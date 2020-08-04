@@ -1,0 +1,30 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css";
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+.label_required:after {
+    content: "*";
+    color: red;
+}
+
+.disabled_btn {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.logo-link{
+    text-align: center;
+}
+.brand-logo {
+    width: 30% !important;
+    margin: 0 auto;
+}
+.company-name{
+    margin: 10px;
+    font-weight: bold;
+    font-size: 120%;
+    text-align: center;
+}
