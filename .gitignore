@@ -6,3 +6,4 @@ user/__pycache__/
 user/migrations/__pycache__/
 db.sqlite3
 __pycache__/manage.cpython-38.pyc
+user/migrations/
