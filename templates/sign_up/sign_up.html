@@ -1,0 +1,520 @@
+{% load static %}
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% trans 'Регистрация в системе' %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/login/logo.svg' %}" sizes="any" type="image/svg+xml">
+
+</head>
+<body>
+
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="{% static 'img/login/logo.svg' %}"
+                 alt="{% trans 'Управление безопасности дорожного движения!' %}"/>
+            <h3>{% trans 'Добро пожаловать' %}</h3>
+
+            <p>{% trans 'Управление безопасности дорожного движения!' %}</p>
+            <a href="{% url 'user:login' %}">{% trans 'Вход в систему' %}</a>
+            <br>
+            <br>
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">{% trans 'Регистрация в системе' %}</h3>
+
+                    <form action="{% url 'user:sign' %}" method="POST">
+
+                        {% csrf_token %}
+                        <div class="row register-form">
+                            {% include 'includes/messages.html' %}
+                            <div class="col-md-6">
+                                <label for="first_name" class="label_required">Ism</label>
+                                <div class="form-group">
+                                    <input type="text" id="first_name" class="form-control" name="first_name"
+                                           required="required" placeholder="Masalan: Salohiddin" autocomplete="off" value=""/>
+                                </div>
+                                <label for="last_name" class="label_required">Familiya</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="last_name" name="last_name"
+                                           required="required" autocomplete="off" placeholder="{% trans 'Masalan: Yoqubov' %}" value=""/>
+                                </div>
+                                <label for="middle_name" class="label_required">Otasining ismi</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="middle_name" name="middle_name"
+                                           required="required" autocomplete="off" placeholder="Masalan: Tojiddinovich" value=""/>
+                                </div>
+
+                                <label for="passport" class="label_required">Passport</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="passport" name="passport"
+                                           required="required" autocomplete="off" placeholder="Masalan: AA1234567" value=""/>
+                                </div>
+                                <label for="document_issue" class="label_required">Passport berilgan sana</label>
+                                <div class="form-group">
+                                    <input type="date" class="form-control" id="document_issue" required="required"
+                                           name="document_issue" autocomplete="off" value=""/>
+                                </div>
+                                <label for="document_expiry" class="label_required">Passport amal qilish muddati</label>
+                                <div class="form-group">
+                                    <input type="date" autocomplete="off" class="form-control" id="document_expiry" required="required"
+                                           name="document_expiry" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl">
+                                        <label class="radio inline">
+                                            <input type="radio" name="gender" value="M" checked>
+                                            <span> Erkak </span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input type="radio" name="gender" value="W">
+                                            <span>Ayol </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="label_required" for="region">Viloyat</label>
+                                    <select name="region" class="form-control" id="region" required="required">
+                                        <option>--Viloyatni tanlang--</option>
+                                        {% for region in regions %}
+                                            <option value="{{ region.id }}">{{ region.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label_required" for="district">Tuman/Shahar</label>
+                                    <select name="district" class="form-control" id="district" required="required">
+                                        <option>--Tumanni tanlang--</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label_required" for="mfy">MFY</label>
+                                    <select name="mfy" class="form-control" id="mfy" required="required">
+                                        <option>--MFYni tanlang--</option>
+                                    </select>
+                                </div>
+                                <label for="address" class="label_required">Manzil</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="address" name="address"
+                                           required="required" autocomplete="disabled" placeholder="Masalan: M.Iqbol ko'chasi 76-uy" value=""/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="label_required" for="nationality">Millati</label>
+                                    <select name="nationality" class="form-control" id="nationality"
+                                            required="required">
+                                        {% for nationality in nationalities %}
+                                            <option value="{{ nationality.id }}">{{ nationality.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="label_required" for="phone">Telefon raqam</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">+998</div>
+                                        </div>
+                                        <input type="number" class="form-control" id="phone" required="required"
+                                               min="000000001" max="999999999" name="phone" autocomplete="disabled">
+                                        <button id="get_code" class="ml-1 fourth">Kodni olish</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="password_confirm_block">
+                                    <label class="label_required" for="confirm_password">Parolni kiriting</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Parol:</div>
+                                        </div>
+                                        <input type="number" class="form-control" id="confirm_password"
+                                               required="required"
+                                               min="0000001" max="9999999" name="confirm_password" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <input type="submit" id="signup_btn" class="btn fourth"
+                                       value="Регистрация"/>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+<script>
+
+    $(document).ready(function () {
+        var FirstName = $('#first_name'),
+            LastName = $('#last_name'),
+            MiddleName = $('#middle_name'),
+            address = $('#address'),
+            region = $('#region'),
+            district = $('#district'),
+            mfy = $('#mfy'),
+            Passport = $('#passport'),
+            DocumentIssue = $('#document_issue'),
+            DocumentExpiry = $('#document_expiry'),
+            phone = $('#phone'),
+            getCode = $('#get_code'),
+            signupBtn = $('#signup_btn'),
+            passwordConfirmBlock = $('#password_confirm_block'),
+            confirmPassword = $('#confirm_password'),
+            nationality = $('#nationality')
+
+
+        //enter press returned false start
+        document.addEventListener('keypress', function (e) {
+            if (e.keyCode === 13 || e.which === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        //enter press returned false end
+
+
+        getCode.hide()
+        passwordConfirmBlock.hide()
+        signupBtn.on('click', function (e) {
+            var SelectedRegion = region.children("option:selected").val(),
+                SelectedDistrict = district.children("option:selected").val(),
+                SelectedMfy = mfy.children('option:selected').val()
+
+            e.preventDefault()
+            if (FirstName.val().length > 0) {
+                if (LastName.val().length > 0) {
+                    if (MiddleName.val().length > 0) {
+                        if (Passport.val().length > 7) {
+                            if (!isNaN(new Date(DocumentIssue.val()).getDate())) {
+                                if (!isNaN(new Date(DocumentExpiry.val()).getDate())) {
+                                    if (parseInt(SelectedRegion)) {
+                                        if (parseInt(SelectedDistrict)) {
+                                            if (parseInt(SelectedMfy)) {
+                                                if (address.val().length > 0) {
+                                                    $("form").submit();
+                                                } else {
+                                                    address.css("border-color", "red").css("background", "#fcf7f7");
+                                                }
+                                            } else {
+                                                mfy.css("border-color", "red").css("background", "#fcf7f7");
+                                            }
+                                        } else {
+                                            district.css("border-color", "red").css("background", "#fcf7f7")
+                                        }
+                                    } else {
+                                        region.css("border-color", "red").css("background", "#fcf7f7");
+                                    }
+                                } else {
+                                    DocumentExpiry.css("border-color", "red").css("background", "#fcf7f7");
+                                }
+                            } else {
+                                DocumentIssue.css("border-color", "red").css("background", "#fcf7f7");
+                            }
+                        } else {
+                            Passport.css("border-color", "red").css("background", "#fcf7f7");
+                        }
+                    } else {
+                        MiddleName.css("border-color", "red").css("background", "#fcf7f7");
+                    }
+                } else {
+                    LastName.css("border-color", "red").css("background", "#fcf7f7");
+                }
+            } else {
+                FirstName.css("border-color", "red").css("background", "#fcf7f7");
+            }
+
+        })
+
+        FirstName.keyup(function (event) {
+
+            // faqat lotin va rus katta, kichik harflarini qabul qiladi
+            $(this).keypress(function (event) {
+                var ew = event.which;
+
+                if (33 <= ew && ew <= 38)
+                    return false;
+                if (40 <= ew && ew <= 64)
+                    return false;
+                if (91 <= ew && ew <= 96)
+                    return false;
+                if (123 <= ew && ew <= 126)
+                    return false;
+                if (186 <= ew && ew <= 222)
+                    return false;
+                return true;
+            });
+
+            if (FirstName.val().length > 0) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        LastName.keyup(function () {
+
+            $(this).keypress(function (event) {
+                var ew = event.which;
+
+                if (33 <= ew && ew <= 38)
+                    return false;
+                if (40 <= ew && ew <= 64)
+                    return false;
+                if (91 <= ew && ew <= 96)
+                    return false;
+                if (123 <= ew && ew <= 126)
+                    return false;
+                if (186 <= ew && ew <= 222)
+                    return false;
+                return true;
+            });
+
+            if (LastName.val().length > 0) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        MiddleName.keyup(function () {
+
+            $(this).keypress(function (event) {
+                var ew = event.which;
+
+                if (33 <= ew && ew <= 38)
+                    return false;
+                if (40 <= ew && ew <= 64)
+                    return false;
+                if (91 <= ew && ew <= 96)
+                    return false;
+                if (123 <= ew && ew <= 126)
+                    return false;
+                if (186 <= ew && ew <= 222)
+                    return false;
+                return true;
+            });
+
+            if (MiddleName.val().length > 0) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        Passport.keyup(function () {
+            //faqat lotin va rus bosh harflari va raqamlarni qabul qiladi
+            $(this).keypress(function (event) {
+                var ew = event.which;
+
+                if (32 <= ew && ew <= 47)
+                    return false;
+                if (58 <= ew && ew <= 64)
+                    return false;
+                if (91 <= ew && ew <= 126)
+                    return false;
+                if (1072 <= ew && ew <= 1105)
+                    return false;
+                return true;
+            });
+
+            if (Passport.val().length > 7) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        Passport.change(function () {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'user:check_passport' %}",
+                data: {
+                    'passport': $(this).val(), // from form
+                },
+                success: function (message) {
+                    if (message == 'True') {
+                        Passport.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
+                        $.notifyDefaults({
+                            type: 'danger',
+                            allow_dismiss: false,
+                        });
+                        $.notify({
+                            icon: 'glyphicon glyphicon-star',
+                            message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+                                '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+                                '</svg> Ushbu pasport oldin ro\'yhatdan o\'tkazilgan!'
+                        });
+                    } else {
+                        Passport.css("border", "1px solid green").css("background", "#e8f0fe");
+                    }
+                }
+            });
+        })
+
+        DocumentIssue.change(function () {
+            if (new Date(DocumentIssue.val())) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        DocumentExpiry.change(function () {
+            if (new Date(DocumentExpiry.val())) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        phone.keyup(function () {
+            var test = $(this).val();
+            var pattern = /^\d{9}$/;
+            if (test.match(pattern)) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+                getCode.fadeIn(1000)
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+                getCode.fadeOut()
+            }
+        });
+
+        region.change(function () {
+            var SelectedRegion = $(this).children("option:selected").val()
+            $.ajax({
+                type: "GET",
+                url: "{% url 'user:get_district' %}",
+                data: {
+                    'region': SelectedRegion, // from form
+                },
+                success: function (message) {
+                    district.empty().append(message)
+                }
+            });
+
+            if (parseInt(SelectedRegion)) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        });
+
+        district.change(function () {
+            var SelectedDistrict = $(this).children("option:selected").val()
+            $.ajax({
+                type: "GET",
+                url: "{% url 'user:get_mfy' %}",
+                data: {
+                    'district': SelectedDistrict, // from form
+                },
+                success: function (message) {
+                    mfy.empty().append(message)
+                }
+            });
+
+            if (parseInt(SelectedDistrict)) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7")
+            }
+        });
+
+        mfy.change(function () {
+            var SelectedMfy = $(this).children('option:selected').val()
+            if (parseInt(SelectedMfy)) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        address.keyup(function () {
+            if (address.val().length > 0) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7");
+            }
+        })
+
+        nationality.mouseenter(function () {
+            nationality.css({'border-color': 'green', "background": "#e8f0fe"})
+        })
+
+        getCode.on('click', function (event) {
+            event.preventDefault()
+
+            $.notifyDefaults({
+                type: 'warning',
+                allow_dismiss: false,
+            });
+            $.notify({
+                icon: 'glyphicon glyphicon-envelope',
+                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                    '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
+                    '</svg>  Raqamingizga tasdiqlash kodi yuborildi !'
+            });
+
+            passwordConfirmBlock.fadeIn(3000)
+            $.ajax({
+                type: "GET",
+                url: "{% url 'user:get_code' %}",
+                data: {
+                    'phone': phone.val(), // from form
+                },
+                success: function (message) {
+                    message = parseInt(message)
+                    confirmPassword.keyup(function () {
+                        var test = confirmPassword.val();
+                        var pattern = /^\d{7}$/;
+                        if (test.match(pattern)) {
+                            if (test == message) {
+                                $(this).css("border", "1px solid green").css("background", "#e8f0fe");
+                                signupBtn.removeClass('disabled_btn')
+
+                            } else {
+                                signupBtn.addClass('disabled_btn')
+                                $.notifyDefaults({
+                                    type: 'danger',
+                                    allow_dismiss: false,
+                                });
+                                $.notify({
+                                    icon: 'glyphicon glyphicon-star',
+                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                        '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+                                        '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+                                        '</svg> SMS kodni xato kiritdingiz! Iltimos qaytadan tekshirib, kiriting!'
+                                });
+                            }
+                        } else {
+                            $(this).css("border", "1px solid red",).css("background", "#fef8f8",);
+                            signupBtn.addClass('disabled_btn')
+
+                        }
+                    });
+                }
+            });
+        });
+
+    })
+
+</script>
+</body>
+</html>

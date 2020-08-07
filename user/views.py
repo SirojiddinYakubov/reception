@@ -2,6 +2,7 @@ import random
 
 import requests
 from django.contrib import messages
+
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
@@ -15,6 +16,7 @@ def sign(request):
     districts = District.objects.all()
     mfys = MFY.objects.all()
     nationalities = Nationality.objects.all()
+
     context = {
         'regions': regions,
         'districts': districts,
@@ -24,15 +26,16 @@ def sign(request):
 
     if request.POST:
         form = SignUpForm(request.POST or None)
+        print(form.errors)
         if form.is_valid():
             phone = form.cleaned_data['phone']
             passport = get_passport(form.cleaned_data['passport'])
             document_issue = form.cleaned_data['document_issue']
             document_expiry = form.cleaned_data['document_expiry']
             password = request.POST['confirm_password']
-            last_name = get_name(form.cleaned_data['last_name'])
-            first_name = get_name(form.cleaned_data['first_name'])
-            middle_name = get_name(form.cleaned_data['middle_name'])
+            last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data['first_name']
+            middle_name = form.cleaned_data['middle_name']
             nationality = get_object_or_404(Nationality, id=request.POST['nationality'])
             region = get_object_or_404(Region, id=request.POST['region'])
             district = get_object_or_404(District, id=request.POST['district'])
@@ -63,12 +66,12 @@ def sign(request):
             user.username = passport
             user.email = ''
             user.save()
-            print('ok')
+
         else:
             messages.error(request, "Formani to'ldirishda xatolik !")
     else:
         form = SignUpForm()
-    return render(request, 'login/main.html', context)
+    return render(request, 'sign_up/sign_up.html', context)
 
 
 def get_district(request):
@@ -108,7 +111,7 @@ def get_code(request):
 def check_passport(request):
     if request.is_ajax():
         passport = get_passport(request.GET['passport'])
-        user = User.objects.filter(passport__icontains=passport)
+        user = User.objects.filter(passport__iexact=passport)
         if user:
             return HttpResponse(True)
         else:
@@ -119,3 +122,7 @@ def check_passport(request):
 
 def panel(request):
     return render(request, 'base.html')
+
+
+def login(request):
+    return render(request, 'login/login.html')
