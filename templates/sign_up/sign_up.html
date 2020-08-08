@@ -23,7 +23,7 @@
             <h3>{% trans 'Добро пожаловать' %}</h3>
 
             <p>{% trans 'Управление безопасности дорожного движения!' %}</p>
-            <a href="{% url 'user:login' %}">{% trans 'Вход в систему' %}</a>
+            <a href="{% url 'user:user_login' %}">{% trans 'Вход в систему' %}</a>
             <br>
             <br>
         </div>
@@ -36,7 +36,9 @@
 
                         {% csrf_token %}
                         <div class="row register-form">
-                            {% include 'includes/messages.html' %}
+                            <div class="container">
+                                {% include 'includes/messages.html' %}
+                            </div>
                             <div class="col-md-6">
                                 <label for="first_name" class="label_required">Ism</label>
                                 <div class="form-group">
@@ -165,6 +167,7 @@
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script>
 
     $(document).ready(function () {
@@ -215,7 +218,30 @@
                                         if (parseInt(SelectedDistrict)) {
                                             if (parseInt(SelectedMfy)) {
                                                 if (address.val().length > 0) {
-                                                    $("form").submit();
+                                                    var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
+                                                        allow_dismiss: false,
+                                                        showProgressbar: true
+                                                    });
+
+                                                    setTimeout(function () {
+                                                        notify.update({
+                                                            'type': 'success',
+                                                            'message': "Ma'lumotlar saqlanmoqda",
+                                                            'progress': 10
+                                                        });
+                                                    }, 10);
+
+                                                    setTimeout(function () {
+                                                        $("form").submit();
+                                                    }, 4500)
+
+
+
+
+                                                    ///setTimeout(function () {
+                                                    // notify.update('message', "Ma'lumotlar saqlandi");
+                                                    // }, 3000);
+
                                                 } else {
                                                     address.css("border-color", "red").css("background", "#fcf7f7");
                                                 }
@@ -249,25 +275,7 @@
 
         })
 
-        FirstName.keyup(function (event) {
-
-            // faqat lotin va rus katta, kichik harflarini qabul qiladi
-            $(this).keypress(function (event) {
-                var ew = event.which;
-
-                if (33 <= ew && ew <= 38)
-                    return false;
-                if (40 <= ew && ew <= 64)
-                    return false;
-                if (91 <= ew && ew <= 96)
-                    return false;
-                if (123 <= ew && ew <= 126)
-                    return false;
-                if (186 <= ew && ew <= 222)
-                    return false;
-                return true;
-            });
-
+        FirstName.keyup(function () {
             if (FirstName.val().length > 0) {
                 $(this).css("border-color", "green").css("background", "#e8f0fe");
             } else {
@@ -275,24 +283,9 @@
             }
         })
 
+        FirstName.keypress(NameInputFilter)
+
         LastName.keyup(function () {
-
-            $(this).keypress(function (event) {
-                var ew = event.which;
-
-                if (33 <= ew && ew <= 38)
-                    return false;
-                if (40 <= ew && ew <= 64)
-                    return false;
-                if (91 <= ew && ew <= 96)
-                    return false;
-                if (123 <= ew && ew <= 126)
-                    return false;
-                if (186 <= ew && ew <= 222)
-                    return false;
-                return true;
-            });
-
             if (LastName.val().length > 0) {
                 $(this).css("border-color", "green").css("background", "#e8f0fe");
             } else {
@@ -300,24 +293,9 @@
             }
         })
 
+        LastName.keypress(NameInputFilter)
+
         MiddleName.keyup(function () {
-
-            $(this).keypress(function (event) {
-                var ew = event.which;
-
-                if (33 <= ew && ew <= 38)
-                    return false;
-                if (40 <= ew && ew <= 64)
-                    return false;
-                if (91 <= ew && ew <= 96)
-                    return false;
-                if (123 <= ew && ew <= 126)
-                    return false;
-                if (186 <= ew && ew <= 222)
-                    return false;
-                return true;
-            });
-
             if (MiddleName.val().length > 0) {
                 $(this).css("border-color", "green").css("background", "#e8f0fe");
             } else {
@@ -325,28 +303,17 @@
             }
         })
 
+        MiddleName.keypress(NameInputFilter)
+
         Passport.keyup(function () {
-            //faqat lotin va rus bosh harflari va raqamlarni qabul qiladi
-            $(this).keypress(function (event) {
-                var ew = event.which;
-
-                if (32 <= ew && ew <= 47)
-                    return false;
-                if (58 <= ew && ew <= 64)
-                    return false;
-                if (91 <= ew && ew <= 126)
-                    return false;
-                if (1072 <= ew && ew <= 1105)
-                    return false;
-                return true;
-            });
-
             if (Passport.val().length > 7) {
                 $(this).css("border-color", "green").css("background", "#e8f0fe");
             } else {
                 $(this).css("border-color", "red").css("background", "#fcf7f7");
             }
         })
+
+        Passport.keypress(PassportInputFilter)
 
         Passport.change(function () {
             $.ajax({
@@ -519,14 +486,7 @@
             });
         })
 
-        confirmPassword.on('input', function () {
-            var $this = $(this);
-            var maxlength = $this.attr('max').length;
-            var value = $this.val();
-            if (value && value.length >= maxlength) {
-                $this.val(value.substr(0, maxlength));
-            }
-        })
+        confirmPassword.on('input', InputMaxLength)
 
     })
 

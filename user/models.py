@@ -98,7 +98,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     birthday = models.DateField(blank=True, verbose_name="Tug'ilgan kuni", null=True, default=datetime.date.today)
     username = models.CharField(max_length=30, unique=True, blank=True)
     phone = models.IntegerField('Tel raqam',null=True, blank=True, unique=True, validators=[MaxValueValidator(999999999),MinValueValidator(100000000)])
-    passport = models.CharField(max_length=9, null=True, unique=True)
+    passport = models.CharField(max_length=20, null=True, unique=True)
     document_issue = models.DateField('Passport berilgan sana',blank=True, null=True)
     document_expiry = models.DateField('Passport amal qilish muddati',blank=True, null=True)
     nationality = models.ForeignKey(Nationality, verbose_name='Millati',on_delete=models.SET_NULL,null=True, blank=True)

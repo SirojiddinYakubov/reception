@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Tizimga kirish</title>
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
@@ -28,29 +28,39 @@
 </head>
 <body>
 <div class="container">
+
     <div class="d-flex justify-content-center h-100">
         <div class="card">
             <div class="card-header">
                 <h3>Tizimga kirish</h3>
             </div>
+
+            {% include 'includes/messages.html' %}
+
             <div class="card-body">
-                <form>
+                <form method="post" action="{% url 'user:user_login' %}">
+
+                    {% csrf_token %}
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user custom_icon"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Passport">
+                        <input type="text" class="form-control" id="passport" name="passport" autocomplete="off"
+                               placeholder="Passport">
 
                     </div>
                     <div class="input-group form-group divWithIcon">
                         <div class="input-group-prepend">
-                            <span id="password" class="input-group-text"><i class="fas fa-lock custom_icon"></i></span>
+                            <span class="input-group-text"><i class="fas fa-lock custom_icon"></i></span>
                         </div>
-                        <input type="password" placeholder="Parol" class="form-control">
+
+                        <input type="password" id="password" placeholder="Parol" name="password" class="form-control">
                         <i class="far fa-eye icon-pwd"></i>
+
                     </div>
+
                     <div class="row align-items-center remember">
-                        <input type="checkbox">Eslab qol
+                        <input name="checkbox" type="checkbox">Eslab qol
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Kirish" class="btn fourth">
@@ -71,12 +81,26 @@
     </div>
 </div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script>
 
-    $('#password').on('click', function () {
-        alert('ok')
-    })
+    $(document).ready(function () {
+        var passport = $('#passport'),
+            password = $('#password')
 
+
+        passport.keypress(PassportInputFilter)
+
+        password.keypress(function (e) {
+            var ew = e.which
+            if (ew === 32) {
+                e.preventDefault()
+            }
+        })
+
+    })
 </script>
 
 

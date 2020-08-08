@@ -13,7 +13,7 @@ html, body {
 }
 
 .card {
-    height: 370px;
+    height: 400px;
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
@@ -43,7 +43,7 @@ html, body {
 }
 
 .input-group-prepend span {
-    width: 50px;
+    width: 40px;
     background-color: #00c6ff;
     color: black;
     border: 0 !important;
@@ -51,7 +51,7 @@ html, body {
 
 input:focus {
     outline: 0 0 0 0 !important;
-    box-shadow: 0 0 0 0 !important;
+    box-shadow: 0 0 4px 0 dodgerblue !important;
 
 }
 
@@ -93,6 +93,8 @@ input:focus {
 
 .divWithIcon {
     color: white;
+    position: relative;
+
 
 }
 
@@ -100,12 +102,38 @@ input:focus {
 
 }
 
+
 .icon-pwd {
-    left: 0;
-    position: relative;
+    right: 0;
+    padding: 8px 8px 8px 8px;
     color: #aaa;
+    position: absolute;
+
+
 }
 
+.divWithIcon input[type='password']:focus , .icon-pwd{
+    color: #090909;
+
+}
+
+/*.divWithIcon input[type='password']::-moz-placeholder {*/
+/*  color: #0082D4;*/
+/*}*/
+
+/*.divWithIcon input[type='password']::-webkit-input-placeholder {*/
+/*  color: #0082D4;*/
+/*}*/
+
+/*.divWithIcon input[type='password']:focus::-moz-placeholder  {*/
+/*  color: #8B9DA7;*/
+/*  border-color: #0082D4;*/
+/*}*/
+
+/*.divWithIcon input[type='password']:focus::-webkit-input-placeholder {*/
+/*  color: #8B9DA7;*/
+/*  border-color: #0082D4;*/
+/*}*/
 
 
 
