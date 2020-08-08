@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!-- IonIcons -->
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+       {% block top %}{% endblock %}
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -178,5 +180,6 @@
 <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
 <script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+{% block bottom %}{% endblock bottom %}
 </body>
 </html>

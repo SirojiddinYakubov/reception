@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
     'django.contrib.sites',
-
+    'app',
+    'docxtpl',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

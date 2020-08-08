@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block top %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+{% endblock top %}
+{% block content %}
+
+
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Yangi avtomobilni ro'yhatdan o'tkazish" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+
+            <!-- left column -->
+            <div class="col-md-7">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "Ma'lumotlarni kiriting" %}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form">
+                        <div class="card-body">
+                            <!-- SELECT2 EXAMPLE -->
+                            <div class="form-group">
+                                <label>Minimal</label>
+                                <select class="form-control select2" style="width: 100%;">
+                                    {% for car in cars %}
+                                        <option value="{{ car.id }}">{{ car.model }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="cert_number">{% trans 'Qayd etish guvohnomasi raqami' %}</label>
+                                <input type="text" class="form-control" id="cert_number"
+                                       placeholder="{% trans 'Masalan: 0012345' %}" name="cert_number">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="engine_number">{% trans 'Dvigitel raqami' %}</label>
+                                <input type="text" class="form-control" id="engine_number"
+                                       placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}" name="engine_number">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="color">{% trans 'Rangi' %}</label>
+                                <input type="text" class="form-control" id="color"
+                                       placeholder="{% trans 'Masalan: GAZ (oq)' %}" name="color">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Date masks:</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input type="date" class="form-control" data-inputmask-alias="datetime"
+                                           data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <!-- /.form gro
+
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+
+
+            </div>
+            <!--/.col (left) -->
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+{% endblock content %}
+{% block bottom %}
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+    <script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('#datemask').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'})
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+        })
+    </script>
+
+{% endblock bottom %}
