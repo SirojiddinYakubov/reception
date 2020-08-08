@@ -10,3 +10,5 @@ user/migrations/
 reception/local_settings.py
 app/migrations/__pycache__/
 app/__pycache__/
+media/
+app/migrations/
