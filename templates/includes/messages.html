@@ -1,9 +1,9 @@
-<div class="container">
+
 {% if messages %}
     {% for message in messages %}
         {% if forloop.last %}
             <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %}">
-                <a class="close" href="#" data-dismiss="alert">×</a>
+                <a class="close" href="" data-dismiss="alert">×</a>
                 {{ message }}
             </div>
         {% endif %}
@@ -25,4 +25,3 @@
         </div>
     {% endfor %}
 {% endif %}
-</div>

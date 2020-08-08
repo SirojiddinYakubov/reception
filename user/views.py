@@ -2,16 +2,17 @@ import random
 
 import requests
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 
 from user.decorators import *
 from user.forms import *
 
 
 def sign(request):
-
     regions = Region.objects.all()
     districts = District.objects.all()
     mfys = MFY.objects.all()
@@ -66,7 +67,7 @@ def sign(request):
             user.username = passport
             user.email = ''
             user.save()
-
+            return redirect(reverse_lazy('user:panel'))
         else:
             messages.error(request, "Formani to'ldirishda xatolik !")
     else:
@@ -108,6 +109,7 @@ def get_code(request):
     else:
         return False
 
+
 def check_passport(request):
     if request.is_ajax():
         passport = get_passport(request.GET['passport'])
@@ -124,5 +126,25 @@ def panel(request):
     return render(request, 'base.html')
 
 
-def login(request):
-    return render(request, 'login/login.html')
+def user_login(request):
+    if request.method == 'POST':
+        passport = request.POST['passport']
+        username = get_passport(passport)
+        password = request.POST['password'].replace(' ', '')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                if request.POST['checkbox']:
+                    response = HttpResponse('cookie example')
+                    response.set_cookie('username', username)
+                    response.set_cookie('password', password)
+                login(request, user)
+                return redirect(reverse_lazy('user:panel'))
+            else:
+                messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
+                return render(request, 'login/login.html')
+        else:
+            messages.error(request, "Login yoki parol noto'g'ri!")
+            return render(request, 'login/login.html')
+    else:
+        return render(request, 'login/login.html')

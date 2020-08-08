@@ -136,7 +136,7 @@ input[type="radio"]:checked {
     border: none;
 }
 
-input[type="radio"]:active{
+input[type="radio"]:active {
     border: none;
 }
 
@@ -145,6 +145,7 @@ input[type="radio"]:active{
 input[type='radio']:active, input[type='radio']:focus {
     outline: none;
 }
+
 input[type='radio']::-moz-focus-inner {
     border: 0;
 }
@@ -154,20 +155,18 @@ input[type='radio']::-moz-focus-inner {
 .btn:active, .custom_btn:active, .fourth:active, .btn:focus, .custom_btn:focus, .fourth:focus {
     outline: none;
 }
+
 input[type='radio']::-moz-focus-inner, .btn::-moz-focus-inner, .custom_btn::-moz-focus-inner, .fourth::-moz-focus-inner {
     border: 0;
 }
 
 .field-icon {
-  float: right;
-  margin-left: -25px;
-  margin-top: -25px;
-  position: relative;
-  z-index: 2;
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
 }
-
-
-
 
 
 /* Start home style*/
@@ -211,3 +210,4 @@ input[type='radio']::-moz-focus-inner, .btn::-moz-focus-inner, .custom_btn::-moz
   .sidenav a {font-size: 18px;}
 }
 /* stop home style*/
+
