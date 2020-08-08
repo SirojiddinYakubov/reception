@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
+from user.models import *
 from docxtpl import DocxTemplate
 
 
@@ -17,10 +18,17 @@ def new_car(request):
     return render(request, 'app/new_car/home.html', context=context)
 
 
+def account_statement(request):
+    return False
+
+
 def word(request):
     doc = DocxTemplate("static/test1.docx")
-    context = {'current_year': "2020"}
+    user = User.objects.get(username=request.user.username)
+    context = {
+        'user': user
+    }
     doc.render(context)
-    doc.save("media/generator/generated_doc.docx")
+    doc.save("media/generated_doc.docx")
 
 

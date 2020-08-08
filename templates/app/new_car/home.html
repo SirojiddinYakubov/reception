@@ -34,21 +34,46 @@
                     <!-- form start -->
                     <form role="form">
                         <div class="card-body">
+
+
+                            <div class="form-group">
+                                <label>Siz kimsiz?</label>
+                                <select class="form-control" style="width: 100%;">
+                                    <option value="enterprise">Jismoniy shaxs</option>
+                                    <option value="person">Yuridik shaxs</option>
+                                </select>
+                            </div>
                             <!-- SELECT2 EXAMPLE -->
                             <div class="form-group">
-                                <label>Minimal</label>
+                                <label>{% trans 'Avtomobilni tanlang:' %}</label>
                                 <select class="form-control select2" style="width: 100%;">
                                     {% for car in cars %}
                                         <option value="{{ car.id }}">{{ car.model }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-
-
+                            <div class="form-group">
+                                <label for="cert_seriya">{% trans 'Qayd etish guvohnomasi seriyasi' %}</label>
+                                <input type="text" class="form-control" id="cert_seriya"
+                                       placeholder="{% trans 'Masalan: AAC' %}" name="cert_seriya">
+                            </div>
                             <div class="form-group">
                                 <label for="cert_number">{% trans 'Qayd etish guvohnomasi raqami' %}</label>
                                 <input type="text" class="form-control" id="cert_number"
                                        placeholder="{% trans 'Masalan: 0012345' %}" name="cert_number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date_conclusion_contract">{% trans "Shartnoma tuzilgan sana:" %}</label>
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input type="date" name="date_conclusion_contract" id='date_conclusion_contract' class="form-control" data-inputmask-alias="datetime"
+                                           data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
+                                </div>
                             </div>
 
 
@@ -58,6 +83,12 @@
                                        placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}" name="engine_number">
                             </div>
 
+                            <div class="form-group">
+                                <label for="body_number">{% trans 'Kuzov raqami' %}</label>
+                                <input type="text" class="form-control" id="body_number"
+                                       placeholder="{% trans 'Masalan: XWBJF69VELA102923' %}" name="body_number">
+                            </div>
+
 
                             <div class="form-group">
                                 <label for="color">{% trans 'Rangi' %}</label>
@@ -65,30 +96,13 @@
                                        placeholder="{% trans 'Masalan: GAZ (oq)' %}" name="color">
                             </div>
 
-                            <div class="form-group">
-                                <label>Date masks:</label>
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                    </div>
-                                    <input type="date" class="form-control" data-inputmask-alias="datetime"
-                                           data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                            <!-- /.form gro
 
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                        </div>
-                                    </div>
-                                    <!-- /.card-body -->
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+                        </div>
                     </form>
                 </div>
                 <!-- /.card -->
