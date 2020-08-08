@@ -7,6 +7,9 @@ input[type=number]::-webkit-inner-spin-button {
     appearance: none;
 }
 
+.label_required {
+    display: block;
+}
 
 .label_required:after {
     content: "*";
@@ -60,10 +63,9 @@ input[type=number]::-webkit-inner-spin-button {
     text-align: center;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
 }
 
-.custom_btn:hover, .btn:focus {
+.custom_btn:hover {
     color: #3498db;
     outline: 0;
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
@@ -93,13 +95,13 @@ input[type=number]::-webkit-inner-spin-button {
     -webkit-transition: background 300ms ease-in-out;
     transition: background 300ms ease-in-out;
     border-radius: 0.5em;
-
-
+    float: right;
 }
 
 .fourth:hover {
     background-position: 0;
     color: #fafafa;
+    transition: 1s;
 }
 
 input[type="radio"] {
@@ -156,3 +158,10 @@ input[type='radio']::-moz-focus-inner, .btn::-moz-focus-inner, .custom_btn::-moz
     border: 0;
 }
 
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}

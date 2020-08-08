@@ -41,23 +41,27 @@
                                 <label for="first_name" class="label_required">Ism</label>
                                 <div class="form-group">
                                     <input type="text" id="first_name" class="form-control" name="first_name"
-                                           required="required" placeholder="Masalan: Salohiddin" autocomplete="off" value=""/>
+                                           required="required" placeholder="Masalan: Salohiddin" autocomplete="off"
+                                           value=""/>
                                 </div>
                                 <label for="last_name" class="label_required">Familiya</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="last_name" name="last_name"
-                                           required="required" autocomplete="off" placeholder="{% trans 'Masalan: Yoqubov' %}" value=""/>
+                                           required="required" autocomplete="off"
+                                           placeholder="{% trans 'Masalan: Yoqubov' %}" value=""/>
                                 </div>
                                 <label for="middle_name" class="label_required">Otasining ismi</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="middle_name" name="middle_name"
-                                           required="required" autocomplete="off" placeholder="Masalan: Tojiddinovich" value=""/>
+                                           required="required" autocomplete="off" placeholder="Masalan: Tojiddinovich"
+                                           value=""/>
                                 </div>
 
                                 <label for="passport" class="label_required">Passport</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="passport" name="passport"
-                                           required="required" autocomplete="off" placeholder="Masalan: AA1234567" value=""/>
+                                           required="required" autocomplete="off" placeholder="Masalan: AA1234567"
+                                           value=""/>
                                 </div>
                                 <label for="document_issue" class="label_required">Passport berilgan sana</label>
                                 <div class="form-group">
@@ -66,7 +70,8 @@
                                 </div>
                                 <label for="document_expiry" class="label_required">Passport amal qilish muddati</label>
                                 <div class="form-group">
-                                    <input type="date" autocomplete="off" class="form-control" id="document_expiry" required="required"
+                                    <input type="date" autocomplete="off" class="form-control" id="document_expiry"
+                                           required="required"
                                            name="document_expiry" value=""/>
                                 </div>
                                 <div class="form-group">
@@ -107,7 +112,8 @@
                                 <label for="address" class="label_required">Manzil</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="address" name="address"
-                                           required="required" autocomplete="disabled" placeholder="Masalan: M.Iqbol ko'chasi 76-uy" value=""/>
+                                           required="required" autocomplete="disabled"
+                                           placeholder="Masalan: M.Iqbol ko'chasi 76-uy" value=""/>
                                 </div>
 
                                 <div class="form-group">
@@ -128,7 +134,7 @@
                                         </div>
                                         <input type="number" class="form-control" id="phone" required="required"
                                                min="000000001" max="999999999" name="phone" autocomplete="disabled">
-                                        <button id="get_code" class="ml-1 fourth">Kodni olish</button>
+                                        <button id="get_code" class="ml-1 btn fourth">Kodni olish</button>
                                     </div>
                                 </div>
 
@@ -140,7 +146,8 @@
                                         </div>
                                         <input type="number" class="form-control" id="confirm_password"
                                                required="required"
-                                               min="0000001" max="9999999" name="confirm_password" autocomplete="off">
+                                               min="0000001" max="9999999" maxlength="7" name="confirm_password"
+                                               autocomplete="off">
                                     </div>
                                 </div>
 
@@ -395,7 +402,7 @@
                 $(this).css("border-color", "red").css("background", "#fcf7f7");
                 getCode.fadeOut()
             }
-        });
+        })
 
         region.change(function () {
             var SelectedRegion = $(this).children("option:selected").val()
@@ -415,7 +422,7 @@
             } else {
                 $(this).css("border-color", "red").css("background", "#fcf7f7");
             }
-        });
+        })
 
         district.change(function () {
             var SelectedDistrict = $(this).children("option:selected").val()
@@ -435,7 +442,7 @@
             } else {
                 $(this).css("border-color", "red").css("background", "#fcf7f7")
             }
-        });
+        })
 
         mfy.change(function () {
             var SelectedMfy = $(this).children('option:selected').val()
@@ -488,7 +495,6 @@
                             if (test == message) {
                                 $(this).css("border", "1px solid green").css("background", "#e8f0fe");
                                 signupBtn.removeClass('disabled_btn')
-
                             } else {
                                 signupBtn.addClass('disabled_btn')
                                 $.notifyDefaults({
@@ -511,7 +517,16 @@
                     });
                 }
             });
-        });
+        })
+
+        confirmPassword.on('input', function () {
+            var $this = $(this);
+            var maxlength = $this.attr('max').length;
+            var value = $this.val();
+            if (value && value.length >= maxlength) {
+                $this.val(value.substr(0, maxlength));
+            }
+        })
 
     })
 

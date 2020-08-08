@@ -122,26 +122,34 @@ body {
 
 .register-left a {
     border: none;
-    border-radius: 1.5rem;
     padding: 2%;
     width: 60%;
     background: #f8f9fa;
     font-weight: bold;
-    color: #383d41;
     margin-top: 30%;
     margin-bottom: 3%;
     padding-left: 5%;
     padding-right: 5%;
     cursor: pointer;
     text-decoration: none;
-        transition: 1s;
+
+    color: #3498db;
+    background-image: -webkit-linear-gradient(45deg, #3498db 50%, transparent 50%);
+    background-image: linear-gradient(45deg, #3498db 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+    border-radius: 1.2em;
+
 
 }
 
 .register-left a:hover {
     transition: 1s;
-    background: #383d41;
-    color: #f8f9fa;
+    background-position: 0;
+    color: #fafafa;
+    border: 1px solid white;
 
 
 }
