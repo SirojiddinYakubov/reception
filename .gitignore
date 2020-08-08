@@ -8,3 +8,6 @@ db.sqlite3
 __pycache__/manage.cpython-38.pyc
 user/migrations/
 reception/local_settings.py
+app/migrations/__pycache__/
+app/migrations/
+app/__pycache__/
