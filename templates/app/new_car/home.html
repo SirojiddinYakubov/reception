@@ -32,7 +32,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST"  action="">
+                    <form role="form" method="POST"  action="{% url 'account_statement:new_car' %}">
                     {% csrf_token %}
                         <div class="card-body">
 
@@ -55,7 +55,7 @@
                                 </select>
                             </div>
                         {% else %}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger" id="organization_div_alert">
                         <h5>Sizda hozirda tashkilot qo'shilmagan. Iltimos avval <a href="#">Tashkilotni qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling</h5>
                         </div>
                         {% endif %}
@@ -161,6 +161,7 @@
             $('[data-mask]').inputmask()
             $("#chassis_number_div").hide()
             $("#organization_div").hide()
+            $("#organization_div_alert").hide()
 
 
         })
@@ -190,8 +191,10 @@
                 var selectedPersonType = $(this).children("option:selected").val();
                 if (selectedPersonType === 'E') {
                      $("#organization_div").fadeIn()
+                     $("#organization_div_alert").fadeIn()
                 }else {
                     $("#organization_div").fadeOut()
+                    $("#organization_div_alert").fadeOut()
                 }
             });
         });
