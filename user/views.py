@@ -110,6 +110,13 @@ def get_code(request):
         return False
 
 
+def get_phone(request):
+    if request.is_ajax():
+        phone = request.GET['phone']
+        user = User.objects.filter(phone=phone)
+        if user:
+            return HttpResponse(True)
+
 def check_passport(request):
     if request.is_ajax():
         passport = get_passport(request.GET['passport'])
