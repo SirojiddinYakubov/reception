@@ -58,3 +58,10 @@ function InputMaxLength() {
         $this.val(value.substr(0, maxlength));
     }
 }
+
+function PressEnterFalse(e) {
+    if (e.keyCode === 13 || e.which === 13) {
+        e.preventDefault();
+        return false;
+    }
+}
