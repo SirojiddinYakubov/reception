@@ -25,25 +25,35 @@ def new_car(request):
         form = AccountStatementForm(request.POST or None)
         print(form.errors)
         if form.is_valid():
+            cert_seriya = form.cleaned_data['cert_seriya']
+            cert_number = form.cleaned_data['cert_number']
+            color = form.cleaned_data['color']
+            engine_number = form.cleaned_data['engine_number']
+            body_number = form.cleaned_data['body_number']
+            chassis_number = form.cleaned_data['chassis_number']
+
             print(request.POST)
-            form.person_type = form.cleaned_data['person_type']
-            form.cert_seriya = form.cleaned_data['cert_seriya']
-            form.cert_number = form.cleaned_data['cert_number']
-            form.date_conclusion_contract = request.POST['organization']
-            form.color = form.cleaned_data['color']
-            form.engine_number = form.cleaned_data['engine_number']
-            form.body_number = form.cleaned_data['body_number']
+            form = form.save(commit=False)
+            form.person_type = request.POST['person_type']
+            form.cert_seriya = cert_seriya
+            form.cert_number = cert_number
+
+            form.date_conclusion_contract = request.POST['date_conclusion_contract']
+            form.color = color
+            form.engine_number = engine_number
+            form.body_number = body_number
+
             if form.person_type == 'E':
-                print('Eeee')
                 form.organization = get_object_or_404(Organization, id=request.POST['organization'] or None)
             else:
                 print('ppp')
+            print(form.organization)
             form.car = get_object_or_404(Car, id=request.POST['car'])
             form.user = User.objects.get(id=request.user.id)
 
 
             if form.car.is_truck == True:
-                form.chassis_number = form.cleaned_data['chassis_number']
+                form.chassis_number = chassis_number
 
             form.save()
 
