@@ -12,6 +12,6 @@ urlpatterns = [
     path('get-mfy/', get_mfy, name='get_mfy'),
     path('get-code/', get_code, name='get_code'),
     path('check_passport/', check_passport, name='check_passport'),
-    path('panel/', panel, name='panel'),
+    path('home/', panel, name='panel'),
 
 ]

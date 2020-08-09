@@ -46,4 +46,8 @@ class NationalityAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
-
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title']
+    list_display_links = ['title']
+    save_on_top = True

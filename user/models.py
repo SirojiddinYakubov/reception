@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, MaxLengthValidator
 
 
-
 class Region(models.Model):
     title = models.CharField('Nomi', max_length=255)
     sort = models.IntegerField(blank=True, default=1)
@@ -21,11 +20,9 @@ class Region(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['sort',]
+        ordering = ['sort', ]
         verbose_name = 'Viloyat'
         verbose_name_plural = 'Viloyatlar'
-
-
 
 
 class District(models.Model):
@@ -69,8 +66,6 @@ class Nationality(models.Model):
         verbose_name_plural = 'Millatlar'
 
 
-
-
 ROLE_CHOICES = (
     ("1", "User"),
     ("2", "R.I.B"),
@@ -83,11 +78,12 @@ GENDER_CHOICES = (
     ('W', 'Ayol'),
 )
 
+
 class User(AbstractBaseUser, PermissionsMixin):
-    last_name = models.CharField('Familiya',max_length=255)
-    first_name = models.CharField('Ism',max_length=255)
-    middle_name = models.CharField('Otasining ismi',max_length=255)
-    role = models.CharField('Foydalanuvchi roli',choices=ROLE_CHOICES, max_length=15, default="1")
+    last_name = models.CharField('Familiya', max_length=255)
+    first_name = models.CharField('Ism', max_length=255)
+    middle_name = models.CharField('Otasining ismi', max_length=255)
+    role = models.CharField('Foydalanuvchi roli', choices=ROLE_CHOICES, max_length=15, default="1")
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
                                  blank=True)
@@ -97,27 +93,27 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     birthday = models.DateField(blank=True, verbose_name="Tug'ilgan kuni", null=True, default=datetime.date.today)
     username = models.CharField(max_length=30, unique=True, blank=True)
-    phone = models.IntegerField('Tel raqam',null=True, blank=True, unique=True, validators=[MaxValueValidator(999999999),MinValueValidator(100000000)])
+    phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
+                                validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     passport = models.CharField(max_length=20, null=True, unique=True)
-    document_issue = models.DateField('Passport berilgan sana',blank=True, null=True)
-    document_expiry = models.DateField('Passport amal qilish muddati',blank=True, null=True)
-    nationality = models.ForeignKey(Nationality, verbose_name='Millati',on_delete=models.SET_NULL,null=True, blank=True)
+    document_issue = models.DateField('Passport berilgan sana', blank=True, null=True)
+    document_expiry = models.DateField('Passport amal qilish muddati', blank=True, null=True)
+    nationality = models.ForeignKey(Nationality, verbose_name='Millati', on_delete=models.SET_NULL, null=True,
+                                    blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     last_login = models.DateTimeField(null=True, auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    gender = models.CharField('Jinsi',choices=GENDER_CHOICES, max_length=5,default='M')
+    gender = models.CharField('Jinsi', choices=GENDER_CHOICES, max_length=5, default='M')
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(7)])
 
     USERNAME_FIELD = 'username'
-
 
     objects = UserManager()
 
     def __str__(self):
         return f"{self.first_name}"
-
 
 
 class UserManager(BaseUserManager):
@@ -152,4 +148,15 @@ class UserManager(BaseUserManager):
         return user
 
 
+class Organization(models.Model):
+    title = models.CharField("Tashkilot nomi", max_length=255)
+    address = models.CharField("Manzili", max_length=255)
+    address_of_garage = models.CharField("Garaj manzili", max_length=255)
+    director = models.ForeignKey(User,  on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        verbose_name = "Tashkilot"
+        verbose_name_plural = "Tashkilotlar"
+
+    def __str__(self):
+        return f"{self.title}"
