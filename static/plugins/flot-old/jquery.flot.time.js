@@ -157,7 +157,7 @@ API.txt for details.
 		}
 	}
 	
-	// map of app. size of time units in milliseconds
+	// map of account_statement. size of time units in milliseconds
 
 	var timeUnitSize = {
 		"second": 1000,

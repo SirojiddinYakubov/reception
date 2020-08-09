@@ -8157,7 +8157,7 @@ function () {
       var editorHeight = this.$editor.outerHeight();
       var editorWidth = this.$editor.width();
       var toolbarHeight = this.$toolbar.height();
-      var statusbarHeight = this.$statusbar.height(); // check if the web app is currently using another static bar
+      var statusbarHeight = this.$statusbar.height(); // check if the web account_statement is currently using another static bar
 
       var otherBarHeight = 0;
 

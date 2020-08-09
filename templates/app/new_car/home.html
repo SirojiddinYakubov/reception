@@ -32,21 +32,37 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" method="POST"  action="">
+                    {% csrf_token %}
                         <div class="card-body">
 
 
                             <div class="form-group">
                                 <label>Siz kimsiz?</label>
-                                <select class="form-control" style="width: 100%;">
-                                    <option value="enterprise">Jismoniy shaxs</option>
-                                    <option value="person">Yuridik shaxs</option>
+                                <select class="form-control" name="person_type" style="width: 100%;" id="person">
+                                    <option value="P">Jismoniy shaxs</option>
+                                    <option value="E">Yuridik shaxs</option>
                                 </select>
                             </div>
                             <!-- SELECT2 EXAMPLE -->
+                            {% if organizations.count > 0 %}
+                            <div class="form-group" id="organization_div">
+                                <label>{% trans 'Korxonani tanlang:' %}</label>
+                                <select id="organization" name="organization" class="form-control select2" style="width: 100%;">
+                                    {% for organization in organizations %}
+                                        <option value="{{ organization.id }}">{{ organization.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                        <div class="alert alert-danger">
+                        <h5>Sizda hozirda tashkilot qo'shilmagan. Iltimos avval <a href="#">Tashkilotni qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling</h5>
+                        </div>
+                        {% endif %}
+
                             <div class="form-group">
-                                <label>{% trans 'Avtomobilni tanlang:' %}</label>
-                                <select class="form-control select2" style="width: 100%;">
+                                <label>{% trans 'Avtomobil modelini tanlang:' %}</label>
+                                <select id="car" name="car" class="form-control select2" style="width: 100%;">
                                     {% for car in cars %}
                                         <option value="{{ car.id }}">{{ car.model }}</option>
                                     {% endfor %}
@@ -71,7 +87,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                     </div>
-                                    <input type="date" name="date_conclusion_contract" id='date_conclusion_contract' class="form-control" data-inputmask-alias="datetime"
+                                    <input type="date" name="date_conclusion_contract" id='date_conclusion_contract'
+                                           class="form-control" data-inputmask-alias="datetime"
                                            data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
                                 </div>
                             </div>
@@ -96,9 +113,13 @@
                                        placeholder="{% trans 'Masalan: GAZ (oq)' %}" name="color">
                             </div>
 
+                            <div class="form-group" id="chassis_number_div">
+                                <label for="chassis_number">{% trans 'Shassi raqami' %}</label>
+                                <input type="text" class="form-control" id="chassis_number"
+                                       placeholder="{% trans 'Shassi raqamini kiriting' %}" name="chassis_number">
+                            </div>
 
-
-
+                            <input type="hidden" name="user" value="{{ request.user.id }}">
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
@@ -117,11 +138,14 @@
     </div>
 {% endblock content %}
 {% block bottom %}
+
     <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
     <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
     <script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
     <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src=""></script>
     <script>
         $(function () {
             //Initialize Select2 Elements
@@ -135,12 +159,42 @@
             $('#datemask2').inputmask('mm/dd/yyyy', {'placeholder': 'mm/dd/yyyy'})
             //Money Euro
             $('[data-mask]').inputmask()
+            $("#chassis_number_div").hide()
+            $("#organization_div").hide()
 
-            $('#timepicker').datetimepicker({
-                format: 'LT'
-            })
 
         })
+        $(document).ready(function () {
+
+            $("select#car").change(function () {
+                var selectedCar = $(this).children("option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'account_statement:get_car_type' %}",
+                    data: {
+                        'car': selectedCar, // from form
+                    },
+                    success: function (message) {
+                        if (message === "1") {
+                            $("#chassis_number_div").fadeIn()
+                        }else{
+                            $("#chassis_number_div").fadeOut()
+                        }
+                    }
+
+                });
+            });
+
+
+            $("select#person").change(function () {
+                var selectedPersonType = $(this).children("option:selected").val();
+                if (selectedPersonType === 'E') {
+                     $("#organization_div").fadeIn()
+                }else {
+                    $("#organization_div").fadeOut()
+                }
+            });
+        });
     </script>
 
 {% endblock bottom %}

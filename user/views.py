@@ -27,7 +27,6 @@ def sign(request):
 
     if request.POST:
         form = SignUpForm(request.POST or None)
-        print(form.errors)
         if form.is_valid():
             phone = form.cleaned_data['phone']
             passport = get_passport(form.cleaned_data['passport'])
