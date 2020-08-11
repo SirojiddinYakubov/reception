@@ -228,10 +228,10 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                if request.POST['checkbox']:
-                    response = HttpResponse('cookie example')
-                    response.set_cookie('username', username)
-                    response.set_cookie('password', password)
+                # if request.POST['checkbox']:
+                #     response = HttpResponse('cookie example')
+                #     response.set_cookie('username', username)
+                #     response.set_cookie('password', password)
                 login(request, user)
                 return redirect(reverse_lazy('user:panel'))
             else:
