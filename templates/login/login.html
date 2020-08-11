@@ -32,7 +32,16 @@
     <div class="d-flex justify-content-center h-100">
         <div class="card">
             <div class="card-header">
-                <h3>Tizimga kirish</h3>
+                <h3 class="not_copy">Tizimga kirish</h3>
+                <div class="d-flex justify-content-end social_icon">
+
+                    <a title="Yordam kerakmi?" href="https://t.me/Sirojiddin_Yakubov"><span><i
+                            style="color: #0088cc; background-color: whitesmoke; border-radius: 140%"
+                            class="fab fa-telegram"></i></span></a>
+                    <a title="Yordam kerakmi?" href="#"><span><i
+                            style="color: #242424; background-color: whitesmoke; border-radius: 120%"
+                            class="far fa-question-circle"></i></span></a>
+                </div>
             </div>
 
             {% include 'includes/messages.html' %}
@@ -60,7 +69,9 @@
                     </div>
 
                     <div class="row align-items-center remember">
-                        <input name="checkbox" type="checkbox">Eslab qol
+                        <input name="checkbox" style="cursor: pointer" type="checkbox"><span class="not_copy"
+                                                                                             style="cursor: pointer"
+                                                                                             id="label_remember">Eslab qol</span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Kirish" class="btn fourth">
@@ -68,13 +79,13 @@
                 </form>
             </div>
             <div class="card-footer">
-                <div class="d-flex justify-content-center links">
+                <div class="d-flex justify-content-center links not_copy">
                     Siz ro'yhatdan o'tganmisiz?
 
                     <a style="display: block" href="{% url 'user:sign' %}">Ro'yhatdan o'tish</a>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <a href="#">Parolni unutdingizmi?</a>
+                    <a href="#" id="forget_pass">Parolni unutdingizmi?</a>
                 </div>
             </div>
         </div>
@@ -84,14 +95,127 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
     $(document).ready(function () {
         var passport = $('#passport'),
-            password = $('#password')
+            password = $('#password'),
+            forget_pass = $('#forget_pass')
 
+        forget_pass.on('click', function () {
+            sweetAlertFunc()
+
+            function sweetAlertFunc() {
+                swal({
+                    title: "Parolni unutdingizmi ?",
+                    {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
+                    {#icon: "warning",#}
+                    className: "",
+                    buttons: [
+                        'Yoq',
+                        'Ha, Parolni tiklash'
+                    ],
+                    dangerMode: false,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        swal({
+                            text: 'Telefon raqamingizni kiriting...',
+                            buttons: [
+                                'Orqaga qaytish',
+                                'Yuborish'
+                            ],
+                            content: {
+                                element: "input",
+                                attributes: {
+                                    placeholder: "Masalan: 919791999",
+                                    type: "text",
+                                },
+                            },
+                        }).then(function (inputValue) {
+                            if (inputValue.length === 9) {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '{% url "user:forgot_pass" %}',
+                                    data: {
+                                        'phone': inputValue,
+                                    },
+                                    success: function (messege) {
+                                        if (messege == 'True') {
+                                            swal({
+                                                icon: "success",
+                                                text: "Passport va parol raqamingizga sms tarzida jo'natildi!"
+                                            });
+                                        } else {
+                                            swal({
+                                                text: 'Bunday raqam bazada mavjud emas!',
+                                                icon: 'error',
+                                                buttons: [
+                                                    'Orqaga qaytish',
+                                                    "Ro'yhatdan o'tish"
+                                                ],
+                                            }).then(function (isRegister) {
+                                                if (isRegister) {
+                                                    window.location.href = '{% url 'user:sign' %}'
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                })
+                            } else {
+                                swal({
+                                    text: 'Raqamni kiritishda xatolik!',
+                                    icon: 'error',
+                                    buttons: [
+                                        'Orqaga qaytish',
+                                        "Qayta urinib ko'rish"
+                                    ],
+                                }).then(function (isAgain) {
+                                    if (isAgain) {
+                                        sweetAlertFunc()
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
+
+                //  swal("Write something here:", {
+                //     content: "input",
+                //  })
+                //      .then((value) => {
+                //          swal(`You typed: ${value}`);
+                //     });
+
+            }
+        })
+
+
+        $('#label_remember').on('click', function () {
+            console.log($(".remember input[name='checkbox']:checked").val())
+            if ($(".remember input[name='checkbox']:checked").val()) {
+
+                $(".remember input[name='checkbox']").prop('checked', false);
+            } else {
+
+                $(".remember input[name='checkbox']").prop('checked', true);
+            }
+
+        })
 
         passport.keypress(PassportInputFilter)
+
+        $('.divWithIcon i').on('click', function () {
+            if ($(this).hasClass('far fa-eye icon-pwd')) {
+                $(this).removeClass().addClass('far fa-eye-slash icon-pwd')
+                $('#password').attr('type', 'text')
+            } else {
+                $(this).removeClass().addClass('far fa-eye icon-pwd')
+                $('#password').attr('type', 'password')
+            }
+        })
 
         password.keypress(function (e) {
             var ew = e.which

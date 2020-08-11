@@ -40,7 +40,7 @@ def makepassport(passport):
         passport = str(self)
         passport = passport.replace('А', 'A').replace('В', 'B').replace('С', 'C').replace('Т', 'T').replace('О',
                                                                                                           'O').replace(
-            'М', 'M').replace('Р', 'P').replace('Ф', 'F').replace('Й', 'Y').replace('У', 'U').replace('К', 'K').replace('Е', 'E').replace('Ц', 'TS').replace('Н', 'N').replace('Г', 'G').replace('Ш', 'SH').replace('З', 'Z').replace('Х', 'X').replace('П', 'P').replace('Л', 'L').replace('Ж', 'J').replace('Э', 'Е').replace('Я', 'YA').replace('Ч', 'CH').replace('И', 'I').replace('Б', 'B').replace('Ю', 'YU').replace(' ','').replace('*','').replace('!', '').replace('~', '').replace('@', '').replace('#', '').replace('№', '').replace('$', '').replace(
+            'М', 'M').replace('Р', 'R').replace('Ф', 'F').replace('Й', 'Y').replace('У', 'U').replace('К', 'K').replace('Е', 'E').replace('Ц', 'TS').replace('Н', 'N').replace('Г', 'G').replace('Ш', 'SH').replace('З', 'Z').replace('Х', 'X').replace('П', 'P').replace('Л', 'L').replace('Ж', 'J').replace('Э', 'Е').replace('Я', 'YA').replace('Ч', 'CH').replace('И', 'I').replace('Б', 'B').replace('Ю', 'YU').replace(' ','').replace('*','').replace('!', '').replace('~', '').replace('@', '').replace('#', '').replace('№', '').replace('$', '').replace(
                 '%', '').replace('^', '').replace(':', '').replace('&', '').replace('?', '').replace('(', '').replace(
                 ')', '').replace('-', '').replace('+', '').replace('=', '').replace('/', '').replace('<', '').replace(
                 '>', '').replace('|', '').replace('€', '').replace('`',"'").replace(';',"'").replace('"',"'").replace('   ','')

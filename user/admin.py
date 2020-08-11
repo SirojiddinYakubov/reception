@@ -10,7 +10,7 @@ class UserAdmin(admin.ModelAdmin):
                     'last_login']
     list_display_links = [ 'role', 'last_name', 'first_name','middle_name',]
     list_filter = ['role','is_active', ]
-    search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport','turbo',]
+    search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport_seriya', 'passport_number','turbo',]
     save_on_top = True
 
 class DistrictInline(admin.StackedInline):
@@ -50,4 +50,10 @@ class NationalityAdmin(admin.ModelAdmin):
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['id', 'title']
     list_display_links = ['title']
+    save_on_top = True
+
+@admin.register(UserPassword)
+class UserPasswordAdmin(admin.ModelAdmin):
+    list_display = ['id', 'phone', 'password']
+    list_display_links = ['phone',]
     save_on_top = True
