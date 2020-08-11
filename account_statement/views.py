@@ -76,12 +76,15 @@ def export_to_word(request, id):
     doc = DocxTemplate("static/online/account_statement_example.docx")
     user = User.objects.get(username=request.user.username)
     data = get_object_or_404(AccountStatement, id=id)
+    now_date = datetime.date.today()
     context = {
         'user': user,
-        'data': data
+        'data': data,
+        'now_date': now_date
     }
     doc.render(context)
-    doc.save(f"media/document/account_statement/{id}.docx")
+    doc.save(f"media/document/account_statement/{data.id}.docx")
+    return HttpResponse()
 
 
 @login_required
