@@ -95,7 +95,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True, blank=True)
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    passport = models.CharField(max_length=20, null=True, unique=True)
+    passport_seriya = models.CharField(max_length=10, null=True, )
+    passport_number = models.IntegerField(null=True, )
     document_issue = models.DateField('Passport berilgan sana', blank=True, null=True)
     document_expiry = models.DateField('Passport amal qilish muddati', blank=True, null=True)
     nationality = models.ForeignKey(Nationality, verbose_name='Millati', on_delete=models.SET_NULL, null=True,
@@ -160,3 +161,10 @@ class Organization(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+class UserPassword(models.Model):
+    phone = models.IntegerField(null=True, unique=True)
+    password = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.phone

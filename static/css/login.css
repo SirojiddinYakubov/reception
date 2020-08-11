@@ -3,7 +3,10 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html, body {
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
+    background-image: url("/static/online/OCERG10.jpg");
+    background-size: cover;
+    background-position: center;
     font-family: 'Numans', sans-serif;
 }
 
@@ -13,12 +16,12 @@ html, body {
 }
 
 .card {
-    height: 400px;
+    height: auto;
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
-    background-color: rgb(255, 255, 255) !important;
-    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.3); !important;
+    opacity: 1;
 }
 
 .social_icon span {
@@ -105,15 +108,15 @@ input:focus {
 
 .icon-pwd {
     right: 0;
-    padding: 8px 8px 8px 8px;
+    padding: 11px 10px 8px 8px;
     color: #aaa;
     position: absolute;
+    cursor: pointer;
 
 
 }
 
-.divWithIcon input[type='password']:focus , .icon-pwd{
-    color: #090909;
+.divWithIcon input[type='password']:focus, .icon-pwd{
 
 }
 
@@ -136,6 +139,17 @@ input:focus {
 /*}*/
 
 
+.social_icon a span i {
+    opacity: 0.5;
+    width: 30px !important;
+    margin-top: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.social_icon a span {
+    font-size: 3rem;
 
 
+}
 
