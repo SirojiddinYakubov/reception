@@ -13,11 +13,11 @@ from docxtpl import DocxTemplate
 
 @login_required
 def home(request):
-    return render(request, 'app/home.html')
+    return render(request, 'account_statement/home.html')
 
 
 @login_required
-def new_car(request):
+def insert(request):
     cars = Car.objects.filter().order_by('model')
     organizations = Organization.objects.filter(director=request.user)
     context = {
@@ -51,21 +51,19 @@ def new_car(request):
             if form.car.is_truck == True:
                 form.chassis_number = chassis_number
             form.save()
-            print(form.id)
-            # return HttpResponseRedirect(reverse('account_statement:new_car_add_photo', id=form.id))
-            return redirect(reverse_lazy('account_statement:new_car_add_photo', kwargs={'id': form.id}))
+            return redirect(reverse_lazy('account_statement:add_photo', kwargs={'id': form.id}))
     else:
         form = AccountStatementForm()
-    return render(request, 'app/new_car/add-form.html', context=context)
+    return render(request, 'account_statement/add-form.html', context=context)
 
 
 @login_required
-def new_car_add_photo(request, id):
+def add_photo(request, id):
     data = AccountStatement.objects.get(id=id)
     context = {
         'data': data
     }
-    return render(request, 'app/new_car/add-photo.html', context=context)
+    return render(request, 'account_statement/add-photo.html', context=context)
 
 
 @login_required
@@ -74,14 +72,16 @@ def account_statement(request):
 
 
 @login_required
-def word(request):
-    doc = DocxTemplate("static/test1.docx")
+def export_to_word(request, id):
+    doc = DocxTemplate("static/online/account_statement_example.docx")
     user = User.objects.get(username=request.user.username)
+    data = get_object_or_404(AccountStatement, id=id)
     context = {
-        'user': user
+        'user': user,
+        'data': data
     }
     doc.render(context)
-    doc.save("media/generated_doc.docx")
+    doc.save(f"media/document/account_statement/{id}.docx")
 
 
 @login_required

@@ -4,7 +4,7 @@
 
 html, body {
     /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
-    background-image: url("/static/online/OCERG10.jpg");
+    background-image: url("/static/online/login_background.jpg");
     background-size: cover;
     background-position: center;
     font-family: 'Numans', sans-serif;
@@ -91,7 +91,10 @@ input:focus {
 
 .custom_icon {
     color: #646464;
+}
 
+.custom_icon:active {
+    color: #646464 !important;
 }
 
 .divWithIcon {

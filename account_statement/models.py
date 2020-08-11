@@ -2,19 +2,6 @@ from django.db import models
 from user.models import *
 
 
-class Car(models.Model):
-    model = models.CharField('Nomi', max_length=50)
-    is_local = models.BooleanField('Mahalliy brend', default=False)
-    is_truck = models.BooleanField('Yuk mashinasi', default=False)
-
-    class Meta:
-        verbose_name = 'Avtomobil'
-        verbose_name_plural = 'Avtomobillar'
-
-    def __str__(self):
-        return self.model
-
-
 PERSON_CHOICES = (
     ('E', 'Yuridik shaxs'),
     ('P', 'Jismoniy shaxs'),
@@ -37,6 +24,7 @@ class AccountStatement(models.Model):
     technical_inspection = models.BooleanField("YXXB RIB tex ko'rik", default=False)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
+    made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True)
 
     class Meta:
         verbose_name = "Hisob ma'lumotnoma"
@@ -48,7 +36,7 @@ class AccountStatement(models.Model):
 
 class AccountStatementDocument(models.Model):
     title = models.CharField("Hujjat nomi", max_length=255)
-    file = models.FileField("Hujjat", 'media/document/')
+    file = models.FileField("Hujjat", 'media/document/account_statement/')
     account_statement = models.ForeignKey(AccountStatement, on_delete=models.SET_NULL, null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 

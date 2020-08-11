@@ -99,6 +99,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     passport_number = models.IntegerField(null=True, )
     document_issue = models.DateField('Passport berilgan sana', blank=True, null=True)
     document_expiry = models.DateField('Passport amal qilish muddati', blank=True, null=True)
+    issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
     nationality = models.ForeignKey(Nationality, verbose_name='Millati', on_delete=models.SET_NULL, null=True,
                                     blank=True)
     is_staff = models.BooleanField(default=False)
@@ -162,9 +163,27 @@ class Organization(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+
+class Car(models.Model):
+    model = models.CharField('Nomi', max_length=50)
+    is_local = models.BooleanField('Mahalliy brend', default=False)
+    is_truck = models.BooleanField('Yuk mashinasi', default=False)
+
+    class Meta:
+        verbose_name = 'Avtomobil'
+        verbose_name_plural = 'Avtomobillar'
+
+    def __str__(self):
+        return self.model
+
+
 class UserPassword(models.Model):
     phone = models.IntegerField(null=True, unique=True)
     password = models.IntegerField(null=True)
 
     def __str__(self):
         return self.phone
+
+    class Meta:
+        verbose_name = 'User parol'
+        verbose_name_plural = 'User parollar'
