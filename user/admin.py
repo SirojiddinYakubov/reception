@@ -57,3 +57,9 @@ class UserPasswordAdmin(admin.ModelAdmin):
     list_display = ['id', 'phone', 'password']
     list_display_links = ['phone',]
     save_on_top = True
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+    list_display = ['id', 'model', 'is_local', 'is_truck']
+    list_display_links = ['model']
+    save_on_top = True

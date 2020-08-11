@@ -36,6 +36,7 @@ def sign(request):
             passport = request.POST['passport']
             document_issue = form.cleaned_data['document_issue']
             document_expiry = form.cleaned_data['document_expiry']
+            issue_by_whom = form.cleaned_data['issue_by_whom']
             last_name = form.cleaned_data['last_name']
             first_name = form.cleaned_data['first_name']
             middle_name = form.cleaned_data['middle_name']
@@ -75,6 +76,7 @@ def sign(request):
                 passport_number=int(integ),
                 document_issue=document_issue,
                 document_expiry=document_expiry,
+                issue_by_whom=issue_by_whom,
                 turbo=password,
                 last_name=last_name,
                 first_name=first_name,
@@ -206,8 +208,6 @@ def check_passport(request):
         users2 = User.objects.filter(passport_seriya=letters)
         for user1 in users1:
             for user2 in users2:
-                print(user1)
-                print(user2)
                 if user1 == user2:
                     return HttpResponse(True)
         else:
@@ -222,8 +222,7 @@ def panel(request):
 
 def user_login(request):
     if request.method == 'POST':
-        passport = request.POST['passport']
-        username = get_passport(passport)
+        username = request.POST['passport']
         password = request.POST['password'].replace(' ', '')
         user = authenticate(username=username, password=password)
         if user is not None:

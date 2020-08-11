@@ -81,6 +81,12 @@
                                            required="required"
                                            name="document_expiry" value=""/>
                                 </div>
+                                <label for="issue_by_whom" class="label_required">Kim tomonidan berilgan</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="issue_by_whom" name="issue_by_whom"
+                                           required="required" autocomplete="off" placeholder="Masalan: BUXORO SHAHAR IIB"
+                                           value=""/>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -186,7 +192,8 @@
             getCode = $('#get_code'),
             signupBtn = $('#signup_btn'),
             passwordConfirmBlock = $('#password_confirm_block'),
-            confirmPassword = $('#confirm_password')
+            confirmPassword = $('#confirm_password'),
+            IssueByWhom = $('#issue_by_whom')
 
 
         //enter press returned false start
@@ -209,70 +216,74 @@
                             if (Passport.val().length > 7) {
                                 if (!isNaN(new Date(DocumentIssue.val()).getDate())) {
                                     if (!isNaN(new Date(DocumentExpiry.val()).getDate())) {
-                                        if (parseInt(SelectedRegion)) {
-                                            if (parseInt(SelectedDistrict)) {
-                                                if (parseInt(SelectedMfy)) {
-                                                    if (address.val().length > 0) {
-                                                        if (phone.val().length === 9) {
-                                                            if (confirmPassword.val().length === 7) {
-                                                                $.ajax({
-                                                                    type: 'GET',
-                                                                    url: "{% url 'user:get_user_pass' %}",
-                                                                    data: {
-                                                                        'phone': phone.val(),
-                                                                        'password': confirmPassword.val()
-                                                                    },
-                                                                    success: function (messege) {
-                                                                        if (messege == 'True') {
-                                                                            var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
-                                                                                allow_dismiss: false,
-                                                                                showProgressbar: true,
-                                                                                animate: {
-                                                                                    enter: 'animated fadeInRight',
-                                                                                    exit: 'animated fadeOutRight'
-                                                                                },
-                                                                            });
-
-                                                                            setTimeout(function () {
-                                                                                notify.update({
-                                                                                    'type': 'success',
-                                                                                    'message': "Ma'lumotlar saqlanmoqda",
-                                                                                    'progress': 25
+                                        if (IssueByWhom.val().length > 0) {
+                                            if (parseInt(SelectedRegion)) {
+                                                if (parseInt(SelectedDistrict)) {
+                                                    if (parseInt(SelectedMfy)) {
+                                                        if (address.val().length > 0) {
+                                                            if (phone.val().length === 9) {
+                                                                if (confirmPassword.val().length === 7) {
+                                                                    $.ajax({
+                                                                        type: 'GET',
+                                                                        url: "{% url 'user:get_user_pass' %}",
+                                                                        data: {
+                                                                            'phone': phone.val(),
+                                                                            'password': confirmPassword.val()
+                                                                        },
+                                                                        success: function (messege) {
+                                                                            if (messege == 'True') {
+                                                                                var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
+                                                                                    allow_dismiss: false,
+                                                                                    showProgressbar: true,
+                                                                                    animate: {
+                                                                                        enter: 'animated fadeInRight',
+                                                                                        exit: 'animated fadeOutRight'
+                                                                                    },
                                                                                 });
-                                                                            }, 25);
 
-                                                                            setTimeout(function () {
-                                                                                {#$("form").submit();#}
-                                                                            }, 3000)
+                                                                                setTimeout(function () {
+                                                                                    notify.update({
+                                                                                        'type': 'success',
+                                                                                        'message': "Ma'lumotlar saqlanmoqda",
+                                                                                        'progress': 25
+                                                                                    });
+                                                                                }, 25);
 
-                                                                            ///setTimeout(function () {
-                                                                            // notify.update('message', "Ma'lumotlar saqlandi");
-                                                                            // }, 3000);
-                                                                        } else {
-                                                                            confirmPassword.css({
-                                                                                "border-color": "red",
-                                                                                "background": "#fcf7f7"
-                                                                            })
+                                                                                setTimeout(function () {
+                                                                                    $("form").submit();
+                                                                                }, 3000)
+
+                                                                                ///setTimeout(function () {
+                                                                                // notify.update('message', "Ma'lumotlar saqlandi");
+                                                                                // }, 3000);
+                                                                            } else {
+                                                                                confirmPassword.css({
+                                                                                    "border-color": "red",
+                                                                                    "background": "#fcf7f7"
+                                                                                })
+                                                                            }
                                                                         }
-                                                                    }
-                                                                })
+                                                                    })
+                                                                } else {
+                                                                    confirmPassword.css("border-color", "red").css("background", "#fcf7f7");
+                                                                }
                                                             } else {
-                                                                confirmPassword.css("border-color", "red").css("background", "#fcf7f7");
+                                                                phone.css("border-color", "red").css("background", "#fcf7f7");
                                                             }
                                                         } else {
-                                                            phone.css("border-color", "red").css("background", "#fcf7f7");
+                                                            address.css("border-color", "red").css("background", "#fcf7f7");
                                                         }
                                                     } else {
-                                                        address.css("border-color", "red").css("background", "#fcf7f7");
+                                                        mfy.css("border-color", "red").css("background", "#fcf7f7");
                                                     }
                                                 } else {
-                                                    mfy.css("border-color", "red").css("background", "#fcf7f7");
+                                                    district.css("border-color", "red").css("background", "#fcf7f7")
                                                 }
                                             } else {
-                                                district.css("border-color", "red").css("background", "#fcf7f7")
+                                                region.css("border-color", "red").css("background", "#fcf7f7");
                                             }
-                                        } else {
-                                            region.css("border-color", "red").css("background", "#fcf7f7");
+                                        }else {
+                                            IssueByWhom.css("border-color", "red").css("background", "#fcf7f7");
                                         }
                                     } else {
                                         DocumentExpiry.css("border-color", "red").css("background", "#fcf7f7");
@@ -298,7 +309,7 @@
 
         })
 
-        $(document).on('keyup', '#middle_name, #last_name, #first_name, #address', function (e) {
+        $(document).on('keyup', '#middle_name, #last_name, #first_name, #address, #issue_by_whom', function (e) {
             if (e.target.value.length > 0) {
                 $(e.target).css("border-color", "green").css("background", "#e8f0fe");
             } else {
@@ -318,6 +329,8 @@
         })
 
         Passport.keypress(PassportInputFilter)
+
+        IssueByWhom.keypress(CustomInputFilter)
 
         Passport.change(function () {
             $.ajax({

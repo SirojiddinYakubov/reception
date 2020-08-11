@@ -6,9 +6,9 @@ app_name = 'account_statement'
 
 urlpatterns = [
     path('', home, name='home'),
-    path('new-car/', new_car, name='new_car'),
-    path('new-car/add-photo/<int:id>/', new_car_add_photo, name='new_car_add_photo'),
-    path('word/', word, name='word'),
-    path('get-car-type/', get_car_type, name='get_car_type'),
+    path('account-statement/insert/', insert, name='insert'),
+    path('account-statement/add-photo/<int:id>/', add_photo, name='add_photo'),
+    path('account-statement/export_to_word/<int:id>/', export_to_word, name='export_to_word'),
+    path('account-statement/get-car-type/', get_car_type, name='get_car_type'),
 
 ]
