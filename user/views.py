@@ -13,7 +13,7 @@ from user.decorators import *
 from user.forms import *
 
 
-def sign(request):
+def signup(request):
     regions = Region.objects.all()
     districts = District.objects.all()
     mfys = MFY.objects.all()
@@ -100,7 +100,7 @@ def sign(request):
             messages.error(request, "Formani to'ldirishda xatolik !")
     else:
         form = SignUpForm()
-    return render(request, 'sign_up/sign_up.html', context)
+    return render(request, 'account/signup.html', context)
 
 
 def get_district(request):
@@ -235,9 +235,9 @@ def user_login(request):
                 return redirect(reverse_lazy('user:panel'))
             else:
                 messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
-                return render(request, 'login/login.html')
+                return render(request, 'account/login.html')
         else:
             messages.error(request, "Login yoki parol noto'g'ri!")
-            return render(request, 'login/login.html')
+            return render(request, 'account/login.html')
     else:
-        return render(request, 'login/login.html')
+        return render(request, 'account/login.html')
