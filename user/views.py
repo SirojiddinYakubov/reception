@@ -95,7 +95,12 @@ def sign(request):
             user.username = passport
             user.email = ''
             user.save()
-            return redirect(reverse_lazy('user:panel'))
+            user = authenticate(username=user.username, password=user.password)
+            print(user)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+            return redirect(reverse_lazy('account_statement:home'))
         else:
             messages.error(request, "Formani to'ldirishda xatolik !")
     else:
@@ -136,10 +141,10 @@ def get_code(request):
                 user_pass.save()
         except ObjectDoesNotExist:
             UserPassword.objects.create(phone=phone, password=password)
-        # msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
-        # msg = msg.replace(" ", "+")
-        # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
-        # response = requests.get(url)
+        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
+        msg = msg.replace(" ", "+")
+        url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
+        response = requests.get(url)
         print(password)
         return HttpResponse(password)
     else:
@@ -163,10 +168,10 @@ def forgot_pass(request):
         try:
             user_pass = UserPassword.objects.get(phone=phone)
             user = User.objects.get(phone=phone)
-            # msg = f"E-RIB dasturi passport va parolingiz:%0aPassport: {user.passport_seriya}{user.passport_number} %0aParol: {user.turbo}"
-            # msg = msg.replace(" ", "+")
-            # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{phone}&msg={msg}"
-            # response = requests.get(url)
+            msg = f"E-RIB dasturi passport va parolingiz:%0aPassport: {user.passport_seriya}{user.passport_number} %0aParol: {user.turbo}"
+            msg = msg.replace(" ", "+")
+            url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{phone}&msg={msg}"
+            response = requests.get(url)
             return HttpResponse(True)
         except:
             return HttpResponse(False)
@@ -232,7 +237,7 @@ def user_login(request):
                 #     response.set_cookie('username', username)
                 #     response.set_cookie('password', password)
                 login(request, user)
-                return redirect(reverse_lazy('user:panel'))
+                return redirect(reverse_lazy('account_statement:home'))
             else:
                 messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
                 return render(request, 'login/login.html')

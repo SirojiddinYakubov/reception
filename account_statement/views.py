@@ -43,6 +43,7 @@ def insert(request):
             form.engine_number = engine_number
             form.body_number = body_number
 
+
             if form.person_type == 'E':
                 form.organization = get_object_or_404(Organization, id=request.POST['organization'] or None)
 

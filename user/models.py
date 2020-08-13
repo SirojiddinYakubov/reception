@@ -182,7 +182,8 @@ class UserPassword(models.Model):
     password = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.phone
+        return str(self.phone)
+
 
     class Meta:
         verbose_name = 'User parol'
