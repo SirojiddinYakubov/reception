@@ -48,7 +48,7 @@
             {% include 'includes/messages.html' %}
 
             <div class="card-body">
-                <form method="post" action="{% url 'user:user_login' %}">
+                <form method="post" action="{% url 'user:login' %}">
 
                     {% csrf_token %}
                     <div class="input-group form-group">
@@ -84,7 +84,7 @@
                 <div class="d-flex justify-content-center links not_copy">
                     Siz ro'yhatdan o'tganmisiz?
 
-                    <a style="display: block" href="{% url 'user:sign' %}">Ro'yhatdan o'tish</a>
+                    <a style="display: block" href="{% url 'user:signup' %}">Ro'yhatdan o'tish</a>
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="#" id="forget_pass">Parolni unutdingizmi?</a>
@@ -158,7 +158,7 @@
                                                 ],
                                             }).then(function (isRegister) {
                                                 if (isRegister) {
-                                                    window.location.href = '{% url 'user:sign' %}'
+                                                    window.location.href = '{% url 'user:signup' %}'
                                                 }
                                             });
                                         }
