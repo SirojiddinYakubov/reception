@@ -12,8 +12,8 @@ from docxtpl import DocxTemplate
 # Create your views here.
 
 @login_required
-def home(request):
-    return render(request, 'account_statement/home.html')
+def index(request):
+    return render(request, 'account_statement/index.html')
 
 
 @login_required
@@ -65,11 +65,6 @@ def add_photo(request, id):
         'data': data
     }
     return render(request, 'account_statement/add-photo.html', context=context)
-
-
-@login_required
-def account_statement(request):
-    return False
 
 
 @login_required

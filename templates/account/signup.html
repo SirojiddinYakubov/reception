@@ -32,7 +32,7 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">{% trans 'Регистрация в системе' %}</h3>
 
-                    <form action="{% url 'user:sign' %}" method="POST">
+                    <form action="{% url 'user:signup' %}" method="POST">
 
                         {% csrf_token %}
                         <div class="row register-form">

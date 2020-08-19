@@ -3,26 +3,80 @@ import random
 import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import get_template
 from django.urls import reverse_lazy
+from docxtpl import DocxTemplate
+from xhtml2pdf import pisa
 
 from user.decorators import *
 from user.forms import *
+import reportlab
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+
+from user.utils import render_to_pdf
 
 
-def signup(request):
+def index(request):
+    # generate pdf
+
+    # html holatda ekranga chiqarish
+
+    template = get_template('user/index.html')
+    passport = '{} {}'.format(request.user.passport_seriya, request.user.passport_number)
+    context = {
+        'user': request.user,
+        'passport': passport
+    }
+    if request.user.gender == 'M':
+        context.update(gender='Erkak')
+    elif request.user.gender == 'W':
+        context.update(gender='Ayol')
+    html = template.render(context)
+    download = request.GET.get('download')
+    if download:
+        doc = DocxTemplate("static/online/user_information.docx")
+        doc.render(context)
+        doc.save(f"media/document/user/Shaxsiy ma'lumotnoma #{request.user.id}.docx")
+    return HttpResponse(html)
+
+
+# pdf holatda ekranga chiqarish
+# context = {
+#     'date': datetime.date.today()
+# }
+# template_name = 'online/user_information.html'
+# pdf = render_to_pdf(template_name, context)
+# if pdf:
+#     response = HttpResponse(pdf, content_type='application/pdf')
+#     filename = "Shahsiy ma'lumot #%s.pdf" %('123')
+#     #pdfni ekranda ko'rsatish inline
+#     content = "inline; filename=%s" %(filename)
+#
+#     #dowload
+#     download = request.GET.get('download')
+#     if download:
+#         #pdfni yuklab olish attachment
+#         content = "attachment; filename=%s" % (filename)
+#     response['Content-Disposition'] = content
+#     return response
+
+# return HttpResponse(pdf, content_type='application/pdf')
+# return HttpResponse("Ma'lumot topilmadi")
+
+
+def user_signup(request):
     regions = Region.objects.all()
-    districts = District.objects.all()
-    mfys = MFY.objects.all()
     nationalities = Nationality.objects.all()
 
     context = {
         'regions': regions,
-        'districts': districts,
-        'mfys': mfys,
         'nationalities': nationalities,
     }
 
@@ -95,17 +149,44 @@ def signup(request):
             user.username = passport
             user.email = ''
             user.save()
-            user = authenticate(username=user.username, password=user.password)
-            print(user)
+            user = authenticate(username=passport, password=password)
             if user is not None:
                 if user.is_active:
                     login(request, user)
-            return redirect(reverse_lazy('account_statement:home'))
+            return redirect(reverse_lazy('user:index'))
         else:
             messages.error(request, "Formani to'ldirishda xatolik !")
     else:
         form = SignUpForm()
     return render(request, 'account/signup.html', context)
+
+
+@login_required
+def user_logout(request):
+    return render(request, 'account/logout.html')
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['passport']
+        password = request.POST['password'].replace(' ', '')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                # if request.POST['checkbox']:
+                #     response = HttpResponse('cookie example')
+                #     response.set_cookie('username', username)
+                #     response.set_cookie('password', password)
+                login(request, user)
+                return redirect(reverse_lazy('account_statement:index'))
+            else:
+                messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
+                return render(request, 'account/login.html')
+        else:
+            messages.error(request, "Login yoki parol noto'g'ri!")
+            return render(request, 'account/login.html')
+    else:
+        return render(request, 'account/login.html')
 
 
 def get_district(request):
@@ -141,10 +222,10 @@ def get_code(request):
                 user_pass.save()
         except ObjectDoesNotExist:
             UserPassword.objects.create(phone=phone, password=password)
-        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
-        msg = msg.replace(" ", "+")
-        url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
-        response = requests.get(url)
+        # msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
+        # msg = msg.replace(" ", "+")
+        # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
+        # response = requests.get(url)
         print(password)
         return HttpResponse(password)
     else:
@@ -175,6 +256,7 @@ def forgot_pass(request):
             return HttpResponse(True)
         except:
             return HttpResponse(False)
+
 
 def get_phone(request):
     if request.is_ajax():
@@ -219,30 +301,3 @@ def check_passport(request):
             return HttpResponse(False)
     else:
         return False
-
-
-def panel(request):
-    return render(request, 'base.html')
-
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST['passport']
-        password = request.POST['password'].replace(' ', '')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                # if request.POST['checkbox']:
-                #     response = HttpResponse('cookie example')
-                #     response.set_cookie('username', username)
-                #     response.set_cookie('password', password)
-                login(request, user)
-                return redirect(reverse_lazy('account_statement:home'))
-            else:
-                messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
-                return render(request, 'account/login.html')
-        else:
-            messages.error(request, "Login yoki parol noto'g'ri!")
-            return render(request, 'account/login.html')
-    else:
-        return render(request, 'account/login.html')
