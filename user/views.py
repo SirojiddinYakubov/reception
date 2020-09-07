@@ -168,6 +168,7 @@ def user_logout(request):
 
 def user_login(request):
     if request.method == 'POST':
+
         username = request.POST['passport']
         password = request.POST['password'].replace(' ', '')
         user = authenticate(username=username, password=password)
