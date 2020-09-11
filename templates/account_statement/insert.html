@@ -56,7 +56,7 @@
                             </div>
                         {% else %}
                         <div class="alert alert-danger" id="organization_div_alert">
-                        <h5>Sizda hozirda tashkilot qo'shilmagan. Iltimos avval <a href="#">Tashkilotni qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling</h5>
+                        <h5>Sizda hozirda tashkilot qo'shilmagan. Iltimos avval <a href="{% url 'user:add_organization' %}">Tashkilotni qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling</h5>
                         </div>
                         {% endif %}
 

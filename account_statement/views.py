@@ -55,7 +55,7 @@ def insert(request):
             return redirect(reverse_lazy('account_statement:add_photo', kwargs={'id': form.id}))
     else:
         form = AccountStatementForm()
-    return render(request, 'account_statement/add-form.html', context=context)
+    return render(request, 'account_statement/insert.html', context=context)
 
 
 @login_required
@@ -65,6 +65,8 @@ def add_photo(request, id):
         'data': data
     }
     return render(request, 'account_statement/add-photo.html', context=context)
+
+
 
 
 @login_required

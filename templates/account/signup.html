@@ -84,11 +84,19 @@
                                 <label for="issue_by_whom" class="label_required">Kim tomonidan berilgan</label>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="issue_by_whom" name="issue_by_whom"
-                                           required="required" autocomplete="off" placeholder="Masalan: BUXORO SHAHAR IIB"
+                                           required="required" autocomplete="off"
+                                           placeholder="Masalan: BUXORO SHAHAR IIB"
                                            value=""/>
                                 </div>
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="label_required" for="person_id">JShShIR</label>
+                                    <input type="number" class="form-control" id="person_id" name="person_id"
+                                           required="required" autocomplete="off"
+                                           placeholder="JShShIRni kiriting..." min="00000000000001" max="99999999999999"
+                                           value=""/>
+                                </div>
                                 <div class="form-group">
                                     <label class="label_required" for="gender">Jins</label>
                                     <select name="gender" class="form-control" id="gender" required="required">
@@ -193,7 +201,8 @@
             signupBtn = $('#signup_btn'),
             passwordConfirmBlock = $('#password_confirm_block'),
             confirmPassword = $('#confirm_password'),
-            IssueByWhom = $('#issue_by_whom')
+            IssueByWhom = $('#issue_by_whom'),
+            PersonId = $('#person_id')
 
         //enter press returned false start
         document.addEventListener('keypress', PressEnterFalse);
@@ -216,72 +225,76 @@
                                 if (!isNaN(new Date(DocumentIssue.val()).getDate())) {
                                     if (!isNaN(new Date(DocumentExpiry.val()).getDate())) {
                                         if (IssueByWhom.val().length > 0) {
-                                            if (parseInt(SelectedRegion)) {
-                                                if (parseInt(SelectedDistrict)) {
-                                                    if (parseInt(SelectedMfy)) {
-                                                        if (address.val().length > 0) {
-                                                            if (phone.val().length === 9) {
-                                                                if (confirmPassword.val().length === 7) {
-                                                                    $.ajax({
-                                                                        type: 'GET',
-                                                                        url: "{% url 'user:get_user_pass' %}",
-                                                                        data: {
-                                                                            'phone': phone.val(),
-                                                                            'password': confirmPassword.val()
-                                                                        },
-                                                                        success: function (messege) {
-                                                                            if (messege == 'True') {
-                                                                                var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
-                                                                                    allow_dismiss: false,
-                                                                                    showProgressbar: true,
-                                                                                    animate: {
-                                                                                        enter: 'animated fadeInRight',
-                                                                                        exit: 'animated fadeOutRight'
-                                                                                    },
-                                                                                });
-
-                                                                                setTimeout(function () {
-                                                                                    notify.update({
-                                                                                        'type': 'success',
-                                                                                        'message': "Ma'lumotlar saqlanmoqda",
-                                                                                        'progress': 25
+                                            if (PersonId.val().length === 14) {
+                                                if (parseInt(SelectedRegion)) {
+                                                    if (parseInt(SelectedDistrict)) {
+                                                        if (parseInt(SelectedMfy)) {
+                                                            if (address.val().length > 0) {
+                                                                if (phone.val().length === 9) {
+                                                                    if (confirmPassword.val().length === 7) {
+                                                                        $.ajax({
+                                                                            type: 'GET',
+                                                                            url: "{% url 'user:get_user_pass' %}",
+                                                                            data: {
+                                                                                'phone': phone.val(),
+                                                                                'password': confirmPassword.val()
+                                                                            },
+                                                                            success: function (messege) {
+                                                                                if (messege == 'True') {
+                                                                                    var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
+                                                                                        allow_dismiss: false,
+                                                                                        showProgressbar: true,
+                                                                                        animate: {
+                                                                                            enter: 'animated fadeInRight',
+                                                                                            exit: 'animated fadeOutRight'
+                                                                                        },
                                                                                     });
-                                                                                }, 25);
 
-                                                                                setTimeout(function () {
-                                                                                    $("form").submit();
-                                                                                }, 3000)
+                                                                                    setTimeout(function () {
+                                                                                        notify.update({
+                                                                                            'type': 'success',
+                                                                                            'message': "Ma'lumotlar saqlanmoqda",
+                                                                                            'progress': 25
+                                                                                        });
+                                                                                    }, 25);
 
-                                                                                ///setTimeout(function () {
-                                                                                // notify.update('message', "Ma'lumotlar saqlandi");
-                                                                                // }, 3000);
-                                                                            } else {
-                                                                                confirmPassword.css({
-                                                                                    "border-color": "red",
-                                                                                    "background": "#fcf7f7"
-                                                                                })
+                                                                                    setTimeout(function () {
+                                                                                        $("form").submit();
+                                                                                    }, 3000)
+
+                                                                                    ///setTimeout(function () {
+                                                                                    // notify.update('message', "Ma'lumotlar saqlandi");
+                                                                                    // }, 3000);
+                                                                                } else {
+                                                                                    confirmPassword.css({
+                                                                                        "border-color": "red",
+                                                                                        "background": "#fcf7f7"
+                                                                                    })
+                                                                                }
                                                                             }
-                                                                        }
-                                                                    })
+                                                                        })
+                                                                    } else {
+                                                                        confirmPassword.css("border-color", "red").css("background", "#fcf7f7");
+                                                                    }
                                                                 } else {
-                                                                    confirmPassword.css("border-color", "red").css("background", "#fcf7f7");
+                                                                    phone.css("border-color", "red").css("background", "#fcf7f7");
                                                                 }
                                                             } else {
-                                                                phone.css("border-color", "red").css("background", "#fcf7f7");
+                                                                address.css("border-color", "red").css("background", "#fcf7f7");
                                                             }
                                                         } else {
-                                                            address.css("border-color", "red").css("background", "#fcf7f7");
+                                                            mfy.css("border-color", "red").css("background", "#fcf7f7");
                                                         }
                                                     } else {
-                                                        mfy.css("border-color", "red").css("background", "#fcf7f7");
+                                                        district.css("border-color", "red").css("background", "#fcf7f7")
                                                     }
                                                 } else {
-                                                    district.css("border-color", "red").css("background", "#fcf7f7")
+                                                    region.css("border-color", "red").css("background", "#fcf7f7");
                                                 }
-                                            } else {
-                                                region.css("border-color", "red").css("background", "#fcf7f7");
+                                            }else{
+                                                PersonId.css("border-color", "red").css("background", "#fcf7f7");
                                             }
-                                        }else {
+                                        } else {
                                             IssueByWhom.css("border-color", "red").css("background", "#fcf7f7");
                                         }
                                     } else {
@@ -541,6 +554,17 @@
         })
 
         confirmPassword.on('input', InputMaxLength)
+        PersonId.on('input', InputMaxLength)
+
+        PersonId.keyup(function () {
+            var test = $(this).val();
+            var pattern = /^\d{14}$/;
+            if (test.match(pattern)) {
+                $(this).css("border-color", "green").css("background", "#e8f0fe");
+            } else {
+                $(this).css("border-color", "red").css("background", "#fcf7f7")
+            }
+        })
 
     })
 

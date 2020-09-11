@@ -10,8 +10,10 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
 
-    #other requests
+    # other requests
     path('', index, name='index'),
+    path('add-organization/', add_organization, name='add_organization'),
+    path('edit/', edit, name='edit'),
 
     # ajax requests
     path('get-district/', get_district, name='get_district'),

@@ -205,3 +205,13 @@ input[type='radio']::-moz-focus-inner, .btn::-moz-focus-inner, .custom_btn::-moz
     -o-user-select: none;
     user-select: none;
 }
+
+.button-block {
+    margin-top: 10px;
+    float: right;
+}
+.button-block button {
+    margin-left: 10px;
+    margin-right: 10px;
+
+}

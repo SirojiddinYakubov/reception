@@ -95,8 +95,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True, blank=True)
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    passport_seriya = models.CharField(max_length=10, null=True, )
+    passport_seriya = models.CharField(max_length=10, null=True, validators=[MaxValueValidator(99999999999999), MinValueValidator(10000000000000)])
     passport_number = models.IntegerField(null=True, )
+    person_id = models.IntegerField('JShShIR',blank=True, null=True, )
     document_issue = models.DateField('Passport berilgan sana', blank=True, null=True)
     document_expiry = models.DateField('Passport amal qilish muddati', blank=True, null=True)
     issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)

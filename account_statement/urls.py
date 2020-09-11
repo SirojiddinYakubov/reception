@@ -12,6 +12,7 @@ urlpatterns = [
     path('add-photo/<int:id>/', add_photo, name='add_photo'),
     path('export_to_word/<int:id>/', export_to_word, name='export_to_word'),
 
+
     #ajax requests
     path('get-car-type/', get_car_type, name='get_car_type'),
 

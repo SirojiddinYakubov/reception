@@ -5,13 +5,20 @@ from user.models import *
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
 
-    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone', 'turbo', 'birthday', 'is_active',
+    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo', 'birthday', 'is_active',
                     'is_superuser', 'is_staff', 'date_joined',
                     'last_login']
     list_display_links = [ 'role', 'last_name', 'first_name','middle_name',]
     list_filter = ['role','is_active', ]
     search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport_seriya', 'passport_number','turbo',]
     save_on_top = True
+
+    def fullpassport(self, obj):
+        if obj.passport_seriya:
+            return f'{obj.passport_seriya}{obj.passport_number}'
+        else:
+            return '-'
+
 
 class DistrictInline(admin.StackedInline):
     model = District

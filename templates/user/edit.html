@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block top %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+{% endblock top %}
+{% block content %}
+
+
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Shahsiy ma'lumotlarni tahrirlash" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+
+            <!-- left column -->
+            <div class="col-md-7">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "Ma'lumotlarni tahrirlash" %}</h3>
+                    </div>
+                    {% include 'includes/messages.html' %}
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" method="POST" action="{% url 'user:edit' %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {{ form }}
+                            <div class="form-group">
+                                <label class="label_required" for="phone">Telefon raqam:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+998</div>
+                                    </div>
+                                    <input type="number" class="form-control" id="phone" required="required"
+                                           min="000000001" max="999999999" name="phone" placeholder="Masalan: 919791999"
+                                           value="{{ request.user.phone }}"
+                                           autocomplete="disabled">
+
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" id="save_btn" class="btn btn-info">Saqlash</button>
+                                <button type="button" id="reset" class="btn btn-danger">Tozalash</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+
+
+            </div>
+            <!--/.col (left) -->
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+{% endblock content %}
+{% block bottom %}
+
+    <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+    <script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+
+    <script src=""></script>
+    <script>
+
+        $(document).ready(function () {
+            var FirstName = $('#first_name'),
+                LastName = $('#last_name'),
+                MiddleName = $('#middle_name'),
+                address = $('#address'),
+                region = $('#region'),
+                district = $('#district'),
+                mfy = $('#mfy'),
+                PassportSeriya = $('#passport_seriya'),
+                PassportNumber = $('#passport_number'),
+                DocumentIssue = $('#document_issue'),
+                DocumentExpiry = $('#document_expiry'),
+                birthday = $('#birthday'),
+                phone = $('#phone'),
+                saveBtn = $('#save_btn'),
+                IssueByWhom = $('#issue_by_whom'),
+                PersonId = $('#person_id'),
+                Reset = $('#reset')
+
+            //enter press returned false start
+            document.addEventListener('keypress', PressEnterFalse);
+            //enter press returned false end
+
+            Reset.on('click', function () {
+                $('input').val('').change()
+            })
+
+            $('input').siblings('label').addClass('label_required')
+
+
+            saveBtn.on('click', function (e) {
+                var SelectedRegion = region.children("option:selected").val(),
+                    SelectedDistrict = district.children("option:selected").val(),
+                    SelectedMfy = mfy.children('option:selected').val()
+
+                e.preventDefault()
+                if (LastName.val().length > 0) {
+                    if (FirstName.val().length > 0) {
+                        if (MiddleName.val().length > 0) {
+                            if (!isNaN(new Date(birthday.val()).getDate()))
+                                if (Passport.val().length > 7) {
+                                    if (!isNaN(new Date(DocumentIssue.val()).getDate())) {
+                                        if (!isNaN(new Date(DocumentExpiry.val()).getDate())) {
+                                            if (IssueByWhom.val().length > 0) {
+                                                if (PersonId.val().length === 14) {
+                                                    if (parseInt(SelectedRegion)) {
+                                                        if (parseInt(SelectedDistrict)) {
+                                                            if (parseInt(SelectedMfy)) {
+                                                                if (address.val().length > 0) {
+                                                                    if (phone.val().length === 9) {
+
+                                                                        var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
+                                                                            allow_dismiss: false,
+                                                                            showProgressbar: true,
+                                                                            animate: {
+                                                                                enter: 'animated fadeInRight',
+                                                                                exit: 'animated fadeOutRight'
+                                                                            },
+                                                                        });
+
+                                                                        setTimeout(function () {
+                                                                            notify.update({
+                                                                                'type': 'success',
+                                                                                'message': "Ma'lumotlar saqlanmoqda",
+                                                                                'progress': 25
+                                                                            });
+                                                                        }, 25);
+
+                                                                        setTimeout(function () {
+                                                                            $("form").submit();
+                                                                        }, 3000)
+
+                                                                        ///setTimeout(function () {
+                                                                        // notify.update('message', "Ma'lumotlar saqlandi");
+                                                                        // }, 3000);
+
+                                                                    } else {
+                                                                        phone.css("border-color", "red").css("background", "#fcf7f7");
+                                                                    }
+                                                                } else {
+                                                                    address.css("border-color", "red").css("background", "#fcf7f7");
+                                                                }
+                                                            } else {
+                                                                mfy.css("border-color", "red").css("background", "#fcf7f7");
+                                                            }
+                                                        } else {
+                                                            district.css("border-color", "red").css("background", "#fcf7f7")
+                                                        }
+                                                    } else {
+                                                        region.css("border-color", "red").css("background", "#fcf7f7");
+                                                    }
+                                                } else {
+                                                    PersonId.css("border-color", "red").css("background", "#fcf7f7");
+                                                }
+                                            } else {
+                                                IssueByWhom.css("border-color", "red").css("background", "#fcf7f7");
+                                            }
+                                        } else {
+                                            DocumentExpiry.css("border-color", "red").css("background", "#fcf7f7");
+                                        }
+                                    } else {
+                                        DocumentIssue.css("border-color", "red").css("background", "#fcf7f7");
+                                    }
+                                } else {
+                                    Passport.css("border-color", "red").css("background", "#fcf7f7");
+                                }
+                            else {
+                                birthday.css("border-color", "red").css("background", "#fcf7f7");
+                            }
+                        } else {
+                            MiddleName.css("border-color", "red").css("background", "#fcf7f7");
+                        }
+                    } else {
+                        FirstName.css("border-color", "red").css("background", "#fcf7f7");
+                    }
+                } else {
+                    LastName.css("border-color", "red").css("background", "#fcf7f7");
+                }
+
+            })
+
+            $(document).on('keyup', '#middle_name, #last_name, #first_name, #address, #issue_by_whom', function (e) {
+                if (e.target.value.length > 0) {
+                    $(e.target).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(e.target).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+
+            $(document).on('keypress', '#middle_name, #last_name, #first_name', NameInputFilter)
+
+            Passport.keyup(function () {
+                if (Passport.val().length > 7) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+            Passport.keypress(PassportInputFilter)
+
+            IssueByWhom.keypress(CustomInputFilter)
+
+            Passport.change(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:check_passport' %}",
+                    data: {
+                        'passport': $(this).val(), // from form
+                    },
+                    success: function (message) {
+                        if (message == 'True') {
+                            Passport.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
+                            $.notifyDefaults({
+                                type: 'danger',
+                                allow_dismiss: false,
+                                //placement: {
+                                //    from: "top",
+                                //     align: "right"
+                                // },
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                },
+
+
+                            });
+                            $.notify({
+                                icon: 'glyphicon glyphicon-star',
+                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                    '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+                                    '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+                                    '</svg> Ushbu pasport oldin ro\'yhatdan o\'tkazilgan!'
+                            });
+                        } else {
+                            Passport.css("border", "1px solid green").css("background", "#e8f0fe");
+                        }
+                    }
+                });
+            })
+
+            $(document).on('change', '#document_issue, #document_expiry, #birthday', function (e) {
+                if (new Date(e.target.value)) {
+                    $(e.target).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(e.target).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+            phone.keyup(function () {
+                var test = $(this).val();
+                var pattern = /^\d{9}$/;
+                if (test.match(pattern)) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+            phone.on('input', InputMaxLength)
+
+            phone.keyup(function () {
+                var phoneVal = phone.val()
+                if (phoneVal.length === 9) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{% url 'user:get_phone' %}",
+                        data: {
+                            'phone': phoneVal,
+                        },
+                        success: function (messege) {
+                            if (messege == 'True') {
+                                phone.css({"border-color": "red", "background": "#fcf7f7"});
+                                $.notifyDefaults({
+                                    type: 'danger',
+                                    allow_dismiss: false,
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
+                                });
+                                $.notify({
+                                    icon: 'glyphicon glyphicon-star',
+                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                        '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+                                        '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+                                        '</svg> Ushbu raqam oldin ro\'yhatdan o\'tkazilgan!'
+                                });
+                            }
+                        }
+                    })
+                }
+            })
+
+            region.change(function () {
+                var SelectedRegion = $(this).children("option:selected").val()
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_district' %}",
+                    data: {
+                        'region': SelectedRegion, // from form
+                    },
+                    success: function (message) {
+                        district.empty().append(message)
+                    }
+                });
+
+                if (parseInt(SelectedRegion)) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+            district.change(function () {
+                var SelectedDistrict = $(this).children("option:selected").val()
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_mfy' %}",
+                    data: {
+                        'district': SelectedDistrict, // from form
+                    },
+                    success: function (message) {
+                        mfy.empty().append(message)
+                    }
+                });
+
+                if (parseInt(SelectedDistrict)) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7")
+                }
+            })
+
+            mfy.change(function () {
+                var SelectedMfy = $(this).children('option:selected').val()
+                if (parseInt(SelectedMfy)) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
+
+            $(document).on('mouseenter', '#nationality, #gender', function (e) {
+                $(e.target).css({'border-color': 'green', "background": "#e8f0fe"})
+            })
+
+
+            PersonId.on('input', InputMaxLength)
+
+            PersonId.keyup(function () {
+                var test = $(this).val();
+                var pattern = /^\d{14}$/;
+                if (test.match(pattern)) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7")
+                }
+            })
+
+        })
+
+    </script>
+
+{% endblock bottom %}

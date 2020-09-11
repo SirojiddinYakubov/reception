@@ -101,6 +101,7 @@ def user_signup(request):
             address = form.cleaned_data['address']
             birthday = request.POST['birthday']
             gender = form.cleaned_data['gender']
+            person_id = request.POST.get('person_id', '')
 
             l = len(passport)
             integ = ''
@@ -144,6 +145,7 @@ def user_signup(request):
                 gender=gender,
                 phone=phone,
                 is_superuser=False,
+                person_id=person_id,
             )
             user.set_password(password)
             user.username = passport
@@ -201,6 +203,30 @@ def get_district(request):
         return False
 
 
+@login_required
+def add_organization(request):
+    return render(request, 'user/add_organization.html')
+
+@login_required
+def edit(request):
+    form = EditForm(instance=request.user)
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        if form.is_bound:
+            if form.is_valid():
+                form = form.save(commit=False)
+                form.phone = request.POST.get('phone', '')
+                form.save()
+            else:
+                messages.error(request, "Formani to'ldirishda xatolik!")
+        else:
+            messages.error(request, "Formani to'ldiring!")
+
+    return render(request, 'user/edit.html', context)
+
+
 def get_mfy(request):
     if request.is_ajax():
         mfys = MFY.objects.filter(district=request.GET.get('district'))
@@ -210,6 +236,7 @@ def get_mfy(request):
         return HttpResponse(options)
     else:
         return False
+
 
 
 def get_code(request):

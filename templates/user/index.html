@@ -39,7 +39,7 @@
 
                     <tr>
                         <th scope="row">Tu'g'ilgan yil:</th>
-                        <td>{{ user.birthday|date:'SHORT_DATE_FORMAT' }}</td>
+                        <td>{{ user.birthday|date:"d.m.Y" }}</td>
                     </tr>
 
                     <tr>
@@ -59,16 +59,21 @@
 
                     <tr>
                         <th scope="row">Passport berilgan sana:</th>
-                        <td>{{ user.document_issue|date:'SHORT_DATE_FORMAT' }}</td>
+                        <td>{{ user.document_issue|date:"d.m.Y" }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Passport amal qilish muddati:</th>
-                        <td>{{ user.document_issue|date:'SHORT_DATE_FORMAT' }}</td>
+                        <td>{{ user.document_issue|date:"d.m.Y" }}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Kim tomonidan berilgan:</th>
                         <td>{{ user.issue_by_whom }}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">JShShIR:</th>
+                        <td>{{ user.person_id }}</td>
                     </tr>
 
                     <tr>
@@ -81,8 +86,8 @@
                         <td>{{ user.get_gender_display }}</td>
                     </tr>
                 </table>
-                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>
-                <button style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash</button>
+{#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}
+                <a href="{% url 'user:edit' %}"><button style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash</button></a>
             </div>
         </div>
     </div>
