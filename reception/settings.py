@@ -124,3 +124,5 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+DATE_INPUT_FORMATS = ['%d.%m.%Y']

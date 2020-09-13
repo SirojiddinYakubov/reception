@@ -22,7 +22,7 @@ from reportlab.pdfgen import canvas
 
 from user.utils import render_to_pdf
 
-
+@login_required
 def index(request):
     # generate pdf
 
@@ -32,7 +32,8 @@ def index(request):
     passport = '{} {}'.format(request.user.passport_seriya, request.user.passport_number)
     context = {
         'user': request.user,
-        'passport': passport
+        'passport': passport,
+        'request': request
     }
     if request.user.gender == 'M':
         context.update(gender='Erkak')
@@ -181,7 +182,7 @@ def user_login(request):
                 #     response.set_cookie('username', username)
                 #     response.set_cookie('password', password)
                 login(request, user)
-                return redirect(reverse_lazy('account_statement:index'))
+                return redirect(reverse_lazy('user:index'))
             else:
                 messages.error(request, 'Sizning profilingiz aktiv holatda emas !')
                 return render(request, 'account/login.html')
@@ -329,3 +330,31 @@ def check_passport(request):
             return HttpResponse(False)
     else:
         return False
+
+
+def check_passport_with_number(request):
+    print('good')
+    if request.is_ajax():
+        passport_seriya = request.GET.get('passport_seriya', '')
+
+        passport_number = request.GET.get('passport_number', '')
+        print(f'{request.user.passport_seriya}, {type(request.user.passport_seriya)}')
+        print(f'{request.user.passport_number}, {type(request.user.passport_number)}')
+        print(f'{passport_seriya}, {type(passport_seriya)}')
+        print(f'{passport_number}, {type(passport_number)}')
+        if int(passport_number) == request.user.passport_number and passport_seriya == request.user.passport_seriya:
+            print('ok')
+            return HttpResponse(False)
+        print('end')
+        users1 = User.objects.filter(passport_number=passport_number)
+        users2 = User.objects.filter(passport_seriya=passport_seriya)
+
+        for user1 in users1:
+            for user2 in users2:
+                if user1 == user2:
+                    return HttpResponse(True)
+
+        else:
+            return HttpResponse(False)
+    else:
+        return HttpResponse(False)

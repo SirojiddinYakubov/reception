@@ -11,6 +11,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, MaxLengthValidator
 
+from reception import settings
+
 
 class Region(models.Model):
     title = models.CharField('Nomi', max_length=255)

@@ -24,66 +24,67 @@
                 <table class="table table-striped table-bordered">
                     <tr>
                         <th scope="row">Familiya:</th>
-                        <td>{{ user.last_name }}</td>
+                        <td>{% if user.last_name %}{{ user.last_name }}{% endif %}</td>
+
                     </tr>
 
                     <tr>
                         <th scope="row">Ism:</th>
-                        <td>{{ user.first_name }}</td>
+                        <td>{% if user.first_name %}{{ user.first_name }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Otasining ismi:</th>
-                        <td>{{ user.middle_name }}</td>
+                        <td>{% if user.middle_name %}{{ user.middle_name }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Tu'g'ilgan yil:</th>
-                        <td>{{ user.birthday|date:"d.m.Y" }}</td>
+                        <td>{% if user.birthday %}{{ user.birthday|date:"d.m.Y" }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Yashash manzili:</th>
-                        <td>{{ user.region }}, {{ user.district }}, {{ user.mfy }}, {{ user.address }},</td>
+                        <td>{% if user.region %}{{ user.region }}{% endif %}, {% if user.district %}{{ user.district }}{% endif %}, {% if user.mfy %}{{ user.mfy }}{% endif %}, {% if user.address %}{{ user.address }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Passport seriyasi:</th>
-                        <td>{{ user.passport_seriya }}</td>
+                        <td>{% if user.passport_seriya %}{{ user.passport_seriya }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Passport raqami:</th>
-                        <td>{{ user.passport_number }}</td>
+                        <td>{% if user.passport_number %}{{ user.passport_number }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Passport berilgan sana:</th>
-                        <td>{{ user.document_issue|date:"d.m.Y" }}</td>
+                        <td>{% if user.document_issue %}{{ user.document_issue|date:"d.m.Y" }}{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Passport amal qilish muddati:</th>
-                        <td>{{ user.document_issue|date:"d.m.Y" }}</td>
+                        <td>{% if user.document_issue %}{{ user.document_issue|date:"d.m.Y" }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Kim tomonidan berilgan:</th>
-                        <td>{{ user.issue_by_whom }}</td>
+                        <td>{% if user.issue_by_whom %}{{ user.issue_by_whom }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">JShShIR:</th>
-                        <td>{{ user.person_id }}</td>
+                        <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Millati:</th>
-                        <td>{{ user.nationality }}</td>
+                        <td>{% if user.nationality %}{{ user.nationality }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Jinsi:</th>
-                        <td>{{ user.get_gender_display }}</td>
+                        <td>{% if user.get_gender_display %}{{ user.get_gender_display }}{% endif %}</td>
                     </tr>
                 </table>
 {#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}

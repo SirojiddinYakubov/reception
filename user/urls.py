@@ -23,5 +23,6 @@ urlpatterns = [
     path('forgot-pass/', forgot_pass, name='forgot_pass'),
     path('get-phone/', get_phone, name='get_phone'),
     path('check_passport/', check_passport, name='check_passport'),
+    path('check_passport_with_number/', check_passport_with_number, name='check_passport_with_number'),
 
 ]

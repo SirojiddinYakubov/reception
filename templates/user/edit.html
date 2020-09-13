@@ -80,8 +80,6 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
-
-    <script src=""></script>
     <script>
 
         $(document).ready(function () {
@@ -102,6 +100,7 @@
                 IssueByWhom = $('#issue_by_whom'),
                 PersonId = $('#person_id'),
                 Reset = $('#reset')
+
 
             //enter press returned false start
             document.addEventListener('keypress', PressEnterFalse);
@@ -216,28 +215,47 @@
 
             $(document).on('keypress', '#middle_name, #last_name, #first_name', NameInputFilter)
 
-            Passport.keyup(function () {
-                if (Passport.val().length > 7) {
+            // Passport.keyup(function () {
+            //    if (Passport.val().length > 7) {
+            //        $(this).css("border-color", "green").css("background", "#e8f0fe");
+            //     } else {
+            //          $(this).css("border-color", "red").css("background", "#fcf7f7");
+            //     }
+            //   })
+
+            PassportSeriya.keypress(OnlyBigLetter)
+            PassportSeriya.on('keyup', function () {
+                if ($(this).val().length >= 2) {
                     $(this).css("border-color", "green").css("background", "#e8f0fe");
                 } else {
                     $(this).css("border-color", "red").css("background", "#fcf7f7");
                 }
             })
 
-            Passport.keypress(PassportInputFilter)
+            PassportNumber.on('keyup', function () {
+                if ($(this).val().length > 0) {
+                    $(this).css("border-color", "green").css("background", "#e8f0fe");
+                } else {
+                    $(this).css("border-color", "red").css("background", "#fcf7f7");
+                }
+            })
 
             IssueByWhom.keypress(CustomInputFilter)
 
-            Passport.change(function () {
+            $(document).on('change', '#passport_seriya', '#passport_number', function () {
+                alert('ok')
                 $.ajax({
                     type: "GET",
-                    url: "{% url 'user:check_passport' %}",
+                    url: "{% url 'user:check_passport_with_number' %}",
                     data: {
-                        'passport': $(this).val(), // from form
+                        'passport_seriya': PassportSeriya.val(), // from form
+                        'passport_number': PassportNumber.val(), // from form
                     },
                     success: function (message) {
                         if (message == 'True') {
-                            Passport.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
+
+                            PassportSeriya.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
+                            PassportNumber.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
                             $.notifyDefaults({
                                 type: 'danger',
                                 allow_dismiss: false,
@@ -260,7 +278,8 @@
                                     '</svg> Ushbu pasport oldin ro\'yhatdan o\'tkazilgan!'
                             });
                         } else {
-                            Passport.css("border", "1px solid green").css("background", "#e8f0fe");
+                            PassportSeriya.css("border", "1px solid green").css("background", "#e8f0fe");
+                            PassportNumber.css("border", "1px solid green").css("background", "#e8f0fe");
                         }
                     }
                 });
