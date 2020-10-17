@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,10 +12,13 @@
     <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    {% block top %}{% endblock %}
+    {% block top %}
+
+    {% endblock %}
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -30,7 +32,7 @@
         <!-- Brand Logo -->
         <a href="" class="brand-link logo-link">
             <img src="{% static 'img/login/logo.svg' %}" alt="RIB ONLINE" class="brand-logo"
-                 style="opacity: 1">
+                 style="opacity: 1; width: 2em !important;">
             {#      <span class="brand-text font-weight-light">RIB ONLINE</span>#}
         </a>
         <div class="company-name">
@@ -43,7 +45,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2"
+                    <img src="{% static 'online/man.jpg' %}" class="img-circle elevation-2"
                          alt="User Image">
                 </div>
                 <div class="info">
@@ -61,16 +63,16 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-{#        <div class="content-header">#}
-{#            <div class="container-fluid">#}
-{#                <div class="row mb-2">#}
-{#                    <div class="col-sm-12">#}
-{#                        <h1 class="m-0 text-dark">Dashboard v3</h1>#}
-{#                    </div><!-- /.col -->#}
-{##}
-{#                </div><!-- /.row -->#}
-{#            </div><!-- /.container-fluid -->#}
-{#        </div>#}
+        {#        <div class="content-header">#}
+        {#            <div class="container-fluid">#}
+        {#                <div class="row mb-2">#}
+        {#                    <div class="col-sm-12">#}
+        {#                        <h1 class="m-0 text-dark">Dashboard v3</h1>#}
+        {#                    </div><!-- /.col -->#}
+        {##}
+        {#                </div><!-- /.row -->#}
+        {#            </div><!-- /.container-fluid -->#}
+        {#        </div>#}
         <!-- /.content-header -->
 
         <!-- Main content -->

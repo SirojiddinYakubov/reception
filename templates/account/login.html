@@ -1,5 +1,4 @@
 {% load static %}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -45,48 +44,69 @@
                 </div>
             </div>
 
-            {% include 'includes/messages.html' %}
+            {% include 'includes/../_parts/messages.html' %}
 
             <div class="card-body">
-                <form method="post" action="{% url 'user:login' %}">
-
+                <form method="post" action="{% url 'user:login_first' %}" id="form">
                     {% csrf_token %}
                     <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user custom_icon"></i></span>
+                        <label class="not_copy" style="width: 100%" for="phone">Telefon raqam:</label>
+                        <input id="phoneCode" type="number" class="form-control"
+                               placeholder="+998" disabled>
+
+                        <input style="width: 63%" type="number" class="form-control" id="phone" name="phone"
+                               autocomplete="off"
+                               placeholder="Masalan: 919791999" aria-describedby="passwordHelpBlock" required/>
+                        <input type="text" class="form-control not_copy" id="showPhone" style="display: none" disabled/>
+
+                        <div style="display: none" class="valid-feedback">Muvaffaqiyatli to'ldirildi</div>
+                        <div style="display: none" class='invalid-feedback'>Raqam 9 xonali sondan iborat bo'lishi
+                            kerak
                         </div>
-                        <input type="text" class="form-control" id="passport" name="passport" autocomplete="off"
-                               placeholder="Passport" required>
 
-                    </div>
-                    <div class="input-group form-group divWithIcon">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-lock custom_icon"></i></span>
+                        <div class="input-group form-group mt-2">
+                            <label id="passwordLabel" class="not_copy" style="width: 100%; display: none;"
+                                   for="password">Parol:</label>
+                            <input type="password" id="password" placeholder="Parol" style="display: none;"
+                                   name="password" autocomplete="off"
+                                   class="form-control" required>
                         </div>
 
-                        <input type="password" id="password" placeholder="Parol" name="password" autocomplete="off"
-                               class="form-control" required>
-                        <i class="far fa-eye icon-pwd"></i>
+
+                        {#                        <small id="passwordHelpBlock" class="form-text text-muted">#}
+                        {#                            9 xonali sondan iborat bo'lishi kerak#}
+                        {#                        </small>#}
 
                     </div>
+                    {#                    <div class="input-group form-group divWithIcon">#}
+                    {#                        <div class="input-group-prepend">#}
+                    {#                            <span class="input-group-text"><i class="fas fa-lock custom_icon"></i></span>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                        <input type="password" id="password" placeholder="Parol" name="password" autocomplete="off"#}
+                    {#                               class="form-control" required>#}
+                    {#                        <i class="far fa-eye icon-pwd"></i>#}
+                    {##}
+                    {#                    </div>#}
 
-                    <div class="row align-items-center remember">
-                        <input name="checkbox" style="cursor: pointer" type="checkbox"><span class="not_copy"
-                                                                                             style="cursor: pointer"
-                                                                                             id="label_remember">Eslab qol</span>
-                    </div>
+                    {#                    <div class="row align-items-center remember">#}
+                    {#                        <input name="checkbox" style="cursor: pointer" type="checkbox"><span class="not_copy"#}
+                    {#                                                                                             style="cursor: pointer"#}
+                    {#                                                                                             id="label_remember">Eslab qol</span>#}
+                    {#                    </div>#}
                     <div class="form-group">
-                        <input type="submit" value="Kirish" class="btn fourth">
+                        <input type="submit" id="SubmitBtn1" value="Kirish" class="btn fourth">
+                        <input style="display: none" type="submit" id="SubmitBtn2" value="Kirish" class="btn fourth">
                     </div>
                 </form>
             </div>
-            <div class="card-footer">
+            <div class="card-footer" style="display: none" id="footerBlock">
                 <div class="d-flex justify-content-center links not_copy">
-                    Siz ro'yhatdan o'tganmisiz?
+                    Raqamni o'zgartirmoqchimisiz?
 
-                    <a style="display: block" href="{% url 'user:signup' %}">Ro'yhatdan o'tish</a>
+                    <a style="display: block" href="{% url 'user:login_first' %}">Raqamni o'zgartirish</a>
                 </div>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center not_copy">
                     <a href="#" id="forget_pass">Parolni unutdingizmi?</a>
                 </div>
             </div>
@@ -101,6 +121,109 @@
 <script>
 
     $(document).ready(function () {
+        var InputPhone = $('#phone'),
+            SubmitBtn1 = $('#SubmitBtn1'),
+            SubmitBtn2 = $('#SubmitBtn2'),
+            redirect = '{{ redirect }}'
+
+
+        // Eterni false qiladi
+        function PressEnterFalse(e) {
+            if (e.keyCode === 13 || e.which === 13) {
+                e.preventDefault();
+                return false;
+            }
+        }
+
+
+        // get csrftoken from cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var phone = getCookie('phone')
+
+        if (redirect) {
+            SubmitBtn1.hide()
+            SubmitBtn2.show()
+            $('#footerBlock').show()
+            $('#password').show()
+            $('.valid-feedback').css('display', 'none')
+            $('#phoneCode').css('display', 'none')
+            InputPhone.css('display', 'none')
+            $('#showPhone').css('display', 'block')
+            $('#passwordLabel').css('display', 'block')
+            $('#showPhone').attr('value', `+998${phone}`)
+        }
+
+        InputPhone.on('keyup', function () {
+
+            if ($(this).val().length === 9) {
+                InputPhone.css("border-color", "green").css("background", "#e8f0fe");
+                $('.invalid-feedback').css('display', 'none')
+                $('.valid-feedback').css('display', 'block')
+            } else {
+                InputPhone.css("border-color", "red").css("background", "#fcf7f7");
+                $('.invalid-feedback').css('display', 'block')
+                $('.valid-feedback').css('display', 'none')
+            }
+        })
+
+        SubmitBtn1.on('click', function (e) {
+
+            e.preventDefault()
+            if (InputPhone.val().length === 9) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "user:is_register" %}',
+                    data: {
+                        'phone': InputPhone.val(),
+                    },
+                    success: function (messege) {
+                        if (messege == 'True') {
+                            SubmitBtn1.hide()
+                            SubmitBtn2.show()
+                            $('#footerBlock').show()
+                            $('#password').show()
+                            $('.valid-feedback').css('display', 'none')
+                            $('#phoneCode').css('display', 'none')
+                            InputPhone.css('display', 'none')
+                            $('#showPhone').css('display', 'block')
+                            $('#passwordLabel').css('display', 'block')
+                            $('#showPhone').attr('value', `+998${InputPhone.val()}`)
+
+                        } else {
+                            window.location.href = '{% url 'user:signup' %}'
+                        }
+                    }
+                })
+            } else {
+                InputPhone.css("border-color", "red").css("background", "#fcf7f7");
+                $('.invalid-feedback').css('display', 'block')
+                $('.valid-feedback').css('display', 'none')
+            }
+        })
+
+
+        SubmitBtn2.on('click', function (e) {
+            // e.preventDefault()
+            $('form').submit()
+
+        })
+
+
+//keraksiz
         var passport = $('#passport'),
             password = $('#password'),
             forget_pass = $('#forget_pass')

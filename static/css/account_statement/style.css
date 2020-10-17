@@ -1,0 +1,165 @@
+input,
+textarea {
+    padding: 0px 8px 4px 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    margin-bottom: 25px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 16px;
+    letter-spacing: 1px
+}
+
+input:focus,
+textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: none;
+    font-weight: bold;
+    border-bottom: 2px solid skyblue;
+    outline-width: 0
+}
+
+#accountStatementPhotoPreview {
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    border: 5px dashed #4c73d4;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #4c4c4c;
+
+}
+
+#accountStatementPhotoPreview > label {
+    margin: 0;
+    padding: 30px;
+    color: red;
+    cursor: pointer;
+}
+
+#accountStatementRemove {
+    display: block;
+
+
+    color: #4e4e4e;
+    text-align: center;
+    cursor: pointer;
+}
+
+#accountStatementRemove:hover {
+    display: block;
+    color: #000000;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.panel-title a {
+    display: block;
+    position: relative;
+    padding: 10px 60px 10px 15px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #6d7194;
+}
+
+.drop-accordion .panel-default {
+    overflow: hidden;
+	border: 0;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+
+}
+.drop-accordion .panel-heading {
+	overflow: hidden;
+	margin-bottom: 5px;
+	padding: 0;
+	border: 1px solid #d9d7d7;
+	background: #fafafa;
+	border-radius: 0;
+
+
+}
+.leaf-ui .drop-accordion .panel-heading,
+.circlus-ui .drop-accordion .panel-heading {
+	border-radius: 4px;
+}
+.panel-title a {
+	display: block;
+	position: relative;
+	padding: 10px 60px 10px 15px;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 1.6;
+	color: #6d7194;
+}
+.panel-title span {
+
+}
+.panel-title .expand-icon-wrap {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-left: 1px solid #d9d7d7;
+	font-size: 24px;
+	line-height: 46px;
+	color: #03C6FE;
+}
+.expand-icon-wrap:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+.panel-title .expand-icon {
+	padding: 0 18px;
+	vertical-align: middle;
+}
+.panel-title .expand-icon:before {
+	content: "\f055";
+}
+.drop-accordion .panel-body {
+	position: relative;
+	border: 1px solid #d9d7d7;
+}
+.circlus-ui .drop-accordion .panel-body,
+.leaf-ui .drop-accordion .panel-body {
+	border-radius: 4px;
+}
+.panel-body-icon {
+	width: 75px;
+	float: left;
+	padding: 10px;
+}
+.panel-body-icon i {
+	font-size: 45px;
+	color: #03C6FE;
+}
+.drop-accordion .tab-collapsed {
+	border: transparent;
+	background: #03C6FE;
+	-webkit-transition: .5s;
+	-o-transition: .5s;
+	transition: .5s;
+}
+.tab-collapsed a {
+	color: #fff;
+}
+.tab-collapsed .expand-icon-wrap {
+	border-color: #fff;
+	color: #fff;
+}
+.tab-collapsed .expand-icon:before {
+	content: "\f056";
+}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block top %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+{% endblock top %}
+{% block content %}
+
+
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Arizalar" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+
+            <!-- left column -->
+            <div class="col-12">
+                <table style="font-size: 0.8em" class="table table-bordered table-responsive">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Xizmat nomi</th>
+                        <th scope="col" style="width: 4%">Topshirdi</th>
+                        <th scope="col">Yaratilgan vaqti</th>
+                        <th scope="col">Tahrirlangan vaqti</th>
+                        <th scope="col">Ariza nusxasi</th>
+                        <th scope="col">Holati</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><a href="{% url 'application:detail' %}">Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam
+                            olish</a></td>
+                        <td>Sirojiddin Yoqubov</td>
+                        <td>02.05.2020</td>
+                        <td>04.05.2020</td>
+                        <td><a href="#">Yuklab olish</a></td>
+                        <td class="text-danger">Rad etilgan</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--/.col (left) -->
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+{% endblock content %}
+{% block bottom %}
+
+{% endblock bottom %}
