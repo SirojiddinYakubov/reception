@@ -6,13 +6,16 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
 from docxtpl import DocxTemplate
 
 from account_statement.models import AccountStatement
 from application.models import Application
 from user.models import User, Organization, Car
+from user.utils import render_to_pdf
+
 
 @login_required
 def index(request):
@@ -22,6 +25,26 @@ def index(request):
 @login_required
 def detail(request):
     return render(request, 'application/detail.html')
+
+
+@login_required
+def application_pdf(request, id):
+    application = get_object_or_404(Application, id=id)
+    context = {
+        'now_date': datetime.date.today(),
+        'created_date': application.created_date.date(),
+        'updated_date': application.updated_date.date(),
+        'app': application
+    }
+    template_name = 'application/application_detail_pdf.html'
+    pdf = render_to_pdf(template_name, context)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Ariza #%s.pdf" % (application.id)
+        content = "attachment; filename=%s" % (filename)
+        response['Content-Disposition'] = content
+        return response
+
 
 @login_required
 def save_application_information(request):
@@ -68,8 +91,6 @@ def save_application_information(request):
 
         application.account_statement = account_statement
 
-
-
         # application photo
         now_date = datetime.date.today()
         context = {
@@ -112,13 +133,13 @@ def save_application_information(request):
     else:
         return HttpResponse(False)
 
+
 @login_required
 def get_information(request):
     if request.is_ajax():
         user = get_object_or_404(User, id=request.GET.get('user'))
         application = get_object_or_404(Application, id=request.GET.get('application'))
         account_statement = get_object_or_404(AccountStatement, id=application.account_statement.id)
-
 
         context = {
             'user': f"{user.last_name} {user.first_name}",

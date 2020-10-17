@@ -49,6 +49,7 @@ def insert(request):
                 form.chassis_number = chassis_number
             form.save()
             return redirect(reverse_lazy('account_statement:add_photo', kwargs={'id': form.id}))
+
     else:
         form = AccountStatementForm()
     return render(request, 'account_statement/insert.html', context=context)

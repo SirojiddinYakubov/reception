@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ariza #{{ app.id }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body>
+<header class="clearfix">
+{#    <div id="logo">#}
+{#        <img src="/ap">#}
+{#    </div>#}
+    <div style="text-align: center">
+        <h2 style="font-size: 3em; color: blue"><b>YXXB Buxoro viloyat bo'limi</b></h2>
+    </div>
+    </div>
+</header>
+<main style="font-size: 2em">
+    <div style="text-align: right" class="clearfix">
+        <div id="invoice">
+            <div class="date">Yaratildi: {{ created_date }}</div>
+            <div class="date">Tahrirlandi: {{ updated_date }}</div>
+            <div class="date">Yuklangan: {{ date }}</div>
+        </div>
+    </div>
+    <table class="table table-bordered" style="border: 1px solid dimgray; margin: 30%; padding: 30%">
+        <tbody>
+        <tr>
+            <td><b>Ariza raqami</b></td>
+            <td>{{ app.id }}</td>
+        </tr>
+        <tr>
+            <td><b>Tekshiruv paroli</b></td>
+            <td style="color: red">sdfsdf</td>
+        </tr>
+        <tr>
+            <td><b>Xizmat nomi</b></td>
+            <td>Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam olish</td>
+        </tr>
+        <tr>
+            <td><b>Holati</b></td>
+            <td style="color: #0f6674">Jarayonda</td>
+        </tr>
+        <tr>
+            <td><b>Sababi</b></td>
+            <td style="color: #0f6674">Ariza qayta yuklanishi kutilmoqda</td>
+        </tr>
+        <tr>
+            <td><b>Yaratdi</b></td>
+            <td>sdfsdf</td>
+        </tr>
+        <tr>
+            <td><b>Ariza topshirdi</b></td>
+            <td>sdfsdf</td>
+        </tr>
+        <tr>
+            <td><b>To'lov</b></td>
+            <td style="color: green">To'langan</td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="margin-top: 10px; color: red">Eslatma!</div>
+    <div id="notices">
+        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq to'ldirib elektor holatda qayta yuklashingiz talab qilinadi!</div>
+    </div>
+</main>
+</body>
+</html>
