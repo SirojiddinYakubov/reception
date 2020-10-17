@@ -12,3 +12,6 @@ account_statement/migrations/__pycache__/
 account_statement/__pycache__/
 media/
 account_statement/migrations/
+application/__pycache__/
+application/migrations/__pycache__/
+application/migrations/0001_initial.py

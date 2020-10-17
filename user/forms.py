@@ -7,7 +7,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'middle_name','birthday', 'person_id','phone', 'region', 'district', 'mfy', 'address',
-                  'nationality', 'gender', 'document_issue', 'document_expiry', 'issue_by_whom']
+              'document_issue', 'document_expiry', 'issue_by_whom']
         exclude = ['password', 'email', 'passport_seriya', 'passport_number']
 
 
@@ -18,6 +18,7 @@ class EditForm(forms.ModelForm):
     birthday = forms.DateField(label="Tug'ilgan  kuni",input_formats=settings.DATE_INPUT_FORMATS, widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020', 'id': 'birthday'}))
     passport_seriya = forms.CharField(label='Passport seriyasi:', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: AA','id': 'passport_seriya'}))
     passport_number = forms.IntegerField(label='Passport raqami:', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: 1234567','id': 'passport_number'}))
+    passport_photo = forms.ImageField(label='Passport surati:', widget=forms.FileInput(attrs={'class': 'form-control', 'id': 'passport_photo'}))
     document_issue = forms.DateField(label="Passport berilgan sana:", widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020', 'id': 'document_issue'}))
     document_expiry = forms.DateField(label="Passport amal qilish muddati:", widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020', 'id': 'document_expiry'},format='%d.%m.%Y'))
     person_id = forms.IntegerField(label='JShShIR:', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '14 xonali identifikatsiya raqamingizni kiriting...','max': '99999999999999','min': '00000000000001','id': 'person_id'}))
@@ -26,15 +27,14 @@ class EditForm(forms.ModelForm):
     district = forms.ModelChoiceField(queryset=District.objects.all(),label="Tuman/Shahar:", widget=forms.Select(attrs={'class': 'form-control','id': 'district'}))
     mfy = forms.ModelChoiceField(queryset=MFY.objects.all(),label="Mahalla:", widget=forms.Select(attrs={'class': 'form-control','id': 'mfy'}))
     address = forms.CharField(label="Ko'cha/qishloq:", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Masalan: Yangiyo'l ko'chasi 14-uy", 'id': 'address'}))
-    nationality = forms.ModelChoiceField(queryset=Nationality.objects.all(),label="Millati:", widget=forms.Select(attrs={'class': 'form-control', 'id': 'nationality'}))
-    gender = forms.ChoiceField(label="Jins:", choices=GENDER_CHOICES,
-                                 widget=forms.Select(attrs={'class': 'form-control', 'id': 'gender'}))
+    # gender = forms.ChoiceField(label="Jins:", choices=GENDER_CHOICES,
+    #                              widget=forms.Select(attrs={'class': 'form-control', 'id': 'gender'}))
     issue_by_whom = forms.CharField(label='Kim tomonidan berilgan:',widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Masalan: BUXORO SHAHAR IIB', 'id': 'issue_by_whom'}))
 
     class Meta:
         model = User
-        fields = ['last_name','first_name', 'middle_name','birthday','passport_seriya', 'passport_number','document_issue', 'document_expiry', 'issue_by_whom', 'person_id', 'region', 'district', 'mfy', 'address',
-                  'nationality', 'gender', ]
+        fields = ['last_name','first_name', 'middle_name','birthday','passport_seriya', 'passport_number', 'passport_photo','document_issue', 'document_expiry', 'issue_by_whom', 'person_id', 'region', 'district', 'mfy', 'address',
+                    ]
         exclude = ['phone']
 
         # labels = {
@@ -67,3 +67,8 @@ class EditForm(forms.ModelForm):
     #     if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
     #         raise forms.ValidationError(u'Email "%s" is already in use.' % email)
     #     return email
+
+class EditOrganizationForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        fields = ['title', 'director', 'identification_number', 'legal_address', 'address_of_garage', 'certificate_photo', 'license_photo']

@@ -39,7 +39,7 @@
                     </tr>
 
                     <tr>
-                        <th scope="row">Tu'g'ilgan yil:</th>
+                        <th scope="row">Tug'ilgan yil:</th>
                         <td>{% if user.birthday %}{{ user.birthday|date:"d.m.Y" }}{% endif %}</td>
                     </tr>
 
@@ -59,6 +59,11 @@
                     </tr>
 
                     <tr>
+                        <th scope="row">Passport surati:</th>
+                        <td><a target="_blank" download="on" href="{% if user.passport_photo %}{{ user.passport_photo.url }}{% endif %}">Yuklab olish</a></td>
+                    </tr>
+
+                    <tr>
                         <th scope="row">Passport berilgan sana:</th>
                         <td>{% if user.document_issue %}{{ user.document_issue|date:"d.m.Y" }}{% endif %}</td>
                     </tr>
@@ -75,16 +80,6 @@
                     <tr>
                         <th scope="row">JShShIR:</th>
                         <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Millati:</th>
-                        <td>{% if user.nationality %}{{ user.nationality }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Jinsi:</th>
-                        <td>{% if user.get_gender_display %}{{ user.get_gender_display }}{% endif %}</td>
                     </tr>
                 </table>
 {#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}

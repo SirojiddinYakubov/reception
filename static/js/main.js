@@ -80,7 +80,7 @@ function CustomInputFilter(e) {
     if (33 <= ew && ew <= 64) {
         e.preventDefault()
     } else if (91 <= ew && ew <= 126) {
-         $.notifyDefaults({
+        $.notifyDefaults({
             type: 'danger',
             allow_dismiss: false,
         })
@@ -93,7 +93,7 @@ function CustomInputFilter(e) {
         })
         e.preventDefault()
     } else if (1072 <= ew && ew <= 1105) {
-         $.notifyDefaults({
+        $.notifyDefaults({
             type: 'danger',
             allow_dismiss: false,
         })
@@ -147,55 +147,47 @@ function PressEnterFalse(e) {
 }
 
 
-function isDate(ExpiryDate) {
-    var objDate,  // date object initialized from the ExpiryDate string
-        mSeconds, // ExpiryDate in milliseconds
-        day,      // day
-        month,    // month
-        year;     // year
-    // date length should be 10 characters (no more no less)
-    if (ExpiryDate.length !== 10) {
-        return false;
+function parseDate(value) {
+    var date = value.split("-");
+    var y = parseInt(date[0], 10),
+        m = parseInt(date[1], 10),
+        d = parseInt(date[2], 10);
+    if (y != NaN && m != NaN && d != NaN)  {
+        return y
     }
-    // third and sixth character should be '/'
-    if (ExpiryDate.substring(2, 3) !== '.' || ExpiryDate.substring(5, 6) !== '.') {
-        return false;
-    }
-    // extract month, day and year from the ExpiryDate (expected format is mm/dd/yyyy)
-    // subtraction will cast variables to integer implicitly (needed
-    // for !== comparing)
-    month = ExpiryDate.substring(0, 2) - 1; // because months in JS start from 0
-    day = ExpiryDate.substring(3, 5) - 0;
-    year = ExpiryDate.substring(6, 10) - 0;
-    // test year range
-    if (year < 1000 || year > 3000) {
-        return false;
-    }
-    // convert ExpiryDate to milliseconds
-    mSeconds = (new Date(year, month, day)).getTime();
-    // initialize Date() object from calculated milliseconds
-    objDate = new Date();
-    objDate.setTime(mSeconds);
-    // compare input date and parts from Date() object
-    // if difference exists then date isn't valid
-    if (objDate.getFullYear() !== year ||
-        objDate.getMonth() !== month ||
-        objDate.getDate() !== day) {
-        return false;
-    }
-    // otherwise return true
-    return true;
+    // return `${d}.${m}.${y}`
+
+    // return new Date(y, m - 1, d);
 }
 
-function checkDate(){
-    // define date string to test
-    var ExpiryDate = document.getElementById(' ExpiryDate').value;
-    // check date and print message
-    if (isDate(ExpiryDate)) {
-        alert('OK');
+// get csrftoken from cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
-    else {
-        alert('Invalid date format!');
-    }
+    return cookieValue;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

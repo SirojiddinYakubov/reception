@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
+from user.utils import render_to_pdf
 from .forms import *
 from .models import *
 from user.models import *
@@ -12,14 +13,9 @@ from docxtpl import DocxTemplate
 # Create your views here.
 
 @login_required
-def index(request):
-    return render(request, 'account_statement/index.html')
-
-
-@login_required
 def insert(request):
-    cars = Car.objects.filter().order_by('model')
-    organizations = Organization.objects.filter(director=request.user)
+    cars = Car.objects.filter(is_show=True).order_by('model')
+    organizations = Organization.objects.filter(created_user=request.user, is_active=True)
     context = {
         'cars': cars,
         'organizations': organizations,
@@ -97,3 +93,5 @@ def get_car_type(request):
         return HttpResponse(message)
     else:
         return False
+
+

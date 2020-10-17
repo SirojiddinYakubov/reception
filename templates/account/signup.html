@@ -1,443 +1,415 @@
+<!doctype html>
 {% load static %}
 {% load i18n %}
-<!doctype html>
-<html lang="en">
+<html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% trans 'Регистрация в системе' %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Ro'yhatdan o'tish</title>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static 'img/login/logo.svg' %}" sizes="any" type="image/svg+xml">
-
 </head>
-<body>
-
-<div class="container register">
-    <div class="row">
-        <div class="col-md-3 register-left">
+<body oncontextmenu='return false' class='snippet-body'>
+<!-- MultiStep Form -->
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center mt-0">
+        <div class="col-11 col-sm-3 col-md-3 col-lg-4 text-center p-0 register-left">
             <img src="{% static 'img/login/logo.svg' %}"
                  alt="{% trans 'Управление безопасности дорожного движения!' %}"/>
-            <h3>{% trans 'Добро пожаловать' %}</h3>
 
-            <p>{% trans 'Управление безопасности дорожного движения!' %}</p>
-            <a href="{% url 'user:login' %}">{% trans 'Вход в систему' %}</a>
+            <p id="left_help_text1">DIQQAT!!! "SMS-xabar" xizmati arizalarni ko'rib chiqish jarayonida arizani
+                tasdqilash uchun
+                mo'ljallangan. Mazkur xizmatdan foydalanish majburiy hisoblanmaydi. "SMS-xabar" xizmatidan
+                foydalanilganlik uchun har bir kiruvchi SMS xabarga 40 so'm miqdorida to'lov undiriladi. To'lov
+                foydalanuvchining abonent raqami hisobidan aloqa operatori tomonidan yechib olinadi. SMS xabar
+                abonentning hisobida yetarli miqdorda mablag' bo'lsagina boradi. Mazkur xizmatni taqdim etuvchining
+                ommaviy ofertasi bilan tanishib chiqing.</p>
+            <p style="display: none" id="left_help_text2">Diqqat!!! Hurmatli foydaluvchi Barcha ma'lumotlarni to'g'ri
+                kiritilayotganligiga alohida e'tibor bering. Ma'lumotlar noto'g'ri kiritilsa arizangiz bekor
+                qilinadi.</p>
+            <p style="display: none" id="left_help_text3">Passport ma'lumotlari to'g'ri kiritilayotganligiga e'tibor
+                bering</p>
             <br>
             <br>
         </div>
-        <div class="col-md-9 register-right">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">{% trans 'Регистрация в системе' %}</h3>
+        <div class="col-11 col-sm-7 col-md-7 col-lg-7 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
 
-                    <form action="{% url 'user:signup' %}" method="POST">
+                <h2 class="not_copy"><strong>Ro'yhatdan o'tish</strong></h2>
+                <p class="not_copy">Keyingi bosqichga o'tish uchun kerakli ma'lumotlarni kiriting</p>
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <div id="msform">
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active not_copy" id="account"><strong>Account</strong></li>
+                                <li class="not_copy" id="personal"><strong>Foydalanuvchi</strong></li>
+                                <li class="not_copy" id="payment"><strong>Passport</strong></li>
+                                <li class="not_copy" id="confirm"><strong>Finish</strong></li>
+                            </ul> <!-- fieldsets -->
+                            <fieldset id="fieldset1">
+                                <div class="form-card">
+                                    <h2 class="fs-title not_copy">Account ma'lumotlari</h2>
+                                    <label class="not_copy" for="phone">Tel raqam:</label>
+                                    <input
+                                            type="text" id="phone"
+                                            placeholder="{% if phone %}+998{{ phone }}{% else %}{% endif %}" disabled/>
+                                    <input type="checkbox"
+                                           style="float: left; cursor: pointer; margin-right: 5px; margin-top: 5px; width: auto !important;"
+                                           id="accept"
+                                           name="accept" value="true" required>
 
-                        {% csrf_token %}
-                        <div class="row register-form">
-                            <div class="container">
-                                {% include 'includes/messages.html' %}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="last_name" class="label_required">Familiya</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                           required="required" autocomplete="off"
-                                           placeholder="{% trans 'Masalan: Yoqubov' %}" value=""/>
-                                </div>
-                                <label for="first_name" class="label_required">Ism</label>
-                                <div class="form-group">
-                                    <input type="text" id="first_name" class="form-control" name="first_name"
-                                           required="required" placeholder="Masalan: Salohiddin" autocomplete="off"
-                                           value=""/>
+                                    <a style="float: left; text-decoration: none; " class="not_copy" id="agree"
+                                       href="#">Shartlar bilan
+                                        tanishib
+                                        chiqdim</a>
+
+                                    <button style="float: right; height: 50%" id="get_code" type="button"
+                                            class="btn btn-info">Tasdiqlash kodini olish
+                                    </button>
+                                    <label id="label_confirm" style="width: 100%; display: none" class="not_copy"
+                                           for="input_confirm">Tasdiqlash kodi:</label>
+                                    <input id="input_confirm" style="display: none; margin-bottom: 0 !important;"
+                                           type="number" name="input_confirm" max="9999999"
+                                           placeholder="Tasdiqlash kodini kiriting..."/>
+                                    <div style="display: none" class="valid-feedback">Muvaffaqiyatli to'ldirildi</div>
+                                    <div style="display: none" class='invalid-feedback'>Maxfiy kod noto'g'ri
+                                    </div>
+                                    <br>
+                                    <br>
+
                                 </div>
 
-                                <label for="middle_name" class="label_required">Otasining ismi</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="middle_name" name="middle_name"
-                                           required="required" autocomplete="off" placeholder="Masalan: Tojiddinovich"
-                                           value=""/>
-                                </div>
-                                <label for="birthday" class="label_required">Tug'ilgan kun</label>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" id="birthday" required="required"
-                                           name="birthday" autocomplete="off" value=""/>
-                                </div>
-                                <label for="passport" class="label_required">Passport</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="passport" name="passport"
-                                           required="required" autocomplete="off" placeholder="Masalan: AA1234567"
-                                           value=""/>
-                                </div>
-                                <label for="document_issue" class="label_required">Passport berilgan sana</label>
-                                <div class="form-group">
-                                    <input type="date" class="form-control" id="document_issue" required="required"
-                                           name="document_issue" autocomplete="off" value=""/>
-                                </div>
-                                <label for="document_expiry" class="label_required">Passport amal qilish muddati</label>
-                                <div class="form-group">
-                                    <input type="date" autocomplete="off" class="form-control" id="document_expiry"
-                                           required="required"
-                                           name="document_expiry" value=""/>
-                                </div>
-                                <label for="issue_by_whom" class="label_required">Kim tomonidan berilgan</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="issue_by_whom" name="issue_by_whom"
-                                           required="required" autocomplete="off"
-                                           placeholder="Masalan: BUXORO SHAHAR IIB"
-                                           value=""/>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="label_required" for="person_id">JShShIR</label>
-                                    <input type="number" class="form-control" id="person_id" name="person_id"
-                                           required="required" autocomplete="off"
-                                           placeholder="JShShIRni kiriting..." min="00000000000001" max="99999999999999"
-                                           value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label class="label_required" for="gender">Jins</label>
-                                    <select name="gender" class="form-control" id="gender" required="required">
-                                        <option value="M">Erkak</option>
-                                        <option value="W">Ayol</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="label_required" for="region">Viloyat</label>
-                                    <select name="region" class="form-control" id="region" required="required">
+                                <a href="{% url 'user:login_first' %}" style="text-decoration: none"
+                                   class="previous action-button-previous">Raqamni almashtirish</a>
+                                <button type="button" id="next1" name="next" class="next action-button" disabled>
+                                    Tasdiqlash
+                                </button>
+                            </fieldset>
+                            <fieldset id="fieldset2">
+                                <div class="form-card">
+                                    <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
+                                    <label style="width: 100%;" class="not_copy label_required"
+                                           for="last_name">Familiya</label>
+                                    <input type="text" name="last_name" id="last_name" required
+                                           placeholder="Masalan: Yoqubov"/>
+                                    <label style="width: 100%;" class="not_copy label_required"
+                                           for="first_name">Ism</label>
+                                    <input type="text" name="first_name" id="first_name" required
+                                           placeholder="Masalan: Sirojiddin"/>
+                                    <label style="width: 100%;" class="not_copy label_required"
+                                           for="middle_name">Otasining ismi</label>
+                                    <input type="text" name="middle_name" id="middle_name" required
+                                           placeholder="Masalan: Tojiddinovich"/>
+                                    <label style="width: 100%;" class="not_copy label_required"
+                                           for="birthday">Tug'ilgan yil</label>
+                                    <input type="date" name="birthday" id="birthday" required/>
+                                    <label class="label_required not_copy" for="region">Viloyat</label>
+                                    <select name="region" class="form-control" id="region" required>
                                         <option>--Viloyatni tanlang--</option>
                                         {% for region in regions %}
                                             <option value="{{ region.id }}">{{ region.title }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="label_required" for="district">Tuman/Shahar</label>
-                                    <select name="district" class="form-control" id="district" required="required">
+                                    <br>
+                                    <label class="label_required not_copy" for="district">Tuman/Shahar</label>
+                                    <select name="district" class="form-control" id="district" required>
                                         <option>--Tumanni tanlang--</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="label_required" for="mfy">MFY</label>
+                                    <br>
+                                    <label class="label_required not_copy" for="mfy">MFY</label>
                                     <select name="mfy" class="form-control" id="mfy" required="required">
                                         <option>--MFYni tanlang--</option>
                                     </select>
-                                </div>
-                                <label for="address" class="label_required">Manzil</label>
-                                <div class="form-group">
+                                    <br>
+                                    <label class="label_required not_copy" for="address">Manzil</label>
                                     <input type="text" class="form-control" id="address" name="address"
-                                           required="required" autocomplete="disabled"
+                                           required autocomplete="disabled"
                                            placeholder="Masalan: M.Iqbol ko'chasi 76-uy" value=""/>
-                                </div>
 
-                                <div class="form-group">
-                                    <label class="label_required" for="nationality">Millati</label>
-                                    <select name="nationality" class="form-control" id="nationality"
-                                            required="required">
-                                        {% for nationality in nationalities %}
-                                            <option value="{{ nationality.id }}">{{ nationality.title }}</option>
-                                        {% endfor %}
-                                    </select>
                                 </div>
+                                <input type="button" name="previous" id="prev2"
+                                       class="previous action-button-previous"
+                                       value="Oldingi"/>
+                                <input type="button" name="next2" id="next2" class="action-button"
+                                       value="Keyingi"/>
+                            </fieldset>
+                            <fieldset id="fieldset3">
+                                <div class="form-card">
+                                    <h2 class="fs-title">Passport Information</h2>
+                                    {#                                    <div class="radio-group">#}
+                                    {#                                        <div class='radio' data-value="credit"><img#}
+                                    {#                                                src="https://i.imgur.com/XzOzVHZ.jpg" width="200px" height="100px">#}
+                                    {#                                        </div>#}
+                                    {#                                        <div class='radio' data-value="paypal"><img#}
+                                    {#                                                src="https://i.imgur.com/jXjwZlj.jpg" width="200px" height="100px">#}
+                                    {#                                        </div>#}
+                                    {#                                        <br>#}
+                                    {#                                    </div>#}
+                                    <div class="row">
 
-                                <div class="form-group">
-                                    <label class="label_required" for="phone">Telefon raqam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">+998</div>
+                                        <div class="col-12 col-lg-3 col-md-3 col-xl-3 col-sm-3"><label
+                                                class="pay label_required not_copy" for="passport_seriya">Passport
+                                            seriya</label>
+                                            <input type="text" id="passport_seriya"
+                                                   placeholder="Masalan: AA"/>
                                         </div>
-                                        <input type="number" class="form-control" id="phone" required="required"
-                                               min="000000001" max="999999999" name="phone" autocomplete="disabled">
-                                        <button id="get_code" class="ml-1 btn fourth">Kodni olish</button>
+                                        <div class="col-12 col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                                            <label for="passport_number"
+                                                   class="pay label_required not_copy">Passport raqam</label>
+                                            <input type="number" id="passport_number"
+                                                   placeholder="Masalan: 3870293"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-2 col-md-2 col-xl-2 col-sm-2">
+                                            <label class="label_required not_copy" for="document_issue">Berilgan
+                                                vaqt</label>
+                                        </div>
+                                        <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4">
+                                            <input type="date" id="document_issue"/>
+                                        </div>
+                                        <div class="col-12 col-lg-2 col-md-2 col-xl-2 col-sm-2">
+                                            <label class="label_required not_copy" for="document_expiry">Amal
+                                                vaqti</label>
+                                        </div>
+                                        <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4">
+                                            <input type="date" id="document_expiry"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5 mb-2">
+
+                                            <div class="PhotoPreview" id="PassportPhotoPreview">
+                                                <label class="not_copy" for="passport_photo">Passport
+                                                    suratini yuklang</label>
+
+                                                <input type="file" name="photo" hidden
+                                                       id="passport_photo"/>
+
+                                                <img style='width: 120px; height: auto;display: none' id='thumbnail'
+                                                     src="" title='Image'/>
+                                                <span style="display: none" id='remove'>O'chirish</span>
+                                            </div>
+                                            <p id="photoError"
+                                               style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none"
+                                               class="form-text text-danger">Passport surati yuklanmagan</p>
+                                        </div>
+                                        <div class="col-12 col-lg-7 col-md-7 col-xl-7 col-sm-7">
+                                            <label class="label_required not_copy" for="issue_by_whom">Kim tomonidan
+                                                berilgan</label>
+                                            <input type="text" style="margin-bottom: 1em"
+                                                   id="issue_by_whom"
+                                                   placeholder="Masalan: BUXORO SHAHAR IIB"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5">
+                                            <img class="mb-2" style="width: 200px"
+                                                 src="{% static 'online/person_id.jpg' %}"
+                                                 alt="JShShIR">
+                                        </div>
+                                        <div class="col-12 col-lg-7 col-md-7 col-xl-7 col-sm-7">
+                                            <label style="margin-bottom: 0"
+                                                   class="label_required not_copy">JShShIR</label>
+                                            <input type="number" style="margin-bottom: 0"
+                                                   max="99999999999999"
+                                                   id="person_id"
+                                                   placeholder=""/>
+                                            <p style="font-size: small">Jismoniy shaxsning shaxsiy identifikatsiya
+                                                raqamini
+                                                kiriting</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <input type="button" name="Previous" class="previous action-button-previous"
+                                       id="prev3" value="Oldingi"/>
+                                <input type="button" id="next3" class="action-button"
+                                       value="Keyingi"/>
+                            </fieldset>
+                            <fieldset id="fieldset4">
+                                <div class="form-card">
+                                    <h2 class="fs-title text-center">Tabriklaymiz!</h2> <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                            <img src="https://img.icons8.com/color/96/000000/ok--v2.png"
+                                                 class="fit-image">
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-7 text-center">
+                                            <h5>Siz muvaffaqiyatli ro'yhatdan o'tdingiz!</h5>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group" id="password_confirm_block">
-                                    <label class="label_required" for="confirm_password">Parolni kiriting</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">Parol:</div>
-                                        </div>
-                                        <input type="number" class="form-control" id="confirm_password"
-                                               required="required"
-                                               min="0000001" max="9999999" maxlength="7" name="confirm_password"
-                                               autocomplete="off">
-                                    </div>
-                                </div>
-
-                                <input type="submit" id="signup_btn" class="btn fourth disabled_btn"
-                                       value="Регистрация"/>
-                            </div>
+                            </fieldset>
                         </div>
-
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-<script>
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+<script type="text/javascript" src="{% static 'js/sign_up.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/dropzone.min.js' %}"></script>
+<script type="text/javascript">
 
     $(document).ready(function () {
-        var FirstName = $('#first_name'),
-            LastName = $('#last_name'),
-            MiddleName = $('#middle_name'),
-            address = $('#address'),
-            region = $('#region'),
-            district = $('#district'),
-            mfy = $('#mfy'),
-            Passport = $('#passport'),
-            DocumentIssue = $('#document_issue'),
-            DocumentExpiry = $('#document_expiry'),
-            birthday = $('#birthday'),
-            phone = $('#phone'),
-            getCode = $('#get_code'),
-            signupBtn = $('#signup_btn'),
-            passwordConfirmBlock = $('#password_confirm_block'),
-            confirmPassword = $('#confirm_password'),
-            IssueByWhom = $('#issue_by_whom'),
-            PersonId = $('#person_id')
 
-        //enter press returned false start
-        document.addEventListener('keypress', PressEnterFalse);
-        //enter press returned false end
+        var phoneVal = '{{ phone }}',
+            next1 = '{{ next1 }}',
+            next2 = '{{ next2 }}'
 
 
-        getCode.hide()
-        passwordConfirmBlock.hide()
-        signupBtn.on('click', function (e) {
-            var SelectedRegion = region.children("option:selected").val(),
-                SelectedDistrict = district.children("option:selected").val(),
-                SelectedMfy = mfy.children('option:selected').val()
+        if (next1 == 'true') {
+            $('#fieldset1').hide()
+            $('#fieldset2').show()
+            $('#personal').addClass('active')
+            if (next2 == 'true') {
+                $('#fieldset1').hide()
+                $('#fieldset2').hide()
+                $('#fieldset3').show()
+                $('#payment').addClass('active')
+            }
+        }
 
-            e.preventDefault()
-            if (LastName.val().length > 0) {
-                if (FirstName.val().length > 0) {
-                    if (MiddleName.val().length > 0) {
-                        if (!isNaN(new Date(birthday.val()).getDate()))
-                            if (Passport.val().length > 7) {
-                                if (!isNaN(new Date(DocumentIssue.val()).getDate())) {
-                                    if (!isNaN(new Date(DocumentExpiry.val()).getDate())) {
-                                        if (IssueByWhom.val().length > 0) {
-                                            if (PersonId.val().length === 14) {
-                                                if (parseInt(SelectedRegion)) {
-                                                    if (parseInt(SelectedDistrict)) {
-                                                        if (parseInt(SelectedMfy)) {
-                                                            if (address.val().length > 0) {
-                                                                if (phone.val().length === 9) {
-                                                                    if (confirmPassword.val().length === 7) {
-                                                                        $.ajax({
-                                                                            type: 'GET',
-                                                                            url: "{% url 'user:get_user_pass' %}",
-                                                                            data: {
-                                                                                'phone': phone.val(),
-                                                                                'password': confirmPassword.val()
-                                                                            },
-                                                                            success: function (messege) {
-                                                                                if (messege == 'True') {
-                                                                                    var notify = $.notify("Ma'lumotlar tekshirilmoqda", {
-                                                                                        allow_dismiss: false,
-                                                                                        showProgressbar: true,
-                                                                                        animate: {
-                                                                                            enter: 'animated fadeInRight',
-                                                                                            exit: 'animated fadeOutRight'
-                                                                                        },
-                                                                                    });
 
-                                                                                    setTimeout(function () {
-                                                                                        notify.update({
-                                                                                            'type': 'success',
-                                                                                            'message': "Ma'lumotlar saqlanmoqda",
-                                                                                            'progress': 25
-                                                                                        });
-                                                                                    }, 25);
+        if ($('#fieldset1').is(':visible')) {
+            $('#left_help_text1').show()
+            $('#left_help_text2').hide()
+            $('#left_help_text3').hide()
+        } else if ($('#fieldset2').is(':visible')) {
+            $('#left_help_text1').hide()
+            $('#left_help_text2').show()
+            $('#left_help_text3').hide()
+        } else if ($('#fieldset3').is(':visible')) {
+            $('#left_help_text1').hide()
+            $('#left_help_text2').hide()
+            $('#left_help_text3').show()
+        }
 
-                                                                                    setTimeout(function () {
-                                                                                        $("form").submit();
-                                                                                    }, 3000)
+        $('#prev2').on('click', function () {
+            $('#left_help_text1').show()
+            $('#left_help_text2').hide()
+            $('#left_help_text3').hide()
+        })
 
-                                                                                    ///setTimeout(function () {
-                                                                                    // notify.update('message', "Ma'lumotlar saqlandi");
-                                                                                    // }, 3000);
-                                                                                } else {
-                                                                                    confirmPassword.css({
-                                                                                        "border-color": "red",
-                                                                                        "background": "#fcf7f7"
-                                                                                    })
-                                                                                }
-                                                                            }
-                                                                        })
-                                                                    } else {
-                                                                        confirmPassword.css("border-color", "red").css("background", "#fcf7f7");
-                                                                    }
-                                                                } else {
-                                                                    phone.css("border-color", "red").css("background", "#fcf7f7");
-                                                                }
-                                                            } else {
-                                                                address.css("border-color", "red").css("background", "#fcf7f7");
-                                                            }
-                                                        } else {
-                                                            mfy.css("border-color", "red").css("background", "#fcf7f7");
-                                                        }
-                                                    } else {
-                                                        district.css("border-color", "red").css("background", "#fcf7f7")
-                                                    }
-                                                } else {
-                                                    region.css("border-color", "red").css("background", "#fcf7f7");
-                                                }
-                                            }else{
-                                                PersonId.css("border-color", "red").css("background", "#fcf7f7");
-                                            }
-                                        } else {
-                                            IssueByWhom.css("border-color", "red").css("background", "#fcf7f7");
-                                        }
-                                    } else {
-                                        DocumentExpiry.css("border-color", "red").css("background", "#fcf7f7");
-                                    }
+        $('#prev3').on('click', function () {
+            $('#left_help_text1').hide()
+            $('#left_help_text2').show()
+            $('#left_help_text3').hide()
+        })
+
+        $('#accept').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('#agree').css('color', 'blue')
+            } else {
+                $('#agree').css('color', 'red')
+            }
+        })
+
+        $('#get_code').on('click', function () {
+
+            if ($('#accept').prop('checked')) {
+                $("#get_code").attr("disabled", true);
+                $("#accept").attr("disabled", true);
+
+                let countdowntime = 300;
+                let button = document.getElementById('get_code')
+
+
+                let interval = setInterval(updateCountDown, 1000)
+
+                function updateCountDown() {
+                    let minutes = Math.floor(countdowntime / 60)
+                    let seconds = countdowntime % 60
+
+                    seconds = seconds < 10 ? '0' + seconds : seconds
+                    minutes = minutes < 10 ? '0' + minutes : minutes
+
+                    button.innerHTML = `${minutes}:${seconds} Qayta yuborish`
+
+                    countdowntime--;
+
+                    if (countdowntime < 0) {
+                        clearInterval(interval)
+                        $("#get_code").attr("disabled", false);
+                        $("#accept").attr("disabled", false);
+                        button.innerHTML = `Qayta yuborish`
+                        {#window.location.href = '../login';#}
+                    }
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_code' %}",
+                    data: {
+                        'phone': phoneVal, // from form
+                    },
+                    success: function (message) {
+                        message = parseInt(message)
+                        $('#input_confirm').keyup(function () {
+                            var test = $('#input_confirm').val(),
+                                pattern = /^\d{5}$/
+                            if (test.match(pattern)) {
+                                if (test == message) {
+                                    $('.invalid-feedback').css('display', 'none')
+                                    $('.valid-feedback').css('display', 'block')
+                                    $('#next1').prop('disabled', false)
+                                    $('#input_confirm').css('border-bottom', '2px solid green')
                                 } else {
-                                    DocumentIssue.css("border-color", "red").css("background", "#fcf7f7");
+                                    $('.invalid-feedback').css('display', 'block')
+                                    $('.valid-feedback').css('display', 'none')
+                                    $('#next1').prop('disabled', true)
+                                    $('#input_confirm').css('border-bottom', '2px solid red')
                                 }
                             } else {
-                                Passport.css("border-color", "red").css("background", "#fcf7f7");
+
                             }
-                        else {
-                            birthday.css("border-color", "red").css("background", "#fcf7f7");
-                        }
-                    } else {
-                        MiddleName.css("border-color", "red").css("background", "#fcf7f7");
-                    }
-                } else {
-                    FirstName.css("border-color", "red").css("background", "#fcf7f7");
-                }
-            } else {
-                LastName.css("border-color", "red").css("background", "#fcf7f7");
-            }
-
-        })
-
-        $(document).on('keyup', '#middle_name, #last_name, #first_name, #address, #issue_by_whom', function (e) {
-            if (e.target.value.length > 0) {
-                $(e.target).css("border-color", "green").css("background", "#e8f0fe");
-            } else {
-                $(e.target).css("border-color", "red").css("background", "#fcf7f7");
-            }
-        })
-
-
-        $(document).on('keypress', '#middle_name, #last_name, #first_name', NameInputFilter)
-
-        Passport.keyup(function () {
-            if (Passport.val().length > 7) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
-            } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7");
-            }
-        })
-
-        Passport.keypress(PassportInputFilter)
-
-        IssueByWhom.keypress(CustomInputFilter)
-
-        Passport.change(function () {
-            $.ajax({
-                type: "GET",
-                url: "{% url 'user:check_passport' %}",
-                data: {
-                    'passport': $(this).val(), // from form
-                },
-                success: function (message) {
-                    if (message == 'True') {
-                        Passport.css("cssText", "border: 1px solid red; background: #fcf7f7 !important");
-                        $.notifyDefaults({
-                            type: 'danger',
-                            allow_dismiss: false,
-                            //placement: {
-                            //    from: "top",
-                            //     align: "right"
-                            // },
-                            animate: {
-                                enter: 'animated fadeInRight',
-                                exit: 'animated fadeOutRight'
-                            },
-
-
                         });
-                        $.notify({
-                            icon: 'glyphicon glyphicon-star',
-                            message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                '</svg> Ushbu pasport oldin ro\'yhatdan o\'tkazilgan!'
-                        });
-                    } else {
-                        Passport.css("border", "1px solid green").css("background", "#e8f0fe");
                     }
-                }
-            });
-        })
+                });
 
-        $(document).on('change', '#document_issue, #document_expiry, #birthday', function (e) {
-            if (new Date(e.target.value)) {
-                $(e.target).css("border-color", "green").css("background", "#e8f0fe");
-            } else {
-                $(e.target).css("border-color", "red").css("background", "#fcf7f7");
-            }
-        })
-
-        phone.keyup(function () {
-            var test = $(this).val();
-            var pattern = /^\d{9}$/;
-            if (test.match(pattern)) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
-                getCode.fadeIn(1000)
-            } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7");
-                getCode.fadeOut()
-            }
-        })
-
-        phone.on('input', InputMaxLength)
-
-        phone.keyup(function () {
-            var phoneVal = phone.val()
-            if (phoneVal.length === 9) {
-                $.ajax({
-                    type: 'GET',
-                    url: "{% url 'user:get_phone' %}",
-                    data: {
-                        'phone': phoneVal,
+                $.notifyDefaults({
+                    type: 'warning',
+                    allow_dismiss: false,
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutRight'
                     },
-                    success: function (messege) {
-                        if (messege == 'True') {
-                            phone.css({"border-color": "red", "background": "#fcf7f7"});
-                            $.notifyDefaults({
-                                type: 'danger',
-                                allow_dismiss: false,
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                            });
-                            $.notify({
-                                icon: 'glyphicon glyphicon-star',
-                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                    '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                    '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                    '</svg> Ushbu raqam oldin ro\'yhatdan o\'tkazilgan!'
-                            });
-                        }
-                    }
-                })
+                });
+                $.notify({
+                    icon: 'glyphicon glyphicon-envelope',
+                    message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                        '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
+                        '</svg>  +998${phoneVal} raqamga tasdiqlash kodi yuborildi !`
+                });
+
+                $('#label_confirm').fadeIn(800)
+                $('#input_confirm').fadeIn(800)
+                $('#help_text_code').fadeIn(800)
+
+            } else {
+                $('#agree').css('color', 'red')
             }
+
+
         })
 
-        region.change(function () {
+        $('#region').change(function () {
             var SelectedRegion = $(this).children("option:selected").val()
             $.ajax({
                 type: "GET",
@@ -446,18 +418,18 @@
                     'region': SelectedRegion, // from form
                 },
                 success: function (message) {
-                    district.empty().append(message)
+                    $('#district').empty().append(message)
                 }
             });
 
             if (parseInt(SelectedRegion)) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
+                $(this).css('border-bottom', '2px solid green')
             } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7");
+                $(this).css('border-bottom', '2px solid red')
             }
         })
 
-        district.change(function () {
+        $('#district').change(function () {
             var SelectedDistrict = $(this).children("option:selected").val()
             $.ajax({
                 type: "GET",
@@ -466,106 +438,231 @@
                     'district': SelectedDistrict, // from form
                 },
                 success: function (message) {
-                    mfy.empty().append(message)
+                    $('#mfy').empty().append(message)
                 }
             });
 
             if (parseInt(SelectedDistrict)) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
+                $(this).css('border-bottom', '2px solid green')
             } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7")
+                $(this).css('border-bottom', '2px solid red')
             }
         })
 
-        mfy.change(function () {
+        $('#mfy').change(function () {
             var SelectedMfy = $(this).children('option:selected').val()
             if (parseInt(SelectedMfy)) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
+                $(this).css('border-bottom', '2px solid green')
             } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7");
+                $(this).css('border-bottom', '2px solid red')
             }
         })
 
-        $(document).on('mouseenter', '#nationality, #gender', function (e) {
-            $(e.target).css({'border-color': 'green', "background": "#e8f0fe"})
+
+        $(document).on('input', '#input_confirm, #person_id', InputMaxLength)
+
+        $(document).on('keypress', '#middle_name, #last_name, #first_name', NameInputFilter)
+
+        $(document).on('keypress', '#passport_seriya, #issue_by_whom', CustomInputFilter)
+
+
+        $(document).on('focusout', '#middle_name, #last_name, #first_name, #address, #passport_seriya, #passport_number, #issue_by_whom', function (e) {
+            if (e.target.value !== '') {
+                $(e.target).css("border-bottom", "2px solid green")
+            } else {
+                $(e.target).css("border-bottom", "2px solid red")
+            }
         })
 
+        $('#person_id').on('keypress', function () {
+            if ($(this).val().length != '14') {
 
-        getCode.on('click', function (event) {
-            event.preventDefault()
+                $(this).css("border-bottom", "2px solid red")
+            } else if ($(this).val() === '') {
 
-            $.notifyDefaults({
-                type: 'warning',
-                allow_dismiss: false,
-                animate: {
-                    enter: 'animated fadeInRight',
-                    exit: 'animated fadeOutRight'
-                },
-            });
-            $.notify({
-                icon: 'glyphicon glyphicon-envelope',
-                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                    '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
-                    '</svg>  Raqamingizga tasdiqlash kodi yuborildi !'
-            });
+                $(this).css("border-bottom", "2px solid red")
+            } else {
+                $(this).css("border-bottom", "2px solid green")
+            }
+        })
 
-            passwordConfirmBlock.fadeIn(1000)
-            $.ajax({
-                type: "GET",
-                url: "{% url 'user:get_code' %}",
-                data: {
-                    'phone': phone.val(), // from form
-                },
-                success: function (message) {
-                    message = parseInt(message)
-                    confirmPassword.keyup(function () {
-                        var test = confirmPassword.val();
-                        var pattern = /^\d{7}$/;
-                        if (test.match(pattern)) {
-                            if (test == message) {
-                                $(this).css("border", "1px solid green").css("background", "#e8f0fe");
-                                signupBtn.removeClass('disabled_btn')
-                            } else {
-                                signupBtn.addClass('disabled_btn')
-                                $.notifyDefaults({
-                                    type: 'danger',
-                                    allow_dismiss: false,
-                                    animate: {
-                                        enter: 'animated fadeInRight',
-                                        exit: 'animated fadeOutRight',
-                                    },
-                                });
-                                $.notify({
-                                    icon: 'glyphicon glyphicon-star',
-                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                        '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                        '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                        '</svg> Kodni xato kiritdingiz! Iltimos qaytadan tekshirib, kiriting!'
-                                });
-                            }
-                        } else {
-                            $(this).css("border", "1px solid red",).css("background", "#fef8f8",);
-                            signupBtn.addClass('disabled_btn')
+        $('#next1').on('click', function () {
+            $('#left_help_text1').hide()
+            $('#left_help_text2').show()
+            $('#left_help_text3').hide()
+        })
 
+        $('#next2').on('click', function () {
+            var SelectedRegion = $('#region').children('option:selected').val()
+            var SelectedDistrict = $('#district').children('option:selected').val()
+            var SelectedMfy = $('#mfy').children('option:selected').val()
+            if ($('#last_name').val() == '') {
+                $('#last_name').css("border-bottom", "2px solid red")
+            } else if ($('#first_name').val() == '') {
+                $('#first_name').css("border-bottom", "2px solid red")
+            } else if ($('#middle_name').val() == '') {
+                $('#middle_name').css("border-bottom", "2px solid red")
+            } else if (!parseDate($('#birthday').val())) {
+                $('#birthday').css("border-bottom", "2px solid red")
+            } else if (!parseInt(SelectedRegion)) {
+                $('#region').css("border-bottom", "2px solid red")
+            } else if (!parseInt(SelectedDistrict)) {
+                $('#district').css("border-bottom", "2px solid red")
+            } else if (!parseInt(SelectedMfy)) {
+                $('#mfy').css("border-bottom", "2px solid red")
+            } else if ($('#address').val() == '') {
+                $('#address').css("border-bottom", "2px solid red")
+            } else {
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:save_user_information' %}",
+                    data: {
+                        'last_name': $('#last_name').val(),
+                        'first_name': $('#first_name').val(),
+                        'middle_name': $('#middle_name').val(),
+                        'birthday': $('#birthday').val(),
+                        'region': $('#region').val(),
+                        'district': $('#district').val(),
+                        'mfy': $('#mfy').val(),
+                        'address': $('#address').val(),
+                        'phone': phoneVal
+                    },
+                    success: function (message) {
+                        if (message == 'True') {
+                            $('#fieldset2').hide()
+                            $('#fieldset3').show()
+                            $('#fieldset3').css('opacity', '1')
+                            $('#left_help_text1').hide()
+                            $('#left_help_text2').hide()
+                            $('#left_help_text3').show()
+                            $('#payment').addClass('active')
                         }
-                    });
-                }
-            });
+                    }
+                })
+            }
+
         })
 
-        confirmPassword.on('input', InputMaxLength)
-        PersonId.on('input', InputMaxLength)
 
-        PersonId.keyup(function () {
-            var test = $(this).val();
-            var pattern = /^\d{14}$/;
-            if (test.match(pattern)) {
-                $(this).css("border-color", "green").css("background", "#e8f0fe");
+        $(document).on('focusout', '#birthday, #document_issue, #document_expiry', function (e) {
+            if (parseDate(e.target.value)) {
+                $(e.target).css("border-bottom", "2px solid green")
             } else {
-                $(this).css("border-color", "red").css("background", "#fcf7f7")
+                $(e.target).css("border-bottom", "2px solid red")
             }
         })
 
+        $('#passport_photo').on('change', function (event) {
+            var files = event.target.files; //FileList object
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                //Only pics
+                if (!file.type.match('image'))
+                    continue;
+                var picReader = new FileReader();
+                picReader.addEventListener("load", function (event) {
+                    var picFile = event.target;
+                    //  var div = document.createElement("div");
+                    $('#PassportPhotoPreview label').hide()
+                    $('#thumbnail').show()
+                    $('#remove').show()
+                    $('#thumbnail').attr('src', picFile.result)
+                    $('#photoError').hide()
+                    // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
+                    //   "title='Image'/><span  id='remove'>O'chirish</span>";
+                    //  result.insertBefore(div, null);
+                    $("#remove").click(function () {
+                        $('#PassportPhotoPreview label').show()
+                        $('#thumbnail').hide()
+                        $('#remove').hide()
+                        $('#photoError').show()
+                    });
+                });
+                //Read the image
+                picReader.readAsDataURL(file);
+            }
+        })
+
+        $('#next3').on('click', function () {
+            if ($('#passport_seriya').val() == '') {
+                $('#passport_seriya').css("border-bottom", "2px solid red")
+            } else if ($('#passport_number').val() == '') {
+                $('#passport_number').css("border-bottom", "2px solid red")
+            } else if (!parseDate($('#document_issue').val())) {
+                $('#document_issue').css("border-bottom", "2px solid red")
+            } else if (!parseDate($('#document_expiry').val())) {
+                $('#document_expiry').css("border-bottom", "2px solid red")
+            } else if ($('#passport_photo').val() == '') {
+                $('#photoError').show()
+            } else if ($('#issue_by_whom').val() == '') {
+                $('#issue_by_whom').css("border-bottom", "2px solid red")
+            } else if ($('#person_id').val() == '') {
+                $('#person_id').css("border-bottom", "2px solid red")
+            } else {
+
+                // get csrftoken from cookie
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                var csrftoken = getCookie('csrftoken');
+
+                // add cookie ajax headers
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    }
+                })
+
+                // add photo in FormData
+                var fd = new FormData();
+                var files = $('#passport_photo')[0].files[0];
+                fd.append('file', files);
+                fd.append('phone', phoneVal);
+                fd.append('passport_seriya', $('#passport_seriya').val());
+                fd.append('passport_number', $('#passport_number').val());
+                fd.append('issue_by_whom', $('#issue_by_whom').val());
+                fd.append('document_issue', $('#document_issue').val());
+                fd.append('document_expiry', $('#document_expiry').val());
+                fd.append('person_id', $('#person_id').val());
+
+                // ajax POST request
+                $.ajax({
+                    url: '{% url "user:upload_file" %}',
+                    type: 'POST',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response == "True") {
+                            $('#fieldset1').hide()
+                            $('#fieldset2').hide()
+                            $('#fieldset3').hide()
+                            $('#fieldset4').show()
+                            $('#confirm').addClass('active')
+                            $('#left_help_text3').hide()
+                            setTimeout(function () {
+                                window.location.href = '{% url "user:index" %}'
+                            }, 3000);
+                        }
+                    }
+                })
+
+            }
+        })
     })
 
 </script>

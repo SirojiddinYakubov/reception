@@ -1,0 +1,436 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block top %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+{% endblock top %}
+
+{% block content %}
+    <style>
+        #certificatePhotoPreview {
+            padding: 0;
+            margin: 0;
+            width: 200px;
+            border: 5px dashed #4c73d4;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            color: #4c4c4c;
+
+        }
+
+        #certificatePhotoPreview > label {
+            margin: 0;
+            padding: 30px;
+            color: red;
+            cursor: pointer;
+        }
+
+        #certificateRemove {
+            display: block;
+
+
+            color: #4e4e4e;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #certificateRemove:hover {
+            display: block;
+            color: #000000;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #licensePhotoPreview {
+            padding: 0;
+            margin: 0;
+            width: 200px;
+            border: 5px dashed #4c73d4;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            color: #4c4c4c;
+
+        }
+
+        #licensePhotoPreview > label {
+            margin: 0;
+            padding: 30px;
+            color: red;
+            cursor: pointer;
+        }
+
+        #licenseRemove {
+            display: block;
+
+
+            color: #4e4e4e;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #licenseRemove:hover {
+            display: block;
+            color: #000000;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Tashkilotni tahrirlash" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <!-- left column -->
+        <div class="form-card">
+            <form id="msform" action="#">
+                <div class="row">
+                    {{ form }}
+                    <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-sm-12">
+                        <label style="float: left" class="label_required not_copy" for="title">Tashkilot
+                            nomi</label>
+                        <input type="text" style="margin-bottom: 1em"
+                               id="title"
+                               placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" МЧЖ'/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <label style="float: left" class="label_required not_copy" for="director">
+                            Rahbari</label>
+                        <input type="text" style="margin-bottom: 1em"
+                               id="director"
+                               placeholder="Masalan: Yoqubov Sirojiddin"/>
+                    </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <label style="float: left" class="label_required not_copy" for="identification_number">STIR
+                            raqam</label>
+                        <input type="number" style="margin-bottom: 1em"
+                               id="identification_number"
+                               placeholder='Masalan: 305897526'/>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <label style="float: left" class="label_required not_copy" for="legal_address">Yuridik
+                            manzili</label>
+                        <input type="text" style="margin-bottom: 1em"
+                               id="legal_address"
+                               placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
+                    </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
+                            manzili</label>
+                        <input type="text" style="margin-bottom: 1em"
+                               id="address_of_garage"
+                               placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+
+                    <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
+                        <p id="currentCertificatePhoto" style="text-align: left; margin-bottom: auto"></p>
+                        <div id="certificatePhotoPreview">
+                            <label class="not_copy" for="certificate_photo">Guvohnoma
+                                suratini yuklang</label>
+
+                            <input type="file" name="photo" hidden
+                                   id="certificate_photo" accept=".jpg, .jpeg, .png, .gif"/>
+
+                            <img style='width: 120px; height: auto;display: none' id='certificateThumbnail'
+                                 src="" title='Image'/>
+                            <span style="display: none" id='certificateRemove'>O'chirish</span>
+                        </div>
+                        <p id="certificatePhotoError"
+                           style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+                           class="form-text text-danger">Guvohnoma surati yuklanmagan</p>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
+                        <p id="currentLicensePhoto" style="text-align: left; margin-bottom: auto"></p>
+                        <div id="licensePhotoPreview">
+                            <label class="not_copy" for="license_photo">Litsenziya
+                                suratini yuklang</label>
+
+                            <input type="file" name="photo" hidden
+                                   id="license_photo" accept=".jpg, .jpeg, .png, .gif"/>
+
+                            <img style='width: 120px; height: auto;display: none' id='licenseThumbnail'
+                                 src="" title='Image'/>
+                            <span style="display: none" id='licenseRemove'>O'chirish</span>
+                        </div>
+                        <p id="licensePhotoError"
+                           style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+                           class="form-text text-danger">Litsenziya surati yuklanmagan</p>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <button id="deleteBtn" type="button" style="margin: 3%"
+                            class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-danger">Tashkilotni o'chirish
+                    </button>
+                    <button id="saveBtn" type="button" style="margin: 3%"
+                            class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-success">Saqlash
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+    <script charset="utf-8" type="text/javascript">
+        $(document).ready(function () {
+            var id = '{{ organization.id }}',
+                title = '{{ organization.title }}',
+                director = '{{ organization.director }}',
+                identification_number = '{{ organization.identification_number }}',
+                legal_address = '{{ organization.legal_address }}',
+                address_of_garage = '{{ organization.address_of_garage }}',
+                license_photo = '{{ organization.license_photo.url }}',
+                certificate_photo = '{{ organization.certificate_photo.url }}'
+
+            $('#title').attr('value', title)
+            $('#director').attr('value', director)
+            $('#identification_number').attr('value', identification_number)
+            $('#legal_address').attr('value', legal_address)
+            $('#address_of_garage').attr('value', address_of_garage)
+            $('#currentCertificatePhoto').html(`Hozirda:<a href='${certificate_photo}' target="_blank"> Ochib ko'rish</a>`)
+            $('#currentLicensePhoto').html(`Hozirda:<a href='${license_photo}' target="_blank"> Ochib ko'rish</a>`)
+
+            $('#certificate_photo').on('change', function (event) {
+
+                var files = event.target.files; //FileList object
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    console.log(file)
+                    console.log(`/media/organizations/certificate/2563897.png`)
+                    //Only pics
+                    if (!file.type.match('image'))
+                        continue;
+                    var picReader = new FileReader();
+                    picReader.addEventListener("load", function (event) {
+                        var picFile = event.target;
+                        //  var div = document.createElement("div");
+                        $('#certificatePhotoPreview label').hide()
+                        $('#certificateThumbnail').show()
+                        $('#certificateRemove').show()
+                        $('#certificateThumbnail').attr('src', picFile.result)
+                        $('#certificatePhotoError').hide()
+                        // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
+                        //   "title='Image'/><span  id='remove'>O'chirish</span>";
+                        //  result.insertBefore(div, null);
+                        $("#certificateRemove").click(function () {
+                            $('#certificatePhotoPreview label').show()
+                            $('#certificateThumbnail').hide()
+                            $('#certificateRemove').hide()
+                            $('#certificatePhotoError').show()
+                        });
+                    });
+                    //Read the image
+                    picReader.readAsDataURL(file);
+                }
+            })
+
+            $('#license_photo').on('change', function (event) {
+                var files = event.target.files; //FileList object
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    //Only pics
+                    if (!file.type.match('image'))
+                        continue;
+                    var picReader = new FileReader();
+                    picReader.addEventListener("load", function (event) {
+                        var picFile = event.target;
+                        //  var div = document.createElement("div");
+                        $('#licensePhotoPreview label').hide()
+                        $('#licenseThumbnail').show()
+                        $('#licenseRemove').show()
+                        $('#licenseThumbnail').attr('src', picFile.result)
+                        $('#licensePhotoError').hide()
+                        // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
+                        //   "title='Image'/><span  id='remove'>O'chirish</span>";
+                        //  result.insertBefore(div, null);
+                        $("#licenseRemove").click(function () {
+                            $('#licensePhotoPreview label').show()
+                            $('#licenseThumbnail').hide()
+                            $('#licenseRemove').hide()
+                            $('#licensePhotoError').show()
+                        });
+                    });
+                    //Read the image
+                    picReader.readAsDataURL(file);
+                }
+            })
+
+            $('#deleteBtn').on('click', function () {
+                var url = "{% url 'user:remove_organization' organization_id=12345 %}".replace(/12345/, id.toString());
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
+                        if (response == "True") {
+                            $.notifyDefaults({
+                                type: 'success',
+                                allow_dismiss: false,
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight',
+                                },
+                            });
+                            $.notify({
+                                icon: 'glyphicon glyphicon-star',
+                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                    '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                    '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                    '</svg> Tashkilot muvaffaqiyatli o\'chirildi!'
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = '{% url "user:view_organizations" %}'
+                            }, 1500)
+
+
+                        } else {
+                            $.notifyDefaults({
+                                type: 'danger',
+                                allow_dismiss: false,
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight',
+                                },
+                            });
+                            $.notify({
+                                icon: 'glyphicon glyphicon-star',
+                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                    '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                    '<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>\n' +
+                                    '</svg> Tashkilotni o\'chirishda xatolik yuz berdi!'
+                            });
+                        }
+                    }
+                })
+            })
+
+            $('#saveBtn').on('click', function () {
+
+                if ($('#title').val() == '') {
+                    $('#title').css("border-bottom", "2px solid red")
+                } else if ($('#director').val() == '') {
+                    $('#director').css("border-bottom", "2px solid red")
+                } else if ($('#identification_number').val() == '') {
+                    $('#identification_number').css("border-bottom", "2px solid red")
+                } else if ($('#legal_address').val() == '') {
+                    $('#legal_address').css("border-bottom", "2px solid red")
+                } else if ($('#address_of_garage').val() == '') {
+                    $('#address_of_garage').css("border-bottom", "2px solid red")
+                } else {
+
+                    // get csrftoken from cookie
+                    function getCookie(name) {
+                        var cookieValue = null;
+                        if (document.cookie && document.cookie !== '') {
+                            var cookies = document.cookie.split(';');
+                            for (var i = 0; i < cookies.length; i++) {
+                                var cookie = jQuery.trim(cookies[i]);
+                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                    break;
+                                }
+                            }
+                        }
+                        return cookieValue;
+                    }
+
+                    var csrftoken = getCookie('csrftoken');
+
+                    // add cookie ajax headers
+
+                    $.ajaxSetup({
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                        }
+                    })
+
+                    // add photo in FormData
+                    var fd = new FormData();
+                    if ($('#license_photo')[0].files[0]) {
+                        var license_photo = $('#license_photo')[0].files[0];
+                        fd.append('license_photo', license_photo);
+                    }
+
+                    if ($('#certificate_photo')[0].files[0]) {
+                        var certificate_photo = $('#certificate_photo')[0].files[0];
+                        fd.append('certificate_photo', certificate_photo);
+                    }
+
+                    fd.append('title', $('#title').val());
+                    fd.append('director', $('#director').val());
+                    fd.append('identification_number', $('#identification_number').val());
+                    fd.append('legal_address', $('#legal_address').val());
+                    fd.append('address_of_garage', $('#address_of_garage').val());
+
+                    // ajax POST request
+                    var url = "{% url 'user:edit_organization' organization_id=12345 %}".replace(/12345/, id.toString());
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response == "True") {
+
+                                $.notifyDefaults({
+                                    type: 'success',
+                                    allow_dismiss: false,
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight',
+                                    },
+                                });
+                                $.notify({
+                                    icon: 'glyphicon glyphicon-star',
+                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                        '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                        '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                        '</svg> Tashkilot muvaffaqiyatli tahrirlandi!'
+                                });
+
+                                setTimeout(function () {
+                                    window.location.href = '{% url "user:view_organizations" %}'
+                                }, 1500);
+                            }
+                        }
+                    })
+                }
+            })
+
+            $(document).on('focusout', '#title, #director, #identification_number, #legal_address, #address_of_garage', function (e) {
+                if (e.target.value !== '') {
+                    $(e.target).css("border-bottom", "2px solid green")
+                } else {
+                    $(e.target).css("border-bottom", "2px solid red")
+                }
+            })
+
+
+        })
+
+    </script>
+{% endblock bottom %}

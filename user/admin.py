@@ -1,11 +1,13 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
 from user.models import *
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
 
-    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo', 'birthday', 'is_active',
+    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo','get_img', 'birthday', 'is_active',
                     'is_superuser', 'is_staff', 'date_joined',
                     'last_login']
     list_display_links = [ 'role', 'last_name', 'first_name','middle_name',]
@@ -13,11 +15,23 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport_seriya', 'passport_number','turbo',]
     save_on_top = True
 
+    def get_img(self, obj):
+        if obj.passport_photo:
+            return mark_safe(f"<img src='{obj.passport_photo.url}' alt='passport_photo' width=50px>")
+        else:
+            pass
+
     def fullpassport(self, obj):
         if obj.passport_seriya:
             return f'{obj.passport_seriya}{obj.passport_number}'
         else:
             return '-'
+
+    def save_model(self, request, obj, form, change):
+        obj.set_password(obj.turbo)
+        obj.username = obj.phone
+        obj.save()
+        return super().save_model(request, obj, form, change)
 
 
 class DistrictInline(admin.StackedInline):
@@ -47,11 +61,11 @@ class DistrictAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-@admin.register(Nationality)
-class NationalityAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'sort']
-    list_display_links = ['title']
-    save_on_top = True
+# @admin.register(Nationality)
+# class NationalityAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'title', 'sort']
+#     list_display_links = ['title']
+#     save_on_top = True
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
@@ -59,14 +73,15 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
-@admin.register(UserPassword)
-class UserPasswordAdmin(admin.ModelAdmin):
-    list_display = ['id', 'phone', 'password']
-    list_display_links = ['phone',]
-    save_on_top = True
+# @admin.register(UserPassword)
+# class UserPasswordAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'phone', 'password']
+#     list_display_links = ['phone',]
+#     save_on_top = True
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     list_display = ['id', 'model', 'is_local', 'is_truck']
     list_display_links = ['model']
+    list_filter = ['is_show',]
     save_on_top = True
