@@ -37,18 +37,29 @@
                         <th scope="col">Holati</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td><a href="{% url 'application:detail' %}">Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam
-                            olish</a></td>
-                        <td>Sirojiddin Yoqubov</td>
-                        <td>02.05.2020</td>
-                        <td>04.05.2020</td>
-                        <td><a href="#">Yuklab olish</a></td>
-                        <td class="text-danger">Rad etilgan</td>
-                    </tr>
-                    </tbody>
+                    {% for application in applications %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <a href="{% url 'application:detail' application.id %}">{{ application.account_statement.service_name }}</a>
+                            </td>
+                            <td>{% if application.account_statment.organization %}
+                                {{ application.account_statment.organization }}{% else %}
+                                {{ application.created_user }}{% endif %}</td>
+                            <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                            <td>{{ application.updated_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                            <td><a href="/media/applications/{{ application.id }}.docx">Yuklab olish</a></td>
+                            {% if app.process == '1' %}
+                                <td style="color: #0f6674">Jarayonda</td>
+                            {% elif app.process == '2' %}
+                                <td style="color: #44ff00">Qabul qilindi</td>
+                            {% elif app.process == '3' %}
+                                <td style="color: #ff0318">Rad etildi</td>
+                            {% endif %}
+                        </tr>
+                        </tbody>
+                    {% endfor %}
                 </table>
             </div>
             <!--/.col (left) -->

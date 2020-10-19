@@ -5,7 +5,7 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -19,21 +19,33 @@ from user.utils import render_to_pdf
 
 @login_required
 def index(request):
-    return render(request, 'application/index.html')
+    applications = Application.objects.all()
+    context = {
+        'applications': applications
+    }
+    return render(request, 'application/index.html', context)
 
 
 @login_required
-def detail(request):
-    return render(request, 'application/detail.html')
+def detail(request, id):
+    application = get_object_or_404(Application, id=id)
+    context = {
+        'application': application
+    }
+    return render(request, 'application/detail.html', context)
+
+
+def admin_url_params_encoded(request):
+    pass
 
 
 @login_required
 def application_pdf(request, id):
     application = get_object_or_404(Application, id=id)
     context = {
-        'now_date': datetime.date.today(),
-        'created_date': application.created_date.date(),
-        'updated_date': application.updated_date.date(),
+        'now_date': f'{datetime.date.today().day}.{datetime.date.today().month}.{datetime.date.today().year}',
+        'created_date': f'{application.created_date.day}.{application.created_date.month}.{application.created_date.year}',
+        'updated_date': f'{application.updated_date.day}.{application.updated_date.month}.{application.updated_date.year}',
         'app': application
     }
     template_name = 'application/application_detail_pdf.html'

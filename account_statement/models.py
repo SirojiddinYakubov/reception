@@ -31,6 +31,7 @@ class AccountStatement(models.Model):
     date_conclusion_contract = models.DateField('Shartnoma tuzilgan sana', null=True)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
+    service_name = models.CharField(verbose_name='Xizmat nomi', max_length=500, blank=True, default='Xisob ma\'lumotnomasiga asosan avtotransport vositasiga raqam olish')
 
 
     class Meta:

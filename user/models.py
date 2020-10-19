@@ -221,6 +221,7 @@ class Car(models.Model):
     model = models.CharField('Nomi', max_length=50)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
+    is_show = models.BooleanField(default=False)
     body_type = models.CharField('Kuzov turi', max_length=100, blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
@@ -230,7 +231,7 @@ class Car(models.Model):
     additionally = models.CharField('Qo\'shimcha jihozlar', max_length=100, null=True, blank=True)
     given_number = models.CharField('Berilgan davlat raqami', max_length=30, blank=True)
     given_technical_passport = models.CharField('Berilgan texpassport seriyasi', max_length=30, blank=True)
-    is_show = models.BooleanField(default=False)
+
 
 
     class Meta:
