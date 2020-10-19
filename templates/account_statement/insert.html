@@ -418,7 +418,7 @@
                                                 <tbody>
                                                 <tr>
                                                     <th scope="row">Ariza raqami:</th>
-                                                    <td id="application_id" class="text-danger"></td>
+                                                    <td id="application_id"></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Tekshirish uchun parol:</th>
@@ -647,8 +647,8 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <th scope="row"><p class="text-danger">Rad etilgan</p></th>
-                                                    <td>Hujjatlar to'liq bo'lmaganligi sababli</td>
+                                                    <th scope="row"><p style="color: #0f6674">Jarayonda</p></th>
+                                                    <td>O'rganib chiqilmoqda</td>
                                                 </tr>
 
                                                 </tbody>
@@ -1167,7 +1167,7 @@
             })
 
             $('#application_render_pdf').on('click', function () {
-                window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, $('#application_id').html().toString());
+                var url = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, $('#application_id').html().toString());
             })
 
 

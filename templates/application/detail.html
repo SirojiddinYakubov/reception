@@ -13,8 +13,46 @@
           rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/account_statement/style.css' %}">
 
+    <style>
+        #applicationPhotoPreview {
+            padding: 0;
+            margin: 0;
+            width: 200px;
+            border: 5px dashed #4c73d4;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
 
+            color: #4c4c4c;
+
+        }
+
+        #applicationPhotoPreview > label {
+            margin: 0;
+            padding: 30px;
+            color: red;
+            cursor: pointer;
+        }
+
+        #applicationRemove {
+            display: block;
+
+
+            color: #4e4e4e;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #applicationRemove:hover {
+            display: block;
+            color: #000000;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    </style>
 {% endblock top %}
+
 {% block content %}
 
 
@@ -28,6 +66,19 @@
         </div>
     </section>
     <div class="container bootstrap snippets bootdey mt-2">
+
+        <div class="row mb-2">
+            <div class="col-4"><label class="not_copy" for="applicationPhoto">Arizani qayta yuklang</label>
+                <input style="border: none" type="file" name="photo" accept=".jpg, .jpeg, .png, .gif, .docx, .doc"/></div>
+
+
+            <div class="col-4 mt-4">
+                <button class="btn btn-outline-primary">Saqlash</button>
+            </div>
+
+        </div>
+
+
         <div class="div">
             <div class="col-12" style="font-size: 0.9em">
                 <div class="panel-group drop-accordion" id="accordion" role="tablist"
@@ -52,37 +103,36 @@
                                     <tbody>
                                     <tr>
                                         <th scope="row">Ariza raqami:</th>
-                                        <td id="application_id" class="text-danger"></td>
+                                        <td>{{ application.id }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Tekshirish uchun parol:</th>
-                                        <td id="application_pass" class="text-danger"></td>
+                                        <td class="text-danger">{{ application.password }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Xizmat nomi:</th>
-                                        <td>Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam
-                                            olish
-                                        </td>
+                                        <td>{{ application.account_statement.service_name }}</td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">Yaratdi:</th>
-                                        <td id="application_created_user"></td>
+                                        <td>{{ application.created_user }}</td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">Ariza nusxasi</th>
-                                        <td><a class="copy_application" href="#">Yuklab olish</a></td>
+                                        <td><a href="/media/applications/{{ application.id }}.docx">Yuklab olish</a>
+                                        </td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">Berilgan sana:</th>
-                                        <td id="created_date"></td>
+                                        <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">Oxirgi o'zgarish sanasi:</th>
-                                        <td id="updated_date"></td>
+                                        <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -106,50 +156,47 @@
                             <div class="panel-body">
                                 <table id="created_is_person" class="table table-bordered">
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">Familiya:</th>
-                                        <td>{{ request.user.last_name }}</td>
-                                    </tr>
+                                    {% if application.account_statement.organization %}
+                                        <tr>
+                                            <th scope="row">Tashkilot:</th>
+                                            <td>{{ application.account_statement.organization.title }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <th scope="row">Ism:</th>
-                                        <td>{{ request.user.first_name }}</td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">Rahbari:</th>
+                                            <td>{{ application.account_statement.organization.director }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <th scope="row">Otasining ismi:</th>
-                                        <td>{{ request.user.middle_name }}</td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">STIR raqam:</th>
+                                            <td>{{ application.account_statement.organization.identification_number }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <th scope="row">Passport:</th>
-                                        <td>{{ request.user.passport_seriya }} {{ request.user.passport_number }}</td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">Yuridik manzil:</th>
+                                            <td>{{ application.account_statement.organization.legal_address }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <th scope="row">Familiya:</th>
+                                            <td>{{ request.user.last_name }}</td>
+                                        </tr>
 
-                                    </tbody>
-                                </table>
-                                <table id="created_is_organization" style="display: none" class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">Tashkilot:</th>
-                                        <td id="organization_title"></td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">Ism:</th>
+                                            <td>{{ request.user.first_name }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <th scope="row">Rahbari:</th>
-                                        <td id="organization_director"></td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">Otasining ismi:</th>
+                                            <td>{{ request.user.middle_name }}</td>
+                                        </tr>
 
-                                    <tr>
-                                        <th scope="row">STIR raqam:</th>
-                                        <td id="organization_identification_number"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Yuridik manzil:</th>
-                                        <td id="organization_legal_address"></td>
-                                    </tr>
-
+                                        <tr>
+                                            <th scope="row">Passport:</th>
+                                            <td>{{ request.user.passport_seriya }} {{ request.user.passport_number }}</td>
+                                        </tr>
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>
@@ -186,7 +233,8 @@
                                         <td>1</td>
                                         <th scope="row">Ariza nusxasi</th>
                                         <td>Yaxshi</td>
-                                        <td><a class="copy_application" href="#">Yuklab olish</a></td>
+                                        <td><a target="_blank" href="/media/applications/{{ application.id }}.docx">Yuklab
+                                            olish</a></td>
                                         <td>56345</td>
                                     </tr>
 
@@ -194,7 +242,8 @@
                                         <td>1</td>
                                         <th scope="row">Passport</th>
                                         <td>Yaxshi</td>
-                                        <td><a href="#" target="_blank" id="passport_photo">Yuklab olish</a></td>
+                                        <td><a href="{{ application.created_user.passport_photo.url }}" target="_blank">Yuklab
+                                            olish</a></td>
                                         <td>12345</td>
                                     </tr>
 
@@ -202,8 +251,12 @@
                                         <td>2</td>
                                         <th scope="row">Xisob ma'lumotnomasi</th>
                                         <td>Yaxshi</td>
-                                        <td><a href="#" target="_blank" id="account_statement_photo">Yuklab olish</a>
+
+                                        <td><a href="{{ application.account_statement.cert_photo.url }}"
+                                               target="_blank">Yuklab olish</a>
+
                                         </td>
+
                                         <td>56845</td>
                                     </tr>
                                     </tbody>
@@ -279,8 +332,16 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row"><p class="text-danger">Rad etilgan</p></th>
-                                        <td>Hujjatlar to'liq bo'lmaganligi sababli</td>
+                                        {% if application.process == '1' %}
+                                            <th scope="row" style="color: #0f6674">Jarayonda</th>
+                                        {% elif application.process == '2' %}
+                                            <th scope="row" style="color: #44ff00">Qabul qilindi</th>
+                                        {% elif application.process == '3' %}
+                                            <th scope="row" style="color: #ff0318">Rad etildi</th>
+                                        {% endif %}
+                                        <th style="color: #0f6674">
+                                            {% if application.process_sms %}{{ application.process_sms }}{% else %}
+                                                O'rganib chiqilmoqda{% endif %}</th>
                                     </tr>
 
                                     </tbody>
@@ -295,5 +356,41 @@
     </div>
 {% endblock content %}
 {% block bottom %}
+    <script type="text/javascript">
+        $('#collapseOne').collapse('show');
 
+        $('#applicationPhoto').on('change', function (event) {
+            var files = event.target.files; //FileList object
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                //Only pics
+                if (!file.type.match('image'))
+                    continue;
+                var picReader = new FileReader();
+                picReader.addEventListener("load", function (event) {
+                    var picFile = event.target;
+                    //  var div = document.createElement("div");
+                    $('#applicationPhotoPreview label').hide()
+                    $('#applicationThumbnail').show()
+                    $('#applicationRemove').show()
+                    $('#applicationThumbnail').attr('src', picFile.result)
+                    $('#applicationPhotoError').hide()
+                    // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
+                    //   "title='Image'/><span  id='remove'>O'chirish</span>";
+                    //  result.insertBefore(div, null);
+                    $("#applicationRemove").click(function () {
+                        $('#applicationPhotoPreview label').show()
+                        $('#applicationThumbnail').hide()
+                        $('#applicationRemove').hide()
+                        $('#applicationPhotoError').show()
+                    });
+                });
+                //Read the image
+                picReader.readAsDataURL(file);
+            }
+        })
+
+
+    </script>
 {% endblock bottom %}
