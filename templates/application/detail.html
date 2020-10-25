@@ -13,44 +13,6 @@
           rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/account_statement/style.css' %}">
 
-    <style>
-        #applicationPhotoPreview {
-            padding: 0;
-            margin: 0;
-            width: 200px;
-            border: 5px dashed #4c73d4;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-
-            color: #4c4c4c;
-
-        }
-
-        #applicationPhotoPreview > label {
-            margin: 0;
-            padding: 30px;
-            color: red;
-            cursor: pointer;
-        }
-
-        #applicationRemove {
-            display: block;
-
-
-            color: #4e4e4e;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        #applicationRemove:hover {
-            display: block;
-            color: #000000;
-            text-align: center;
-            cursor: pointer;
-        }
-
-    </style>
 {% endblock top %}
 
 {% block content %}
@@ -65,18 +27,20 @@
             </div>
         </div>
     </section>
+
     <div class="container bootstrap snippets bootdey mt-2">
 
-        <div class="row mb-2">
+        <form class="row mb-2" action="{% url 'application:detail' application.id %}" enctype="multipart/form-data"
+              method="post">
+            {% csrf_token %}
             <div class="col-4"><label class="not_copy" for="applicationPhoto">Arizani qayta yuklang</label>
-                <input style="border: none" type="file" name="photo" accept=".jpg, .jpeg, .png, .gif, .docx, .doc"/></div>
-
-
-            <div class="col-4 mt-4">
-                <button class="btn btn-outline-primary">Saqlash</button>
+                <input style="border: none" type="file" name="photo" accept=".jpg, .jpeg, .png, .gif, .docx, .doc"/>
             </div>
 
-        </div>
+            <div class="col-4 mt-4">
+                <button type="submit" class="btn btn-outline-primary">Saqlash</button>
+            </div>
+        </form>
 
 
         <div class="div">
@@ -358,39 +322,6 @@
 {% block bottom %}
     <script type="text/javascript">
         $('#collapseOne').collapse('show');
-
-        $('#applicationPhoto').on('change', function (event) {
-            var files = event.target.files; //FileList object
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-
-                //Only pics
-                if (!file.type.match('image'))
-                    continue;
-                var picReader = new FileReader();
-                picReader.addEventListener("load", function (event) {
-                    var picFile = event.target;
-                    //  var div = document.createElement("div");
-                    $('#applicationPhotoPreview label').hide()
-                    $('#applicationThumbnail').show()
-                    $('#applicationRemove').show()
-                    $('#applicationThumbnail').attr('src', picFile.result)
-                    $('#applicationPhotoError').hide()
-                    // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
-                    //   "title='Image'/><span  id='remove'>O'chirish</span>";
-                    //  result.insertBefore(div, null);
-                    $("#applicationRemove").click(function () {
-                        $('#applicationPhotoPreview label').show()
-                        $('#applicationThumbnail').hide()
-                        $('#applicationRemove').hide()
-                        $('#applicationPhotoError').show()
-                    });
-                });
-                //Read the image
-                picReader.readAsDataURL(file);
-            }
-        })
-
 
     </script>
 {% endblock bottom %}

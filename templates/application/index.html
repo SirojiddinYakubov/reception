@@ -50,11 +50,11 @@
                             <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                             <td>{{ application.updated_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                             <td><a href="/media/applications/{{ application.id }}.docx">Yuklab olish</a></td>
-                            {% if app.process == '1' %}
+                            {% if application.process == '1' %}
                                 <td style="color: #0f6674">Jarayonda</td>
-                            {% elif app.process == '2' %}
+                            {% elif application.process == '2' %}
                                 <td style="color: #44ff00">Qabul qilindi</td>
-                            {% elif app.process == '3' %}
+                            {% elif application.process == '3' %}
                                 <td style="color: #ff0318">Rad etildi</td>
                             {% endif %}
                         </tr>
