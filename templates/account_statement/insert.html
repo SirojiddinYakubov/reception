@@ -1181,7 +1181,7 @@
             })
 
             $('#application_render_pdf').on('click', function () {
-                var url = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, $('#application_id').html().toString());
+                window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, $('#application_id').html().toString());
             })
 
 

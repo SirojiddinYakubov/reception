@@ -217,11 +217,27 @@ class Organization(models.Model):
         return super().save(*args, **kwargs)
 
 
-class Car(models.Model):
+class CarModel(models.Model):
     model = models.CharField('Nomi', max_length=50)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
-    is_show = models.BooleanField(default=False)
+
+
+
+
+    class Meta:
+        verbose_name = 'Avtomobil rusumi'
+        verbose_name_plural = 'Avtomobillar rusumi'
+
+    def __str__(self):
+        return self.model
+
+
+
+
+class Car(models.Model):
+    car_model = models.ForeignKey(CarModel, "Model",  on_delete=models.CASCADE)
+
     body_type = models.CharField('Kuzov turi', max_length=100, blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)

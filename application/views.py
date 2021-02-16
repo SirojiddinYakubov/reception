@@ -32,6 +32,11 @@ def detail(request, id):
     context = {
         'application': application
     }
+
+    if request.POST:
+        file = request.FILES.get('photo')
+        application.file = file
+        application.save()
     return render(request, 'application/detail.html', context)
 
 

@@ -382,10 +382,10 @@ def get_code(request):
             user = User.objects.create(username=phone, phone=phone, password=password, turbo=password)
             user.set_password(password)
             user.save()
-        # msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
-        # msg = msg.replace(" ", "+")
-        # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
-        # response = requests.get(url)
+        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
+        msg = msg.replace(" ", "+")
+        url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
+        response = requests.get(url)
         print(password)
         # for key, value in request.session.items():
         #     print(key, value)
