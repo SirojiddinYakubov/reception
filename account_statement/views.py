@@ -14,7 +14,7 @@ from docxtpl import DocxTemplate
 
 @login_required
 def insert(request):
-    cars = Car.objects.filter(is_show=True).order_by('model')
+    cars = CarModel.objects.all()
     organizations = Organization.objects.filter(created_user=request.user, is_active=True)
     context = {
         'cars': cars,
@@ -43,9 +43,9 @@ def insert(request):
             if form.person_type == 'E':
                 form.organization = get_object_or_404(Organization, id=request.POST['organization'] or None)
 
-            form.car = get_object_or_404(Car, id=request.POST['car'])
+            carModel = get_object_or_404(CarModel, id=request.POST['car'])
             form.user = User.objects.get(id=request.user.id)
-            if form.car.is_truck == True:
+            if carModel.is_truck == True:
                 form.chassis_number = chassis_number
             form.save()
             return redirect(reverse_lazy('account_statement:add_photo', kwargs={'id': form.id}))
@@ -86,7 +86,8 @@ def export_to_word(request, id):
 def get_car_type(request):
     if request.is_ajax():
         car_id = request.GET.get('car', None)
-        car = Car.objects.get(id=car_id)
+        car = CarModel.objects.get(id=car_id)
+
         if car.is_truck:
             message = 1
         else:

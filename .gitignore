@@ -16,3 +16,4 @@ application/__pycache__/
 application/migrations/__pycache__/
 application/migrations/0001_initial.py
 application/migrations/
+__pycache__/

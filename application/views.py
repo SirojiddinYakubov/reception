@@ -13,7 +13,7 @@ from docxtpl import DocxTemplate
 
 from account_statement.models import AccountStatement
 from application.models import Application
-from user.models import User, Organization, Car
+from user.models import *
 from user.utils import render_to_pdf
 
 
@@ -67,6 +67,7 @@ def application_pdf(request, id):
 def save_application_information(request):
     if request.is_ajax():
         # get request arg
+        print(request.POST)
         person_type = request.POST.get('person_type')
         engine_number = request.POST.get('engine_number')
         body_number = request.POST.get('body_number')
@@ -78,10 +79,10 @@ def save_application_information(request):
         date_conclusion_contract = request.POST.get('date_conclusion_contract')
         accountStatementPhoto = request.FILES.get('accountStatementPhoto')
         user = get_object_or_404(User, id=request.user.id)
-        get_car = get_object_or_404(Car, id=request.POST.get('car'))
+        get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
         # create car
-        car = Car.objects.create(model=get_car.model, is_local=get_car.is_local, is_truck=get_car.is_truck)
+        car = Car.objects.create(model=get_car)
         if request.POST.get('body_type') and request.POST.get('chassis_number'):
             car.body_type = request.POST.get('body_type')
             car.chassis_number = request.POST.get('chassis_number')
@@ -119,12 +120,12 @@ def save_application_information(request):
 
         }
 
-        if car.is_truck:
+        if get_car.is_truck:
             context.update(type='Юк')
         else:
             context.update(type='Енгил')
 
-        if car.is_local:
+        if get_car.is_local:
             context.update(local='Махаллий')
         else:
             context.update(local="Чет эл")

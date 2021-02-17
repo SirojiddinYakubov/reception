@@ -28,636 +28,650 @@
     </section>
     <div class="container-fluid mt-3">
 
-    <div id="smartwizard">
-        <ul>
-            <li id="nav-1" style="width: 25%"><a href="#step-1">Qadam 1<br/><small>Foydalanuvchi</small></a></li>
-            <li id="nav-2" style="width: 25%;"><a href="#step-2">Qadam 2<br/><small>Avtomashina</small></a></li>
-            <li id="nav-3" style="width: 25%"><a href="#step-3">Qadam 3<br/><small>To'ov</small></a></li>
-            <li id="nav-4" style="width: 25%"><a href="#step-4">Qadam 4<br/><small>Holat</small></a></li>
-        </ul>
-        <div class="mt-4">
-            <div id="step-1">
-                <div class="row">
-                    <div class="col-12">
-                        <label class="not_copy">Foydalanuvchini tanlang?</label>
-                        <select class="form-control" style="width: 100%;" id="person_type" required>
-                            <option value="J">Jismoniy shaxs</option>
-                            <option value="Y">Yuridik shaxs</option>
-                        </select>
-                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em" id="organization_div_alert"
-                           class="text-danger not_copy">
-                            Sizda tashkilot mavjud emas. <a href="{% url 'user:add_organization' %}">Tashkilotni
-                            qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling
-                        </p>
-                    </div>
-                    <div class="col-12 mt-3" id="div_organization">
-                        {% if organizations.count > 0 %}
-                            <div class="form-group">
-                                <label class="not_copy">{% trans 'Korxonani tanlang:' %}</label>
-                                <select id="organization" name="organization" class="form-control select2"
-                                        style="width: 100%;">
-                                    {% for organization in organizations %}
-                                        <option value="{{ organization.id }}">{{ organization.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div id="msdiv1">
+        <div id="smartwizard">
+            <ul>
+                <li id="nav-1" style="width: 25%"><a href="#step-1">Qadam 1<br/><small>Foydalanuvchi</small></a></li>
+                <li id="nav-2" style="width: 25%;"><a href="#step-2">Qadam 2<br/><small>Avtomashina</small></a></li>
+                <li id="nav-3" style="width: 25%"><a href="#step-3">Qadam 3<br/><small>To'ov</small></a></li>
+                <li id="nav-4" style="width: 25%"><a href="#step-4">Qadam 4<br/><small>Holat</small></a></li>
+            </ul>
+            <div class="mt-4">
+                <div id="step-1">
                     <div class="row">
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label class="not_copy">{% trans 'Familiya:' %}</label>
-                            <input type="text" class="form-control"
-                                   placeholder="{% if request.user.last_name %}{{ request.user.last_name }}{% endif %}"
-                                   disabled>
+                        <div class="col-12">
+                            <label class="not_copy">Foydalanuvchini tanlang?</label>
+                            <select class="form-control" style="width: 100%;" id="person_type" required>
+                                <option value="J">Jismoniy shaxs</option>
+                                <option value="Y">Yuridik shaxs</option>
+                            </select>
+                            <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em" id="organization_div_alert"
+                               class="text-danger not_copy">
+                                Sizda tashkilot mavjud emas. <a href="{% url 'user:add_organization' %}">Tashkilotni
+                                qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling
+                            </p>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label class="not_copy">{% trans 'Ism:' %}</label>
-                            <input type="text" class="form-control" placeholder="
+                        <div class="col-12 mt-3" id="div_organization">
+                            {% if organizations.count > 0 %}
+                                <div class="form-group">
+                                    <label class="not_copy">{% trans 'Korxonani tanlang:' %}</label>
+                                    <select id="organization" name="organization" class="form-control select2"
+                                            style="width: 100%;">
+                                        {% for organization in organizations %}
+                                            <option value="{{ organization.id }}">{{ organization.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div id="msdiv1">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label class="not_copy">{% trans 'Familiya:' %}</label>
+                                <input type="text" class="form-control"
+                                       placeholder="
+                                               {% if request.user.last_name %}{{ request.user.last_name }}{% endif %}"
+                                       disabled>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label class="not_copy">{% trans 'Ism:' %}</label>
+                                <input type="text" class="form-control" placeholder="
                                     {% if request.user.first_name %}{{ request.user.first_name }}{% endif %}"
-                                   disabled>
+                                       disabled>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label class="not_copy mt-2">{% trans 'Otasining ismi:' %}</label>
-                            <input type="text" class="form-control" placeholder="
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label class="not_copy mt-2">{% trans 'Otasining ismi:' %}</label>
+                                <input type="text" class="form-control" placeholder="
                                     {% if request.user.middle_name %}{{ request.user.middle_name }}{% endif %}"
-                                   disabled>
+                                       disabled>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label class="not_copy mt-2">{% trans 'Passport:' %}</label>
+                                <input type="text" class="form-control" placeholder="
+
+
+
+
+
+
+
+
+
+
+
+                                        {% if request.user.passport_seriya and request.user.passport_number %}{{ request.user.passport_seriya }}{{ request.user.passport_number }}{% endif %}"
+                                       disabled>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label class="not_copy mt-2">{% trans 'Passport:' %}</label>
-                            <input type="text" class="form-control" placeholder="
 
-
-
-
-                                    {% if request.user.passport_seriya and request.user.passport_number %}{{ request.user.passport_seriya }}{{ request.user.passport_number }}{% endif %}"
-                                   disabled>
+                    </div>
+                    <div id="msdiv2" style="display: none">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label>{% trans 'Rahbar:' %}</label>
+                                <input type="text" id="director" class="form-control" placeholder="" disabled>
+                            </div>
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label>{% trans 'STIR raqam:' %}</label>
+                                <input type="text" id="identification_number" class="form-control" placeholder=""
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                <label>{% trans 'Yuridik manzil:' %}</label>
+                                <input type="text" id="legal_address" class="form-control" placeholder="" disabled>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="text-right mt-4">
+                        <button id="next1" class="col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 btn btn-primary">
+                            Keyingi
+                        </button>
+                    </div>
                 </div>
-                <div id="msdiv2" style="display: none">
+                <div id="step-2">
+                    <div class="form-group">
+                        <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
+                        <select id="car" name="car" class="form-control select2" style="width: 100%;">
+                            {% for car in cars %}
+                                <option value="{{ car.id }}">{{ car.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label>{% trans 'Rahbar:' %}</label>
-                            <input type="text" id="director" class="form-control" placeholder="" disabled>
+                            <label class="label_required" for="engine_number">{% trans 'Dvigitel raqami' %}</label>
+                            <input type="text" id="engine_number"
+                                   placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}">
                         </div>
                         <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label>{% trans 'STIR raqam:' %}</label>
-                            <input type="text" id="identification_number" class="form-control" placeholder=""
-                                   disabled>
+                            <label class="label_required" for="body_number">{% trans 'Kuzov raqami' %}</label>
+                            <input type="text" id="body_number"
+                                   placeholder="{% trans 'Masalan: XWBJF69VELA102923' %}">
                         </div>
                     </div>
+
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2" id="chassis_number_div">
+                            <label for="chassis_number" class="label_required">{% trans 'Shassi raqami' %}</label>
+                            <input type="text" id="chassis_number"
+                                   placeholder="{% trans 'Masalan: X8945642519874656' %}">
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2" id="body_type_div">
+                            <label for="body_type" class="label_required">{% trans 'Kuzov turi' %}</label>
+                            <input type="text" id="body_type"
+                                   placeholder="{% trans 'Kuzov turini kiriting' %}">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                            <label>{% trans 'Yuridik manzil:' %}</label>
-                            <input type="text" id="legal_address" class="form-control" placeholder="" disabled>
+                            <label class="label_required" for="color">{% trans 'Rangi' %}</label>
+                            <input type="text" id="color"
+                                   placeholder="{% trans 'Masalan: GAZ (oq)' %}">
+                        </div>
+
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <label class="label_required" for="made_year">{% trans 'Yili' %}</label>
+                            <input type="number" id="made_year"
+                                   placeholder="{% trans 'Masalan: 2020' %}">
                         </div>
                     </div>
-                </div>
-                <div class="text-right mt-4">
-                    <button id="next1" class="col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 btn btn-primary">
-                        Keyingi
-                    </button>
-                </div>
-            </div>
-            <div id="step-2">
-                <div class="form-group">
-                    <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
-                    <select id="car" name="car" class="form-control select2" style="width: 100%;">
-                        {% for car in cars %}
-                            <option value="{{ car.id }}">{{ car.model }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
 
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required" for="engine_number">{% trans 'Dvigitel raqami' %}</label>
-                        <input type="text" id="engine_number"
-                               placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}">
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required" for="body_number">{% trans 'Kuzov raqami' %}</label>
-                        <input type="text" id="body_number"
-                               placeholder="{% trans 'Masalan: XWBJF69VELA102923' %}">
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2" id="chassis_number_div">
-                        <label for="chassis_number" class="label_required">{% trans 'Shassi raqami' %}</label>
-                        <input type="text" id="chassis_number"
-                               placeholder="{% trans 'Masalan: X8945642519874656' %}">
-                    </div>
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2" id="body_type_div">
-                        <label for="body_type" class="label_required">{% trans 'Kuzov turi' %}</label>
-                        <input type="text" id="body_type"
-                               placeholder="{% trans 'Kuzov turini kiriting' %}">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required" for="color">{% trans 'Rangi' %}</label>
-                        <input type="text" id="color"
-                               placeholder="{% trans 'Masalan: GAZ (oq)' %}">
-                    </div>
-
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required" for="made_year">{% trans 'Yili' %}</label>
-                        <input type="number" id="made_year"
-                               placeholder="{% trans 'Masalan: 2020' %}">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required"
-                               for="additionality">{% trans "Qo'shimcha jihozlar" %}</label>
-                        <input type="text" id="additionality"
-                               placeholder="{% trans "Masalan: MAXSUS O'QUV" %}">
-                    </div>
-
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required"
-                               for="cert_seriya">{% trans "Hisob ma'lumotnomasi seriyasi" %}</label>
-                        <input type="text" id="cert_seriya"
-                               placeholder="{% trans 'Masalan: AAC' %}">
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required"
-                               for="cert_number">{% trans "Hisob ma'lumotnomasi raqami" %}</label>
-                        <input type="number" id="cert_number"
-                               placeholder="{% trans 'Masalan: 0012345' %}" name="cert_number">
-                    </div>
-
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <label class="label_required"
-                               for="date_conclusion_contract">{% trans "Shartnoma tuzilgan sana" %}</label>
-                        {#                            <div class="input-group-prepend">#}
-                        {#                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>#}
-                        {#                            </div>#}
-                        <input type="date" name="date_conclusion_contract" id='date_conclusion_contract'
-                               style="margin-top: 0"
-                               data-inputmask-alias="datetime"
-                               data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                        <div id="accountStatementPhotoPreview">
-                            <label class="not_copy" for="accountStatementPhoto">Xisob ma'lumotnoma
-                                suratini yuklang</label>
-
-                            <input type="file" name="photo" hidden
-                                   id="accountStatementPhoto" accept=".jpg, .jpeg, .png, .gif"/>
-
-                            <img style='width: 120px; height: auto;display: none' id='accountStatementThumbnail'
-                                 src="" title='Image'/>
-                            <span style="display: none" id='accountStatementRemove'>O'chirish</span>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <label class="label_required"
+                                   for="additionality">{% trans "Qo'shimcha jihozlar" %}</label>
+                            <input type="text" id="additionality"
+                                   placeholder="{% trans "Masalan: MAXSUS O'QUV" %}">
                         </div>
-                        <p id="accountStatementPhotoError"
-                           style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
-                           class="form-text text-danger">Xisob ma'lumotnoma surati yuklanmagan</p>
+
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <label class="label_required"
+                                   for="cert_seriya">{% trans "Hisob ma'lumotnomasi seriyasi" %}</label>
+                            <input type="text" id="cert_seriya"
+                                   placeholder="{% trans 'Masalan: AAC' %}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <label class="label_required"
+                                   for="cert_number">{% trans "Hisob ma'lumotnomasi raqami" %}</label>
+                            <input type="number" id="cert_number"
+                                   placeholder="{% trans 'Masalan: 0012345' %}" name="cert_number">
+                        </div>
+
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <label class="label_required"
+                                   for="date_conclusion_contract">{% trans "Shartnoma tuzilgan sana" %}</label>
+                            {#                            <div class="input-group-prepend">#}
+                            {#                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>#}
+                            {#                            </div>#}
+                            <input type="date" name="date_conclusion_contract" id='date_conclusion_contract'
+                                   style="margin-top: 0"
+                                   data-inputmask-alias="datetime"
+                                   data-inputmask-inputformat="dd/mm/yyyy" data-mask placeholder="01/12/2020">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                            <div id="accountStatementPhotoPreview">
+                                <label class="not_copy" for="accountStatementPhoto">Xisob ma'lumotnoma
+                                    suratini yuklang</label>
+
+                                <input type="file" name="photo" hidden
+                                       id="accountStatementPhoto" accept=".jpg, .jpeg, .png, .gif"/>
+
+                                <img style='width: 120px; height: auto;display: none' id='accountStatementThumbnail'
+                                     src="" title='Image'/>
+                                <span style="display: none" id='accountStatementRemove'>O'chirish</span>
+                            </div>
+                            <p id="accountStatementPhotoError"
+                               style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+                               class="form-text text-danger">Xisob ma'lumotnoma surati yuklanmagan</p>
+                        </div>
+                    </div>
+
+
+                    <div class="text-right mt-3">
+                        <button id="prev2" class="btn btn-secondary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
+                            Oldingi
+                        </button>
+                        <button id="next2" class="btn btn-primary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
+                            Keyingi
+                        </button>
                     </div>
                 </div>
-
-
-                <div class="text-right mt-3">
-                    <button id="prev2" class="btn btn-secondary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
-                        Oldingi
-                    </button>
-                    <button id="next2" class="btn btn-primary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
-                        Keyingi
-                    </button>
-                </div>
-            </div>
-            <div id="step-3">
-                <div class="row no-gutters d-flex justify-content-center">
-                    <div class="col-md-10">
-                        <div class="payment-info">
-                            <div class="row">
-                                <h3 class="text-xs-center">To'lov turlari</h3>
-                                <img class="img-fluid cc-img"
-                                     src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
-                            </div>
-
-                            <div class="mt-2">
-                                <label class="credit-card-label label_required">Karta egasi</label>
-                                <input type="text" class="credit-inputs" placeholder="Masalan: Abdullayev Bahtiyor">
-                            </div>
-                            <div class="mt-2">
-                                <label class="credit-card-label label_required">Karta raqami</label>
-                                <input type="text" class="credit-inputs"
-                                       placeholder="0000 0000 0000 0000">
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-6">
-                                    <label class="credit-card-label label_required">Vaqti</label>
-                                    <input type="text" class="credit-inputs" placeholder="12/24">
+                <div id="step-3">
+                    <div class="row no-gutters d-flex justify-content-center">
+                        <div class="col-md-10">
+                            <div class="payment-info">
+                                <div class="row">
+                                    <h3 class="text-xs-center">To'lov turlari</h3>
+                                    <img class="img-fluid cc-img"
+                                         src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="credit-card-label label_required">Maxfiy kod</label>
-                                    <input type="text" class="credit-inputs" placeholder="342">
+
+                                <div class="mt-2">
+                                    <label class="credit-card-label label_required">Karta egasi</label>
+                                    <input type="text" class="credit-inputs" placeholder="Masalan: Abdullayev Bahtiyor">
                                 </div>
-                            </div>
-                            <hr class="line">
-                            <div class="d-flex justify-content-between information">
-                                <span>Yangi raqam uchun</span>
-                                <span>560 000 so'm</span>
-                            </div>
-                            <hr style="margin: 0; background-color: #b6b6b6">
-                            <div class="d-flex justify-content-between information">
-                                <span>Tex passport uchun</span>
-                                <span>350 000 so'm</span>
-                            </div>
-                            <hr style="margin: 0; background-color: #b6b6b6">
-                            <div class="d-flex justify-content-between information">
-                                <span>Ro'yhatlash uchun</span>
-                                <span>22 300 so'm</span>
-                            </div>
-                            <hr style="margin: 0; background-color: #b6b6b6">
-                            <div class="d-flex justify-content-between information">
-                                <span>Qayta ro'yhatlash uchun</span>
-                                <span>44 600 so'm</span>
-                            </div>
-                            <hr style="margin: 0; background-color: #3e3e3e">
-                            <div class="d-flex justify-content-between information">
-                                <span><b>Jami to'lov</b></span>
-                                <span><b>976 900 so'm</b></span>
-                            </div>
-                            <button id="next3"
-                                    class="btn btn-primary btn-block d-flex justify-content-between mt-3 mb-3"
-                                    type="button">
-                                <span>394 600 so'm</span>
-                                <span>To'lash<i class="fa fa-long-arrow-right ml-1"></i>
+                                <div class="mt-2">
+                                    <label class="credit-card-label label_required">Karta raqami</label>
+                                    <input type="text" class="credit-inputs"
+                                           placeholder="0000 0000 0000 0000">
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label class="credit-card-label label_required">Vaqti</label>
+                                        <input type="text" class="credit-inputs" placeholder="12/24">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="credit-card-label label_required">Maxfiy kod</label>
+                                        <input type="text" class="credit-inputs" placeholder="342">
+                                    </div>
+                                </div>
+                                <hr class="line">
+                                <div class="d-flex justify-content-between information">
+                                    <span>Yangi raqam uchun</span>
+                                    <span>560 000 so'm</span>
+                                </div>
+                                <hr style="margin: 0; background-color: #b6b6b6">
+                                <div class="d-flex justify-content-between information">
+                                    <span>Tex passport uchun</span>
+                                    <span>350 000 so'm</span>
+                                </div>
+                                <hr style="margin: 0; background-color: #b6b6b6">
+                                <div class="d-flex justify-content-between information">
+                                    <span>Ro'yhatlash uchun</span>
+                                    <span>22 300 so'm</span>
+                                </div>
+                                <hr style="margin: 0; background-color: #b6b6b6">
+                                <div class="d-flex justify-content-between information">
+                                    <span>Qayta ro'yhatlash uchun</span>
+                                    <span>44 600 so'm</span>
+                                </div>
+                                <hr style="margin: 0; background-color: #3e3e3e">
+                                <div class="d-flex justify-content-between information">
+                                    <span><b>Jami to'lov</b></span>
+                                    <span><b>976 900 so'm</b></span>
+                                </div>
+                                <button id="next3"
+                                        class="btn btn-primary btn-block d-flex justify-content-between mt-3 mb-3"
+                                        type="button">
+                                    <span>394 600 so'm</span>
+                                    <span>To'lash<i class="fa fa-long-arrow-right ml-1"></i>
                                     </span>
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="step-3-2">
-                <div class="alert-danger mb-2 text-center">Ushbu to'lovlarni hisob-raqamingizdan pul ko'chirish yo'li
-                    orqali to'lang!!!
+                <div id="step-3-2">
+                    <div class="alert-danger mb-2 text-center">Ushbu to'lovlarni hisob-raqamingizdan pul ko'chirish
+                        yo'li
+                        orqali to'lang!!!
+                    </div>
+                    <div id="render_div" class="row no-gutters d-flex justify-content-center">
+                        <div class="col-md-10">
+                            <div class="payment-info table-responsive-sm">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Hujjat nomi</th>
+                                        <th scope="col">Hisob raqami</th>
+                                        <th scope="col">Summasi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <th scope="row">Yo'l fondi ot kuchi</th>
+                                        <td>401422860406242342210179</td>
+                                        <td>33 000</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>2</td>
+                                        <th scope="row">Texnik ko'rik</th>
+                                        <td>401422860406242342210179</td>
+                                        <td>22 300</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>3</td>
+                                        <th scope="row">Ro'yhatlash</th>
+                                        <td>401422860406242342210179</td>
+                                        <td>22 300</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>4</td>
+                                        <th scope="row">Qayta ro'yhatlash</th>
+                                        <td>401422860406242342210179</td>
+                                        <td>44 600</td>
+                                    </tr>
+                                    </tbody>
+
+                                    <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <th class="row">Jami:</th>
+                                        <td></td>
+                                        <td><b>366 000</b></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="text-right mt-3">
+                                    <button id="render_pdf"
+                                            class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
+                                        PDF holatda
+                                        chiqarish
+                                    </button>
+                                    <button id="next3-2"
+                                            class="btn btn-primary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
+                                        Keyingi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="render_div" class="row no-gutters d-flex justify-content-center">
-                    <div class="col-md-10">
-                        <div class="payment-info table-responsive-sm">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Hujjat nomi</th>
-                                    <th scope="col">Hisob raqami</th>
-                                    <th scope="col">Summasi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                <div id="step-4">
+                    <div class="container bootstrap snippets bootdey">
+                        <div class="div">
+                            <div class="alert-danger mb-2 text-center">Ariza nusxasini chiqarib olib transport
+                                vositrasini
+                                YXXB noziri ko'rigidan o'tkazgandan so'ng arizani qayta yuklang!!!
+                            </div>
+                            <div class="h2 text-center text-danger">Amallar xronologiyasi</div>
 
-                                <tr>
-                                    <td>1</td>
-                                    <th scope="row">Yo'l fondi ot kuchi</th>
-                                    <td>401422860406242342210179</td>
-                                    <td>33 000</td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <th scope="row">Texnik ko'rik</th>
-                                    <td>401422860406242342210179</td>
-                                    <td>22 300</td>
-                                </tr>
-
-                                <tr>
-                                    <td>3</td>
-                                    <th scope="row">Ro'yhatlash</th>
-                                    <td>401422860406242342210179</td>
-                                    <td>22 300</td>
-                                </tr>
-
-                                <tr>
-                                    <td>4</td>
-                                    <th scope="row">Qayta ro'yhatlash</th>
-                                    <td>401422860406242342210179</td>
-                                    <td>44 600</td>
-                                </tr>
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <th class="row">Jami:</th>
-                                    <td></td>
-                                    <td><b>366 000</b></td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <div class="text-right mt-3">
-                                <button id="render_pdf"
-                                        class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
+                            <div class="text-right mt-2 mb-2">
+                                <button id="application_render_pdf"
+                                        class="btn btn-outline-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
                                     PDF holatda
                                     chiqarish
                                 </button>
-                                <button id="next3-2"
-                                        class="btn btn-primary col-3 col-md-2 col-sm-2 col-lg-2 col-xl-2 m-2">
-                                    Keyingi
-                                </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="step-4">
-                <div class="container bootstrap snippets bootdey">
-                    <div class="div">
-                        <div class="alert-danger mb-2 text-center">Ariza nusxasini chiqarib olib transport vositrasini
-                            YXXB noziri ko'rigidan o'tkazgandan so'ng arizani qayta yuklang!!!
-                        </div>
-                        <div class="h2 text-center text-danger">Amallar xronologiyasi</div>
 
-                        <div class="text-right mt-2 mb-2">
-                            <button id="application_render_pdf"
-                                    class="btn btn-outline-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-                                PDF holatda
-                                chiqarish
-                            </button>
-                        </div>
+                            <div class="col-12" style="font-size: 0.9em">
+                                <div class="panel-group drop-accordion" id="accordion" role="tablist"
+                                     aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle" data-toggle="collapse"
+                                                   data-parent="#accordion"
+                                                   href="#collapseOne" aria-expanded="false"
+                                                   aria-controls="collapseOne">
+                                                    Ariza haqida ma'lumot
+                                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                                      class="fas fa-angle-double-down"></i></span>
+                                                </a>
 
-                        <div class="col-12" style="font-size: 0.9em">
-                            <div class="panel-group drop-accordion" id="accordion" role="tablist"
-                                 aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a class="collapse-controle" data-toggle="collapse" data-parent="#accordion"
-                                               href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                Ariza haqida ma'lumot
-                                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                                  class="fas fa-angle-double-down"></i></span>
-                                            </a>
+                                            </h4>
+                                        </div>
 
-                                        </h4>
+                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                             aria-labelledby="headingOne" aria-expanded="false">
+                                            <div class="panel-body">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Ariza raqami:</th>
+                                                        <td id="application_id"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Tekshirish uchun parol:</th>
+                                                        <td id="application_pass" class="text-danger"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Xizmat nomi:</th>
+                                                        <td>Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam
+                                                            olish
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Yaratdi:</th>
+                                                        <td id="application_created_user"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Ariza nusxasi</th>
+                                                        <td><a class="copy_application" href="#">Yuklab olish</a></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Berilgan sana:</th>
+                                                        <td id="created_date"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Oxirgi o'zgarish sanasi:</th>
+                                                        <td id="updated_date"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapse-controle collapsed" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                                   aria-controls="collapseTwo">
+                                                    Ariza topshiruvchi
+                                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                                      class="fas fa-angle-double-down"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                                            <div class="panel-body">
+                                                <table id="created_is_person" class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Familiya:</th>
+                                                        <td>{{ request.user.last_name }}</td>
+                                                    </tr>
 
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                                         aria-labelledby="headingOne" aria-expanded="false">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row">Ariza raqami:</th>
-                                                    <td id="application_id"></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Tekshirish uchun parol:</th>
-                                                    <td id="application_pass" class="text-danger"></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Xizmat nomi:</th>
-                                                    <td>Xisob ma'lumotnomasiga asosan avtotransport vositasiga raqam
-                                                        olish
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">Ism:</th>
+                                                        <td>{{ request.user.first_name }}</td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <th scope="row">Yaratdi:</th>
-                                                    <td id="application_created_user"></td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">Otasining ismi:</th>
+                                                        <td>{{ request.user.middle_name }}</td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <th scope="row">Ariza nusxasi</th>
-                                                    <td><a class="copy_application" href="#">Yuklab olish</a></td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">Passport:</th>
+                                                        <td>{{ request.user.passport_seriya }} {{ request.user.passport_number }}</td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <th scope="row">Berilgan sana:</th>
-                                                    <td id="created_date"></td>
-                                                </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table id="created_is_organization" style="display: none"
+                                                       class="table table-bordered">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Tashkilot:</th>
+                                                        <td id="organization_title"></td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <th scope="row">Oxirgi o'zgarish sanasi:</th>
-                                                    <td id="updated_date"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                    <tr>
+                                                        <th scope="row">Rahbari:</th>
+                                                        <td id="organization_director"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">STIR raqam:</th>
+                                                        <td id="organization_identification_number"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">Yuridik manzil:</th>
+                                                        <td id="organization_legal_address"></td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                                   aria-controls="collapseThree">
+                                                    Mavjud fayllar
+                                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                                      class="fas fa-angle-double-down"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingThree" aria-expanded="false">
+                                            <div class="panel-body">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Hujjat nomi</th>
+                                                        <th scope="col">Holati</th>
+                                                        <th scope="col">Hujjat havolasi</th>
+                                                        <th scope="col">Pin kod</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <th scope="row">Ariza nusxasi</th>
+                                                        <td>Yaxshi</td>
+                                                        <td><a class="copy_application" href="#">Yuklab olish</a></td>
+                                                        <td>56345</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <th scope="row">Passport</th>
+                                                        <td>Yaxshi</td>
+                                                        <td><a href="#" target="_blank" id="passport_photo">Yuklab
+                                                            olish</a>
+                                                        </td>
+                                                        <td>12345</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <th scope="row">Xisob ma'lumotnomasi</th>
+                                                        <td>Yaxshi</td>
+                                                        <td><a href="#" target="_blank" id="account_statement_photo">Yuklab
+                                                            olish</a></td>
+                                                        <td>56845</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                                   aria-controls="collapseFour">
+                                                    To'lov
+                                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                                      class="fas fa-angle-double-down"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingFour" aria-expanded="false">
+                                            <div class="panel-body">
+                                                <table class="table table-bordered table-responsive">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Karta egasi</th>
+                                                        <th scope="col">Karta raqami</th>
+                                                        <th scope="col" style="width: 4%">Amal qilish muddati</th>
+                                                        <th scope="col">Yangi raqam</th>
+                                                        <th scope="col">Yangi tex passport</th>
+                                                        <th scope="col">Ro'yhatlash</th>
+                                                        <th scope="col">Qayta ro'yhatlash</th>
+                                                        <th scope="col"><b>Jami</b></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Yoqubov Sirojidin</th>
+                                                        <td>9860 0230 5693 8972</td>
+                                                        <td><a href="#">05/23</a></td>
+                                                        <td>560 100 so'm</td>
+                                                        <td>350 000 so'm</td>
+                                                        <td>22 300 so'm</td>
+                                                        <td>44 600 so'm</td>
+                                                        <td><b>976 900 so'm</b></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                                   data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
+                                                   aria-controls="collapseFifth">
+                                                    Ariza holati
+                                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                                      class="fas fa-angle-double-down"></i></span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingFifth" aria-expanded="false">
+                                            <div class="panel-body">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Holat</th>
+                                                        <th scope="col">Sababi</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row"><p style="color: #0f6674">Jarayonda</p></th>
+                                                        <td>O'rganib chiqilmoqda</td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapse-controle collapsed" data-toggle="collapse"
-                                               data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                                               aria-controls="collapseTwo">
-                                                Ariza topshiruvchi
-                                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                                  class="fas fa-angle-double-down"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                                         aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
-                                        <div class="panel-body">
-                                            <table id="created_is_person" class="table table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row">Familiya:</th>
-                                                    <td>{{ request.user.last_name }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">Ism:</th>
-                                                    <td>{{ request.user.first_name }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">Otasining ismi:</th>
-                                                    <td>{{ request.user.middle_name }}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">Passport:</th>
-                                                    <td>{{ request.user.passport_seriya }} {{ request.user.passport_number }}</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                            <table id="created_is_organization" style="display: none"
-                                                   class="table table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row">Tashkilot:</th>
-                                                    <td id="organization_title"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">Rahbari:</th>
-                                                    <td id="organization_director"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">STIR raqam:</th>
-                                                    <td id="organization_identification_number"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row">Yuridik manzil:</th>
-                                                    <td id="organization_legal_address"></td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                                               data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                                               aria-controls="collapseThree">
-                                                Mavjud fayllar
-                                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                                  class="fas fa-angle-double-down"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                         aria-labelledby="headingThree" aria-expanded="false">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered">
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Hujjat nomi</th>
-                                                    <th scope="col">Holati</th>
-                                                    <th scope="col">Hujjat havolasi</th>
-                                                    <th scope="col">Pin kod</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <th scope="row">Ariza nusxasi</th>
-                                                    <td>Yaxshi</td>
-                                                    <td><a class="copy_application" href="#">Yuklab olish</a></td>
-                                                    <td>56345</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <th scope="row">Passport</th>
-                                                    <td>Yaxshi</td>
-                                                    <td><a href="#" target="_blank" id="passport_photo">Yuklab olish</a>
-                                                    </td>
-                                                    <td>12345</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>2</td>
-                                                    <th scope="row">Xisob ma'lumotnomasi</th>
-                                                    <td>Yaxshi</td>
-                                                    <td><a href="#" target="_blank" id="account_statement_photo">Yuklab
-                                                        olish</a></td>
-                                                    <td>56845</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                                               data-parent="#accordion" href="#collapseFour" aria-expanded="false"
-                                               aria-controls="collapseFour">
-                                                To'lov
-                                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                                  class="fas fa-angle-double-down"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                                         aria-labelledby="headingFour" aria-expanded="false">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered table-responsive">
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">Karta egasi</th>
-                                                    <th scope="col">Karta raqami</th>
-                                                    <th scope="col" style="width: 4%">Amal qilish muddati</th>
-                                                    <th scope="col">Yangi raqam</th>
-                                                    <th scope="col">Yangi tex passport</th>
-                                                    <th scope="col">Ro'yhatlash</th>
-                                                    <th scope="col">Qayta ro'yhatlash</th>
-                                                    <th scope="col"><b>Jami</b></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row">Yoqubov Sirojidin</th>
-                                                    <td>9860 0230 5693 8972</td>
-                                                    <td><a href="#">05/23</a></td>
-                                                    <td>560 100 so'm</td>
-                                                    <td>350 000 so'm</td>
-                                                    <td>22 300 so'm</td>
-                                                    <td>44 600 so'm</td>
-                                                    <td><b>976 900 so'm</b></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                                               data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
-                                               aria-controls="collapseFifth">
-                                                Ariza holati
-                                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                                  class="fas fa-angle-double-down"></i></span>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
-                                         aria-labelledby="headingFifth" aria-expanded="false">
-                                        <div class="panel-body">
-                                            <table class="table table-bordered">
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">Holat</th>
-                                                    <th scope="col">Sababi</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <th scope="row"><p style="color: #0f6674">Jarayonda</p></th>
-                                                    <td>O'rganib chiqilmoqda</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- /#accordion -->
                             </div>
-                            <!-- /#accordion -->
                         </div>
                     </div>
                 </div>
