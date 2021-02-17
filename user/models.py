@@ -218,7 +218,7 @@ class Organization(models.Model):
 
 
 class CarModel(models.Model):
-    model = models.CharField('Nomi', max_length=50)
+    title = models.CharField('Nomi', max_length=50)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
 
@@ -230,14 +230,13 @@ class CarModel(models.Model):
         verbose_name_plural = 'Avtomobillar rusumi'
 
     def __str__(self):
-        return self.model
+        return self.title
 
 
 
 
 class Car(models.Model):
-    car_model = models.ForeignKey(CarModel, "Model",  on_delete=models.CASCADE)
-
+    model = models.ForeignKey(CarModel, verbose_name="Model",  on_delete=models.SET_NULL, null=True)
     body_type = models.CharField('Kuzov turi', max_length=100, blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)

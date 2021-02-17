@@ -81,7 +81,12 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['id', 'model', 'is_local', 'is_truck']
+    list_display = ['id', 'model', ]
     list_display_links = ['model']
-    list_filter = ['is_show',]
+    save_on_top = True
+
+@admin.register(CarModel)
+class CarModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', ]
+    list_display_links = ['title']
     save_on_top = True

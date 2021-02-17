@@ -137,7 +137,7 @@
                         <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
                         <select id="car" name="car" class="form-control select2" style="width: 100%;">
                             {% for car in cars %}
-                                <option value="{{ car.id }}">{{ car.model }}</option>
+                                <option value="{{ car.id }}">{{ car.title }}</option>
                             {% endfor %}
                         </select>
                     </div>
