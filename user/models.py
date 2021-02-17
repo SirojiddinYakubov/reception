@@ -237,7 +237,6 @@ class CarModel(models.Model):
 
 class Car(models.Model):
     car_model = models.ForeignKey(CarModel, "Model",  on_delete=models.CASCADE)
-
     body_type = models.CharField('Kuzov turi', max_length=100, blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
