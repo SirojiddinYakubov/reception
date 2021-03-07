@@ -137,7 +137,7 @@ function InputMaxLength() {
     }
 }
 
-// Eterni false qiladi
+// Enterni false qiladi
 
 function PressEnterFalse(e) {
     if (e.keyCode === 13 || e.which === 13) {
@@ -152,7 +152,7 @@ function parseDate(value) {
     var y = parseInt(date[0], 10),
         m = parseInt(date[1], 10),
         d = parseInt(date[2], 10);
-    if (y != NaN && m != NaN && d != NaN)  {
+    if (y != NaN && m != NaN && d != NaN) {
         return y
     }
     // return `${d}.${m}.${y}`
@@ -177,17 +177,219 @@ function getCookie(name) {
 }
 
 
+$('#id').on('click', function () {
+
+    var pdf = new jsPDF('p', 'pt', 'letter');
+    // source can be HTML-formatted string, or a reference
+    // to an actual DOM element from which the text will be scraped.
+    source = $('#id')[0];
+
+    // we support special element handlers. Register them with jQuery-style
+    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+    // There is no support for any other type of selectors
+    // (class, of compound) at this time.
+    specialElementHandlers = {
+        // element with id of "bypass" - jQuery style selector
+        '#bypassme': function (element, renderer) {
+            // true = "handled elsewhere, bypass text extraction"
+            return true
+        }
+    };
+    margins = {
+        top: 80,
+        bottom: 60,
+        left: 40,
+        width: 1000
+    };
+    // all coords and widths are in jsPDF instance's declared units
+    // 'inches' in this case
+    pdf.fromHTML(
+        source, // HTML string or DOM elem ref.
+        margins.left, // x coord
+        margins.top, { // y coord
+            'width': margins.width, // max width of content on PDF
+            'elementHandlers': specialElementHandlers
+        },
+
+        function (dispose) {
+            // dispose: object with X, Y of the last line add to the PDF
+            //          this allow the insertion of new lines after html
+            pdf.save("To'lov.pdf");
+        }, margins);
 
 
+})
+
+// suratni javascript orqali joyida ochib ko'rish'
+
+// $('#accountStatementPhoto').on('change', function (event) {
+//                 var files = event.target.files; //FileList object
+//                 for (var i = 0; i < files.length; i++) {
+//                     var file = files[i];
+//
+//                     //Only pics
+//                     if (!file.type.match('image'))
+//                         continue;
+//                     var picReader = new FileReader();
+//                     picReader.addEventListener("load", function (event) {
+//                         var picFile = event.target;
+//                         //  var div = document.createElement("div");
+//                         $('#accountStatementPhotoPreview label').hide()
+//                         $('#accountStatementThumbnail').show()
+//                         $('#accountStatementRemove').show()
+//                         $('#accountStatementThumbnail').attr('src', picFile.result)
+//                         $('#accountStatementPhotoError').hide()
+//                         // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +
+//                         //   "title='Image'/><span  id='remove'>O'chirish</span>";
+//                         //  result.insertBefore(div, null);
+//                         $("#accountStatementRemove").click(function () {
+//                             $('#accountStatementPhotoPreview label').show()
+//                             $('#accountStatementThumbnail').hide()
+//                             $('#accountStatementRemove').hide()
+//                             $('#accountStatementPhotoError').show()
+//                         });
+//                     });
+//                     //Read the image
+//                     picReader.readAsDataURL(file);
+//                 }
+//             })
 
 
+// var accountStatementPhoto = $('#accountStatementPhoto')[0].files[0];
+//
+//
+// fd.append('accountStatementPhoto', accountStatementPhoto);
 
 
+// html template
+
+// < div
+// className = "col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2" >
+//     < div
+// id = "accountStatementPhotoPreview" >
+//     < label
+// className = "not_copy"
+// htmlFor = "accountStatementPhoto" > Xisob
+// ma
+// 'lumotnoma
+// suratini
+// yuklang < /label>
+//
+// <input type="file" name="photo" hidden
+//        id="accountStatementPhoto" accept=".jpg, .jpeg, .png, .gif"/>
+//
+// <img style='width: 120px; height: auto;display: none' id='accountStatementThumbnail'
+//      src="" title='Image'/>
+// <span style="display: none" id='accountStatementRemove'>O'chirish</span>
+// </div>
+// <p id="accountStatementPhotoError"
+// style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+// className="form-text text-danger">Xisob ma'lumotnoma surati yuklanmagan</p>
+// </div>
 
 
+var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/
+
+$(function () {
+    $(".datepicker").datepicker({
+        dateFormat: "dd.mm.yy",
+        // minDate: '-150M',
+        // maxDate: '+5M',
+        defaultDate: '01.01.1990',
+        // value: "7/11/2011",
+        showButtonPanel: true,
+        numberOfMonths: 1,
+        // showOn: '',
+        // startDate: "-130M",
+        //endDate: "+30d",
+        //currentText: 'Today',
+        autoclose: true,
+        changeMonth: true,
+        changeYear: true,
 
 
+        //yakshanbalarni chiqarish
+        // beforeShowDay: function (date) {
+        //     var day = date.getDay();
+        //     return [(day !== 0), ''];
+        // },
+
+        onClose: function () {
+            if ($(this).val().match(dateReg)) {
+                $(this).css("border-bottom", "2px solid green")
+            } else {
+                $(this).css("border-bottom", "2px solid red")
+            }
+        }
+    })
+    $(".datepicker").datepicker('setDate', new Date());
+})
+
+$('.datepicker_icon').on('click', function () {
+    $('.datepicker').datepicker('show')
+})
+
+$('.datepicker').on('keypress', function (e) {
+    return false
+})
+
+// $(document).on('keypress', '#body_type, #body_number, #chassis_number, #engine_number, #made_year,#additionality, #color, #cert_seriya, #cert_number', function (e) {
+//     if (e.target.value !== '') {
+//         $(e.target).css("border-bottom", "2px solid green")
+//     } else {
+//         $(e.target).css("border-bottom", "2px solid red")
+//     }
+// })
+
+//div render to pdf
+
+// $('#payment_render_pdf').on('click', function () {
+//     var pdf = new jsPDF('p', 'pt', 'letter');
+//     source = $('#render_div')[0];
+//     specialElementHandlers = {
+//         '#bypassme': function (element, renderer) {
+//             return true
+//         }
+//     };
+//     margins = {
+//         top: 80,
+//         bottom: 60,
+//         left: 40,
+//         width: 1000
+//     };
+//     pdf.fromHTML(
+//         source, // HTML string or DOM elem ref.
+//         margins.left, // x coord
+//         margins.top, { // y coord
+//             'width': margins.width, // max width of content on PDF
+//             'elementHandlers': specialElementHandlers
+//         },
+//         function (dispose) {
+//             pdf.save("To'lov.pdf");
+//         }, margins);
+// })
 
 
+// $(window).bind('hashchange', function () {
+//     if (window.location.hash === '#step-3') {
+//         if ($('#step-3').data('transition') === false) {
+//             window.location.hash = '#step-1'
+//         }
+//     } else if (window.location.hash === '#step-2') {
+//         if ($('#step-2').data('transition') === false) {
+//             window.location.hash = '#step-1'
+//         }
+//     }
+// })
 
+// Jquery validation metod
 
+// jQuery.validator.addMethod("noSpace", function (value, element) {
+//     return value == '' || value.trim().length != 0;
+// }, "Iltimos, bo'sh joy qoldirmang!");
+// jQuery.validator.addMethod("customEmail", function (value, element) {
+//     return this.optional(element) || /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+// }, "Iltimos, to'g'ri elektron pochta manzilini kiriting!");
+// $.validator.addMethod("alphanumeric", function (value, element) {
+//     return this.optional(element) || /^\w+$/i.test(value);
+// }, "Faqat harf va raqam kiriting!");

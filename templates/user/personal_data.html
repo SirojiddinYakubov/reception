@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block top %}
-    <style>
-        #blah {
-            width: 200px;
-        }
-    </style>
-{% endblock top %}
 {% block content %}
     <section class="py-3 mt-2 bg-info text-light">
         <div class="container">
@@ -59,20 +52,6 @@
                     </tr>
 
                     <tr>
-                        <th scope="row">Passport surati:</th>
-                        <td><a target="_blank" download="on" href="{% if user.passport_photo %}{{ user.passport_photo.url }}{% endif %}">Yuklab olish</a></td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Passport berilgan sana:</th>
-                        <td>{% if user.document_issue %}{{ user.document_issue|date:"d.m.Y" }}{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Passport amal qilish muddati:</th>
-                        <td>{% if user.document_issue %}{{ user.document_issue|date:"d.m.Y" }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
                         <th scope="row">Kim tomonidan berilgan:</th>
                         <td>{% if user.issue_by_whom %}{{ user.issue_by_whom }}{% endif %}</td>
                     </tr>
@@ -83,7 +62,7 @@
                     </tr>
                 </table>
 {#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}
-                <a href="{% url 'user:edit' %}"><button style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash</button></a>
+                <a href="{% url 'user:edit_personal_data' %}"><button style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash</button></a>
             </div>
         </div>
     </div>

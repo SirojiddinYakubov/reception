@@ -3,55 +3,75 @@ import json
 import os
 import random
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from docxtpl import DocxTemplate
+from rest_framework.authtoken.models import Token
 
 from account_statement.models import AccountStatement
-from application.models import Application
+from application.models import Application, Service
+from contract_of_sale.models import ContractOfSale
+from gift_agreement.models import GiftAgreement
+from reception.settings import BASE_DIR
 from user.models import *
 from user.utils import render_to_pdf
 
 
 @login_required
-def index(request):
-    applications = Application.objects.all()
+def applications_list(request):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    applications = Application.objects.filter(created_user=request.user)
     context = {
         'applications': applications
     }
-    return render(request, 'application/index.html', context)
+    return render(request, 'application/applications_list.html', context)
 
 
 @login_required
-def detail(request, id):
+def application_detail(request, id):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     application = get_object_or_404(Application, id=id)
+    if application.created_user != request.user:
+        return redirect(reverse_lazy('application:applications_list'))
+
     context = {
         'application': application
     }
-
-    if request.POST:
-        file = request.FILES.get('photo')
-        application.file = file
-        application.save()
-    return render(request, 'application/detail.html', context)
-
-
-def admin_url_params_encoded(request):
-    pass
+    return render(request, 'application/application_detail.html', context)
 
 
 @login_required
 def application_pdf(request, id):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     application = get_object_or_404(Application, id=id)
+    region = get_object_or_404(Region, id=application.created_user.region.id)
+
     context = {
-        'now_date': f'{datetime.date.today().day}.{datetime.date.today().month}.{datetime.date.today().year}',
-        'created_date': f'{application.created_date.day}.{application.created_date.month}.{application.created_date.year}',
-        'updated_date': f'{application.updated_date.day}.{application.updated_date.month}.{application.updated_date.year}',
-        'app': application
+        'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
+        'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
+        'app': application,
+        'region': region
     }
     template_name = 'application/application_detail_pdf.html'
     pdf = render_to_pdf(template_name, context)
@@ -64,95 +84,6 @@ def application_pdf(request, id):
 
 
 @login_required
-def save_application_information(request):
-    if request.is_ajax():
-        # get request arg
-        print(request.POST)
-        person_type = request.POST.get('person_type')
-        engine_number = request.POST.get('engine_number')
-        body_number = request.POST.get('body_number')
-        color = request.POST.get('color')
-        made_year = request.POST.get('made_year')
-        additionality = request.POST.get('additionality')
-        cert_seriya = request.POST.get('cert_seriya')
-        cert_number = request.POST.get('cert_number')
-        date_conclusion_contract = request.POST.get('date_conclusion_contract')
-        accountStatementPhoto = request.FILES.get('accountStatementPhoto')
-        user = get_object_or_404(User, id=request.user.id)
-        get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
-
-        # create car
-        car = Car.objects.create(model=get_car)
-        if request.POST.get('body_type') and request.POST.get('chassis_number'):
-            car.body_type = request.POST.get('body_type')
-            car.chassis_number = request.POST.get('chassis_number')
-        car.body_number = body_number
-        car.engine_number = engine_number
-        car.made_year = made_year
-        car.color = color
-        car.additionally = additionality
-        car.save()
-
-        # create application and account_statament
-        application = Application.objects.create(created_user=user, created_date=timezone.now())
-        account_statement = AccountStatement.objects.create(person_type=person_type, car=car)
-        account_statement.cert_seriya = cert_seriya
-        account_statement.cert_number = cert_number
-        account_statement.date_conclusion_contract = date_conclusion_contract
-        account_statement.cert_photo = accountStatementPhoto
-        if person_type == 'Y':
-            organization = get_object_or_404(Organization, id=request.POST.get('organization'))
-            application.is_legal = True
-            account_statement.organization = organization
-
-        account_statement.save()
-
-        application.account_statement = account_statement
-
-        # application photo
-        now_date = datetime.date.today()
-        context = {
-            'data': account_statement,
-            'now_date': now_date,
-            'car': car,
-            'state': f"{account_statement.cert_seriya} № {account_statement.cert_number} {account_statement.date_conclusion_contract}",
-            'user': request.user
-
-        }
-
-        if get_car.is_truck:
-            context.update(type='Юк')
-        else:
-            context.update(type='Енгил')
-
-        if get_car.is_local:
-            context.update(local='Махаллий')
-        else:
-            context.update(local="Чет эл")
-
-        if request.POST.get('organization'):
-            organization = get_object_or_404(Organization, id=request.POST.get('organization'))
-            context.update(org=organization)
-            doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_legal.docx")
-        else:
-            doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
-        doc.render(context)
-        doc.save(f"media{os.sep}applications{os.sep}{application.id}.docx")
-        # file = open(os.path.join(settings.MEDIA_ROOT, f'applications{os.sep}{application.id}.docx'), 'r').read()
-        password = random.randint(1000, 9999)
-        # application.file = document
-        application.password = password
-        application.save()
-
-        app = serializers.serialize('json', [application, ])
-        struct = json.loads(app)
-        data = json.dumps(struct[0])
-        return HttpResponse(data, content_type='json')
-    else:
-        return HttpResponse(False)
-
-
-@login_required
 def get_information(request):
     if request.is_ajax():
         user = get_object_or_404(User, id=request.GET.get('user'))
@@ -161,7 +92,6 @@ def get_information(request):
 
         context = {
             'user': f"{user.last_name} {user.first_name}",
-            'passport_photo_url': user.passport_photo.url,
             'account_statement_photo_url': account_statement.cert_photo.url
         }
 
@@ -169,3 +99,114 @@ def get_information(request):
         return HttpResponse(data, content_type='json')
     else:
         return False
+
+
+@login_required
+def create_application_doc(request, filename):
+    application = get_object_or_404(Application, file_name=filename)
+    service = get_object_or_404(Service, id=application.service.id)
+
+    context = {}
+
+    if service.account_statement is not None:
+        service = Service.objects.filter(account_statement=service.account_statement.id).first()
+        data = AccountStatement.objects.filter(id=service.account_statement.id).first()
+        if data.organization is not None:
+            organization = get_object_or_404(Organization, id=data.organization.id)
+            print(organization)
+            context.update(org=organization)
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_legal.docx")
+
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
+    if service.gift_agreement is not None:
+        service = Service.objects.filter(gift_agreement=service.gift_agreement.id).first()
+        data = GiftAgreement.objects.filter(id=service.gift_agreement.id).first()
+        if data.organization is not None:
+            organization = get_object_or_404(Organization, id=data.organization.id)
+            context.update(org=organization)
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_legal.docx")
+
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_person.docx")
+
+    if service.contract_of_sale is not None:
+        service = Service.objects.filter(contract_of_sale=service.contract_of_sale.id).first()
+        data = ContractOfSale.objects.filter(id=service.contract_of_sale.id).first()
+        if data.organization is not None:
+            organization = get_object_or_404(Organization, id=data.organization.id)
+            context.update(org=organization)
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_legal.docx")
+
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_person.docx")
+
+    print('before')
+    print(data.car)
+    car = get_object_or_404(Car, id=data.car.id)
+
+    devices_string = ', '.join([str(i).replace('"', "'") for i in car.devices.all()])
+
+    context.update(data=data,
+                   now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
+                   devices=devices_string,
+                   car=car,
+                   state=f"{data.seriya} {datetime.datetime.strftime(data.date_conclusion_contract, '%d.%m.%Y')}",
+                   user=request.user,
+                   birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'))
+
+    car_model = get_object_or_404(CarModel, id=car.model.id)
+    if car_model.is_truck:
+        context.update(type='Yuk')
+    else:
+        context.update(type='Yengil')
+
+    if car_model.is_local:
+        context.update(local='Mahalliy')
+    else:
+        context.update(local="Chet el")
+
+    if car.lost_technical_passport:
+        context.update(lost_technical_passport=True)
+
+    doc.render(context)
+    response = HttpResponse(doc, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    filename = "Ariza #%s.docx" % (filename)
+    content = "attachment; filename=%s" % (filename)
+    response['Content-Disposition'] = content
+    doc.save(response)
+    return response
+
+    # render context doc file
+    # doc.render(context)
+    # # save doc file in directory media/applications/
+    # doc.save(f"media{os.sep}applications{os.sep}{application.file_name}.docx", )
+
+    #
+    # # file_bytes = io.BytesIO()
+    # # doc.save(file_bytes)
+    # # file_bytes.seek(0)
+    # # application.file_doc.save('Lease #12345.doc', ContentFile(file_bytes.read()))
+    # # application.save()
+    #
+    # pdf = convert('static/online/contract_of_sale/contract_of_sale_person.docx', "media/123.pdf")
+    # print('after')
+    # file = open('static/online/contract_of_sale/contract_of_sale_person.docx', 'rb')
+    # data = file.read()
+    # print('before')
+    # print(data)
+    # application.file_pdf = pdf
+    # application.save()
+    #
+    # application.password = password
+    # application.save()
+    #
+    #
+    # doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}123.docx")
+    # context ={
+    #     'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
+    # }
+    # doc.render(context)

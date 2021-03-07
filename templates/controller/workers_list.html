@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row pt-5">
+        <!-- left column -->
+        <div class="col-md-12 col-sm-12">
+            <!-- general form elements -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Xodimlar ro'yhati</h3>
+                </div>
+                {% include '_parts/messages.html' %}
+                <!-- /.card-header -->
+                <!-- form start -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1"
+                               class="table table-bordered table-hovered table-hover">
+                            <thead>
+                            <tr style="background-color: #ecebeb">
+                                <th>№</th>
+                                <th>Xodimning ism familiyasi</th>
+                                <th>Lavozimi</th>
+                                <th>Tug'ilgan yili</th>
+                                <th>Manzili</th>
+                                <th>Telefon</th>
+                                <th>Login</th>
+                                <th>Parol</th>
+                                {% if request.user.role == '2' %}
+                                    <th>Tahrirlash/O'chirish</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for worker in workers %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><b>{{ worker.last_name }} {{ worker.first_name }} {{ worker.middle_name }}</b>
+                                    </td>
+                                    <td><b>{% if worker.role == '3' %}Arizani tekshiruvchi xodim{% elif worker.role == '4' %}Texnik ko'rikdan
+                                        o'tkazuvchi xodim{% endif %}</b></td>
+                                    <td>{% if worker.birthday %}
+                                        {{ worker.birthday|date:'SHORT_DATE_FORMAT' }}{% endif %}</td>
+                                    <td>{% if worker.district %}{{ worker.district }}{% endif %}</td>
+                                    <td>+998{{ worker.phone }}</td>
+                                    <td>{{ worker.username }}</td>
+                                    <td>{{ worker.turbo }}</td>
+
+                                    {% if request.user.role == '2' %}
+                                        <td>
+                                            &nbsp;&nbsp;
+                                            <a href="{% url 'user:worker_edit' worker.id %}">
+                                                <button class="btn btn-primary"><i class="fa fa-edit"
+                                                ></i></button>
+                                            </a>
+
+                                            &nbsp;&nbsp;<a href="#" class="delete_worker" data-id="{{ worker.id }}"
+                                                           data-name="{{ worker.last_name }} {{ worker.first_name }}">
+                                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                        </a>
+
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block bottom %}
+    <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.delete_worker').on('click', function () {
+                var workerId = $(this).data('id'),
+                    workerName = $(this).data('name')
+
+                swal({
+                    title: "Xodimni o'chirmoqchimisiz ?",
+                    text: workerName + "ni o'chirmoqchimisiz ?",
+                    icon: "warning",
+                    closeOnClickOutside: false,
+                    buttons: [
+                        'Yoq, Bekor qilish!',
+                        'Ha, Roziman!'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        swal({
+                            title: "Muvaffaqiyatli o'chirildi !",
+                            text: workerName + " muvaffaqiyatli o'chirildi !",
+                            icon: 'success'
+                        }).then(function () {
+                            $.ajax({
+                                type: 'GET',
+                                url: "{% url 'user:worker_delete' worker_id=12345 %}".replace(/12345/, workerId.toString()),
+                            });
+                            window.location.href = '';
+                            window.location.href = '{% url "user:workers_list" %}';
+                        });
+                    } else {
+                        swal("Bekor qilindi", workerName + " ro'yhatda turibti !", "error");
+                    }
+                });
+            })
+
+
+        })
+    </script>
+{% endblock bottom %}

@@ -16,16 +16,24 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
 
 from reception import settings
+from user.views import HelloView, CustomAuthToken
 
 urlpatterns = [
-    path('account_statement/', include('account_statement.urls')),
+    path('account-statement/', include('account_statement.urls')),
+    path('gift-agreement/', include('gift_agreement.urls')),
+    path('contract-of-sale/', include('contract_of_sale.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('user.urls')),
     path('application/', include('application.urls')),
-
+    path('hello/', HelloView.as_view(), name='hello'),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls.jwt')),
+    # path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
 ]
 
 if settings.DEBUG:

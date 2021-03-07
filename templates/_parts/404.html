@@ -20,8 +20,8 @@
     }
 </style>
 
-<link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
-<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>{#<script src="{% static '' %}//code.jquery.com/jquery-1.11.1.min.js"></script>#}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" id="bootstrap-css">
+<script src="{% static 'js/bootstrap.js' %}"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <div class="container">
@@ -36,9 +36,9 @@
                     Kechirasiz, Xatolik yuz berdi. Siz izlayotgan sahifa topilmadi.
                 </div>
                 <div class="error-actions">
-                    <a href="{% url 'video:home' %}" class="btn btn-primary btn-lg"><span
+                    <a href="{% url 'user:personal_data' %}" class="btn btn-primary btn-lg"><span
                             class="glyphicon glyphicon-home"></span>
-                        Bosh sahifa</a><a href="https://t.me/onless_support" class="btn btn-secondary btn-lg"><span
+                        Bosh sahifa</a><a href="#" class="btn btn-secondary btn-lg"><span
                         class="glyphicon glyphicon-envelope"></span> Biz bilan aloqa </a>
                 </div>
             </div>

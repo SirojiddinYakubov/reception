@@ -8,14 +8,14 @@ from .models import *
 
 @admin.register(AccountStatement)
 class AccountStatementAdmin(admin.ModelAdmin):
-    list_display = ['id', 'make_cert', 'date_conclusion_contract','person_type']
-    list_display_links = ['make_cert']
-    list_filter = ['person_type' ]
+    list_display = ['id', 'seriya', 'car','organization','created_user','date_conclusion_contract','person_type', ]
+    list_display_links = ['seriya']
+    list_filter = ['person_type' , 'created_date', 'date_conclusion_contract']
 
-    def make_cert(self,obj):
-        cert =  f'{obj.cert_seriya} №{obj.cert_number}'
-        return cert
+    # def make_cert(self,obj):
+    #     cert =  f'{obj.cert_seriya} №{obj.cert_number}'
+    #     return cert
 
-    make_cert.allow_tags = True
-    make_cert.short_description = "Guvohnoma"
+    # make_cert.allow_tags = True
+    # make_cert.short_description = "Guvohnoma"
 

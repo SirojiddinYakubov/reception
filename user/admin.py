@@ -7,19 +7,18 @@ from user.models import *
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
 
-    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo','get_img', 'birthday', 'is_active',
-                    'is_superuser', 'is_staff', 'date_joined',
-                    'last_login']
+    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo', 'birthday', 'is_active',
+                    'is_superuser', 'is_staff', 'date_joined','last_login']
     list_display_links = [ 'role', 'last_name', 'first_name','middle_name',]
     list_filter = ['role','is_active', ]
     search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport_seriya', 'passport_number','turbo',]
     save_on_top = True
 
-    def get_img(self, obj):
-        if obj.passport_photo:
-            return mark_safe(f"<img src='{obj.passport_photo.url}' alt='passport_photo' width=50px>")
-        else:
-            pass
+    # def get_img(self, obj):
+    #     if obj.passport_photo:
+    #         return mark_safe(f"<img src='{obj.passport_photo.url}' alt='passport_photo' width=50px>")
+    #     else:
+    #         pass
 
     def fullpassport(self, obj):
         if obj.passport_seriya:
@@ -81,7 +80,7 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['id', 'model', ]
+    list_display = ['id', 'model','created_date' ]
     list_display_links = ['model']
     save_on_top = True
 
@@ -90,3 +89,28 @@ class CarModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', ]
     list_display_links = ['title']
     save_on_top = True
+
+
+@admin.register(Devices)
+class DevicesAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title','created_date' ]
+    list_display_links = ['title']
+    save_on_top = True
+
+
+@admin.register(BodyType)
+class BodyTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title','created_date' ]
+    list_display_links = ['title']
+    save_on_top = True
+
+
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title','created_date' ]
+    list_display_links = ['title']
+    save_on_top = True
+
+
+from rest_framework.authtoken.admin import TokenAdmin
+# TokenAdmin.raw_id_fields = ['user']

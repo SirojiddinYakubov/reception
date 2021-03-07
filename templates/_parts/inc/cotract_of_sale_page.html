@@ -1,0 +1,9 @@
+<li class="nav-item">
+    <a href="{% url 'contract_of_sale:contract-of-sale-index' %}"
+       class="nav-link {% if request.resolver_match.url_name == 'contract-of-sale-index' %}active{% endif %}">
+        <i class="nav-icon fas fa-car"></i>
+        <p>
+            Oldi sotdi shartnomasi
+        </p>
+    </a>
+</li>

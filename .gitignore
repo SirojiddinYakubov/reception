@@ -17,3 +17,6 @@ application/migrations/__pycache__/
 application/migrations/0001_initial.py
 application/migrations/
 __pycache__/
+contract_of_sale/migrations/
+customs_certificate/migrations/
+gift_agreement/migrations/

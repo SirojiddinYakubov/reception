@@ -210,9 +210,532 @@ input[type='radio']::-moz-focus-inner, .btn::-moz-focus-inner, .custom_btn::-moz
     margin-top: 10px;
     float: right;
 }
+
 .button-block button {
     margin-left: 10px;
     margin-right: 10px;
 
 }
 
+.datepicker, .datepicker_icon:hover {
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+html {
+    height: 100%
+}
+
+#grad1 {
+    background-image: url("/static/online/login_background.jpg");
+    background-size: 100%;
+    background-position: center;
+    /*    background-color: #9C27B0;*/
+    /*    background-image: linear-gradient(120deg, #FF4081, #81D4FA)*/
+}
+
+#msform {
+    text-align: center;
+    position: relative;
+    margin-top: 20px
+}
+
+fieldset .form-card {
+    background: white;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    padding: 20px 40px 30px 40px;
+    box-sizing: border-box;
+    width: 94%;
+    margin: 0 3% 20px 3%;
+    position: relative
+}
+
+fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative
+}
+
+fieldset:not(:first-of-type) {
+    display: none
+}
+
+fieldset .form-card {
+    text-align: left;
+    color: #9E9E9E
+}
+
+
+.action-button {
+    width: 100px;
+    background: skyblue;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px
+}
+
+.action-button:hover,
+.action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+}
+
+.action-button-previous {
+    width: 100px;
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px
+}
+
+.action-button-previous:hover,
+.action-button-previous:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+}
+
+.action-button-reset {
+    width: 100px;
+    background: #ee0d0d;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px
+}
+
+.action-button-reset:hover,
+.action-button-reset:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #f30909
+}
+
+select.list-dt {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px 3px 5px;
+    margin: 2px
+}
+
+select.list-dt:focus {
+    border-bottom: 2px solid skyblue
+}
+
+.card {
+    z-index: 0;
+    border: none;
+    border-radius: 0.5rem;
+    position: relative
+}
+
+.fs-title {
+    font-size: 25px;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: left
+}
+
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey
+}
+
+#progressbar .active {
+    color: #000000
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 12px;
+    width: 33%;
+    float: left;
+    position: relative
+}
+
+#progressbar #account:before {
+    font-family: FontAwesome;
+    content: "\f023"
+}
+
+#progressbar #car_icon:before {
+    content: '\f35a'; /* You should use \ and not /*/
+    font-family: "Font Awesome 5 Free";
+}
+
+#progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f007"
+}
+
+#progressbar #payment:before {
+    font-family: FontAwesome;
+    content: "\f09d"
+}
+
+#progressbar #confirm:before {
+    font-family: FontAwesome;
+    content: "\f00c"
+}
+
+#progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 18px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px
+}
+
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: skyblue
+}
+
+.radio-group {
+    position: relative;
+    margin-bottom: 25px
+}
+
+.radio {
+    display: inline-block;
+    width: 204px;
+    height: 104px;
+    border-radius: 0;
+    background: lightblue;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 8px 2px
+}
+
+.radio:hover {
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+}
+
+.radio.selected {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+}
+
+.fit-image {
+    width: 100%;
+    object-fit: cover
+}
+
+.register-left {
+    text-align: center;
+    color: #fff;
+
+    /*margin-right: auto;*/
+}
+
+.register-left input {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+
+.register-left img {
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite alternate;
+    animation: mover 1s infinite alternate;
+}
+
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+.register-left p {
+    font-weight: bold;
+    padding: 12%;
+    margin-top: -9%;
+    color: black;
+
+
+}
+
+.register-left h3 {
+    font-weight: bold;
+    color: #000000;
+
+
+}
+
+.register-left a {
+    border: none;
+    padding: 2%;
+    width: 60%;
+    background: #3b3b3b;
+    font-weight: bold;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+    cursor: pointer;
+    text-decoration: none;
+
+    color: #ffffff;
+    background-image: -webkit-linear-gradient(45deg, #3b3a3a 50%, transparent 50%);
+    background-image: linear-gradient(45deg, #000000 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+    border-radius: 1.2em;
+
+
+}
+
+.register-left a:hover {
+    transition: 1s;
+    background-position: 0;
+    color: #fafafa;
+    border: 1px solid white;
+
+
+}
+
+.input-error {
+    border-bottom: 2px solid red
+}
+
+
+.input-success {
+    border-bottom: 2px solid green
+}
+
+#PassportPhotoPreview {
+    padding: 0;
+    margin: 0;
+    width: 200px;
+    border: 5px dashed #4c73d4;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #4c4c4c;
+
+}
+
+#PassportPhotoPreview > label {
+    margin: 0;
+    padding: 30px;
+    color: red;
+    cursor: pointer;
+}
+
+.Photo_show {
+    display: none;
+}
+
+#remove {
+    display: block;
+
+
+    color: #4e4e4e;
+    text-align: center;
+    cursor: pointer;
+}
+
+#remove:hover {
+    display: block;
+    color: #000000;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+label.error {
+    font-size: small;
+    color: #ff0000;
+    padding: 3px;
+    margin-left: 5px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+select:hover {
+    cursor: pointer;
+}
+
+
+/*application dizayn*/
+.panel-title a {
+    display: block;
+    position: relative;
+    padding: 10px 60px 10px 15px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #6d7194;
+}
+
+.drop-accordion .panel-default {
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+}
+
+.drop-accordion .panel-heading {
+    overflow: hidden;
+    margin-bottom: 5px;
+    padding: 0;
+    border: 1px solid #d9d7d7;
+    background: #fafafa;
+    border-radius: 0;
+
+
+}
+
+.leaf-ui .drop-accordion .panel-heading,
+.circlus-ui .drop-accordion .panel-heading {
+    border-radius: 4px;
+}
+
+.panel-title a {
+    display: block;
+    position: relative;
+    padding: 10px 60px 10px 15px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #6d7194;
+}
+
+.panel-title span {
+
+}
+
+.panel-title .expand-icon-wrap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #d9d7d7;
+    font-size: 24px;
+    line-height: 46px;
+    color: #03C6FE;
+}
+
+.expand-icon-wrap:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.panel-title .expand-icon {
+    padding: 0 18px;
+    vertical-align: middle;
+}
+
+.panel-title .expand-icon:before {
+    content: "\f055";
+}
+
+.drop-accordion .panel-body {
+    position: relative;
+    border: 1px solid #d9d7d7;
+}
+
+.circlus-ui .drop-accordion .panel-body,
+.leaf-ui .drop-accordion .panel-body {
+    border-radius: 4px;
+}
+
+.panel-body-icon {
+    width: 75px;
+    float: left;
+    padding: 10px;
+}
+
+.panel-body-icon i {
+    font-size: 45px;
+    color: #03C6FE;
+}
+
+.drop-accordion .tab-collapsed {
+    border: transparent;
+    background: #5bd2f3;
+    -webkit-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+}
+
+.tab-collapsed a {
+    color: #fff;
+}
+
+.tab-collapsed .expand-icon-wrap {
+    border-color: #fff;
+    color: #fff;
+}
+
+.tab-collapsed .expand-icon:before {
+    content: "\f056";
+}
+
+#password_icon_div {
+    cursor: pointer;
+}

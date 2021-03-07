@@ -68,11 +68,16 @@ class MFY(models.Model):
 #         verbose_name = 'Millat'
 #         verbose_name_plural = 'Millatlar'
 
+PERSON_CHOICES = (
+    ('Y', 'Yuridik shaxs'),
+    ('J', 'Jismoniy shaxs'),
+)
 
 ROLE_CHOICES = (
-    ("1", "User"),
-    ("2", "R.I.B"),
-    ("3", "M.I.R.B"),
+    ("1", "User"),          # Oddiy foydalanuvchilar
+    ("2", "Controller"),    # Xodimlar nazoratchisi
+    ("3", "Checker"),       # Arizalarni tekshiruvchi xodim
+    ("4", "Technical"),     # Texnik ko'rik o'tkazuvchi xodim
 
 )
 
@@ -111,10 +116,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
     passport_number = models.IntegerField(null=True, blank=True)
-    passport_photo = models.ImageField(upload_to=path_and_rename, null=True, blank=True)
     person_id = models.IntegerField('JShShIR',blank=True, null=True, )
-    document_issue = models.DateField('Passport berilgan sana', blank=True, null=True)
-    document_expiry = models.DateField('Passport amal qilish muddati', blank=True, null=True)
     issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False, blank=True)
@@ -194,7 +196,7 @@ class Organization(models.Model):
     identification_number = models.IntegerField('STIR',null=True,)
     legal_address = models.CharField("Yuridik manzili", max_length=255)
     address_of_garage = models.CharField("Garaj manzili", max_length=255)
-    director = models.CharField(max_length=50, null=True)
+    director = models.CharField(max_length=50,verbose_name='Rahbari', null=True)
     created_user = models.ForeignKey(User,verbose_name='Yaratgan shaxs', on_delete=models.CASCADE, null=True)
     created_date = models.DateTimeField(editable=False, verbose_name='Yaratgan vaqti', null=True)
     updated_date = models.DateTimeField(verbose_name='Tahrirlangan vaqti', null=True)
@@ -230,29 +232,65 @@ class CarModel(models.Model):
         verbose_name_plural = 'Avtomobillar rusumi'
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 
 
 class Car(models.Model):
     model = models.ForeignKey(CarModel, verbose_name="Model",  on_delete=models.SET_NULL, null=True)
-    body_type = models.CharField('Kuzov turi', max_length=100, blank=True)
+    body_type = models.ForeignKey('BodyType',verbose_name='Kuzov turi', on_delete=models.SET_NULL,blank=True, null=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)
     made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
-    color = models.CharField('Rangi', max_length=50, blank=True)
-    additionally = models.CharField('Qo\'shimcha jihozlar', max_length=100, null=True, blank=True)
+    color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
+    devices = models.ManyToManyField('Devices',verbose_name='Qo\'shimcha jihozlar', blank=True)
     given_number = models.CharField('Berilgan davlat raqami', max_length=30, blank=True)
     given_technical_passport = models.CharField('Berilgan texpassport seriyasi', max_length=30, blank=True)
-
-
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+    lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan',default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'
         verbose_name_plural = 'Avtomobillar'
 
     def __str__(self):
-        return self.model
+        return str(self.model)
 
+class Devices(models.Model):
+    title = models.CharField('Nomi', max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'O\'rnatilgan qurilma'
+        verbose_name_plural = 'O\'rnatilgan qurilmalar'
+
+    def __str__(self):
+        if self.title:
+            return str(self.title)
+
+class BodyType(models.Model):
+    title = models.CharField('Nomi', max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'Kuzov turi'
+        verbose_name_plural = 'Kuzov turlari'
+
+    def __str__(self):
+        return str(self.title)
+
+class Color(models.Model):
+    title = models.CharField('Nomi', max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'Rang'
+        verbose_name_plural = 'Ranglar'
+
+    def __str__(self):
+        return str(self.title)
