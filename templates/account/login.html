@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            {% include 'includes/../_parts/messages.html' %}
+            {% include '_parts/messages.html' %}
 
             <div class="card-body">
                 <form method="post" action="{% url 'user:login_first' %}" id="form">
@@ -68,32 +68,10 @@
                             <label id="passwordLabel" class="not_copy" style="width: 100%; display: none;"
                                    for="password">Parol:</label>
                             <input type="password" id="password" placeholder="Parol" style="display: none;"
-                                   name="password" autocomplete="off"
+                                   name="password" autocomplete="disabled"
                                    class="form-control" required>
                         </div>
-
-
-                        {#                        <small id="passwordHelpBlock" class="form-text text-muted">#}
-                        {#                            9 xonali sondan iborat bo'lishi kerak#}
-                        {#                        </small>#}
-
                     </div>
-                    {#                    <div class="input-group form-group divWithIcon">#}
-                    {#                        <div class="input-group-prepend">#}
-                    {#                            <span class="input-group-text"><i class="fas fa-lock custom_icon"></i></span>#}
-                    {#                        </div>#}
-                    {##}
-                    {#                        <input type="password" id="password" placeholder="Parol" name="password" autocomplete="off"#}
-                    {#                               class="form-control" required>#}
-                    {#                        <i class="far fa-eye icon-pwd"></i>#}
-                    {##}
-                    {#                    </div>#}
-
-                    {#                    <div class="row align-items-center remember">#}
-                    {#                        <input name="checkbox" style="cursor: pointer" type="checkbox"><span class="not_copy"#}
-                    {#                                                                                             style="cursor: pointer"#}
-                    {#                                                                                             id="label_remember">Eslab qol</span>#}
-                    {#                    </div>#}
                     <div class="form-group">
                         <input type="submit" id="SubmitBtn1" value="Kirish" class="btn fourth">
                         <input style="display: none" type="submit" id="SubmitBtn2" value="Kirish" class="btn fourth">
@@ -125,32 +103,6 @@
             SubmitBtn1 = $('#SubmitBtn1'),
             SubmitBtn2 = $('#SubmitBtn2'),
             redirect = '{{ redirect }}'
-
-
-        // Eterni false qiladi
-        function PressEnterFalse(e) {
-            if (e.keyCode === 13 || e.which === 13) {
-                e.preventDefault();
-                return false;
-            }
-        }
-
-
-        // get csrftoken from cookie
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
 
         var phone = getCookie('phone')
 

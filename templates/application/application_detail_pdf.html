@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+{% load applications_tags %}
+<html lang="uz">
 <head>
     <meta charset="utf-8">
     <title>Ariza #{{ app.id }}</title>
@@ -12,7 +13,7 @@
 {#        <img src="/ap">#}
 {#    </div>#}
     <div style="text-align: center">
-        <h2 style="font-size: 3em; color: blue"><b>YXXB Buxoro viloyat bo'limi</b></h2>
+        <h2 style="font-size: 3em; color: blue"><b>YXXB {{ region }} bo'limi</b></h2>
     </div>
     </div>
 </header>
@@ -20,8 +21,7 @@
     <div style="text-align: right" class="clearfix">
         <div id="invoice">
             <div class="date">Yaratildi: {{ created_date }}</div>
-            <div class="date">Tahrirlandi: {{ updated_date }}</div>
-            <div class="date">Yuklangan: {{ now_date }}</div>
+            <div class="date">Yuklandi: {{ now_date }}</div>
         </div>
     </div>
     <table class="table table-bordered" style="border: 1px solid dimgray; margin: 30%; padding: 30%">
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td><b>Xizmat nomi</b></td>
-            <td>{{ app.account_statement.service_name }}</td>
+            <td>{% get_service_name app.service %}</td>
         </tr>
         <tr>
             <td><b>Holati</b></td>
@@ -58,7 +58,7 @@
         </tr>
         <tr>
             <td><b>Ariza topshirdi</b></td>
-            <td>{% if app.account_statement.organization %}{{ app.account_statement.organization }}{% else %}{{ app.created_user }}{% endif %}</td>
+            <td>{% get_application_submitting app.service %}</td>
         </tr>
         <tr>
             <td><b>To'lov</b></td>
@@ -70,9 +70,11 @@
         </tr>
         </tbody>
     </table>
+    <br>
     <div style="margin-top: 10px; color: red">Eslatma!</div>
     <div id="notices">
-        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq to'ldirib elektor holatda qayta yuklashingiz talab qilinadi!</div>
+        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq to'ldirib YXXB
+            {{ region }} bo'limiga yetkazib bershingiz talab qilinadi!</div>
     </div>
 </main>
 </body>

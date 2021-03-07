@@ -9,13 +9,23 @@
     <title>E-RIB</title>
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     {% block top %}
 
     {% endblock %}
     <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+    <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152092/smartwizard/smart_wizard.min.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152091/smartwizard/smart_wizard_theme_arrows.min.css"
+          rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -49,7 +59,7 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                    <a href="{% url 'user:personal_data' %}" class="d-block">{{ request.user.first_name }} {{ request.user.last_name }}</a>
                 </div>
             </div>
 
@@ -112,6 +122,28 @@
 <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
 <script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+<script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/responsive.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+<script src="{% static 'js/jsPdf/jspdf.js' %}"></script>
+<script src="{% static 'js/jsPdf/modules/html.js' %}"></script>
+<script src="{% static 'js/jsPdf/modules/split_text_to_size.js' %}"></script>
+<script src="{% static 'js/jsPdf/modules/standard_fonts_metrics.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<script src="{% static 'js/html2canvas.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
 {% block bottom %}{% endblock bottom %}
 </body>
 </html>

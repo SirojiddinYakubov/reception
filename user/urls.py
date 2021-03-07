@@ -9,14 +9,15 @@ urlpatterns = [
     path('signup/', user_signup, name='signup'),
     path('login/', login_first, name='login_first'),
     path('logout/', user_logout, name='logout'),
+    path('custom-logout/', Logout.as_view(), name='custom_logout'),
 
     # other requests
-    path('', index, name='index'),
-    path('edit/', edit, name='edit'),
+    path('', personal_data, name='personal_data'),
+    path('edit-personal-data/', edit_personal_data, name='edit_personal_data'),
     path('add-organization/', add_organization, name='add_organization'),
-    path('view-organizations/', view_organizations, name='view_organizations'),
+    path('organizations-list/', organizations_list, name='organizations_list'),
     path('edit-organization/<int:organization_id>/', edit_organization, name='edit_organization'),
-    path('remove-organization/<int:organization_id>/', remove_organization, name='remove_organization'),
+    path('remove-organization/', Remove_Organization.as_view(), name='remove_organization'),
 
     # ajax requests
     path('get-district/', get_district, name='get_district'),
@@ -26,11 +27,18 @@ urlpatterns = [
     path('forgot-pass/', forgot_pass, name='forgot_pass'),
     path('get-phone/', get_phone, name='get_phone'),
     path('is-register/', is_register, name='is_register'),
-    path('get-organization/', get_organization, name='get_organization'),
+    path('get-organization/', Get_Organization.as_view(), name='get_organization'),
     # path('check_passport/', check_passport, name='check_passport'),
     # path('check_passport_with_number/', check_passport_with_number, name='check_passport_with_number'),
-    path('save_user_information/', save_user_information, name='save_user_information'),
-    path('upload-file/', upload_file, name='upload_file'),
+    path('save-user-information/', Save_User_Information.as_view(), name='save_user_information'),
+    path('save-passport-data/', save_passport_data.as_view(), name='save_passport_data'),
+    path('add-worker/', add_worker, name='add_worker'),
+    path('workers-list/', workers_list, name='workers_list'),
+    path('worker-delete/<int:worker_id>/', worker_delete, name='worker_delete'),
+    path('worker-edit/<int:worker_id>/', worker_edit, name='worker_edit'),
+
+    # ajax requests
+    path('get-car-type/', Get_Car_Type.as_view(), name='get_car_type'),
 
 
 ]

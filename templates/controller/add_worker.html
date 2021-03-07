@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row pt-5" style="margin: auto; ">
+        <!-- left column -->
+        <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12" style="margin: auto">
+            <!-- general form elements -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Xodim qo'shish</h3>
+                </div>
+
+                {% include '_parts/messages.html' %}
+
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" method="POST" id="save_user_form" action="{% url 'user:add_worker' %}">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="label_required" for="exampleInputname">Xodimni tanlang</label>
+                            <select class="form-control" name="worker" id="worker">
+                                <option value="checker">Arizalarni tekshiruvchi xodim</option>
+                                <option value="technical">Texnik ko'rik o'tkazuvchi xodim</option>
+                            </select>
+                        </div>
+                        <div class="row justify-content-around">
+                            <div class="col-12 col-xl-6">
+
+                                <label class="label_required" for="last_name">Familiya</label>
+                                <input type="text" name="last_name" class="form-control" id="last_name"
+                                       placeholder="Yoqubov">
+                            </div>
+                            <div class="col-12 col-xl-6">
+                                <label class="label_required" for="first_name">Ism</label>
+                                <input type="text" name="first_name" class="form-control" id="first_name"
+                                       placeholder="Sirojiddin">
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-around">
+                            <div class="col-12 col-xl-6">
+                                <label class="label_required" for="middle_name">Otasining ismi</label>
+                                <input type="text" name="middle_name" class="form-control" id="middle_name"
+                                       placeholder="Tojiddinovich">
+                            </div>
+
+                            <div class="col-12 col-xl-6">
+                                <label class="label_required" for="phone">Telefon raqami</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+998</div>
+                                    </div>
+                                    <input type="text" required="required" class="form-control" id="phone"
+                                           name="phone"
+                                           placeholder="(XX) XXX-XX-XX"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end mt-3">
+                            <button type="reset" class="btn btn-danger">Tozalash</button>
+                            <button type="submit" class="btn btn-success ml-2 mr-2">Saqlash</button>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#phone').inputmask('(99) 999-99-99');
+
+
+            jQuery.validator.addMethod("noSpace", function (value, element) {
+                return value == '' || value.trim().length != 0;
+            }, "Iltimos, bo'sh joy qoldirmang!");
+            $.validator.addMethod("alphanumeric", function (value, element) {
+                return this.optional(element) || /^\w+$/i.test(value);
+            }, "Faqat harf va raqam kiriting!");
+            var $registrationForm = $('#save_user_form');
+            if ($registrationForm.length) {
+                $registrationForm.validate({
+                    ignore: ":hidden",
+                    rules: {
+                        //username is the name of the textbox
+                        last_name: {
+                            required: true,
+                            //alphanumeric is the custom method, we defined in the above
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        first_name: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        middle_name: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        phone: {
+                            required: true,
+                        }
+
+
+                    },
+                    messages: {
+                        last_name: {
+                            //error message for the required field
+                            required: 'Familiya kiritilmagan!'
+                        },
+                        first_name: {
+                            required: 'Ism kiritilmagan!'
+                        },
+                        middle_name: {
+                            required: "Otasining ismi kiritilmagan!"
+                        },
+                        phone: {
+                            required: 'Telefon raqam kiritilmagan!',
+                        }
+
+
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.is("#phone")) {
+                            console.log(element.parents('.input-group'))
+                            error.appendTo(element.parents('.col-12'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+
+                    },
+                });
+            }
+        })
+    </script>
+{% endblock bottom %}

@@ -1,0 +1,1 @@
+default_app_config = 'gift_agreement.apps.GiftAgreementConfig'

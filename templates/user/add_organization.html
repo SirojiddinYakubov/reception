@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% block top %}
-    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
-{% endblock top %}
 
 {% block content %}
     <style>
@@ -90,90 +87,6 @@
     </section>
     <div class="container-fluid mt-3">
         <!-- left column -->
-        {% if organizations %}
-            <div class="row justify-content-center">
-                <div class="col-12">
-
-                    <select class="form-control" name="organization" id="organization">
-                        {% for organization in organizations %}
-                            <option value="{{ organization.id }}">{{ organization.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-12 mt-3">
-                    <table id="table" class="table table-striped table-bordered">
-                        <tr>
-                            <th scope="row">Tashkilot nomi:</th>
-                            <td id="Viewtitle">{% if organization.title %}{{ organization.title }}{% endif %}</td>
-
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Rahbari:</th>
-                            <td id="Viewdirector">
-                                {% if organization.director %}{{ organization.director }}{% endif %}</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">STIR raqami:</th>
-                            <td id="Viewidentification_number">{% if organization.identification_number %}
-                                {{ organization.identification_number }}{% endif %}</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Yuridik manzili:</th>
-                            <td id="Viewlegal_address">
-                                {% if organization.legal_address %}{{ organization.legal_address }}{% endif %}</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Garaj manzili:</th>
-                            <td id="Viewaddress_of_garage">{% if organization.address_of_garage %}
-                                {{ organization.address_of_garage }}{% endif %}</td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Guvohnoma surati:</th>
-                            <td id="Viewcertificate_photo"><a target="_blank" download="on"
-                                                              href="
-
-
-                                                                      {% if organization.certificate_photo %}{{ organization.certificate_photo.url }}{% endif %}">Yuklab
-                                olish</a></td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Litsenziya surati:</th>
-                            <td id="Viewlicense_photo"><a target="_blank" download="on"
-                                                          href="
-
-
-                                                                  {% if organization.license_photo %}{{ organization.license_photo.url }}{% endif %}">Yuklab
-                                olish</a></td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">Yaratildi:</th>
-                            <td id="Viewcreated_date">{% if organization.created_date %}
-                                {{ organization.created_date|date:"d.m.Y" }}{% endif %}</td>
-                        </tr>
-
-                    </table>
-
-                    <hr>
-                    <div class="row">
-                        <button id="EditBtn" type="button" style="margin: 3%"
-                                class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-secondary">Tashkilotni
-                            tahrirlash
-                        </button>
-                        <button id="addBtn" type="button" style="margin: 3%"
-                                class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-primary">Tashkilot qo'shish
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        {% endif %}
         <div class="form-card" {% if organizations %} style="display: none" {% endif %}>
             <form id="msform" action="#">
                 <div class="row">
@@ -181,7 +94,7 @@
                         <label style="float: left" class="label_required not_copy" for="title">Tashkilot
                             nomi</label>
                         <input type="text" style="margin-bottom: 1em"
-                               id="title"
+                               id="title" autocomplete="off" class="form-control"
                                placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" МЧЖ'/>
                     </div>
                 </div>
@@ -190,14 +103,14 @@
                         <label style="float: left" class="label_required not_copy" for="director">
                             Rahbari</label>
                         <input type="text" style="margin-bottom: 1em"
-                               id="director"
+                               id="director" autocomplete="off" class="form-control"
                                placeholder="Masalan: Sirojiddin Yoqubov"/>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
                         <label style="float: left" class="label_required not_copy" for="identification_number">STIR
                             raqam</label>
                         <input type="number" style="margin-bottom: 1em"
-                               id="identification_number"
+                               id="identification_number" autocomplete="off" class="form-control"
                                placeholder='Masalan: 305897526'/>
                     </div>
 
@@ -208,14 +121,14 @@
                         <label style="float: left" class="label_required not_copy" for="legal_address">Yuridik
                             manzili</label>
                         <input type="text" style="margin-bottom: 1em"
-                               id="legal_address"
+                               id="legal_address" autocomplete="off" class="form-control"
                                placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
                         <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
                             manzili</label>
                         <input type="text" style="margin-bottom: 1em"
-                               id="address_of_garage"
+                               id="address_of_garage" autocomplete="off" class="form-control"
                                placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
                     </div>
 
@@ -271,8 +184,6 @@
     </div>
 {% endblock %}
 {% block bottom %}
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -453,6 +364,7 @@
                                         enter: 'animated fadeInRight',
                                         exit: 'animated fadeOutRight',
                                     },
+                                    z_index: '9999'
                                 });
                                 $.notify({
                                     icon: 'glyphicon glyphicon-star',
@@ -463,7 +375,7 @@
                                 });
 
                                 setTimeout(function () {
-                                    window.location.href = '{% url "user:view_organizations" %}'
+                                    window.location.href = '{% url "user:organizations_list" %}'
                                 }, 1500);
                             }
                         }
@@ -471,7 +383,7 @@
                 }
             })
 
-            $(document).on('focusout', '#title, #director, #identification_number, #legal_address, #address_of_garage', function (e) {
+            $(document).on('change', '#title, #director, #identification_number, #legal_address, #address_of_garage', function (e) {
                 if (e.target.value !== '') {
                     $(e.target).css("border-bottom", "2px solid green")
                 } else {
