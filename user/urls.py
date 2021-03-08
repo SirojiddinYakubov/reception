@@ -13,6 +13,7 @@ urlpatterns = [
 
     # other requests
     path('', personal_data, name='personal_data'),
+    path('view-personal-data/<int:id>/', view_personal_data, name='view_personal_data'),
     path('edit-personal-data/', edit_personal_data, name='edit_personal_data'),
     path('add-organization/', add_organization, name='add_organization'),
     path('organizations-list/', organizations_list, name='organizations_list'),
@@ -36,6 +37,9 @@ urlpatterns = [
     path('workers-list/', workers_list, name='workers_list'),
     path('worker-delete/<int:worker_id>/', worker_delete, name='worker_delete'),
     path('worker-edit/<int:worker_id>/', worker_edit, name='worker_edit'),
+    path('view-car-data/<int:car_id>/', view_car_data, name='view_car_data'),
+    path('view-organization-data/<int:id>/', view_organization_data, name='view_organization_data'),
+    path('confirm-car-data/<int:car_id>/', confirm_car_data, name='confirm_car_data'),
 
     # ajax requests
     path('get-car-type/', Get_Car_Type.as_view(), name='get_car_type'),

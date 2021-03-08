@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Foydalanuvchi ma'lumotlari" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+            <!-- left column -->
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th scope="row">Familiya:</th>
+                        <td>{% if user.last_name %}{{ user.last_name }}{% endif %}</td>
+
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Ism:</th>
+                        <td>{% if user.first_name %}{{ user.first_name }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Otasining ismi:</th>
+                        <td>{% if user.middle_name %}{{ user.middle_name }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Tug'ilgan yil:</th>
+                        <td>{% if user.birthday %}{{ user.birthday|date:"d.m.Y" }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Yashash manzili:</th>
+                        <td>{% if user.region %}{{ user.region }}{% endif %}, {% if user.district %}{{ user.district }}{% endif %}, {% if user.mfy %}{{ user.mfy }}{% endif %}, {% if user.address %}{{ user.address }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Passport seriyasi:</th>
+                        <td>{% if user.passport_seriya %}{{ user.passport_seriya }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Passport raqami:</th>
+                        <td>{% if user.passport_number %}{{ user.passport_number }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Kim tomonidan berilgan:</th>
+                        <td>{% if user.issue_by_whom %}{{ user.issue_by_whom }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">JShShIR:</th>
+                        <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+
+{% endblock bottom %}

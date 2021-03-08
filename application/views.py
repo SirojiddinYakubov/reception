@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -30,11 +31,35 @@ def applications_list(request):
         Token.objects.get(key=token)
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
+    context = {}
 
-    applications = Application.objects.filter(created_user=request.user)
-    context = {
-        'applications': applications
-    }
+    if request.user.role == '2':
+        qs = Application.objects.filter(created_user__region=request.user.region)
+        print(qs)
+        if request.method == "GET":
+            if request.GET.get('person_type'):
+                qs = qs.filter(person_type=request.GET.get('person_type'))
+                context.update(applications=qs)
+            if request.GET.get('process'):
+                qs = qs.filter(process=request.GET.get('process'))
+                context.update(applications=qs)
+        print(qs)
+        context.update(applications=qs)
+        return render(request, 'user/role/controller/controller_applications_list.html', context)
+    elif request.user.role == '3':
+        applications = Application.objects.filter(created_user__region=request.user.region)
+        context.update(applications=applications)
+        return render(request, 'user/role/checker/checker_applications_list.html', context)
+    elif request.user.role == '4':
+        applications = Application.objects.filter(created_user__region=request.user.region)
+        context.update(applications=applications)
+        return render(request, 'user/role/technical/technical_applications_list.html', context)
+    else:
+        applications = Application.objects.filter(created_user=request.user)
+        context.update(applications=applications)
+
+
+
     return render(request, 'application/applications_list.html', context)
 
 
@@ -210,3 +235,26 @@ def create_application_doc(request, filename):
     #     'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
     # }
     # doc.render(context)
+
+@login_required
+def view_application_service_data(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    try:
+        context = {}
+        if service.account_statement:
+            account_statement = get_object_or_404(AccountStatement, id=service.account_statement.id)
+            context.update(account_statement=account_statement)
+            return render(request, 'account_statement/view_account_statement_data.html', context)
+        elif service.gift_agreement:
+            gift_agreement = get_object_or_404(GiftAgreement, id=service.gift_agreement.id)
+            context.update(gift_agreement=gift_agreement)
+            return render(request, 'gift_agreement/view_gift_agreement_data.html', context)
+        elif service.contract_of_sale:
+            contract_of_sale = get_object_or_404(ContractOfSale, id=service.contract_of_sale.id)
+            context.update(contract_of_sale=contract_of_sale)
+            return render(request, 'contract_of_sale/view_contract_of_sale_data.html', context)
+        else:
+            return HttpResponse('SERVICE NOT FOUND')
+
+    except AttributeError:
+        return HttpResponse('SERVICE NOT FOUND')

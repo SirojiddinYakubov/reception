@@ -17,12 +17,26 @@
                 <form role="form" method="POST" id="save_user_form" action="{% url 'user:add_worker' %}">
                     {% csrf_token %}
                     <div class="card-body">
-                        <div class="form-group">
-                            <label class="label_required" for="exampleInputname">Xodimni tanlang</label>
-                            <select class="form-control" name="worker" id="worker">
-                                <option value="checker">Arizalarni tekshiruvchi xodim</option>
-                                <option value="technical">Texnik ko'rik o'tkazuvchi xodim</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-12 col-xl-6">
+                                <label class="label_required" for="exampleInputname">Xodimni tanlang</label>
+                                <select class="form-control" name="worker" id="worker">
+                                    <option value="checker">Arizalarni tekshiruvchi xodim</option>
+                                    <option value="technical">Texnik ko'rik o'tkazuvchi xodim</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-xl-6">
+                                <label class="label_required" for="phone">Telefon raqami</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+998</div>
+                                    </div>
+                                    <input type="text" required="required" class="form-control" id="phone"
+                                           name="phone"
+                                           placeholder="(XX) XXX-XX-XX"
+                                           autocomplete="off">
+                                </div>
+                            </div>
                         </div>
                         <div class="row justify-content-around">
                             <div class="col-12 col-xl-6">
@@ -44,19 +58,15 @@
                                 <input type="text" name="middle_name" class="form-control" id="middle_name"
                                        placeholder="Tojiddinovich">
                             </div>
-
                             <div class="col-12 col-xl-6">
-                                <label class="label_required" for="phone">Telefon raqami</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">+998</div>
-                                    </div>
-                                    <input type="text" required="required" class="form-control" id="phone"
-                                           name="phone"
-                                           placeholder="(XX) XXX-XX-XX"
-                                           autocomplete="off">
-                                </div>
+                                <label class="label_required" for="region">Vilyatni tanlang</label>
+                                <select class="form-control" name="region" id="region">
+                                    {% for region in regions %}
+                                       <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
+
                         </div>
                         <div class="row justify-content-end mt-3">
                             <button type="reset" class="btn btn-danger">Tozalash</button>

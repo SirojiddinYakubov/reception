@@ -246,10 +246,18 @@ class Car(models.Model):
     made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
     color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
     devices = models.ManyToManyField('Devices',verbose_name='Qo\'shimcha jihozlar', blank=True)
+    milage = models.IntegerField('Qancha yurganligi', null=True, blank=True, default=0)
+    full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
+    empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
+    engine_power = models.IntegerField('Dvigatel quvvati', null=True, blank=True, default=0)
+    old_number = models.CharField('Eski raqami', null=True, blank=True, max_length=15)
+    manufacturer = models.CharField('Ishlab chiqaruvchi', null=True, blank=True, max_length=100)
     given_number = models.CharField('Berilgan davlat raqami', max_length=30, blank=True)
-    given_technical_passport = models.CharField('Berilgan texpassport seriyasi', max_length=30, blank=True)
+    old_technical_passport = models.CharField('Eski texpassport seriyasi va raqami', max_length=30, blank=True)
+    given_technical_passport = models.CharField('Berilgan texpassport seriyasi va raqami', max_length=30, blank=True)
     created_date = models.DateTimeField(default=timezone.now, editable=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan',default=False)
+    is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi' ,default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'

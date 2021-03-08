@@ -42,3 +42,18 @@ def get_application_submitting(object):
             return f"Xizmat turini kiriting...."
     except AttributeError:
         return f"Xizmat turini kiriting...."
+
+
+@register.simple_tag
+def get_service(object):
+    try:
+        if object.account_statement:
+            return object.account_statement
+        elif object.gift_agreement:
+            return object.gift_agreement
+        elif object.contract_of_sale:
+            return object.contract_of_sale
+        else:
+            return f"ERROR"
+    except AttributeError:
+        return f"ERROR"

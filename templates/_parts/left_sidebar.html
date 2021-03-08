@@ -9,12 +9,14 @@
             {% include '_parts/inc/cotract_of_sale_page.html' %}
         {% elif request.user.role == '2' %}
             {% include '_parts/inc/personal_data_page.html' %}
+            {% include '_parts/inc/application_page.html' %}
             {% include '_parts/inc/workers_page.html' %}
-            {% include '_parts/inc/add_page.html' %}
         {% elif request.user.role == '3' %}
             {% include '_parts/inc/personal_data_page.html' %}
+            {% include '_parts/inc/application_page.html' %}
         {% elif request.user.role == '4' %}
             {% include '_parts/inc/personal_data_page.html' %}
+            {% include '_parts/inc/application_page.html' %}
         {% endif %}
 
         {#        <li class="nav-item has-treeview">#}

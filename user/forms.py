@@ -125,3 +125,9 @@ class EditWorkerForm(ModelForm):
         model = User
         fields = ('last_name', 'first_name', 'middle_name','role', 'region','district','mfy', 'address','passport_seriya','passport_number', 'username','turbo','password')
         exclude = ('phone',)
+
+class EditCarForm(ModelForm):
+    class Meta:
+        model = Car
+        fields = ('model', 'body_type', 'body_number','chassis_number', 'engine_number','made_year','color', 'devices','milage','full_weight', 'empty_weight','engine_power','old_number','manufacturer','old_technical_passport','lost_technical_passport')
+        exclude = ()

@@ -46,7 +46,8 @@ def personal_data(request):
     # generate pdf
 
     # html holatda ekranga chiqarish
-
+    if request.user.person_id == None:
+        return redirect(reverse_lazy('user:edit_personal_data'))
     template = get_template('user/personal_data.html')
     passport = '{} {}'.format(request.user.passport_seriya, request.user.passport_number)
     context = {
@@ -97,19 +98,7 @@ def user_signup(request):
         'regions': regions,
         'phone': phone
     }
-    try:
-        user = User.objects.get(phone=phone)
-        next1 = 'true'
-        context.update(next1=next1)
-        if user.last_name != '':
-            next2 = 'true'
-            context.update(next2=next2)
-            return render(request, 'account/signup.html', context)
-        if user.person_id != None:
-            return redirect(reverse_lazy('user:login_first'))
-        return render(request, 'account/signup.html', context)
-    except ObjectDoesNotExist:
-        return render(request, 'account/signup.html', context)
+    return render(request, 'account/signup.html', context)
 
     # if request.POST:
     #     form = SignUpForm(request.POST or None)
@@ -215,8 +204,9 @@ def login_first(request):
             except KeyError:
                 return redirect(reverse_lazy('user:login_first'))
         try:
-            user1 = User.objects.get(phone=phone)
-            if user1.person_id == None:
+            user1 = User.objects.get(username=phone)
+            print(user1)
+            if not user1.is_staff and user1.person_id == None:
                 return redirect(reverse_lazy('user:signup'))
             user = authenticate(request, username=phone, password=password)
 
@@ -465,8 +455,8 @@ def is_register(request):
     if request.is_ajax():
         phone = request.GET.get('phone')
     try:
-        user = User.objects.get(phone=phone)
-        if user.person_id == None:
+        user = User.objects.get(username=phone)
+        if not user.is_staff and user.person_id == None:
             response = HttpResponse(False)
             response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
             return response
@@ -651,6 +641,11 @@ def add_worker(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
+    regions = Region.objects.all()
+
+    context = {
+        'regions': regions
+    }
     if request.method == "POST":
         role = request.POST.get('worker')
         phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
@@ -662,6 +657,7 @@ def add_worker(request):
             last_name = get_name(form.cleaned_data['last_name'])
             first_name = get_name(form.cleaned_data['first_name'])
             middle_name = get_name(form.cleaned_data['middle_name'])
+            region = get_object_or_404(Region, id=request.POST.get('region'))
 
             if role == 'technical':
                 role = 4
@@ -676,9 +672,11 @@ def add_worker(request):
                     last_name=last_name,
                     first_name=first_name,
                     middle_name=middle_name,
+                    region=region,
                     phone=phone,
                     role=str(role),
                     is_superuser=False,
+                    is_staff=True,
                 )
                 user.set_password(password)
                 user.username = phone
@@ -693,7 +691,7 @@ def add_worker(request):
                 messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
             except IntegrityError:
                 messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
-    return render(request, 'controller/add_worker.html')
+    return render(request, 'user/role/controller/add_worker.html', context)
 
 
 @login_required
@@ -710,7 +708,7 @@ def workers_list(request):
     context = {
         'workers': workers
     }
-    return render(request, 'controller/workers_list.html', context)
+    return render(request, 'user/role/controller/workers_list.html', context)
 
 @login_required
 def worker_delete(request, worker_id):
@@ -752,10 +750,81 @@ def worker_edit(request, worker_id):
                 # response = requests.get(url)
                 context.update(form=form)
                 messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
-                return render(request, 'controller/edit_worker.html', context)
+                return render(request, 'user/role/controller/edit_worker.html', context)
             else:
                 messages.error(request, "Formani to'ldirishda xatolik !")
-                return render(request, 'controller/edit_worker.html', context)
-        return render(request, 'controller/edit_worker.html', context)
+                return render(request, 'user/role/controller/edit_worker.html', context)
+        return render(request, 'user/role/controller/edit_worker.html', context)
+    else:
+        return render(request, '_parts/404.html')
+
+
+@login_required
+def view_car_data(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    form = EditCarForm(instance=car)
+
+    context = {
+        # 'form': form,
+        'car': car
+    }
+    return render(request, 'user/car/view_car_data.html', context)
+
+@login_required
+def view_organization_data(request, id):
+    organization = get_object_or_404(Organization, id=id)
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    context = {
+        'organization': organization
+    }
+    return render(request, 'user/organization/view_organization_data.html', context)
+
+@login_required
+def view_personal_data(request, id):
+    user = get_object_or_404(User, id=id)
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    context = {
+        'user': user
+    }
+    return render(request, 'user/view_personal_data.html', context)
+
+@login_required
+def confirm_car_data(request, car_id):
+    if request.user.role == '4':
+        car = get_object_or_404(Car, id=car_id)
+        try:
+            token = request.COOKIES.get('token')
+            Token.objects.get(key=token)
+        except ObjectDoesNotExist:
+            return redirect(reverse_lazy('user:custom_logout'))
+
+        if request.method == 'GET':
+            if request.GET.get('confirm') == 'True':
+                car.is_confirm = True
+                car.save()
+                messages.success(request, f'{car.model} muvaffaqiyatli tasdiqlandi!')
+            elif request.GET.get('confirm') == 'False':
+                car.is_confirm = False
+                car.save()
+                messages.success(request, f'{car.model} muvaffaqiyatli tasdiqlash bekor qilindi!')
+            return redirect(reverse_lazy('application:applications_list'))
+        else:
+            return redirect(reverse_lazy('application:applications_list'))
     else:
         return render(request, '_parts/404.html')

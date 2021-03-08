@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Hisob ma'lumotnomasi" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+            <!-- left column -->
+            <div class="col-md-12">
+                {% include '_parts/messages.html' %}
+                <table class="table table-bordered">
+                    <tr>
+                        <th scope="row">Seriyasi va raqami:</th>
+                        <td>{% if account_statement.seriya %}{{ account_statement.seriya }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Shartnoma tuzilgan sana:</th>
+                        <td>{% if account_statement.date_conclusion_contract %}
+                            {{ account_statement.date_conclusion_contract|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Shaxs turi:</th>
+                        <td>{% if account_statement.person_type == 'Y' %}
+                            Yuridik shaxs{% elif account_statement.person_type == 'J' %}Jismoniy shaxs{% endif %}</td>
+                    </tr>
+                    {% if account_statement.person_type == 'Y' %}
+                        <tr>
+                            <th scope="row">Tashkilot:</th>
+                            <td>{% if account_statement.organization %}
+                                <a href="{% url 'user:view_organization_data' account_statement.organization.id %}">
+                                    {{ account_statement.organization }}</a>{% endif %}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th scope="row">Avtomobil:</th>
+                        <td>{% if account_statement.car %}
+                            <a href="{% url 'user:view_car_data' account_statement.car.id %}">{{ account_statement.car.model }}</a>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yaratgan shaxs:</th>
+                        <td>{% if account_statement.created_user %}
+                            <a href="{% url 'user:view_personal_data' account_statement.created_user.id %}">{{ account_statement.created_user }}</a>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yaratilgan vaqt:</th>
+                        <td>{% if account_statement.created_date %}
+                            {{ account_statement.created_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+
+{% endblock bottom %}

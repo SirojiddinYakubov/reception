@@ -3,289 +3,384 @@
 {% load i18n %}
 {% load applications_tags %}
 {% block content %}
-  <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Amallar xronologiyasi" %}</h2>
-                </div>
+<section class="py-3 mt-2 bg-info text-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h2>{% trans "Amallar xronologiyasi" %}</h2>
             </div>
         </div>
-    </section>
-
-
-    <div class="text-right mt-2 mb-2 mr-5">
-        <button class="btn btn-default m-2 application_render_pdf" data-application="{{ application.id }}">
-            Ariza haqida ma'lumot &nbsp&nbsp <i class="fas fa-download"></i>
-        </button>
     </div>
-    <div class="row">
-        <div class="col-12" style="font-size: 0.9em">
-            <div class="panel-group drop-accordion" id="accordion" role="tablist"
-                 aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a class="collapse-controle" data-toggle="collapse" data-parent="#accordion"
-                               href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Ariza haqida ma'lumot
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
+</section>
 
-                        </h4>
-                    </div>
 
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                         aria-labelledby="headingOne" aria-expanded="false">
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Ariza raqami:</th>
-                                    <td>{{ application.id }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Tekshirish uchun parol:</th>
-                                    <td class="text-danger">{{ application.password }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Xizmat nomi:</th>
-                                    <td>{% get_service_name application.service %}</td>
-                                </tr>
+<div class="text-right mt-2 mb-2 mr-5">
+    <button class="btn btn-default m-2 application_render_pdf" data-application="{{ application.id }}">
+        Ariza haqida ma'lumot &nbsp&nbsp <i class="fas fa-download"></i>
+    </button>
+</div>
+<div class="row">
+    <div class="col-12" style="font-size: 0.9em">
+        <div class="panel-group drop-accordion" id="accordion" role="tablist"
+             aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a class="collapse-controle" data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Ariza haqida ma'lumot
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
 
-                                <tr>
-                                    <th scope="row">Yaratdi:</th>
-                                    <td>{{ application.created_user }}</td>
-                                </tr>
+                    </h4>
+                </div>
 
-                                <tr>
-                                    <th scope="row">Ariza nusxasi</th>
-                                    <td><a href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
-                                        olish</a>
-                                    </td>
-                                </tr>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingOne" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th scope="row">Ariza raqami:</th>
+                                <td>{{ application.id }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Tekshirish uchun parol:</th>
+                                <td class="text-danger">{{ application.password }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Xizmat nomi:</th>
+                                <td>{% get_service_name application.service %}</td>
+                            </tr>
 
-                                <tr>
-                                    <th scope="row">Ariza haqida ma'lumot</th>
-                                    <td><a style="cursor: pointer; color: #007bff" class="application_render_pdf"
-                                           data-application="{{ application.id }}">Yuklab olish</a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <th scope="row">Yaratdi:</th>
+                                <td>{{ application.created_user }}</td>
+                            </tr>
 
-                                <tr>
-                                    <th scope="row">Berilgan sana:</th>
-                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                                </tr>
+                            <tr>
+                                <th scope="row">Ariza nusxasi</th>
+                                <td><a href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
+                                    olish</a>
+                                </td>
+                            </tr>
 
-                                <tr>
-                                    <th scope="row">Oxirgi o'zgarish sanasi:</th>
-                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            <tr>
+                                <th scope="row">Ariza haqida ma'lumot</th>
+                                <td><a style="cursor: pointer; color: #007bff" class="application_render_pdf"
+                                       data-application="{{ application.id }}">Yuklab olish</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Berilgan sana:</th>
+                                <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Oxirgi o'zgarish sanasi:</th>
+                                <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapse-controle collapsed" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                               aria-controls="collapseTwo">
-                                Ariza topshiruvchi
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
-                        <div class="panel-body">
-                            <table id="created_is_person" class="table table-bordered">
-                                <tbody>
-                                {% get_application_submitting application.service as submitting %}
-                                {% if submitting.title %}
-                                    <tr>
-                                        <th scope="row">Tashkilot:</th>
-                                        <td>{{ submitting.title }}</td>
-                                    </tr>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapse-controle collapsed" data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                           aria-controls="collapseTwo">
+                            Ariza topshiruvchi
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                    <div class="panel-body">
+                        <table id="created_is_person" class="table table-bordered">
+                            <tbody>
+                            {% get_application_submitting application.service as submitting %}
+                            {% if submitting.title %}
+                                <tr>
+                                    <th scope="row">Tashkilot:</th>
+                                    <td>{{ submitting.title }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">Rahbari:</th>
-                                        <td>{{ submitting.director }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">Rahbari:</th>
+                                    <td>{{ submitting.director }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">STIR raqam:</th>
-                                        <td>{{ submitting.identification_number }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">STIR raqam:</th>
+                                    <td>{{ submitting.identification_number }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">Yuridik manzil:</th>
-                                        <td>{{ submitting.legal_address }}</td>
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <th scope="row">Familiya:</th>
-                                        <td>{{ submitting.last_name }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">Yuridik manzil:</th>
+                                    <td>{{ submitting.legal_address }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <th scope="row">Familiya:</th>
+                                    <td>{{ submitting.last_name }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">Ism:</th>
-                                        <td>{{ submitting.first_name }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">Ism:</th>
+                                    <td>{{ submitting.first_name }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">Otasining ismi:</th>
-                                        <td>{{ submitting.middle_name }}</td>
-                                    </tr>
+                                <tr>
+                                    <th scope="row">Otasining ismi:</th>
+                                    <td>{{ submitting.middle_name }}</td>
+                                </tr>
 
-                                    <tr>
-                                        <th scope="row">Passport:</th>
-                                        <td>{{ submitting.passport_seriya }} {{ submitting.passport_number }}</td>
-                                    </tr>
-                                {% endif %}
-                                </tbody>
-                            </table>
-                        </div>
+                                <tr>
+                                    <th scope="row">Passport:</th>
+                                    <td>{{ submitting.passport_seriya }} {{ submitting.passport_number }}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                               aria-controls="collapseThree">
-                                Mavjud fayllar
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingThree" aria-expanded="false">
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Hujjat nomi</th>
-                                    <th scope="col">Formati</th>
-                                    <th scope="col">Hujjat havolasi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td>1</td>
-                                    <th scope="row">Ariza haqida ma'lumot</th>
-                                    <td>PDF</td>
-                                    <td><a target="_blank" href="/media/applications/{{ application.id }}.docx">Yuklab
-                                        olish</a></td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <th scope="row">Ariza nusxasi</th>
-                                    <td>DOCX</td>
-                                    <td><a href="{% url 'application:create_application_doc' application.file_name %}" target="_blank">Yuklab
-                                        olish</a></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapse-controle collapsed" data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                           aria-controls="collapseThree">
+                            Avtomobil
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
+                    </h4>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseFour" aria-expanded="false"
-                               aria-controls="collapseFour">
-                                To'lov
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFour" aria-expanded="false">
-                        <div class="panel-body">
-                            <table class="table table-bordered table-responsive">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Karta egasi</th>
-                                    <th scope="col">Karta raqami</th>
-                                    <th scope="col" style="width: 4%">Amal qilish muddati</th>
-                                    <th scope="col">Yangi raqam</th>
-                                    <th scope="col">Yangi tex passport</th>
-                                    <th scope="col">Ro'yhatlash</th>
-                                    <th scope="col">Qayta ro'yhatlash</th>
-                                    <th scope="col"><b>Jami</b></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Yoqubov Sirojidin</th>
-                                    <td>9860 0230 5693 8972</td>
-                                    <td><a href="#">05/23</a></td>
-                                    <td>560 100 so'm</td>
-                                    <td>350 000 so'm</td>
-                                    <td>22 300 so'm</td>
-                                    <td>44 600 so'm</td>
-                                    <td><b>976 900 so'm</b></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
-                               aria-controls="collapseFifth">
-                                Ariza holati
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFifth" aria-expanded="false">
-                        <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Holat</th>
-                                    <th scope="col">Sababi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    {% if application.process == '1' %}
-                                        <th scope="row" style="color: #0f6674">Jarayonda</th>
-                                    {% elif application.process == '2' %}
-                                        <th scope="row" style="color: #44ff00">Qabul qilindi</th>
-                                    {% elif application.process == '3' %}
-                                        <th scope="row" style="color: #ff0318">Rad etildi</th>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;">
+                    <div class="panel-body">
+                        <table id="created_is_person" class="table table-bordered">
+                            <tbody>
+                            {% get_service application.service as service %}
+                            <tr>
+                                <th scope="row">Model:</th>
+                                <td>{% if service.car.model %}{{ service.car.model }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Kuzov turi:</th>
+                                <td>{% if service.car.body_type %}{{ service.car.body_type }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Kuzov raqami:</th>
+                                <td>{% if service.car.body_number %}{{ service.car.body_number }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Shassi raqami:</th>
+                                <td>{% if service.car.chassis_number %}{{ service.car.chassis_number }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Dvigitel raqami:</th>
+                                <td>{% if service.car.engine_number %}{{ service.car.engine_number }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Ishlab chiqarilgan yili:</th>
+                                <td>{% if service.car.made_year %}{{ service.car.made_year }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Rangi:</th>
+                                <td>{% if service.car.color %}{{ service.car.color }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Qo'shimcha jihozlar:</th>
+                                <td>
+                                    {% if service.car.devices %}
+                                        {% for device in service.car.devices.all %}
+                                            <button class="disabled btn btn-outline-primary">{{ device }}</button>
+                                        {% endfor %}
                                     {% endif %}
-                                    <th style="color: #0f6674">
-                                        {% if application.process_sms %}{{ application.process_sms }}{% else %}
-                                            O'rganib chiqilmoqda{% endif %}</th>
-                                </tr>
+                                </td>
+                            </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
+                            <tr>
+                                <th scope="row">Qancha yurganligi:</th>
+                                <td>{% if service.car.milage %}{{ service.car.milage }}{% endif %}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">To'la vazni:</th>
+                                <td>{% if service.car.full_weight %}{{ service.car.full_weight }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Yuksiz vazni:</th>
+                                <td>{% if service.car.empty_weight %}{{ service.car.empty_weight }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Dvigatel quvvati:</th>
+                                <td>{% if service.car.engine_power %}{{ service.car.engine_power }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Eski texpassport seriyasi va raqami:</th>
+                                <td>{% if service.car.old_technical_passport %}{{ service.car.old_technical_passport }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Texnik passport yo'qolgan:</th>
+                                <td>{% if service.car.lost_technical_passport %}Yo'qolgan{% else %}Yo'qolmagan{% endif %}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!-- /#accordion -->
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
+                    <h4 class="panel-title">
+                        <a class="collapsed collapse-controle" data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                           aria-controls="collapseFour">
+                            Mavjud fayllar
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingFour" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Hujjat nomi</th>
+                                <th scope="col">Formati</th>
+                                <th scope="col">Hujjat havolasi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <th scope="row">Ariza haqida ma'lumot</th>
+                                <td>PDF</td>
+                                <td><a style="cursor: pointer; color: #007bff" class="application_render_pdf"
+                                       data-application="{{ application.id }}">Yuklab olish</a></td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <th scope="row">Ariza nusxasi</th>
+                                <td>DOCX</td>
+                                <td><a href="{% url 'application:create_application_doc' application.file_name %}"
+                                       target="_blank">Yuklab
+                                    olish</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
+                    <h4 class="panel-title">
+                        <a class="collapsed collapse-controle" data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
+                           aria-controls="collapseFifth">
+                            To'lov
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingFifth" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-responsive">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Karta egasi</th>
+                                <th scope="col">Karta raqami</th>
+                                <th scope="col" style="width: 4%">Amal qilish muddati</th>
+                                <th scope="col">Yangi raqam</th>
+                                <th scope="col">Yangi tex passport</th>
+                                <th scope="col">Ro'yhatlash</th>
+                                <th scope="col">Qayta ro'yhatlash</th>
+                                <th scope="col"><b>Jami</b></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">Yoqubov Sirojidin</th>
+                                <td>9860 0230 5693 8972</td>
+                                <td><a href="#">05/23</a></td>
+                                <td>560 100 so'm</td>
+                                <td>350 000 so'm</td>
+                                <td>22 300 so'm</td>
+                                <td>44 600 so'm</td>
+                                <td><b>976 900 so'm</b></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading tab-collapsed" role="tab" id="headingSix">
+                    <h4 class="panel-title">
+                        <a class="collapsed collapse-controle" data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                           aria-controls="collapseSix">
+                            Ariza holati
+                            <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                              class="fas fa-angle-double-down"></i></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="headingSix" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Holat</th>
+                                <th scope="col">Sababi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% if application.process == '1' %}
+                                    <th scope="row" style="color: #0f6674">Jarayonda</th>
+                                {% elif application.process == '2' %}
+                                    <th scope="row" style="color: #44ff00">Qabul qilindi</th>
+                                {% elif application.process == '3' %}
+                                    <th scope="row" style="color: #ff0318">Rad etildi</th>
+                                {% endif %}
+                                <th style="color: #0f6674">
+                                    {% if application.process_sms %}{{ application.process_sms }}{% else %}
+                                        O'rganib chiqilmoqda{% endif %}</th>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- /#accordion -->
     </div>
+</div>
 
 {% endblock content %}
 {% block bottom %}

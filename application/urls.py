@@ -10,5 +10,6 @@ urlpatterns = [
     path('application-pdf/<int:id>/', application_pdf, name='application_pdf'),
     path('get-information/', get_information, name='get_information'),
     path('create-application-doc/<str:filename>/', create_application_doc, name='create_application_doc'),
+    path('view-application-service-data/<int:service_id>/', view_application_service_data, name='view_application_service_data'),
 
 ]

@@ -12,6 +12,7 @@
                 <!-- /.card-header -->
                 <!-- form start -->
                 <div class="card-body">
+                <a href="{% url 'user:add_worker' %}" class="btn btn-default float-right mb-3">Xodim qo'shish &nbsp;&nbsp;<i class="fas fa-plus"></i></a>
                     <div class="table-responsive">
                         <table id="example1"
                                class="table table-bordered table-hovered table-hover">
@@ -21,7 +22,7 @@
                                 <th>Xodimning ism familiyasi</th>
                                 <th>Lavozimi</th>
                                 <th>Tug'ilgan yili</th>
-                                <th>Manzili</th>
+                                <th>Viloyat</th>
                                 <th>Telefon</th>
                                 <th>Login</th>
                                 <th>Parol</th>
@@ -41,7 +42,7 @@
                                         o'tkazuvchi xodim{% endif %}</b></td>
                                     <td>{% if worker.birthday %}
                                         {{ worker.birthday|date:'SHORT_DATE_FORMAT' }}{% endif %}</td>
-                                    <td>{% if worker.district %}{{ worker.district }}{% endif %}</td>
+                                    <td>{% if worker.region %}{{ worker.region }}{% endif %}</td>
                                     <td>+998{{ worker.phone }}</td>
                                     <td>{{ worker.username }}</td>
                                     <td>{{ worker.turbo }}</td>

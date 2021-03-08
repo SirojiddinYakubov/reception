@@ -10,7 +10,7 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
-<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     {% block top %}
@@ -28,7 +28,6 @@
           rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -59,7 +58,8 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="{% url 'user:personal_data' %}" class="d-block">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                    <a href="{% url 'user:personal_data' %}"
+                       class="d-block">{{ request.user.first_name }} {{ request.user.last_name }}</a>
                 </div>
             </div>
 
@@ -117,6 +117,7 @@
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE -->
 <script src="{% static 'dist/js/adminlte.js' %}"></script>
+
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
