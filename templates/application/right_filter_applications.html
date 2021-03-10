@@ -1,142 +1,76 @@
 {% load applications_tags %}
+
 <div class="card border-info mb-3">
     <div class="card-header bg-gradient-indigo">Saralash</div>
     <div class="card-body">
+        <h5 class="card-title text-info mb-1 w-100">Xizmat turi bo'yicha</h5>
+        <ul class="search-ul" style="">
+            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'all' %}">Hammasi</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'account_statement' %}">Hisob
+                ma'lumotnoma</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'gift_agreement' %}">Xadya
+                shartnomasi</a>
+            </li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'contract_of_sale' %}">Oldi
+                sotdi shartnomasi</a>
+            </li>
+        </ul>
+
+        <hr>
         <h5 class="card-title text-info mb-1 w-100">Holat bo'yicha</h5>
         <ul class="search-ul" style="">
-            <li class="search-li"><a href="?">Hammasi</a></li>
-            <li class="search-li"><a
-                    {% if request.GET|length != 0 %}
-                        {% if request.GET.process %}
-                            href="{{ request.get_full_path }}&process=1"
-
-                        {% else %}
-                            href="{{ request.get_full_path }}&process=1"
-                        {% endif %}
-
-                    {% else %}
-                        href="{{ request.get_full_path }}?process=1"
-                    {% endif %}
-            >Jarayon</a></li>
-            <li class="search-li"><a
-                    {% if request.GET|length != 0 %}
-                        href="{{ request.get_full_path }}&process=2"
-                    {% else %}
-                        href="{{ request.get_full_path }}?process=2"
-                    {% endif %}
-            >Qabul qilingan</a></li>
-            <li class="search-li"><a
-                    {% if request.GET|length != 0 %}
-                        href="{{ request.get_full_path }}&process=3"
-                    {% else %}
-                        href="{{ request.get_full_path }}?process=3"
-                    {% endif %}
-            >Rad etilgan</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'process' 'all' %}">Hammasi</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '1' %}">Jarayon</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '2' %}">Qabul qilingan</a>
+            </li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '3' %}">Rad etilgan</a>
+            </li>
         </ul>
 
         <hr>
 
         <h5 class="card-title text-info mb-1 w-100">Shaxs turi bo'yicha</h5>
-        <ul class="serach_ul" style="">
-            <li class="search-li"><a href="?">Hammasi</a></li>
-            <li class="search-li"><a
-                    {% if request.GET|length != 0 %}
-                        href="{{ request.get_full_path }}&person_type=J"
-                    {% else %}
-                        href="{{ request.get_full_path }}?person_type=J"
-                    {% endif %}
-            >Jismoniy shaxs</a></li>
-            <li class="search-li"><a
-                    {% if request.GET|length != 0 %}
-                        href="{{ request.get_full_path }}&person_type=Y"
-                    {% else %}
-                        href="{{ request.get_full_path }}?person_type=Y"
-                    {% endif %}
-            >Yuridik shaxs</a></li>
+        <ul class="search-ul" style="">
+            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'all' %}">Hammasi</a>
+            </li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'J' %}">Jismoniy
+                shaxs</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'Y' %}">Yuridik
+                shaxs</a></li>
+
         </ul>
         <hr>
 
         <h5 class="card-title text-info mb-1 w-100">To'lov bo'yicha</h5>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="payment_radio" id="exampleRadios1"
-                   value="option1" checked>
-            <label class="form-check-label" for="exampleRadios1">
-                Hammasi
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="payment_radio" id="exampleRadios1"
-                   value="option1">
-            <label class="form-check-label" for="exampleRadios1">
-                To'ov qilingan
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="payment_radio" id="exampleRadios2"
-                   value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-                To'lov qilinmagan
-            </label>
-        </div>
+        <ul class="search-ul" style="">
+            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'all' %}">Hammasi</a>
+            </li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'True' %}">To'lov
+                qilingan</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'False' %}">To'lov
+                qilinmagan</a></li>
+
+        </ul>
         <hr>
         <h5 class="card-title text-info mb-1 w-100">Texnik ko'rik bo'yicha</h5>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="check_technical_radio" id="exampleRadios1"
-                   value="option1" checked>
-            <label class="form-check-label" for="exampleRadios1">
-                Hammasi
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="check_technical_radio" id="exampleRadios1"
-                   value="option1">
-            <label class="form-check-label" for="exampleRadios1">
-                Texnik ko'rikdan o'tgan
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="check_technical_radio" id="exampleRadios2"
-                   value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-                Texnik ko'rikdan o'tmagan
-            </label>
-        </div>
+        <ul class="search-ul" style="">
+            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'all' %}">Hammasi</a>
+            </li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'True' %}">Ko'rikdan
+                o'tkazilgan</a></li>
+            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Ko'rikdan
+                o'tkazilmagan</a></li>
+        </ul>
         <hr>
-        <h5 class="card-title text-info mb-1 w-100">Yaratilgan vaqt bo'yicha</h5>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="created_date_radio" id="exampleRadios1"
-                   value="option1" checked>
-            <label class="form-check-label" for="exampleRadios1">
-                Istalgan kun
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="created_date_radio" id="exampleRadios1"
-                   value="option1">
-            <label class="form-check-label" for="exampleRadios1">
-                Bugun
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="created_date_radio" id="exampleRadios2"
-                   value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-                O'tgan 7 kun
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="created_date_radio" id="exampleRadios2"
-                   value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-                Shu oyda
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="created_date_radio" id="exampleRadios2"
-                   value="option2">
-            <label class="form-check-label" for="exampleRadios2">
-                Shu yilda
-            </label>
-        </div>
+{#        <h5 class="card-title text-info mb-1 w-100">Yaratilgan vaqt bo'yicha</h5>#}
+{#        <ul class="search-ul" style="">#}
+{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'all' %}">Istalgan kun</a>#}
+{#            </li>#}
+{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'True' %}">Bugun</a></li>#}
+{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">O'tgan 7 kun</a></li>#}
+{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Shu oyda</a></li>#}
+{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Shu yilda</a></li>#}
+{#        </ul>#}
+{#        <hr>#}
     </div>
 </div>

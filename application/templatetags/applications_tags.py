@@ -1,5 +1,6 @@
 
 import datetime
+from urllib.parse import urlencode
 
 from django import template
 from django.utils import timezone
@@ -57,3 +58,27 @@ def get_service(object):
             return f"ERROR"
     except AttributeError:
         return f"ERROR"
+
+
+@register.simple_tag(takes_context=True)
+def render_widget(context, key, value):
+    request = context.get('request')
+    if bool(request.GET):
+        print('if')
+        # mavjud
+        if key in request.GET:
+            new_key = key
+            new_value = request.GET[f'{key}']
+            query_dict = request.GET.copy()
+            del query_dict['person_type']
+
+            query = '&'.join([f'{new_key}={new_value}', *['{}={}'.format(k, v) for k, v in query_dict.items()]])
+            print(query)
+            return query
+        else:
+            print('key off')
+            return f"&{key}={value}"
+    else:
+        print('else')
+        # mavjud emas
+        return f"?{key}={value}"

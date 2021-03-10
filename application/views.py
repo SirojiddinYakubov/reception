@@ -37,11 +37,27 @@ def applications_list(request):
         qs = Application.objects.filter(created_user__region=request.user.region)
         print(qs)
         if request.method == "GET":
+            if request.GET.get('service'):
+                if request.GET.get('service') == 'account_statement':
+                    qs = qs.filter(service__account_statement__isnull=False)
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'gift_agreement':
+                    qs = qs.filter(service__gift_agreement__isnull=False)
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'contract_of_sale':
+                    qs = qs.filter(service__contract_of_sale__isnull=False)
+                    context.update(applications=qs)
             if request.GET.get('person_type'):
                 qs = qs.filter(person_type=request.GET.get('person_type'))
                 context.update(applications=qs)
             if request.GET.get('process'):
                 qs = qs.filter(process=request.GET.get('process'))
+                context.update(applications=qs)
+            if request.GET.get('payment'):
+                qs = qs.filter(is_payment=request.GET.get('payment'))
+                context.update(applications=qs)
+            if request.GET.get('technical'):
+                qs = qs.filter(Q(service__account_statement__car__is_confirm=request.GET.get('technical')) | Q(service__gift_agreement__car__is_confirm=request.GET.get('technical')) | Q(service__contract_of_sale__car__is_confirm=request.GET.get('technical')))
                 context.update(applications=qs)
         print(qs)
         context.update(applications=qs)
@@ -57,8 +73,6 @@ def applications_list(request):
     else:
         applications = Application.objects.filter(created_user=request.user)
         context.update(applications=applications)
-
-
 
     return render(request, 'application/applications_list.html', context)
 
@@ -236,6 +250,7 @@ def create_application_doc(request, filename):
     # }
     # doc.render(context)
 
+
 @login_required
 def view_application_service_data(request, service_id):
     service = get_object_or_404(Service, id=service_id)
@@ -258,3 +273,44 @@ def view_application_service_data(request, service_id):
 
     except AttributeError:
         return HttpResponse('SERVICE NOT FOUND')
+
+
+@login_required
+def change_get_request(request, key, value):
+    try:
+        url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
+        if value == 'all':
+            get_params = str(request.META['HTTP_REFERER']).split('?', 1)[1]
+            query_dict = {}
+            try:
+                for par in str(get_params).split('&'):
+                    k, v = par.split('=')
+                    if key == k:
+                        continue
+                    query_dict[k] = v
+
+                query = '&'.join([*['{}={}'.format(k, v) for k, v in query_dict.items()]])
+                return HttpResponseRedirect(url + '?' + query)
+            except ValueError:
+                return HttpResponseRedirect(url)
+        else:
+            get_params = str(request.META['HTTP_REFERER']).split('?', 1)[1]
+            query_dict = {}
+            try:
+                for par in str(get_params).split('&'):
+                    k, v = par.split('=')
+                    if key == k:
+                        continue
+                    query_dict[k] = v
+                query = '&'.join([f'{key}={value}', *['{}={}'.format(k, v) for k, v in query_dict.items()]])
+                print(query)
+                return HttpResponseRedirect(url + '?' + query)
+            except ValueError:
+                return HttpResponseRedirect(url)
+
+    except IndexError:
+        # mavjud emas
+        url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
+        if value == 'all':
+            return HttpResponseRedirect(url)
+        return HttpResponseRedirect(url + f"?{key}={value}")

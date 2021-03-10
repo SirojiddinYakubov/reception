@@ -2,12 +2,9 @@ import datetime
 import io
 import json
 import random
-
-from comtypes.client import CreateObject
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.files.base import ContentFile, File
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
