@@ -17,57 +17,56 @@
 
             <!-- left column -->
             <div class="col-12">
-            {% include '_parts/messages.html' %}
+                {% include '_parts/messages.html' %}
                 <table class="table table-bordered table-responsive">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">№</th>
-
+                        <th scope="col">Ariza raqami</th>
                         <th scope="col" style="width: 35%">Xizmat nomi</th>
                         <th scope="col">Topshirdi</th>
                         <th scope="col">Yaratilgan vaqti</th>
                         <th scope="col">Ariza nusxasi</th>
                         <th scope="col">Holati</th>
-                        <th scope="col">Ariza raqami</th>
+
                         <th scope="col">Tekshiruv paroli</th>
                     </tr>
                     </thead>
 
-{#                    {% if applications %}#}
-                        {% for application in applications %}
-                            <tbody>
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
+                    {#                    {% if applications %}#}
+                    {% for application in applications %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{ application.id }}</th>
 
-                                <td>
-                                    <a href="{% url 'application:application_detail' application.id %}">{% get_service_name application.service %}</a>
-                                </td>
-                                <td>{% get_application_submitting application.service %}</td>
-                                <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                                <td>
-                                    <a class="btn btn-default"
-                                       href="{% url 'application:create_application_doc' application.file_name %}">Yuklab olish
-                                        &nbsp&nbsp<i class="fas fa-download"></i></a>
-                                </td>
-                                {% if application.process == '1' %}
-                                    <td style="color: #0f6674">Jarayonda</td>
-                                {% elif application.process == '2' %}
-                                    <td style="color: #44ff00">Qabul qilindi</td>
-                                {% elif application.process == '3' %}
-                                    <td style="color: #ff0318">Rad etildi</td>
-                                {% endif %}
-                                <td style="text-align: center">{{ application.id }}</td>
-                                <td style="text-align: center; color: red">{{ application.password }}</td>
-                            </tr>
-                            </tbody>
-                        {% endfor %}
-{#                    {% else %}#}
-{#                        <tbody>#}
-{#                        <tr class="text-center">#}
-{#                            <td colspan="8" class="text-danger">Arizalar mavjud emas!</td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    {% endif %}#}
+                            <td>
+                                <a href="{% url 'application:application_detail' application.id %}">{% get_service_name application.service %}</a>
+                            </td>
+                            <td>{% get_application_submitting application.service %}</td>
+                            <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                            <td>
+                                <a class="btn btn-default"
+                                   href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
+                                    olish
+                                    &nbsp&nbsp<i class="fas fa-download"></i></a>
+                            </td>
+                            {% if application.process == '1' %}
+                                <td style="color: #0f6674">Jarayonda</td>
+                            {% elif application.process == '2' %}
+                                <td style="color: #44ff00">Qabul qilindi</td>
+                            {% elif application.process == '3' %}
+                                <td style="color: #ff0318">Rad etildi</td>
+                            {% endif %}
+                            <td style="text-align: center; color: red">{{ application.password }}</td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                    {#                    {% else %}#}
+                    {#                        <tbody>#}
+                    {#                        <tr class="text-center">#}
+                    {#                            <td colspan="8" class="text-danger">Arizalar mavjud emas!</td>#}
+                    {#                        </tr>#}
+                    {#                        </tbody>#}
+                    {#                    {% endif %}#}
                 </table>
             </div>
             <!--/.col (left) -->

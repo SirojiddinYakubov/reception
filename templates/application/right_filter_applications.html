@@ -1,76 +1,106 @@
 {% load applications_tags %}
 
 <div class="card border-info mb-3">
-    <div class="card-header bg-gradient-indigo">Saralash</div>
-    <div class="card-body">
-        <h5 class="card-title text-info mb-1 w-100">Xizmat turi bo'yicha</h5>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'all' %}">Hammasi</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'account_statement' %}">Hisob
+    <div class="card-header bg-gradient-indigo text-lg" style="padding-top: 0;padding-bottom: 0">Saralash</div>
+    <div class="card-body" style="padding-left: 0;padding-right: 0;padding-top: 0">
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Xizmat turi bo'yicha</h5>
+        <ul class="search-ul">
+            <li class="search-li"><a
+                    {% if request.GET.service == 'all' or not request.GET.service %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'service' 'all' %}">Hammasi</a></li>
+            <li class="search-li"><a {% if request.GET.service == 'account_statement' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'service' 'account_statement' %}">Hisob
                 ma'lumotnoma</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'gift_agreement' %}">Xadya
+            <li class="search-li"><a {% if request.GET.service == 'gift_agreement' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'service' 'gift_agreement' %}">Xadya
                 shartnomasi</a>
             </li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'service' 'contract_of_sale' %}">Oldi
+            <li class="search-li"><a {% if request.GET.service == 'contract_of_sale' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'service' 'contract_of_sale' %}">Oldi
                 sotdi shartnomasi</a>
             </li>
         </ul>
 
-        <hr>
-        <h5 class="card-title text-info mb-1 w-100">Holat bo'yicha</h5>
+
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Holat bo'yicha</h5>
         <ul class="search-ul" style="">
-            <li class="search-li"><a href="{% url "application:change_get_request" 'process' 'all' %}">Hammasi</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '1' %}">Jarayon</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '2' %}">Qabul qilingan</a>
+            <li class="search-li"><a
+                    {% if request.GET.process == 'all' or not request.GET.process %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'process' 'all' %}">Hammasi</a></li>
+            <li class="search-li"><a {% if request.GET.process == '1' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'process' '1' %}">Jarayon</a></li>
+            <li class="search-li"><a {% if request.GET.process == '2' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'process' '2' %}">Qabul qilingan</a>
             </li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'process' '3' %}">Rad etilgan</a>
+            <li class="search-li"><a {% if request.GET.process == '3' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'process' '3' %}">Rad etilgan</a>
             </li>
         </ul>
 
-        <hr>
 
-        <h5 class="card-title text-info mb-1 w-100">Shaxs turi bo'yicha</h5>
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Shaxs turi bo'yicha</h5>
         <ul class="search-ul" style="">
-            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'all' %}">Hammasi</a>
+            <li class="search-li"><a
+                    {% if request.GET.person_type == 'all' or not request.GET.person_type %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'person_type' 'all' %}">Hammasi</a>
             </li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'J' %}">Jismoniy
+            <li class="search-li"><a {% if request.GET.person_type == 'J' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'person_type' 'J' %}">Jismoniy
                 shaxs</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'person_type' 'Y' %}">Yuridik
+            <li class="search-li"><a {% if request.GET.person_type == 'Y' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'person_type' 'Y' %}">Yuridik
                 shaxs</a></li>
 
         </ul>
-        <hr>
 
-        <h5 class="card-title text-info mb-1 w-100">To'lov bo'yicha</h5>
+
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">To'lov bo'yicha</h5>
         <ul class="search-ul" style="">
-            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'all' %}">Hammasi</a>
+            <li class="search-li"><a
+                    {% if request.GET.payment == 'all' or not request.GET.payment %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'payment' 'all' %}">Hammasi</a>
             </li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'True' %}">To'lov
+            <li class="search-li"><a {% if request.GET.payment == 'True' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'payment' 'True' %}">To'lov
                 qilingan</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'payment' 'False' %}">To'lov
+            <li class="search-li"><a {% if request.GET.payment == 'False' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'payment' 'False' %}">To'lov
                 qilinmagan</a></li>
 
         </ul>
-        <hr>
-        <h5 class="card-title text-info mb-1 w-100">Texnik ko'rik bo'yicha</h5>
+
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Texnik ko'rik bo'yicha</h5>
         <ul class="search-ul" style="">
-            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'all' %}">Hammasi</a>
+            <li class="search-li"><a
+                    {% if request.GET.technical == 'all' or not request.GET.technical %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'technical' 'all' %}">Hammasi</a>
             </li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'True' %}">Ko'rikdan
+            <li class="search-li"><a {% if request.GET.technical == 'True' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'technical' 'True' %}">Ko'rikdan
                 o'tkazilgan</a></li>
-            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Ko'rikdan
+            <li class="search-li"><a {% if request.GET.technical == 'False' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'technical' 'False' %}">Ko'rikdan
                 o'tkazilmagan</a></li>
         </ul>
-        <hr>
-{#        <h5 class="card-title text-info mb-1 w-100">Yaratilgan vaqt bo'yicha</h5>#}
-{#        <ul class="search-ul" style="">#}
-{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'all' %}">Istalgan kun</a>#}
-{#            </li>#}
-{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'True' %}">Bugun</a></li>#}
-{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">O'tgan 7 kun</a></li>#}
-{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Shu oyda</a></li>#}
-{#            <li class="search-li"><a href="{% url "application:change_get_request" 'technical' 'False' %}">Shu yilda</a></li>#}
-{#        </ul>#}
-{#        <hr>#}
+
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Sana bo'yicha</h5>
+
+        <ul class="search-ul">
+
+            <li class="search-li"><a
+                    {% if request.GET.date == 'all' or not request.GET.date %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'date' 'all' %}">Istalgan kun</a>
+            </li>
+
+            <li class="search-li"><a {% if request.GET.date == 'today' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'date' 'today' %}">Bugun</a></li>
+
+            <li class="search-li"><a {% if request.GET.date == 'last-7-days' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'date' 'last-7-days' %}">So'nggi 7 kun</a></li>
+         <li class="search-li"><a {% if request.GET.date == 'month' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'date' 'month' %}">Shu oyda</a></li>
+        <li class="search-li"><a {% if request.GET.date == 'year' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'date' 'year' %}">Shu yilda</a></li>
+        </ul>
     </div>
 </div>

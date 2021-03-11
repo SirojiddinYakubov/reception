@@ -739,3 +739,15 @@ select:hover {
 #password_icon_div {
     cursor: pointer;
 }
+
+.search-ul {
+    list-style-type: none;
+}
+
+.search-li {
+    padding-left: 1em
+}
+
+.search-li .active {
+    color:red;
+}

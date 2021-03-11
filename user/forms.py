@@ -129,5 +129,5 @@ class EditWorkerForm(ModelForm):
 class EditCarForm(ModelForm):
     class Meta:
         model = Car
-        fields = ('model', 'body_type', 'body_number','chassis_number', 'engine_number','made_year','color', 'devices','milage','full_weight', 'empty_weight','engine_power','old_number','manufacturer','old_technical_passport','lost_technical_passport')
+        fields = ('model', 'body_type', 'body_number','chassis_number', 'engine_number','made_year','color','milage','full_weight', 'empty_weight','engine_power','old_number','manufacturer','old_technical_passport','lost_technical_passport')
         exclude = ()

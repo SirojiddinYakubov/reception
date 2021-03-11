@@ -90,13 +90,17 @@ class CarModelAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
-
-@admin.register(Devices)
-class DevicesAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title','created_date' ]
+@admin.register(FuelType)
+class FuelTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', ]
     list_display_links = ['title']
     save_on_top = True
 
+@admin.register(CarType)
+class CarTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', ]
+    list_display_links = ['title']
+    save_on_top = True
 
 @admin.register(BodyType)
 class BodyTypeAdmin(admin.ModelAdmin):
