@@ -5,8 +5,8 @@ from user.models import *
 SERVICE_CHOICES = (
     ('account_statement', 'Hisob ma\'lumotnoma'),
     ('contract_of_sale', 'Oldi sotdi shartnoma'),
-    ('gift_agreement', 'Xadya shartnomasi'),
-    ('4', 'Meros shartnomasi'),
+    ('gift_agreement', 'Xadya shartnoma'),
+    ('4', 'Meros shartnoma'),
     ('5', 'Ro\'yhatga qo\'yish'),
 )
 

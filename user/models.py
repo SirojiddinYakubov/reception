@@ -221,10 +221,7 @@ class Organization(models.Model):
 
 class CarModel(models.Model):
     title = models.CharField('Nomi', max_length=50)
-    type = models.ManyToManyField('CarType', verbose_name='Avtomobil turi', blank=True,)
     creator = models.CharField('Ishlab chiqaruvchi', null=True, blank=True, max_length=100)
-    full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
-    empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
 
@@ -243,7 +240,10 @@ class Car(models.Model):
     model = models.ForeignKey(CarModel, verbose_name="Model",  on_delete=models.SET_NULL, null=True)
     body_type = models.ForeignKey('BodyType',verbose_name='Kuzov turi', on_delete=models.SET_NULL,blank=True, null=True)
     fuel_type = models.ManyToManyField('FuelType',verbose_name='Yoqilg\'i turi',blank=True)
-    device = models.ManyToManyField('Device',verbose_name='Yoqilg\'i turi',blank=True)
+    full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
+    empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
+    type = models.ManyToManyField('CarType', verbose_name='Avtomobil turi', blank=True, )
+    device = models.ManyToManyField('Device',verbose_name='Qo\'shimcha qurilmalar',blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)

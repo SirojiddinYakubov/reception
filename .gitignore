@@ -20,3 +20,4 @@ __pycache__/
 contract_of_sale/migrations/
 customs_certificate/migrations/
 gift_agreement/migrations/
+service/migrations/
