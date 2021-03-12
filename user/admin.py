@@ -108,6 +108,12 @@ class BodyTypeAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title','created_date' ]
+    list_display_links = ['title']
+    save_on_top = True
+
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
@@ -118,3 +124,11 @@ class ColorAdmin(admin.ModelAdmin):
 
 from rest_framework.authtoken.admin import TokenAdmin
 # TokenAdmin.raw_id_fields = ['user']
+
+@admin.register(Constant)
+class ConstantAdmin(admin.ModelAdmin):
+    list_display = ['id', 'info','value' , ]
+    list_display_links = [ 'value', 'info']
+    search_fields = ['key', 'value']
+    readonly_fields = ('info',)
+    save_on_top = True

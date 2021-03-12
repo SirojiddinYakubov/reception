@@ -64,7 +64,7 @@ def applications_list(request):
                 some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
                 some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
                 some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
-               
+
                 if request.GET.get('date') == 'today':
                     qs = qs.filter(created_date__range=(today_min, today_max))
                     context.update(applications=qs)
@@ -276,15 +276,15 @@ def view_application_service_data(request, service_id):
         if service.account_statement:
             account_statement = get_object_or_404(AccountStatement, id=service.account_statement.id)
             context.update(account_statement=account_statement)
-            return render(request, 'account_statement/view_account_statement_data.html', context)
+            return render(request, 'service/account_statement/view_account_statement_data.html', context)
         elif service.gift_agreement:
             gift_agreement = get_object_or_404(GiftAgreement, id=service.gift_agreement.id)
             context.update(gift_agreement=gift_agreement)
-            return render(request, 'gift_agreement/view_gift_agreement_data.html', context)
+            return render(request, 'service/gift_agreement/view_gift_agreement_data.html', context)
         elif service.contract_of_sale:
             contract_of_sale = get_object_or_404(ContractOfSale, id=service.contract_of_sale.id)
             context.update(contract_of_sale=contract_of_sale)
-            return render(request, 'contract_of_sale/view_contract_of_sale_data.html', context)
+            return render(request, 'service/contract_of_sale/view_contract_of_sale_data.html', context)
         else:
             return HttpResponse('SERVICE NOT FOUND')
 

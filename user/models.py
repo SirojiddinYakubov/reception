@@ -221,10 +221,12 @@ class Organization(models.Model):
 
 class CarModel(models.Model):
     title = models.CharField('Nomi', max_length=50)
+    type = models.ManyToManyField('CarType', verbose_name='Avtomobil turi', blank=True,)
+    creator = models.CharField('Ishlab chiqaruvchi', null=True, blank=True, max_length=100)
+    full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
+    empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
-
-
 
 
     class Meta:
@@ -240,23 +242,20 @@ class CarModel(models.Model):
 class Car(models.Model):
     model = models.ForeignKey(CarModel, verbose_name="Model",  on_delete=models.SET_NULL, null=True)
     body_type = models.ForeignKey('BodyType',verbose_name='Kuzov turi', on_delete=models.SET_NULL,blank=True, null=True)
-    car_type = models.ManyToManyField('CarType',verbose_name='Avtomobil turi',blank=True,)
     fuel_type = models.ManyToManyField('FuelType',verbose_name='Yoqilg\'i turi',blank=True)
+    device = models.ManyToManyField('Device',verbose_name='Yoqilg\'i turi',blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)
     made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
     color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
-    milage = models.IntegerField('Qancha yurganligi', null=True, blank=True, default=0)
-    full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
-    empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
+    # milage = models.IntegerField('Qancha yurganligi', null=True, blank=True, default=0)
     engine_power = models.IntegerField('Dvigatel quvvati', null=True, blank=True, default=0)
-    manufacturer = models.CharField('Ishlab chiqaruvchi', null=True, blank=True, max_length=100)
     old_technical_passport = models.CharField('Eski texpassport seriyasi va raqami', max_length=30, blank=True)
     given_technical_passport = models.CharField('Berilgan texpassport seriyasi va raqami', max_length=30, blank=True)
     created_date = models.DateTimeField(default=timezone.now, editable=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan',default=False)
-    is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi' ,default=False)
+    is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi',default=False)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL,blank=True, null=True)
     is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')
     auction_number = models.CharField(verbose_name='Auksion raqami', max_length=15, null=True, blank=True)
@@ -297,6 +296,18 @@ class BodyType(models.Model):
     def __str__(self):
         return str(self.title)
 
+class Device(models.Model):
+    title = models.CharField('Nomi', max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+
+    class Meta:
+        verbose_name = 'Qo\'shimcha qurilma'
+        verbose_name_plural = 'Qo\'shimcha qurilmalar'
+
+    def __str__(self):
+        return str(self.title)
+
 class FuelType(models.Model):
     title = models.CharField('Nomi', max_length=100)
     is_active = models.BooleanField(default=True)
@@ -323,5 +334,13 @@ class Color(models.Model):
 
 
 class Constant(models.Model):
-    key = models.CharField('Nomi', max_length=150)
+    key = models.CharField('Nomi', max_length=150,editable=False)
     value = models.CharField('Qiymati', max_length=150)
+    info = models.CharField('Ma\'lumot', max_length=250)
+
+    class Meta:
+        verbose_name = 'Constant'
+        verbose_name_plural = 'Constantlar'
+
+    def __str__(self):
+        return f"{self.key}: {self.value}"

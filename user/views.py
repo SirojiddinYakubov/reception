@@ -26,6 +26,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import *
 
 from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE
+from service.models import *
+from service.utils import calculation_state_duty_service_price
 from user.decorators import *
 from user.forms import *
 import reportlab
@@ -57,11 +59,12 @@ def personal_data(request):
     }
 
     html = template.render(context)
-    download = request.GET.get('download')
-    if download:
-        doc = DocxTemplate("static/online/user_information.docx")
-        doc.render(context)
-        doc.save(f"media/document/user/Shaxsiy ma'lumotnoma #{request.user.id}.docx")
+
+
+    state_duty = StateDutyPercent.objects.get(service='account_statement')
+
+    print(calculation_state_duty_service_price(state_duty))
+
     return HttpResponse(html)
 
 

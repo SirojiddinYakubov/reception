@@ -47,7 +47,7 @@ def contract_of_sale_index(request):
         'years': years,
         'color': colors
     }
-    return render(request, 'contract_of_sale/contract_of_sale_insert.html', context)
+    return render(request, 'service/contract_of_sale/contract_of_sale_insert.html', context)
 
 @permission_classes([IsAuthenticated])
 class Save_Contract_Of_Sale_And_Car(APIView):

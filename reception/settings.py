@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'gift_agreement',
     'contract_of_sale',
     'customs_certificate',
+    'service',
     'docxtpl',
     'allauth',
     'allauth.account',

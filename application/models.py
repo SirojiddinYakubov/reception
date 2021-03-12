@@ -80,24 +80,3 @@ class Application(models.Model):
 
 # class Payment(models.Model):
 
-class StateDutyTitle(models.Model):
-    title = models.CharField(verbose_name='Nomi', max_length=200)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Davlat boji'
-        verbose_name_plural = 'Davlat bojlari'
-
-class StateDutyPercent(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True)
-    state_duty = models.ForeignKey(StateDutyTitle, on_delete=models.SET_NULL, null=True)
-    percent = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.service} : {self.state_duty} : {self.percent}%"
-
-    class Meta:
-        verbose_name = 'Davlat boji foizlari'
-        verbose_name_plural = 'Davlat bojlari foizlari'
