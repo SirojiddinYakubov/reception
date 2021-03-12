@@ -40,7 +40,9 @@ def account_statement_insert(request):
     year = datetime.datetime.today().year
     years = range(year, year - 80, -1)
     cars = CarModel.objects.all()
-    devices = Devices.objects.filter(is_active=True)
+    fuel_types = FuelType.objects.filter(is_active=True)
+    car_types = CarType.objects.filter(is_active=True)
+    devices = Device.objects.filter(is_active=True)
     bodyTypes = BodyType.objects.filter(is_active=True)
     colors = Color.objects.filter(is_active=True)
     organizations = Organization.objects.filter(created_user=request.user, is_active=True)
@@ -48,21 +50,14 @@ def account_statement_insert(request):
     context = {
         'cars': cars,
         'organizations': organizations,
+        'fuel_types': fuel_types,
+        'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
         'years': years,
         'color': colors
     }
-    return render(request, 'account_statement/account_statement_insert.html', context=context)
-
-
-@login_required
-def add_photo(request, id):
-    data = AccountStatement.objects.get(id=id)
-    context = {
-        'data': data
-    }
-    return render(request, 'account_statement/add-photo.html', context=context)
+    return render(request, 'service/account_statement/account_statement_insert.html', context=context)
 
 
 @permission_classes([IsAuthenticated])
@@ -124,17 +119,3 @@ class Save_Account_Statement_And_Car(APIView):
             return HttpResponse(False)
 
 
-@login_required
-def export_to_word(request, id):
-    doc = DocxTemplate("static/online/account_statement_example.docx")
-    user = User.objects.get(username=request.user.username)
-    data = get_object_or_404(AccountStatement, id=id)
-    now_date = datetime.date.today()
-    context = {
-        'user': user,
-        'data': data,
-        'now_date': now_date
-    }
-    doc.render(context)
-    doc.save(f"media/document/account_statement/{data.id}.docx")
-    return HttpResponse()

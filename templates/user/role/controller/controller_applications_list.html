@@ -26,8 +26,8 @@
                     <table id="example1" class="table table-bordered table-hover dataTable">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">№</th>
 
+                            <th scope="col">Ariza raqami</th>
                             <th scope="col" style="width: 35%">Xizmat nomi</th>
                             <th scope="col">Hujjat</th>
                             <th scope="col">Avtomobil</th>
@@ -37,7 +37,7 @@
                             <th scope="col">Yaratilgan vaqti</th>
                             <th scope="col">Ariza nusxasi</th>
                             <th scope="col">Holati</th>
-                            <th scope="col">Ariza raqami</th>
+
 
                         </tr>
                         </thead>
@@ -45,16 +45,23 @@
                         {% for application in applications %}
                             {% get_service application.service as service %}
                             <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
 
+                                <th scope="row" class="text-center">{{ application.id }}</th>
                                 <td>
                                     <a href="{% url 'application:application_detail' application.id %}">{% get_service_name application.service %}</a>
                                 </td>
-                                <td><a href="{% url 'application:view_application_service_data' application.service.id %}">{{ service.seriya }}</a></td>
-                                <td class="text-center"><a href="{% url 'user:view_car_data' service.car.id %}">{{ service.car.model }}</a></td>
-                            <td class="text-center">{% if service.car.is_confirm %}
-                                    <i style="color: green" class="far fa-check-circle"></i>{% else %}<i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
-                                <td class="text-center">{% if application.is_payment %}<i style="color: green" class="far fa-check-circle"></i>{% else %}<i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                <td>
+                                    <a href="{% url 'application:view_application_service_data' application.service.id %}">{{ service.seriya }}</a>
+                                </td>
+                                <td class="text-center"><a
+                                        href="{% url 'user:view_car_data' service.car.id %}">{{ service.car.model }}</a>
+                                </td>
+                                <td class="text-center">{% if service.car.is_confirm %}
+                                    <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                    <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                <td class="text-center">{% if application.is_payment %}
+                                    <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                    <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                 <td>{% get_application_submitting application.service %}</td>
 
                                 <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
@@ -70,7 +77,7 @@
                                 {% elif application.process == '3' %}
                                     <td style="color: #ff0318">Rad etildi</td>
                                 {% endif %}
-                                <td style="text-align: center">{{ application.id }}</td>
+
 
                             </tr>
                         {% endfor %}

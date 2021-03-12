@@ -77,3 +77,6 @@ class Application(models.Model):
             b = bytes(f"{self.password}{time.time() * 1000}{self.created_date.time()}", encoding='utf-8')
             self.file_name = hashlib.md5(b).hexdigest()[0:15]
         return super().save(*args, **kwargs)
+
+# class Payment(models.Model):
+

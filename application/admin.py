@@ -11,8 +11,4 @@ class ApplicationAdmin(admin.ModelAdmin):
     list_filter = [ 'process', 'person_type','created_date', ]
 
 
-# @admin.register(Service)
-# class ServiceAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'account_statement', 'gift_agreement','contract_of_sale',]
-#     list_display_links = ['id',]
-#     save_on_top = True
+

@@ -26,8 +26,7 @@
                     <table id="example1" class="table table-bordered table-hover dataTable">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">№</th>
-
+     <th scope="col">Ariza raqami</th>
                             <th scope="col" style="width: 35%">Xizmat nomi</th>
                             <th scope="col">Hujjat</th>
                             <th scope="col">Avtomobil</th>
@@ -37,7 +36,7 @@
                             <th scope="col">Yaratilgan vaqti</th>
                             <th scope="col">Ariza nusxasi</th>
                             <th scope="col">Holati</th>
-                            <th scope="col">Ariza raqami</th>
+
 
                         </tr>
                         </thead>
@@ -45,7 +44,7 @@
                         {% for application in applications %}
                             {% get_service application.service as service %}
                             <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
+                               <th scope="row" class="text-center">{{ application.id }}</th>
 
                                 <td>
                                     <a href="{% url 'application:application_detail' application.id %}">{% get_service_name application.service %}</a>
@@ -77,7 +76,7 @@
                                 {% elif application.process == '3' %}
                                     <td style="color: #ff0318">Rad etildi</td>
                                 {% endif %}
-                                <td style="text-align: center">{{ application.id }}</td>
+
 
                             </tr>
                         {% endfor %}

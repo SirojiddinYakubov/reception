@@ -46,7 +46,7 @@ def gift_agreement_index(request):
         'years': years,
         'color': colors
     }
-    return render(request, 'gift_agreement/gift_agreement_insert.html', context)
+    return render(request, 'service/gift_agreement/gift_agreement_insert.html', context)
 
 @permission_classes([IsAuthenticated])
 class Save_Gift_Agreement_And_Car(APIView):

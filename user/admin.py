@@ -90,16 +90,26 @@ class CarModelAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
+@admin.register(FuelType)
+class FuelTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', ]
+    list_display_links = ['title']
+    save_on_top = True
 
-@admin.register(Devices)
-class DevicesAdmin(admin.ModelAdmin):
+@admin.register(CarType)
+class CarTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', ]
+    list_display_links = ['title']
+    save_on_top = True
+
+@admin.register(BodyType)
+class BodyTypeAdmin(admin.ModelAdmin):
     list_display = ['id', 'title','created_date' ]
     list_display_links = ['title']
     save_on_top = True
 
-
-@admin.register(BodyType)
-class BodyTypeAdmin(admin.ModelAdmin):
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
     list_display = ['id', 'title','created_date' ]
     list_display_links = ['title']
     save_on_top = True
@@ -114,3 +124,11 @@ class ColorAdmin(admin.ModelAdmin):
 
 from rest_framework.authtoken.admin import TokenAdmin
 # TokenAdmin.raw_id_fields = ['user']
+
+@admin.register(Constant)
+class ConstantAdmin(admin.ModelAdmin):
+    list_display = ['id', 'info','value' , ]
+    list_display_links = [ 'value', 'info']
+    search_fields = ['key', 'value']
+    readonly_fields = ('info',)
+    save_on_top = True

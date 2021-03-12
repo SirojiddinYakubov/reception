@@ -130,7 +130,16 @@
                                             {% endfor %}
                                         </select>
 
-
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                  <label class="label_required">{% trans 'Avtomobil turini tanlang' %}</label>
+                                        <select id="car" name="car" class="form-control select2" style="width: 100%;">
+                                            {% for car_type in car_types %}
+                                                <option value="{{ car_type.id }}">{{ car_type.title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <label class="label_required"
@@ -410,6 +419,8 @@
 
         })
         $(document).ready(function () {
+            $('#fieldset1').hide()
+            $('#fieldset2').show()
             var is_legal = false,
                 passport = '{{ request.user.passport_seriya }}{{ request.user.passport_number }}',
                 firstName = '{{ request.user.first_name }}',
