@@ -399,10 +399,10 @@ def get_code(request):
             user.save()
 
         print(password)
-        # msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
-        # msg = msg.replace(" ", "+")
-        # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
-        # response = requests.get(url)
+        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
+        msg = msg.replace(" ", "+")
+        url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
+        response = requests.get(url)
 
         token, created = Token.objects.get_or_create(user=user)
 
@@ -685,7 +685,7 @@ def add_worker(request):
 
                 msg = f"Hurmatli {user.last_name} {user.first_name}! Sizning shaxsiy login va parolingiz. %0aLogin: {user.username}%0aParol: {user.turbo}"
                 msg = msg.replace(" ", "+")
-                url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'5678946512348456sd4fsderdfsd'}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
+                url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'cb547db5ce188f49c1e1790c25ca6184'}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
                 response = requests.get(url)
 
                 messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
