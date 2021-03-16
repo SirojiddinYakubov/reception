@@ -616,8 +616,11 @@ select:hover {
     cursor: pointer;
 }
 
+input[type='checkbox'] {
+    cursor: pointer;
+}
 
-/*application dizayn*/
+/* application dizayn */
 .panel-title a {
     display: block;
     position: relative;

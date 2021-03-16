@@ -1,1 +1,0 @@
-default_app_config = 'contract_of_sale.apps.ContractOfSaleConfig'

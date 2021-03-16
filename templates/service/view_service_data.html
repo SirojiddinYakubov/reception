@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <h2>{% trans "Xadya shartnomasi" %}</h2>
+                    <h2>{{ service.get_title_display }}</h2>
                 </div>
             </div>
         </div>
@@ -18,43 +18,43 @@
                 <table class="table table-bordered">
                     <tr>
                         <th scope="row">Seriyasi va raqami:</th>
-                        <td>{% if gift_agreement.seriya %}{{ gift_agreement.seriya }}{% endif %}</td>
+                        <td>{% if service.seriya %}{{ service.seriya }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Shartnoma tuzilgan sana:</th>
-                        <td>{% if gift_agreement.date_conclusion_contract %}
-                            {{ gift_agreement.date_conclusion_contract|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
+                        <td>{% if service.contract_date %}
+                            {{ service.contract_date|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Shaxs turi:</th>
-                        <td>{% if gift_agreement.person_type == 'Y' %}
+                        <td>{% if service.person_type == 'Y' %}
                             Yuridik shaxs{% else %}Jismoniy shaxs{% endif %}</td>
                     </tr>
-                    {% if gift_agreement.person_type == 'Y' %}
+                    {% if service.person_type == 'Y' %}
                         <tr>
                             <th scope="row">Tashkilot:</th>
-                            <td>{% if gift_agreement.organization %}
-                                <a href="{% url 'user:view_organization_data' gift_agreement.organization.id %}">
-                                    {{ gift_agreement.organization }}</a>{% endif %}</td>
+                            <td>{% if service.organization %}
+                                <a href="{% url 'user:view_organization_data' service.organization.id %}">
+                                    {{ service.organization }}</a>{% endif %}</td>
                         </tr>
                     {% endif %}
                     <tr>
                         <th scope="row">Avtomobil:</th>
-                        <td>{% if gift_agreement.car %}
-                            <a href="{% url 'user:view_car_data' gift_agreement.car.id %}">{{ gift_agreement.car.model }}</a>{% endif %}
+                        <td>{% if service.car %}
+                            <a href="{% url 'user:view_car_data' service.car.id %}">{{ service.car.model }}</a>{% endif %}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Yaratgan shaxs:</th>
-                        <td>{% if gift_agreement.created_user %}
-                            <a href="{% url 'user:view_personal_data' gift_agreement.created_user.id %}">{{ gift_agreement.created_user }}</a>{% endif %}
+                        <td>{% if service.created_user %}
+                            <a href="{% url 'user:view_personal_data' service.created_user.id %}">{{ service.created_user }}</a>{% endif %}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Yaratilgan vaqt:</th>
-                        <td>{% if gift_agreement.created_date %}
-                            {{ gift_agreement.created_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}
+                        <td>{% if service.created_date %}
+                            {{ service.created_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}
                         </td>
                     </tr>
                 </table>

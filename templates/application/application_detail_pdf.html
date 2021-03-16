@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td><b>Xizmat nomi</b></td>
-            <td>{% get_service_name app.service %}</td>
+            <td>{{ app.service.get_title_display }}</td>
         </tr>
         <tr>
             <td><b>Holati</b></td>
@@ -58,7 +58,7 @@
         </tr>
         <tr>
             <td><b>Ariza topshirdi</b></td>
-            <td>{% get_application_submitting app.service %}</td>
+            <td>{% if app.service.organization  %}{{ app.service.organization }}{% else %}{{ app.service.created_user }}{% endif %}</td>
         </tr>
         <tr>
             <td><b>To'lov</b></td>

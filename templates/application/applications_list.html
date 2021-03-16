@@ -16,13 +16,13 @@
         <div class="row justify-content-center">
 
             <!-- left column -->
-            <div class="col-12">
+            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
                 {% include '_parts/messages.html' %}
                 <table class="table table-bordered table-responsive">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Ariza raqami</th>
-                        <th scope="col" style="width: 35%">Xizmat nomi</th>
+                        <th scope="col" style="width: 25%">Xizmat nomi</th>
                         <th scope="col">Topshirdi</th>
                         <th scope="col">Yaratilgan vaqti</th>
                         <th scope="col">Ariza nusxasi</th>
@@ -39,9 +39,9 @@
                             <th scope="row">{{ application.id }}</th>
 
                             <td>
-                                <a href="{% url 'application:application_detail' application.id %}">{% get_service_name application.service %}</a>
+                                <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
                             </td>
-                            <td>{% get_application_submitting application.service %}</td>
+                            <td>{% if application.service.organization %}{{ application.service.organization }}{% else %}{{ application.service.created_user }}{% endif %}</td>
                             <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                             <td>
                                 <a class="btn btn-default"
@@ -70,7 +70,9 @@
                 </table>
             </div>
             <!--/.col (left) -->
-
+             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                {% include 'application/right_filter_applications.html' %}
+            </div>
 
         </div>
         <!-- /.row -->

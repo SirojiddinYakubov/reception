@@ -242,10 +242,10 @@ class Car(models.Model):
     fuel_type = models.ManyToManyField('FuelType',verbose_name='Yoqilg\'i turi',blank=True)
     full_weight = models.IntegerField('To\'la vazni', null=True, blank=True, default=0)
     empty_weight = models.IntegerField('Yuksiz vazni', null=True, blank=True, default=0)
-    type = models.ManyToManyField('CarType', verbose_name='Avtomobil turi', blank=True, )
-    device = models.ManyToManyField('Device',verbose_name='Qo\'shimcha qurilmalar',blank=True)
+    type = models.ForeignKey('CarType',on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,null=True)
+    device = models.ManyToManyField('Device',verbose_name='Qayta jihozlashlar',blank=True)
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
-    chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True)
+    chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True, null=True)
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)
     made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
     color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
@@ -258,9 +258,8 @@ class Car(models.Model):
     is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi',default=False)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL,blank=True, null=True)
     is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')
-    auction_number = models.CharField(verbose_name='Auksion raqami', max_length=15, null=True, blank=True)
-    old_number = models.CharField('Eski raqami', null=True, blank=True, max_length=15)
-    given_number = models.CharField('Berilgan davlat raqami', max_length=15, blank=True)
+    old_number = models.CharField('Eski DRB', null=True, blank=True, max_length=15)
+    given_number = models.CharField('Yangi DRB', max_length=15, blank=True, null=True)
 
 
     class Meta:

@@ -20,10 +20,25 @@
                         <th scope="row">Model:</th>
                         <td>{% if car.model %}{{ car.model }}{% endif %}</td>
                     </tr>
+                    <tr>
+                        <th scope="row">Transport vositasi turi:</th>
+                        <td>{% if car.type %}{{ car.type }}{% endif %}</td>
+                    </tr>
 
                     <tr>
                         <th scope="row">Kuzov turi:</th>
                         <td>{% if car.body_type %}{{ car.body_type }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Yoqilg'i turlari:</th>
+                        <td>
+                            {% if car.fuel_type %}
+                                {% for fuel_type in car.fuel_type.all %}
+                                    <button class="disabled btn btn-outline-primary">{{ fuel_type }}</button>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
                     </tr>
 
                     <tr>
@@ -52,7 +67,7 @@
                     </tr>
 
                     <tr>
-                        <th scope="row">Qo'shimcha jihozlar:</th>
+                        <th scope="row">Qayta jihozlash:</th>
                         <td>
                             {% if car.devices %}
                                 {% for device in car.devices.all %}
@@ -60,11 +75,6 @@
                                 {% endfor %}
                             {% endif %}
                         </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Qancha yurganligi:</th>
-                        <td>{% if car.milage %}{{ car.milage }}{% endif %}</td>
                     </tr>
 
                     <tr>
@@ -79,14 +89,24 @@
                         <th scope="row">Dvigatel quvvati:</th>
                         <td>{% if car.engine_power %}{{ car.engine_power }}{% endif %}</td>
                     </tr>
+
                     <tr>
-                        <th scope="row">Eski texpassport seriyasi va raqami:</th>
+                        <th scope="row">Qayd etish guvohnomasi yo'qolgan:</th>
+                        <td>{% if car.lost_technical_passport %}Yo'qolgan{% else %}Yo'qolmagan{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Eski qayd etish guvohnomasi:</th>
                         <td>{% if car.old_technical_passport %}{{ car.old_technical_passport }}{% endif %}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Texnik passport yo'qolgan:</th>
-                        <td>{% if car.lost_technical_passport %}Yo'qolgan{% else %}Yo'qolmagan{% endif %}</td>
+                        <th scope="row">Eski DRB:</th>
+                        <td>{% if car.old_number %}{{ car.old_number }}{% endif %}</td>
                     </tr>
+                  <tr>
+                        <th scope="row">Yangi DRB:</th>
+                        <td>{% if car.given_number %}{{ car.given_number }}{% endif %}</td>
+                    </tr>
+
 
                 </table>
 

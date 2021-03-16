@@ -284,30 +284,10 @@
                                                                placeholder="342">
                                                     </div>
                                                 </div>
-                                                <hr class="line">
-                                                <div class="d-flex justify-content-between information">
-                                                    <span>Yangi raqam uchun</span>
-                                                    <span>560 000 so'm</span>
-                                                </div>
-                                                <hr style="margin: 0; background-color: #b6b6b6">
-                                                <div class="d-flex justify-content-between information">
-                                                    <span>Tex passport uchun</span>
-                                                    <span>350 000 so'm</span>
-                                                </div>
-                                                <hr style="margin: 0; background-color: #b6b6b6">
-                                                <div class="d-flex justify-content-between information">
-                                                    <span>Ro'yhatlash uchun</span>
-                                                    <span>22 300 so'm</span>
-                                                </div>
-                                                <hr style="margin: 0; background-color: #b6b6b6">
-                                                <div class="d-flex justify-content-between information">
-                                                    <span>Qayta ro'yhatlash uchun</span>
-                                                    <span>44 600 so'm</span>
-                                                </div>
-                                                <hr style="margin: 0; background-color: #3e3e3e">
-                                                <div class="d-flex justify-content-between information">
-                                                    <span><b>Jami to'lov</b></span>
-                                                    <span><b>976 900 so'm</b></span>
+                                                <br>
+                                                <div class="state_duty_price">
+
+
                                                 </div>
                                                 <div class="text-right mt-3">
                                                     <button class="btn btn-primary col-12"
@@ -323,7 +303,7 @@
                                 </div>
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3" value="Oldingi"/>
+                                       id="prev3-person" value="Oldingi"/>
                                 <a target="_blank" href="#"
                                    class="action-button copy_application" style="padding: 0.7em !important;">
                                     Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
@@ -333,72 +313,29 @@
                                 <div class="form-card">
                                     <div class="alert alert-danger text-center"><b>Ushbu to'lovlarni hisob-raqamingizdan
                                         pul ko'chirish
-                                        yo'li orqali to'lang!!!</b></div>
-                                    <div id="render_div" class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-10">
-                                            <div class="payment-info table-responsive-sm">
-                                                <table class="table table-bordered">
-                                                    <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Hujjat nomi</th>
-                                                        <th scope="col">Hisob raqami</th>
-                                                        <th scope="col">Summasi</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <th scope="row">Yo'l fondi ot kuchi</th>
-                                                        <td>401422860406242342210179</td>
-                                                        <td>33 000</td>
-                                                    </tr>
+                                        yo'li orqali to'lang!!!</b>
+                                    </div>
+                                    <div class="row no-gutters d-flex justify-content-center">
+                                        <div class="col-md-12">
 
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <th scope="row">Texnik ko'rik</th>
-                                                        <td>401422860406242342210179</td>
-                                                        <td>22 300</td>
-                                                    </tr>
+                                            <div id="render_div" class="state_duty_price">
 
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <th scope="row">Ro'yhatlash</th>
-                                                        <td>401422860406242342210179</td>
-                                                        <td>22 300</td>
-                                                    </tr>
+                                            </div>
 
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <th scope="row">Qayta ro'yhatlash</th>
-                                                        <td>401422860406242342210179</td>
-                                                        <td>44 600</td>
-                                                    </tr>
-                                                    </tbody>
-
-                                                    <tfoot>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td><b>Jami to'lov:</b></td>
-                                                        <td></td>
-                                                        <td><b>366 000</b></td>
-                                                    </tr>
-                                                    </tfoot>
-                                                </table>
-                                                <div class="text-right mt-3">
-                                                    <button id="payment_render_pdf"
-                                                            class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-                                                        To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-                                                            class="fas fa-file-download"></i>
-                                                    </button>
-                                                </div>
+                                            <div class="text-right mt-3">
+                                                <button id="payment_render_pdf"
+                                                        class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
+                                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
+                                                        class="fas fa-file-download"></i>
+                                                </button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3" value="Oldingi"/>
+                                       id="prev3-legal" value="Oldingi"/>
                                 <a target="_blank" href="#"
                                    class="action-button copy_application" style="padding: 0.7em !important;">
                                     Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
@@ -434,6 +371,9 @@
             $('#last_name').attr('value', lastName)
             $('#middle_name').attr('value', middleName)
             $('#passport').attr('value', passport)
+            alert('ok')
+            $('#fieldset1').hide()
+            $('#fieldset3-person').show()
 
             $.ajaxSetup({
                 beforeSend: function (xhr) {
@@ -672,10 +612,20 @@
                                     $('#made_year').attr("disabled", "disabled")
                                     $('.devices').attr("disabled", "disabled")
                                     $('#gift_agreement').attr("disabled", "disabled")
-                                    $('#date_conclusion_contract').attr("disabled", "disabled")
+                                    $('#contract_date').attr("disabled", "disabled")
+
+                                    $('#fuel_types').attr("disabled", "disabled")
+                                    $('#car_type').attr("disabled", "disabled")
+                                    $('#empty_weight').attr("disabled", "disabled")
+                                    $('#full_weight').attr("disabled", "disabled")
+                                    $('#engine_power').attr("disabled", "disabled")
+                                    $('#auction_number').attr("disabled", "disabled")
+                                    $('#is_auction').attr("disabled", "disabled")
+                                    $('#old_number').attr("disabled", "disabled")
+                                    $('#old_technical_passport').attr("disabled", "disabled")
                                     $('#lost_technical_passport').attr("disabled", "disabled")
 
-                                     $('.copy_application').data('filename', response.fields.file_name)
+                                    $('.copy_application').data('filename', response.fields.file_name)
                                 }
                             },
                             error: function (response) {
@@ -694,29 +644,15 @@
             })
 
             $('#payment_render_pdf').on('click', function () {
-                var pdf = new jsPDF('p', 'pt', 'letter');
-                source = $('#render_div')[0];
-                specialElementHandlers = {
-                    '#bypassme': function (element, renderer) {
-                        return true
-                    }
-                };
-                margins = {
-                    top: 80,
-                    bottom: 60,
-                    left: 40,
-                    width: 1000
-                };
-                pdf.fromHTML(
-                    source, // HTML string or DOM elem ref.
-                    margins.left, // x coord
-                    margins.top, { // y coord
-                        'width': margins.width, // max width of content on PDF
-                        'elementHandlers': specialElementHandlers
-                    },
-                    function (dispose) {
-                        pdf.save("To'lov.pdf");
-                    }, margins);
+                var element = document.getElementById('render_div');
+
+                html2pdf(element, {
+                    margin: 1,
+                    filename: 'To\'lov.pdf',
+                    image: {type: 'jpeg', quality: 0.98},
+                    html2canvas: {scale: 2},
+                    jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
+                })
             })
         })
     </script>
