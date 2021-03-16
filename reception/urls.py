@@ -22,9 +22,8 @@ from reception import settings
 from user.views import HelloView, CustomAuthToken
 
 urlpatterns = [
-    path('account-statement/', include('account_statement.urls')),
-    path('gift-agreement/', include('gift_agreement.urls')),
-    path('contract-of-sale/', include('contract_of_sale.urls')),
+
+    path('service/', include('service.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('user.urls')),

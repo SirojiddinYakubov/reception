@@ -3,10 +3,7 @@ import time
 
 from django.db import models
 from django.utils import timezone
-
-from account_statement.models import AccountStatement
-from contract_of_sale.models import ContractOfSale
-from gift_agreement.models import GiftAgreement
+from service.models import Service
 from user.models import User, PERSON_CHOICES
 
 PROCESS_CHOICES =  (
@@ -16,24 +13,7 @@ PROCESS_CHOICES =  (
 
 )
 
-class Service(models.Model):
-    account_statement = models.ForeignKey(AccountStatement,verbose_name='Hisob ma\'lumotnomasi', on_delete=models.CASCADE, null=True, blank=True,)
-    gift_agreement = models.ForeignKey(GiftAgreement, verbose_name='Xadya shartnomasi', on_delete=models.CASCADE, null=True, blank=True, )
-    contract_of_sale = models.ForeignKey(ContractOfSale, verbose_name='Oldi sotdi shartnomasi', on_delete=models.CASCADE, null=True, blank=True, )
 
-    class Meta:
-        verbose_name = 'Xizmat turi'
-        verbose_name_plural = 'Xizmat turlari'
-
-    def __str__(self):
-        if self.account_statement:
-            return f'Hisob ma\'lumotnoma: {self.account_statement.seriya}'
-        elif self.gift_agreement:
-            return f"Xadya shartnomasi: {self.gift_agreement.seriya}"
-        elif self.contract_of_sale:
-            return f"Oldi sotdi shartnomasi: {self.contract_of_sale.seriya}"
-        else:
-            return f"ERROR SERIVCE IS NULL"
 
 
 class Application(models.Model):
@@ -44,7 +24,6 @@ class Application(models.Model):
     process_sms = models.CharField('Holat sababi', max_length=600, blank=True)
     is_payment = models.BooleanField('To\'lov qilingan', default=False)
     service = models.ForeignKey(Service, verbose_name='Xizmat turi', on_delete=models.CASCADE, blank=True, null=True)
-    is_delete = models.BooleanField(default=False)
     person_type = models.CharField('Ariza topshiruvchi shaxsi', choices=PERSON_CHOICES, max_length=3, default="J")
     file_name = models.CharField(max_length=64, unique=True, null=True, blank=True, editable=False)
     password = models.IntegerField(blank=True, null=True, verbose_name='Ariza tekshiruv kodi')
@@ -55,17 +34,7 @@ class Application(models.Model):
         verbose_name_plural = 'Arizalar'
 
     def __str__(self):
-        try:
-            if self.service.account_statement:
-                return f'Hisob ma\'lumotnoma: {self.service.account_statement.seriya}'
-            elif self.service.gift_agreement:
-                return f"Xadya shartnomasi: {self.service.gift_agreement.seriya}"
-            elif self.service.contract_of_sale:
-                return f"Oldi sotdi shartnomasi: {self.service.contract_of_sale.seriya}"
-            else:
-                return f"{self.id}"
-        except AttributeError:
-            return f"ERROR APPLICATION IS NULL"
+        return self.service.get_title_display()
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''

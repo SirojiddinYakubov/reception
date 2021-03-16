@@ -1,1 +1,0 @@
-default_app_config = 'customs_certificate.apps.CustomsCertificateConfig'

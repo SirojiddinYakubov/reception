@@ -15,10 +15,8 @@ from django.utils import timezone
 from docxtpl import DocxTemplate
 from rest_framework.authtoken.models import Token
 
-from account_statement.models import AccountStatement
-from application.models import Application, Service
-from contract_of_sale.models import ContractOfSale
-from gift_agreement.models import GiftAgreement
+
+from application.models import *
 from reception.settings import BASE_DIR
 from user.models import *
 from user.utils import render_to_pdf
@@ -38,13 +36,13 @@ def applications_list(request):
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
-                    qs = qs.filter(service__account_statement__isnull=False)
+                    qs = qs.filter(service__title='account_statement')
                     context.update(applications=qs)
                 if request.GET.get('service') == 'gift_agreement':
-                    qs = qs.filter(service__gift_agreement__isnull=False)
+                    qs = qs.filter(service__title='gift_agreement')
                     context.update(applications=qs)
                 if request.GET.get('service') == 'contract_of_sale':
-                    qs = qs.filter(service__contract_of_sale__isnull=False)
+                    qs = qs.filter(service__title='contract_of_sale')
                     context.update(applications=qs)
             if request.GET.get('person_type'):
                 qs = qs.filter(person_type=request.GET.get('person_type'))
@@ -56,7 +54,7 @@ def applications_list(request):
                 qs = qs.filter(is_payment=request.GET.get('payment'))
                 context.update(applications=qs)
             if request.GET.get('technical'):
-                qs = qs.filter(Q(service__account_statement__car__is_confirm=request.GET.get('technical')) | Q(service__gift_agreement__car__is_confirm=request.GET.get('technical')) | Q(service__contract_of_sale__car__is_confirm=request.GET.get('technical')))
+                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
                 context.update(applications=qs)
             if request.GET.get('date'):
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
@@ -80,16 +78,142 @@ def applications_list(request):
         context.update(applications=qs)
         return render(request, 'user/role/controller/controller_applications_list.html', context)
     elif request.user.role == '3':
-        applications = Application.objects.filter(created_user__region=request.user.region)
-        context.update(applications=applications)
+        qs = Application.objects.filter(created_user__region=request.user.region)
+        if request.method == "GET":
+            if request.GET.get('service'):
+                if request.GET.get('service') == 'account_statement':
+                    qs = qs.filter(service__title='account_statement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'gift_agreement':
+                    qs = qs.filter(service__title='gift_agreement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'contract_of_sale':
+                    qs = qs.filter(service__title='contract_of_sale')
+                    context.update(applications=qs)
+            if request.GET.get('person_type'):
+                qs = qs.filter(person_type=request.GET.get('person_type'))
+                context.update(applications=qs)
+            if request.GET.get('process'):
+                qs = qs.filter(process=request.GET.get('process'))
+                context.update(applications=qs)
+            if request.GET.get('payment'):
+                qs = qs.filter(is_payment=request.GET.get('payment'))
+                context.update(applications=qs)
+            if request.GET.get('technical'):
+                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
+                context.update(applications=qs)
+            if request.GET.get('date'):
+                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+
+                if request.GET.get('date') == 'today':
+                    qs = qs.filter(created_date__range=(today_min, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'last-7-days':
+                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'month':
+                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'year':
+                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+                    context.update(applications=qs)
+        context.update(applications=qs)
         return render(request, 'user/role/checker/checker_applications_list.html', context)
     elif request.user.role == '4':
-        applications = Application.objects.filter(created_user__region=request.user.region)
-        context.update(applications=applications)
+        qs = Application.objects.filter(created_user__region=request.user.region)
+        if request.method == "GET":
+            if request.GET.get('service'):
+                if request.GET.get('service') == 'account_statement':
+                    qs = qs.filter(service__title='account_statement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'gift_agreement':
+                    qs = qs.filter(service__title='gift_agreement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'contract_of_sale':
+                    qs = qs.filter(service__title='contract_of_sale')
+                    context.update(applications=qs)
+            if request.GET.get('person_type'):
+                qs = qs.filter(person_type=request.GET.get('person_type'))
+                context.update(applications=qs)
+            if request.GET.get('process'):
+                qs = qs.filter(process=request.GET.get('process'))
+                context.update(applications=qs)
+            if request.GET.get('payment'):
+                qs = qs.filter(is_payment=request.GET.get('payment'))
+                context.update(applications=qs)
+            if request.GET.get('technical'):
+                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
+                context.update(applications=qs)
+            if request.GET.get('date'):
+                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+
+                if request.GET.get('date') == 'today':
+                    qs = qs.filter(created_date__range=(today_min, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'last-7-days':
+                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'month':
+                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'year':
+                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+                    context.update(applications=qs)
+        context.update(applications=qs)
         return render(request, 'user/role/technical/technical_applications_list.html', context)
     else:
-        applications = Application.objects.filter(created_user=request.user)
-        context.update(applications=applications)
+        qs = Application.objects.filter(created_user=request.user)
+        if request.method == "GET":
+            if request.GET.get('service'):
+                if request.GET.get('service') == 'account_statement':
+                    qs = qs.filter(service__title='account_statement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'gift_agreement':
+                    qs = qs.filter(service__title='gift_agreement')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'contract_of_sale':
+                    qs = qs.filter(service__title='contract_of_sale')
+                    context.update(applications=qs)
+            if request.GET.get('person_type'):
+                qs = qs.filter(person_type=request.GET.get('person_type'))
+                context.update(applications=qs)
+            if request.GET.get('process'):
+                qs = qs.filter(process=request.GET.get('process'))
+                context.update(applications=qs)
+            if request.GET.get('payment'):
+                qs = qs.filter(is_payment=request.GET.get('payment'))
+                context.update(applications=qs)
+            if request.GET.get('technical'):
+                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
+                context.update(applications=qs)
+            if request.GET.get('date'):
+                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+
+                if request.GET.get('date') == 'today':
+                    qs = qs.filter(created_date__range=(today_min, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'last-7-days':
+                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'month':
+                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+                    context.update(applications=qs)
+                if request.GET.get('date') == 'year':
+                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+                    context.update(applications=qs)
+        context.update(applications=qs)
 
     return render(request, 'application/applications_list.html', context)
 
@@ -163,62 +287,44 @@ def create_application_doc(request, filename):
     service = get_object_or_404(Service, id=application.service.id)
 
     context = {}
-
-    if service.account_statement is not None:
-        service = Service.objects.filter(account_statement=service.account_statement.id).first()
-        data = AccountStatement.objects.filter(id=service.account_statement.id).first()
-        if data.organization is not None:
-            organization = get_object_or_404(Organization, id=data.organization.id)
-            print(organization)
-            context.update(org=organization)
+    if service.title == 'account_statement':
+        if service.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_legal.docx")
-
         else:
-            doc = DocxTemplate(
-                f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
-    if service.gift_agreement is not None:
-        service = Service.objects.filter(gift_agreement=service.gift_agreement.id).first()
-        data = GiftAgreement.objects.filter(id=service.gift_agreement.id).first()
-        if data.organization is not None:
-            organization = get_object_or_404(Organization, id=data.organization.id)
-            context.update(org=organization)
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
+    elif service.title == 'gift_agreement':
+        if service.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_legal.docx")
-
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_person.docx")
-
-    if service.contract_of_sale is not None:
-        service = Service.objects.filter(contract_of_sale=service.contract_of_sale.id).first()
-        data = ContractOfSale.objects.filter(id=service.contract_of_sale.id).first()
-        if data.organization is not None:
-            organization = get_object_or_404(Organization, id=data.organization.id)
-            context.update(org=organization)
+    elif service.title == 'contract_of_sale':
+        if service.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_legal.docx")
-
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_person.docx")
 
-    print('before')
-    print(data.car)
-    car = get_object_or_404(Car, id=data.car.id)
+    car = get_object_or_404(Car, id=service.car.id)
 
-    devices_string = ', '.join([str(i).replace('"', "'") for i in car.devices.all()])
+    devices_string = ', '.join([str(i).replace('"', "'") for i in car.device.all()])
+    fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
 
-    context.update(data=data,
-                   now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
+    if service.organization:
+        context.update(org=service.organization)
+    context.update(now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
                    devices=devices_string,
+                   fuel_types=fuel_types_string,
                    car=car,
-                   state=f"{data.seriya} {datetime.datetime.strftime(data.date_conclusion_contract, '%d.%m.%Y')}",
+                   state=f"{service.seriya} {datetime.datetime.strftime(service.contract_date, '%d.%m.%Y')}",
                    user=request.user,
-                   birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'))
+                   birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'),
+                   given_number=car.given_number,
+                   old_number=car.old_number,
+                   old_technical_passport=car.old_technical_passport
+                   )
 
     car_model = get_object_or_404(CarModel, id=car.model.id)
-    if car_model.is_truck:
-        context.update(type='Yuk')
-    else:
-        context.update(type='Yengil')
 
     if car_model.is_local:
         context.update(local='Mahalliy')
@@ -271,25 +377,11 @@ def create_application_doc(request, filename):
 @login_required
 def view_application_service_data(request, service_id):
     service = get_object_or_404(Service, id=service_id)
-    try:
-        context = {}
-        if service.account_statement:
-            account_statement = get_object_or_404(AccountStatement, id=service.account_statement.id)
-            context.update(account_statement=account_statement)
-            return render(request, 'service/account_statement/view_account_statement_data.html', context)
-        elif service.gift_agreement:
-            gift_agreement = get_object_or_404(GiftAgreement, id=service.gift_agreement.id)
-            context.update(gift_agreement=gift_agreement)
-            return render(request, 'service/gift_agreement/view_gift_agreement_data.html', context)
-        elif service.contract_of_sale:
-            contract_of_sale = get_object_or_404(ContractOfSale, id=service.contract_of_sale.id)
-            context.update(contract_of_sale=contract_of_sale)
-            return render(request, 'service/contract_of_sale/view_contract_of_sale_data.html', context)
-        else:
-            return HttpResponse('SERVICE NOT FOUND')
+    context = {
+        'service': service
+    }
+    return render(request, 'service/view_service_data.html', context)
 
-    except AttributeError:
-        return HttpResponse('SERVICE NOT FOUND')
 
 
 @login_required
