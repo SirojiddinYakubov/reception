@@ -21,7 +21,7 @@ def calculation_state_duty_service_price(service):
         state_title = percent.state_duty.title
 
 
-        if state_title == 'Ot kuchi':
+        if state_title == "Yo'l fondi ot kuchi":
             #ishlab chiqarilganiga 3 yil to'lmagan
             if timezone.now().year - 3 <= int(service.car.made_year):
                 print('3 yil to\'lmagan')
