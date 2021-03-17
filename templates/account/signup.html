@@ -550,6 +550,30 @@
             $('#fieldset2').show()
         })
 
+        $('#region').on('change', function () {
+            var selectedRegion = $(this).children("option:selected").val();
+            if (parseInt(selectedRegion)) {
+                $(this).valid()
+
+            }
+        })
+
+         $('#district').on('change', function () {
+            var selectedDistrict = $(this).children("option:selected").val();
+            if (parseInt(selectedDistrict)) {
+                $(this).valid()
+
+            }
+        })
+
+         $('#mfy').on('change', function () {
+            var selectedMfy = $(this).children("option:selected").val();
+            if (parseInt(selectedMfy)) {
+                $(this).valid()
+
+            }
+        })
+
         jQuery.validator.addMethod("noSpace", function (value, element) {
             return value == '' || value.trim().length != 0;
         }, "Iltimos, bo'sh joy qoldirmang!");

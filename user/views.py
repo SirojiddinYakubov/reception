@@ -60,11 +60,6 @@ def personal_data(request):
 
     html = template.render(context)
 
-
-    state_duty = StateDutyPercent.objects.get(service='account_statement')
-
-    print(calculation_state_duty_service_price(state_duty))
-
     return HttpResponse(html)
 
 

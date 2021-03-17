@@ -87,6 +87,7 @@ def calculation_state_duty_service_price(service):
                            f'<span>{intcomma(state_price)} so\'m</span>' \
                        f'</div>' \
                    f'</div>'
+        state_score = 0
     print(total_prices)
     context += f"<hr style='margin: 0; background-color: #3e3e3e'>" \
                f"<div class='d-flex justify-content-between information'>" \
