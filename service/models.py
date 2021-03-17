@@ -66,7 +66,10 @@ class StateDutyScore(models.Model):
     updated_date = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
-        return f"{self.state_duty.title} : {self.region.title} : {self.score}"
+        if self.region:
+            return f"{self.state_duty.title} : {self.region.title} : {self.score}"
+        else:
+            return f"{self.state_duty.title} : {self.score}"
 
     class Meta:
         verbose_name = 'Davlat boji hisob raqami'

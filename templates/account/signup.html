@@ -161,7 +161,7 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-12 col-xl-6">
+                                                <div class="col-12 col-xl-6 region">
                                                     <label class="label_required not_copy" for="region">Viloyat</label>
                                                     <select name="region" class="form-control select2" id="region"
                                                             required>
@@ -171,7 +171,7 @@
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                                <div class="col-12 col-xl-6">
+                                                <div class="col-12 col-xl-6 district">
                                                     <label class="label_required not_copy"
                                                            for="district">Tuman/Shahar</label>
                                                     <select name="district" class="form-control select2" id="district"
@@ -183,7 +183,7 @@
 
 
                                             <div class="row">
-                                                <div class="col-12 col-xl-6">
+                                                <div class="col-12 col-xl-6 mfy">
                                                     <label class="label_required not_copy" for="mfy">MFY</label>
                                                     <select name="mfy" class="form-control select2" id="mfy"
                                                             required="required">
@@ -620,10 +620,12 @@
 
                 },
                 errorPlacement: function (error, element) {
-                    if (element.is(":radio")) {
-                        error.appendTo(element.parents('.devices'));
-                    } else if (element.is(":checkbox")) {
-                        error.appendTo(element.parents('.devices'));
+                    if (element.is("#region")) {
+                        error.appendTo(element.parents('.region'));
+                    } else if (element.is("#district")) {
+                        error.appendTo(element.parents('.district'));
+                    } else if (element.is("#mfy")) {
+                        error.appendTo(element.parents('.mfy'));
                     } else {
                         error.insertAfter(element);
                     }
