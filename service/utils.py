@@ -44,6 +44,7 @@ def calculation_state_duty_service_price(service):
                     print(f"OT KUCHI 3 YIL TO'LGAN 7 YIL TO'LMAGAN FOIZI TOPILMADI")
             #7 yildan ortiq
             elif timezone.now().year - 7 >= int(service.car.made_year):
+                
                 print('7 yildan ortiq')
                 if percent.start == 7 and percent.stop == 0:
                     if percent.car_type == service.car.type:
