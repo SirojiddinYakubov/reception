@@ -127,7 +127,7 @@
                                         <input type='hidden' value="J" name="person_type">
                                         <input type='hidden' value="" name="organization">
                                         <input type='hidden' value="" name="devices">
-                                        <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
+                                        <label class="label_required">{% trans 'T/v modelini tanlang' %}</label>
                                         <select id="car" name="car" class="form-control select2" style="width: 100%;">
                                             {% for car in cars %}
                                                 <option value="{{ car.id }}">{{ car.title }}</option>
@@ -136,7 +136,7 @@
 
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required">{% trans 'Avtomobil turini tanlang' %}</label>
+                                                <label class="label_required">{% trans 'T/v turini tanlang' %}</label>
                                                 <select id="car_type" name="car_type" class="form-control select2"
                                                         style="width: 100%;">
                                                     {% for car_type in car_types %}
@@ -271,192 +271,221 @@
                                                            for="lost_technical_passport"><b>Qayd etish guvohnomasi
                                                         yo'qolgan</b> <i
                                                             class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="Avtomobilning texnik passporti yo'qolgan bo'lsa ushbu maydonni belgilang"
+                                                            title="T/v ning texnik passporti yo'qolgan bo'lsa ushbu maydonni belgilang"
                                                             id='example3'></i></label>
                                                 </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="lost_number"
+                                                           id="lost_number"
+                                                           class="form-check-input"/>
+                                                    <label class="form-check-label"
+                                                           for="lost_number"><b>DRB yo'qolgan</b> <i
+                                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                                            title="T/v ning davlat raqami belgisi yo'qolgan bo'lsa ushbu maydonni belgilang"
+                                                            id='example4'></i></label>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 old_number">
-                                                <label class="label_required"
-                                                       for="old_number">{% trans "Avtomobildagi davlat raqami" %}</label>
-                                                <input type="text" id="old_number" name="old_number"
-                                                       class="form-control" placeholder="Masalan: 80979HBA"
-                                                       autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
-                                                    harflarda kiriting!</p>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2"
-                                                 id="old_technical_passport_div">
-                                                <label class="label_required"
-                                                       for="old_technical_passport">{% trans "Qayd etish guvohnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="old_technical_passport"
-                                                       name="old_technical_passport"
-                                                       class="form-control" placeholder="Masalan: AAC9875445"
-                                                       autocomplete="off">
-                                            </div>
 
+                                                <label class="label_required" style="width: 30%;
+
+margin-right: .5em;
+float:left;"
+                                                       for="old_number">{% trans "T/v dagi DRB" %}</label>
+                                                <div class="form-check" style="width: 30%;
+
+margin-right: .5em;
+float:left;"
+                                                >
+                                                <input type="checkbox" name="is_lost_number"
+                                                       id="is_lost_number"
+                                                       class="form-check-input"/>
+                                                <label class="form-check-label"
+                                                       for="is_lost_number"><b>DRB eski</b> <i
+                                                        class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="T/v ning davlat raqami belgisi oldingi ko'rinishdagi raqam bo'lsa ushbu maydonni belgilang"
+                                                        id='example5'></i></label>
+                                            </div>
+                                            <input type="text" id="old_number" name="old_number"
+                                                   class="form-control" placeholder="Masalan: 80979HBA"
+                                                   autocomplete="off">
+                                            <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
+                                                harflarda kiriting!</p>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2"
+                                             id="old_technical_passport_div">
+                                            <label class="label_required"
+                                                   for="old_technical_passport">{% trans "Qayd etish guvohnomasi seriyasi va raqami" %}</label>
+                                            <input type="text" id="old_technical_passport"
+                                                   name="old_technical_passport"
+                                                   class="form-control" placeholder="Masalan: AAC9875445"
+                                                   autocomplete="off">
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="gift_agreement">{% trans "Xadya shartnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="gift_agreement" name="gift_agreement"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: AAC123456' %}"
-                                                       autocomplete="off">
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="contract_date">{% trans "Shartnoma tuzilgan sana" %}</label>
-                                                <div class="input-group mb-2">
-                                                    <input id='contract_date' name="contract_date"
-                                                           type="text"
-                                                           class="form-control datepicker"/>
-                                                    <div class="input-group-prepend datepicker_icon">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"
-                                                                                         aria-hidden="true"></i>
-                                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                            <label class="label_required"
+                                                   for="seriya">{% trans "Xadya shartnomasi seriyasi va raqami" %}</label>
+                                            <input type="text" id="seriya" name="seriya"
+                                                   class="form-control"
+                                                   placeholder="{% trans 'Masalan: AAC123456' %}"
+                                                   autocomplete="off">
+                                        </div>
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                            <label class="label_required"
+                                                   for="contract_date">{% trans "Shartnoma tuzilgan sana" %}</label>
+                                            <div class="input-group mb-2">
+                                                <input id='contract_date' name="contract_date"
+                                                       type="text"
+                                                       class="form-control datepicker"/>
+                                                <div class="input-group-prepend datepicker_icon">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"
+                                                                                     aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <div class="form-check">
-                                                    <input type="checkbox" id="is_auction"
-                                                           class="form-check-input"/>
-                                                    <label class="form-check-label"
-                                                           for="is_auction"><b>Raqam auksiondan olingan</b> <i
-                                                            class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="Raqam auksiondan olingan bo'lsa ushbu maydonni belgilang"
-                                                            id='example2'></i></label>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                            <div class="form-check">
+                                                <input type="checkbox" id="is_auction"
+                                                       class="form-check-input"/>
+                                                <label class="form-check-label"
+                                                       for="is_auction"><b>Raqam auksiondan olingan</b> <i
+                                                        class="fas fa-info-circle" data-toggle="tooltip"
+                                                        title="Raqam auksiondan olingan bo'lsa ushbu maydonni belgilang"
+                                                        id='example2'></i></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" id="auction_number_div">
+                                        <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 auction_number">
+                                            <label class="label_required"
+                                                   for="auction_number">{% trans "Auksion raqami" %}</label>
+                                            <input type="text" id="auction_number"
+                                                   class="form-control" placeholder="Masalan: 80979HBA"
+                                                   autocomplete="off">
+                                            <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
+                                                harflarda kiriting!</p>
+                                        </div>
+
+                                    </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <input type="button" id="prev2"
+                                   class="previous action-button-previous"
+                                   value="Oldingi"/>
+                            <input type="submit" id="next2" class="action-button"
+                                   value="Keyingi"/>
+                            <input type="button" style="display: none" id="refresh_next2"
+                                   class="action-button"
+                                   value="Keyingi"/>
+                        </div>
+                        </form>
+                        </fieldset>
+                        <fieldset id="fieldset3-person">
+                            <div class="form-card">
+                                <div class="row no-gutters d-flex justify-content-center">
+                                    <div class="col-md-10">
+                                        <div class="payment-info">
+                                            <div class="row">
+                                                <img class="img-fluid cc-img"
+                                                     src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
                                             </div>
 
-                                        </div>
-                                        <div class="row" id="auction_number_div">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 auction_number">
-                                                <label class="label_required"
-                                                       for="auction_number">{% trans "Auksion raqami" %}</label>
-                                                <input type="text" id="auction_number"
-                                                       class="form-control" placeholder="Masalan: 80979HBA"
-                                                       autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
-                                                    harflarda kiriting!</p>
+                                            <div class="mt-2">
+                                                <label class="credit-card-label label_required">Karta egasi</label>
+                                                <input type="text" class="credit-inputs form-control"
+                                                       placeholder="Masalan: Abdullayev Bahtiyor">
                                             </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <input type="button" id="prev2"
-                                               class="previous action-button-previous"
-                                               value="Oldingi"/>
-                                        <input type="submit" id="next2" class="action-button"
-                                               value="Keyingi"/>
-                                        <input type="button" style="display: none" id="refresh_next2"
-                                               class="action-button"
-                                               value="Keyingi"/>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="fieldset3-person">
-                                <div class="form-card">
-                                    <div class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-10">
-                                            <div class="payment-info">
-                                                <div class="row">
-                                                    <img class="img-fluid cc-img"
-                                                         src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
-                                                </div>
-
-                                                <div class="mt-2">
-                                                    <label class="credit-card-label label_required">Karta egasi</label>
+                                            <div class="mt-2">
+                                                <label class="credit-card-label label_required">Karta raqami</label>
+                                                <input type="text" class="credit-inputs form-control"
+                                                       placeholder="0000 0000 0000 0000">
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label class="credit-card-label label_required">Vaqti</label>
                                                     <input type="text" class="credit-inputs form-control"
-                                                           placeholder="Masalan: Abdullayev Bahtiyor">
+                                                           placeholder="12/24">
                                                 </div>
-                                                <div class="mt-2">
-                                                    <label class="credit-card-label label_required">Karta raqami</label>
+                                                <div class="col-md-6">
+                                                    <label class="credit-card-label label_required">Maxfiy
+                                                        kod</label>
                                                     <input type="text" class="credit-inputs form-control"
-                                                           placeholder="0000 0000 0000 0000">
+                                                           placeholder="342">
                                                 </div>
-                                                <div class="row mt-2">
-                                                    <div class="col-md-6">
-                                                        <label class="credit-card-label label_required">Vaqti</label>
-                                                        <input type="text" class="credit-inputs form-control"
-                                                               placeholder="12/24">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="credit-card-label label_required">Maxfiy
-                                                            kod</label>
-                                                        <input type="text" class="credit-inputs form-control"
-                                                               placeholder="342">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="state_duty_price">
+                                            </div>
+                                            <br>
+                                            <div class="state_duty_price">
 
-
-                                                </div>
-                                                <div class="text-right mt-3">
-                                                    <button class="btn btn-primary col-12"
-                                                            type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
-                                                        <span style="float:right;"><i
-                                                                class="fas fa-long-arrow-alt-right"></i></span>
-                                                    </button>
-                                                </div>
 
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-person" value="Oldingi"/>
-                                <a target="_blank" href="#"
-                                   class="action-button copy_application" style="padding: 0.7em !important;">
-                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
-                                </a>
-                            </fieldset>
-                            <fieldset id="fieldset3-legal">
-                                <div class="form-card">
-                                    <div class="alert alert-danger text-center"><b>Ushbu to'lovlarni hisob-raqamingizdan
-                                        pul ko'chirish
-                                        yo'li orqali to'lang!!!</b>
-                                    </div>
-                                    <div class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-12">
-
-                                            <div id="render_div" class="state_duty_price">
-
-                                            </div>
-
                                             <div class="text-right mt-3">
-                                                <button id="payment_render_pdf"
-                                                        class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
-                                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-                                                        class="fas fa-file-download"></i>
+                                                <button class="btn btn-primary col-12"
+                                                        type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
+                                                    <span style="float:right;"><i
+                                                            class="fas fa-long-arrow-alt-right"></i></span>
                                                 </button>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-legal" value="Oldingi"/>
-                                <a target="_blank" href="#"
-                                   class="action-button copy_application" style="padding: 0.7em !important;">
-                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
-                                </a>
-                            </fieldset>
-                        </div>
+                            <input type="button" name="Previous" class="previous action-button-previous"
+                                   id="prev3-person" value="Oldingi"/>
+                            <a target="_blank" href="#"
+                               class="action-button copy_application" style="padding: 0.7em !important;">
+                                Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
+                            </a>
+                        </fieldset>
+                        <fieldset id="fieldset3-legal">
+                            <div class="form-card">
+                                <div class="alert alert-danger text-center"><b>Ushbu to'lovlarni hisob-raqamingizdan
+                                    pul ko'chirish
+                                    yo'li orqali to'lang!!!</b>
+                                </div>
+                                <div class="row no-gutters d-flex justify-content-center">
+                                    <div class="col-md-12">
+
+                                        <div id="render_div" class="state_duty_price">
+
+                                        </div>
+
+                                        <div class="text-right mt-3">
+                                            <button id="payment_render_pdf"
+                                                    class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
+                                                To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
+                                                    class="fas fa-file-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <input type="button" name="Previous" class="previous action-button-previous"
+                                   id="prev3-legal" value="Oldingi"/>
+                            <a target="_blank" href="#"
+                               class="action-button copy_application" style="padding: 0.7em !important;">
+                                Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
+                            </a>
+                        </fieldset>
                     </div>
                 </div>
             </div>
-
         </div>
+
+    </div>
     </div>
 
 {% endblock content %}
@@ -497,6 +526,8 @@
                 $('#example1').tooltip();
                 $('#example2').tooltip();
                 $('#example3').tooltip();
+                $('#example4').tooltip();
+                $('#example5').tooltip();
                 $('#fuel_types').selectize({});
                 $('#devices').selectize({});
 
@@ -505,6 +536,13 @@
 
                 {#$('#old_number').inputmask("9{2}[A|9]{4}A{2}");#}
 
+                $('#auction_number').inputmask({casing: 'upper'});
+                $('#engine_number').inputmask({casing: 'upper'});
+                $('#body_number').inputmask({casing: 'upper'});
+                $('#chassis_number').inputmask({casing: 'upper'});
+                $('#seriya').inputmask({casing: 'upper'});
+                $('#old_number').inputmask({casing: 'upper'});
+                $('#old_technical_passport').inputmask({casing: 'upper'});
 
 
                 {#$('#fieldset1').hide()#}
@@ -751,7 +789,7 @@
                             engine_power: {
                                 required: true,
                             },
-                            gift_agreement: {
+                            seriya: {
                                 required: true,
                                 alphanumeric: true,
                                 noSpace: true,
@@ -793,7 +831,7 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                            gift_agreement: {
+                            seriya: {
                                 required: "Xadya shartnomasi seriyasi va raqami kiritilmagan!"
                             },
                             old_technical_passport: {
@@ -803,7 +841,7 @@
                                 required: "Auksion raqami kiritilmagan!"
                             },
                             old_number: {
-                                required: "Avtomobildagi davlat raqami kiritilmagan!"
+                                required: "T/v dagi DRB kiritilmagan!"
                             },
 
 
@@ -869,7 +907,7 @@
                                             $('#color').attr("disabled", "disabled")
                                             $('#made_year').attr("disabled", "disabled")
                                             $('.devices').attr("disabled", "disabled")
-                                            $('#gift_agreement').attr("disabled", "disabled")
+                                            $('#seriya').attr("disabled", "disabled")
                                             $('#contract_date').attr("disabled", "disabled")
                                             $('#fuel_types').attr("disabled", "disabled")
                                             $('#car_type').attr("disabled", "disabled")
@@ -886,7 +924,7 @@
                                             $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)
 
-                                        }else {
+                                        } else {
                                             errorFunction()
                                         }
                                     } else {

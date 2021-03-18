@@ -263,8 +263,8 @@
                                             </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <label class="label_required"
-                                                       for="account_statement">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="account_statement" name="account_statement"
+                                                       for="seriya">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}</label>
+                                                <input type="text" id="seriya" name="seriya"
                                                        class="form-control"
                                                        placeholder="{% trans 'Masalan: AAC123456' %}"
                                                        autocomplete="off">
@@ -288,6 +288,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 price">
+                                                <label class="label_required"
+                                                       for="price">{% trans 'Avtomobil narxi' %}</label>
+                                                <input type="number" id="price" name="price"
+                                                       class="form-control" autocomplete="off"
+                                                       placeholder="{% trans 'Masalan: 47000000' %}">
+                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni so'mda
+                                                    kiriting!</p>
+                                            </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
@@ -309,8 +319,6 @@
                                                 <input type="text" id="auction_number"
                                                        class="form-control" placeholder="Masalan: 80979HBA"
                                                        autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
-                                                    harflarda kiriting!</p>
                                             </div>
                                         </div>
                                     </div>
@@ -465,8 +473,12 @@
                 $('#fuel_types').selectize({});
                 $('#devices').selectize({});
 
-                {#$('#auction_number').inputmask("9{2}A{1}9{3}A{2}");#}
-                {#$('#auction_number').attr('placeholder', '80G979NA')#}
+                $('#auction_number').inputmask({casing:'upper'});
+                $('#engine_number').inputmask({casing:'upper'});
+                $('#body_number').inputmask({casing:'upper'});
+                $('#chassis_number').inputmask({casing:'upper'});
+                $('#seriya').inputmask({casing:'upper'});
+
 
 
                 {#$('#fieldset1').hide()#}
@@ -702,7 +714,10 @@
                             engine_power: {
                                 required: true,
                             },
-                            account_statement: {
+                            price: {
+                                required: true,
+                            },
+                            seriya: {
                                 required: true,
                                 alphanumeric: true,
                                 noSpace: true,
@@ -737,7 +752,10 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                            account_statement: {
+                             price: {
+                                required: "Avtomobil narxi kiritilmagan!",
+                            },
+                            seriya: {
                                 required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
                             },
                             auction_number: {
@@ -757,6 +775,8 @@
                                 error.appendTo(element.parents('.empty_weight'));
                             } else if (element.is("#engine_power")) {
                                 error.appendTo(element.parents('.engine_power'));
+                            }else if (element.is("#price")) {
+                                error.appendTo(element.parents('.price'));
                             } else {
                                 error.insertAfter(element);
                             }
@@ -804,7 +824,7 @@
                                             $('#color').attr("disabled", "disabled")
                                             $('#made_year').attr("disabled", "disabled")
                                             $('.devices').attr("disabled", "disabled")
-                                            $('#account_statement').attr("disabled", "disabled")
+                                            $('#seriya').attr("disabled", "disabled")
                                             $('#contract_date').attr("disabled", "disabled")
                                             $('#fuel_types').attr("disabled", "disabled")
                                             $('#car_type').attr("disabled", "disabled")
@@ -813,11 +833,12 @@
                                             $('#engine_power').attr("disabled", "disabled")
                                             $('#auction_number').attr("disabled", "disabled")
                                             $('#is_auction').attr("disabled", "disabled")
+                                            $('#price').attr("disabled", "disabled")
 
 
                                             $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)
-                                        }else {
+                                        } else {
                                             errorFunction()
                                         }
 

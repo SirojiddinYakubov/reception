@@ -27,7 +27,7 @@ def account_statement_index(request):
 
     # get previous years
     year = datetime.datetime.today().year
-    years = range(year, year - 80, -1)
+    years = range(year, year - 5, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -35,7 +35,7 @@ def account_statement_index(request):
     bodyTypes = BodyType.objects.filter(is_active=True)
     colors = Color.objects.filter(is_active=True)
     organizations = Organization.objects.filter(created_user=request.user, is_active=True)
-    services = StateDutyPercent.objects.filter(service='account_statement')
+
 
     context = {
         'cars': cars,
@@ -46,7 +46,7 @@ def account_statement_index(request):
         'bodyTypes': bodyTypes,
         'years': years,
         'color': colors,
-        'services': services
+
     }
     return render(request, 'service/account_statement/account_statement_index.html', context=context)
 
@@ -62,6 +62,7 @@ class Save_Account_Statement(APIView):
             engine_power = request.POST.get('engine_power')
             auction_number = request.POST.get('auction_number')
             body_number = request.POST.get('body_number')
+            price = request.POST.get('price')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
             made_year = request.POST.get('made_year')
             devices = []
@@ -74,7 +75,7 @@ class Save_Account_Statement(APIView):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            seriya = request.POST.get('account_statement')
+            seriya = request.POST.get('seriya')
             contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None),'%d.%m.%Y')
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
@@ -91,6 +92,8 @@ class Save_Account_Statement(APIView):
             car.full_weight = full_weight
             car.empty_weight = empty_weight
             car.engine_power = engine_power
+            car.is_new = True
+            car.price = price
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number
@@ -195,7 +198,7 @@ class Save_Gift_Agreement(APIView):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            seriya = request.POST.get('gift_agreement')
+            seriya = request.POST.get('seriya')
             contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None),'%d.%m.%Y')
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))

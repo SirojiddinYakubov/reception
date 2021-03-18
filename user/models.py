@@ -249,16 +249,20 @@ class Car(models.Model):
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)
     made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
     color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
-    # milage = models.IntegerField('Qancha yurganligi', null=True, blank=True, default=0)
     engine_power = models.IntegerField('Dvigatel quvvati', null=True, blank=True, default=0)
+    old_number = models.CharField('Eski DRB', null=True, blank=True, max_length=15)
     old_technical_passport = models.CharField('Eski texpassport seriyasi va raqami', max_length=30, blank=True)
+    is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
     given_technical_passport = models.CharField('Berilgan texpassport seriyasi va raqami', max_length=30, blank=True)
     created_date = models.DateTimeField(default=timezone.now, editable=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan',default=False)
+    lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan',default=False)
     is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi',default=False)
+    is_new = models.BooleanField(verbose_name='Avtomobil yangi',default=False)
+    price = models.IntegerField(verbose_name='Avtomobil narxi',default=0, blank=True)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL,blank=True, null=True)
     is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')
-    old_number = models.CharField('Eski DRB', null=True, blank=True, max_length=15)
+
     given_number = models.CharField('Yangi DRB', max_length=15, blank=True, null=True)
 
 
