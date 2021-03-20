@@ -14,7 +14,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(StateDutyPercent)
 class StateDutyPercentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'state_duty','car_type','person_type', 'percent','is_old_number','lost_number','lost_technical_passport','start','stop' ]
+    list_display = ['id', 'state_duty','car_type','person_type', 'percent','car_is_new','is_old_number','lost_number','lost_technical_passport','start','stop' ]
     list_display_links = ['id','state_duty']
     list_filter = ['state_duty','car_type','person_type','is_old_number','lost_number','lost_technical_passport', ]
     save_on_top = True

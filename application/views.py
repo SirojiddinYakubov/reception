@@ -18,6 +18,7 @@ from rest_framework.authtoken.models import Token
 
 from application.models import *
 from reception.settings import BASE_DIR
+from service.utils import calculation_state_duty_service_price
 from user.models import *
 from user.utils import render_to_pdf
 
@@ -230,8 +231,11 @@ def application_detail(request, id):
     if application.created_user != request.user:
         return redirect(reverse_lazy('application:applications_list'))
 
+    payments = calculation_state_duty_service_price(application.service)
+
     context = {
-        'application': application
+        'application': application,
+        'payments': payments
     }
     return render(request, 'application/application_detail.html', context)
 

@@ -184,6 +184,16 @@ class Save_Gift_Agreement(APIView):
             else:
                 lost_technical_passport = False
 
+            if request.POST.get('lost_number') == 'on':
+                lost_number = True
+            else:
+                lost_number = False
+
+            if request.POST.get('is_old_number') == 'on':
+                is_old_number = True
+            else:
+                is_old_number = False
+
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
@@ -218,6 +228,8 @@ class Save_Gift_Agreement(APIView):
             car.lost_technical_passport = lost_technical_passport
             car.empty_weight = empty_weight
             car.engine_power = engine_power
+            car.lost_number = lost_number
+            car.is_old_number = is_old_number
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number
@@ -306,6 +318,16 @@ class Save_Contract_Of_Sale(APIView):
             else:
                 lost_technical_passport = False
 
+            if request.POST.get('lost_number') == 'on':
+                lost_number = True
+            else:
+                lost_number = False
+
+            if request.POST.get('is_old_number') == 'on':
+                is_old_number = True
+            else:
+                is_old_number = False
+
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
@@ -320,7 +342,7 @@ class Save_Contract_Of_Sale(APIView):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            seriya = request.POST.get('contract_of_sale')
+            seriya = request.POST.get('seriya')
             contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None),'%d.%m.%Y')
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
@@ -340,6 +362,8 @@ class Save_Contract_Of_Sale(APIView):
             car.lost_technical_passport = lost_technical_passport
             car.empty_weight = empty_weight
             car.engine_power = engine_power
+            car.lost_number = lost_number
+            car.is_old_number = is_old_number
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number

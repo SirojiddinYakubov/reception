@@ -14,8 +14,7 @@ def calculation_state_duty_service_price(service):
     car = get_object_or_404(Car, id=service.car.id)
     created_user = get_object_or_404(User, id=service.created_user.id)
 
-    re_registration = StateDutyPercent.objects.filter(lost_number=car.lost_number,
-                                                      is_old_number=car.is_old_number, car_is_new=car.is_new,
+    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,
                                                       state_duty=6).first()
     registration = StateDutyPercent.objects.filter(car_type=car.type,
                                                    lost_number=car.lost_number, is_old_number=car.is_old_number,
@@ -25,9 +24,22 @@ def calculation_state_duty_service_price(service):
                                                  state_duty=3).first()
 
     if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
-        fine = StateDutyPercent.objects.filter(state_duty=7).first()
+        try:
+            fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
+        except AttributeError:
+            fine = 0
+            print("10 KUN O'TGANLIGI UCHUN JARIMA FOIZI TOPILMADI")
     else:
-        fine = None
+        fine = 0
+
+
+    if car.lost_technical_passport:
+        try:
+            fine_lost_technical_passport = StateDutyPercent.objects.filter(state_duty=7,lost_technical_passport=car.lost_technical_passport).first().percent
+            fine = fine + fine_lost_technical_passport
+        except AttributeError:
+            print("YO'QOLGAN TEX PASSPORT UCHUN JARIMA FOIZI TOPILMADI")
+
 
     if car.is_new:
         state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
@@ -153,17 +165,17 @@ def calculation_state_duty_service_price(service):
 
     if fine:
         try:
-            score = StateDutyScore.objects.filter(state_duty=fine.state_duty).first().score
+            score = StateDutyScore.objects.filter(state_duty=7).first().score
         except AttributeError:
             score = 0
             print('JARIMA SCORE NOT FOUND')
 
-        price = int(MINIMUM_BASE_WAGE / 100 * fine.percent)
+        price = int(MINIMUM_BASE_WAGE / 100 * fine)
         total_prices += price
         context += f'<hr class="line m-0 p-0">' \
                    f'<div class=\'row\'>' \
                    f'<div class=\'col-4\'>' \
-                   f'<span>{fine.get_state_duty_display()}</span>' \
+                   f'<span>Jarima</span>' \
                    f'</div>' \
                    f'<div class=\'col-4 text-left\'>' \
                    f'<span>{score}</span>' \

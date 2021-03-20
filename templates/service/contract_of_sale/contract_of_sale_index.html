@@ -274,17 +274,42 @@
                                                             title="Avtomobilning texnik passporti yo'qolgan bo'lsa ushbu maydonni belgilang"
                                                             id='example3'></i></label>
                                                 </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="lost_number"
+                                                           id="lost_number"
+                                                           class="form-check-input"/>
+                                                    <label class="form-check-label"
+                                                           for="lost_number"><b>DRB yo'qolgan</b> <i
+                                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                                            title="T/v ning davlat raqami belgisi yo'qolgan bo'lsa ushbu maydonni belgilang"
+                                                            id='example4'></i></label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 old_number">
-                                                <label class="label_required"
-                                                       for="old_number">{% trans "Avtomobildagi davlat raqami" %}</label>
+                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 old_number">
+
+                                                <label class="label_required" style="width: 30%;
+
+margin-right: .5em;
+float:left;"
+                                                       for="old_number">{% trans "T/v dagi DRB" %}</label>
+                                                <div class="form-check" style="width: 30%;
+
+margin-right: .5em;
+float:left;">
+                                                    <input type="checkbox" name="is_old_number"
+                                                           id="is_old_number"
+                                                           class="form-check-input"/>
+                                                    <label class="form-check-label"
+                                                           for="is_old_number"><b>DRB eski</b> <i
+                                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                                            title="T/v ning davlat raqami belgisi oldingi ko'rinishdagi raqam bo'lsa ushbu maydonni belgilang"
+                                                            id='example5'></i></label>
+                                                </div>
                                                 <input type="text" id="old_number" name="old_number"
                                                        class="form-control" placeholder="Masalan: 80979HBA"
                                                        autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
-                                                    harflarda kiriting!</p>
                                             </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2"
                                                  id="old_technical_passport_div">
@@ -301,8 +326,8 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <label class="label_required"
-                                                       for="contract_of_sale">{% trans "Oldi sotdi shartnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="contract_of_sale" name="contract_of_sale"
+                                                       for="seriya">{% trans "Oldi sotdi shartnomasi seriyasi va raqami" %}</label>
+                                                <input type="text" id="seriya" name="seriya"
                                                        class="form-control"
                                                        placeholder="{% trans 'Masalan: AAC123456' %}"
                                                        autocomplete="off">
@@ -343,8 +368,6 @@
                                                 <input type="text" id="auction_number"
                                                        class="form-control" placeholder="Masalan: 80979HBA"
                                                        autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Raqamdagi harflarni bosh
-                                                    harflarda kiriting!</p>
                                             </div>
 
                                         </div>
@@ -353,8 +376,7 @@
                                         <input type="button" id="prev2"
                                                class="previous action-button-previous"
                                                value="Oldingi"/>
-                                        <input type="submit" id="next2" class="action-button"
-                                               value="Keyingi"/>
+                                        <input type="submit" id="next2" class="action-button" value="Keyingi" />
                                         <input type="button" style="display: none" id="refresh_next2"
                                                class="action-button"
                                                value="Keyingi"/>
@@ -497,6 +519,8 @@
                 $('#example1').tooltip();
                 $('#example2').tooltip();
                 $('#example3').tooltip();
+                $('#example4').tooltip();
+                $('#example5').tooltip();
                 $('#fuel_types').selectize({});
                 $('#devices').selectize({});
 
@@ -505,10 +529,16 @@
 
                 {#$('#old_number').inputmask("9{2}[A|9]{4}A{2}");#}
 
+                $('#auction_number').inputmask({casing: 'upper'});
+                $('#engine_number').inputmask({casing: 'upper'});
+                $('#body_number').inputmask({casing: 'upper'});
+                $('#chassis_number').inputmask({casing: 'upper'});
+                $('#seriya').inputmask({casing: 'upper'});
+                $('#old_number').inputmask({casing: 'upper'});
+                $('#old_technical_passport').inputmask({casing: 'upper'});
 
-
-                {#$('#fieldset1').hide()#}
-                {#$('#fieldset3-legal').show()#}
+                $('#fieldset1').hide()
+                $('#fieldset2').show()
                 var is_legal = false,
                     passport = '{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}',
                     firstName = '{{ request.user.first_name }}',
@@ -752,7 +782,7 @@
                             engine_power: {
                                 required: true,
                             },
-                            contract_of_sale: {
+                            seriya: {
                                 required: true,
                                 alphanumeric: true,
                                 noSpace: true,
@@ -794,7 +824,7 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                            contract_of_sale: {
+                            seriya: {
                                 required: "Oldi sotdi shartnomasi seriyasi va raqami kiritilmagan!"
                             },
                             old_technical_passport: {
@@ -840,6 +870,7 @@
                             })
 
                             $('input[name ="devices"]').val(devices)
+                            $('#next2').val(`<span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`)
 
                             $.ajax({
                                 type: "POST",
@@ -871,7 +902,7 @@
                                             $('#color').attr("disabled", "disabled")
                                             $('#made_year').attr("disabled", "disabled")
                                             $('.devices').attr("disabled", "disabled")
-                                            $('#contract_of_sale').attr("disabled", "disabled")
+                                            $('#seriya').attr("disabled", "disabled")
                                             $('#contract_date').attr("disabled", "disabled")
                                             $('#fuel_types').attr("disabled", "disabled")
                                             $('#car_type').attr("disabled", "disabled")
@@ -883,6 +914,8 @@
                                             $('#old_number').attr("disabled", "disabled")
                                             $('#old_technical_passport').attr("disabled", "disabled")
                                             $('#lost_technical_passport').attr("disabled", "disabled")
+                                            $('#is_old_number').attr("disabled", "disabled")
+                                            $('#lost_number').attr("disabled", "disabled")
 
                                             $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)

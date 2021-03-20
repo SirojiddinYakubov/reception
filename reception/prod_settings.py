@@ -12,14 +12,20 @@ SECRET_KEY = 'x9fq&#!x9v_%^&^*(&*)74558768976jo@-_oq5nvqc($wlbq23)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'reception',
+        'USER': 'pyth',
+        'PASSWORD': 'm6232971',
+        'HOST': 'localhost',
+        'PORT': '3306',
+
     }
 }
+
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')

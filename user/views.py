@@ -57,6 +57,7 @@ def personal_data(request):
         'passport': passport,
         'request': request
     }
+    service = Service.objects.all().last()
 
     html = template.render(context)
 
