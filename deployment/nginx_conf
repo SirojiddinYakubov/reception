@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_name 89.108.99.141;
+
+    access_log /home/yakubov/reception/logs/nginx_access.log;
+    error_log /home/yakubov/reception/logs/nginx_error.log;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /static/ {
+        root /home/yakubov/reception;
+    }
+
+    location /media/ {
+        root /home/yakubov/reception;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/yakubov/run/gunicorn.sock;
+    }
+}

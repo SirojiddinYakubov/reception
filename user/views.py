@@ -50,18 +50,17 @@ def personal_data(request):
     # html holatda ekranga chiqarish
     if request.user.person_id == None:
         return redirect(reverse_lazy('user:edit_personal_data'))
-    template = get_template('user/personal_data.html')
+    # template = get_template('user/personal_data.html')
     passport = '{} {}'.format(request.user.passport_seriya, request.user.passport_number)
     context = {
         'user': request.user,
         'passport': passport,
         'request': request
     }
-    service = Service.objects.all().last()
 
-    html = template.render(context)
+    # html = template.render(context)
 
-    return HttpResponse(html)
+    return render(request, 'user/personal_data.html', context)
 
 
 # pdf holatda ekranga chiqarish

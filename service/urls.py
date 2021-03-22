@@ -14,4 +14,6 @@ urlpatterns = [
     path('contract-of-sale-index/', contract_of_sale_index, name='contract_of_sale_index'),
     path('save-contract-of-sale/', Save_Contract_Of_Sale.as_view(), name='save_contract_of_sale'),
 
+    path('replace-tp-index/', replace_tp_index, name='replace_tp_index'),
+    path('save-replace-tp/', Save_Replace_Tp.as_view(), name='save_replace_tp'),
 ]

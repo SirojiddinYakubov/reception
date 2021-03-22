@@ -14,11 +14,15 @@ def calculation_state_duty_service_price(service):
     car = get_object_or_404(Car, id=service.car.id)
     created_user = get_object_or_404(User, id=service.created_user.id)
 
-    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,
-                                                      state_duty=6).first()
-    registration = StateDutyPercent.objects.filter(car_type=car.type,
+    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()
+
+    if not car.is_auction:
+        registration = StateDutyPercent.objects.filter(car_type=car.type,
                                                    lost_number=car.lost_number, is_old_number=car.is_old_number,
                                                    car_is_new=car.is_new, state_duty=5).first()
+    else:
+        registration = None
+
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=service.person_type, car_type=service.car.type,
                                                  state_duty=3).first()

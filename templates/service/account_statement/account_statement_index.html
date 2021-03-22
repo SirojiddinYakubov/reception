@@ -37,7 +37,7 @@
                                             <option value="J">Jismoniy shaxs</option>
                                             <option value="Y">Yuridik shaxs</option>
                                         </select>
-                                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em"
+                                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em;display: none"
                                            id="organization_div_alert"
                                            class="text-danger not_copy">
                                             Sizda tashkilot mavjud emas. <a
@@ -326,8 +326,7 @@
                                         <input type="button" id="prev2"
                                                class="previous action-button-previous"
                                                value="Oldingi"/>
-                                        <input type="submit" id="next2" class="action-button"
-                                               value="Keyingi"/>
+                                        <button type="submit" id="next2" class="action-button">Keyingi</button>
                                         <input type="button" style="display: none" id="refresh_next2"
                                                class="action-button"
                                                value="Keyingi"/>
@@ -405,7 +404,7 @@
 
                                             </div>
 
-                                            <div class="text-right mt-3">
+                                            <div class="text-right mt-3" data-html2canvas-ignore="true">
                                                 <button id="payment_render_pdf"
                                                         class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
                                                     To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
@@ -462,7 +461,6 @@
     <script type="text/javascript" charset="UTF-8">
         $(function () {
             $('.select2').select2()
-            $('#organization_div_alert').hide()
             $('#auction_number_div').hide()
 
         })
@@ -473,12 +471,11 @@
                 $('#fuel_types').selectize({});
                 $('#devices').selectize({});
 
-                $('#auction_number').inputmask({casing:'upper'});
-                $('#engine_number').inputmask({casing:'upper'});
-                $('#body_number').inputmask({casing:'upper'});
-                $('#chassis_number').inputmask({casing:'upper'});
-                $('#seriya').inputmask({casing:'upper'});
-
+                $('#auction_number').inputmask({casing: 'upper'});
+                $('#engine_number').inputmask({casing: 'upper'});
+                $('#body_number').inputmask({casing: 'upper'});
+                $('#chassis_number').inputmask({casing: 'upper'});
+                $('#seriya').inputmask({casing: 'upper'});
 
 
                 {#$('#fieldset1').hide()#}
@@ -752,7 +749,7 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                             price: {
+                            price: {
                                 required: "Avtomobil narxi kiritilmagan!",
                             },
                             seriya: {
@@ -775,7 +772,7 @@
                                 error.appendTo(element.parents('.empty_weight'));
                             } else if (element.is("#engine_power")) {
                                 error.appendTo(element.parents('.engine_power'));
-                            }else if (element.is("#price")) {
+                            } else if (element.is("#price")) {
                                 error.appendTo(element.parents('.price'));
                             } else {
                                 error.insertAfter(element);
@@ -785,6 +782,9 @@
 
 
                         submitHandler: function (form) {
+                            $('#next2').attr('disabled', true)
+                            $('#next2').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
+
                             var devices = []
                             $('.devices').each(function () {
                                 if ($(this).prop('checked')) {
@@ -840,14 +840,20 @@
                                             $('.copy_application').data('filename', response.application)
                                         } else {
                                             errorFunction()
+                                            $('#next2').attr('disabled', false)
+                                            $('#next2').html('Keyingi')
                                         }
 
                                     } else {
                                         errorFunction()
+                                        $('#next2').attr('disabled', false)
+                                        $('#next2').html('Keyingi')
                                         console.log(response.status)
                                     }
                                 },
                                 error: function (response) {
+                                    $('#next2').attr('disabled', false)
+                                    $('#next2').html('Keyingi')
                                     errorFunction()
                                     console.log(response.status)
                                 }

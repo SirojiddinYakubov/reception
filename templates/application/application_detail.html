@@ -332,41 +332,54 @@
                         </h4>
                     </div>
                     <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFifth" aria-expanded="false">
-                        <div class="panel-body">
+                         aria-labelledby="headingFifth" aria-expanded="false" style="font-size: larger">
+                        <div class="panel-body" id="render_div">
                             <div class="row m-1 no-gutters d-flex justify-content-center">
                                 <div class="col-md-11">
                                     {{ payments|safe }}
                                 </div>
+
+                            </div>
+                            <div class="text-right mt-3 mb-3 mr-4"  data-html2canvas-ignore="true">
+                                {% if not application.service.organization %}
+                                <button class="btn btn-primary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
+                                    To'lov qilish &nbsp&nbsp&nbsp<i class="fas fa-long-arrow-alt-right"></i>
+                                </button>
+                                {% endif %}
+                                <button id="payment_render_pdf"
+                                        class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
+                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
+                                        class="fas fa-file-download"></i>
+                                </button>
                             </div>
 
 
-{#                                                        <table class="table table-bordered table-responsive">#}
-{#                                                            <thead class="thead-light">#}
-{#                                                            <tr>#}
-{#                                                                <th scope="col">Karta egasi</th>#}
-{#                                                                <th scope="col">Karta raqami</th>#}
-{#                                                                <th scope="col" style="width: 4%">Amal qilish muddati</th>#}
-{#                                                                <th scope="col">Yangi raqam</th>#}
-{#                                                                <th scope="col">Yangi tex passport</th>#}
-{#                                                                <th scope="col">Ro'yhatlash</th>#}
-{#                                                                <th scope="col">Qayta ro'yhatlash</th>#}
-{#                                                                <th scope="col"><b>Jami</b></th>#}
-{#                                                            </tr>#}
-{#                                                            </thead>#}
-{#                                                            <tbody>#}
-{#                                                            <tr>#}
-{#                                                                <th scope="row">Yoqubov Sirojidin</th>#}
-{#                                                                <td>9860 0230 5693 8972</td>#}
-{#                                                                <td><a href="#">05/23</a></td>#}
-{#                                                                <td>560 100 so'm</td>#}
-{#                                                                <td>350 000 so'm</td>#}
-{#                                                                <td>22 300 so'm</td>#}
-{#                                                                <td>44 600 so'm</td>#}
-{#                                                                <td><b>976 900 so'm</b></td>#}
-{#                                                            </tr>#}
-{#                                                            </tbody>#}
-{#                                                        </table>#}
+                            {#                                                        <table class="table table-bordered table-responsive">#}
+                            {#                                                            <thead class="thead-light">#}
+                            {#                                                            <tr>#}
+                            {#                                                                <th scope="col">Karta egasi</th>#}
+                            {#                                                                <th scope="col">Karta raqami</th>#}
+                            {#                                                                <th scope="col" style="width: 4%">Amal qilish muddati</th>#}
+                            {#                                                                <th scope="col">Yangi raqam</th>#}
+                            {#                                                                <th scope="col">Yangi tex passport</th>#}
+                            {#                                                                <th scope="col">Ro'yhatlash</th>#}
+                            {#                                                                <th scope="col">Qayta ro'yhatlash</th>#}
+                            {#                                                                <th scope="col"><b>Jami</b></th>#}
+                            {#                                                            </tr>#}
+                            {#                                                            </thead>#}
+                            {#                                                            <tbody>#}
+                            {#                                                            <tr>#}
+                            {#                                                                <th scope="row">Yoqubov Sirojidin</th>#}
+                            {#                                                                <td>9860 0230 5693 8972</td>#}
+                            {#                                                                <td><a href="#">05/23</a></td>#}
+                            {#                                                                <td>560 100 so'm</td>#}
+                            {#                                                                <td>350 000 so'm</td>#}
+                            {#                                                                <td>22 300 so'm</td>#}
+                            {#                                                                <td>44 600 so'm</td>#}
+                            {#                                                                <td><b>976 900 so'm</b></td>#}
+                            {#                                                            </tr>#}
+                            {#                                                            </tbody>#}
+                            {#                                                        </table>#}
                         </div>
                     </div>
                 </div>
@@ -426,5 +439,16 @@
             window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());
         })
 
+        $('#payment_render_pdf').on('click', function () {
+            var element = document.getElementById('render_div');
+
+            html2pdf(element, {
+                margin: 1,
+                filename: 'To\'lov.pdf',
+                image: {type: 'jpeg', quality: 0.98},
+                html2canvas: {scale: 2},
+                jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
+            })
+        })
     </script>
 {% endblock bottom %}
