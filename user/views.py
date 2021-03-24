@@ -576,8 +576,8 @@ class save_passport_data(APIView):
                 user.issue_by_whom = request.POST.get('issue_by_whom')
                 user.person_id = request.POST.get('person_id')
                 user.save()
-            user = authenticate(request, username=user.phone, password=user.turbo)
-            if user is not None:
+                print(user.person_id)
+                user = authenticate(request, username=user.phone, password=user.turbo)
                 login(request, user)
                 return HttpResponse(True)
             else:

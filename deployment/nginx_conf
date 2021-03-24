@@ -1,22 +1,22 @@
 server {
     listen 80;
-    server_name 89.108.99.141;
+    server_name e-rib.uz www.e-rib.uz;
 
-    access_log /home/yakubov/reception/logs/nginx_access.log;
-    error_log /home/yakubov/reception/logs/nginx_error.log;
+    access_log /home/pyth/reception/logs/nginx_access.log;
+    error_log /home/pyth/reception/logs/nginx_error.log;
 
     location = /favicon.ico { access_log off; log_not_found off; }
 
     location /static/ {
-        root /home/yakubov/reception;
+        root /home/pyth/reception;
     }
 
     location /media/ {
-        root /home/yakubov/reception;
+        root /home/pyth/reception;
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/yakubov/run/gunicorn.sock;
+        proxy_pass http://unix:/run/gunicorn.sock;
     }
 }

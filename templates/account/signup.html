@@ -8,7 +8,7 @@
     <title>Ro'yhatdan o'tish</title>
     <!-- favicon -->
     <!-- Bootstrap -->
-
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
@@ -265,7 +265,6 @@
                                                 <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5">
                                                     <img class="img-responsive mb-2"
                                                          style="width: 200px; margin: 0 auto" height="auto"
-
                                                          src="{% static 'online/person_id.jpg' %}"
                                                          alt="JShShIR">
                                                 </div>
@@ -274,9 +273,9 @@
 
                                         <input type="button" name="Previous" class="action-button-previous"
                                                id="prev3" value="Oldingi"/>
-                                        <input type="submit" id="next3" class="action-button"
-                                               style="width: auto !important;padding-left: 1.2em;padding-right: 1.2em"
-                                               value="Tizimga kirish"/>
+                                        <button type="submit" id="next3" style="width: 9rem" class="action-button">
+                                            Tizimga kirish
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -294,9 +293,9 @@
 <script src="{% static 'dist/js/adminlte.js' %}"></script>
 
 <!-- OPTIONAL SCRIPTS -->
-<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
-<script src="{% static 'dist/js/demo.js' %}"></script>
-<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+{#<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>#}
+{#<script src="{% static 'dist/js/demo.js' %}"></script>#}
+{#<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>#}
 <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
 <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
 <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
@@ -307,11 +306,11 @@
 <script src="{% static 'js/responsive.js' %}"></script>
 <script src="{% static 'js/sign_up.js' %}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{% static 'js/jsPdf/jspdf.js' %}"></script>
-<script src="{% static 'js/jsPdf/modules/html.js' %}"></script>
-<script src="{% static 'js/jsPdf/modules/split_text_to_size.js' %}"></script>
-<script src="{% static 'js/jsPdf/modules/standard_fonts_metrics.js' %}"></script>
-<script src="{% static 'js/html2canvas.min.js' %}"></script>
+{#<script src="{% static 'js/jsPdf/jspdf.js' %}"></script>#}
+{#<script src="{% static 'js/jsPdf/modules/html.js' %}"></script>#}
+{#<script src="{% static 'js/jsPdf/modules/split_text_to_size.js' %}"></script>#}
+{#<script src="{% static 'js/jsPdf/modules/standard_fonts_metrics.js' %}"></script>#}
+{#<script src="{% static 'js/html2canvas.min.js' %}"></script>#}
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
@@ -365,6 +364,9 @@
         $('#input_confirm').inputmask('99999');
         $('#person_id').inputmask('99999999999999');
 
+        $('#passport_seriya').inputmask({casing: 'upper'});
+        $('#issue_by_whom').inputmask({casing: 'upper'});
+
         var phoneVal = '{{ phone }}'
 
         $('#accept').on('change', function () {
@@ -375,6 +377,9 @@
                 $('#agree').css('color', 'red')
             }
         })
+
+        {#$('#fieldset1').hide()#}
+        {#$('#fieldset3').show()#}
 
         $('#birthday').on('keypress', function () {
             return false
@@ -558,7 +563,7 @@
             }
         })
 
-         $('#district').on('change', function () {
+        $('#district').on('change', function () {
             var selectedDistrict = $(this).children("option:selected").val();
             if (parseInt(selectedDistrict)) {
                 $(this).valid()
@@ -566,7 +571,7 @@
             }
         })
 
-         $('#mfy').on('change', function () {
+        $('#mfy').on('change', function () {
             var selectedMfy = $(this).children("option:selected").val();
             if (parseInt(selectedMfy)) {
                 $(this).valid()
@@ -700,6 +705,7 @@
                         },
                         error: function (response) {
                             if (response.status === 401) {
+
                                 $.notifyDefaults({
                                     type: 'danger',
                                     allow_dismiss: false,
@@ -719,6 +725,8 @@
                                 setTimeout(function () {
                                     window.location.href = '{% url "user:custom_logout" %}'
                                 }, 3000);
+                            } else {
+                                errorFunction()
                             }
                         }
                     });
@@ -784,6 +792,9 @@
                 },
 
                 submitHandler: function (form) {
+                    $('#next3').attr('disabled', true)
+                    $('#next3').html('Tizimga kirish&nbsp<i class="fas fa-spinner fa-spin"></i>')
+
                     $("#fieldset3").keyup(function (event) {
                         if (event.keyCode === 13) {
                             $("#next3").click();
@@ -836,6 +847,10 @@
                                 setTimeout(function () {
                                     window.location.href = '{% url "user:custom_logout" %}'
                                 }, 3000);
+                            } else {
+                                errorFunction()
+                                $('#next3').attr('disabled', false)
+                                $('#next3').html('Tizimga kirish')
                             }
                         }
                     });
