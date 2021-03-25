@@ -33,7 +33,7 @@ def applications_list(request):
     context = {}
 
     if request.user.role == '2':
-        qs = Application.objects.filter(created_user__region=request.user.region)
+        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
@@ -79,7 +79,7 @@ def applications_list(request):
         context.update(applications=qs)
         return render(request, 'user/role/controller/controller_applications_list.html', context)
     elif request.user.role == '3':
-        qs = Application.objects.filter(created_user__region=request.user.region)
+        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
@@ -125,7 +125,7 @@ def applications_list(request):
         context.update(applications=qs)
         return render(request, 'user/role/checker/checker_applications_list.html', context)
     elif request.user.role == '4':
-        qs = Application.objects.filter(created_user__region=request.user.region)
+        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
@@ -228,8 +228,10 @@ def application_detail(request, id):
         return redirect(reverse_lazy('user:custom_logout'))
 
     application = get_object_or_404(Application, id=id)
-    if application.created_user != request.user:
-        return redirect(reverse_lazy('application:applications_list'))
+
+    if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
+        if application.created_user != request.user:
+            return redirect(reverse_lazy('application:applications_list'))
 
     payments = calculation_state_duty_service_price(application.service)
 

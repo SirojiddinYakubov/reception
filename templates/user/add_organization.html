@@ -80,7 +80,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <h2>{% trans "Tashkilotni qo'shish" %}</h2>
+                    <h2>{% trans "Tashkilot qo'shish" %}</h2>
                 </div>
             </div>
         </div>
@@ -118,12 +118,29 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                        <label style="float: left" class="label_required not_copy" for="legal_address">Yuridik
-                            manzili</label>
-                        <input type="text" style="margin-bottom: 1em"
-                               id="legal_address" autocomplete="off" class="form-control"
-                               placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
+                        <label style="float: left" class="label_required not_copy" for="legal_address_region">Yuridik
+                            manzili(Viloyat)</label>
+                        <select name="legal_address_region" class="form-control select2" id="legal_address_region"
+                                required>
+                            <option value="">--Viloyatni tanlang--</option>
+                            {% for region in regions %}
+                                <option value="{{ region.id }}">{{ region.title }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <label style="float: left" class="label_required not_copy" for="legal_address_district">Yuridik
+                            manzili(Tuman)</label>
+                        <select name="legal_address_district" class="form-control select2" id="legal_address_district"
+                                required>
+                            <option value="">--Tumanni tanlang--</option>
+                        </select>
+                    </div>
+
+
+                </div>
+
+                <div class="row mt-2">
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
                         <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
                             manzili</label>
@@ -131,42 +148,43 @@
                                id="address_of_garage" autocomplete="off" class="form-control"
                                placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
                     </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                        <div class="row">
+                            <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
+                                <div id="certificatePhotoPreview">
+                                    <label class="not_copy" for="certificate_photo">Guvohnoma
+                                        suratini yuklang</label>
 
-                </div>
+                                    <input type="file" name="photo" hidden
+                                           id="certificate_photo" accept=".jpg, .jpeg, .png, .gif"/>
 
-                <div class="row mt-2">
-                    <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
-                        <div id="certificatePhotoPreview">
-                            <label class="not_copy" for="certificate_photo">Guvohnoma
-                                suratini yuklang</label>
+                                    <img style='width: 120px; height: auto;display: none' id='certificateThumbnail'
+                                         src="" title='Image'/>
+                                    <span style="display: none" id='certificateRemove'>O'chirish</span>
+                                </div>
+                                <p id="certificatePhotoError"
+                                   style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+                                   class="form-text text-danger">Guvohnoma surati yuklanmagan</p>
+                            </div>
+                            <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
 
-                            <input type="file" name="photo" hidden
-                                   id="certificate_photo" accept=".jpg, .jpeg, .png, .gif"/>
+                                <div id="licensePhotoPreview">
+                                    <label class="not_copy" for="license_photo">Litsenziya
+                                        suratini yuklang</label>
 
-                            <img style='width: 120px; height: auto;display: none' id='certificateThumbnail'
-                                 src="" title='Image'/>
-                            <span style="display: none" id='certificateRemove'>O'chirish</span>
+                                    <input type="file" name="photo" hidden
+                                           id="license_photo" accept=".jpg, .jpeg, .png, .gif"/>
+
+                                    <img style='width: 120px; height: auto;display: none' id='licenseThumbnail'
+                                         src="" title='Image'/>
+                                    <span style="display: none" id='licenseRemove'>O'chirish</span>
+                                </div>
+                                <p id="licensePhotoError"
+                                   style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
+                                   class="form-text text-danger">Litsenziya surati yuklanmagan</p>
+                            </div>
                         </div>
-                        <p id="certificatePhotoError"
-                           style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
-                           class="form-text text-danger">Guvohnoma surati yuklanmagan</p>
-                    </div>
-                    <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">
 
-                        <div id="licensePhotoPreview">
-                            <label class="not_copy" for="license_photo">Litsenziya
-                                suratini yuklang</label>
-
-                            <input type="file" name="photo" hidden
-                                   id="license_photo" accept=".jpg, .jpeg, .png, .gif"/>
-
-                            <img style='width: 120px; height: auto;display: none' id='licenseThumbnail'
-                                 src="" title='Image'/>
-                            <span style="display: none" id='licenseRemove'>O'chirish</span>
-                        </div>
-                        <p id="licensePhotoError"
-                           style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"
-                           class="form-text text-danger">Litsenziya surati yuklanmagan</p>
                     </div>
 
                 </div>
@@ -292,6 +310,25 @@
 
             })
 
+            $('#legal_address_region').change(function () {
+                var SelectedRegion = $(this).children("option:selected").val()
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_district' %}",
+                    data: {
+                        'region': SelectedRegion, // from form
+                    },
+                    success: function (message) {
+                        $('#legal_address_district').empty().append(message)
+                        $('#legal_address_district').css('border', '1px solid blue')
+                        setTimeout(function () {
+                            $('#legal_address_district').css('border', '1px solid #ced4da')
+                        }, 1000)
+
+                    }
+                });
+            })
+
             $('#saveBtn').on('click', function () {
                 if ($('#title').val() == '') {
                     $('#title').css("border-bottom", "2px solid red")
@@ -305,9 +342,9 @@
                     $('#address_of_garage').css("border-bottom", "2px solid red")
                 } else if ($('#certificate_photo').val() == '') {
                     $('#certificatePhotoError').show()
-                } else if ($('#license_photo').val() == '') {
-                    $('#licensePhotoError').show()
                 } else {
+                    $('#saveBtn').attr('disabled', true)
+                    $('#saveBtn').html('Saqlash&nbsp&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
                     // get csrftoken from cookie
                     function getCookie(name) {
@@ -339,12 +376,16 @@
                     var fd = new FormData();
                     var license_photo = $('#license_photo')[0].files[0];
                     var certificate_photo = $('#certificate_photo')[0].files[0];
+                    var SelectedLegalRegion = $('#legal_address_region').children("option:selected").val()
+                    var SelectedLegalDistrict = $('#legal_address_district').children("option:selected").val()
+
                     fd.append('license_photo', license_photo);
                     fd.append('certificate_photo', certificate_photo);
                     fd.append('title', $('#title').val());
                     fd.append('director', $('#director').val());
                     fd.append('identification_number', $('#identification_number').val());
-                    fd.append('legal_address', $('#legal_address').val());
+                    fd.append('legal_address_region', SelectedLegalRegion);
+                    fd.append('legal_address_district', SelectedLegalDistrict);
                     fd.append('address_of_garage', $('#address_of_garage').val());
 
                     // ajax POST request
@@ -355,7 +396,7 @@
                         contentType: false,
                         processData: false,
                         success: function (response) {
-                            if (response == "True") {
+                            if (response === "True") {
 
                                 $.notifyDefaults({
                                     type: 'success',
@@ -377,7 +418,17 @@
                                 setTimeout(function () {
                                     window.location.href = '{% url "user:organizations_list" %}'
                                 }, 1500);
+                            } else {
+                                errorFunction()
+                                $('#saveBtn').attr('disabled', false)
+                                $('#saveBtn').html('Saqlash')
                             }
+
+                        },
+                        error: function (response) {
+                            errorFunction()
+                            $('#saveBtn').attr('disabled', false)
+                            $('#saveBtn').html('Saqlash')
                         }
                     })
                 }

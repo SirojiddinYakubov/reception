@@ -90,8 +90,10 @@ class EditOrganizationForm(forms.ModelForm):
         attrs={'class': 'form-control'}))
     identification_number = forms.IntegerField(label='STIR:', widget=forms.NumberInput(
         attrs={'class': 'form-control', }))
-    legal_address = forms.CharField(label='Yuridik manzil:', widget=forms.TextInput(
+    legal_address_region = forms.ModelChoiceField(label='Yuridik manzil(Viloyat)', queryset=Region.objects.all(), widget=forms.Select(
         attrs={'class': 'form-control' }))
+    legal_address_district = forms.ModelChoiceField(label='Yuridik manzil(tuman)',queryset=District.objects.all(), widget=forms.Select(
+        attrs={'class': 'form-control'}))
     address_of_garage = forms.CharField(label='Garaj manzili:', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     certificate_photo = forms.FileField(label='Guvohnoma surati:', required=False, widget=forms.FileInput(
@@ -101,7 +103,7 @@ class EditOrganizationForm(forms.ModelForm):
 
     class Meta:
         model = Organization
-        fields = ['title', 'director', 'identification_number', 'legal_address', 'address_of_garage',]
+        fields = ['title', 'director', 'identification_number', 'legal_address_region','legal_address_district', 'address_of_garage',]
         exclude = ['certificate_photo', 'license_photo']
 
 

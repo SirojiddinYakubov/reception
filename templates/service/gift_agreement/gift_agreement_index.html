@@ -105,9 +105,14 @@
                                             </div>
                                         </div>
                                         <div class="row">
+                                           <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label>{% trans 'Yuridik manzil(Viloyat):' %}</label>
+                                                <input type="text" id="legal_address_region" class="form-control"
+                                                       placeholder="" disabled>
+                                            </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label>{% trans 'Yuridik manzil:' %}</label>
-                                                <input type="text" id="legal_address" class="form-control"
+                                                <label>{% trans 'Yuridik manzil(Tuman):' %}</label>
+                                                <input type="text" id="legal_address_district" class="form-control"
                                                        placeholder="" disabled>
                                             </div>
                                         </div>
@@ -619,16 +624,12 @@ float:left;">
                             {#$('#auction_number').inputmask("9{2}9{3}A{3}");#}
                             {#$('#auction_number').attr('placeholder', '80979HBA')#}
 
-                            $('#director').attr('value', response.fields.director)
-                            $('#legal_address').attr('value', response.fields.legal_address)
-                            $('#identification_number').attr('value', response.fields.identification_number)
+                            $('#director').attr('value', response.organization.fields.director)
+                            $('#identification_number').attr('value', response.organization.fields.identification_number)
+                            $('#legal_address_region').attr('value', response.legal_address_region)
+                            $('#legal_address_district').attr('value', response.legal_address_district)
 
                             $('input[name ="organization"]').val($('#organization option:selected').val())
-
-                            $('#organization_title').html(response.fields.title)
-                            $('#organization_director').html(response.fields.director)
-                            $('#organization_legal_address').html(response.fields.legal_address)
-                            $('#organization_identification_number').html(response.fields.identification_number)
                         }
                     })
                 }

@@ -240,22 +240,38 @@ def organizations_list(request):
 
 @login_required
 def add_organization(request):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    regions = Region.objects.all()
+    context = {
+        'regions': regions
+    }
     if request.is_ajax():
         if request.method == 'POST':
             organization = Organization.objects.create(title=request.POST.get('title', None))
             organization.director = request.POST.get('director', None)
             organization.identification_number = request.POST.get('identification_number', None)
-            organization.legal_address = request.POST.get('legal_address', None)
             organization.address_of_garage = request.POST.get('address_of_garage', None)
-            organization.license_photo = request.FILES.get('license_photo', None)
-            organization.certificate_photo = request.FILES.get('certificate_photo', None)
+            organization.legal_address_region = get_object_or_404(Region, id=request.POST.get('legal_address_region'))
+
+            organization.legal_address_district = get_object_or_404(District, id=request.POST.get('legal_address_district'))
+            if request.FILES.get('license_photo'):
+                organization.license_photo = request.FILES.get('license_photo', None)
+            if request.FILES.get('certificate_photo'):
+                organization.certificate_photo = request.FILES.get('certificate_photo', None)
             organization.created_user = request.user
             organization.created_date = timezone.now()
             organization.save()
             return HttpResponse(True)
         else:
             return HttpResponse(False)
-    return render(request, 'user/add_organization.html', )
+    return render(request, 'user/add_organization.html', context)
+
+
 
 
 @login_required
@@ -325,8 +341,15 @@ class Get_Organization(APIView):
         if request.is_ajax():
             organization = get_object_or_404(Organization, id=request.GET.get('organization', None))
             company = serializers.serialize('json', [organization, ])
-            struct = json.loads(company)
-            data = json.dumps(struct[0])
+            struct = json.loads(company, )
+            # data = json.dumps(struct[0])
+            context = {
+                'organization': struct[0],
+                'legal_address_district': organization.legal_address_district.title,
+                'legal_address_region': organization.legal_address_region.title,
+            }
+            data = json.dumps(context)
+
             return HttpResponse(data, content_type='json')
         return HttpResponse(False)
 
@@ -569,6 +592,8 @@ class Save_User_Information(APIView):
 class save_passport_data(APIView):
     def post(self, request):
         if request.is_ajax():
+            print('tralala')
+            print(request.POST)
             user = get_object_or_404(User, id=request.POST.get('user_id'))
             if user is not None:
                 user.passport_seriya = request.POST.get('passport_seriya')
@@ -576,7 +601,7 @@ class save_passport_data(APIView):
                 user.issue_by_whom = request.POST.get('issue_by_whom')
                 user.person_id = request.POST.get('person_id')
                 user.save()
-                print('tralala')
+
                 print(user.person_id)
                 user = authenticate(request, username=user.phone, password=user.turbo)
                 login(request, user)

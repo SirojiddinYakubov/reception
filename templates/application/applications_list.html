@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load applications_tags %}
+{% block top %}
+    <link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+{% endblock top %}
 {% block content %}
     <section class="py-3 mt-2 bg-info text-light">
         <div class="container">
@@ -18,59 +20,66 @@
             <!-- left column -->
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
                 {% include '_parts/messages.html' %}
-                <table class="table table-bordered table-responsive">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Ariza raqami</th>
-                        <th scope="col" style="width: 25%">Xizmat nomi</th>
-                        <th scope="col">Topshirdi</th>
-                        <th scope="col">Yaratilgan vaqti</th>
-                        <th scope="col">Ariza nusxasi</th>
-                        <th scope="col">Holati</th>
-
-                        <th scope="col">Tekshiruv paroli</th>
-                    </tr>
-                    </thead>
-
-                    {#                    {% if applications %}#}
-                    {% for application in applications %}
-                        <tbody>
+                <div class="table-responsive"
+                     style="border: 1px solid #dbdada; border-radius: 3px; padding: 2% 2% 2% 2%;">
+                    <table id="example1" class="table table-bordered table-responsive">
+                        <thead class="thead-light">
                         <tr>
-                            <th scope="row">{{ application.id }}</th>
+                            <th scope="col">Ariza raqami</th>
+                            <th scope="col" style="width: 25%">Xizmat nomi</th>
+                            <th scope="col">Topshirdi</th>
+                            <th scope="col">Yaratilgan vaqti</th>
+                            <th scope="col">Ariza nusxasi</th>
+                            <th scope="col">Holati</th>
 
-                            <td>
-                                <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
-                            </td>
-                            <td>{% if application.service.organization %}{{ application.service.organization }}{% else %}{{ application.service.created_user }}{% endif %}</td>
-                            <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                            <td>
-                                <a class="btn btn-default"
-                                   href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
-                                    olish
-                                    &nbsp&nbsp<i class="fas fa-download"></i></a>
-                            </td>
-                            {% if application.process == '1' %}
-                                <td style="color: #0f6674">Jarayonda</td>
-                            {% elif application.process == '2' %}
-                                <td style="color: #44ff00">Qabul qilindi</td>
-                            {% elif application.process == '3' %}
-                                <td style="color: #ff0318">Rad etildi</td>
-                            {% endif %}
-                            <td style="text-align: center; color: red">{{ application.password }}</td>
+                            <th scope="col">Tekshiruv paroli</th>
                         </tr>
+                        </thead>
+
+
+                        <tbody>
+                        {% if applications %}
+                            {% for application in applications %}
+                                <tr>
+                                    <th scope="row">{{ application.id }}</th>
+
+                                    <td>
+                                        <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
+                                    </td>
+                                    <td>{% if application.service.organization %}
+                                        {{ application.service.organization }}{% else %}
+                                        {{ application.service.created_user }}{% endif %}</td>
+                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                                    <td>
+                                        <a class="btn btn-default"
+                                           href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
+                                            olish
+                                            &nbsp&nbsp<i class="fas fa-download"></i></a>
+                                    </td>
+                                    {% if application.process == '1' %}
+                                        <td style="color: #0f6674">Jarayonda</td>
+                                    {% elif application.process == '2' %}
+                                        <td style="color: #44ff00">Qabul qilindi</td>
+                                    {% elif application.process == '3' %}
+                                        <td style="color: #ff0318">Rad etildi</td>
+                                    {% endif %}
+                                    <td style="text-align: center; color: red">{{ application.password }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr class="text-center">
+                                <td colspan="8" class="text-danger">Arizalar mavjud emas!</td>
+                            </tr>
+
+                        {% endif %}
                         </tbody>
-                    {% endfor %}
-                    {#                    {% else %}#}
-                    {#                        <tbody>#}
-                    {#                        <tr class="text-center">#}
-                    {#                            <td colspan="8" class="text-danger">Arizalar mavjud emas!</td>#}
-                    {#                        </tr>#}
-                    {#                        </tbody>#}
-                    {#                    {% endif %}#}
-                </table>
+
+
+                    </table>
+                </div>
             </div>
             <!--/.col (left) -->
-             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
                 {% include 'application/right_filter_applications.html' %}
             </div>
 
@@ -79,11 +88,24 @@
     </div>
 {% endblock content %}
 {% block bottom %}
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-        })
-
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
     </script>
 {% endblock bottom %}
