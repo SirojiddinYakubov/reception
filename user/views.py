@@ -242,7 +242,7 @@ def organizations_list(request):
 
 @login_required
 def add_organization(request):
-    print(request.user)
+
     try:
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
@@ -275,7 +275,7 @@ def add_organization(request):
     context = {
         'regions': regions,
         'districts': districts,
-        'foo': 'sdfsdfsdf'
+        'foo': request.user
     }
     return render(request, 'user/add_organization.html', context)
 
