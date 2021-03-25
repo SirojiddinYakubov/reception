@@ -1,6 +1,8 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from loguru import logger
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -35,3 +37,9 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOG_FILE_PATH = '/home/pyth/reception/debug.log'
+# logger.add(LOG_FILE_PATH, format="{time} {level} {messege}", level="DEBUG")
+# logger.debug('DEBUG')
+# logger.info('INFO')
+# logger.error('ERROR')

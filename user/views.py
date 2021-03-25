@@ -16,6 +16,7 @@ from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from docxtpl import DocxTemplate
+
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -26,6 +27,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import *
 
 from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE
+from reception.prod_settings import LOG_FILE_PATH, logger
 from service.models import *
 from service.utils import calculation_state_duty_service_price
 from user.decorators import *
@@ -247,8 +249,11 @@ def add_organization(request):
         return redirect(reverse_lazy('user:custom_logout'))
 
     regions = Region.objects.all()
+    # logger.add(LOG_FILE_PATH, format="{time} {level} {messege}", level="DEBUG")
+    logger.error('ERROR')
+    logger.info(regions)
     context = {
-        'regions': regions
+        'regions': regions,
     }
     if request.is_ajax():
         if request.method == 'POST':
