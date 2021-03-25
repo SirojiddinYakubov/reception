@@ -164,7 +164,14 @@
             $('#change_process').on('change', function () {
                 var SelectedProcess = $(this).children('option:selected').val(),
                     applicationId = $(this).data('id'),
+                    url = '#'
+                if (applicationId === '') {
+                    url = '#'
+                    errorFunction()
+                } else {
                     url = "{% url 'application:confirm_application_data' id=12345 %}".replace(/12345/, applicationId.toString())
+                }
+
 
                 if (SelectedProcess === 'confirm') {
                     swal({

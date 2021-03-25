@@ -491,7 +491,9 @@
                                         $('#next1').prop('disabled', true)
                                     }
                                 } else {
-
+                                    $('#next1').prop('disabled', true)
+                                    $('.invalid-feedback').css('display', 'block')
+                                    $('.valid-feedback').css('display', 'none')
                                 }
                             });
                         }
