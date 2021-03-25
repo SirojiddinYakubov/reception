@@ -3,6 +3,7 @@ import json
 import os
 import random
 
+import requests
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -14,7 +15,9 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from docxtpl import DocxTemplate
 from rest_framework.authtoken.models import Token
-
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 from application.models import *
 from reception.settings import BASE_DIR
@@ -289,6 +292,12 @@ def get_information(request):
 
 @login_required
 def create_application_doc(request, filename):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     application = get_object_or_404(Application, file_name=filename)
     service = get_object_or_404(Service, id=application.service.id)
 
@@ -382,6 +391,12 @@ def create_application_doc(request, filename):
 
 @login_required
 def view_application_service_data(request, service_id):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     service = get_object_or_404(Service, id=service_id)
     context = {
         'service': service
@@ -392,6 +407,12 @@ def view_application_service_data(request, service_id):
 
 @login_required
 def change_get_request(request, key, value):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     try:
         url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
         if value == 'all':
@@ -434,4 +455,48 @@ def change_get_request(request, key, value):
         return HttpResponseRedirect(url + f"?{key}={value}")
 
 
+@permission_classes([IsAuthenticated])
+class ConfirmApplicationData(APIView):
+    def post(self, request, id):
+        application = get_object_or_404(Application, id=id)
+        car = get_object_or_404(Car, id=application.service.car.id)
+        if not request.user.role == '2' or request.user.role == '3':
+            return render(request, '_parts/404.html')
 
+        if request.is_ajax():
+            if request.method == 'POST':
+                if request.POST.get('confirm') == 'True':
+                    car.given_number = request.POST.get('given_number')
+                    car.given_technical_passport = request.POST.get('technical_passport')
+                    car.save()
+                    application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
+                    application.process = '2'
+                    application.save()
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+                elif request.POST.get('confirm') == 'pass':
+                    application.process = '3'
+                    application.process_sms = request.POST.get('process_sms')
+                    application.save()
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+                else:
+                    application.process = '1'
+                    application.process_sms = request.POST.get('process_sms')
+                    application.save()
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+                return HttpResponse(True)
+            else:
+                return HttpResponse(False)
+        else:
+            return HttpResponse(False)

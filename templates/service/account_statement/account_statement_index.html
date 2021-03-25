@@ -581,10 +581,13 @@
 
                         if (typeof ($('#organization option').attr('value')) == 'undefined') {
                             $('#organization_div_alert').show()
+                            $('#next1').attr('disabled', true)
                         } else {
                             $('#organization_div_alert').hide()
+                            $('#next1').attr('disabled', false)
                         }
                     } else if (selectedPersonType === 'J') {
+                        $('#next1').attr('disabled', false)
                         $('#organization_div_alert').hide()
                         $('#msdiv1').show()
                         $('#msdiv2').hide()

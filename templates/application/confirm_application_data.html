@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Avtotransport ma'lumotlari" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row justify-content-center">
+            <!-- left column -->
+            <div class="col-md-12">
+                {% include '_parts/messages.html' %}
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th scope="row">Model:</th>
+                        <td>{% if car.model %}{{ car.model }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Transport vositasi turi:</th>
+                        <td>{% if car.type %}{{ car.type }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Kuzov turi:</th>
+                        <td>{% if car.body_type %}{{ car.body_type }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Yoqilg'i turlari:</th>
+                        <td>
+                            {% if car.fuel_type %}
+                                {% for fuel_type in car.fuel_type.all %}
+                                    <button class="disabled btn btn-outline-primary">{{ fuel_type }}</button>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Kuzov raqami:</th>
+                        <td>{% if car.body_number %}{{ car.body_number }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Shassi raqami:</th>
+                        <td>{% if car.chassis_number %}{{ car.chassis_number }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Dvigitel raqami:</th>
+                        <td>{% if car.engine_number %}{{ car.engine_number }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Ishlab chiqarilgan yili:</th>
+                        <td>{% if car.made_year %}{{ car.made_year }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Rangi:</th>
+                        <td>{% if car.color %}{{ car.color }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Qayta jihozlash:</th>
+                        <td>
+                            {% if car.devices %}
+                                {% for device in car.devices.all %}
+                                    <button class="disabled btn btn-outline-primary">{{ device }}</button>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">To'la vazni:</th>
+                        <td>{% if car.full_weight %}{{ car.full_weight }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Yuksiz vazni:</th>
+                        <td>{% if car.empty_weight %}{{ car.empty_weight }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Dvigatel quvvati:</th>
+                        <td>{% if car.engine_power %}{{ car.engine_power }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Qayd etish guvohnomasi yo'qolgan:</th>
+                        <td>{% if car.lost_technical_passport %}Yo'qolgan{% else %}Yo'qolmagan{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Eski qayd etish guvohnomasi:</th>
+                        <td>{% if car.old_technical_passport %}{{ car.old_technical_passport }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Eski DRB:</th>
+                        <td>{% if car.old_number %}{{ car.old_number }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Yangi DRB:</th>
+                        <td><input type="text" id="given_number" placeholder="Berilgan DRBni kiriting..." class="form-control" {% if car.given_number %}value="{{ car.given_number }}"{% endif %} /></td>
+                    </tr>
+                   <tr>
+                        <th scope="row">Berilayotgan qayd etish guvohnomasi seriyasi va raqami:</th>
+                        <td><input type="text" value="" id="given_technical_passport" placeholder="Berilgan qayd etish guvohnomasini kiriting..." class="form-control" /></td>
+                    </tr>
+
+
+                </table>
+
+                {% if request.user.role == '4' %}
+                    {% if not car.is_confirm %}
+                        <a href="{% url 'user:confirm_car_data' car.id %}?confirm=True">
+                            <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                                    class="btn btn-success">Ma'lumotlar mos
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user:confirm_car_data' car.id %}?confirm=False">
+                            <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                                    class="btn btn-danger">Ma'lumotlar mos emas
+                            </button>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+
+{% endblock bottom %}
