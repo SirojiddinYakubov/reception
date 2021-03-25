@@ -185,6 +185,52 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse'
+#         }
+#     },
+#     'handlers': {
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'django.utils.log.AdminEmailHandler'
+#         },
+#         'applogfile': {
+#             'level':'DEBUG',
+#             'class':'logging.handlers.RotatingFileHandler',
+#             # 'filename': os.path.join(BASE_DIR, 'debug.log'),
+#             'filename': '/home/pyth/reception/debug.log',
+#
+#             'maxBytes': 1024*1024*15, # 15MB
+#             'backupCount': 10,
+#         }
+#     },
+#     'loggers': {
+#         'django.request': {
+#             'handlers': ['mail_admins'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#         'survey': {
+#             'handlers': ['applogfile',],
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
+
+import logging
+
+
+logging.basicConfig(
+    level = logging.INFO,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = '/home/pyth/reception/debug.log',)
+
 TOKEN_MAX_AGE = 3600        #foydalanuvchiga berilgan tokenning umri
 PHONE_MAX_AGE = 1800        #ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
 MINIMUM_BASE_WAGE = 245000  #eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha

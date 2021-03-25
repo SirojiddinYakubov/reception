@@ -242,19 +242,14 @@ def organizations_list(request):
 
 @login_required
 def add_organization(request):
+    print(request.user)
     try:
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    regions = Region.objects.all()
-    # logger.add(LOG_FILE_PATH, format="{time} {level} {messege}", level="DEBUG")
-    logger.error('ERROR')
-    logger.info(regions)
-    context = {
-        'regions': regions,
-    }
+
     if request.is_ajax():
         if request.method == 'POST':
             organization = Organization.objects.create(title=request.POST.get('title', None))
@@ -274,6 +269,14 @@ def add_organization(request):
             return HttpResponse(True)
         else:
             return HttpResponse(False)
+
+    regions = Region.objects.all()
+    districts = District.objects.all()
+    context = {
+        'regions': regions,
+        'districts': districts,
+        'foo': 'sdfsdfsdf'
+    }
     return render(request, 'user/add_organization.html', context)
 
 
