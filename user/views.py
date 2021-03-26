@@ -12,6 +12,7 @@ from django.db.models import Q
 
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template import RequestContext
 from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views.generic.base import View
@@ -206,6 +207,7 @@ def login_first(request):
         try:
             user1 = User.objects.get(username=phone)
             print(user1)
+            print('eshmat')
             if not user1.is_staff and user1.person_id == None:
                 return redirect(reverse_lazy('user:signup'))
             user = authenticate(request, username=phone, password=password)
@@ -277,7 +279,7 @@ def add_organization(request):
         'districts': districts,
         'foo': request.user
     }
-    return render(request, 'user/add_organization.html', context)
+    return render(request, 'user/add_organization.html',  context,)
 
 
 

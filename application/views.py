@@ -455,48 +455,4 @@ def change_get_request(request, key, value):
         return HttpResponseRedirect(url + f"?{key}={value}")
 
 
-@permission_classes([IsAuthenticated])
-class ConfirmApplicationData(APIView):
-    def post(self, request):
-        application = get_object_or_404(Application, id=request.POST.get('application'))
-        car = get_object_or_404(Car, id=application.service.car.id)
-        if not request.user.role == '2' or request.user.role == '3':
-            return render(request, '_parts/404.html')
 
-        if request.is_ajax():
-            if request.method == 'POST':
-                if request.POST.get('confirm') == 'True':
-                    car.given_number = request.POST.get('given_number')
-                    car.given_technical_passport = request.POST.get('technical_passport')
-                    car.save()
-                    application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
-                    application.process = '2'
-                    application.save()
-
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                elif request.POST.get('confirm') == 'pass':
-                    application.process = '3'
-                    application.process_sms = request.POST.get('process_sms')
-                    application.save()
-
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                else:
-                    application.process = '1'
-                    application.process_sms = request.POST.get('process_sms')
-                    application.save()
-
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                return HttpResponse(True)
-            else:
-                return HttpResponse(False)
-        else:
-            return HttpResponse(False)

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load applications_tags %}
 {% block top %}
     <link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
 {% endblock top %}
@@ -20,7 +19,7 @@
             <!-- left column -->
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
                 {% include '_parts/messages.html' %}
-
+                 <a href="{% url 'service:qwerty' %}">link</a>
                 <div class="table-responsive"
                      style="border: 1px solid #dbdada; border-radius: 3px; padding: 2% 2% 2% 2%;">
                     <table id="example1" class="table table-bordered table-hover dataTable">
@@ -169,8 +168,10 @@
                 $(".change_process").each(function () {
 
                     if ($(this).data('id') === applicationId) {
+                        console.log('ok')
+                        {#console.log("{% url 'application:confirm_application_data' %}")#}
 
-                        var url = "{% url 'application:confirm_application_data' %}"
+                        {#var url = "{% url 'application:confirm_application_data' %}"#}
 
 
                         if (SelectedProcess === 'confirm') {
