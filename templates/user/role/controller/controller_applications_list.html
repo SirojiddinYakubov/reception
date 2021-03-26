@@ -168,11 +168,7 @@
                 $(".change_process").each(function () {
 
                     if ($(this).data('id') === applicationId) {
-                        console.log('ok')
-                        {#console.log("{% url 'application:confirm_application_data' %}")#}
-
-                        {#var url = "{% url 'application:confirm_application_data' %}"#}
-
+                        var url = "{% url 'application:confirm_application_data' %}"
 
                         if (SelectedProcess === 'confirm') {
                             swal({

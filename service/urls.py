@@ -17,5 +17,5 @@ urlpatterns = [
     path('replace-tp-index/', replace_tp_index, name='replace_tp_index'),
     path('save-replace-tp/', Save_Replace_Tp.as_view(), name='save_replace_tp'),
 
-    path('confirm-application-data/', qwerty, name='qwerty'),
+
 ]
