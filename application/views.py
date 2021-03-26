@@ -457,8 +457,8 @@ def change_get_request(request, key, value):
 
 @permission_classes([IsAuthenticated])
 class ConfirmApplicationData(APIView):
-    def post(self, request, id):
-        application = get_object_or_404(Application, id=id)
+    def post(self, request):
+        application = get_object_or_404(Application, id=request.POST.get('application'))
         car = get_object_or_404(Car, id=application.service.car.id)
         if not request.user.role == '2' or request.user.role == '3':
             return render(request, '_parts/404.html')
