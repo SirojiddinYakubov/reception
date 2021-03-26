@@ -170,72 +170,58 @@
                     if ($(this).data('id') === applicationId) {
                         var url = "{% url 'application:confirm_application_data' %}"
 
-                        if (SelectedProcess === 'confirm') {
-                            swal({
-                                title: "Berilayotgan DRB",
-                                {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
-                                {#icon: "warning",#}
-                                closeOnClickOutside: false,
 
-                                className: "",
-                                buttons: [
-                                    'Bekor qilish',
-                                    'Saqlash'
-                                ],
-                                dangerMode: false,
-                                content: {
-                                    element: "input",
-                                    attributes: {
-                                        placeholder: "Masalan: 80979HBA",
-                                        type: "text",
-                                    },
-                                },
-                            }).then(function (given_number_val) {
-                                if (given_number_val) {
-                                    if (given_number_val !== '') {
-                                        swal({
-                                            title: "Berilayotgan qayd etish guvohnomasi",
-                                            {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
-                                            {#icon: "warning",#}
-                                            closeOnClickOutside: false,
-                                            className: "",
-                                            buttons: [
-                                                'Bekor qilish',
-                                                'Saqlash'
-                                            ],
-                                            dangerMode: false,
-                                            content: {
-                                                element: "input",
-                                                attributes: {
-                                                    placeholder: "Masalan: AAC112345785",
-                                                    type: "text",
-                                                },
-                                            },
-                                        }).then(function (technical_passport_val) {
-                                            if (technical_passport_val) {
-                                                if (technical_passport_val !== '') {
-                                                    swal({
-                                                        title: "Qayd etish guvohnomasini topshirish kunini kiriting!",
-                                                        {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
-                                                        {#icon: "warning",#}
-                                                        closeOnClickOutside: false,
-                                                        className: "",
-                                                        buttons: [
-                                                            'Bekor qilish',
-                                                            'Saqlash'
-                                                        ],
-                                                        dangerMode: false,
-                                                        content: {
-                                                            element: "input",
-                                                            attributes: {
-                                                                {#placeholder: "Masalan: AAC112345785",#}
-                                                                type: "date",
-                                                            },
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
+                            success: function (response) {
+                                let input = document.createElement("input")
+                                if (response !== '') {
+                                    input.value = `${response}`
+                                }
+                                input.placeholder = 'Masalan: 80979HBA'
+                                input.type = 'text'
+                                input.className = 'swal-content__input'
+                                if (SelectedProcess === 'confirm') {
+                                    swal({
+                                        title: "Berilayotgan DRB",
+                                        {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
+                                        {#icon: "warning",#}
+                                        closeOnClickOutside: false,
+                                        className: "",
+                                        buttons: [
+                                            'Bekor qilish',
+                                            'Saqlash'
+                                        ],
+                                        dangerMode: false,
+                                        content: input,
+
+                                    }).then(function (given_number_val) {
+                                        if (given_number_val) {
+                                            if (input.value !== '') {
+                                                swal({
+                                                    title: "Berilayotgan qayd etish guvohnomasi",
+                                                    {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
+                                                    {#icon: "warning",#}
+                                                    closeOnClickOutside: false,
+                                                    className: "",
+                                                    buttons: [
+                                                        'Bekor qilish',
+                                                        'Saqlash'
+                                                    ],
+                                                    dangerMode: false,
+                                                    content: {
+                                                        element: "input",
+                                                        attributes: {
+                                                            placeholder: "Masalan: AAC112345785",
+                                                            type: "text",
                                                         },
-                                                    }).then(function (given_date) {
-                                                        if (given_date) {
+                                                    },
+                                                }).then(function (technical_passport_val) {
+                                                    if (technical_passport_val) {
+                                                        if (technical_passport_val !== '') {
                                                             swal({
-                                                                title: "Qayd etish guvohnomasini topshirish vaqtini kiriting!",
+                                                                title: "Qayd etish guvohnomasini topshirish kunini kiriting!",
                                                                 {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
                                                                 {#icon: "warning",#}
                                                                 closeOnClickOutside: false,
@@ -248,139 +234,172 @@
                                                                 content: {
                                                                     element: "input",
                                                                     attributes: {
-                                                                        placeholder: "Masalan: 15:30",
-                                                                        type: "text",
+                                                                        {#placeholder: "Masalan: AAC112345785",#}
+                                                                        type: "date",
                                                                     },
                                                                 },
-
-                                                            }).then(function (given_time) {
-                                                                if (given_time) {
-                                                                    $.ajax({
-                                                                        type: "POST",
-                                                                        url: url,
-                                                                        data: {
-                                                                            'application': applicationId,
-                                                                            'given_number': given_number_val,
-                                                                            'technical_passport': technical_passport_val,
-                                                                            'confirm': 'True',
-                                                                            'given_date': given_date,
-                                                                            'given_time': given_time
-
+                                                            }).then(function (given_date) {
+                                                                if (given_date) {
+                                                                    swal({
+                                                                        title: "Qayd etish guvohnomasini topshirish vaqtini kiriting!",
+                                                                        {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
+                                                                        {#icon: "warning",#}
+                                                                        closeOnClickOutside: false,
+                                                                        className: "",
+                                                                        buttons: [
+                                                                            'Bekor qilish',
+                                                                            'Saqlash'
+                                                                        ],
+                                                                        dangerMode: false,
+                                                                        content: {
+                                                                            element: "input",
+                                                                            attributes: {
+                                                                                placeholder: "Masalan: 15:30",
+                                                                                type: "text",
+                                                                            },
                                                                         },
-                                                                        success: function (response) {
-                                                                            if (response === 'True') {
-                                                                                $.notifyDefaults({
-                                                                                    type: 'success',
-                                                                                    allow_dismiss: false,
-                                                                                    animate: {
-                                                                                        enter: 'animated fadeInRight',
-                                                                                        exit: 'animated fadeOutRight',
-                                                                                    },
-                                                                                    z_index: '9999'
-                                                                                });
-                                                                                $.notify({
-                                                                                    icon: 'glyphicon glyphicon-star',
-                                                                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                                                                        '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
-                                                                                        '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
-                                                                                        '</svg> Muvaffaqiyatli tasdiqlandi!'
-                                                                                });
-                                                                            } else {
-                                                                                errorFunction()
-                                                                            }
-                                                                        },
-                                                                        error: function (response) {
-                                                                            console.log(response.status)
-                                                                            errorFunction()
+
+                                                                    }).then(function (given_time) {
+                                                                        if (given_time) {
+                                                                            $.ajax({
+                                                                                type: "POST",
+                                                                                url: url,
+                                                                                data: {
+                                                                                    'application': applicationId,
+                                                                                    'given_number': input.value,
+                                                                                    'technical_passport': technical_passport_val,
+                                                                                    'confirm': 'True',
+                                                                                    'given_date': given_date,
+                                                                                    'given_time': given_time
+
+                                                                                },
+                                                                                success: function (response) {
+                                                                                    if (response === 'True') {
+                                                                                        $.notifyDefaults({
+                                                                                            type: 'success',
+                                                                                            allow_dismiss: false,
+                                                                                            animate: {
+                                                                                                enter: 'animated fadeInRight',
+                                                                                                exit: 'animated fadeOutRight',
+                                                                                            },
+                                                                                            z_index: '9999'
+                                                                                        });
+                                                                                        $.notify({
+                                                                                            icon: 'glyphicon glyphicon-star',
+                                                                                            message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                                                '</svg> Muvaffaqiyatli tasdiqlandi!'
+                                                                                        });
+                                                                                    } else {
+                                                                                        errorFunction()
+                                                                                    }
+                                                                                },
+                                                                                error: function (response) {
+                                                                                    console.log(response.status)
+                                                                                    errorFunction()
+                                                                                }
+                                                                            })
+                                                                        } else {
+                                                                            window.location.href = "{% url 'application:applications_list' %}"
                                                                         }
                                                                     })
+
+
+                                                                } else {
+                                                                    window.location.href = "{% url 'application:applications_list' %}"
                                                                 }
+
                                                             })
 
 
+                                                        } else {
+                                                            window.location.href = "{% url 'application:applications_list' %}"
                                                         }
+                                                    } else {
+                                                        window.location.href = "{% url 'application:applications_list' %}"
+                                                    }
 
-                                                    })
+                                                })
+                                            } else {
+                                                window.location.href = "{% url 'application:applications_list' %}"
+                                            }
+                                        } else {
+                                            window.location.href = "{% url 'application:applications_list' %}"
+                                        }
 
+                                    })
+                                } else {
 
-                                                } else {
+                                    swal({
+                                        title: "Jarayon yoki rad etish sababini kiriting",
+                                        {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
+                                        {#icon: "warning",#}
+                                        closeOnClickOutside: false,
+                                        className: "",
+                                        buttons: [
+                                            'Bekor qilish',
+                                            'Saqlash'
+                                        ],
+                                        dangerMode: false,
+                                        content: {
+                                            element: "input",
+                                            attributes: {
+                                                placeholder: "Masalan: Kiritilgan ma'lumotlarda xato va kamchiliklar mavjud",
+                                                type: "text",
+                                            },
+                                        },
+                                    }).then(function (process_sms) {
+                                        if (process_sms) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: url,
+                                                data: {
+                                                    'application': applicationId,
+                                                    'confirm': SelectedProcess,
+                                                    'process_sms': process_sms
+                                                },
+                                                success: function (response) {
+                                                    if (response === 'True') {
+                                                        $.notifyDefaults({
+                                                            type: 'warning',
+                                                            allow_dismiss: false,
+                                                            animate: {
+                                                                enter: 'animated fadeInRight',
+                                                                exit: 'animated fadeOutRight',
+                                                            },
+                                                            z_index: '9999'
+                                                        });
+                                                        $.notify({
+                                                            icon: 'glyphicon glyphicon-star',
+                                                            message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                '</svg> Muvaffaqiyatli tahrirlandi!'
+                                                        });
 
+                                                    } else {
+
+                                                        errorFunction()
+                                                    }
+                                                },
+                                                error: function (response) {
+                                                    console.log(response.status)
                                                     errorFunction()
                                                 }
-                                            }
-
-                                        })
-                                    } else {
-
-                                        errorFunction()
-                                    }
-                                }
-
-                            })
-                        } else {
-
-                            swal({
-                                title: "Jarayon yoki rad etish sababini kiriting",
-                                {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
-                                {#icon: "warning",#}
-                                closeOnClickOutside: false,
-                                className: "",
-                                buttons: [
-                                    'Bekor qilish',
-                                    'Saqlash'
-                                ],
-                                dangerMode: false,
-                                content: {
-                                    element: "input",
-                                    attributes: {
-                                        placeholder: "Masalan: Kiritilgan ma'lumotlarda xato va kamchiliklar mavjud",
-                                        type: "text",
-                                    },
-                                },
-                            }).then(function (process_sms) {
-                                if (process_sms) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: url,
-                                        data: {
-                                            'application': applicationId,
-                                            'confirm': SelectedProcess,
-                                            'process_sms': process_sms
-                                        },
-                                        success: function (response) {
-                                            if (response === 'True') {
-                                                $.notifyDefaults({
-                                                    type: 'success',
-                                                    allow_dismiss: false,
-                                                    animate: {
-                                                        enter: 'animated fadeInRight',
-                                                        exit: 'animated fadeOutRight',
-                                                    },
-                                                    z_index: '9999'
-                                                });
-                                                $.notify({
-                                                    icon: 'glyphicon glyphicon-star',
-                                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                                        '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
-                                                        '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
-                                                        '</svg> Tasdiq muvaffaqiyatli bekor qilindi!'
-                                                });
-
-                                            } else {
-
-                                                errorFunction()
-                                            }
-                                        },
-                                        error: function (response) {
-                                            console.log(response.status)
-                                            errorFunction()
+                                            })
+                                        } else {
+                                            window.location.href = "{% url 'application:applications_list' %}"
                                         }
                                     })
+
+
                                 }
-                            })
+
+                            },
+                        })
 
 
-                        }
                     }
 
 

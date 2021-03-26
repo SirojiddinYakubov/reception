@@ -42,7 +42,7 @@
                                 <th scope="row" style="text-align: center">{{ application.id }}</th>
                                 <td><a href="{% url 'user:view_car_data' application.service.car.id %}">{{ application.service.car.model }}</a>
                                 </td>
-                                <td class="text-center">{% if service.car.is_confirm %}
+                                <td class="text-center">{% if application.service.car.is_confirm %}
                                     <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                     <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                 <td>

@@ -23,7 +23,7 @@ class Service(models.Model):
     person_type = models.CharField('Shaxs turi', choices=PERSON_CHOICES, max_length=3, default="J")
     organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
                                      blank=True)
-    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True)
+    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True, related_name='service_car')
     created_user = models.ForeignKey(User, verbose_name='Yaratdi', on_delete=models.SET_NULL, null=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 

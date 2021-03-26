@@ -27,6 +27,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import *
 
+from application.models import Application
 from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE
 from reception.prod_settings import LOG_FILE_PATH, logger
 from service.models import *
@@ -840,19 +841,30 @@ def view_personal_data(request, id):
 
 @login_required
 def confirm_car_data(request, car_id):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     if request.user.role == '4':
         car = get_object_or_404(Car, id=car_id)
-        try:
-            token = request.COOKIES.get('token')
-            Token.objects.get(key=token)
-        except ObjectDoesNotExist:
-            return redirect(reverse_lazy('user:custom_logout'))
+        application = get_object_or_404(Application, id=car.service_car.last().application_service.last().id)
+
+        if application.process == '3':
+            messages.error(request, f'{application.id} raqamli ariza {application.process_sms} sababli rad etilgan!')
+            return redirect(reverse_lazy('application:applications_list'))
 
         if request.method == 'GET':
             if request.GET.get('confirm') == 'True':
                 car.is_confirm = True
                 car.save()
-                messages.success(request, f'{car.model} muvaffaqiyatli tasdiqlandi!')
+                messages.success(request, f"{car.model} transport vositasi muvaffaqiyatli texnik ko'rikdan o'tkazildi!")
+
+                msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangizga ko'ra {car.model} rusumli transport vositangiz muvaffaqiyatli texnik ko'rikdan o'tkazildi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
+                msg = msg.replace(" ", "+")
+                url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                response = requests.get(url)
             elif request.GET.get('confirm') == 'False':
                 car.is_confirm = False
                 car.save()

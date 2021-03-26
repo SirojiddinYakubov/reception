@@ -107,7 +107,7 @@
                                placeholder="Masalan: Sirojiddin Yoqubov"/>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                        <label class="label_required not_copy" for="identification_number">STIR
+                        <label  style="float: left"  class="label_required not_copy" for="identification_number">STIR
                             raqam</label>
                         <input type="number" style="margin-bottom: 1em"
                                id="identification_number" autocomplete="off" class="form-control"
@@ -118,11 +118,11 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                        <label class="label_required" for="legal_address_region">Yuridik
+                        <label  class="label_required not_copy" for="legal_address_region">Yuridik
                             manzili(Viloyat)</label>
                         <select name="legal_address_region" class="form-control select2"  id="legal_address_region"
                                 required>
-                            <option value="12" class="float-left" >--Viloyatni tanlang--</option>
+                            <option value="">--Viloyatni tanlang--</option>
                             {% for region in regions %}
                                 <option value="{{ region.id }}">{{ region.title }}</option>
                             {% endfor %}
@@ -130,7 +130,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                        <label class="label_required" for="legal_address_district">Yuridik
+                        <label class="label_required not_copy" for="legal_address_district">Yuridik
                             manzili(Tuman)</label>
                         <select name="legal_address_district" class="form-control select2" id="legal_address_district"
                                 required>
