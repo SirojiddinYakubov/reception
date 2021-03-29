@@ -28,7 +28,7 @@
           rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -121,7 +121,7 @@
 
 
 <!-- OPTIONAL SCRIPTS -->
-
+<script src="{% static 'js/responsive.js' %}"></script>
 <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
 <script src="{% static 'dist/js/demo.js' %}"></script>
 <script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
@@ -147,21 +147,21 @@
 
 {% block bottom %}{% endblock bottom %}
 
-   <script type="text/javascript" charset="UTF-8">
-        document.onreadystatechange = function () {
-            var state = document.readyState
-            {#console.log(state)#}
-            if (state === 'interactive') {
-                {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
-            } else if (state === 'complete') {
-                setTimeout(function () {
-                    document.getElementById('interactive');
-                    document.getElementById('load').style.visibility = "hidden";
-                    {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
-                }, 100);
-            }
+<script type="text/javascript" charset="UTF-8">
+    document.onreadystatechange = function () {
+        var state = document.readyState
+        {#console.log(state)#}
+        if (state === 'interactive') {
+            {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
+        } else if (state === 'complete') {
+            setTimeout(function () {
+                document.getElementById('interactive');
+                document.getElementById('load').style.visibility = "hidden";
+                {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
+            }, 100);
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>

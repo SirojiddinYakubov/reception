@@ -67,9 +67,16 @@
                         <div class="input-group form-group mt-2">
                             <label id="passwordLabel" class="not_copy" style="width: 100%; display: none;"
                                    for="password">Parol:</label>
-                            <input type="password" id="password" placeholder="Parol" style="display: none;"
-                                   name="password" autocomplete="disabled"
-                                   class="form-control" required>
+                            <div class="input-group" id="password_div" style="display: none">
+                                <input type="password" name="password" id="password"
+                                       class="form-control password"
+                                       required value="{{ form.instance.turbo }}"
+                                       autocomplete="disabled"
+                                       placeholder="Masalan: qwerty12345"/>
+                                <div class="input-group-prepend show_password" data-password="password">
+                                    <div class="input-group-text"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -111,7 +118,7 @@
             SubmitBtn1.hide()
             SubmitBtn2.show()
             $('#footerBlock').show()
-            $('#password').show()
+            $('#password_div').show()
             $('.valid-feedback').css('display', 'none')
             $('#phoneCode').css('display', 'none')
             InputPhone.css('display', 'none')
@@ -148,7 +155,7 @@
                             SubmitBtn1.hide()
                             SubmitBtn2.show()
                             $('#footerBlock').show()
-                            $('#password').show()
+                            $('#password_div').show()
                             $('.valid-feedback').css('display', 'none')
                             $('#phoneCode').css('display', 'none')
                             InputPhone.css('display', 'none')
@@ -172,6 +179,30 @@
         SubmitBtn2.on('click', function (e) {
             // e.preventDefault()
             $('form').submit()
+
+        })
+
+        $('.show_password').on('click', function () {
+            var $Passwords = $('.show_password');
+            var data = $(this).data('password')
+
+            $Passwords.each(function (index, element) {
+                var $password = $(element)
+
+
+                if ($password.data('password') === data) {
+                    if ($password.siblings('.password').attr('type') === 'password') {
+                        $password.children('.input-group-text').html('<i class="far fa-eye-slash"></i>')
+                        $password.siblings('.password').attr('type', 'text')
+                    } else {
+                        $password.children('.input-group-text').html('<i class="far fa-eye"></i>')
+                        $password.siblings('.password').attr('type', 'password')
+
+                    }
+                }
+
+            })
+
 
         })
 

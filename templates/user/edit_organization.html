@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+
 {% block content %}
     <section class="py-3 mt-2 bg-info text-light">
         <div class="container">
@@ -13,33 +14,98 @@
     </section>
     <div class="container-fluid mt-3">
         <!-- left column -->
-        <div class="form-card">
-            {% if form %}
-                <form method="POST" action="{% url 'user:edit_organization' organization.id %}"
-                      enctype="multipart/form-data">
+        <fieldset class="pt-5">
+            <div class="form-card">
+                <form id="add_organization_form" action="#" method="POST">
                     {% csrf_token %}
-                    {{ form }}
-{#                    {% if form.instance.license_photo %}#}
-{#                        {{ form.instance.license_photo.url }}#}
-{#                    {% endif %}#}
-                    <br>
+                    <div class="row">
+                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-sm-12">
+                            <label style="float: left" class="label_required not_copy" for="title">Tashkilot
+                                nomi</label>
+                            <input type="text"
+                                   id="title" autocomplete="off" name="title" class="form-control"
+                                   value="{{ form.instance.title }}"
+                                   placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                            <label style="float: left" class="label_required not_copy" for="director">
+                                Rahbari</label>
+                            <input type="text"
+                                   id="director" autocomplete="off" name="director" class="form-control"
+                                   value="{{ form.instance.director }}" placeholder="Masalan: Sirojiddin Yoqubov"/>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                            <label style="float: left" class="label_required not_copy" for="identification_number">STIR
+                                raqam</label>
+                            <input type="number" value="{{ form.instance.identification_number }}"
+                                   id="identification_number" name="identification_number" autocomplete="off"
+                                   class="form-control"
+                                   placeholder='Masalan: 305897526'/>
+                        </div>
 
-                    <input type="submit" value="Saqlash" class="btn btn-success m-2 pr-5 pl-5"/>
 
-                    <input id="deleteBtn" value="O'chirish" class="btn btn-danger"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 legal_address_region">
+                            <label class="label_required not_copy" for="legal_address_region">Yuridik
+                                manzili(Viloyat)</label>
+                            <select name="legal_address_region" class="form-control select2" id="legal_address_region"
+                                    required>
+                                <option value="">--Viloyatni tanlang--</option>
+                                {% for region in regions %}
+                                    <option value="{{ region.id }}">{{ region.title }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 legal_address_district">
+                            <label class="label_required not_copy" for="legal_address_district">Yuridik
+                                manzili(Tuman)</label>
+                            <select name="legal_address_district" class="form-control select2"
+                                    id="legal_address_district"
+                                    required>
+                                <option value="">--Tumanni tanlang--</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
+                            <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
+                                manzili</label>
+                            <input type="text" value="{{ form.instance.address_of_garage }}"
+                                   id="address_of_garage" autocomplete="off" name="address_of_garage"
+                                   class="form-control"
+                                   placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row justify-content-center">
+                        <input type="button" id="deleteBtn" data-title="{{ form.instance.title }}"
+                               class="action-button-reset" style="width:11rem"
+                               value="Tashkilotni o'chirish"/>
+                        <button type="submit" id="saveBtn" class="action-button">Saqlash</button>
+                    </div>
                 </form>
-            {% endif %}
-        </div>
+            </div>
+        </fieldset>
     </div>
 {% endblock %}
 {% block bottom %}
-    <script charset="utf-8" type="text/javascript">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.select2').select2()
+        })
         $(document).ready(function () {
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken'),
-                organizationId = '{{ organization.id }}'
 
-             $.ajaxSetup({
+            var token = getCookie('token'),
+                csrftoken = getCookie('csrftoken')
+
+            $.ajaxSetup({
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRFToken', csrftoken)
                     xhr.setRequestHeader('Authorization', `Token ${token}`)
@@ -69,61 +135,219 @@
                 }
             })
 
-            $('#deleteBtn').on('click', function () {
-                {#var url = "{% url 'user:remove_organization' organization_id=12345 %}".replace(/12345/, id.toString());#}
+            $('#legal_address_region').change(function () {
+                var SelectedRegion = $(this).children("option:selected").val()
+
+
                 $.ajax({
-                    url: "{% url 'user:remove_organization' %}",
-                    type: 'POST',
+                    type: "GET",
+                    url: "{% url 'user:get_district' %}",
                     data: {
-                        'organization': organizationId
+                        'region': SelectedRegion, // from form
                     },
-                    success: function (response) {
-                        if (response === "True") {
-                            $.notifyDefaults({
-                                type: 'success',
-                                allow_dismiss: false,
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight',
-                                },
-                                z_index: '9999'
-                            });
-                            $.notify({
-                                icon: 'glyphicon glyphicon-star',
-                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                    '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
-                                    '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
-                                    '</svg> Tashkilot muvaffaqiyatli o\'chirildi!'
-                            });
-
-                            setTimeout(function () {
-                                window.location.href = '{% url "user:organizations_list" %}'
-                            }, 1500)
-
-
-                        } else {
-                            $.notifyDefaults({
-                                type: 'danger',
-                                allow_dismiss: false,
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight',
-                                },
-                                z_index: '9999'
-                            });
-                            $.notify({
-                                icon: 'glyphicon glyphicon-star',
-                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                    '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
-                                    '<path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>\n' +
-                                    '</svg> Tashkilotni o\'chirishda xatolik yuz berdi!'
-                            });
-                        }
+                    success: function (message) {
+                        $('#legal_address_district').empty().append(message)
                     }
-                })
+                });
+            })
+
+
+            $('#legal_address_region').on('change', function () {
+                var selectedRegion = $(this).children("option:selected").val();
+                if (parseInt(selectedRegion)) {
+                    $(this).valid()
+
+                }
+            })
+
+            $('#legal_address_district').on('change', function () {
+                var selectedDistrict = $(this).children("option:selected").val();
+                if (parseInt(selectedDistrict)) {
+                    $(this).valid()
+
+                }
+            })
+
+            jQuery.validator.addMethod("noSpace", function (value, element) {
+                return value == '' || value.trim().length != 0;
+            }, "Iltimos, bo'sh joy qoldirmang!");
+            jQuery.validator.addMethod("customEmail", function (value, element) {
+                return this.optional(element) || /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+            }, "Iltimos, to'g'ri elektron pochta manzilini kiriting!");
+            $.validator.addMethod("alphanumeric", function (value, element) {
+                return this.optional(element) || /^\w+$/i.test(value);
+            }, "Faqat harf va raqam kiriting!");
+            //   $.validator.addMethod("auctionNumber", function (value, element) {
+            //      return this.optional(element) || /^[A-Z0-9]{8}$/i.test(value);
+            // }, "Raqamni to'liq kiriting!");
+
+            var $organizationForm = $('#add_organization_form');
+            if ($organizationForm.length) {
+                $organizationForm.validate({
+                    {#ignore: ":hidden:not('#fuel_types')",#}
+
+                    rules: {
+                        //username is the name of the textbox
+                        title: {
+                            required: true,
+                        },
+                        director: {
+                            required: true,
+                        },
+                        identification_number: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        legal_address_region: {
+                            required: true,
+                        },
+                        legal_address_district: {
+                            required: true,
+                        },
+                        address_of_garage: {
+                            required: true,
+                        },
+
+
+                    },
+                    messages: {
+                        title: {
+                            //error message for the required field
+                            required: 'Tashkilot nomi kiritilmagan!'
+                        },
+                        director: {
+                            required: 'Rahbar kiritilmagan!'
+                        },
+                        identification_number: {
+                            required: 'STIR raqam kiritilmagan!'
+                        },
+                        legal_address_region: {
+                            required: "Yuridik manzil(Viloyat) tanlanmagan!",
+                        },
+                        legal_address_district: {
+                            required: "Yuridik manzil(Tuman) tanlanmagan!",
+                        },
+                        address_of_garage: {
+                            required: "Garaj manzili kiritilmagan!",
+                        },
+
+
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.is("#legal_address_region")) {
+                            error.appendTo(element.parents('.legal_address_region'));
+                        } else if (element.is("#legal_address_district")) {
+                            error.appendTo(element.parents('.legal_address_district'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+
+                    },
+
+
+                    submitHandler: function (form) {
+                        $('#saveBtn').attr('disabled', true)
+                        $('#saveBtn').html('Saqlash&nbsp<i class="fas fa-spinner fa-spin"></i>')
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'user:add_organization' %}",
+                            data: $(form).serialize(),
+
+                            success: function (response) {
+                                console.log(typeof response)
+                                if (typeof response === 'object') {
+                                    $.notifyDefaults({
+                                        type: 'success',
+                                        allow_dismiss: false,
+                                        animate: {
+                                            enter: 'animated fadeInRight',
+                                            exit: 'animated fadeOutRight',
+                                        },
+                                        z_index: '9999'
+                                    });
+                                    $.notify({
+                                        icon: 'glyphicon glyphicon-star',
+                                        message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                            '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                            '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                            '</svg> ${response.fields.title} muvaffaqiyatli saqlandi!`
+                                    });
+
+                                    setTimeout(function () {
+                                        window.location.href = "{% url 'user:organizations_list' %}"
+                                    }, 1500)
+                                } else {
+                                    errorFunction()
+                                    $('#saveBtn').attr('disabled', false)
+                                    $('#saveBtn').html('Saqlash')
+                                }
+                            }
+
+                        });
+                        return false; // required to block normal submit since you used ajax
+                    }
+                });
+            }
+
+            $('#deleteBtn').on('click', function () {
+                var title = $(this).data('title'),
+                    organizationId = '{{ organization.id }}'
+
+                swal({
+                    title: "Tashkilotni o'chirmoqchimisiz ?",
+                    text: title + "ni o'chirmoqchimisiz ?",
+                    icon: "warning",
+                    closeOnClickOutside: false,
+                    buttons: [
+                        'Yoq, Bekor qilish!',
+                        'Ha, Roziman!'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+
+                        $.ajax({
+                            url: "{% url 'user:remove_organization' %}",
+                            type: 'POST',
+                            data: {
+                                'organization': organizationId
+                            },
+                            success: function (response) {
+                                if (response === "True") {
+                                    swal({
+                                        title: "Muvaffaqiyatli o'chirildi !",
+                                        text: title + " muvaffaqiyatli o'chirildi !",
+                                        icon: 'success'
+                                    }).then(function () {
+                                        window.location.href = '{% url "user:organizations_list" %}';
+                                    });
+                                } else {
+                                    swal({
+                                        title: "Tashkilotni o'chirishda xatolik yuz berdi!",
+                                        text: title + "ni o'chirishda xatolik yuz berdi!",
+                                        icon: 'error'
+                                    }).then(function () {
+                                       errorFunction()
+                                    });
+                                }
+                            }
+                        })
+
+
+                    } else {
+                        swal("Bekor qilindi", title + " ro'yhatda turibti !", "error");
+                    }
+                });
+
+                {#var url = "{% url 'user:remove_organization' organization_id=12345 %}".replace(/12345/, id.toString());#}
+
             })
 
         })
 
     </script>
 {% endblock bottom %}
+
+

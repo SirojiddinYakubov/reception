@@ -19,6 +19,14 @@
                                      href="{% url "application:change_get_request" 'service' 'contract_of_sale' %}">Oldi
                 sotdi shartnomasi</a>
             </li>
+            <li class="search-li"><a {% if request.GET.service == 'replace_tp' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'service' 'replace_tp' %}">TP
+                almashtirish</a>
+            </li>
+            <li class="search-li"><a {% if request.GET.service == 'replace_number_and_tp' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'service' 'replace_number_and_tp' %}">DRB va TP
+                almashtirish</a>
+            </li>
         </ul>
 
 
@@ -96,10 +104,11 @@
                                      href="{% url "application:change_get_request" 'date' 'today' %}">Bugun</a></li>
 
             <li class="search-li"><a {% if request.GET.date == 'last-7-days' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'date' 'last-7-days' %}">So'nggi 7 kun</a></li>
-         <li class="search-li"><a {% if request.GET.date == 'month' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'date' 'last-7-days' %}">So'nggi 7
+                kun</a></li>
+            <li class="search-li"><a {% if request.GET.date == 'month' %}class="active"{% endif %}
                                      href="{% url "application:change_get_request" 'date' 'month' %}">Shu oyda</a></li>
-        <li class="search-li"><a {% if request.GET.date == 'year' %}class="active"{% endif %}
+            <li class="search-li"><a {% if request.GET.date == 'year' %}class="active"{% endif %}
                                      href="{% url "application:change_get_request" 'date' 'year' %}">Shu yilda</a></li>
         </ul>
     </div>

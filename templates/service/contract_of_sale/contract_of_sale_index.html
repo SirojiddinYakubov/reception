@@ -29,7 +29,7 @@
                                     <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
 
                                     <div class="col-12">
-                                        <label class="not_copy">Foydalanuvchini tanlang? <i
+                                        <label class="not_copy">Foydalanuvchi shaxsini tanlang &nbsp<i
                                                 class="fas fa-info-circle" data-toggle="tooltip"
                                                 title="Arizani yuridik yoki jismoniy shaxs sifatida yuborishni tanlang!"
                                                 id='example1'></i></label>
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                         <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <label>{% trans 'Yuridik manzil(Viloyat):' %}</label>
                                                 <input type="text" id="legal_address_region" class="form-control"
                                                        placeholder="" disabled>
@@ -162,7 +162,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label>{% trans "Qayta jihozlash" %}</label>
+                                                <label class="label">{% trans "Qayta jihozlash" %}</label>
                                                 <select id="devices" name="devices" class="form-control"
                                                         multiple="multiple">
                                                     {% for device in devices %}
@@ -276,45 +276,42 @@
                                                            for="lost_technical_passport"><b>Qayd etish guvohnomasi
                                                         yo'qolgan</b> <i
                                                             class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="Avtomobilning texnik passporti yo'qolgan bo'lsa ushbu maydonni belgilang"
+                                                            title="Transport vositasining qayd etish guvohnomasi yo'qolgan bo'lsa ushbu maydonni belgilang"
                                                             id='example3'></i></label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="checkbox" name="lost_number"
                                                            id="lost_number"
                                                            class="form-check-input"/>
-                                                    <label class="form-check-label"
-                                                           for="lost_number"><b>DRB yo'qolgan</b> <i
+                                                    <label class="form-check-label label"
+                                                           for="lost_number"><b>Davlat raqam belgisi yo'qolgan</b> <i
                                                             class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="T/v ning davlat raqami belgisi yo'qolgan bo'lsa ushbu maydonni belgilang"
+                                                            title="Transport vositasining davlat raqami belgisi yo'qolgan bo'lsa ushbu maydonni belgilang"
                                                             id='example4'></i></label>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 old_number">
 
-                                                <label class="label_required" style="width: 30%;
+                                                <label class="label_required"
+                                                       for="old_number">{% trans "T/v dagi davlat raqam belgisi" %}</label>
 
-margin-right: .5em;
-float:left;"
-                                                       for="old_number">{% trans "T/v dagi DRB" %}</label>
-                                                <div class="form-check" style="width: 30%;
-
-margin-right: .5em;
-float:left;">
-                                                    <input type="checkbox" name="is_old_number"
-                                                           id="is_old_number"
-                                                           class="form-check-input"/>
-                                                    <label class="form-check-label"
-                                                           for="is_old_number"><b>DRB eski</b> <i
-                                                            class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="T/v ning davlat raqami belgisi oldingi ko'rinishdagi raqam bo'lsa ushbu maydonni belgilang"
-                                                            id='example5'></i></label>
-                                                </div>
                                                 <input type="text" id="old_number" name="old_number"
                                                        class="form-control" placeholder="Masalan: 80979HBA"
                                                        autocomplete="off">
+
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="is_old_number"
+                                                           id="is_old_number"
+                                                           class="form-check-input"/>
+                                                    <label class="form-check-label label"
+                                                           for="is_old_number"><b>Davlat raqam belgisi eski</b> <i
+                                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                                            title="Transport vositasining davlat raqami belgisi oldingi ko'rinishdagi raqam bo'lsa ushbu maydonni belgilang"
+                                                            id='example5'></i></label>
+                                                </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2"
                                                  id="old_technical_passport_div">
@@ -648,10 +645,10 @@ float:left;">
 
                         if (typeof ($('#organization option').attr('value')) == 'undefined') {
                             $('#organization_div_alert').show()
-                             $('#next1').attr('disabled', true)
+                            $('#next1').attr('disabled', true)
                         } else {
                             $('#organization_div_alert').hide()
-                             $('#next1').attr('disabled', false)
+                            $('#next1').attr('disabled', false)
                         }
                     } else if (selectedPersonType === 'J') {
                         $('#next1').attr('disabled', false)
@@ -957,15 +954,10 @@ float:left;">
                 })
 
                 $('#payment_render_pdf').on('click', function () {
-                    var element = document.getElementById('render_div');
+                    var element = document.getElementById('render_div'),
+                        filename = `To'lov`
 
-                    html2pdf(element, {
-                        margin: 1,
-                        filename: 'To\'lov.pdf',
-                        image: {type: 'jpeg', quality: 0.98},
-                        html2canvas: {scale: 2},
-                        jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
-                    })
+                    html_to_pdf(element, filename)
                 })
             }
         )

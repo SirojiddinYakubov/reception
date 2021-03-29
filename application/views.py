@@ -35,8 +35,11 @@ def applications_list(request):
         return redirect(reverse_lazy('user:custom_logout'))
     context = {}
 
-    if request.user.role == '2':
-        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
+    if request.user.role == '2' or request.user.role == '3':
+        qs = Application.objects.filter(
+            Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(
+                Q(service__organization__legal_address_region=request.user.region) & Q(
+                    service__organization__isnull=False)))
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
@@ -47,6 +50,12 @@ def applications_list(request):
                     context.update(applications=qs)
                 if request.GET.get('service') == 'contract_of_sale':
                     qs = qs.filter(service__title='contract_of_sale')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'replace_tp':
+                    qs = qs.filter(service__title='replace_tp')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'replace_number_and_tp':
+                    qs = qs.filter(service__title='replace_number_and_tp')
                     context.update(applications=qs)
             if request.GET.get('person_type'):
                 qs = qs.filter(person_type=request.GET.get('person_type'))
@@ -63,8 +72,9 @@ def applications_list(request):
             if request.GET.get('date'):
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
+                                                               datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
                 some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
 
                 if request.GET.get('date') == 'today':
@@ -80,55 +90,15 @@ def applications_list(request):
                     qs = qs.filter(created_date__range=(some_day_last_year, today_max))
                     context.update(applications=qs)
         context.update(applications=qs)
+
+        if not qs.exists():
+            messages.error(request, "Arizalar mavjud emas!")
         return render(request, 'user/role/controller/controller_applications_list.html', context)
-    elif request.user.role == '3':
-        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
-        if request.method == "GET":
-            if request.GET.get('service'):
-                if request.GET.get('service') == 'account_statement':
-                    qs = qs.filter(service__title='account_statement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'gift_agreement':
-                    qs = qs.filter(service__title='gift_agreement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'contract_of_sale':
-                    qs = qs.filter(service__title='contract_of_sale')
-                    context.update(applications=qs)
-            if request.GET.get('person_type'):
-                qs = qs.filter(person_type=request.GET.get('person_type'))
-                context.update(applications=qs)
-            if request.GET.get('process'):
-                qs = qs.filter(process=request.GET.get('process'))
-                context.update(applications=qs)
-            if request.GET.get('payment'):
-                qs = qs.filter(is_payment=request.GET.get('payment'))
-                context.update(applications=qs)
-            if request.GET.get('technical'):
-                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
-                context.update(applications=qs)
-            if request.GET.get('date'):
-                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
-                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
-
-                if request.GET.get('date') == 'today':
-                    qs = qs.filter(created_date__range=(today_min, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'last-7-days':
-                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'month':
-                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'year':
-                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-                    context.update(applications=qs)
-        context.update(applications=qs)
-        return render(request, 'user/role/checker/checker_applications_list.html', context)
     elif request.user.role == '4':
-        qs = Application.objects.filter(Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(Q(service__organization__legal_address_region=request.user.region) & Q(service__organization__isnull=False)))
+        qs = Application.objects.filter(
+            Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(
+                Q(service__organization__legal_address_region=request.user.region) & Q(
+                    service__organization__isnull=False)))
         if request.method == "GET":
             if request.GET.get('service'):
                 if request.GET.get('service') == 'account_statement':
@@ -139,6 +109,12 @@ def applications_list(request):
                     context.update(applications=qs)
                 if request.GET.get('service') == 'contract_of_sale':
                     qs = qs.filter(service__title='contract_of_sale')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'replace_tp':
+                    qs = qs.filter(service__title='replace_tp')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'replace_number_and_tp':
+                    qs = qs.filter(service__title='replace_number_and_tp')
                     context.update(applications=qs)
             if request.GET.get('person_type'):
                 qs = qs.filter(person_type=request.GET.get('person_type'))
@@ -155,8 +131,9 @@ def applications_list(request):
             if request.GET.get('date'):
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
+                                                               datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
                 some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
 
                 if request.GET.get('date') == 'today':
@@ -171,6 +148,9 @@ def applications_list(request):
                 if request.GET.get('date') == 'year':
                     qs = qs.filter(created_date__range=(some_day_last_year, today_max))
                     context.update(applications=qs)
+
+        if not qs.exists():
+            messages.error(request, "Arizalar mavjud emas!")
         context.update(applications=qs)
         return render(request, 'user/role/technical/technical_applications_list.html', context)
     else:
@@ -186,6 +166,12 @@ def applications_list(request):
                 if request.GET.get('service') == 'contract_of_sale':
                     qs = qs.filter(service__title='contract_of_sale')
                     context.update(applications=qs)
+                if request.GET.get('service') == 'replace_tp':
+                    qs = qs.filter(service__title='replace_tp')
+                    context.update(applications=qs)
+                if request.GET.get('service') == 'replace_number_and_tp':
+                    qs = qs.filter(service__title='replace_number_and_tp')
+                    context.update(applications=qs)
             if request.GET.get('person_type'):
                 qs = qs.filter(person_type=request.GET.get('person_type'))
                 context.update(applications=qs)
@@ -201,8 +187,9 @@ def applications_list(request):
             if request.GET.get('date'):
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1),datetime.time.min)
+                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
+                                                               datetime.time.min)
+                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
                 some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
 
                 if request.GET.get('date') == 'today':
@@ -217,6 +204,8 @@ def applications_list(request):
                 if request.GET.get('date') == 'year':
                     qs = qs.filter(created_date__range=(some_day_last_year, today_max))
                     context.update(applications=qs)
+        if not qs.exists():
+            messages.error(request, "Arizalar mavjud emas!")
         context.update(applications=qs)
 
     return render(request, 'application/applications_list.html', context)
@@ -256,12 +245,33 @@ def application_pdf(request, id):
     application = get_object_or_404(Application, id=id)
     region = get_object_or_404(Region, id=application.created_user.region.id)
 
+    # import qrcode
+    #
+    # qr = qrcode.QRCode(
+    #     version=1,
+    #     error_correction=qrcode.constants.ERROR_CORRECT_L,
+    #     box_size=10,
+    #     border=4,
+    # )
+    # qr.add_data(request.build_absolute_uri())
+    #
+    # qr.make(fit=True)
+    #
+    # img = qr.make_image(fill_color="black", back_color="white")
+    # filename = f"{application.id}"
+    # img.save(f"media{os.sep}applications{os.sep}qrcodes{os.sep}{filename}.jpg", "JPEG")
+
     context = {
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
         'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
         'app': application,
-        'region': region
+        'region': region,
+        # 'filepath': f"<img src='http://127.0.0.1:8000/media/applications/qrcodes/{filename}.jpg' alt='12345'>"
     }
+
+
+
+
     template_name = 'application/application_detail_pdf.html'
     pdf = render_to_pdf(template_name, context)
     if pdf:
@@ -319,24 +329,41 @@ def create_application_doc(request, filename):
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_person.docx")
+    elif service.title == 'replace_tp':
+        if service.organization:
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_legal.docx")
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_person.docx")
+    elif service.title == 'replace_number_and_tp':
+        if service.organization:
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_legal.docx")
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_person.docx")
 
     car = get_object_or_404(Car, id=service.car.id)
 
     devices_string = ', '.join([str(i).replace('"', "'") for i in car.device.all()])
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
 
+    if service.seriya and service.contract_date:
+        context.update(state=f"{service.seriya} {datetime.datetime.strftime(service.contract_date, '%d.%m.%Y')}")
+
+    if car.given_technical_passport:
+        context.update(given_technical_passport=car.given_technical_passport)
     if service.organization:
         context.update(org=service.organization)
     context.update(now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
                    devices=devices_string,
                    fuel_types=fuel_types_string,
                    car=car,
-                   state=f"{service.seriya} {datetime.datetime.strftime(service.contract_date, '%d.%m.%Y')}",
                    user=request.user,
                    birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'),
                    given_number=car.given_number,
                    old_number=car.old_number,
-                   old_technical_passport=car.old_technical_passport
+                   old_technical_passport=car.old_technical_passport,
+
                    )
 
     car_model = get_object_or_404(CarModel, id=car.model.id)
@@ -350,7 +377,7 @@ def create_application_doc(request, filename):
         context.update(lost_technical_passport=True)
 
     doc.render(context)
-    response = HttpResponse(doc, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     filename = "Ariza #%s.docx" % (filename)
     content = "attachment; filename=%s" % (filename)
     response['Content-Disposition'] = content
@@ -402,7 +429,6 @@ def view_application_service_data(request, service_id):
         'service': service
     }
     return render(request, 'service/view_service_data.html', context)
-
 
 
 @login_required
@@ -460,24 +486,19 @@ class ConfirmApplicationData(APIView):
     def post(self, request):
         application = get_object_or_404(Application, id=request.POST.get('application'))
         car = get_object_or_404(Car, id=application.service.car.id)
-        print(car)
         if request.user.role == '1':
-            print('not')
             return HttpResponse(False)
 
         if request.is_ajax():
-            print('ajax')
             if request.method == 'POST':
-                print('POST')
-                if request.POST.get('confirm') == 'True':
-                    print('confirm')
+                if request.POST.get('process') == 'confirm':
                     car.given_number = request.POST.get('given_number')
                     car.given_technical_passport = request.POST.get('technical_passport')
                     car.save()
-                    print(car.given_number)
                     application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
                     application.process = '2'
-                    application.given_date = datetime.datetime.strptime(request.POST.get('given_date'), "%Y-%m-%d").date()
+                    application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
+                                                                        "%Y-%m-%d").date()
                     application.given_time = request.POST.get('given_time')
                     application.save()
 
@@ -486,8 +507,7 @@ class ConfirmApplicationData(APIView):
                     # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     # response = requests.get(url)
                     return HttpResponse(True)
-                elif request.POST.get('confirm') == 'pass':
-                    print('pass')
+                elif request.POST.get('process') == 'cancel':
                     application.process = '3'
                     application.process_sms = request.POST.get('process_sms')
                     application.save()
@@ -497,8 +517,7 @@ class ConfirmApplicationData(APIView):
                     # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     # response = requests.get(url)
                     return HttpResponse(True)
-                else:
-                    print('process')
+                elif request.POST.get('process') == 'process':
                     application.process = '1'
                     application.process_sms = request.POST.get('process_sms')
                     application.save()
@@ -508,10 +527,13 @@ class ConfirmApplicationData(APIView):
                     # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     # response = requests.get(url)
                     return HttpResponse(True)
+                else:
+                    return HttpResponse(False)
             else:
                 return HttpResponse(False)
         else:
             return HttpResponse(False)
+
 
 @permission_classes([IsAuthenticated])
 class GetGivenNumber(APIView):
@@ -525,3 +547,18 @@ class GetGivenNumber(APIView):
                 return HttpResponse('')
         else:
             return HttpResponse('')
+
+
+@permission_classes([IsAuthenticated])
+class RemoveApplication(APIView):
+    def post(self, request):
+        application = Application.objects.filter(id=request.POST.get('application')).first()
+
+        if application:
+            if application.service.car.is_confirm:
+                return HttpResponse('disabled')
+            else:
+                application.delete()
+                return HttpResponse(True)
+        else:
+            return HttpResponse(False)

@@ -245,6 +245,12 @@ def organizations_list(request):
 
 @login_required
 def add_organization(request):
+    regions = Region.objects.all()
+    districts = District.objects.all()
+    context = {
+        'regions': regions,
+        'districts': districts,
+    }
 
     try:
         token = request.COOKIES.get('token')
@@ -255,31 +261,29 @@ def add_organization(request):
 
     if request.is_ajax():
         if request.method == 'POST':
+            print(request.POST)
+
             organization = Organization.objects.create(title=request.POST.get('title', None))
             organization.director = request.POST.get('director', None)
             organization.identification_number = request.POST.get('identification_number', None)
             organization.address_of_garage = request.POST.get('address_of_garage', None)
             organization.legal_address_region = get_object_or_404(Region, id=request.POST.get('legal_address_region'))
-
             organization.legal_address_district = get_object_or_404(District, id=request.POST.get('legal_address_district'))
-            if request.FILES.get('license_photo'):
-                organization.license_photo = request.FILES.get('license_photo', None)
-            if request.FILES.get('certificate_photo'):
-                organization.certificate_photo = request.FILES.get('certificate_photo', None)
+            # if request.FILES.get('license_photo'):
+            #     organization.license_photo = request.FILES.get('license_photo', None)
+            # if request.FILES.get('certificate_photo'):
+            #     organization.certificate_photo = request.FILES.get('certificate_photo', None)
             organization.created_user = request.user
             organization.created_date = timezone.now()
             organization.save()
-            return HttpResponse(True)
+
+            company = serializers.serialize('json', [organization, ])
+            struct = json.loads(company, )
+            data = json.dumps(struct[0])
+            return HttpResponse(data, content_type='json')
         else:
             return HttpResponse(False)
 
-    regions = Region.objects.all()
-    districts = District.objects.all()
-    context = {
-        'regions': regions,
-        'districts': districts,
-        'foo': request.user
-    }
     return render(request, 'user/add_organization.html',  context,)
 
 
@@ -291,7 +295,7 @@ def edit_organization(request, organization_id):
     form = EditOrganizationForm(instance=organization)
     created_user = get_object_or_404(User, id=request.user.id)
 
-    if organization.created_user != created_user:
+    if organization.created_user != created_user or organization.is_active == False:
         return render(request, '_parts/404.html')
 
     context = {
@@ -323,15 +327,19 @@ def edit_organization(request, organization_id):
 @permission_classes([IsAuthenticated])
 class Remove_Organization(APIView):
     def post(self, request):
+        print(request.POST)
         if request.is_ajax():
-            organization = get_object_or_404(Organization, id=request.POST.get('organization'))
-            created_user = get_object_or_404(User, id=request.user.id)
-            if organization.created_user != created_user:
+            try:
+                organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                created_user = get_object_or_404(User, id=request.user.id)
+                if organization.created_user != created_user:
+                    return HttpResponse(False)
+                organization.is_active = False
+                organization.removed_date = timezone.now()
+                organization.save()
+                return HttpResponse(True)
+            except:
                 return HttpResponse(False)
-            organization.is_active = False
-            organization.removed_date = timezone.now()
-            organization.save()
-            return HttpResponse(True)
         return redirect(reverse_lazy('user:organizations_list'))
 
 
@@ -358,6 +366,7 @@ class Get_Organization(APIView):
                 'organization': struct[0],
                 'legal_address_district': organization.legal_address_district.title,
                 'legal_address_region': organization.legal_address_region.title,
+                'created_date': datetime.datetime.strftime(organization.created_date, '%d.%m.%Y')
             }
             data = json.dumps(context)
 
@@ -368,30 +377,49 @@ class Get_Organization(APIView):
 @login_required
 def edit_personal_data(request):
     form = EditForm(instance=request.user)
+    regions = Region.objects.all()
+
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
     context = {
-        'form': form
+        'form': form,
+        'regions': regions
     }
     if request.method == 'POST':
         try:
             token = request.COOKIES.get('token')
             Token.objects.get(key=token)
         except ObjectDoesNotExist:
-            return redirect(reverse_lazy('user:custom_logout'))
+            return HttpResponse(False)
 
         form = EditForm(request.POST, instance=request.user)
         if form.is_bound:
             if form.is_valid():
                 form = form.save(commit=False)
                 form.phone = request.POST.get('phone')
+                form.username = request.POST.get('phone')
+                form.turbo = request.POST.get('password')
                 form.save()
-                form = EditForm(instance=request.user)
-                context.update(form=form)
-                messages.success(request, "Muvaffaqiyatli tahrirlandi!")
-                return render(request, 'user/edit_personal_data.html', context)
+
+                user = get_object_or_404(User, id=request.user.id)
+                if user:
+                    user.username = request.POST.get('phone')
+                    user.turbo = request.POST.get('password')
+                    user.set_password(request.POST.get('password'))
+                    user.save()
+
+                    user = authenticate(request, username=user.username, password=user.turbo)
+                    if user is not None:
+                        login(request, user)
+                return HttpResponse(True)
             else:
-                messages.error(request, "Formani to'ldirishda xatolik!")
+                return HttpResponse(False)
         else:
-            messages.error(request, "Formani to'ldiring!")
+            return HttpResponse(False)
 
     return render(request, 'user/edit_personal_data.html', context)
 

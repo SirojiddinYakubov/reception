@@ -5,13 +5,14 @@
 <head>
     <meta charset="utf-8">
     <title>Ariza #{{ app.id }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
 <header class="clearfix">
-{#    <div id="logo">#}
-{#        <img src="/ap">#}
-{#    </div>#}
+    {#    <div id="logo">#}
+    {#        <img src="/ap">#}
+    {#    </div>#}
     <div style="text-align: center">
         <h2 style="font-size: 3em; color: blue"><b>YXXB {{ region }} bo'limi</b></h2>
     </div>
@@ -41,16 +42,17 @@
         <tr>
             <td><b>Holati</b></td>
             {% if app.process == '1' %}
-            <td style="color: #0f6674">Jarayonda</td>
+                <td style="color: #0f6674">Jarayonda</td>
             {% elif app.process == '2' %}
-            <td style="color: #44ff00">Qabul qilindi</td>
+                <td style="color: #44ff00">Qabul qilindi</td>
             {% elif app.process == '3' %}
-            <td style="color: #ff0318">Rad etildi</td>
+                <td style="color: #ff0318">Rad etildi</td>
             {% endif %}
         </tr>
         <tr>
             <td><b>Sababi</b></td>
-            <td style="color: #0f6674">{% if app.process_sms %}{{ app.process_sms }}{% else %}O'rganib chiqilmoqda{% endif %}</td>
+            <td style="color: #0f6674">
+                {% if app.process_sms %}{{ app.process_sms }}{% else %}O'rganib chiqilmoqda{% endif %}</td>
         </tr>
         <tr>
             <td><b>Yaratdi</b></td>
@@ -58,12 +60,13 @@
         </tr>
         <tr>
             <td><b>Ariza topshirdi</b></td>
-            <td>{% if app.service.organization  %}{{ app.service.organization }}{% else %}{{ app.service.created_user }}{% endif %}</td>
+            <td>{% if app.service.organization %}{{ app.service.organization }}{% else %}
+                {{ app.service.created_user }}{% endif %}</td>
         </tr>
         <tr>
             <td><b>To'lov</b></td>
             {% if app.is_payment %}
-            <td style="color: green">To'langan</td>
+                <td style="color: green">To'langan</td>
             {% else %}
                 <td style="color: red">To'lanmagan</td>
             {% endif %}
@@ -71,10 +74,14 @@
         </tbody>
     </table>
     <br>
+    <img src="{{ filepath }}" alt="12345">
+    <br>
     <div style="margin-top: 10px; color: red">Eslatma!</div>
     <div id="notices">
-        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq to'ldirib YXXB
-            {{ region }} bo'limiga yetkazib bershingiz talab qilinadi!</div>
+        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq
+            to'ldirib YXXB
+            {{ region }} bo'limiga yetkazib bershingiz talab qilinadi!
+        </div>
     </div>
 </main>
 </body>

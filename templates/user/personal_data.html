@@ -38,7 +38,10 @@
 
                     <tr>
                         <th scope="row">Yashash manzili:</th>
-                        <td>{% if user.region %}{{ user.region }}{% endif %}, {% if user.district %}{{ user.district }}{% endif %}, {% if user.mfy %}{{ user.mfy }}{% endif %}, {% if user.address %}{{ user.address }}{% endif %}</td>
+                        <td>{% if user.region %}{{ user.region }}{% endif %},
+                            {% if user.district %}{{ user.district }}{% endif %},
+                            {% if user.mfy %}{{ user.mfy }}{% endif %},
+                            {% if user.address %}{{ user.address }}{% endif %}</td>
                     </tr>
 
                     <tr>
@@ -60,13 +63,52 @@
                         <th scope="row">JShShIR:</th>
                         <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
                     </tr>
+                    <tr>
+                        <th scope="row">Login:</th>
+                        <td>{% if user.phone %}{{ user.phone }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Parol:</th>
+                        <td>
+                            {% if user.turbo %}<span id="password" data-show="false" data-password="{{ user.turbo }}">***********</span>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <span style="cursor: pointer" id="show_password"><i class="far fa-eye"></i></span>
+                            {% endif %}
+                        </td>
+                    </tr>
                 </table>
-{#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}
-                <a href="{% url 'user:edit_personal_data' %}"><button style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash</button></a>
+                {#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}
+                <a href="{% url 'user:edit_personal_data' %}">
+                    <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                            class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash
+                    </button>
+                </a>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block bottom %}
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+
+            $('#show_password').on('click', function () {
+
+                if ($(this).siblings('#password').data('show') === false) {
+                    $(this).html('<i class="far fa-eye-slash"></i>')
+                    $(this).siblings('#password').data('show', true)
+
+                    $('#password').text($(this).siblings('#password').data('password'))
+                } else {
+                    $(this).html('<i class="far fa-eye"></i>')
+                    $(this).siblings('#password').data('show', false)
+                      $('#password').text('***********')
+                }
+
+
+            })
+
+        })
+
+    </script>
 {% endblock bottom %}

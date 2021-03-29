@@ -16,26 +16,30 @@ def calculation_state_duty_service_price(service):
 
     re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()
 
-    if not car.is_auction:
-        registration = StateDutyPercent.objects.filter(car_type=car.type,
-                                                   lost_number=car.lost_number, is_old_number=car.is_old_number,
-                                                   car_is_new=car.is_new, state_duty=5).first()
+    if car.is_replace_number:
+        if not car.is_auction:
+            registration = StateDutyPercent.objects.filter(car_type=car.type,
+                                                       lost_number=car.lost_number, is_old_number=car.is_old_number,
+                                                       car_is_new=car.is_new, state_duty=5).first()
+        else:
+            registration = None
     else:
         registration = None
 
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=service.person_type, car_type=service.car.type,
                                                  state_duty=3).first()
-
-    if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
-        try:
-            fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
-        except AttributeError:
+    if service.contract_date:
+        if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
+            try:
+                fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
+            except AttributeError:
+                fine = 0
+                print("10 KUN O'TGANLIGI UCHUN JARIMA FOIZI TOPILMADI")
+        else:
             fine = 0
-            print("10 KUN O'TGANLIGI UCHUN JARIMA FOIZI TOPILMADI")
     else:
         fine = 0
-
 
     if car.lost_technical_passport:
         try:
@@ -44,30 +48,32 @@ def calculation_state_duty_service_price(service):
         except AttributeError:
             print("YO'QOLGAN TEX PASSPORT UCHUN JARIMA FOIZI TOPILMADI")
 
+    if car.is_road_fund:
+        if car.is_new:
+            state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
+            road_fund = int(int(state_percent) / 100 * int(car.price))
 
-    if car.is_new:
-        state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
-        road_fund = int(int(state_percent) / 100 * int(car.price))
-
-    else:
-        # ishlab chiqarilganiga 3 yil to'lmagan
-        if timezone.now().year - 3 <= int(service.car.made_year):
-            state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=0,
-                                                            stop=3).first().percent
-        # 3 yil to'lgan lekin 7 yil to'lmagan
-        elif timezone.now().year - 3 >= int(service.car.made_year) and timezone.now().year - 7 <= int(
-                service.car.made_year):
-            state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=3,
-                                                            stop=7).first().percent
-        # 7 yildan ortiq
-        elif timezone.now().year - 7 >= int(service.car.made_year):
-            state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=7,
-                                                            stop=0).first().percent
         else:
-            state_percent = 0
-            print("YO'L FONDI OT KUCHI TOPILMADI")
+            # ishlab chiqarilganiga 3 yil to'lmagan
+            if timezone.now().year - 3 <= int(service.car.made_year):
+                state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=0,
+                                                                stop=3).first().percent
+            # 3 yil to'lgan lekin 7 yil to'lmagan
+            elif timezone.now().year - 3 >= int(service.car.made_year) and timezone.now().year - 7 <= int(
+                    service.car.made_year):
+                state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=3,
+                                                                stop=7).first().percent
+            # 7 yildan ortiq
+            elif timezone.now().year - 7 >= int(service.car.made_year):
+                state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=7,
+                                                                stop=0).first().percent
+            else:
+                state_percent = 0
+                print("YO'L FONDI OT KUCHI TOPILMADI")
 
-        road_fund = int(MINIMUM_BASE_WAGE / 100 * int(state_percent) * car.engine_power)
+            road_fund = int(MINIMUM_BASE_WAGE / 100 * int(state_percent) * car.engine_power)
+    else:
+        road_fund = 0
 
     context = ''
     total_prices = 0
@@ -191,6 +197,7 @@ def calculation_state_duty_service_price(service):
 
     else:
         print('JARIMA PERCENT NOT FOUND')
+
 
     if not road_fund == 0:
         try:

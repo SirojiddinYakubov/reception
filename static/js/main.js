@@ -403,6 +403,28 @@ $('.datepicker').on('keypress', function (e) {
 //         required: "Shassi raqami kiritilmagan!",
 //     })
 
+function tokenInvalid() {
+    $.notifyDefaults({
+        type: 'danger',
+        allow_dismiss: false,
+        animate: {
+            enter: 'animated fadeInRight',
+            exit: 'animated fadeOutRight'
+        },
+        z_index: '9999'
+    })
+    $.notify({
+        icon: 'glyphicon glyphicon-star',
+        message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+            '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+            '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+            '</svg> Xatolik yuz berdi! Token yaroqsiz!'
+    })
+    setTimeout(function () {
+        window.location.href = '{% url "user:custom_logout" %}'
+    }, 3000);
+}
+
 function errorFunction() {
 
     $.notifyDefaults({
@@ -416,5 +438,401 @@ function errorFunction() {
             '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
             '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
             '</svg> Xatolik yuz berdi! Sahifani yangilab qayta urinib ko\'ring'
+    })
+}
+
+
+function process_confirm_replace_number(success_url, cancel_url, applicationId, response) {
+    let input = document.createElement("input")
+    if (response !== '') {
+        input.value = `${response}`
+    }
+    input.placeholder = 'Masalan: 80979HBA'
+    input.type = 'text'
+    input.className = 'swal-content__input'
+    swal({
+        title: "Berilayotgan DRBni kiriting!",
+
+        closeOnClickOutside: false,
+        className: "",
+        buttons: [
+            'Bekor qilish',
+            'Saqlash'
+        ],
+        dangerMode: false,
+        content: input,
+
+    }).then(function (given_number_val) {
+        if (given_number_val) {
+            if (input.value !== '') {
+                swal({
+                    title: "Berilayotgan qayd etish guvohnomasini kiriting!",
+                    closeOnClickOutside: false,
+                    className: "",
+                    buttons: [
+                        'Bekor qilish',
+                        'Saqlash'
+                    ],
+                    dangerMode: false,
+                    content: {
+                        element: "input",
+                        attributes: {
+                            placeholder: "Masalan: AAC112345785",
+                            type: "text",
+                        },
+                    },
+                }).then(function (technical_passport_val) {
+                    if (technical_passport_val) {
+                        if (technical_passport_val !== '') {
+                            swal({
+                                title: "Qayd etish guvohnomasini topshirish kunini kiriting!",
+                                closeOnClickOutside: false,
+                                className: "",
+                                buttons: [
+                                    'Bekor qilish',
+                                    'Saqlash'
+                                ],
+                                dangerMode: false,
+                                content: {
+                                    element: "input",
+                                    attributes: {
+                                        // placeholder: "Masalan: AAC112345785",
+                                        type: "date",
+                                    },
+                                },
+                            }).then(function (given_date) {
+                                if (given_date) {
+                                    swal({
+                                        title: "Qayd etish guvohnomasini topshirish vaqtini kiriting!",
+                                        // text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",
+                                        // icon: "warning",
+                                        closeOnClickOutside: false,
+                                        className: "",
+                                        buttons: [
+                                            'Bekor qilish',
+                                            'Saqlash'
+                                        ],
+                                        dangerMode: false,
+                                        content: {
+                                            element: "input",
+                                            attributes: {
+                                                placeholder: "Masalan: 15:30",
+                                                type: "text",
+                                            },
+                                        },
+                                    }).then(function (given_time) {
+                                        if (given_time) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: success_url,
+                                                data: {
+                                                    'application': applicationId,
+                                                    'given_number': input.value,
+                                                    'technical_passport': technical_passport_val,
+                                                    'process': 'confirm',
+                                                    'given_date': given_date,
+                                                    'given_time': given_time
+                                                },
+                                                success: function (response) {
+                                                    if (response === 'True') {
+                                                        $.notifyDefaults({
+                                                            type: 'success',
+                                                            allow_dismiss: false,
+                                                            animate: {
+                                                                enter: 'animated fadeInRight',
+                                                                exit: 'animated fadeOutRight',
+                                                            },
+                                                            z_index: '9999'
+                                                        });
+                                                        $.notify({
+                                                            icon: 'glyphicon glyphicon-star',
+                                                            message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
+                                                        });
+                                                    } else {
+                                                        errorFunction()
+                                                    }
+                                                },
+                                                error: function (response) {
+                                                    console.log(response.status)
+                                                    errorFunction()
+                                                }
+                                            })
+                                        } else {
+                                            window.location.href = cancel_url
+                                        }
+                                    })
+                                } else {
+                                    window.location.href = cancel_url
+                                }
+                            })
+                        } else {
+                            window.location.href = cancel_url
+                        }
+                    } else {
+                        window.location.href = cancel_url
+                    }
+                })
+            } else {
+                window.location.href = cancel_url
+            }
+        } else {
+            window.location.href = cancel_url
+        }
+    })
+}
+
+
+function process_confirm_not_replace_number(success_url, cancel_url, applicationId) {
+
+    swal({
+        title: "Berilayotgan qayd etish guvohnomasi kiriting!",
+        closeOnClickOutside: false,
+        className: "",
+        buttons: [
+            'Bekor qilish',
+            'Saqlash'
+        ],
+        dangerMode: false,
+        content: {
+            element: "input",
+            attributes: {
+                placeholder: "Masalan: AAC112345785",
+                type: "text",
+            },
+        },
+    }).then(function (technical_passport_val) {
+        if (technical_passport_val) {
+            if (technical_passport_val !== '') {
+                swal({
+                    title: "Qayd etish guvohnomasini topshirish kunini kiriting!",
+                    closeOnClickOutside: false,
+                    className: "",
+                    buttons: [
+                        'Bekor qilish',
+                        'Saqlash'
+                    ],
+                    dangerMode: false,
+                    content: {
+                        element: "input",
+                        attributes: {
+                            // placeholder: "Masalan: AAC112345785",
+                            type: "date",
+                        },
+                    },
+                }).then(function (given_date) {
+                    if (given_date) {
+                        swal({
+                            title: "Qayd etish guvohnomasini topshirish vaqtini kiriting!",
+                            // text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",
+                            // icon: "warning",
+                            closeOnClickOutside: false,
+                            className: "",
+                            buttons: [
+                                'Bekor qilish',
+                                'Saqlash'
+                            ],
+                            dangerMode: false,
+                            content: {
+                                element: "input",
+                                attributes: {
+                                    placeholder: "Masalan: 15:30",
+                                    type: "text",
+                                },
+                            },
+                        }).then(function (given_time) {
+                            if (given_time) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: success_url,
+                                    data: {
+                                        'application': applicationId,
+                                        'given_number': input.value,
+                                        'technical_passport': technical_passport_val,
+                                        'process': 'confirm',
+                                        'given_date': given_date,
+                                        'given_time': given_time
+                                    },
+                                    success: function (response) {
+                                        if (response === 'True') {
+                                            $.notifyDefaults({
+                                                type: 'success',
+                                                allow_dismiss: false,
+                                                animate: {
+                                                    enter: 'animated fadeInRight',
+                                                    exit: 'animated fadeOutRight',
+                                                },
+                                                z_index: '9999'
+                                            });
+                                            $.notify({
+                                                icon: 'glyphicon glyphicon-star',
+                                                message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
+                                            });
+                                        } else {
+                                            errorFunction()
+                                        }
+                                    },
+                                    error: function (response) {
+                                        console.log(response.status)
+                                        errorFunction()
+                                    }
+                                })
+                            } else {
+                                window.location.href = cancel_url
+                            }
+                        })
+                    } else {
+                        window.location.href = cancel_url
+                    }
+                })
+            } else {
+                window.location.href = cancel_url
+            }
+        } else {
+            window.location.href = cancel_url
+        }
+    })
+
+}
+
+function process_cancel(success_url, cancel_url, applicationId) {
+    swal({
+        title: "Rad etish sababini kiriting",
+
+        closeOnClickOutside: false,
+        className: "",
+        buttons: [
+            'Bekor qilish',
+            'Saqlash'
+        ],
+        dangerMode: false,
+        content: {
+            element: "input",
+            attributes: {
+                placeholder: "Masalan: Kiritilgan ma'lumotlarda xato va kamchiliklar mavjud",
+                type: "text",
+            },
+        },
+    }).then(function (process_sms) {
+        if (process_sms) {
+            $.ajax({
+                type: "POST",
+                url: success_url,
+                data: {
+                    'application': applicationId,
+                    'process': 'cancel',
+                    'process_sms': process_sms
+                },
+                success: function (response) {
+                    if (response === 'True') {
+                        $.notifyDefaults({
+                            type: 'danger',
+                            allow_dismiss: false,
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight',
+                            },
+                            z_index: '9999'
+                        });
+                        $.notify({
+                            icon: 'glyphicon glyphicon-star',
+                            message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                '</svg> &nbsp${applicationId}-raqamli ariza rad etildi!`
+                        });
+
+                    } else {
+
+                        errorFunction()
+                    }
+                },
+                error: function (response) {
+                    console.log(response.status)
+                    errorFunction()
+                }
+            })
+        } else {
+            window.location.href = cancel_url
+        }
+    })
+}
+
+
+function process(success_url, cancel_url, applicationId) {
+    swal({
+        title: "Jarayon sababini kiriting",
+
+        closeOnClickOutside: false,
+        className: "",
+        buttons: [
+            'Bekor qilish',
+            'Saqlash'
+        ],
+        dangerMode: false,
+        content: {
+            element: "input",
+            attributes: {
+                placeholder: "Masalan: To'lov amalga oshirilishi kutilmoqda",
+                type: "text",
+            },
+        },
+    }).then(function (process_sms) {
+        if (process_sms) {
+            $.ajax({
+                type: "POST",
+                url: success_url,
+                data: {
+                    'application': applicationId,
+                    'process': 'process',
+                    'process_sms': process_sms
+                },
+                success: function (response) {
+                    if (response === 'True') {
+                        $.notifyDefaults({
+                            type: 'warning',
+                            allow_dismiss: false,
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight',
+                            },
+                            z_index: '9999'
+                        });
+                        $.notify({
+                            icon: 'glyphicon glyphicon-star',
+                            message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                '</svg> &nbsp${applicationId}-raqamli ariza jarayon holatida!`
+                        });
+
+                    } else {
+
+                        errorFunction()
+                    }
+                },
+                error: function (response) {
+                    console.log(response.status)
+                    errorFunction()
+                }
+            })
+        } else {
+            window.location.href = cancel_url
+        }
+    })
+}
+
+function html_to_pdf(element, filename) {
+    html2pdf(element, {
+        margin: 1,
+        filename: filename + ' #' +  new Date().getTime(),
+        image: {type: 'jpeg', quality: 0.98},
+        html2canvas: {scale: 2},
+        jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
     })
 }

@@ -14,43 +14,42 @@ class SignUpForm(forms.ModelForm):
 
 
 class EditForm(forms.ModelForm):
-    first_name = forms.CharField(label='Ism:', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: Yoqubov', 'id': 'first_name'}))
-    last_name = forms.CharField(label='Familiya:', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: Sirojiddin', 'id': 'last_name'}))
-    middle_name = forms.CharField(label='Otasining ismi:', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: Tojiddinovich', 'id': 'middle_name'}))
-    birthday = forms.DateField(label="Tug'ilgan  kuni", input_formats=settings.DATE_INPUT_FORMATS,
-                               widget=forms.DateInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020',
-                                          'id': 'birthday'}))
-    passport_seriya = forms.CharField(label='Passport seriyasi:', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: AA', 'id': 'passport_seriya'}))
-    passport_number = forms.IntegerField(label='Passport raqami:', widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: 1234567', 'id': 'passport_number'}))
-    person_id = forms.IntegerField(label='JShShIR:', widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'placeholder': '14 xonali identifikatsiya raqamingizni kiriting...',
-               'max': '99999999999999', 'min': '00000000000001', 'id': 'person_id'}))
-    # phone = forms.IntegerField(label='Tel raqam:', widget=forms.NumberInput(attrs={'class': 'form-control','max': '999999999','min': '000000001','id': 'phone'}))
-    region = forms.ModelChoiceField(queryset=Region.objects.all(), label="Viloyat:",
-                                    widget=forms.Select(attrs={'class': 'form-control', 'id': 'region'}))
-    district = forms.ModelChoiceField(queryset=District.objects.all(), label="Tuman/Shahar:",
-                                      widget=forms.Select(attrs={'class': 'form-control', 'id': 'district'}))
-    mfy = forms.ModelChoiceField(queryset=MFY.objects.all(), label="Mahalla:",
-                                 widget=forms.Select(attrs={'class': 'form-control', 'id': 'mfy'}))
-    address = forms.CharField(label="Ko'cha/qishloq:", widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': "Masalan: Yangiyo'l ko'chasi 14-uy", 'id': 'address'}))
-    # gender = forms.ChoiceField(label="Jins:", choices=GENDER_CHOICES,
-    #                              widget=forms.Select(attrs={'class': 'form-control', 'id': 'gender'}))
-    issue_by_whom = forms.CharField(label='Kim tomonidan berilgan:', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Masalan: BUXORO SHAHAR IIB', 'id': 'issue_by_whom'}))
+    # first_name = forms.CharField(label='Ism:', widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: Yoqubov', 'id': 'first_name'}))
+    # last_name = forms.CharField(label='Familiya:', widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: Sirojiddin', 'id': 'last_name'}))
+    # middle_name = forms.CharField(label='Otasining ismi:', widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: Tojiddinovich', 'id': 'middle_name'}))
+    # birthday = forms.DateField(label="Tug'ilgan  kuni", input_formats=settings.DATE_INPUT_FORMATS,
+    #                            widget=forms.DateInput(
+    #                                attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020',
+    #                                       'id': 'birthday'}))
+    # passport_seriya = forms.CharField(label='Passport seriyasi:', widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: AA', 'id': 'passport_seriya'}))
+    # passport_number = forms.IntegerField(label='Passport raqami:', widget=forms.NumberInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: 1234567', 'id': 'passport_number'}))
+    # person_id = forms.IntegerField(label='JShShIR:', widget=forms.NumberInput(
+    #     attrs={'class': 'form-control', 'placeholder': '14 xonali identifikatsiya raqamingizni kiriting...',
+    #            'max': '99999999999999', 'min': '00000000000001', 'id': 'person_id'}))
+    # # phone = forms.IntegerField(label='Tel raqam:', widget=forms.NumberInput(attrs={'class': 'form-control','max': '999999999','min': '000000001','id': 'phone'}))
+    # region = forms.ModelChoiceField(queryset=Region.objects.all(), label="Viloyat:",
+    #                                 widget=forms.Select(attrs={'class': 'form-control', 'id': 'region'}))
+    # district = forms.ModelChoiceField(queryset=District.objects.all(), label="Tuman/Shahar:",
+    #                                   widget=forms.Select(attrs={'class': 'form-control', 'id': 'district'}))
+    # mfy = forms.ModelChoiceField(queryset=MFY.objects.all(), label="Mahalla:",
+    #                              widget=forms.Select(attrs={'class': 'form-control', 'id': 'mfy'}))
+    # address = forms.CharField(label="Ko'cha/qishloq:", widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': "Masalan: Yangiyo'l ko'chasi 14-uy", 'id': 'address'}))
+    # # gender = forms.ChoiceField(label="Jins:", choices=GENDER_CHOICES,
+    # #                              widget=forms.Select(attrs={'class': 'form-control', 'id': 'gender'}))
+    # issue_by_whom = forms.CharField(label='Kim tomonidan berilgan:', widget=forms.TextInput(
+    #     attrs={'class': 'form-control', 'placeholder': 'Masalan: BUXORO SHAHAR IIB', 'id': 'issue_by_whom'}))
 
     class Meta:
         model = User
         fields = ['last_name', 'first_name', 'middle_name', 'birthday', 'passport_seriya', 'passport_number',
-                  'issue_by_whom', 'person_id', 'region', 'district', 'mfy', 'address',
-                  ]
-        exclude = ['phone']
+                  'issue_by_whom', 'person_id', 'region', 'district', 'mfy', 'address','phone']
+        exclude = []
 
         # labels = {
         #     'name': _('Writer'),
@@ -96,15 +95,15 @@ class EditOrganizationForm(forms.ModelForm):
         attrs={'class': 'form-control'}))
     address_of_garage = forms.CharField(label='Garaj manzili:', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    certificate_photo = forms.FileField(label='Guvohnoma surati:', required=False, widget=forms.FileInput(
-        attrs={'class': 'form-control-file',"accept": '.png, .jpg, .jpeg .gif' }))
-    license_photo = forms.FileField(label='Litsenziya surati:',required=False, widget=forms.FileInput(
-        attrs={'class': 'form-control-file',"accept": '.png, .jpg, .jpeg .gif' }))
+    # certificate_photo = forms.FileField(label='Guvohnoma surati:', required=False, widget=forms.FileInput(
+    #     attrs={'class': 'form-control-file',"accept": '.png, .jpg, .jpeg .gif' }))
+    # license_photo = forms.FileField(label='Litsenziya surati:',required=False, widget=forms.FileInput(
+    #     attrs={'class': 'form-control-file',"accept": '.png, .jpg, .jpeg .gif' }))
 
     class Meta:
         model = Organization
         fields = ['title', 'director', 'identification_number', 'legal_address_region','legal_address_district', 'address_of_garage',]
-        exclude = ['certificate_photo', 'license_photo']
+        # exclude = ['certificate_photo', 'license_photo']
 
 
 # class AddCarForm(forms.ModelForm):

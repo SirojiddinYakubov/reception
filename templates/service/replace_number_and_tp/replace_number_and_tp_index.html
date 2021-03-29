@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <h2>{% trans "Xadya shartnomasiga asosan avtotransport vositasiga raqam olish" %}</h2>
+                    <h2>{% trans "Davlat raqam belgisi va qayd etish guvohnomasini almashtirish" %}</h2>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                                             <option value="J">Jismoniy shaxs</option>
                                             <option value="Y">Yuridik shaxs</option>
                                         </select>
-                                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em;display: none"
+                                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em; display: none"
                                            id="organization_div_alert"
                                            class="text-danger not_copy">
                                             Sizda tashkilot mavjud emas. <a
@@ -132,7 +132,7 @@
                                         <input type='hidden' value="J" name="person_type">
                                         <input type='hidden' value="" name="organization">
                                         <input type='hidden' value="" name="devices">
-                                        <label class="label_required">{% trans 'T/v modelini tanlang' %}</label>
+                                        <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
                                         <select id="car" name="car" class="form-control select2" style="width: 100%;">
                                             {% for car in cars %}
                                                 <option value="{{ car.id }}">{{ car.title }}</option>
@@ -141,7 +141,7 @@
 
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required">{% trans 'T/v turini tanlang' %}</label>
+                                                <label class="label_required">{% trans 'Avtomobil turini tanlang' %}</label>
                                                 <select id="car_type" name="car_type" class="form-control select2"
                                                         style="width: 100%;">
                                                     {% for car_type in car_types %}
@@ -324,31 +324,6 @@
                                             </div>
 
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="seriya">{% trans "Xadya shartnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="seriya" name="seriya"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: AAC123456' %}"
-                                                       autocomplete="off">
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="contract_date">{% trans "Shartnoma tuzilgan sana" %}</label>
-                                                <div class="input-group mb-2">
-                                                    <input id='contract_date' name="contract_date"
-                                                           type="text"
-                                                           class="form-control datepicker"/>
-                                                    <div class="input-group-prepend datepicker_icon">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"
-                                                                                         aria-hidden="true"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <div class="form-check">
@@ -378,8 +353,7 @@
                                         <input type="button" id="prev2"
                                                class="previous action-button-previous"
                                                value="Oldingi"/>
-                                        <button type="submit" id="next2" class="action-button">Keyingi
-                                        </button>
+                                        <button type="submit" id="next2" class="action-button">Keyingi</button>
                                         <input type="button" style="display: none" id="refresh_next2"
                                                class="action-button"
                                                value="Keyingi"/>
@@ -534,16 +508,12 @@
                 $('#auction_number').inputmask({casing: 'upper'});
                 $('#engine_number').inputmask({casing: 'upper'});
                 $('#body_number').inputmask({casing: 'upper'});
-                $('#chassis_number').inputmask({casing: 'upper'});
-                $('#seriya').inputmask({casing: 'upper'});
+                $('#chassis_number').inputmask({casing: 'upper'})
                 $('#old_number').inputmask({casing: 'upper'});
                 $('#old_technical_passport').inputmask({casing: 'upper'});
 
-
                 {#$('#fieldset1').hide()#}
                 {#$('#fieldset2').show()#}
-
-
                 var is_legal = false,
                     passport = '{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}',
                     firstName = '{{ request.user.first_name }}',
@@ -564,25 +534,7 @@
                     },
                     error: function (response) {
                         if (response.status === 401) {
-                            $.notifyDefaults({
-                                type: 'danger',
-                                allow_dismiss: false,
-                                animate: {
-                                    enter: 'animated fadeInRight',
-                                    exit: 'animated fadeOutRight'
-                                },
-                                z_index: '9999'
-                            })
-                            $.notify({
-                                icon: 'glyphicon glyphicon-star',
-                                message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                    '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                    '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                    '</svg> Xatolik yuz berdi! Token yaroqsiz!'
-                            })
-                            setTimeout(function () {
-                                window.location.href = '{% url "user:custom_logout" %}'
-                            }, 3000);
+                            tokenInvalid()
                         }
                     }
                 })
@@ -712,6 +664,7 @@
                     $('#fieldset1').show()
                 })
 
+
                 $(document).on('click', '#prev3-legal, #prev3-person', function () {
                     $('#fieldset3-legal').hide()
                     $('#fieldset3-person').hide()
@@ -785,11 +738,7 @@
                             engine_power: {
                                 required: true,
                             },
-                            seriya: {
-                                required: true,
-                                alphanumeric: true,
-                                noSpace: true,
-                            },
+
                             old_technical_passport: {
                                 required: true,
                                 alphanumeric: true,
@@ -827,9 +776,7 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                            seriya: {
-                                required: "Xadya shartnomasi seriyasi va raqami kiritilmagan!"
-                            },
+
                             old_technical_passport: {
                                 required: "Qayd etish guvohnomasi seriyasi va raqami kiritilmagan!"
                             },
@@ -837,7 +784,7 @@
                                 required: "Auksion raqami kiritilmagan!"
                             },
                             old_number: {
-                                required: "T/v dagi DRB kiritilmagan!"
+                                required: "Avtomobildagi davlat raqami kiritilmagan!"
                             },
 
 
@@ -868,7 +815,6 @@
                             $('#next2').attr('disabled', true)
                             $('#next2').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
-
                             var devices = []
                             $('.devices').each(function () {
                                 if ($(this).prop('checked')) {
@@ -877,14 +823,16 @@
                             })
 
                             $('input[name ="devices"]').val(devices)
+                            $('#next2').val(`<span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`)
 
                             $.ajax({
                                 type: "POST",
-                                url: "{% url 'service:save_gift_agreement' %}",
+                                url: "{% url 'service:save_replace_number_and_tp' %}",
                                 data: $(form).serialize(),
                                 success: function (response) {
                                     if (typeof response === 'object') {
                                         if (response.application && response.html) {
+
                                             $('#next2').remove()
                                             $('#refresh_next2').css('display', 'block')
                                             $('#fieldset2').hide()
@@ -907,8 +855,6 @@
                                             $('#color').attr("disabled", "disabled")
                                             $('#made_year').attr("disabled", "disabled")
                                             $('.devices').attr("disabled", "disabled")
-                                            $('#seriya').attr("disabled", "disabled")
-                                            $('#contract_date').attr("disabled", "disabled")
                                             $('#fuel_types').attr("disabled", "disabled")
                                             $('#car_type').attr("disabled", "disabled")
                                             $('#empty_weight').attr("disabled", "disabled")
@@ -921,7 +867,6 @@
                                             $('#lost_technical_passport').attr("disabled", "disabled")
                                             $('#is_old_number').attr("disabled", "disabled")
                                             $('#lost_number').attr("disabled", "disabled")
-
 
                                             $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)

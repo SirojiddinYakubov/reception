@@ -18,7 +18,7 @@
         <div class="row justify-content-center">
             <div class="col-12">
 
-                <select class="form-control" name="organization" id="organization">
+                <select class="form-control select2"  name="organization" id="organization">
                     {% for organization in organizations %}
                         <option value="{{ organization.id }}">{{ organization.title }}</option>
                     {% endfor %}
@@ -46,17 +46,18 @@
 
                     <tr>
                         <th scope="row">Yuridik manzili(Viloyat):</th>
-                        <td id="Viewlegal_address">
+                        <td id="Viewlegal_address_region">
                             {% if organization.legal_address_region %}
                                 {{ organization.legal_address_region.title }}{% endif %}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Yuridik manzili(Tuman):</th>
-                        <td id="Viewlegal_address">
+                        <td id="Viewlegal_address_district">
                             {% if organization.legal_address_district %}
                                 {{ organization.legal_address_district.title }}{% endif %}</td>
                     </tr>
+
                     <tr>
                         <th scope="row">Garaj manzili:</th>
                         <td id="Viewaddress_of_garage">{% if organization.address_of_garage %}
@@ -104,9 +105,65 @@
 {% block bottom %}
 
     <script type="text/javascript">
-
+        $(function () {
+            $('.select2').select2()
+        })
         $(document).ready(function () {
+            var token = getCookie('token'),
+                csrftoken = getCookie('csrftoken')
+            $.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    xhr.setRequestHeader('Authorization', `Token ${token}`)
+                },
+                error: function (response) {
+                    if (response.status === 401) {
+                        $.notifyDefaults({
+                            type: 'danger',
+                            allow_dismiss: false,
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            },
+                            z_index: '9999'
+                        })
+                        $.notify({
+                            icon: 'glyphicon glyphicon-star',
+                            message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
+                                '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
+                                '</svg> Xatolik yuz berdi! Token yaroqsiz!'
+                        })
+                        setTimeout(function () {
+                            window.location.href = '{% url "user:custom_logout" %}'
+                        }, 3000);
+                    }
+                }
+            })
 
+            $('#organization').on('change', function () {
+                var SelectedOrganization = $(this).children("option:selected").val()
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "user:get_organization" %}',
+                    data: {'organization': SelectedOrganization},
+                    success: function (response) {
+                        if (typeof response === 'object') {
+                            $('#Viewtitle').text(response.organization.fields.title);
+                            $('#Viewdirector').text(response.organization.fields.director);
+                            $('#Viewidentification_number').text(response.organization.fields.identification_number);
+                            $('#Viewlegal_address_region').text(response.legal_address_region);
+                            $('#Viewlegal_address_district').text(response.legal_address_district);
+                            $('#Viewaddress_of_garage').text(response.organization.fields.address_of_garage);
+                            {#$('#Viewcertificate_photo a').attr('href', `/media/${response.fields.certificate_photo}`)#}
+                            {#$('#Viewlicense_photo a').attr('href', `/media/${response.fields.license_photo}`)#}
+                            $('#Viewcreated_date').text(response.created_date)
+                        } else {
+                            errorFunction()
+                        }
+                    }
+                })
+            })
         })
 
     </script>

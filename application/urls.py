@@ -14,4 +14,5 @@ urlpatterns = [
     path('change-get-request/<str:key>/<str:value>/', change_get_request, name='change_get_request'),
     path('confirm-application-data/', ConfirmApplicationData.as_view(), name='confirm_application_data'),
     path('get-given-number/<int:id>/', GetGivenNumber.as_view(), name='get_given_number'),
+    path('remove-application/', RemoveApplication.as_view(), name='remove_application'),
 ]

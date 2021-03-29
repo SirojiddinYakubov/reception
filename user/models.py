@@ -191,8 +191,8 @@ def organization_rename2(instance, filename):
 
 class Organization(models.Model):
     title = models.CharField("Tashkilot nomi", max_length=255)
-    certificate_photo = models.ImageField('Guvohnoma surati',upload_to=organization_rename,null=True)
-    license_photo = models.ImageField('Litsenziya surati', upload_to=organization_rename2,null=True)
+    # certificate_photo = models.ImageField('Guvohnoma surati',upload_to=organization_rename,null=True)
+    # license_photo = models.ImageField('Litsenziya surati', upload_to=organization_rename2,null=True)
     identification_number = models.IntegerField('STIR',null=True,)
     legal_address_region = models.ForeignKey(Region, on_delete=models.SET_NULL, verbose_name="Yuridik manzil(Viloyat)", null=True)
     legal_address_district = models.ForeignKey(District, on_delete=models.SET_NULL, verbose_name="Yuridik manzil(Tuman)", null=True)
@@ -263,9 +263,10 @@ class Car(models.Model):
     price = models.IntegerField(verbose_name='Avtomobil narxi',default=0, blank=True)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL,blank=True, null=True)
     is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')
-
     given_number = models.CharField('Yangi DRB', max_length=15, blank=True, null=True)
 
+    is_replace_number = models.BooleanField(verbose_name='Yangi raqam olish', default=False)
+    is_road_fund = models.BooleanField(verbose_name="Yo'l fondi uchun to'lov", default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'

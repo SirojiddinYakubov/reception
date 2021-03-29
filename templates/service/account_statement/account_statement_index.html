@@ -29,7 +29,7 @@
                                     <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
 
                                     <div class="col-12">
-                                        <label class="not_copy">Foydalanuvchini tanlang? <i
+                                        <label class="not_copy">Foydalanuvchi shaxsini tanlang &nbsp<i
                                                 class="fas fa-info-circle" data-toggle="tooltip"
                                                 title="Arizani yuridik yoki jismoniy shaxs sifatida yuborishni tanlang!"
                                                 id='example1'></i></label>
@@ -162,7 +162,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label>{% trans "Qayta jihozlash" %}</label>
+                                                <label class="label">{% trans "Qayta jihozlash" %}</label>
                                                 <select id="devices" name="devices" class="form-control"
                                                         multiple="multiple">
                                                     {% for device in devices %}
@@ -876,17 +876,10 @@
                 })
 
                 $('#payment_render_pdf').on('click', function () {
+                    var element = document.getElementById('render_div'),
+                        filename = `To'lov`
 
-
-                    var element = document.getElementById('render_div');
-
-                    html2pdf(element, {
-                        margin: 1,
-                        filename: 'To\'lov.pdf',
-                        image: {type: 'jpeg', quality: 0.98},
-                        html2canvas: {scale: 2},
-                        jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
-                    })
+                    html_to_pdf(element, filename)
                 })
             }
         )

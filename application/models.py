@@ -21,13 +21,13 @@ class Application(models.Model):
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
     updated_date = models.DateTimeField(verbose_name='Tahrirlangan vaqti', null=True, blank=True,default=timezone.now)
     process = models.CharField(choices=PROCESS_CHOICES,max_length=12, verbose_name="Holat", default=1)
-    process_sms = models.CharField('Holat sababi', max_length=600, blank=True)
+    process_sms = models.CharField('Holat sababi', max_length=600, blank=True, default="Ko'rib chiqilmoqda")
     is_payment = models.BooleanField('To\'lov qilingan', default=False)
     service = models.ForeignKey(Service, verbose_name='Xizmat turi', on_delete=models.CASCADE, blank=True, null=True, related_name='application_service')
     person_type = models.CharField('Ariza topshiruvchi shaxsi', choices=PERSON_CHOICES, max_length=3, default="J")
     file_name = models.CharField(max_length=64, unique=True, null=True, blank=True, editable=False)
     password = models.IntegerField(blank=True, null=True, verbose_name='Ariza tekshiruv kodi')
-    given_date = models.DateField('Berish sanasi',  blank=True, default=timezone.now)
+    given_date = models.DateField('Berish sanasi',  blank=True, null=True)
     given_time = models.CharField('Berish vaqti', max_length=10, blank=True, null=True)
 
 
