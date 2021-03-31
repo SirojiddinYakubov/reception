@@ -501,10 +501,10 @@ class ConfirmApplicationData(APIView):
                     application.given_time = request.POST.get('given_time')
                     application.save()
 
-                    # msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
-                    # msg = msg.replace(" ", "+")
-                    # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    # response = requests.get(url)
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
                     return HttpResponse(True)
                 elif request.POST.get('process') == 'cancel':
                     application.process = '3'
@@ -512,20 +512,20 @@ class ConfirmApplicationData(APIView):
                     application.canceled_date = timezone.now()
                     application.save()
 
-                    # msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
-                    # msg = msg.replace(" ", "+")
-                    # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    # response = requests.get(url)
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
                     return HttpResponse(True)
                 elif request.POST.get('process') == 'process':
                     application.process = '1'
                     application.process_sms = request.POST.get('process_sms')
                     application.save()
 
-                    # msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
-                    # msg = msg.replace(" ", "+")
-                    # url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    # response = requests.get(url)
+                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
                     return HttpResponse(True)
                 else:
                     return HttpResponse(False)
