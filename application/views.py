@@ -359,8 +359,8 @@ def create_application_doc(request, filename):
                    devices=devices_string,
                    fuel_types=fuel_types_string,
                    car=car,
-                   user=request.user,
-                   birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'),
+                   user=application.created_user,
+                   birthday=datetime.datetime.strftime(application.created_user.birthday, '%d.%m.%Y'),
                    given_number=car.given_number,
                    old_number=car.old_number,
                    old_technical_passport=car.old_technical_passport,)
@@ -497,11 +497,11 @@ class ConfirmApplicationData(APIView):
                     application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
                     application.process = '2'
                     application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
-                                                                        "%Y-%m-%d").date()
+                                                                        "%d.%m.%Y").date()
                     application.given_time = request.POST.get('given_time')
                     application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
                     msg = msg.replace(" ", "+")
                     url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
@@ -512,7 +512,7 @@ class ConfirmApplicationData(APIView):
                     application.canceled_date = timezone.now()
                     application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
                     msg = msg.replace(" ", "+")
                     url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
@@ -522,7 +522,7 @@ class ConfirmApplicationData(APIView):
                     application.process_sms = request.POST.get('process_sms')
                     application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
                     msg = msg.replace(" ", "+")
                     url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)

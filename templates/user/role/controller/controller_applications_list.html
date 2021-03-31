@@ -48,10 +48,16 @@
                                         <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
                                     </td>
                                     <td>
-                                        {% if application.service.seriya %}<a href="{% url 'application:view_application_service_data' application.service.id %}">{{ application.service.seriya }}</a>{% else %}{% if application.service.car.lost_technical_passport %}yo'qolgan{% else %}{{ application.service.car.old_technical_passport }}{% endif %}{% endif %}
+                                        {% if application.service.seriya %}
+                                            <a href="{% url 'application:view_application_service_data' application.service.id %}">{{ application.service.seriya }}</a>
+                                            {% else %}{% if application.service.car.lost_technical_passport %}yo'qolgan
+                                            {% else %}{{ application.service.car.old_technical_passport }}
+                                            {% endif %}{% endif %}
                                     </td>
                                     <td class="text-center"><a
-                                            href="{% url 'user:view_car_data' application.service.car.id %}">{{ application.service.car.model }} {% if application.service.car.old_number %}{{ application.service.car.old_number }}{% endif %}</a>
+                                            href="{% url 'user:view_car_data' application.service.car.id %}">{{ application.service.car.model }}
+                                        {% if application.service.car.old_number %}
+                                            {{ application.service.car.old_number }}{% endif %}</a>
                                     </td>
                                     <td class="text-center">{% if application.service.car.is_confirm %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
@@ -70,8 +76,10 @@
                                                 class="fas fa-download"></i></a>
                                     </td>
                                     <td>
-                                        <select  name="process_select" class="form-control change_process"
-                                                data-id="{{ application.id }}" data-replace-number="{% if application.service.car.is_replace_number %}true{% else %}false{% endif %}" style="font-size: smaller;border: 2px solid {% if application.process == '1' %}#ecec01{% elif application.process == '2' %}#36f406{% elif application.process == '3' %}#dc3545;{% endif %} ">
+                                        <select name="process_select" class="form-control change_process"
+                                                data-id="{{ application.id }}"
+                                                data-replace-number="{% if application.service.car.is_replace_number %}true{% else %}false{% endif %}"
+                                                style="font-size: smaller;border: 2px solid {% if application.process == '1' %}#ecec01{% elif application.process == '2' %}#36f406{% elif application.process == '3' %}#dc3545;{% endif %} ">
                                             <option {% if application.process == '1' %}selected{% endif %}
                                                     value="process">
                                                 Jarayon
@@ -156,20 +164,32 @@
                     if ($(this).data('id') === applicationId) {
                         var is_replace_number = $(this).data('replace-number')
 
+                        if (SelectedProcess === 'confirm'){
+                            $(this).css('border','2px solid #36f406')
+                        }else if (SelectedProcess === 'cancel'){
+                            $(this).css('border','2px solid #dc3545')
+
+                        }else if(SelectedProcess === 'process') {
+                            $(this).css('border','2px solid #ecec01')
+                        }
+
                         $.ajax({
                             type: 'POST',
                             url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
                             success: function (response) {
                                 if (SelectedProcess === 'confirm') {
-                                    if (is_replace_number){
+
+                                    if (is_replace_number) {
                                         process_confirm_replace_number(success_url, cancel_url, applicationId, response)
-                                    }else{
+                                    } else {
                                         process_confirm_not_replace_number(success_url, cancel_url, applicationId)
                                     }
 
                                 } else if (SelectedProcess === 'cancel') {
+
                                     process_cancel(success_url, cancel_url, applicationId)
                                 } else if (SelectedProcess === 'process') {
+
                                     process(success_url, cancel_url, applicationId)
                                 }
                             },

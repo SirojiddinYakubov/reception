@@ -887,7 +887,7 @@ def confirm_car_data(request, car_id):
                 car.save()
                 messages.success(request, f"{car.model} transport vositasi muvaffaqiyatli texnik ko'rikdan o'tkazildi!")
 
-                msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangizga ko'ra {car.model} rusumli transport vositangiz muvaffaqiyatli texnik ko'rikdan o'tkazildi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
+                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangizga ko'ra {car.model} rusumli transport vositangiz muvaffaqiyatli texnik ko'rikdan o'tkazildi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
                 msg = msg.replace(" ", "+")
                 url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                 response = requests.get(url)
