@@ -207,8 +207,6 @@ def login_first(request):
                 return redirect(reverse_lazy('user:login_first'))
         try:
             user1 = User.objects.get(username=phone)
-            print(user1)
-            print('eshmat')
             if not user1.is_staff and user1.person_id == None:
                 return redirect(reverse_lazy('user:signup'))
             user = authenticate(request, username=phone, password=password)

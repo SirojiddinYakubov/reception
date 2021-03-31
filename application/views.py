@@ -258,8 +258,9 @@ def application_pdf(request, id):
     # qr.make(fit=True)
     #
     # img = qr.make_image(fill_color="black", back_color="white")
-    # filename = f"{application.id}"
-    # img.save(f"media{os.sep}applications{os.sep}qrcodes{os.sep}{filename}.jpg", "JPEG")
+    # img.save(f"media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg", "JPEG")
+
+
 
     context = {
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
@@ -362,9 +363,7 @@ def create_application_doc(request, filename):
                    birthday=datetime.datetime.strftime(request.user.birthday, '%d.%m.%Y'),
                    given_number=car.given_number,
                    old_number=car.old_number,
-                   old_technical_passport=car.old_technical_passport,
-
-                   )
+                   old_technical_passport=car.old_technical_passport,)
 
     car_model = get_object_or_404(CarModel, id=car.model.id)
 
@@ -510,6 +509,7 @@ class ConfirmApplicationData(APIView):
                 elif request.POST.get('process') == 'cancel':
                     application.process = '3'
                     application.process_sms = request.POST.get('process_sms')
+                    application.canceled_date = timezone.now()
                     application.save()
 
                     # msg = f"Hurmatli foydalanuvchi! {application.id} raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
@@ -555,7 +555,7 @@ class RemoveApplication(APIView):
         application = Application.objects.filter(id=request.POST.get('application')).first()
 
         if application:
-            if application.service.car.is_confirm:
+            if application.service.car.is_confirm or application.is_payment or application.process == '2':
                 return HttpResponse('disabled')
             else:
                 application.delete()

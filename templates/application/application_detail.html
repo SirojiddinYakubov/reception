@@ -399,8 +399,12 @@
                                     {% if application.process == '2' %}
                                         <th scope="col">Holat</th>
                                         <th scope="col">Sababi</th>
-                                        <th scope="col">Hujjatlarni berish sanasi</th>
-                                        <th scope="col">Hujjatlarni berish vaqti</th>
+                                        <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
+                                        <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
+                                    {% elif application.process == '3' %}
+                                        <th scope="col">Holat</th>
+                                        <th scope="col">Sababi</th>
+                                        <th scope="col">Rad etilgan vaqti</th>
                                     {% else %}
                                         <th scope="col">Holat</th>
                                         <th scope="col">Sababi</th>
@@ -409,11 +413,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    {% if application.process == '1' %}
-                                        <th scope="row" style="color: #0f6674">Jarayonda</th>
-                                        <th style="color: #0f6674">{{ application.process_sms }}</th>
-
-                                    {% elif application.process == '2' %}
+                                    {% if application.process == '2' %}
                                         <th scope="row" style="color: #44ff00">Qabul qilindi</th>
                                         <th style="color: #0f6674">{{ application.process_sms }}</th>
                                         <th style="color: #0f6674">{{ application.given_date }}</th>
@@ -421,8 +421,11 @@
                                     {% elif application.process == '3' %}
                                         <th scope="row" style="color: #ff0318">Rad etildi</th>
                                         <th style="color: #0f6674">{{ application.process_sms }}</th>
+                                        <th>{{ application.canceled_date|date:"SHORT_DATETIME_FORMAT" }}</th>
+                                    {% else %}
+                                        <th scope="row" style="color: #0f6674">Jarayonda</th>
+                                        <th style="color: #0f6674">{{ application.process_sms }}</th>
                                     {% endif %}
-
                                 </tr>
                                 </tbody>
                             </table>
@@ -448,7 +451,7 @@
             var element = document.getElementById('render_div'),
                 filename = `To'lov`
 
-           html_to_pdf(element, filename)
+            html_to_pdf(element, filename)
         })
     </script>
 {% endblock bottom %}

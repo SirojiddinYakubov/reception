@@ -185,6 +185,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
 
 # LOGGING = {
 #     'version': 1,

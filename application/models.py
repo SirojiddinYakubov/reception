@@ -29,7 +29,7 @@ class Application(models.Model):
     password = models.IntegerField(blank=True, null=True, verbose_name='Ariza tekshiruv kodi')
     given_date = models.DateField('Berish sanasi',  blank=True, null=True)
     given_time = models.CharField('Berish vaqti', max_length=10, blank=True, null=True)
-
+    canceled_date = models.DateTimeField(verbose_name='Rad etilgan vaqti', null=True,blank=True)
 
     class Meta:
         verbose_name = 'Ariza'
