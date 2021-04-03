@@ -19,10 +19,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-xl-6">
-                                <label class="label_required" for="exampleInputname">Xodimni tanlang</label>
+                                <label class="label_required" for="worker">Xodimni tanlang</label>
                                 <select class="form-control" name="worker" id="worker">
-                                    <option value="checker">Arizalarni tekshiruvchi xodim</option>
-                                    <option value="technical">Texnik ko'rik o'tkazuvchi xodim</option>
+                                    <option value="checker">Arizalarni tasdiqlovchi xodim</option>
+                                    <option value="reviewer">Avtomobil ma'lumotlari mosligini tasdiqlovchi xodim</option>
+                                    <option value="technical">Avtomobilni texnik ko'rikdan o'tkazuvchi xodim</option>
                                 </select>
                             </div>
                             <div class="col-12 col-xl-6">
@@ -52,21 +53,12 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-around">
+                        <div class="row justify-content-start">
                             <div class="col-12 col-xl-6">
                                 <label class="label_required" for="middle_name">Otasining ismi</label>
                                 <input type="text" name="middle_name" class="form-control" id="middle_name"
                                        placeholder="Tojiddinovich">
                             </div>
-                            <div class="col-12 col-xl-6">
-                                <label class="label_required" for="region">Viloyatni tanlang</label>
-                                <select class="form-control" name="region" id="region">
-                                    {% for region in regions %}
-                                       <option value="{{ region.id }}">{{ region.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
                         </div>
                         <div class="row justify-content-end mt-3">
                             <button type="reset" class="btn btn-danger">Tozalash</button>

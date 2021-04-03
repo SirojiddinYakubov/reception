@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -45,9 +46,9 @@
                  style="opacity: 1; width: 2em !important;">
             {#      <span class="brand-text font-weight-light">RIB ONLINE</span>#}
         </a>
-        <div class="company-name">
-            {#         <p>Yo'l harakati xavfsizligi xizmati RIB bo'limi</p>#}
-        </div>
+        {#        <div class="company-name">#}
+        {#         <p>Yo'l harakati xavfsizligi xizmati RIB bo'limi</p>#}
+        {#        </div>#}
 
 
         <!-- Sidebar -->
@@ -73,19 +74,21 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        {#        <div class="content-header">#}
-        {#            <div class="container-fluid">#}
-        {#                <div class="row mb-2">#}
-        {#                    <div class="col-sm-12">#}
-        {#                        <h1 class="m-0 text-dark">Dashboard v3</h1>#}
-        {#                    </div><!-- /.col -->#}
-        {##}
-        {#                </div><!-- /.row -->#}
-        {#            </div><!-- /.container-fluid -->#}
-        {#        </div>#}
-        <!-- /.content-header -->
-
+        {% if request.user.role == '2' or request.user.role == '3' or request.user.role == '4' or request.user.role == '5' %}
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="text-center text-dark"
+                                style="font-size: 2.5rem">{{ request.user.section.title }}</h1>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <div class="alert alert-dark text-center" style="padding: 2px; margin-bottom: unset; border-radius: unset"></div>
+            <!-- /.content-header -->
+        {% endif %}
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">

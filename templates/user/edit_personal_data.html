@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
                             <label style="width: 100%;" class="not_copy label_required"
                                    for="middle_name">Otasining ismi</label>
                             <input type="text" name="middle_name" id="middle_name"
@@ -52,7 +52,7 @@
                                    autocomplete="disabled"
                                    placeholder="Masalan: Tojiddinovich"/>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
                             <label style="width: 100%;" class="not_copy label_required"
                                    for="birthday">Tug'ilgan yil</label>
                             <div class="input-group">
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 region">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 region">
                             <label class="label_required not_copy" for="region">Viloyat</label>
                             <select name="region" class="form-control select2" id="region"
                                     required>
@@ -79,7 +79,7 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 district">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 district">
                             <label class="label_required not_copy"
                                    for="district">Tuman/Shahar</label>
                             <select name="district" class="form-control select2" id="district"
@@ -91,14 +91,14 @@
 
 
                     <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mfy">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 mfy">
                             <label class="label_required not_copy" for="mfy">MFY</label>
                             <select name="mfy" class="form-control select2" id="mfy"
                                     required="required">
                                 <option value="">--MFYni tanlang--</option>
                             </select>
                         </div>
-                        <div class="col-12 col-xl-6">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
                             <label class="label_required not_copy" for="address">Manzil</label>
                             <input type="text" class="form-control" id="address" name="address"
                                    required autocomplete="disabled"
@@ -108,14 +108,14 @@
 
                     <div class="row">
                         <input type="hidden" name="user_id">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12"><label
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2"><label
                                 class="pay label_required not_copy" for="passport_seriya">Passport
                             seriya</label>
                             <input type="text" id="passport_seriya" class="form-control"
                                    name="passport_seriya" value="{{ form.instance.passport_seriya }}"
                                    placeholder="Masalan: AA" autocomplete="off"/>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
                             <label for="passport_number"
                                    class="pay label_required not_copy">Passport raqam</label>
                             <input type="number" id="passport_number" class="form-control"
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12">
+                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12 mt-2">
                             <label
                                     class="label_required not_copy">JShShIR</label>
                             <input type="text" style="margin-bottom: 0" name="person_id"
@@ -137,7 +137,7 @@
                                 raqamini
                                 kiriting</p>
                         </div>
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12">
+                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12 mt-2">
                             <label class="label_required not_copy" for="issue_by_whom">Kim
                                 tomonidan
                                 berilgan</label>
@@ -147,8 +147,8 @@
                         </div>
 
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 phone">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2 phone">
                             <img class="img-responsive mb-2"
                                  style="width: 200px; margin: 0 auto" height="auto"
                                  src="{% static 'online/person_id.jpg' %}"
@@ -170,7 +170,7 @@
 
                                 </div>
                             </div>
-                            <div class="password_div">
+                            <div class="password_div mt-2">
                                 <label class="label_required" for="password">Parol</label>
                                 <div class="input-group password">
                                     <input type="password" name="password" id="password"
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="confirm_password_div">
+                            <div class="confirm_password_div mt-2">
                                 <label class="label_required" for="confirm_password">Parolni qayta kiriting</label>
                                 <div class="input-group confirm_password">
                                     <input type="password" name="confirm_password" id="confirm_password"
@@ -295,13 +295,9 @@
                         } else {
                             $password.children('.input-group-text').html('<i class="far fa-eye"></i>')
                             $password.siblings('.password').attr('type', 'password')
-
                         }
                     }
-
                 })
-
-
             })
 
             $('#region').change(function () {

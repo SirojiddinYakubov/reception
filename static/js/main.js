@@ -326,7 +326,7 @@ $(function () {
 })
 
 $('.datepicker_icon').on('click', function () {
-    $('.datepicker').datepicker('show')
+    $(this).siblings('.datepicker').datepicker('show')
 })
 
 $('.datepicker').on('keypress', function (e) {
@@ -830,9 +830,212 @@ function process(success_url, cancel_url, applicationId) {
 function html_to_pdf(element, filename) {
     html2pdf(element, {
         margin: 1,
-        filename: filename + ' #' +  new Date().getTime(),
+        filename: filename + ' #' + new Date().getTime(),
         image: {type: 'jpeg', quality: 0.98},
         html2canvas: {scale: 2},
         jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
     })
+}
+
+
+function success_toast(success_url) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        background: '#8ff8ac',
+        timer: 5000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        // willClose: (close) => {
+        //    window.location.href = success_url
+        // }
+    })
+    Toast.fire({
+        icon: 'success',
+        title: 'Muvaffaqiyatli saqlandi!'
+    })
+}
+
+function error_toast() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        background: '#ffa2a2',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    Toast.fire({
+        icon: 'error',
+        title: 'Bekor qilindi!'
+    })
+}
+
+function addColor() {
+    const {value: formValues} = Swal.fire({
+        allowOutsideClick: false,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        },
+        confirmButtonText: 'Saqlash',
+        cancelButtonText: 'Bekor qilish',
+        title: 'T/v rangini qo\'shish',
+        html:
+            '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Rang</label>' +
+            '<input style="margin-top: 4px" id="add_color" class="form-control" placeholder="Masalan: Gaz(oq)">',
+
+        focusConfirm: false,
+        preConfirm: () => {
+            return [
+                document.getElementById('add_color').value,
+
+            ]
+        },
+
+    }).then(function (confirm) {
+
+        if (confirm.isConfirmed) {
+            var color = confirm.value[0]
+            if (color !== '') {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/save-new-color/',
+                    data: {
+                        color: color,
+
+                    },
+                    success: function (response) {
+                        if (response !== 'False') {
+                            success_toast()
+                            $('#color').empty().append(response)
+                            $('#color').siblings('.select2').css('border', '1px solid blue')
+                            setTimeout(function () {
+                                $('#color').siblings('.select2').css('border', 'none')
+                            }, 3000)
+                        } else {
+                            errorFunction()
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response.status)
+                        errorFunction()
+                    }
+                })
+            } else {
+                error_toast()
+            }
+
+
+        } else {
+            error_toast()
+        }
+    });
+}
+
+function addCarModel() {
+    const {value: formValues} = Swal.fire({
+        allowOutsideClick: false,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        },
+        confirmButtonText: 'Saqlash',
+        cancelButtonText: 'Bekor qilish',
+        title: 'T/v modeli qo\'shish',
+        html:
+            '<label style="float: left; margin-bottom: 0" class="label_required" for="title">Nomi</label>' +
+            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra">' +
+            '<label style="margin-bottom: 0; width: 100%; text-align: left; display: block !important;" class="label_required"  for="is_local">Ishlab chiqaruvchi</label>' +
+            '<div class="form-check" style="float: left">' +
+            '<input class="form-check-input" type="radio" name="is_local" id="is_local1" value="true" checked>' +
+            '<label class="form-check-label" for="is_local1">Mahalliy</label>' +
+            '</div>' +
+            '<div class="form-check" style="float: left; margin-left: 10px">' +
+            '<input class="form-check-input" type="radio" name="is_local" id="is_local2" value="false" >' +
+            '<label class="form-check-label" for="is_local2">Chet el</label>' +
+            '</div>' +
+            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi yuk</label>' +
+            '<div class="form-check" style="float: left">' +
+            '<input class="form-check-input" type="radio" name="is_truck" id="is_truck1" value="true" checked>' +
+            '<label class="form-check-label" for="is_truck1">Ha</label>' +
+            '</div>' +
+            '<div class="form-check" style="float: left; margin-left: 10px">' +
+            '<input class="form-check-input" type="radio" name="is_truck" id="is_truck2" value="false" >' +
+            '<label class="form-check-label" for="is_truck2">Yoq</label>' +
+            '</div>',
+
+        focusConfirm: false,
+        preConfirm: () => {
+            return [
+                document.getElementById('title').value,
+                $('input[name=is_local]:checked').val(),
+                $('input[name=is_truck]:checked').val(),
+            ]
+        },
+
+    }).then(function (confirm) {
+
+        if (confirm.isConfirmed) {
+            var title = confirm.value[0],
+                is_local = confirm.value[1],
+                is_truck = confirm.value[2]
+
+            if (title !== '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/save-new-car-model/',
+                    data: {
+                        title: title,
+                        is_local: is_local,
+                        is_truck: is_truck
+                    },
+                    success: function (response) {
+                        if (response !== 'False') {
+                            success_toast()
+                            $('#car').empty().append(response)
+                            $('#car').siblings('.select2').css('border', '1px solid blue')
+                            setTimeout(function () {
+                                $('#car').siblings('.select2').css('border', 'none')
+                            }, 3000)
+                        } else {
+                            errorFunction()
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response.status)
+                        errorFunction()
+                    }
+                })
+            } else {
+                error_toast()
+            }
+
+
+        } else {
+            error_toast()
+        }
+    });
+}
+
+function htmlDecode(str) {
+    const doc = new DOMParser().parseFromString(str, "text/html");
+    return doc.documentElement.textContent;
 }

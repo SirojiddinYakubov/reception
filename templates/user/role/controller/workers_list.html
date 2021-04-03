@@ -39,8 +39,7 @@
                                     <td>{{ forloop.counter }}</td>
                                     <td><b>{{ worker.last_name }} {{ worker.first_name }} {{ worker.middle_name }}</b>
                                     </td>
-                                    <td><b>{% if worker.role == '3' %}Arizani tekshiruvchi xodim{% elif worker.role == '4' %}Texnik ko'rikdan
-                                        o'tkazuvchi xodim{% endif %}</b></td>
+                                    <td><b>{% if worker.role == '3' %}Arizalarni tekshiruvchi xodim{% elif worker.role == '4' %}Ma'lumotlar mosligini tasdiqlovchi xodim{% elif worker.role == '5' %}Texnik ko'rikdan o'tkazuvchi xodim{% endif %}</b></td>
                                     <td>{% if worker.birthday %}
                                         {{ worker.birthday|date:'SHORT_DATE_FORMAT' }}{% endif %}</td>
                                     <td>{% if worker.region %}{{ worker.region }}{% endif %}</td>

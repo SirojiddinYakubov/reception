@@ -54,7 +54,7 @@
                                     </td>
                                     <td>{% if application.service.organization %}
                                         {{ application.service.organization }}{% else %}
-                                        {{ application.service.created_user }}{% endif %}</td>
+                                        {{ application.created_user }}{% endif %}</td>
 
                                     <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                                     <td style="text-align: center;">
@@ -129,6 +129,7 @@
             })
 
             $('.removeBtn').on('click', function () {
+
                 var applicationId = $(this).data('application')
 
                 swal({

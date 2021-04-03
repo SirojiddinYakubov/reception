@@ -256,7 +256,6 @@ def add_organization(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-
     if request.is_ajax():
         if request.method == 'POST':
             print(request.POST)
@@ -266,7 +265,8 @@ def add_organization(request):
             organization.identification_number = request.POST.get('identification_number', None)
             organization.address_of_garage = request.POST.get('address_of_garage', None)
             organization.legal_address_region = get_object_or_404(Region, id=request.POST.get('legal_address_region'))
-            organization.legal_address_district = get_object_or_404(District, id=request.POST.get('legal_address_district'))
+            organization.legal_address_district = get_object_or_404(District,
+                                                                    id=request.POST.get('legal_address_district'))
             # if request.FILES.get('license_photo'):
             #     organization.license_photo = request.FILES.get('license_photo', None)
             # if request.FILES.get('certificate_photo'):
@@ -282,9 +282,7 @@ def add_organization(request):
         else:
             return HttpResponse(False)
 
-    return render(request, 'user/add_organization.html',  context,)
-
-
+    return render(request, 'user/add_organization.html', context, )
 
 
 @login_required
@@ -629,8 +627,6 @@ class Save_User_Information(APIView):
 class save_passport_data(APIView):
     def post(self, request):
         if request.is_ajax():
-            print('tralala')
-            print(request.POST)
             user = get_object_or_404(User, id=request.POST.get('user_id'))
             if user is not None:
                 user.passport_seriya = request.POST.get('passport_seriya')
@@ -639,7 +635,6 @@ class save_passport_data(APIView):
                 user.person_id = request.POST.get('person_id')
                 user.save()
 
-                print(user.person_id)
                 user = authenticate(request, username=user.phone, password=user.turbo)
                 login(request, user)
                 return HttpResponse(True)
@@ -669,8 +664,7 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        print(token)
-        print(created)
+
         return Response({
             'token': token.key,
             'user_id': user.pk,
@@ -702,11 +696,6 @@ def add_worker(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    regions = Region.objects.all()
-
-    context = {
-        'regions': regions
-    }
     if request.method == "POST":
         role = request.POST.get('worker')
         phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
@@ -718,12 +707,15 @@ def add_worker(request):
             last_name = get_name(form.cleaned_data['last_name'])
             first_name = get_name(form.cleaned_data['first_name'])
             middle_name = get_name(form.cleaned_data['middle_name'])
-            region = get_object_or_404(Region, id=request.POST.get('region'))
+            section = get_object_or_404(Section, id=request.user.section.id)
+
 
             if role == 'technical':
-                role = 4
+                role = 5
             elif role == 'checker':
                 role = 3
+            elif role == 'reviewer':
+                role = 4
 
             try:
                 user = User.objects.create_user(
@@ -733,7 +725,7 @@ def add_worker(request):
                     last_name=last_name,
                     first_name=first_name,
                     middle_name=middle_name,
-                    region=region,
+                    section=section,
                     phone=phone,
                     role=str(role),
                     is_superuser=False,
@@ -752,7 +744,7 @@ def add_worker(request):
                 messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
             except IntegrityError:
                 messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
-    return render(request, 'user/role/controller/add_worker.html', context)
+    return render(request, 'user/role/controller/add_worker.html')
 
 
 @login_required
@@ -763,7 +755,8 @@ def workers_list(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    workers = User.objects.filter(Q(role=3) | Q(role=4) & Q(is_active=True))
+    workers = User.objects.filter(Q(Q(role=3) | Q(role=4) | Q(role=5)) & Q(is_active=True) & Q(section=request.user.section))
+
     if not workers.exists():
         messages.error(request, 'Xodimlar mavjud emas!')
     context = {
@@ -771,10 +764,11 @@ def workers_list(request):
     }
     return render(request, 'user/role/controller/workers_list.html', context)
 
+
 @login_required
 def worker_delete(request, worker_id):
-    if request.user.role == '2':
-        worker = get_object_or_404(User, id=worker_id)
+    worker = get_object_or_404(User, id=worker_id)
+    if request.user.role == '2' and request.user.section == worker.section:
         worker.delete()
     else:
         return render(request, '_parts/404.html')
@@ -782,10 +776,9 @@ def worker_delete(request, worker_id):
 
 @login_required
 def worker_edit(request, worker_id):
-    if request.user.role == '2':
-        worker = get_object_or_404(User, id=worker_id)
+    worker = get_object_or_404(User, id=worker_id)
+    if request.user.role == '2' and request.user.section == worker.section:
         regions = Region.objects.all()
-
         form = EditWorkerForm(instance=worker)
         context = {
             'form': form,
@@ -794,25 +787,29 @@ def worker_edit(request, worker_id):
         }
 
         if request.method == 'POST':
-            phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
-            form = EditWorkerForm(request.POST, instance=worker)
-            if form.is_valid():
-                password = form.cleaned_data['password']
-                form = form.save(commit=False)
-                worker.set_password(password)
-                form.phone = phone
-                form.turbo = password
-                form.save()
-                form = EditWorkerForm(instance=worker)
+            try:
+                phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+                form = EditWorkerForm(request.POST, instance=worker)
+                if form.is_valid():
+                    password = form.cleaned_data['password']
+                    form = form.save(commit=False)
+                    worker.set_password(password)
+                    form.phone = phone
+                    form.turbo = password
+                    form.save()
+                    form = EditWorkerForm(instance=worker)
 
-                # msg = f"Hurmatli {worker.last_name} {worker.first_name}! Sizning ma'lumotlaringiz tahrirlandi. %0aLogin: {worker.username}%0aParol: {worker.turbo}"
-                # msg = msg.replace(" ", "+")
-                # url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'564654sdfsdfdsfsdf'}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
-                # response = requests.get(url)
-                context.update(form=form)
-                messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
-                return render(request, 'user/role/controller/edit_worker.html', context)
-            else:
+                    msg = f"Hurmatli {worker.last_name} {worker.first_name}! Sizning ma'lumotlaringiz tahrirlandi. %0aLogin: {worker.username}%0aParol: {worker.turbo}"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'564654sdfsdfdsfsdf'}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
+                    response = requests.get(url)
+                    context.update(form=form)
+                    messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
+                    return render(request, 'user/role/controller/edit_worker.html', context)
+                else:
+                    messages.error(request, "Formani to'ldirishda xatolik !")
+                    return render(request, 'user/role/controller/edit_worker.html', context)
+            except:
                 messages.error(request, "Formani to'ldirishda xatolik !")
                 return render(request, 'user/role/controller/edit_worker.html', context)
         return render(request, 'user/role/controller/edit_worker.html', context)
@@ -837,6 +834,7 @@ def view_car_data(request, car_id):
     }
     return render(request, 'user/car/view_car_data.html', context)
 
+
 @login_required
 def view_organization_data(request, id):
     organization = get_object_or_404(Organization, id=id)
@@ -850,6 +848,7 @@ def view_organization_data(request, id):
         'organization': organization
     }
     return render(request, 'user/organization/view_organization_data.html', context)
+
 
 @login_required
 def view_personal_data(request, id):
@@ -865,6 +864,7 @@ def view_personal_data(request, id):
     }
     return render(request, 'user/view_personal_data.html', context)
 
+
 @login_required
 def confirm_car_data(request, car_id):
     try:
@@ -878,7 +878,7 @@ def confirm_car_data(request, car_id):
         application = get_object_or_404(Application, id=car.service_car.last().application_service.last().id)
 
         if application.process == '3':
-            messages.error(request, f'{application.id} raqamli ariza {application.process_sms} sababli rad etilgan!')
+            messages.error(request, f'{application.id}-raqamli ariza {application.process_sms} sababli rad etilgan!')
             return redirect(reverse_lazy('application:applications_list'))
 
         if request.method == 'GET':
@@ -887,7 +887,7 @@ def confirm_car_data(request, car_id):
                 car.save()
                 messages.success(request, f"{car.model} transport vositasi muvaffaqiyatli texnik ko'rikdan o'tkazildi!")
 
-                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangizga ko'ra {car.model} rusumli transport vositangiz muvaffaqiyatli texnik ko'rikdan o'tkazildi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
+                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} rusumli transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
                 msg = msg.replace(" ", "+")
                 url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
                 response = requests.get(url)
@@ -895,8 +895,69 @@ def confirm_car_data(request, car_id):
                 car.is_confirm = False
                 car.save()
                 messages.success(request, f'{car.model} muvaffaqiyatli tasdiqlash bekor qilindi!')
+
+                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} rusumli transport vositasining dvigateli, shassi, kuzovi raqam belgilari tasdiqlanmadi!"
+                msg = msg.replace(" ", "+")
+                url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                response = requests.get(url)
+
             return redirect(reverse_lazy('application:applications_list'))
         else:
             return redirect(reverse_lazy('application:applications_list'))
     else:
         return render(request, '_parts/404.html')
+
+
+@permission_classes([IsAuthenticated])
+class Save_New_Car_Model(APIView):
+    def post(self, request):
+        if request.is_ajax():
+            if request.POST.get('is_local') == 'true':
+                is_local = True
+            else:
+                is_local = False
+
+            if request.POST.get('is_truck') == 'true':
+                is_truck = True
+            else:
+                is_truck = False
+
+            try:
+                CarModel.objects.create(title=request.POST.get('title'), is_truck=is_truck, is_local=is_local,created_user=request.user)
+                car_models = CarModel.objects.filter(is_active=True)
+                options = ""
+                for car_model in car_models:
+                    options += f"<option value='{car_model.id}'>{car_model.title}</option>"
+                return HttpResponse(options)
+            except:
+                return HttpResponse(False)
+        else:
+            return HttpResponse(False)
+
+
+@permission_classes([IsAuthenticated])
+class Save_New_Color(APIView):
+    def post(self, request):
+        if request.is_ajax():
+            try:
+                Color.objects.create(title=request.POST.get('color'), created_user=request.user)
+                colors = Color.objects.filter(is_active=True)
+                options = ""
+                for color in colors:
+                    options += f"<option value='{color.id}'>{color.title}</option>"
+                return HttpResponse(options)
+            except:
+                return HttpResponse(False)
+        else:
+            return HttpResponse(False)
+
+
+def getDistrict(request):
+    id = request.GET.get('id','')
+    result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+def getMfy(request):
+    id = request.GET.get('id','')
+    result = list(MFY.objects.filter(district_id=int(id)).values('id', 'title'))
+    return HttpResponse(json.dumps(result), content_type="application/json")

@@ -60,11 +60,11 @@ class DistrictAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-# @admin.register(Nationality)
-# class NationalityAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'title', 'sort']
-#     list_display_links = ['title']
-#     save_on_top = True
+@admin.register(Section)
+class SectionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'region',]
+    list_display_links = ['region',]
+    save_on_top = True
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):

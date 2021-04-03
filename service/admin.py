@@ -5,7 +5,7 @@ from service.models import *
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['id','title', 'seriya', 'car','organization','created_user','contract_date','person_type', ]
+    list_display = ['id','title', 'seriya', 'car','organization','contract_date','person_type', ]
     list_display_links = ['seriya']
     list_filter = ['person_type' , 'created_date', 'contract_date']
     search_fields = ['title', 'seriya']

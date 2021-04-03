@@ -12,7 +12,8 @@ from user.models import Constant
 def calculation_state_duty_service_price(service):
     service = get_object_or_404(Service, id=service.id)
     car = get_object_or_404(Car, id=service.car.id)
-    created_user = get_object_or_404(User, id=service.created_user.id)
+
+    created_user = get_object_or_404(User, id=service.application_service.first().created_user.id)
 
     re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()
 
@@ -28,7 +29,7 @@ def calculation_state_duty_service_price(service):
 
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=service.person_type, car_type=service.car.type,
-                                                 state_duty=3).first()
+                                                  state_duty=3).first()
     if service.contract_date:
         if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
             try:
@@ -48,6 +49,11 @@ def calculation_state_duty_service_price(service):
         except AttributeError:
             print("YO'QOLGAN TEX PASSPORT UCHUN JARIMA FOIZI TOPILMADI")
 
+    some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
+    some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
+    # print(timezone.now().date())
+    # print(some_day_3years_ago)
+    # print(some_day_7years_ago)
     if car.is_road_fund:
         if car.is_new:
             state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
@@ -55,16 +61,18 @@ def calculation_state_duty_service_price(service):
 
         else:
             # ishlab chiqarilganiga 3 yil to'lmagan
-            if timezone.now().year - 3 <= int(service.car.made_year):
+            if some_day_3years_ago <= service.car.made_year:
+                # print('3 yil bo\'lmagan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=0,
                                                                 stop=3).first().percent
             # 3 yil to'lgan lekin 7 yil to'lmagan
-            elif timezone.now().year - 3 >= int(service.car.made_year) and timezone.now().year - 7 <= int(
-                    service.car.made_year):
+            elif some_day_3years_ago >= service.car.made_year and some_day_7years_ago <= service.car.made_year:
+                # print('3 yil bo\'lgan 7 yil bo\'lmagan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=3,
                                                                 stop=7).first().percent
             # 7 yildan ortiq
-            elif timezone.now().year - 7 >= int(service.car.made_year):
+            elif some_day_7years_ago >= service.car.made_year:
+                # print(' 7 yildan o\'tgan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=7,
                                                                 stop=0).first().percent
             else:
@@ -234,92 +242,3 @@ def calculation_state_duty_service_price(service):
                f"</div>"
 
     return context
-    # state_percents = StateDutyPercent.objects.filter(service=service.title)
-    #
-    # created_user = get_object_or_404(User, id=service.created_user.id)
-    # context = ''
-    #
-    # if not state_percents.exists():
-    #     print(f"DAVLAT BOJ FOIZLARI TOPILMADI")
-    #     return context
-    #
-    # total_prices = 0
-    # for percent in state_percents:
-    #     state_title = percent.state_duty.title
-    #
-    #
-    #     if state_title == "Yo'l fondi ot kuchi":
-    #         #ishlab chiqarilganiga 3 yil to'lmagan
-    #         if timezone.now().year - 3 <= int(service.car.made_year):
-    #             print('3 yil to\'lmagan')
-    #             if percent.start == 0 and percent.stop == 3:
-    #                 if percent.car_type == service.car.type:
-    #                     state_percent = percent.percent
-    #                 else:
-    #                     print(f"OT KUCHI {service.car.type} FOIZI TOPILMADI")
-    #             else:
-    #                 print(f"OT KUCHI 3 YIL TO'LMAGAN FOIZI TOPILMADI")
-    #         # 3 yil to'lgan lekin 7 yil to'lmagan
-    #         elif timezone.now().year - 3 >= int(service.car.made_year) and timezone.now().year - 7 <= int(service.car.made_year):
-    #             print('3 yil to\'lgan lekin 7 yil to\'lmagan')
-    #             if percent.start == 3 and percent.stop == 7:
-    #                 if percent.car_type == service.car.type:
-    #                     state_percent = percent.percent
-    #                 else:
-    #                     print(f"OT KUCHI {service.car.type} FOIZI TOPILMADI")
-    #             else:
-    #                 print(f"OT KUCHI 3 YIL TO'LGAN 7 YIL TO'LMAGAN FOIZI TOPILMADI")
-    #         #7 yildan ortiq
-    #         elif timezone.now().year - 7 >= int(service.car.made_year):
-    #
-    #             print('7 yildan ortiq')
-    #             if percent.start == 7 and percent.stop == 0:
-    #                 if percent.car_type == service.car.type:
-    #                     state_percent = percent.percent
-    #                 else:
-    #                     print(f"OT KUCHI {service.car.type} FOIZI TOPILMADI")
-    #             else:
-    #                 print(f"OT KUCHI 3 YIL TO'LGAN 7 YIL TO'LMAGAN FOIZI TOPILMADI")
-    #
-    #     else:
-    #         state_percent = percent.percent
-    #
-    #     try:
-    #         state_score = StateDutyScore.objects.get(state_duty=percent.state_duty, region=created_user.region,
-    #                                                  district=created_user.district)
-    #         state_score = state_score.score
-    #     except ObjectDoesNotExist:
-    #         print(f"Davlat boji hisob raqami topilmadi")
-    #
-    #     if state_percent == 0:
-    #         continue
-    #
-    #     try:
-    #         MINIMUM_BASE_WAGE = int(Constant.objects.get(key='MINIMUM_BASE_WAGE').value)
-    #         price = MINIMUM_BASE_WAGE / 100 * int(state_percent)
-    #         state_price = int(price)
-    #         total_prices += state_price
-    #     except ObjectDoesNotExist:
-    #         print(f"MINIMUM_BASE_WAGE NOT FOUND")
-    #     state_percent = 0
-    #     context += f'<hr class="line m-0 p-0">' \
-    #                f'<div class=\'row\'>' \
-    #                    f'<div class=\'col-4\'>' \
-    #                        f'<span>{state_title}</span>' \
-    #                    f'</div>' \
-    #                    f'<div class=\'col-4 text-left\'>' \
-    #                        f'<span>{state_score}</span>' \
-    #                    f'</div>' \
-    #                    f'<div class=\'col-4 text-right\'>' \
-    #                        f'<span>{intcomma(state_price)} so\'m</span>' \
-    #                    f'</div>' \
-    #                f'</div>'
-    #     state_score = 0
-    # print(total_prices)
-    # context += f"<hr style='margin: 0; background-color: #3e3e3e'>" \
-    #            f"<div class='d-flex justify-content-between information'>" \
-    #            f"<span><b>Jami to'lov</b></span>" \
-    #            f"<span><b>{intcomma(total_prices)} so'm</b></span>" \
-    #            f"</div>"
-    #
-    # return context

@@ -16,16 +16,19 @@
             <div class="col-md-12">
                 {% include '_parts/messages.html' %}
                 <table class="table table-bordered">
-                    <tr>
-                        <th scope="row">Seriyasi va raqami:</th>
-                        <td>{% if service.seriya %}{{ service.seriya }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Shartnoma tuzilgan sana:</th>
-                        <td>{% if service.contract_date %}
-                            {{ service.contract_date|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
-                    </tr>
+                    {% if service.seriya %}
+                        <tr>
+                            <th scope="row">Seriyasi va raqami:</th>
+                            <td>{{ service.seriya }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if service.contract_date %}
+                        <tr>
+                            <th scope="row">Shartnoma tuzilgan sana:</th>
+                            <td>
+                                {{ service.contract_date|date:"SHORT_DATE_FORMAT" }}</td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <th scope="row">Shaxs turi:</th>
                         <td>{% if service.person_type == 'Y' %}
@@ -45,12 +48,7 @@
                             <a href="{% url 'user:view_car_data' service.car.id %}">{{ service.car.model }}</a>{% endif %}
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">Yaratgan shaxs:</th>
-                        <td>{% if service.created_user %}
-                            <a href="{% url 'user:view_personal_data' service.created_user.id %}">{{ service.created_user }}</a>{% endif %}
-                        </td>
-                    </tr>
+
                     <tr>
                         <th scope="row">Yaratilgan vaqt:</th>
                         <td>{% if service.created_date %}

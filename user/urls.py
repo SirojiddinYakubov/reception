@@ -43,6 +43,11 @@ urlpatterns = [
 
     # ajax requests
     path('get-car-type/', Get_Car_Type.as_view(), name='get_car_type'),
+    path('save-new-car-model/', Save_New_Car_Model.as_view(), name='save_new_car_model'),
+    path('save-new-color/', Save_New_Color.as_view(), name='save_new_color'),
+    path('getDistrict/', getDistrict, name='getDistrict'),
+    path('getMfy/', getMfy, name='getMfy'),
+
 
 
 ]

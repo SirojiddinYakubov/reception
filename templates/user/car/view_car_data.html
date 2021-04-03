@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <h2>{% trans "Avtotransport ma'lumotlari" %}</h2>
+                    <h2>{% trans "Transport vositasi ma'lumotlari" %}</h2>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 
                     <tr>
                         <th scope="row">Ishlab chiqarilgan yili:</th>
-                        <td>{% if car.made_year %}{{ car.made_year }}{% endif %}</td>
+                        <td>{% if car.made_year %}{{ car.made_year|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
                     </tr>
 
                     <tr>
@@ -67,7 +67,7 @@
                     </tr>
 
                     <tr>
-                        <th scope="row">Qayta jihozlash:</th>
+                        <th scope="row">Alohida belgilar:</th>
                         <td>
                             {% if car.devices %}
                                 {% for device in car.devices.all %}
@@ -99,10 +99,22 @@
                         <td>{% if car.old_technical_passport %}{{ car.old_technical_passport }}{% endif %}</td>
                     </tr>
                     <tr>
+                        <th scope="row">Ma'lumotlar mosligi:</th>
+                        <td class="text-left">{% if car.is_confirm %}
+                            <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                            <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                    </tr>
+                <tr>
+                        <th scope="row">Texnik ko'rik:</th>
+                        <td class="text-left">{% if car.is_technical_confirm %}
+                            <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                            <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">Eski DRB:</th>
                         <td>{% if car.old_number %}{{ car.old_number }}{% endif %}</td>
                     </tr>
-                  <tr>
+                    <tr>
                         <th scope="row">Yangi DRB:</th>
                         <td>{% if car.given_number %}{{ car.given_number }}{% endif %}</td>
                     </tr>

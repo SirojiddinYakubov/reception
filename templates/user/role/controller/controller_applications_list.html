@@ -22,20 +22,22 @@
                 {% if applications %}
                     <div class="table-responsive"
                          style="border: 1px solid #dbdada; border-radius: 3px; padding: 2% 2% 2% 2%;">
-                        <table id="example1" class="table table-bordered table-hover dataTable">
-                            <thead class="thead-light" style="font-size: smaller">
+                        <table id="example1" class="table table-bordered table-hover dataTable"
+                               style="font-size: smaller">
+                            <thead class="thead-light">
                             <tr>
 
                                 <th scope="col">Ariza raqami</th>
                                 <th scope="col">Xizmat nomi</th>
                                 <th scope="col">Hujjat</th>
                                 <th scope="col">Avtomobil</th>
+                                <th scope="col">Ma'lumotlar mosligi</th>
                                 <th scope="col">Texnik ko'rik</th>
                                 <th scope="col">To'lov</th>
                                 <th scope="col">Topshirdi</th>
                                 <th scope="col">Yaratilgan vaqti</th>
                                 <th scope="col">Ariza nusxasi</th>
-                                <th scope="col" style="width: 6rem">Holati</th>
+                                <th scope="col" style="width: 9rem">Holati</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,9 +51,9 @@
                                     </td>
                                     <td>
                                         {% if application.service.seriya %}
-                                            <a href="{% url 'application:view_application_service_data' application.service.id %}">{{ application.service.seriya }}</a>
+                                            <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.seriya }}</a>
                                             {% else %}{% if application.service.car.lost_technical_passport %}yo'qolgan
-                                            {% else %}{{ application.service.car.old_technical_passport }}
+                                                {% else %}{{ application.service.car.old_technical_passport }}
                                             {% endif %}{% endif %}
                                     </td>
                                     <td class="text-center"><a
@@ -62,12 +64,15 @@
                                     <td class="text-center">{% if application.service.car.is_confirm %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                    <td class="text-center">{% if application.service.car.is_technical_confirm %}
+                                        <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                        <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                     <td class="text-center">{% if application.is_payment %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                     <td>{% if application.service.organization %}
                                         {{ application.service.organization }}{% else %}
-                                        {{ application.service.created_user }}{% endif %}</td>
+                                        {{ application.created_user }}{% endif %}</td>
 
                                     <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                                     <td class="text-center">
@@ -164,13 +169,13 @@
                     if ($(this).data('id') === applicationId) {
                         var is_replace_number = $(this).data('replace-number')
 
-                        if (SelectedProcess === 'confirm'){
-                            $(this).css('border','2px solid #36f406')
-                        }else if (SelectedProcess === 'cancel'){
-                            $(this).css('border','2px solid #dc3545')
+                        if (SelectedProcess === 'confirm') {
+                            $(this).css('border', '2px solid #36f406')
+                        } else if (SelectedProcess === 'cancel') {
+                            $(this).css('border', '2px solid #dc3545')
 
-                        }else if(SelectedProcess === 'process') {
-                            $(this).css('border','2px solid #ecec01')
+                        } else if (SelectedProcess === 'process') {
+                            $(this).css('border', '2px solid #ecec01')
                         }
 
                         $.ajax({

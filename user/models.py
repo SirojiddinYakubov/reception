@@ -56,17 +56,17 @@ class MFY(models.Model):
         verbose_name_plural = 'Mahallalar'
 
 
-# class Nationality(models.Model):
-#     title = models.CharField('Nomi', max_length=255)
-#     sort = models.IntegerField(blank=True, default=1)
-#
-#     def __str__(self):
-#         return self.title
-#
-#     class Meta:
-#         ordering = ['sort', ]
-#         verbose_name = 'Millat'
-#         verbose_name_plural = 'Millatlar'
+class Section(models.Model):
+    title = models.CharField(max_length=300, verbose_name="Bo'lim nomi", blank=True, null=True)
+    region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
+    district = models.ManyToManyField(District, verbose_name='Tuman/Shahar', blank=True)
+
+    class Meta:
+        verbose_name = "Bo'lim"
+        verbose_name_plural = "Bo'limlar"
+
+    def __str__(self):
+        return f"{self.title}: {self.region.title}"
 
 PERSON_CHOICES = (
     ('Y', 'Yuridik shaxs'),
@@ -77,7 +77,8 @@ ROLE_CHOICES = (
     ("1", "User"),          # Oddiy foydalanuvchilar
     ("2", "Controller"),    # Xodimlar nazoratchisi
     ("3", "Checker"),       # Arizalarni tekshiruvchi xodim
-    ("4", "Technical"),     # Texnik ko'rik o'tkazuvchi xodim
+    ("4", "Reviewer"),      # Ma'lumotlar mosligini tasdiqlovchi xodim
+    ("5", "Technical"),     # Texnik ko'rik o'tkazuvchi xodim
 
 )
 
@@ -105,8 +106,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     middle_name = models.CharField('Otasining ismi', max_length=255, blank=True)
     role = models.CharField('Foydalanuvchi roli', choices=ROLE_CHOICES, max_length=15, default="1")
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
-    district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
-                                 blank=True)
+    district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,blank=True)
+    section = models.ForeignKey(Section, verbose_name="Bo'lim", on_delete=models.SET_NULL, null=True, blank=True)
     mfy = models.ForeignKey(MFY, on_delete=models.SET_NULL, verbose_name='MFY', null=True, blank=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=254, unique=False, blank=True, default='')
@@ -225,7 +226,8 @@ class CarModel(models.Model):
     creator = models.CharField('Ishlab chiqaruvchi', null=True, blank=True, max_length=100)
     is_local = models.BooleanField('Mahalliy brend', default=False)
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
-
+    is_active = models.BooleanField(default=True)
+    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Avtomobil rusumi'
@@ -248,7 +250,7 @@ class Car(models.Model):
     body_number = models.CharField('Kuzov raqami', max_length=50, blank=True)
     chassis_number = models.CharField("Shassi raqami", max_length=255, blank=True, null=True)
     engine_number = models.CharField('Dvigitel raqami', max_length=50, blank=True)
-    made_year = models.IntegerField("Ishlab chiqarilgan yili", null=True, blank=True)
+    made_year = models.DateField("Ishlab chiqarilgan yili", null=True, blank=True)
     color = models.ForeignKey('Color',verbose_name='Rangi', on_delete=models.SET_NULL,null=True, blank=True)
     engine_power = models.IntegerField('Dvigatel quvvati', null=True, blank=True, default=0)
     old_number = models.CharField('Eski DRB', null=True, blank=True, max_length=15)
@@ -259,6 +261,7 @@ class Car(models.Model):
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan',default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan',default=False)
     is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi',default=False)
+    is_technical_confirm = models.BooleanField(verbose_name='Texnik ko\'rik',default=False)
     is_new = models.BooleanField(verbose_name='Avtomobil yangi',default=False)
     price = models.IntegerField(verbose_name='Avtomobil narxi',default=0, blank=True)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL,blank=True, null=True)
@@ -329,6 +332,7 @@ class Color(models.Model):
     title = models.CharField('Nomi', max_length=100)
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(default=timezone.now, editable=False)
+    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Rang'

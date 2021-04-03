@@ -36,179 +36,87 @@ def applications_list(request):
     context = {}
 
     if request.user.role == '2' or request.user.role == '3':
+        region = request.user.section.region
+        districts = request.user.section.district.all()
+
         qs = Application.objects.filter(
-            Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(
-                Q(service__organization__legal_address_region=request.user.region) & Q(
+            Q(Q(created_user__region=region) & Q(created_user__district__in=districts) & Q(service__organization__isnull=True)) | Q(
+                Q(service__organization__legal_address_region=region) & Q(service__organization__legal_address_district__in=districts) & Q(
                     service__organization__isnull=False)))
-        if request.method == "GET":
-            if request.GET.get('service'):
-                if request.GET.get('service') == 'account_statement':
-                    qs = qs.filter(service__title='account_statement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'gift_agreement':
-                    qs = qs.filter(service__title='gift_agreement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'contract_of_sale':
-                    qs = qs.filter(service__title='contract_of_sale')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_tp':
-                    qs = qs.filter(service__title='replace_tp')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_number_and_tp':
-                    qs = qs.filter(service__title='replace_number_and_tp')
-                    context.update(applications=qs)
-            if request.GET.get('person_type'):
-                qs = qs.filter(person_type=request.GET.get('person_type'))
-                context.update(applications=qs)
-            if request.GET.get('process'):
-                qs = qs.filter(process=request.GET.get('process'))
-                context.update(applications=qs)
-            if request.GET.get('payment'):
-                qs = qs.filter(is_payment=request.GET.get('payment'))
-                context.update(applications=qs)
-            if request.GET.get('technical'):
-                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
-                context.update(applications=qs)
-            if request.GET.get('date'):
-                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
-                                                               datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
-                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+        template = 'user/role/controller/controller_applications_list.html'
+    elif request.user.role == '4' or request.user.role == '5':
+        region = request.user.section.region
+        districts = request.user.section.district.all()
 
-                if request.GET.get('date') == 'today':
-                    qs = qs.filter(created_date__range=(today_min, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'last-7-days':
-                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'month':
-                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'year':
-                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-                    context.update(applications=qs)
-        context.update(applications=qs)
-
-        if not qs.exists():
-            messages.error(request, "Arizalar mavjud emas!")
-        return render(request, 'user/role/controller/controller_applications_list.html', context)
-    elif request.user.role == '4':
         qs = Application.objects.filter(
-            Q(Q(created_user__region=request.user.region) & Q(service__organization__isnull=True)) | Q(
-                Q(service__organization__legal_address_region=request.user.region) & Q(
+            Q(Q(created_user__region=region) & Q(created_user__district__in=districts) & Q(
+                service__organization__isnull=True)) | Q(
+                Q(service__organization__legal_address_region=region) & Q(
+                    service__organization__legal_address_district__in=districts) & Q(
                     service__organization__isnull=False)))
-        if request.method == "GET":
-            if request.GET.get('service'):
-                if request.GET.get('service') == 'account_statement':
-                    qs = qs.filter(service__title='account_statement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'gift_agreement':
-                    qs = qs.filter(service__title='gift_agreement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'contract_of_sale':
-                    qs = qs.filter(service__title='contract_of_sale')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_tp':
-                    qs = qs.filter(service__title='replace_tp')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_number_and_tp':
-                    qs = qs.filter(service__title='replace_number_and_tp')
-                    context.update(applications=qs)
-            if request.GET.get('person_type'):
-                qs = qs.filter(person_type=request.GET.get('person_type'))
-                context.update(applications=qs)
-            if request.GET.get('process'):
-                qs = qs.filter(process=request.GET.get('process'))
-                context.update(applications=qs)
-            if request.GET.get('payment'):
-                qs = qs.filter(is_payment=request.GET.get('payment'))
-                context.update(applications=qs)
-            if request.GET.get('technical'):
-                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
-                context.update(applications=qs)
-            if request.GET.get('date'):
-                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
-                                                               datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
-                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
-
-                if request.GET.get('date') == 'today':
-                    qs = qs.filter(created_date__range=(today_min, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'last-7-days':
-                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'month':
-                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'year':
-                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-                    context.update(applications=qs)
-
-        if not qs.exists():
-            messages.error(request, "Arizalar mavjud emas!")
-        context.update(applications=qs)
-        return render(request, 'user/role/technical/technical_applications_list.html', context)
+        template = 'user/role/technical/technical_applications_list.html'
     else:
         qs = Application.objects.filter(created_user=request.user)
-        if request.method == "GET":
-            if request.GET.get('service'):
-                if request.GET.get('service') == 'account_statement':
-                    qs = qs.filter(service__title='account_statement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'gift_agreement':
-                    qs = qs.filter(service__title='gift_agreement')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'contract_of_sale':
-                    qs = qs.filter(service__title='contract_of_sale')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_tp':
-                    qs = qs.filter(service__title='replace_tp')
-                    context.update(applications=qs)
-                if request.GET.get('service') == 'replace_number_and_tp':
-                    qs = qs.filter(service__title='replace_number_and_tp')
-                    context.update(applications=qs)
-            if request.GET.get('person_type'):
-                qs = qs.filter(person_type=request.GET.get('person_type'))
-                context.update(applications=qs)
-            if request.GET.get('process'):
-                qs = qs.filter(process=request.GET.get('process'))
-                context.update(applications=qs)
-            if request.GET.get('payment'):
-                qs = qs.filter(is_payment=request.GET.get('payment'))
-                context.update(applications=qs)
-            if request.GET.get('technical'):
-                qs = qs.filter(service__car__is_confirm=request.GET.get('technical'))
-                context.update(applications=qs)
-            if request.GET.get('date'):
-                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
-                                                               datetime.time.min)
-                some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
-                some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+        template = 'application/applications_list.html'
 
-                if request.GET.get('date') == 'today':
-                    qs = qs.filter(created_date__range=(today_min, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'last-7-days':
-                    qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'month':
-                    qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-                    context.update(applications=qs)
-                if request.GET.get('date') == 'year':
-                    qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-                    context.update(applications=qs)
-        if not qs.exists():
-            messages.error(request, "Arizalar mavjud emas!")
-        context.update(applications=qs)
+    if request.method == "GET":
+        if request.GET.get('service'):
+            if request.GET.get('service') == 'account_statement':
+                qs = qs.filter(service__title='account_statement')
+                context.update(applications=qs)
+            if request.GET.get('service') == 'gift_agreement':
+                qs = qs.filter(service__title='gift_agreement')
+                context.update(applications=qs)
+            if request.GET.get('service') == 'contract_of_sale':
+                qs = qs.filter(service__title='contract_of_sale')
+                context.update(applications=qs)
+            if request.GET.get('service') == 'replace_tp':
+                qs = qs.filter(service__title='replace_tp')
+                context.update(applications=qs)
+            if request.GET.get('service') == 'replace_number_and_tp':
+                qs = qs.filter(service__title='replace_number_and_tp')
+                context.update(applications=qs)
+        if request.GET.get('person_type'):
+            qs = qs.filter(person_type=request.GET.get('person_type'))
+            context.update(applications=qs)
+        if request.GET.get('process'):
+            qs = qs.filter(process=request.GET.get('process'))
+            context.update(applications=qs)
+        if request.GET.get('payment'):
+            qs = qs.filter(is_payment=request.GET.get('payment'))
+            context.update(applications=qs)
+        if request.GET.get('confirm'):
+            qs = qs.filter(service__car__is_confirm=request.GET.get('confirm'))
+            context.update(applications=qs)
+        if request.GET.get('technical_confirm'):
+            qs = qs.filter(service__car__is_technical_confirm=request.GET.get('technical_confirm'))
+            context.update(applications=qs)
+        if request.GET.get('date'):
+            today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+            today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+            some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
+                                                           datetime.time.min)
+            some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
+            some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
 
-    return render(request, 'application/applications_list.html', context)
+            if request.GET.get('date') == 'today':
+                qs = qs.filter(created_date__range=(today_min, today_max))
+                context.update(applications=qs)
+            if request.GET.get('date') == 'last-7-days':
+                qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+                context.update(applications=qs)
+            if request.GET.get('date') == 'month':
+                qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+                context.update(applications=qs)
+            if request.GET.get('date') == 'year':
+                qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+                context.update(applications=qs)
+    context.update(applications=qs)
+
+    if not qs.exists():
+        messages.error(request, "Arizalar mavjud emas!")
+    return render(request, template, context)
+
 
 
 @login_required
@@ -416,7 +324,7 @@ def create_application_doc(request, filename):
 
 
 @login_required
-def view_application_service_data(request, service_id):
+def view_service_data(request, service_id):
     try:
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
@@ -424,6 +332,10 @@ def view_application_service_data(request, service_id):
         return redirect(reverse_lazy('user:custom_logout'))
 
     service = get_object_or_404(Service, id=service_id)
+
+    if request.user.role == '1' and service.created_user != request.user:
+        return render(request, '_parts/404.html')
+
     context = {
         'service': service
     }

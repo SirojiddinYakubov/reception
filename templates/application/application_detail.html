@@ -51,7 +51,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Xizmat nomi:</th>
-                                    <td>{{ application.service.get_title_display }}</td>
+                                    <td><a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a></td>
                                 </tr>
 
                                 <tr>

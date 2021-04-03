@@ -25,9 +25,6 @@ def account_statement_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    # get previous years
-    year = datetime.datetime.today().year
-    years = range(year, year - 5, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -44,7 +41,6 @@ def account_statement_index(request):
         'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
-        'years': years,
         'color': colors,
 
     }
@@ -64,7 +60,8 @@ class Save_Account_Statement(APIView):
             body_number = request.POST.get('body_number')
             price = request.POST.get('price')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = request.POST.get('made_year')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
+
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -94,7 +91,14 @@ class Save_Account_Statement(APIView):
             car.engine_power = engine_power
             car.is_new = True
             car.is_replace_number = True
-            car.is_road_fund = True
+            if get_car.is_local:
+                if car.made_year < datetime.datetime.strptime('25.12.2020','%d.%m.%Y'):
+                    car.is_road_fund = True
+                else:
+                    car.is_road_fund = False
+            else:
+                car.is_road_fund = True
+
             car.price = price
             if request.POST.get('auction_number'):
                 car.is_auction = True
@@ -143,9 +147,6 @@ def gift_agreement_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    # get previous years
-    year = datetime.datetime.today().year
-    years = range(year, year - 80, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -161,7 +162,6 @@ def gift_agreement_index(request):
         'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
-        'years': years,
         'color': colors,
 
     }
@@ -199,7 +199,7 @@ class Save_Gift_Agreement(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = request.POST.get('made_year')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -233,7 +233,15 @@ class Save_Gift_Agreement(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-            car.is_road_fund = True
+
+            if get_car.is_local:
+                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+                    car.is_road_fund = True
+                else:
+                    car.is_road_fund = False
+            else:
+                car.is_road_fund = True
+
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number
@@ -280,8 +288,8 @@ def contract_of_sale_index(request):
         return redirect(reverse_lazy('user:custom_logout'))
 
     # get previous years
-    year = datetime.datetime.today().year
-    years = range(year, year - 80, -1)
+    # year = datetime.datetime.today().year
+    # years = range(year, year - 80, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -297,7 +305,6 @@ def contract_of_sale_index(request):
         'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
-        'years': years,
         'color': colors,
 
     }
@@ -335,7 +342,7 @@ class Save_Contract_Of_Sale(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = request.POST.get('made_year')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -369,7 +376,14 @@ class Save_Contract_Of_Sale(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-            car.is_road_fund = True
+            if get_car.is_local:
+                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+                    car.is_road_fund = True
+                else:
+                    car.is_road_fund = False
+            else:
+                car.is_road_fund = True
+
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number
@@ -419,9 +433,6 @@ def replace_tp_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    # get previous years
-    year = datetime.datetime.today().year
-    years = range(year, year - 80, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -437,7 +448,6 @@ def replace_tp_index(request):
         'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
-        'years': years,
         'color': colors,
 
     }
@@ -465,7 +475,7 @@ class Save_Replace_Tp(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = request.POST.get('made_year')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -541,9 +551,6 @@ def replace_number_and_tp_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    # get previous years
-    year = datetime.datetime.today().year
-    years = range(year, year - 80, -1)
     cars = CarModel.objects.all()
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
@@ -559,7 +566,6 @@ def replace_number_and_tp_index(request):
         'car_types': car_types,
         'devices': devices,
         'bodyTypes': bodyTypes,
-        'years': years,
         'color': colors,
 
     }
@@ -597,7 +603,7 @@ class Save_Replace_Number_And_Tp(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = request.POST.get('made_year')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):

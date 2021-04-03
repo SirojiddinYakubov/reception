@@ -2,8 +2,8 @@
 
 <div class="card border-info mb-3">
     <div class="card-header bg-gradient-indigo text-lg" style="padding-top: 0;padding-bottom: 0">Saralash</div>
-    <div class="card-body" style="padding-left: 0;padding-right: 0;padding-top: 0">
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Xizmat turi bo'yicha</h5>
+    <div class="card-body" style="padding-left: 0;padding-right: 0;padding-top: 0;font-size: smaller" >
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Xizmat turi bo'yicha</h6>
         <ul class="search-ul">
             <li class="search-li"><a
                     {% if request.GET.service == 'all' or not request.GET.service %}class="active"{% endif %}
@@ -24,13 +24,14 @@
                 almashtirish</a>
             </li>
             <li class="search-li"><a {% if request.GET.service == 'replace_number_and_tp' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'replace_number_and_tp' %}">DRB va TP
+                                     href="{% url "application:change_get_request" 'service' 'replace_number_and_tp' %}">DRB
+                va TP
                 almashtirish</a>
             </li>
         </ul>
 
 
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Holat bo'yicha</h5>
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Holat bo'yicha</h6>
         <ul class="search-ul" style="">
             <li class="search-li"><a
                     {% if request.GET.process == 'all' or not request.GET.process %}class="active"{% endif %}
@@ -46,7 +47,7 @@
         </ul>
 
 
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Shaxs turi bo'yicha</h5>
+        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Shaxs turi bo'yicha</h5>
         <ul class="search-ul" style="">
             <li class="search-li"><a
                     {% if request.GET.person_type == 'all' or not request.GET.person_type %}class="active"{% endif %}
@@ -62,7 +63,7 @@
         </ul>
 
 
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">To'lov bo'yicha</h5>
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">To'lov bo'yicha</h6>
         <ul class="search-ul" style="">
             <li class="search-li"><a
                     {% if request.GET.payment == 'all' or not request.GET.payment %}class="active"{% endif %}
@@ -77,21 +78,35 @@
 
         </ul>
 
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Texnik ko'rik bo'yicha</h5>
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Ma'lumotlar mosligi bo'yicha</h6>
         <ul class="search-ul" style="">
             <li class="search-li"><a
-                    {% if request.GET.technical == 'all' or not request.GET.technical %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'technical' 'all' %}">Hammasi</a>
+                    {% if request.GET.confirm == 'all' or not request.GET.confirm %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'confirm' 'all' %}">Hammasi</a>
             </li>
-            <li class="search-li"><a {% if request.GET.technical == 'True' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'technical' 'True' %}">Ko'rikdan
-                o'tkazilgan</a></li>
-            <li class="search-li"><a {% if request.GET.technical == 'False' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'technical' 'False' %}">Ko'rikdan
-                o'tkazilmagan</a></li>
+            <li class="search-li"><a {% if request.GET.confirm == 'True' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'confirm' 'True' %}">Tasdiqlangan</a>
+            </li>
+            <li class="search-li"><a {% if request.GET.confirm == 'False' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'confirm' 'False' %}">Tasdiqlanmagan</a>
+            </li>
         </ul>
 
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2">Sana bo'yicha</h5>
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Texnik ko'rik bo'yicha</h6>
+        <ul class="search-ul" style="">
+            <li class="search-li"><a
+                    {% if request.GET.technical_confirm == 'all' or not request.GET.technical_confirm %}class="active"{% endif %}
+                    href="{% url "application:change_get_request" 'technical_confirm' 'all' %}">Hammasi</a>
+            </li>
+            <li class="search-li"><a {% if request.GET.technical_confirm == 'True' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'technical_confirm' 'True' %}">Ko'rikdan o'tkazilgan</a>
+            </li>
+            <li class="search-li"><a {% if request.GET.technical_confirm == 'False' %}class="active"{% endif %}
+                                     href="{% url "application:change_get_request" 'technical_confirm' 'False' %}">Ko'rikdan o'tkazilmagan</a>
+            </li>
+        </ul>
+
+        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Sana bo'yicha</h6>
 
         <ul class="search-ul">
 

@@ -8,12 +8,12 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .label_required {
-    display: block;
+    display: inline;
     margin-top: 1rem;
 }
 
 .label {
-    display: block;
+    display: inline;
     margin-top: 1rem;
 }
 
@@ -787,4 +787,41 @@ input[type='checkbox'] {
 /*    background-color: blue;*/
 /*    width: 100%;*/
 /*    position: absolute;*/
+/*}*/
+
+.input-group > .select2-container--default {
+    width: auto;
+    flex: 1 1 auto !important;
+}
+
+.input-group > .select2-container--bootstrap .select2-selection--single {
+    height: 100%;
+    line-height: inherit;
+    padding: 0.5rem 1rem;
+}
+
+.input-group > .selectize-control {
+    width: auto;
+    flex: 1 1 auto !important;
+}
+
+.input-group >  .selectize-input {
+    height: 100%;
+    line-height: inherit;
+    padding: 0.5rem 1rem;
+}
+
+/*.input-group .selectize-input:first-child {*/
+/*  border-top-right-radius: 0;*/
+/*  border-bottom-right-radius: 0;*/
+/*}*/
+
+/*.input-group .selectize-input:last-child {*/
+/*  border-top-left-radius: 0;*/
+/*  border-bottom-left-radius: 0;*/
+/*}*/
+
+/*.selectize-control.multi .selectize-input.has-items {*/
+/*    height: unset !important;*/
+/*    */
 /*}*/

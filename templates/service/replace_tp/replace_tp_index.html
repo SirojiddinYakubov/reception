@@ -21,7 +21,7 @@
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li class="active not_copy" id="personal"><strong>Foydalanuvchi</strong></li>
-                                <li class="not_copy" id="car_icon"><strong>Avtotransport</strong></li>
+                                <li class="not_copy" id="car_icon"><strong>Transport vositasi</strong></li>
                                 <li class="not_copy" id="payment"><strong>To'lov</strong></li>
                             </ul> <!-- fieldsets -->
                             <fieldset id="fieldset1">
@@ -29,10 +29,9 @@
                                     <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
 
                                     <div class="col-12">
-                                        <label class="not_copy">Foydalanuvchi shaxsini tanlang &nbsp<i
-                                                class="fas fa-info-circle" data-toggle="tooltip"
-                                                title="Arizani yuridik yoki jismoniy shaxs sifatida yuborishni tanlang!"
-                                                id='example1'></i></label>
+                                        <label class="not_copy label_required">Foydalanuvchi shaxsini tanlang</label>&nbsp<i
+                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                            title="Arizani yuridik yoki jismoniy shaxs sifatida yuborishni tanlang!"></i>
                                         <select class="form-control" style="width: 100%;" id="person_type" required>
                                             <option value="J">Jismoniy shaxs</option>
                                             <option value="Y">Yuridik shaxs</option>
@@ -128,20 +127,30 @@
                                 <form action="#" id="save_car_form" method="post">
                                     {% csrf_token %}
                                     <div class="form-card">
-                                        <h2 class="fs-title not_copy">Avtotransport ma'lumotlari</h2>
+                                        <h2 class="fs-title not_copy">Transport vositasi ma'lumotlari</h2>
                                         <input type='hidden' value="J" name="person_type">
                                         <input type='hidden' value="" name="organization">
                                         <input type='hidden' value="" name="devices">
-                                        <label class="label_required">{% trans 'Avtomobil modelini tanlang' %}</label>
-                                        <select id="car" name="car" class="form-control select2" style="width: 100%;">
-                                            {% for car in cars %}
-                                                <option value="{{ car.id }}">{{ car.title }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label style="display: inline !important;"
+                                               class="label_required">{% trans 'T/v modelini tanlang' %}</label>&nbsp <i
+                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                            title="Transport vositasining modelini tanlang, agar sizning transport vositangiz modeli mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz modelini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining modeli hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"></i>
+
+                                        <div class="input-group mb-3">
+                                            <select id="car" name="car" class="form-control select2">
+                                                {% for car in cars %}
+                                                    <option value="{{ car.id }}">{{ car.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-default" type="button" id="AddCarBtn"><i
+                                                        class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
 
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required">{% trans 'Avtomobil turini tanlang' %}</label>
+                                                <label class="label_required">{% trans 'T/v turini tanlang' %}</label>
                                                 <select id="car_type" name="car_type" class="form-control select2"
                                                         style="width: 100%;">
                                                     {% for car_type in car_types %}
@@ -162,7 +171,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label">{% trans "Qayta jihozlash" %}</label>
+                                                <label class="label">{% trans "Alohida belgilar" %}</label>
                                                 <select id="devices" name="devices" class="form-control"
                                                         multiple="multiple">
                                                     {% for device in devices %}
@@ -247,27 +256,47 @@
                                                     kiriting!</p>
                                             </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required" for="color">{% trans 'Rangi' %}</label>
-                                                <select id="color" name="color" class="form-control select2">
-                                                    {% for color in color %}
-                                                        <option value="{{ color.id }}">{{ color.title }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                  <label style="display: inline !important;" class="label_required"
+                                                       for="color">{% trans 'Rangi' %}</label>&nbsp<i
+                                                    class="fas fa-info-circle" data-toggle="tooltip"
+                                                    title="Transport vositasining rangini tanlang, agar sizning transport vositangiz rangi mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz rangini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining rangini hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"
+                                            ></i>
+
+
+                                                <div class="input-group mb-3">
+                                                    <select id="color" name="color" class="form-control select2">
+                                                        {% for color in color %}
+                                                            <option value="{{ color.id }}">{{ color.title }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-default" type="button" id="AddColorBtn">
+                                                            <i
+                                                                    class="fas fa-plus"></i></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
 
 
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required" for="made_year">{% trans 'Yili' %}</label>
-                                                <select id="made_year" name="made_year" class="form-control select2">
-                                                    {% for year in years %}
-                                                        <option value="{{ year }}">{{ year }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                <label class="label_required"
+                                                       for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}</label>&nbsp<i
+                                                    class="fas fa-info-circle" data-toggle="tooltip"
+                                                    title="Transport vositasi ishlab chiqarilgan vaqtini aniq kiriting! Ushbu qiymatning aniqligi transport vositasining ot kuchini hisoblashda juda muhim hisoblanadi!"></i>
+                                                <div class="input-group mb-2">
+                                                    <input id='made_year' name="made_year"
+                                                           type="text"
+                                                           class="form-control datepicker"/>
+                                                    <div class="input-group-prepend datepicker_icon">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"
+                                                                                         aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <br>
                                                 <br>
                                                 <div class="form-check">
                                                     <input type="checkbox" name="lost_technical_passport"
@@ -277,8 +306,7 @@
                                                            for="lost_technical_passport"><b>Qayd etish guvohnomasi
                                                         yo'qolgan</b> <i
                                                             class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="Transport vositasining qayd etish guvohnomasi yo'qolgan bo'lsa ushbu maydonni belgilang"
-                                                            id='example3'></i></label>
+                                                            title="Transport vositasining qayd etish guvohnomasi yo'qolgan bo'lsa ushbu maydonni belgilang"></i></label>
                                                 </div>
 
                                             </div>
@@ -450,13 +478,16 @@
         })
 
         $(document).ready(function () {
-                $('#example1').tooltip();
-                $('#example2').tooltip();
-                $('#example3').tooltip();
-                $('#example4').tooltip();
-                $('#example5').tooltip();
-                $('#fuel_types').selectize({});
-                $('#devices').selectize({});
+                $('[data-toggle="tooltip"]').tooltip();
+
+                $('#fuel_types').selectize({
+                    placeholder: "Masalan: BENZIN",
+                });
+                $('#devices').selectize({
+                    {#inputClass: 'form-control selectize-input',#}
+                    {#dropdownParent: "body",#}
+                    placeholder: "Masalan: MAXSUS O'QUV",
+                });
 
 
                 $('#engine_number').inputmask({casing: 'upper'});
@@ -468,10 +499,10 @@
                 {#$('#fieldset1').hide()#}
                 {#$('#fieldset2').show()#}
                 var is_legal = false,
-                    passport = '{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}',
-                    firstName = '{{ request.user.first_name }}',
-                    lastName = '{{ request.user.last_name }}',
-                    middleName = '{{ request.user.middle_name }}',
+                    passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
+                    firstName = htmlDecode('{{ request.user.first_name }}'),
+                    lastName = htmlDecode('{{ request.user.last_name }}'),
+                    middleName = htmlDecode('{{ request.user.middle_name }}'),
                     token = getCookie('token'),
                     csrftoken = getCookie('csrftoken')
 
@@ -490,6 +521,13 @@
                             tokenInvalid()
                         }
                     }
+                })
+                $('#AddCarBtn').on('click', function () {
+                    addCarModel()
+                })
+
+                $('#AddColorBtn').on('click', function () {
+                    addColor()
                 })
 
                 $('#lost_technical_passport').on('change', function () {
@@ -716,7 +754,7 @@
                             },
 
                             old_number: {
-                                required: "Avtomobildagi davlat raqami kiritilmagan!"
+                                required: "T/v dagi davlat raqami kiritilmagan!"
                             },
 
 
