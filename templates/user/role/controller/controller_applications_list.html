@@ -71,8 +71,9 @@
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                     <td>{% if application.service.organization %}
-                                        {{ application.service.organization }}{% else %}
-                                        {{ application.created_user }}{% endif %}</td>
+                                        <a href="{% url 'user:view_organization_data' application.service.organization.id %}">{{ application.service.organization }}</a>{% else %}
+                                        <a href="{% url 'user:view_personal_data' application.created_user.id %}">{{ application.created_user }}</a>{% endif %}
+                                    </td>
 
                                     <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
                                     <td class="text-center">
@@ -159,7 +160,9 @@
                 }
             })
 
-            $('.change_process').on('change', function () {
+
+            $('#example1 tbody').on('change', '.change_process', function () {
+
                 var applicationId = $(this).data('id'),
                     SelectedProcess = $(this).children('option:selected').val(),
                     cancel_url = "{% url 'application:applications_list' %}",

@@ -28,7 +28,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import *
 
 from application.models import Application
-from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE
+from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE, SMS_LOGIN, SMS_TOKEN
 from reception.prod_settings import LOG_FILE_PATH, logger
 from service.models import *
 from service.utils import calculation_state_duty_service_price
@@ -372,6 +372,7 @@ class Get_Organization(APIView):
 
 @login_required
 def edit_personal_data(request):
+
     form = EditForm(instance=request.user)
     regions = Region.objects.all()
 
@@ -433,17 +434,6 @@ def get_mfy(request):
 
 def get_code(request):
     if request.is_ajax():
-        # phone = request.GET.get('phone', False)
-        # if 'phone' in request.session:
-        #     if 'password' in request.session:
-        #         password = request.session.get('password', False)
-        #     else:
-        #         password = random.randint(1000000, 9999999)
-        #         request.session['password'] = password
-        # else:
-        #     password = random.randint(1000000, 9999999)
-        #     request.session['password'] = password
-
         phone = request.GET.get('phone')
         try:
             user = User.objects.get(phone=phone)
@@ -455,9 +445,9 @@ def get_code(request):
             user.save()
 
         print(password)
-        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {request.GET.get('phone')} %0aParol: {password}"
+        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {user.username} %0aParol: {user.turbo}"
         msg = msg.replace(" ", "+")
-        url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{request.GET.get('phone')}&msg={msg}"
+        url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&msg={msg}"
         response = requests.get(url)
 
         token, created = Token.objects.get_or_create(user=user)
@@ -478,7 +468,7 @@ def get_user_pass(request):
         phone = request.GET['phone']
         password = request.GET['password']
         try:
-            User.objects.get(phone=phone, password=password)
+            User.objects.get(username=phone, turbo=password)
             return HttpResponse(True)
         except ObjectDoesNotExist:
             return HttpResponse(False)
@@ -490,9 +480,9 @@ def forgot_pass(request):
         try:
             user_pass = User.objects.get(phone=phone)
             user = User.objects.get(phone=phone)
-            msg = f"E-RIB dasturi passport va parolingiz:%0aPassport: {user.passport_seriya}{user.passport_number} %0aParol: {user.turbo}"
+            msg = f"E-RIB dasturi login va parolingiz:%0aLogin: {user.username} %0aParol: {user.turbo}"
             msg = msg.replace(" ", "+")
-            url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{phone}&msg={msg}"
+            url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{phone}&msg={msg}"
             response = requests.get(url)
             return HttpResponse(True)
         except:
@@ -510,19 +500,19 @@ def get_phone(request):
 def is_register(request):
     if request.is_ajax():
         phone = request.GET.get('phone')
-    try:
-        user = User.objects.get(username=phone)
-        if not user.is_staff and user.person_id == None:
+        try:
+            user = User.objects.get(username=phone)
+            if not user.is_staff and user.person_id == None:
+                response = HttpResponse(False)
+                response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
+                return response
+            response = HttpResponse(True)
+            response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
+            return response
+        except ObjectDoesNotExist:
             response = HttpResponse(False)
             response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
             return response
-        response = HttpResponse(True)
-        response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
-        return response
-    except ObjectDoesNotExist:
-        response = HttpResponse(False)
-        response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
-        return response
 
 
 # def check_passport(request):
@@ -738,7 +728,7 @@ def add_worker(request):
 
                 msg = f"Hurmatli {user.last_name} {user.first_name}! Sizning shaxsiy login va parolingiz. %0aLogin: {user.username}%0aParol: {user.turbo}"
                 msg = msg.replace(" ", "+")
-                url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'cb547db5ce188f49c1e1790c25ca6184'}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
+                url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
                 response = requests.get(url)
 
                 messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
@@ -801,7 +791,7 @@ def worker_edit(request, worker_id):
 
                     msg = f"Hurmatli {worker.last_name} {worker.first_name}! Sizning ma'lumotlaringiz tahrirlandi. %0aLogin: {worker.username}%0aParol: {worker.turbo}"
                     msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u={'jj39k'}&h={'564654sdfsdfdsfsdf'}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
                     response = requests.get(url)
                     context.update(form=form)
                     messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
@@ -826,14 +816,76 @@ def view_car_data(request, car_id):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    form = EditCarForm(instance=car)
-
     context = {
-        # 'form': form,
+
         'car': car
     }
     return render(request, 'user/car/view_car_data.html', context)
 
+
+@login_required
+def edit_car_data(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    form = EditCarForm(instance=car)
+
+    models = CarModel.objects.filter(is_active=True)
+    fuel_types = FuelType.objects.filter(is_active=True)
+    car_types = CarType.objects.filter(is_active=True)
+    devices = Device.objects.filter(is_active=True)
+    bodyTypes = BodyType.objects.filter(is_active=True)
+    colors = Color.objects.filter(is_active=True)
+
+    context = {
+        'models': models,
+        'fuel_types': fuel_types,
+        'car_types': car_types,
+        'devices': devices,
+        'bodyTypes': bodyTypes,
+        'color': colors,
+
+        'form': form,
+        'car': car
+    }
+
+    if request.method == 'POST':
+        try:
+            form = EditCarForm(request.POST, instance=car)
+            devices = []
+            if request.POST.getlist('devices'):
+                for device_id in list(filter(None, request.POST.getlist('devices'))):
+                    devices.append(get_object_or_404(Device, id=device_id))
+
+            fuel_types = []
+            if request.POST.getlist('fuel_types'):
+                for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
+                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+
+
+            if form.is_valid():
+                given_number = request.POST.get('auction_number')
+
+                form = form.save(commit=False)
+                form.fuel_type.clear()
+                form.device.clear()
+                for fuel_type in fuel_types:
+                    form.fuel_type.add(fuel_type)
+                for device in devices:
+                    form.device.add(device)
+                form.given_number = given_number
+                form.save()
+                return HttpResponse(True)
+            else:
+                return HttpResponse(False)
+        except:
+            return HttpResponse(False)
+
+    return render(request, 'user/car/edit_car_data.html', context)
 
 @login_required
 def view_organization_data(request, id):
@@ -873,7 +925,7 @@ def confirm_car_data(request, car_id):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    if request.user.role == '4':
+    if request.user.role == '4' or request.user.role == '5':
         car = get_object_or_404(Car, id=car_id)
         application = get_object_or_404(Application, id=car.service_car.last().application_service.last().id)
 
@@ -883,23 +935,53 @@ def confirm_car_data(request, car_id):
 
         if request.method == 'GET':
             if request.GET.get('confirm') == 'True':
-                car.is_confirm = True
-                car.save()
-                messages.success(request, f"{car.model} transport vositasi muvaffaqiyatli texnik ko'rikdan o'tkazildi!")
+                if request.user.role == '4':
+                    car.is_confirm = True
+                    car.confirm_date = timezone.now()
 
-                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} rusumli transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi! Hujjatlarning asl nusxalarini {request.user.region.title} YHXB bo'limiga olib kelishingizni so'raymiz!"
-                msg = msg.replace(" ", "+")
-                url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                response = requests.get(url)
+                    messages.success(request, f"{car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi!")
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi! {'Transport vositangizni texnik ko*rikdan o*tkazib,' if not car.is_technical_confirm else ''} {'To*lovlarni kerakli hisob raqamlarga o*tkazib,' if not application.is_payment else ''} Hujjatlarning asl nusxalarini {request.user.section.title}ga olib kelishingizni so*raymiz!"
+                    msg = msg.replace(" ", "+").replace('*', "'")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+
+                elif request.user.role == '5':
+                    car.is_technical_confirm = True
+                    car.technical_confirm = timezone.now()
+
+                    messages.success(request,
+                                     f"{car.model} {car.old_number if car.old_number else ''} transport vositasi texnik ko'rikdan muvaffaqiyatli o'tkazildi!")
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} {car.old_number if car.old_number else ''} transport vositasi texnik ko'rikdan muvaffaqiyatli o'tkazildi! {'Transport vositangizni dvigateli, shassi, kuzovi raqam belgilari arizada ko*rsatilgandek ekanligini tasdiqlatib,' if not car.is_confirm else ''} {'To*lovlarni kerakli hisob raqamlarga o*tkazib,' if not application.is_payment else ''} Hujjatlarning asl nusxalarini {request.user.section.title}ga olib kelishingizni so*raymiz!"
+                    msg = msg.replace(" ", "+").replace('*', "'")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+                car.save()
             elif request.GET.get('confirm') == 'False':
-                car.is_confirm = False
-                car.save()
-                messages.success(request, f'{car.model} muvaffaqiyatli tasdiqlash bekor qilindi!')
+                if request.user.role == '4':
+                    car.is_confirm = False
+                    car.confirm_date = timezone.now()
 
-                msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} rusumli transport vositasining dvigateli, shassi, kuzovi raqam belgilari tasdiqlanmadi!"
-                msg = msg.replace(" ", "+")
-                url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                response = requests.get(url)
+                    messages.success(request,
+                                     f"{car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilarining tasdiqlangani muvvaffaqiyatli bekor qilindi!")
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari arizada ko*rsatilgan ma*lumotlar bilan mos emas!"
+                    msg = msg.replace(" ", "+").replace('*', "'")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+
+                elif request.user.role == '5':
+                    car.is_technical_confirm = False
+                    car.technical_confirm = timezone.now()
+
+                    messages.success(request,
+                                     f"{car.model} {car.old_number if car.old_number else ''} transport vositasi texnik nosoz ekanligi muvaffaqiyatli tasdiqlandi!")
+
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} {car.old_number if car.old_number else ''} transport vositasi texnik nosoz deb topildi!"
+                    msg = msg.replace(" ", "+").replace('*', "'")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    response = requests.get(url)
+                car.save()
 
             return redirect(reverse_lazy('application:applications_list'))
         else:

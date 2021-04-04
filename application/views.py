@@ -20,7 +20,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from application.models import *
-from reception.settings import BASE_DIR
+from reception.settings import BASE_DIR, SMS_LOGIN, SMS_TOKEN
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 from user.utils import render_to_pdf
@@ -291,37 +291,6 @@ def create_application_doc(request, filename):
     doc.save(response)
     return response
 
-    # render context doc file
-    # doc.render(context)
-    # # save doc file in directory media/applications/
-    # doc.save(f"media{os.sep}applications{os.sep}{application.file_name}.docx", )
-
-    #
-    # # file_bytes = io.BytesIO()
-    # # doc.save(file_bytes)
-    # # file_bytes.seek(0)
-    # # application.file_doc.save('Lease #12345.doc', ContentFile(file_bytes.read()))
-    # # application.save()
-    #
-    # pdf = convert('static/online/contract_of_sale/contract_of_sale_person.docx', "media/123.pdf")
-    # print('after')
-    # file = open('static/online/contract_of_sale/contract_of_sale_person.docx', 'rb')
-    # data = file.read()
-    # print('before')
-    # print(data)
-    # application.file_pdf = pdf
-    # application.save()
-    #
-    # application.password = password
-    # application.save()
-    #
-    #
-    # doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}123.docx")
-    # context ={
-    #     'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
-    # }
-    # doc.render(context)
-
 
 @login_required
 def view_service_data(request, service_id):
@@ -409,13 +378,13 @@ class ConfirmApplicationData(APIView):
                     application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
                     application.process = '2'
                     application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
-                                                                        "%d.%m.%Y").date()
+                                                                        "%Y-%m-%d").date()
                     application.given_time = request.POST.get('given_time')
                     application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz tasdiqlandi!%0a{request.POST.get('given_date')} {request.POST.get('given_time')} da {request.user.region.title} YHXBga kelishingizni so'raymiz."
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} YHXBga kelib olib ketishingizni so'raymiz."
                     msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
                     return HttpResponse(True)
                 elif request.POST.get('process') == 'cancel':
@@ -424,9 +393,9 @@ class ConfirmApplicationData(APIView):
                     application.canceled_date = timezone.now()
                     application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.region.title} YHXB"
+                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} sababli bekor qilindi! %0a {request.user.section.title} YHXB"
                     msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
                     return HttpResponse(True)
                 elif request.POST.get('process') == 'process':
@@ -436,7 +405,7 @@ class ConfirmApplicationData(APIView):
 
                     msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} sababli jarayonda turibti!"
                     msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u=jj39k&h=cb547db5ce188f49c1e1790c25ca6184&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
                     return HttpResponse(True)
                 else:

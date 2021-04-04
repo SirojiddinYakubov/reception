@@ -25,7 +25,7 @@ def account_statement_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    cars = CarModel.objects.all()
+    cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
     devices = Device.objects.filter(is_active=True)
@@ -147,7 +147,7 @@ def gift_agreement_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    cars = CarModel.objects.all()
+    cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
     devices = Device.objects.filter(is_active=True)
@@ -290,7 +290,7 @@ def contract_of_sale_index(request):
     # get previous years
     # year = datetime.datetime.today().year
     # years = range(year, year - 80, -1)
-    cars = CarModel.objects.all()
+    cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
     devices = Device.objects.filter(is_active=True)
@@ -433,7 +433,7 @@ def replace_tp_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    cars = CarModel.objects.all()
+    cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
     devices = Device.objects.filter(is_active=True)
@@ -551,7 +551,7 @@ def replace_number_and_tp_index(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
-    cars = CarModel.objects.all()
+    cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
     car_types = CarType.objects.filter(is_active=True)
     devices = Device.objects.filter(is_active=True)

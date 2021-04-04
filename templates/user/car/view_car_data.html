@@ -104,7 +104,7 @@
                             <i style="color: green" class="far fa-check-circle"></i>{% else %}
                             <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                     </tr>
-                <tr>
+                    <tr>
                         <th scope="row">Texnik ko'rik:</th>
                         <td class="text-left">{% if car.is_technical_confirm %}
                             <i style="color: green" class="far fa-check-circle"></i>{% else %}
@@ -126,17 +126,32 @@
                     {% if not car.is_confirm %}
                         <a href="{% url 'user:confirm_car_data' car.id %}?confirm=True">
                             <button style="float: right;margin-bottom: 10px; margin-right: 10px"
-                                    class="btn btn-success">Ma'lumotlar mos
+                                    class="btn btn-success"><i class="far fa-check-circle"></i>&nbsp Ma'lumotlar mos
                             </button>
                         </a>
                     {% else %}
                         <a href="{% url 'user:confirm_car_data' car.id %}?confirm=False">
                             <button style="float: right;margin-bottom: 10px; margin-right: 10px"
-                                    class="btn btn-danger">Ma'lumotlar mos emas
+                                    class="btn btn-danger"><i class="far fa-times-circle"></i>&nbsp Ma'lumotlar mos emas
+                            </button>
+                        </a>
+                    {% endif %}
+                {% elif request.user.role == '5' %}
+                    {% if not car.is_technical_confirm %}
+                        <a href="{% url 'user:confirm_car_data' car.id %}?confirm=True">
+                            <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                                    class="btn btn-success"><i class="far fa-check-circle"></i>&nbsp Texnik soz
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user:confirm_car_data' car.id %}?confirm=False">
+                            <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                                    class="btn btn-danger"><i class="far fa-times-circle"></i>&nbsp Texnik soz emas
                             </button>
                         </a>
                     {% endif %}
                 {% endif %}
+                <a href="{% url 'user:edit_car_data' car.id %}" style="float: right;margin-bottom: 10px; margin-right: 10px" class="btn btn-default"><i class="far fa-edit"></i>&nbsp Tahrirlash</a>
             </div>
         </div>
     </div>

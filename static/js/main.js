@@ -649,7 +649,6 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
                                     url: success_url,
                                     data: {
                                         'application': applicationId,
-                                        'given_number': input.value,
                                         'technical_passport': technical_passport_val,
                                         'process': 'confirm',
                                         'given_date': given_date,

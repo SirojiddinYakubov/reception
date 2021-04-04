@@ -28,7 +28,8 @@
 
                             <input type="text" name="last_name" id="last_name"
                                    class="form-control"
-                                   required value="{{ form.instance.last_name }}"
+                                   required
+                                   {% if form.instance.last_name %}value="{{ form.instance.last_name }}"{% endif %}
                                    autocomplete="disabled"
                                    placeholder="Masalan: Yoqubov"/>
                         </div>
@@ -36,7 +37,8 @@
                             <label style="width: 100%;" class="not_copy label_required"
                                    for="first_name">Ism</label>
                             <input type="text" name="first_name" id="first_name"
-                                   class="form-control" value="{{ form.instance.first_name }}"
+                                   class="form-control"
+                                   {% if form.instance.first_name %}value="{{ form.instance.first_name }}"{% endif %}
                                    required
                                    autocomplete="disabled"
                                    placeholder="Masalan: Sirojiddin"/>
@@ -48,13 +50,14 @@
                                    for="middle_name">Otasining ismi</label>
                             <input type="text" name="middle_name" id="middle_name"
                                    class="form-control"
-                                   required value="{{ form.instance.middle_name }}"
+                                   required
+                                   {% if form.instance.middle_name %}value="{{ form.instance.middle_name }}"{% endif %}
                                    autocomplete="disabled"
                                    placeholder="Masalan: Tojiddinovich"/>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
+                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 birthday">
                             <label style="width: 100%;" class="not_copy label_required"
-                                   for="birthday">Tug'ilgan yil</label>
+                                   for="birthday">Tug'ilgan vaqt</label>
                             <div class="input-group">
                                 <input id='birthday' name="birthday"
                                        type="text"
@@ -102,7 +105,8 @@
                             <label class="label_required not_copy" for="address">Manzil</label>
                             <input type="text" class="form-control" id="address" name="address"
                                    required autocomplete="disabled"
-                                   placeholder="Masalan: M.Iqbol ko'chasi 76-uy" value="{{ form.instance.address }}"/>
+                                   placeholder="Masalan: M.Iqbol ko'chasi 76-uy"
+                                   {% if form.instance.address %}value="{{ form.instance.address }}"{% endif %}/>
                         </div>
                     </div>
 
@@ -112,7 +116,8 @@
                                 class="pay label_required not_copy" for="passport_seriya">Passport
                             seriya</label>
                             <input type="text" id="passport_seriya" class="form-control"
-                                   name="passport_seriya" value="{{ form.instance.passport_seriya }}"
+                                   name="passport_seriya"
+                                   {% if form.instance.passport_seriya %}value="{{ form.instance.passport_seriya }}"{% endif %}
                                    placeholder="Masalan: AA" autocomplete="off"/>
                         </div>
                         <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
@@ -128,7 +133,8 @@
                             <label
                                     class="label_required not_copy">JShShIR</label>
                             <input type="text" style="margin-bottom: 0" name="person_id"
-                                   class="form-control" value="{{ form.instance.person_id }}"
+                                   class="form-control"
+                                   {% if form.instance.person_id %}value="{{ form.instance.person_id }}"{% endif %}
                                    id="person_id"
                                    placeholder=""/>
                             <p style="font-size: small; margin-bottom: 0">Jismoniy shaxsning
@@ -141,7 +147,8 @@
                             <label class="label_required not_copy" for="issue_by_whom">Kim
                                 tomonidan
                                 berilgan</label>
-                            <input type="text" value="{{ form.instance.issue_by_whom }}"
+                            <input type="text"
+                                   {% if form.instance.issue_by_whom %}value="{{ form.instance.issue_by_whom }}"{% endif %}
                                    id="issue_by_whom" class="form-control" name="issue_by_whom"
                                    autocomplete="off" placeholder="Masalan: BUXORO SHAHAR IIB"/>
                         </div>
@@ -211,7 +218,7 @@
 
                 </div>
                 <div class="row justify-content-center">
-                    <input type="button" id="prev2"
+                    <input type="reset"
                            class="action-button-reset"
                            value="Tozalash"/>
                     <button type="submit" id="saveBtn" class="action-button">Saqlash</button>
@@ -401,6 +408,9 @@
                         mfy: {
                             required: true
                         },
+                        birthday: {
+                            required: true
+                        },
                         address: {
                             required: true,
                             noSpace: true,
@@ -458,6 +468,9 @@
                         mfy: {
                             required: 'MFY tanlanmagan!',
                         },
+                        birthday: {
+                            required: 'Tug\'ilgan vaqti kiritilmagan!',
+                        },
                         address: {
                             required: 'Manzil kiritilmagan!',
                         },
@@ -495,6 +508,8 @@
                             error.appendTo(element.parents('.district'));
                         } else if (element.is("#mfy")) {
                             error.appendTo(element.parents('.mfy'));
+                        }else if (element.is("#birthday")) {
+                            error.appendTo(element.parents('.birthday'));
                         } else if (element.is("#person_id")) {
                             error.appendTo(element.siblings('p'));
                         } else if (element.is("#phone")) {

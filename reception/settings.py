@@ -236,3 +236,5 @@ logging.basicConfig(
 TOKEN_MAX_AGE = 3600        #foydalanuvchiga berilgan tokenning umri
 PHONE_MAX_AGE = 1800        #ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
 MINIMUM_BASE_WAGE = 245000  #eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
+SMS_LOGIN = 'jj39k'
+SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'

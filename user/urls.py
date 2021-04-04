@@ -38,6 +38,7 @@ urlpatterns = [
     path('worker-delete/<int:worker_id>/', worker_delete, name='worker_delete'),
     path('worker-edit/<int:worker_id>/', worker_edit, name='worker_edit'),
     path('view-car-data/<int:car_id>/', view_car_data, name='view_car_data'),
+    path('edit-car-data/<int:car_id>/', edit_car_data, name='edit_car_data'),
     path('view-organization-data/<int:id>/', view_organization_data, name='view_organization_data'),
     path('confirm-car-data/<int:car_id>/', confirm_car_data, name='confirm_car_data'),
 
