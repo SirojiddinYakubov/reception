@@ -32,7 +32,7 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Xizmat'
         verbose_name_plural = 'Xizmatlar'
-
+ 
 
 
 STATE_DUTY_TITLE = (

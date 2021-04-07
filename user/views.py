@@ -840,6 +840,7 @@ def edit_car_data(request, car_id):
     devices = Device.objects.filter(is_active=True)
     bodyTypes = BodyType.objects.filter(is_active=True)
     colors = Color.objects.filter(is_active=True)
+    histories = Car.objects.all()
 
     context = {
         'models': models,
@@ -850,12 +851,19 @@ def edit_car_data(request, car_id):
         'color': colors,
 
         'form': form,
-        'car': car
+        'car': car,
+
+        'histories': histories
     }
 
     if request.method == 'POST':
         try:
             form = EditCarForm(request.POST, instance=car)
+            if request.POST.get('history'):
+                history = get_object_or_404(Car, id=request.POST.get('history'))
+            else:
+                history = None
+
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -878,6 +886,7 @@ def edit_car_data(request, car_id):
                 for device in devices:
                     form.device.add(device)
                 form.given_number = given_number
+                form.history = history
                 form.save()
                 return HttpResponse(True)
             else:
@@ -1033,12 +1042,13 @@ class Save_New_Color(APIView):
         else:
             return HttpResponse(False)
 
-
+@login_required
 def getDistrict(request):
     id = request.GET.get('id','')
     result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
     return HttpResponse(json.dumps(result), content_type="application/json")
 
+@login_required
 def getMfy(request):
     id = request.GET.get('id','')
     result = list(MFY.objects.filter(district_id=int(id)).values('id', 'title'))

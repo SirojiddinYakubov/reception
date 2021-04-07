@@ -329,9 +329,9 @@ $('.datepicker_icon').on('click', function () {
     $(this).siblings('.datepicker').datepicker('show')
 })
 
-$('.datepicker').on('keypress', function (e) {
-    return false
-})
+// $('.datepicker').on('keypress', function (e) {
+//     return false
+// })
 
 // $(document).on('keypress', '#body_type, #body_number, #chassis_number, #engine_number, #made_year,#additionality, #color, #cert_seriya, #cert_number', function (e) {
 //     if (e.target.value !== '') {

@@ -284,9 +284,27 @@
                                    class="form-control" placeholder="Masalan: 80979HBA"
                                    autocomplete="off">
                         </div>
+                    </div>
+                    <div class="row">
 
+                        {% if request.user.role == '2' or request.user.role == '3' %}
+                            <div class="col-12 mt-2">
+                             <label class="label"
+                                   for="history">{% trans "Transport vositasi oldingi ma'lumotlari" %}</label>
+                                <select id="history"  class="form-control select2">
+                                    <option value="">--- --- ---</option>
+                                    {% for history in histories %}
+                                        <option {% if car.history == history %} selected {% endif %}
+                                                                                  value="{{ history.id }}">{{ history.model.title }}
+                                            {% if history.old_number %}{{ history.old_number }}{% else %}
+                                                {{ history.old_technical_passport }}{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
+
                 <div class="row justify-content-center">
                     <input type="reset"
                            class="action-button-reset"
@@ -392,6 +410,14 @@
                 $('#auction_number_div').children('.col-12').children('input').removeAttr('name')
             }
 
+             $('#history').on('change', function () {
+                var selectedHistory = $(this).children("option:selected").val();
+                if (parseInt(selectedHistory)) {
+                    $(this).attr('name', 'history')
+                }else{
+                    $(this).removeAttr('name')
+                }
+            })
 
             $('#is_auction').on('change', function () {
                 if ($(this).prop('checked')) {
