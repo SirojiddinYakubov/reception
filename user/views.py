@@ -258,8 +258,6 @@ def add_organization(request):
 
     if request.is_ajax():
         if request.method == 'POST':
-            print(request.POST)
-
             organization = Organization.objects.create(title=request.POST.get('title', None))
             organization.director = request.POST.get('director', None)
             organization.identification_number = request.POST.get('identification_number', None)

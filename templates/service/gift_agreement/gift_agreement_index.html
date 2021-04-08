@@ -40,7 +40,7 @@
                                            id="organization_div_alert"
                                            class="text-danger not_copy">
                                             Sizda tashkilot mavjud emas. <a
-                                                href="{% url 'user:add_organization' %}">Tashkilotni
+                                                href="{% url 'user:add_organization' %}?next={{ request.path }}">Tashkilotni
                                             qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling
                                         </p>
                                     </div>
@@ -134,7 +134,7 @@
                                         <label style="display: inline !important;"
                                                class="label_required">{% trans 'T/v modelini tanlang' %}</label>&nbsp <i
                                             class="fas fa-info-circle" data-toggle="tooltip"
-                                            title="Transport vositasining modelini tanlang, agar sizning transport vositangiz modeli mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz modelini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining modeli hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"></i>
+                                            title="Transport vositasining modelini tanlang, agar sizning transport vositangiz modeli mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz modelini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining modeli qayd etish guvohnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"></i>
 
                                         <div class="input-group mb-3">
                                             <select id="car" name="car" class="form-control select2">

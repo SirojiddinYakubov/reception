@@ -196,11 +196,11 @@ def get_information(request):
     if request.is_ajax():
         user = get_object_or_404(User, id=request.GET.get('user'))
         application = get_object_or_404(Application, id=request.GET.get('application'))
-        account_statement = get_object_or_404(AccountStatement, id=application.account_statement.id)
+        # account_statement = get_object_or_404(AccountStatement, id=application.account_statement.id)
 
         context = {
             'user': f"{user.last_name} {user.first_name}",
-            'account_statement_photo_url': account_statement.cert_photo.url
+            # 'account_statement_photo_url': account_statement.cert_photo.url
         }
 
         data = json.dumps(context)
@@ -250,14 +250,21 @@ def create_application_doc(request, filename):
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_person.docx")
+    elif service.title == 're_equipment':
+        if service.organization:
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_legal.docx")
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_person.docx")
 
     car = get_object_or_404(Car, id=service.car.id)
 
     devices_string = ', '.join([str(i).replace('"', "'") for i in car.device.all()])
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
+    re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
     if service.seriya and service.contract_date:
-        context.update(state=f"{service.seriya} {datetime.datetime.strftime(service.contract_date, '%d.%m.%Y')}")
+        context.update(state=f"{service.seriya} {service.contract_date.strftime('%d.%m.%Y')}")
 
     if car.given_technical_passport:
         context.update(given_technical_passport=car.given_technical_passport)
@@ -272,7 +279,8 @@ def create_application_doc(request, filename):
                    birthday=application.created_user.birthday.strftime('%d.%m.%Y'),
                    given_number=car.given_number,
                    old_number=car.old_number,
-                   old_technical_passport=car.old_technical_passport,)
+                   old_technical_passport=car.old_technical_passport,
+                   re_fuel_types=re_fuel_types_string)
 
     car_model = get_object_or_404(CarModel, id=car.model.id)
 
@@ -302,10 +310,10 @@ def view_service_data(request, service_id):
         return redirect(reverse_lazy('user:custom_logout'))
 
     service = get_object_or_404(Service, id=service_id)
-
-    if request.user.role == '1' and service.created_user != request.user:
+    application = get_object_or_404(Application, id=service.application_service.all().first().id)
+    if request.user.role == '1' and application.created_user != request.user:
         return render(request, '_parts/404.html')
-
+   
     context = {
         'service': service
     }

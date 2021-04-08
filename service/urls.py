@@ -20,5 +20,6 @@ urlpatterns = [
     path('replace-number-and-tp-index/', replace_number_and_tp_index, name='replace_number_and_tp_index'),
     path('save-replace-number-and-tp/', Save_Replace_Number_And_Tp.as_view(), name='save_replace_number_and_tp'),
 
-
+    path('re-equipment-index/', re_equipment_index, name='re_equipment_index'),
+    path('save-re-equipment/', Save_Re_Equipment.as_view(), name='save_re_equipment'),
 ]

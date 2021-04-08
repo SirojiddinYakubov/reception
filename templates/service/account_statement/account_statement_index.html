@@ -40,7 +40,7 @@
                                            id="organization_div_alert"
                                            class="text-danger not_copy">
                                             Sizda tashkilot mavjud emas. <a
-                                                href="{% url 'user:add_organization' %}">Tashkilotni
+                                                href="{% url 'user:add_organization' %}?next={{ request.path }}">Tashkilotni
                                             qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling
                                         </p>
                                     </div>

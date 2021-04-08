@@ -920,10 +920,16 @@ function addColor() {
                     success: function (response) {
                         if (response !== 'False') {
                             success_toast()
-                            $('#color').empty().append(response)
-                            $('#color').siblings('.select2').css('border', '1px solid blue')
+                            $('select.color').empty().append(response)
+                            $('select.color').siblings('.select2').css('border', '1px solid blue')
                             setTimeout(function () {
-                                $('#color').siblings('.select2').css('border', 'none')
+                                $('select.color').siblings('.select2').css('border', 'none')
+                            }, 3000)
+
+                            $('select.color').empty().append(response)
+                            $('select.color').siblings('.select2').css('border', '1px solid blue')
+                            setTimeout(function () {
+                                $('select.color').siblings('.select2').css('border', 'none')
                             }, 3000)
                         } else {
                             errorFunction()
