@@ -271,6 +271,7 @@ def create_application_doc(request, filename):
         context.update(given_technical_passport=car.given_technical_passport)
     if service.organization:
         context.update(org=service.organization)
+        context.update(legal_address=f"{service.organization.legal_address_region.title}, {service.organization.legal_address_district.title}")
     context.update(now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
                    devices=devices_string,
                    fuel_types=fuel_types_string,
