@@ -219,6 +219,7 @@ def create_application_doc(request, filename):
 
     application = get_object_or_404(Application, file_name=filename)
     service = get_object_or_404(Service, id=application.service.id)
+    section = Section.objects.get(region=request.user.region, district=request.user.district)
 
     context = {}
     if service.title == 'account_statement':
@@ -280,7 +281,8 @@ def create_application_doc(request, filename):
                    given_number=car.given_number,
                    old_number=car.old_number,
                    old_technical_passport=car.old_technical_passport,
-                   re_fuel_types=re_fuel_types_string)
+                   re_fuel_types=re_fuel_types_string,
+                   section=section)
 
     car_model = get_object_or_404(CarModel, id=car.model.id)
 
