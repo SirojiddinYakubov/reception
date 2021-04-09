@@ -219,7 +219,10 @@ def create_application_doc(request, filename):
 
     application = get_object_or_404(Application, file_name=filename)
     service = get_object_or_404(Service, id=application.service.id)
-    section = Section.objects.get(region=request.user.region, district=request.user.district)
+    if request.user.role == '1':
+        section = Section.objects.get(region=request.user.region, district=request.user.district)
+    else:
+        section = Section.objects.get(id=request.user.section.id)
 
     context = {}
     if service.title == 'account_statement':

@@ -233,14 +233,14 @@ class Save_Gift_Agreement(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
+            car.is_road_fund = False
+            # if get_car.is_local:
+            #     if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+            #         car.is_road_fund = True
+            #     else:
+            #         car.is_road_fund = False
+            # else:
+            #     car.is_road_fund = True
 
             if request.POST.get('auction_number'):
                 car.is_auction = True
