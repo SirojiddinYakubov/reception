@@ -13,7 +13,7 @@
     {#        <img src="/ap">#}
     {#    </div>#}
     <div style="text-align: center">
-        <h2 style="font-size: 3em; color: blue"><b>YXXB {{ region }} bo'limi</b></h2>
+        <h2 style="font-size: 3em; color: blue"><b>{{ section.title }}</b></h2>
     </div>
     </div>
 </header>
@@ -60,7 +60,7 @@
         <tr>
             <td><b>Ariza topshirdi</b></td>
             <td>{% if app.service.organization %}{{ app.service.organization }}{% else %}
-                {{ app.service.created_user }}{% endif %}</td>
+                {{ app.created_user }}{% endif %}</td>
         </tr>
         <tr>
             <td><b>To'lov</b></td>
@@ -78,9 +78,8 @@
     <br>
     <div style="margin-top: 10px; color: red">Eslatma!</div>
     <div id="notices">
-        <div>Hurmatli foydalanuvchi avtotransport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq
-            to'ldirib YXXB
-            {{ region }} bo'limiga yetkazib bershingiz talab qilinadi!
+        <div>Hurmatli foydalanuvchi! Transport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq
+            to'ldirib {{ section.title }} ga yetkazib berishingiz talab qilinadi!
         </div>
     </div>
 </main>

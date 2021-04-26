@@ -30,10 +30,13 @@ class Application(models.Model):
     given_date = models.DateField('Berish sanasi',  blank=True, null=True)
     given_time = models.CharField('Berish vaqti', max_length=10, blank=True, null=True)
     canceled_date = models.DateTimeField(verbose_name='Rad etilgan vaqti', null=True,blank=True)
+    is_active = models.BooleanField(default=True)
+    is_block = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Ariza'
         verbose_name_plural = 'Arizalar'
+        ordering = ['-id']
 
     def __str__(self):
         return self.service.get_title_display()

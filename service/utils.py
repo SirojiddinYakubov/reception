@@ -15,6 +15,7 @@ def calculation_state_duty_service_price(service):
 
     created_user = get_object_or_404(User, id=service.application_service.first().created_user.id)
 
+    # Davlat bojlari foizlarini olish
     re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()
 
     if car.is_replace_number:
@@ -22,6 +23,7 @@ def calculation_state_duty_service_price(service):
             registration = StateDutyPercent.objects.filter(car_type=car.type,
                                                        lost_number=car.lost_number, is_old_number=car.is_old_number,
                                                        car_is_new=car.is_new, state_duty=5).first()
+
         else:
             registration = None
     else:
@@ -83,126 +85,117 @@ def calculation_state_duty_service_price(service):
     else:
         road_fund = 0
 
-    context = ''
-    total_prices = 0
+    #Davlat bojlari hisob raqamlarini olish
+
     if re_registration:
         try:
-            score = StateDutyScore.objects.filter(state_duty=re_registration.state_duty).first().score
+            score = StateDutyScore.objects.filter(state_duty=re_registration.state_duty).first()
+
         except AttributeError:
-            score = 0
+            score = None
             print('QAYTA RO\'YHATLASH SCORE NOT FOUND')
+
         price = int(MINIMUM_BASE_WAGE / 100 * re_registration.percent)
-        total_prices += price
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>{re_registration.get_state_duty_display()}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(price)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
+
+        state_duty = StateDuty.objects.filter(title=re_registration.state_duty, service=service).first()
+        if not state_duty:
+            StateDuty.objects.create(title=re_registration.state_duty, created_user=created_user, payment=price, service=service, score=score)
+        else:
+            state_duty.payment = price
+            state_duty.score = score
+            state_duty.updated_date = timezone.now()
+            state_duty.save()
+
+
     else:
         print('QAYTA RO\'YHATLASH PERCENT NOT FOUND')
 
     if registration:
         try:
-            score = StateDutyScore.objects.filter(state_duty=registration.state_duty).first().score
+            score = StateDutyScore.objects.filter(state_duty=registration.state_duty).first()
+
         except AttributeError:
-            score = 0
+            score = None
             print('RO\'YHATLASH SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * registration.percent)
-        total_prices += price
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>{registration.get_state_duty_display()}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(price)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
+
+        state_duty = StateDuty.objects.filter(title=registration.state_duty, service=service).first()
+        if not state_duty:
+            StateDuty.objects.create(title=registration.state_duty, created_user=created_user, payment=price,
+                                     service=service,score=score)
+        else:
+            state_duty.payment = price
+            state_duty.score = score
+            state_duty.updated_date = timezone.now()
+            state_duty.save()
+
     else:
         print('RO\'YHATLASH PERCENT NOT FOUND')
 
     if technical_passport:
         try:
-            score = StateDutyScore.objects.filter(state_duty=technical_passport.state_duty,region=created_user.region, district=created_user.district).first().score
+            score = StateDutyScore.objects.filter(state_duty=technical_passport.state_duty,region=created_user.region, district=created_user.district).first()
         except AttributeError:
-            score = 0
+            score = None
             print('QAYD ETISH GUVOHNOMASI SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * technical_passport.percent)
-        total_prices += price
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>{technical_passport.get_state_duty_display()}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(price)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
+
+        state_duty = StateDuty.objects.filter(title=technical_passport.state_duty, service=service).first()
+        if not state_duty:
+            StateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
+                                     service=service, score=score)
+        else:
+            state_duty.payment = price
+            state_duty.score = score
+            state_duty.updated_date = timezone.now()
+            state_duty.save()
+
     else:
         print('QAYD ETISH GUVOHNOMASI PERCENT NOT FOUND')
 
     if inspection:
         try:
             score = StateDutyScore.objects.filter(state_duty=inspection.state_duty, region=created_user.region,
-                                              district=created_user.district).first().score
+                                              district=created_user.district).first()
         except AttributeError:
-            score = 0
+            score = None
             print('TEXNIK KO\'RIK SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * inspection.percent)
-        total_prices += price
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>{inspection.get_state_duty_display()}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(price)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
+
+        state_duty = StateDuty.objects.filter(title=inspection.state_duty, service=service).first()
+        if not state_duty:
+            StateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
+                                     service=service, score=score)
+        else:
+            state_duty.payment = price
+            state_duty.score = score
+            state_duty.updated_date = timezone.now()
+            state_duty.save()
+
     else:
         print('TEXNIK KO\'RIK PERCENT NOT FOUND')
 
     if fine:
         try:
-            score = StateDutyScore.objects.filter(state_duty=7).first().score
+            score = StateDutyScore.objects.filter(state_duty=7).first()
+
         except AttributeError:
-            score = 0
+            score = None
             print('JARIMA SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * fine)
-        total_prices += price
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>Jarima</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(price)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
 
+        state_duty = StateDuty.objects.filter(title='7', service=service).first()
+        if not state_duty:
+            StateDuty.objects.create(title='7', created_user=created_user, payment=price, service=service, score=score)
+        else:
+            state_duty.payment = road_fund
+            state_duty.score = score
+            state_duty.updated_date = timezone.now()
+            state_duty.save()
     else:
         print('JARIMA PERCENT NOT FOUND')
 
@@ -211,34 +204,31 @@ def calculation_state_duty_service_price(service):
         try:
             if car.is_new:
                 score = StateDutyScore.objects.filter(state_duty=1, region=created_user.region,
-                                              district=created_user.district).first().score
+                                              district=created_user.district).first()
+
+                state_duty = StateDuty.objects.filter(title='1', service=service).first()
+                if not state_duty:
+                    StateDuty.objects.create(title='1', created_user=created_user, payment=road_fund, service=service, score=score)
+                else:
+                    state_duty.payment = road_fund
+                    state_duty.score = score
+                    state_duty.updated_date = timezone.now()
+                    state_duty.save()
+
             else:
                 score = StateDutyScore.objects.filter(state_duty=2, region=created_user.region,
-                                                      district=created_user.district).first().score
-        except AttributeError:
-            score = 0
-            print('YO\'L FONDI SCORE NOT FOUND')
-        total_prices += road_fund
-        context += f'<hr class="line m-0 p-0">' \
-                   f'<div class=\'row\'>' \
-                   f'<div class=\'col-4\'>' \
-                   f'<span>Yo\'l fondi</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-left\'>' \
-                   f'<span>{score}</span>' \
-                   f'</div>' \
-                   f'<div class=\'col-4 text-right\'>' \
-                   f'<span>{intcomma(road_fund)} so\'m</span>' \
-                   f'</div>' \
-                   f'</div>'
+                                                      district=created_user.district).first()
+                state_duty = StateDuty.objects.filter(title='2', service=service).first()
+                if not state_duty:
+                    StateDuty.objects.create(title='2', created_user=created_user, payment=road_fund, service=service, score=score)
+                else:
+                    state_duty.payment = road_fund
+                    state_duty.score = score
+                    state_duty.updated_date = timezone.now()
+                    state_duty.save()
 
+        except AttributeError:
+            print('YO\'L FONDI SCORE NOT FOUND')
     else:
         print('YO\'L FONDI PERCENT NOT FOUND')
 
-    context += f"<hr style='margin: 0; background-color: #3e3e3e'>" \
-               f"<div class='d-flex justify-content-between information'>" \
-               f"<span><b>Jami to'lov</b></span>" \
-               f"<span><b>{intcomma(total_prices)} so'm</b></span>" \
-               f"</div>"
-
-    return context

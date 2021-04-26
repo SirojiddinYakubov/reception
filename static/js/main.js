@@ -588,7 +588,7 @@ function process_confirm_replace_number(success_url, cancel_url, applicationId, 
 function process_confirm_not_replace_number(success_url, cancel_url, applicationId) {
 
     swal({
-        title: "Berilayotgan qayd etish guvohnomasi kiriting!",
+        title: "Berilayotgan qayd etish guvohnomasini kiriting!",
         closeOnClickOutside: false,
         className: "",
         buttons: [
@@ -607,7 +607,7 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
         if (technical_passport_val) {
             if (technical_passport_val !== '') {
                 swal({
-                    title: "Qayd etish guvohnomasini topshirish kunini kiriting!",
+                    title: "Qayd etish guvohnomasini topshirish sanasini kiriting!",
                     closeOnClickOutside: false,
                     className: "",
                     buttons: [
@@ -832,7 +832,7 @@ function html_to_pdf(element, filename) {
         filename: filename + ' #' + new Date().getTime(),
         image: {type: 'jpeg', quality: 0.98},
         html2canvas: {scale: 2},
-        jsPDF: {unit: 'in', format: 'A4', orientation: 'portrait'}
+        jsPDF: {unit: 'mm', format: 'A4', orientation: 'p'}
     })
 }
 
@@ -856,6 +856,28 @@ function success_toast(success_url) {
     Toast.fire({
         icon: 'success',
         title: 'Muvaffaqiyatli saqlandi!'
+    })
+}
+
+function edit_toast() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        background: '#8ff8ac',
+        timer: 5000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        // willClose: (close) => {
+        //    window.location.href = success_url
+        // }
+    })
+    Toast.fire({
+        icon: 'success',
+        title: 'Muvaffaqiyatli tahrirlandi!'
     })
 }
 

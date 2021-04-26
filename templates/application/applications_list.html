@@ -100,6 +100,9 @@
             $("#example1").DataTable({
                 "responsive": true,
                 "autoWidth": false,
+                "ordering": true,
+                "order": [[0, "desc"]],
+
             });
             $('#example2').DataTable({
                 "paging": true,
@@ -177,7 +180,7 @@
                                             '</svg> ${applicationId}-raqamli arizani o'chirishga ruxsat berilmaydi!`
                                     })
                                 } else {
-                                   errorFunction()
+                                    errorFunction()
                                 }
 
                             }

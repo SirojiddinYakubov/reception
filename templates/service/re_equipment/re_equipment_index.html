@@ -348,7 +348,8 @@
                                                 class="fas fa-info-circle" data-toggle="tooltip"
                                                 title="Transport vositasining almashtirilayotgan rangini tanlang, agar sizning transport vositangiz rangi mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz rangini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz!"></i>
                                             <div class="input-group mb-3">
-                                                <select id="re_color" name="re_color" class="form-control select2 color">
+                                                <select id="re_color" name="re_color"
+                                                        class="form-control select2 color">
                                                     {% for color in color %}
                                                         <option value="{{ color.id }}">{{ color.title }}</option>
                                                     {% endfor %}
@@ -361,7 +362,8 @@
                                         </div>
                                         <div class="col-12 mt-2 re_fuel_types" style="display: none">
                                             <label class="label_required">{% trans "O'rnatilayotgan qo'shimcha yoqilg'i turini tanlang" %}</label>
-                                            <select id="re_fuel_types" name="re_fuel_types"  class="form-control" multiple="multiple" style="width: 100%;">
+                                            <select id="re_fuel_types" name="re_fuel_types" class="form-control"
+                                                    multiple="multiple" style="width: 100%;">
                                                 {% for fuel_type in fuel_types %}
                                                     <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
                                                 {% endfor %}
@@ -380,7 +382,7 @@
                                     </div>
                                 </form>
                             </fieldset>
-                            <fieldset id="fieldset3-person">
+                            <fieldset id="fieldset3">
                                 <div class="form-card">
                                     <div class="row no-gutters d-flex justify-content-center">
                                         <div class="col-md-10">
@@ -414,14 +416,29 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <div class="state_duty_price">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="not_copy">Xizmat turi</th>
+                                                        <th>#</th>
+                                                        <th class="text-center not_copy">Narxi</th>
+                                                        <th class="text-center not_copy">Jami</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="col-md-9"><em>Elektron ariza shakllantirish</em></td>
+                                                        <td class="col-md-1" style="text-align: center"> 1</td>
+                                                        <td class="col-md-1 text-center">XXXXX</td>
+                                                        <td class="col-md-1 text-center">XXXXX</td>
+                                                    </tr>
 
-
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                                 <div class="text-right mt-3">
                                                     <button class="btn btn-primary col-12"
                                                             type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
-                                                        <span style="float:right;"><i
+                                                        <span style="float:right;">XXXXX so'm &nbsp&nbsp&nbsp<i
                                                                 class="fas fa-long-arrow-alt-right"></i></span>
                                                     </button>
                                                 </div>
@@ -432,39 +449,7 @@
                                 </div>
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-person" value="Oldingi"/>
-                                <a target="_blank" href="#"
-                                   class="action-button copy_application" style="padding: 0.7em !important;">
-                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
-                                </a>
-                            </fieldset>
-                            <fieldset id="fieldset3-legal">
-                                <div class="form-card">
-                                    <div class="alert alert-danger text-center"><b>Ushbu to'lovlarni hisob-raqamingizdan
-                                        pul ko'chirish
-                                        yo'li orqali to'lang!!!</b>
-                                    </div>
-                                    <div class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-12">
-
-                                            <div id="render_div" class="state_duty_price">
-
-                                            </div>
-
-                                            <div class="text-right mt-3" data-html2canvas-ignore="true">
-                                                <button id="payment_render_pdf"
-                                                        class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
-                                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-                                                        class="fas fa-file-download"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-legal" value="Oldingi"/>
+                                       id="prev3" value="Oldingi"/>
                                 <a target="_blank" href="#"
                                    class="action-button copy_application" style="padding: 0.7em !important;">
                                     Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
@@ -517,7 +502,7 @@
                 $('#fuel_types').selectize({
                     placeholder: "Masalan: BENZIN",
                 });
-                  $('#re_fuel_types').selectize({
+                $('#re_fuel_types').selectize({
                     placeholder: "Masalan: DIZEL",
                 });
                 $('#devices').selectize({
@@ -569,16 +554,16 @@
 
                 $('#re_equipment').on('change', function () {
                     var selectedReEquipment = $(this).children("option:selected").val();
-                    if (selectedReEquipment === 'fuel'){
+                    if (selectedReEquipment === 'fuel') {
                         $('#re_fuel_types').attr('name', 're_fuel_types')
                         $('#re_color').removeAttr('name')
                         $('.re_color').hide()
                         $('.re_fuel_types').show()
 
-                    }else{
+                    } else {
                         $('#re_color').attr('name', 're_color')
                         $('#re_fuel_types').removeAttr('name')
-                         $('.re_color').show()
+                        $('.re_color').show()
                         $('.re_fuel_types').hide()
                     }
                 })
@@ -694,19 +679,17 @@
                 })
 
 
-                $(document).on('click', '#prev3-legal, #prev3-person', function () {
-                    $('#fieldset3-legal').hide()
-                    $('#fieldset3-person').hide()
+                $(document).on('click', '#prev3', function () {
+                    $('#fieldset3').hide()
+
                     $('#fieldset2').show()
                 })
 
                 $('#refresh_next2').on('click', function (e) {
                     $('#fieldset2').hide()
-                    if (is_legal === true) {
-                        $('#fieldset3-legal').show()
-                    } else {
-                        $('#fieldset3-person').show()
-                    }
+
+                    $('#fieldset3').show()
+
 
                 })
 
@@ -785,7 +768,7 @@
                             old_number: {
                                 required: true,
                             },
-                             re_fuel_types: {
+                            re_fuel_types: {
                                 required: true,
                             },
 
@@ -844,7 +827,7 @@
                                 error.appendTo(element.parents('.old_number'));
                             } else if (element.is("#re_fuel_types")) {
                                 error.appendTo(element.parents('.re_fuel_types'));
-                            }else {
+                            } else {
                                 error.insertAfter(element);
                             }
 
@@ -871,18 +854,11 @@
                                 data: $(form).serialize(),
                                 success: function (response) {
                                     if (typeof response === 'object') {
-                                        if (response.application && response.html) {
+                                        if (response.application) {
 
                                             $('#next2').remove()
                                             $('#refresh_next2').css('display', 'block')
                                             $('#fieldset2').hide()
-
-                                            if (is_legal === true) {
-                                                $('#fieldset3-legal').show()
-                                            } else {
-                                                $('#fieldset3-person').show()
-                                            }
-
 
                                             $('#fieldset3').show()
                                             $('#payment').addClass('active')
@@ -906,7 +882,6 @@
                                             $('#old_technical_passport').attr("disabled", "disabled")
                                             $('#lost_technical_passport').attr("disabled", "disabled")
 
-                                            $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)
 
                                         } else {

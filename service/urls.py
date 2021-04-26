@@ -22,4 +22,9 @@ urlpatterns = [
 
     path('re-equipment-index/', re_equipment_index, name='re_equipment_index'),
     path('save-re-equipment/', Save_Re_Equipment.as_view(), name='save_re_equipment'),
+
+
+
+
+    path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
 ]

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load humanize %}
 {% load applications_tags %}
 {% block content %}
     <section class="py-3 mt-2 bg-info text-light">
@@ -12,8 +13,14 @@
             </div>
         </div>
     </section>
-
-
+    {% if application.is_block %}
+        <br>
+        <div class="alert alert-danger">Ariza faollashtirilmagan! Arizani faollashtirish uchun to'lovni amalga
+            oshiring!
+{#            <a class="close" href="#" data-dismiss="alert">×</a>#}
+        </div>
+    {% endif %}
+    {% include '_parts/messages.html' %}
     <div class="text-right mt-2 mb-2 mr-5">
         <button class="btn btn-default m-2 application_render_pdf" data-application="{{ application.id }}">
             Ariza haqida ma'lumot &nbsp&nbsp <i class="fas fa-download"></i>
@@ -51,7 +58,9 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Xizmat nomi:</th>
-                                    <td><a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a></td>
+                                    <td>
+                                        <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -327,14 +336,61 @@
                         </h4>
                     </div>
                     <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFifth" aria-expanded="false" style="font-size: larger">
+                         aria-labelledby="headingFifth" aria-expanded="false">
                         <div class="panel-body" id="render_div">
-                            <div class="row m-1 no-gutters d-flex justify-content-center">
-                                <div class="col-md-11">
-                                    {{ payments|safe }}
-                                </div>
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Davlat boji nomi</th>
+                                    <th scope="col">Hisob raqam</th>
+                                    <th scope="col">To'lov miqdori</th>
+                                    <th scope="col" style="width: 7%">Holati</th>
 
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for payment in payments %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <th scope="row">{{ payment.get_title_display }}</th>
+                                        <td><b>{{ payment.score.score }}</b></td>
+                                        <td><b class="state_payment">{{ payment.payment|intcomma }}</b> so'm</td>
+                                        <td>
+                                            {% if request.user.role == '2' or request.user.role == '3' %}
+                                                <input name="payment" {% if payment.is_paid %}checked{% endif %}
+                                                       data-payment="{{ payment.id }}"
+                                                       class="payment_checkbox" type="checkbox"/>
+                                            {% else %}
+                                                {% if payment.is_paid %}
+                                                    <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                                    <i style="color: red" class="far fa-times-circle"></i>{% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                                <tfoot style="background: lightgray">
+                                <tr>
+                                    <th></th>
+                                    <th>Jami</th>
+
+                                    <th></th>
+                                    <th><b id="total_state_payments"></b> so'm</th>
+                                    <th></th>
+
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div style="margin: 20px; font-size: medium">
+                                <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
+                                    bosh boshqarmasi XKKM</b></p>
+                                <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
+                                <p>MFO: <b style="color: blue">00014</b></p>
+                                <p>INN: <b style="color: blue">201122919</b></p>
                             </div>
+                            <hr>
                             <div class="text-right mt-3 mb-3 mr-4" data-html2canvas-ignore="true">
                                 {% if not application.service.organization %}
                                     <button class="btn btn-primary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
@@ -347,34 +403,6 @@
                                         class="fas fa-file-download"></i>
                                 </button>
                             </div>
-
-
-                            {#                                                        <table class="table table-bordered table-responsive">#}
-                            {#                                                            <thead class="thead-light">#}
-                            {#                                                            <tr>#}
-                            {#                                                                <th scope="col">Karta egasi</th>#}
-                            {#                                                                <th scope="col">Karta raqami</th>#}
-                            {#                                                                <th scope="col" style="width: 4%">Amal qilish muddati</th>#}
-                            {#                                                                <th scope="col">Yangi raqam</th>#}
-                            {#                                                                <th scope="col">Yangi tex passport</th>#}
-                            {#                                                                <th scope="col">Ro'yhatlash</th>#}
-                            {#                                                                <th scope="col">Qayta ro'yhatlash</th>#}
-                            {#                                                                <th scope="col"><b>Jami</b></th>#}
-                            {#                                                            </tr>#}
-                            {#                                                            </thead>#}
-                            {#                                                            <tbody>#}
-                            {#                                                            <tr>#}
-                            {#                                                                <th scope="row">Yoqubov Sirojidin</th>#}
-                            {#                                                                <td>9860 0230 5693 8972</td>#}
-                            {#                                                                <td><a href="#">05/23</a></td>#}
-                            {#                                                                <td>560 100 so'm</td>#}
-                            {#                                                                <td>350 000 so'm</td>#}
-                            {#                                                                <td>22 300 so'm</td>#}
-                            {#                                                                <td>44 600 so'm</td>#}
-                            {#                                                                <td><b>976 900 so'm</b></td>#}
-                            {#                                                            </tr>#}
-                            {#                                                            </tbody>#}
-                            {#                                                        </table>#}
                         </div>
                     </div>
                 </div>
@@ -440,6 +468,8 @@
 {% endblock content %}
 {% block bottom %}
     <script type="text/javascript">
+
+
         $('#collapseOne').collapse('show');
 
         $('.application_render_pdf').on('click', function () {
@@ -453,5 +483,64 @@
 
             html_to_pdf(element, filename)
         })
+        calc_total()
+
+        function calc_total() {
+            if (!String.prototype.trim) {
+                String.prototype.trim = function () {
+                    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                };
+            }
+
+            var sum = 0;
+            $(".state_payment").each(function () {
+                sum += parseFloat($(this).text().replace(/\s+/g, ''));
+            });
+            $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+        }
+
+        var token = getCookie('token'),
+            csrftoken = getCookie('csrftoken')
+
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                xhr.setRequestHeader('Authorization', `Token ${token}`)
+            },
+            error: function (response) {
+                if (response.status === 401) {
+                    tokenInvalid()
+                }
+            }
+        })
+
+        $('.payment_checkbox').on('change', function () {
+            let modify
+            if ($(this).prop('checked')) {
+                modify = true
+            } else {
+                modify = false
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "service:modify_payment_checkbox" %}',
+                data: {
+                    'modify': modify,
+                    'payment': $(this).data('payment'),
+                },
+                success: function (res) {
+                    if (res === 'True') {
+                        edit_toast()
+                    } else {
+                        errorFunction()
+                    }
+                },
+                error: function (err) {
+                    errorFunction()
+                }
+            })
+        })
+
     </script>
 {% endblock bottom %}

@@ -311,7 +311,7 @@
                                                 <div class="form-check">
                                                     <input type="checkbox" name="lost_number"
                                                            id="lost_number"
-                                                           class="form-check-input" />
+                                                           class="form-check-input"/>
                                                     <label class="form-check-label label"
                                                            for="lost_number"><b>Davlat raqam belgisi yo'qolgan</b> <i
                                                             class="fas fa-info-circle" data-toggle="tooltip"
@@ -413,7 +413,7 @@
                                     </div>
                                 </form>
                             </fieldset>
-                            <fieldset id="fieldset3-person">
+                            <fieldset id="fieldset3">
                                 <div class="form-card">
                                     <div class="row no-gutters d-flex justify-content-center">
                                         <div class="col-md-10">
@@ -447,14 +447,29 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <div class="state_duty_price">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="not_copy">Xizmat turi</th>
+                                                        <th>#</th>
+                                                        <th class="text-center not_copy">Narxi</th>
+                                                        <th class="text-center not_copy">Jami</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="col-md-9"><em>Elektron ariza shakllantirish</em></td>
+                                                        <td class="col-md-1" style="text-align: center"> 1</td>
+                                                        <td class="col-md-1 text-center">XXXXX</td>
+                                                        <td class="col-md-1 text-center">XXXXX</td>
+                                                    </tr>
 
-
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                                 <div class="text-right mt-3">
                                                     <button class="btn btn-primary col-12"
                                                             type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
-                                                        <span style="float:right;"><i
+                                                        <span style="float:right;">XXXXX so'm &nbsp&nbsp&nbsp<i
                                                                 class="fas fa-long-arrow-alt-right"></i></span>
                                                     </button>
                                                 </div>
@@ -465,39 +480,7 @@
                                 </div>
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-person" value="Oldingi"/>
-                                <a target="_blank" href="#"
-                                   class="action-button copy_application" style="padding: 0.7em !important;">
-                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
-                                </a>
-                            </fieldset>
-                            <fieldset id="fieldset3-legal">
-                                <div class="form-card">
-                                    <div class="alert alert-danger text-center"><b>Ushbu to'lovlarni hisob-raqamingizdan
-                                        pul ko'chirish
-                                        yo'li orqali to'lang!!!</b>
-                                    </div>
-                                    <div class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-12">
-
-                                            <div id="render_div" class="state_duty_price">
-
-                                            </div>
-
-                                            <div class="text-right mt-3" data-html2canvas-ignore="true">
-                                                <button id="payment_render_pdf"
-                                                        class="btn btn-secondary col-5 col-md-4 col-sm-4 col-lg-4 col-xl-4 m-2">
-                                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-                                                        class="fas fa-file-download"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3-legal" value="Oldingi"/>
+                                       id="prev3" value="Oldingi"/>
                                 <a target="_blank" href="#"
                                    class="action-button copy_application" style="padding: 0.7em !important;">
                                     Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
@@ -569,8 +552,8 @@
                 $('#old_number').inputmask({casing: 'upper'});
                 $('#old_technical_passport').inputmask({casing: 'upper'});
 
-                {#$('#fieldset1').hide()#}
-                {#$('#fieldset2').show()#}
+                $('#fieldset1').hide()
+                $('#fieldset3').show()
                 var is_legal = false,
                     passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
                     firstName = htmlDecode('{{ request.user.first_name }}'),
@@ -722,9 +705,8 @@
                 })
 
 
-                $(document).on('click', '#prev3-legal, #prev3-person', function () {
-                    $('#fieldset3-legal').hide()
-                    $('#fieldset3-person').hide()
+                $(document).on('click', '#prev3', function () {
+                    $('#fieldset3').hide()
                     $('#fieldset2').show()
                 })
 
@@ -738,11 +720,8 @@
 
                 $('#refresh_next2').on('click', function (e) {
                     $('#fieldset2').hide()
-                    if (is_legal === true) {
-                        $('#fieldset3-legal').show()
-                    } else {
-                        $('#fieldset3-person').show()
-                    }
+
+                        $('#fieldset3').show()
 
                 })
 
@@ -902,17 +881,15 @@
                                 data: $(form).serialize(),
                                 success: function (response) {
                                     if (typeof response === 'object') {
-                                        if (response.application && response.html) {
+                                        if (response.application) {
 
                                             $('#next2').remove()
                                             $('#refresh_next2').css('display', 'block')
                                             $('#fieldset2').hide()
 
-                                            if (is_legal === true) {
-                                                $('#fieldset3-legal').show()
-                                            } else {
-                                                $('#fieldset3-person').show()
-                                            }
+
+                                                $('#fieldset3').show()
+
 
 
                                             $('#fieldset3').show()
@@ -941,7 +918,6 @@
                                             $('#is_old_number').attr("disabled", "disabled")
                                             $('#lost_number').attr("disabled", "disabled")
 
-                                            $('.state_duty_price').html(response.html)
                                             $('.copy_application').data('filename', response.application)
 
                                         } else {

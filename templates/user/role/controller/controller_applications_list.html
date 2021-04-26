@@ -67,9 +67,13 @@
                                     <td class="text-center">{% if application.service.car.is_technical_confirm %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
-                                    <td class="text-center">{% if application.is_payment %}
+                                    <td class="text-center">
+                                        <a href="{% url 'application:view_payments' application.service.id %}">
+                                        {% if application.is_payment %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                        <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                        <i style="color: red" class="far fa-times-circle"></i>{% endif %}
+                                        </a>
+                                    </td>
                                     <td>{% if application.service.organization %}
                                         <a href="{% url 'user:view_organization_data' application.service.organization.id %}">{{ application.service.organization }}</a>{% else %}
                                         <a href="{% url 'user:view_personal_data' application.created_user.id %}">{{ application.created_user }}</a>{% endif %}
@@ -104,11 +108,6 @@
                                 </tr>
                             {% endfor %}
                             </tbody>
-
-
-                            <tfoot>
-
-                            </tfoot>
                         </table>
                     </div>
                 {% endif %}
@@ -133,12 +132,14 @@
             $("#example1").DataTable({
                 "responsive": true,
                 "autoWidth": false,
+                "ordering": true,
+                "order": [[0, "desc"]]
             });
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
@@ -186,7 +187,6 @@
                             url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
                             success: function (response) {
                                 if (SelectedProcess === 'confirm') {
-
                                     if (is_replace_number) {
                                         process_confirm_replace_number(success_url, cancel_url, applicationId, response)
                                     } else {

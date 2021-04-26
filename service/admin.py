@@ -10,7 +10,17 @@ class ServiceAdmin(admin.ModelAdmin):
     list_filter = ['person_type' , 'created_date', 'contract_date']
     search_fields = ['title', 'seriya']
 
+@admin.register(StateDuty)
+class StateDutyAdmin(admin.ModelAdmin):
+    # formfield_overrides = {
+    #     models.IntegerField: {'widget': NumberInput(attrs={'size': '300'})},
+    # }
 
+    list_display = ['id', 'title','payment', 'created_user',  'created_date', 'updated_date']
+    search_fields = ['title', 'payment']
+    list_filter = ['title']
+    list_display_links = ['id','title']
+    save_on_top = True
 
 @admin.register(StateDutyPercent)
 class StateDutyPercentAdmin(admin.ModelAdmin):

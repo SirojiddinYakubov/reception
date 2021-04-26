@@ -26,6 +26,7 @@ class Service(models.Model):
     car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True, related_name='service_car')
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 
+
     def __str__(self):
         return self.get_title_display()
 
@@ -45,6 +46,23 @@ STATE_DUTY_TITLE = (
     ('7', 'Jarima')
 )
 
+class StateDuty(models.Model):
+    service = models.ForeignKey(Service, verbose_name="Xizmat nomi", on_delete=models.CASCADE, null=True, blank=True,
+                                related_name='state_duty_service')
+    title = models.CharField(max_length=20, choices=STATE_DUTY_TITLE, null=True,blank=True)
+    payment = models.IntegerField(verbose_name="To'lovi", default=0)
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(default=timezone.now)
+    created_user = models.ForeignKey(User,verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True, blank=True)
+    is_paid = models.BooleanField(default=False, verbose_name="To'langan")
+    score = models.ForeignKey('StateDutyScore', verbose_name='Hisob raqam', on_delete=models.SET_NULL, related_name="state_duty_score", null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    def __str__(self):
+        return f"{self.get_title_display()} : {self.payment} so'm"
+
+    class Meta:
+        verbose_name = 'Davlat boj to\'lovi'
+        verbose_name_plural = 'Davlat boj to\'lovlari'
 
 class StateDutyPercent(models.Model):
     # service = models.CharField(max_length=50, choices=SERVICE_CHOICES, blank=True, null=True)

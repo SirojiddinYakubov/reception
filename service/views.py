@@ -12,7 +12,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from application.models import *
-from service.models import StateDutyPercent
+from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 
@@ -414,8 +414,8 @@ class Save_Contract_Of_Sale(APIView):
             # struct = json.loads(app)
             # data = json.dumps(struct[0])
             # return HttpResponse(data, content_type='json')
+
             context = {
-                'html': calculation_state_duty_service_price(service),
                 'application': application.file_name
             }
 
@@ -805,4 +805,49 @@ class Save_Re_Equipment(APIView):
             data = json.dumps(context)
             return HttpResponse(data, content_type='json')
         else:
+            return HttpResponse(False)
+
+@permission_classes([IsAuthenticated])
+class Modify_Payment_Checkbox(APIView):
+    def post(self, request):
+        try:
+            if request.user.role == '2' or request.user.role == '3':
+                get_payment = request.POST.get('payment')
+                modify = request.POST.get('modify')
+
+                if modify == 'true':
+                    modify = True
+                else:
+                    modify = False
+
+                payment = StateDuty.objects.get(id=get_payment)
+                if payment:
+                    payment.is_paid = modify
+
+                    service = Service.objects.get(id=payment.service.id)
+                    if service:
+                        application = Application.objects.get(id=service.application_service.first().id)
+                        if application:
+                            payments = StateDuty.objects.filter(service=service)
+                            if payments.exists():
+                                payment.save()
+                                if all(payment.is_paid for payment in payments):
+                                    application.is_payment = True
+                                    application.save()
+                                else:
+                                    application.is_payment = False
+                                    application.save()
+
+                                return HttpResponse(True)
+                            else:
+                                return HttpResponse(False)
+                        else:
+                            return HttpResponse(False)
+                    else:
+                        return HttpResponse(False)
+                else:
+                    return HttpResponse(False)
+            else:
+                return HttpResponse(False)
+        except:
             return HttpResponse(False)

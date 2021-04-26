@@ -21,6 +21,7 @@ from rest_framework.views import APIView
 
 from application.models import *
 from reception.settings import BASE_DIR, SMS_LOGIN, SMS_TOKEN
+from service.models import StateDuty
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 from user.utils import render_to_pdf
@@ -39,24 +40,25 @@ def applications_list(request):
         region = request.user.section.region
         districts = request.user.section.district.all()
 
-        qs = Application.objects.filter(
-            Q(Q(created_user__region=region) & Q(created_user__district__in=districts) & Q(service__organization__isnull=True)) | Q(
+        qs = Application.objects.filter( Q(Q(created_user__region=region) & Q(created_user__district__in=districts) & Q(service__organization__isnull=True)) | Q(
                 Q(service__organization__legal_address_region=region) & Q(service__organization__legal_address_district__in=districts) & Q(
-                    service__organization__isnull=False)))
+                    service__organization__isnull=False))).filter(Q(is_active=True) & Q(is_block=False))
+        for app in qs:
+            print(app.is_block)
         template = 'user/role/controller/controller_applications_list.html'
     elif request.user.role == '4' or request.user.role == '5':
         region = request.user.section.region
         districts = request.user.section.district.all()
 
-        qs = Application.objects.filter(
+        qs = Application.objects.filter(Q(is_active=True) & Q(is_block=False) &
             Q(Q(created_user__region=region) & Q(created_user__district__in=districts) & Q(
                 service__organization__isnull=True)) | Q(
                 Q(service__organization__legal_address_region=region) & Q(
                     service__organization__legal_address_district__in=districts) & Q(
-                    service__organization__isnull=False)))
+                    service__organization__isnull=False))).filter(Q(is_active=True) & Q(is_block=False))
         template = 'user/role/technical/technical_applications_list.html'
     else:
-        qs = Application.objects.filter(created_user=request.user)
+        qs = Application.objects.filter(Q(is_active=True) & Q(created_user=request.user))
         template = 'application/applications_list.html'
 
     if request.method == "GET":
@@ -133,7 +135,9 @@ def application_detail(request, id):
         if application.created_user != request.user:
             return redirect(reverse_lazy('application:applications_list'))
 
-    payments = calculation_state_duty_service_price(application.service)
+    payments = StateDuty.objects.filter(service=application.service)
+    if not payments.exists():
+        calculation_state_duty_service_price(application.service)
 
     context = {
         'application': application,
@@ -151,8 +155,12 @@ def application_pdf(request, id):
         return redirect(reverse_lazy('user:custom_logout'))
 
     application = get_object_or_404(Application, id=id)
-    region = get_object_or_404(Region, id=application.created_user.region.id)
 
+
+    if request.user.role == '1':
+        section = Section.objects.get(region=request.user.region, district=request.user.district)
+    else:
+        section = Section.objects.get(id=request.user.section.id)
     # import qrcode
     #
     # qr = qrcode.QRCode(
@@ -174,7 +182,7 @@ def application_pdf(request, id):
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
         'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
         'app': application,
-        'region': region,
+        'section': section,
         # 'filepath': f"<img src='http://127.0.0.1:8000/media/applications/qrcodes/{filename}.jpg' alt='12345'>"
     }
 
@@ -218,6 +226,10 @@ def create_application_doc(request, filename):
         return redirect(reverse_lazy('user:custom_logout'))
 
     application = get_object_or_404(Application, file_name=filename)
+
+    if application.is_block:
+        messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani faollashtirishingiz talab etiladi!')
+        return redirect(reverse_lazy('application:application_detail',kwargs={'id': application.id}))
     service = get_object_or_404(Service, id=application.service.id)
     if request.user.role == '1':
         section = Section.objects.get(region=request.user.region, district=request.user.district)
@@ -325,6 +337,31 @@ def view_service_data(request, service_id):
     }
     return render(request, 'service/view_service_data.html', context)
 
+
+@login_required
+def view_payments(request, service_id):
+    try:
+        token = request.COOKIES.get('token')
+        Token.objects.get(key=token)
+    except ObjectDoesNotExist:
+        return redirect(reverse_lazy('user:custom_logout'))
+
+    service = get_object_or_404(Service, id=service_id)
+    application = get_object_or_404(Application, id=service.application_service.all().first().id)
+    payments = StateDuty.objects.filter(service=service, is_active=True)
+    if request.user.role == '1':
+        section = Section.objects.get(region=request.user.region, district=request.user.district)
+    else:
+        section = Section.objects.get(id=request.user.section.id)
+
+    if (request.user.role == '1' and application.created_user != request.user) or ((request.user.role == '2' or request.user.role == '3') and (request.user.section != section)):
+        return render(request, '_parts/404.html')
+
+    context = {
+        'service': service,
+        'payments': payments
+    }
+    return render(request, 'application/view_payments.html', context)
 
 @login_required
 def change_get_request(request, key, value):
