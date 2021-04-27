@@ -27,10 +27,14 @@
                     </tr>
 
                     <tr>
-                        <th scope="row">Yuridik manzili:</th>
-                        <td>{% if organization.legal_address %}{{ organization.legal_address }}{% endif %}</td>
+                        <th scope="row">Yuridik manzil(Viloyat):</th>
+                        <td>{% if organization.legal_address_region %}{{ organization.legal_address_region }}{% endif %}</td>
                     </tr>
 
+                <tr>
+                        <th scope="row">Yuridik manzil(Tuman):</th>
+                        <td>{% if organization.legal_address_district %}{{ organization.legal_address_district }}{% endif %}</td>
+                    </tr>
                      <tr>
                         <th scope="row">Garaj manzili:</th>
                         <td>{% if organization.address_of_garage %}{{ organization.address_of_garage }}{% endif %}</td>
@@ -39,16 +43,6 @@
                     <tr>
                         <th scope="row">STIR raqami:</th>
                         <td>{% if organization.identification_number %}{{ organization.identification_number }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Guvohnoma surati:</th>
-                        <td>{% if organization.certificate_photo %}<a target="_blank" download="download" href="{{ organization.certificate_photo.url }}">Yuklab olish</a>{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Litsenziya surati:</th>
-                        <td>{% if organization.license_photo %}<a target="_blank" download="download" href="{{ organization.license_photo.url }}">Yuklab olish</a>{% endif %}</td>
                     </tr>
 
                     <tr>

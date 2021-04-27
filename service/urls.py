@@ -26,5 +26,5 @@ urlpatterns = [
 
 
 
-    path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
+
 ]

@@ -11,9 +11,13 @@ urlpatterns = [
     path('get-information/', get_information, name='get_information'),
     path('create-application-doc/<str:filename>/', create_application_doc, name='create_application_doc'),
     path('view-service-data/<int:service_id>/', view_service_data, name='view_service_data'),
-    path('view-payments/<int:service_id>/', view_payments, name='view_payments'),
+
     path('change-get-request/<str:key>/<str:value>/', change_get_request, name='change_get_request'),
     path('confirm-application-data/', ConfirmApplicationData.as_view(), name='confirm_application_data'),
     path('get-given-number/<int:id>/', GetGivenNumber.as_view(), name='get_given_number'),
     path('remove-application/', RemoveApplication.as_view(), name='remove_application'),
+
+    path('payment-detail/<int:service_id>/', payment_detail, name='payment_detail'),
+    path('payments/', payments, name='payments'),
+    path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
 ]

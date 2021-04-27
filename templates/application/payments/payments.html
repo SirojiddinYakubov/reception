@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load humanize %}
+{% load service_tags %}
+{% block content %}
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>Davlat boj to'lovlari</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        {% include '_parts/messages.html' %}
+        <form class="form-group mb-3" id="payments_filter_form" method="GET"
+              action="{% url 'application:payments' %}">
+            <div class="row">
+                <div class="col-12 col-md-4 col-sm-4 col-lg-4 col-xl-4">
+                    <label class="text-dark" for="startdate">Boshlanish:</label>
+                    <input type="date" id="startdate" class="form-control"
+                           name="startdate"
+                           {% if startdate %}value="{{ startdate }}"{% endif %}>
+                </div>
+                <div class="col-12 col-md-4 col-sm-4 col-lg-4 col-xl-4">
+                    <label class="text-dark" for="stopdate">Tugash:</label>
+                    <input type="date" id="stopdate"
+                           class="form-control"
+                           name="stopdate"
+                           {% if stopdate %}value="{{ stopdate }}"{% endif %}>
+                </div>
+                <div class="col-12 col-md-4 col-sm-4 col-lg-4 col-xl-4">
+                    <label class="text-dark" style="width: 100%" for="district">Tuman/Shahar:</label>
+                    <select name="district"
+                            class="form-control" id="district">
+                        <option value="all">Barchasi</option>
+                        {% for district in districts_list %}
+                            <option {% if request.GET.district == district.id|stringformat:"i" %}selected{% endif %}
+                                    value="{{ district.id }}">{{ district.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {#                <div class="col-md-3" style="margin-top: 1.9rem; text-align: center">#}
+                {#                    <button type="submit" class="btn btn-info"#}
+                {#                            style="padding: 1.5% 10% 1.5% 10% !important;">#}
+                {#                        Filtrlash#}
+                {#                    </button>#}
+                {#                </div>#}
+            </div>
+        </form>
+        <div class="row justify-content-center">
+
+            <!-- left column -->
+            <div class="col-md-12">
+
+                <div class="panel-body" id="render_div">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Davlat boji nomi</th>
+                            <th scope="col">Hisoblangan</th>
+                            <th scope="col">To'langan</th>
+                            <th scope="col">Qarzdorlik</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pay in pays %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <th scope="row" data-key="{{ pay.0 }}">{{ pay.1 }}</th>
+                                {% get_calculated_payments pay.0 as calculated_pay %}
+                                <td><b class="calculated_pay">{{ calculated_pay|intcomma }}</b></td>
+                                {% get_paid_payments pay.0 as paid_pay %}
+                                <td><b class="paid_pay text-green">{{ paid_pay|intcomma }}</b></td>
+                                {% get_unpaid_payments pay.0 as unpaid_pay %}
+                                <td>
+                                    <b class="unpaid_pay text-danger">{{ unpaid_pay|intcomma }}</b>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                        <tfoot style="background: lightgray">
+                        <tr>
+                            <th></th>
+                            <th>Jami:</th>
+
+                            <th><b id="calculated_pay_total"></b> so'm</th>
+                            <th><b id="paid_pay_total" class="text-green"></b> so'm</th>
+                            <th><b id="unpaid_pay_total" class="text-danger"></b> so'm</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bottom %}
+    <script type="text/javascript" charset="UTF-8">
+        $(document).ready(function () {
+            calc_total()
+
+            function calc_total() {
+                if (!String.prototype.trim) {
+                    String.prototype.trim = function () {
+                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                    };
+                }
+
+                var calculated_sum = 0;
+                $(".calculated_pay").each(function () {
+                    calculated_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#calculated_pay_total').text(calculated_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+                var paid_sum = 0;
+                 $(".paid_pay").each(function () {
+                    paid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                  $('#paid_pay_total').text(paid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+                  var unpaid_sum = 0;
+                 $(".unpaid_pay").each(function () {
+                    unpaid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                  $('#unpaid_pay_total').text(unpaid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+
+            }
+
+            $('#district').on('change', function () {
+                $('#payments_filter_form').submit()
+            })
+
+            $('#startdate').on('blur', function () {
+                $('#payments_filter_form').submit()
+            })
+
+            $('#stopdate').on('blur', function () {
+                $('#payments_filter_form').submit()
+            })
+        })
+    </script>
+{% endblock bottom %}

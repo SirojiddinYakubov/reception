@@ -805,7 +805,7 @@ input[type='checkbox'] {
     flex: 1 1 auto !important;
 }
 
-.input-group >  .selectize-input {
+.input-group > .selectize-input {
     height: 100%;
     line-height: inherit;
     padding: 0.5rem 1rem;
@@ -825,3 +825,8 @@ input[type='checkbox'] {
 /*    height: unset !important;*/
 /*    */
 /*}*/
+
+
+
+
+

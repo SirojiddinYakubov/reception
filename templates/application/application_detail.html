@@ -524,7 +524,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{% url "service:modify_payment_checkbox" %}',
+                url: '{% url "application:modify_payment_checkbox" %}',
                 data: {
                     'modify': modify,
                     'payment': $(this).data('payment'),

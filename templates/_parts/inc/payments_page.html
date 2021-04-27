@@ -1,0 +1,8 @@
+<li class="nav-item has-treeview">
+    <a href="{% url 'application:payments' %}" class="nav-link {% if request.resolver_match.url_name == 'payments' or request.resolver_match.url_name == 'payment_detail' %}active{% endif %}">
+        &nbsp<i class="fas fa-coins"></i>
+        <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;To'lovlar
+        </p>
+    </a>
+</li>

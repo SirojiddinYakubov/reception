@@ -68,7 +68,7 @@
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
                                     <td class="text-center">
-                                        <a href="{% url 'application:view_payments' application.service.id %}">
+                                        <a href="{% url 'application:payment_detail' application.service.id %}">
                                         {% if application.is_payment %}
                                         <i style="color: green" class="far fa-check-circle"></i>{% else %}
                                         <i style="color: red" class="far fa-times-circle"></i>{% endif %}
