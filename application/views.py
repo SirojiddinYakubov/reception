@@ -501,12 +501,12 @@ def payments(request):
         region = request.user.section.region
         districts_list = request.user.section.district.all()
 
-        services = Service.objects.filter(Q(Q(application_service__created_user__region=region) & Q(
-            application_service__created_user__district__in=districts_list) & Q(
-            organization__isnull=True)) | Q(
-            Q(organization__legal_address_region=region) & Q(organization__legal_address_district__in=districts_list) & Q(
-                organization__isnull=False))).filter(
-            Q(application_service__is_active=True) & Q(application_service__is_block=False))
+        # services = Service.objects.filter(Q(Q(application_service__created_user__region=region) & Q(
+        #     application_service__created_user__district__in=districts_list) & Q(
+        #     organization__isnull=True)) | Q(
+        #     Q(organization__legal_address_region=region) & Q(organization__legal_address_district__in=districts_list) & Q(
+        #         organization__isnull=False))).filter(
+        #     Q(application_service__is_active=True) & Q(application_service__is_block=False))
 
         context = {
             'region': region,
@@ -514,28 +514,28 @@ def payments(request):
             'pays': STATE_DUTY_TITLE
         }
 
-        startdate = timezone.now().replace(year=2021,month=1,day=1)
-        stopdate = timezone.now()
+        # startdate = timezone.now().replace(year=2021,month=1,day=1)
+        # stopdate = timezone.now()
         # stopdate = datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE)
 
         if request.method == 'GET':
             try:
                 if request.GET.get('startdate') and request.GET.get('startdate') != 'None' and request.GET.get('startdate') != '':
-                    startdate = dt.strptime(request.GET.get('startdate'), "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
+                    # startdate = dt.strptime(request.GET.get('startdate'), "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
                     context.update(startdate=request.GET.get('startdate'))
                 if request.GET.get('stopdate') and request.GET.get('stopdate') != 'None' and request.GET.get('stopdate') != '':
-                    stopdate = dt.strptime(request.GET.get('stopdate'), '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
+                    # stopdate = dt.strptime(request.GET.get('stopdate'), '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
                     context.update(stopdate=request.GET.get('stopdate'))
-                if request.GET.get('district') and request.GET.get('district') != 'all':
-                    districts = District.objects.filter(id=request.GET.get('district'))
-                    context.update(districts=districts)
-                else:
-                    context.update(districts=districts_list)
+                # if request.GET.get('district') and request.GET.get('district') != 'all':
+                #     districts = District.objects.filter(id=request.GET.get('district'))
+                #     context.update(districts=districts)
+                # else:
+                #     context.update(districts=districts_list)
             except:
                 messages.error(request, 'Xatolik yuz berdi! Sanani tanlashda xatolik!')
                 return render(request, 'application/payments/payments.html', context)
-        payments = StateDuty.objects.filter(Q(is_active=True) & Q(service__in=services) & Q(created_date__range=[startdate, stopdate]))
-        context.update(payments=payments)
+        # payments = StateDuty.objects.filter(Q(is_active=True) & Q(service__in=services) & Q(created_date__range=[startdate, stopdate]))
+        # context.update(payments=payments)
         return render(request, 'application/payments/payments.html', context)
     else:
         return render(request, '_parts/404.html')

@@ -47,7 +47,8 @@ def get_calculated_payments(context, state_duty_id):
             Q(service__organization__legal_address_region=region) & Q(
                 service__organization__legal_address_district__in=districts) & Q(
                 service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]))
+            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
+                service__application_service__is_active=True) & Q(service__application_service__is_block=False))
 
         total = 0
         for payment in payments:
@@ -92,7 +93,9 @@ def get_paid_payments(context, state_duty_id):
             Q(service__organization__legal_address_region=region) & Q(
                 service__organization__legal_address_district__in=districts) & Q(
                 service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(is_paid=True))
+            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
+                is_paid=True) & Q(service__application_service__is_active=True) & Q(
+                service__application_service__is_block=False))
 
         total = 0
         for payment in payments:
@@ -103,7 +106,7 @@ def get_paid_payments(context, state_duty_id):
 
 
 @register.simple_tag(takes_context=True)
-def get_unpaid_payments(context,state_duty_id):
+def get_unpaid_payments(context, state_duty_id):
     try:
         request = context.get('request')
         startdate = timezone.now().replace(year=2021, month=1, day=1)
@@ -137,7 +140,9 @@ def get_unpaid_payments(context,state_duty_id):
             Q(service__organization__legal_address_region=region) & Q(
                 service__organization__legal_address_district__in=districts) & Q(
                 service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(is_paid=False))
+            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
+                is_paid=False) & Q(service__application_service__is_active=True) & Q(
+                service__application_service__is_block=False))
 
         total = 0
         for payment in payments:
