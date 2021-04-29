@@ -94,25 +94,69 @@
     <script type="text/javascript" charset="UTF-8">
         $(document).ready(function () {
             calc_total()
-            function calc_total() {
-            if (!String.prototype.trim) {
-                String.prototype.trim = function () {
-                    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-                };
-            }
 
-            var sum = 0;
-            $(".state_payment").each(function () {
-                sum += parseFloat($(this).text().replace(/\s+/g, ''));
-            });
-            $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
-        }
+            function calc_total() {
+                if (!String.prototype.trim) {
+                    String.prototype.trim = function () {
+                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                    };
+                }
+
+                var sum = 0;
+                $(".state_payment").each(function () {
+                    sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+            }
 
             $('#payment_render_pdf').on('click', function () {
                 var element = document.getElementById('render_div'),
                     filename = `To'lov`
 
                 html_to_pdf(element, filename)
+            })
+
+            var token = getCookie('token'),
+                csrftoken = getCookie('csrftoken')
+
+            $.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    xhr.setRequestHeader('Authorization', `Token ${token}`)
+                },
+                error: function (response) {
+                    if (response.status === 401) {
+                        tokenInvalid()
+                    }
+                }
+            })
+
+            $('.payment_checkbox').on('change', function () {
+                let modify
+                if ($(this).prop('checked')) {
+                    modify = true
+                } else {
+                    modify = false
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "application:modify_payment_checkbox" %}',
+                    data: {
+                        'modify': modify,
+                        'payment': $(this).data('payment'),
+                    },
+                    success: function (res) {
+                        if (res === 'True') {
+                            edit_toast()
+                        } else {
+                            errorFunction()
+                        }
+                    },
+                    error: function (err) {
+                        errorFunction()
+                    }
+                })
             })
         })
     </script>
