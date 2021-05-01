@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'django.contrib.humanize'
+    'django.contrib.humanize',
+    'django_crontab',
 
 ]
 
@@ -240,3 +241,7 @@ PHONE_MAX_AGE = 1800        #ro'yhatdan o'tish qismidagi cookiedagi raqamning um
 MINIMUM_BASE_WAGE = 245000  #eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
 SMS_LOGIN = 'jj39k'
 SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
+
+CRONJOBS = [
+    ('*/1 * * * *', '../cron.crontab_function')
+]
