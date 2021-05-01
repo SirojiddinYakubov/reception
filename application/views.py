@@ -188,12 +188,15 @@ def application_pdf(request, id):
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
-    img.save(f'media/applications/qrcodes/{application.id}.jpg')
 
     if request.META['HTTP_HOST'] == '127.0.0.1:8000':
+        img.save(f'media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
         img_path = f'H:{os.sep}django_projects{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg'
     else:
+        img.save(
+            f'{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
         img_path = f"{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg"
+
 
     context = {
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
