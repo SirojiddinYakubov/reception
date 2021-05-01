@@ -1,9 +1,12 @@
+from base64 import decodestring
 from datetime import timezone, datetime, timedelta
 from datetime import datetime as dt
 import datetime
 import json
 import os
 import random
+
+
 import pytz
 import requests
 from django.contrib import messages
@@ -173,27 +176,31 @@ def application_pdf(request, id):
         section = Section.objects.get(region=request.user.region, district=request.user.district)
     else:
         section = Section.objects.get(id=request.user.section.id)
-    # import qrcode
-    #
-    # qr = qrcode.QRCode(
-    #     version=1,
-    #     error_correction=qrcode.constants.ERROR_CORRECT_L,
-    #     box_size=10,
-    #     border=4,
-    # )
-    # qr.add_data(request.build_absolute_uri())
-    #
-    # qr.make(fit=True)
-    #
-    # img = qr.make_image(fill_color="black", back_color="white")
-    # img.save(f"media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg", "JPEG")
+
+    import qrcode
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(request.build_absolute_uri())
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    img.save(f'media/applications/qrcodes/{application.id}.jpg')
+
+    if request.META['HTTP_HOST'] == '127.0.0.1:8000':
+        img_path = f'H:{os.sep}django_projects{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg'
+    else:
+        img_path = f"{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg"
 
     context = {
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
         'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
         'app': application,
         'section': section,
-        # 'filepath': f"<img src='http://127.0.0.1:8000/media/applications/qrcodes/{filename}.jpg' alt='12345'>"
+        'img_path': img_path
     }
 
     template_name = 'application/application_detail_pdf.html'
