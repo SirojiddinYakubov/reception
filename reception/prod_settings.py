@@ -46,7 +46,3 @@ logger.add(sys.stderr, format="{time} {level} {messege}", level="DEBUG")
 # logger.info('INFO')
 # logger.error('ERROR')
 
-
-CRONJOBS = [
-    ('*/1 * * * *', 'application.cron.application_crontab',)
-]

@@ -242,3 +242,7 @@ MINIMUM_BASE_WAGE = 245000  #eng kam bazaviy hisoblash ish xaqi 01.02.2021 holat
 SMS_LOGIN = 'jj39k'
 SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
 
+
+CRONJOBS = [
+    ('*/1 * * * *', 'application.cron.application_crontab',)
+]
