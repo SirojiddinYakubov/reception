@@ -48,5 +48,5 @@ logger.add(sys.stderr, format="{time} {level} {messege}", level="DEBUG")
 
 
 CRONJOBS = [
-    ('*/1 * * * *', 'application.cron.application_crontab', '>> /home/pyth/reception/logs/contrab.log')
+    ('*/1 * * * *', 'application.cron.application_crontab',)
 ]
