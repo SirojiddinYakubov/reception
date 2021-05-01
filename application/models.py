@@ -12,7 +12,11 @@ PROCESS_CHOICES =  (
     ("3", "Rad etish"),
 
 )
-
+CRON_COICES = (
+    ('1', '3 days inside'),
+    ('2', '7 days before'),
+    ('3', '7 days after'),
+)
 
 
 
@@ -32,6 +36,7 @@ class Application(models.Model):
     canceled_date = models.DateTimeField(verbose_name='Rad etilgan vaqti', null=True,blank=True)
     is_active = models.BooleanField(default=True)
     is_block = models.BooleanField(default=True)
+    cron = models.CharField(choices=CRON_COICES,max_length=15, verbose_name="CRON holati", default=1)
 
     class Meta:
         verbose_name = 'Ariza'

@@ -31,6 +31,19 @@ from user.utils import render_to_pdf
 
 @login_required
 def applications_list(request):
+    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=['1','3']))
+
+    for application in applications:
+
+        #Rad etilgan ariza 30 kundan so'ng o'chirib yuboriladi
+        if application.process == '3' and not application.is_block and timezone.now() - timedelta(days=30) > application.created_date:
+            application.delete()
+
+
+
+
+
+
     try:
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
