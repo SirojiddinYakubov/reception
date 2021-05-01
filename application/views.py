@@ -184,7 +184,7 @@ def application_pdf(request, id):
         box_size=10,
         border=4,
     )
-    qr.add_data(request.build_absolute_uri())
+    qr.add_data(f'/application/application-detail/{application.id}?password={application.password}')
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
@@ -193,8 +193,7 @@ def application_pdf(request, id):
         img.save(f'media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
         img_path = f'H:{os.sep}django_projects{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg'
     else:
-        img.save(
-            f'{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
+        img.save(f'{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
         img_path = f"{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg"
 
 
