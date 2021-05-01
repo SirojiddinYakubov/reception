@@ -184,7 +184,7 @@ def application_pdf(request, id):
         box_size=10,
         border=4,
     )
-    qr.add_data(f'/application/application-detail/{application.id}?password={application.password}')
+    qr.add_data(f'{request.META["HTTP_HOST"]}{os.sep}application{os.sep}application-detail{os.sep}{application.id}{os.sep}?password={application.password}')
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
