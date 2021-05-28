@@ -21,3 +21,5 @@ contract_of_sale/migrations/
 customs_certificate/migrations/
 gift_agreement/migrations/
 service/migrations/
+click/migrations/
+paycom/migrations/
