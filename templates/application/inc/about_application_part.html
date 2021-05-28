@@ -1,0 +1,59 @@
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <th scope="row">Ariza raqami:</th>
+        <td>{{ application.id }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Tekshirish uchun parol:</th>
+        <td class="text-danger">{{ application.password }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Xizmat nomi:</th>
+        <td>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
+            {% else %}
+                <p>{{ application.service.get_title_display }}</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% if application.service.seriya %}
+     <tr>
+            <th scope="row">Xizmat turi seriyasi va raqami:</th>
+        <td>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
+            {% else %}
+                <p>{{ application.service.get_title_display }}</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th scope="row">Yaratdi:</th>
+        <td>{{ application.created_user }}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Ariza nusxasi</th>
+        <td>
+            <a href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
+                olish</a>
+        </td>
+    </tr>
+
+    <tr>
+        <th scope="row">Ariza haqida ma'lumot</th>
+        <td><a style="cursor: pointer; color: #007bff"
+               class="application_render_pdf"
+               data-application="{{ application.id }}">Yuklab olish</a>
+        </td>
+    </tr>
+
+    <tr>
+        <th scope="row">Berilgan sana:</th>
+        <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+    </tr>
+    </tbody>
+</table>

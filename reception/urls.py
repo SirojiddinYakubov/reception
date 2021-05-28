@@ -16,15 +16,19 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.authtoken.views import obtain_auth_token
 
 from reception import settings
 from user.views import HelloView, CustomAuthToken
 
-urlpatterns = [
 
-    path('service/', include('service.urls')),
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
+urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sentry-debug/', trigger_error),
+    path('service/', include('service.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('user.urls')),
     path('application/', include('application.urls')),
@@ -33,6 +37,9 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls.jwt')),
     # path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
+    path('payme/', include('paycom.urls')),
+    path('click/', include('click.urls')),
+    path('payments/', include('payments.urls')),
 ]
 
 if settings.DEBUG:

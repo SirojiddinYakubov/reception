@@ -3,6 +3,7 @@ import datetime
 from urllib.parse import urlencode
 
 from django import template
+from django.urls import reverse
 from django.utils import timezone
 
 register = template.Library()
@@ -82,3 +83,11 @@ register = template.Library()
 #         print('else')
 #         # mavjud emas
 #         return f"?{key}={value}"
+
+
+# @register.inclusion_tag('application/application_detail_pdf.html', takes_context=True)
+# def get_qrcode_image(context):
+#     # request = context.get('request')
+#     # url = reverse('application:qr_code_generate')
+#     # print(url)
+#     return None

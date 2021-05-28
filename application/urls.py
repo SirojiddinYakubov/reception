@@ -20,4 +20,11 @@ urlpatterns = [
     path('payment-detail/<int:service_id>/', payment_detail, name='payment_detail'),
     path('payments/', payments, name='payments'),
     path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
+
+    path('generate-qr-code-image/<int:id>/', generate_qr_code_image, name='generate_qr_code_image'),
+
+    path('check-application-status/<int:id>/', check_application_status, name='check_application_status'),
+
+    path('access-with-qrcode/<int:id>/', access_with_qrcode, name='access_with_qrcode'),
+
 ]

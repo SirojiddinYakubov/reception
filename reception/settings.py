@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'djoser',
     'django.contrib.humanize',
     'django_crontab',
+    'paycom',
+    'click',
+    'clickuz',
+    'payments',
 
 ]
 
@@ -247,3 +251,42 @@ CRONJOBS = [
     # ('0 */2 * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
     ('*/1 * * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
 ]
+
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "602a69da2f3eb10fc98597ee",  # token
+    "TOKEN": "602a69da2f3eb10fc98597ee",  # token
+    "SECRET_KEY": "dZp&k%s@Qm72ADXHdbK4EWnRrEf&R@xmnUvk",  # password
+    "ACCOUNTS": {
+        "KEY": "order"
+    }
+}
+
+
+CLICK_SETTINGS = {
+    'service_id': 17367,
+    'merchant_id': 12584,
+    'secret_key': 'tVhBORlLRo8AN',
+    'merchant_user_id': 18969,
+}
+
+PAYMENT_HOST = '81.177.139.231:443'
+PAYMENT_USES_SSL = True  # set the True value if you are using the SSL
+PAYMENT_MODEL = 'user.Payment'
+
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://5a04cc3b80bf465ba822bc1cbab24b9c@o732152.ingest.sentry.io/5787270",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

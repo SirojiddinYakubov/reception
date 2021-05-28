@@ -24,6 +24,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
+from application.generators import *
 from application.models import *
 from reception.settings import BASE_DIR, SMS_LOGIN, SMS_TOKEN, LOCAL_TIMEZONE
 from service.models import StateDuty, STATE_DUTY_TITLE
@@ -177,36 +178,18 @@ def application_pdf(request, id):
     else:
         section = Section.objects.get(id=request.user.section.id)
 
-    import qrcode
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(f'{request.META["HTTP_HOST"]}{os.sep}application{os.sep}application-detail{os.sep}{application.id}{os.sep}?password={application.password}')
-    qr.make(fit=True)
-
-    img = qr.make_image(fill_color="black", back_color="white")
-
-    if request.META['HTTP_HOST'] == '127.0.0.1:8000':
-        img.save(f'media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
-        img_path = f'H:{os.sep}django_projects{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg'
-    else:
-        img.save(f'{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg')
-        img_path = f"{os.sep}home{os.sep}pyth{os.sep}reception{os.sep}media{os.sep}applications{os.sep}qrcodes{os.sep}{application.id}.jpg"
-
-
     context = {
         'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
         'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
         'app': application,
         'section': section,
-        'img_path': img_path
+        'request': request,
     }
 
     template_name = 'application/application_detail_pdf.html'
     pdf = render_to_pdf(template_name, context)
+
+
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = "Ariza #%s.pdf" % (application.id)
@@ -214,6 +197,17 @@ def application_pdf(request, id):
         response['Content-Disposition'] = content
         return response
 
+
+def generate_qr_code_image(request, id):
+    try:
+        application = get_object_or_404(Application, id=id)
+        link = create_link(request, application.id)
+        qr = create_qr_code(link, 10, 2)
+        response = HttpResponse(content_type="image/png")
+        qr.save(response, "PNG")
+        return response
+    except:
+        return HttpResponse('APPLICATION NOT FOUND')
 
 @login_required
 def get_information(request):
@@ -607,3 +601,22 @@ class Modify_Payment_Checkbox(APIView):
                 return HttpResponse(False)
         except:
             return HttpResponse(False)
+
+
+def check_application_status(request, id):
+    application = get_object_or_404(Application, id=id)
+    payments = StateDuty.objects.filter(service=application.service)
+    if not payments.exists():
+        calculation_state_duty_service_price(application.service)
+
+    context = {
+        'application': application,
+        'payments': payments
+    }
+    return render(request, 'application/check_application_status.html', context)
+
+def access_with_qrcode(request, id):
+    application = get_object_or_404(Application, id=id)
+    print('welcome')
+    print(application)
+    return None

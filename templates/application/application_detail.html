@@ -4,7 +4,9 @@
 {% load humanize %}
 {% load applications_tags %}
 {% block content %}
+
     <section class="py-3 mt-2 bg-info text-light">
+
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
@@ -17,7 +19,7 @@
         <br>
         <div class="alert alert-danger">Ariza faollashtirilmagan! Arizani faollashtirish uchun to'lovni amalga
             oshiring!
-{#            <a class="close" href="#" data-dismiss="alert">×</a>#}
+            {#            <a class="close" href="#" data-dismiss="alert">×</a>#}
         </div>
     {% endif %}
     {% include '_parts/messages.html' %}
@@ -46,48 +48,7 @@
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                          aria-labelledby="headingOne" aria-expanded="false">
                         <div class="panel-body">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Ariza raqami:</th>
-                                    <td>{{ application.id }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Tekshirish uchun parol:</th>
-                                    <td class="text-danger">{{ application.password }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Xizmat nomi:</th>
-                                    <td>
-                                        <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Yaratdi:</th>
-                                    <td>{{ application.created_user }}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Ariza nusxasi</th>
-                                    <td><a href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
-                                        olish</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Ariza haqida ma'lumot</th>
-                                    <td><a style="cursor: pointer; color: #007bff" class="application_render_pdf"
-                                           data-application="{{ application.id }}">Yuklab olish</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Berilgan sana:</th>
-                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                           {% include 'application/inc/about_application_part.html' %}
                         </div>
                     </div>
                 </div>
@@ -106,54 +67,7 @@
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
                         <div class="panel-body">
-                            <table id="created_is_person" class="table table-bordered">
-                                <tbody>
-                                {% if application.service.organization %}
-                                    <tr>
-                                        <th scope="row">Tashkilot:</th>
-                                        <td>{{ application.service.organization.title }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Rahbari:</th>
-                                        <td>{{ application.service.organization.director }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">STIR raqam:</th>
-                                        <td>{{ application.service.organization.identification_number }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Yuridik manzil:</th>
-                                        <td>{{ application.service.organization.legal_address }}</td>
-                                    </tr>
-                                {% else %}
-                                    <tr>
-                                        <th scope="row">Familiya:</th>
-                                        <td>{{ application.service.created_user.last_name }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Ism:</th>
-                                        <td>{{ application.service.created_user.first_name }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Otasining ismi:</th>
-                                        <td>{{ application.service.created_user.middle_name }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Passport:</th>
-                                        <td>{% if application.service.created_user.passport_seriya %}
-                                            {{ application.service.created_user.passport_seriya }}{% endif %}
-                                            {% if application.service.created_user.passport_number %}
-                                                {{ application.service.created_user.passport_number }}{% endif %}</td>
-                                    </tr>
-                                {% endif %}
-                                </tbody>
-                            </table>
+                            {% include 'application/inc/application_submitting_part.html' %}
                         </div>
                     </div>
                 </div>
@@ -172,107 +86,7 @@
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;">
                         <div class="panel-body">
-                            <table id="created_is_person" class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Model:</th>
-                                    <td>{% if application.service.car.model %}
-                                        {{ application.service.car.model }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Avtmobil turi:</th>
-                                    <td>{% if application.service.car.type %}
-                                        {{ application.service.car.type }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Kuzov turi:</th>
-                                    <td>{% if application.service.car.body_type %}
-                                        {{ application.service.car.body_type }}{% endif %}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Yoqilg'i turi:</th>
-                                    <td>{% if application.service.car.fuel_type %}
-                                        {% for fuel_type in application.service.car.fuel_type.all %}
-                                            <button class="disabled btn btn-outline-primary">{{ fuel_type }}</button>
-                                        {% endfor %}
-                                    {% endif %}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Kuzov raqami:</th>
-                                    <td>{% if application.service.car.body_number %}
-                                        {{ application.service.car.body_number }}{% endif %}</td>
-                                </tr>
-                                {% if application.service.car.chassis_number %}
-                                    <tr>
-                                        <th scope="row">Shassi raqami:</th>
-                                        <td>{{ application.service.car.chassis_number }}</td>
-                                    </tr>
-                                {% endif %}
-                                <tr>
-                                    <th scope="row">Dvigatel raqami:</th>
-                                    <td>{% if application.service.car.engine_number %}
-                                        {{ application.service.car.engine_number }}{% endif %}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Ishlab chiqarilgan yili:</th>
-                                    <td>{% if application.service.car.made_year %}
-                                        {{ application.service.car.made_year }}{% endif %}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Rangi:</th>
-                                    <td>{% if application.service.car.color %}
-                                        {{ application.service.car.color }}{% endif %}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Qo'shimcha jihozlar:</th>
-                                    <td>
-                                        {% if application.service.car.device %}
-                                            {% for device in application.service.car.device.all %}
-                                                <button class="disabled btn btn-outline-primary">{{ device }}</button>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">To'la vazni:</th>
-                                    <td>{% if application.service.car.full_weight %}
-                                        {{ application.service.car.full_weight }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Yuksiz vazni:</th>
-                                    <td>{% if application.service.car.empty_weight %}
-                                        {{ application.service.car.empty_weight }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Dvigatel quvvati:</th>
-                                    <td>{% if application.service.car.engine_power %}
-                                        {{ application.service.car.engine_power }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Eski texpassport seriyasi va raqami:</th>
-                                    <td>{% if application.service.car.old_technical_passport %}
-                                        {{ application.service.car.old_technical_passport }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Texnik passport yo'qolgan:</th>
-                                    <td>{% if application.service.car.lost_technical_passport %}Yo'qolgan{% else %}
-                                        Yo'qolmagan{% endif %}</td>
-                                </tr>
-                                {% if application.service.car.is_auction %}
-                                    <tr>
-                                        <th scope="row">Auksion raqami:</th>
-                                        <td>{% if application.service.car.given_number %}
-                                            {{ application.service.car.given_number }}{% endif %}</td>
-                                    </tr>
-                                {% endif %}
-                                </tbody>
-                            </table>
+                   {% include 'application/inc/application_car_part.html' %}
                         </div>
                     </div>
                 </div>
@@ -291,35 +105,7 @@
                     <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingFour" aria-expanded="false">
                         <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Hujjat nomi</th>
-                                    <th scope="col">Formati</th>
-                                    <th scope="col">Hujjat havolasi</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td>1</td>
-                                    <th scope="row">Ariza haqida ma'lumot</th>
-                                    <td>PDF</td>
-                                    <td><a style="cursor: pointer; color: #007bff" class="application_render_pdf"
-                                           data-application="{{ application.id }}">Yuklab olish</a></td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <th scope="row">Ariza nusxasi</th>
-                                    <td>DOCX</td>
-                                    <td><a href="{% url 'application:create_application_doc' application.file_name %}"
-                                           target="_blank">Yuklab
-                                        olish</a></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            {% include 'application/inc/application_files_part.html' %}
                         </div>
                     </div>
                 </div>
@@ -338,71 +124,7 @@
                     <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingFifth" aria-expanded="false">
                         <div class="panel-body" id="render_div">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Davlat boji nomi</th>
-                                    <th scope="col">Hisob raqam</th>
-                                    <th scope="col">To'lov miqdori</th>
-                                    <th scope="col" style="width: 7%">Holati</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for payment in payments %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <th scope="row">{{ payment.get_title_display }}</th>
-                                        <td><b>{{ payment.score.score }}</b></td>
-                                        <td><b class="state_payment">{{ payment.payment|intcomma }}</b> so'm</td>
-                                        <td>
-                                            {% if request.user.role == '2' or request.user.role == '3' %}
-                                                <input name="payment" {% if payment.is_paid %}checked{% endif %}
-                                                       data-payment="{{ payment.id }}"
-                                                       class="payment_checkbox" type="checkbox"/>
-                                            {% else %}
-                                                {% if payment.is_paid %}
-                                                    <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                                    <i style="color: red" class="far fa-times-circle"></i>{% endif %}
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-
-                                {% endfor %}
-                                </tbody>
-                                <tfoot style="background: lightgray">
-                                <tr>
-                                    <th></th>
-                                    <th>Jami</th>
-
-                                    <th></th>
-                                    <th><b id="total_state_payments"></b> so'm</th>
-                                    <th></th>
-
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <div style="margin: 20px; font-size: medium">
-                                <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
-                                    bosh boshqarmasi XKKM</b></p>
-                                <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
-                                <p>MFO: <b style="color: blue">00014</b></p>
-                                <p>INN: <b style="color: blue">201122919</b></p>
-                            </div>
-                            <hr>
-                            <div class="text-right mt-3 mb-3 mr-4" data-html2canvas-ignore="true">
-                                {% if not application.service.organization %}
-                                    <button class="btn btn-primary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-                                        To'lov qilish &nbsp&nbsp&nbsp<i class="fas fa-long-arrow-alt-right"></i>
-                                    </button>
-                                {% endif %}
-                                <button id="payment_render_pdf"
-                                        class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-                                    To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-                                        class="fas fa-file-download"></i>
-                                </button>
-                            </div>
+                            {% include 'application/inc/application_payments_part.html' %}
                         </div>
                     </div>
                 </div>
@@ -421,42 +143,7 @@
                     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingSix" aria-expanded="false">
                         <div class="panel-body">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    {% if application.process == '2' %}
-                                        <th scope="col">Holat</th>
-                                        <th scope="col">Sababi</th>
-                                        <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
-                                        <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
-                                    {% elif application.process == '3' %}
-                                        <th scope="col">Holat</th>
-                                        <th scope="col">Sababi</th>
-                                        <th scope="col">Rad etilgan vaqti</th>
-                                    {% else %}
-                                        <th scope="col">Holat</th>
-                                        <th scope="col">Sababi</th>
-                                    {% endif %}
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    {% if application.process == '2' %}
-                                        <th scope="row" style="color: #44ff00">Qabul qilindi</th>
-                                        <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                        <th style="color: #0f6674">{{ application.given_date }}</th>
-                                        <th style="color: #0f6674">{{ application.given_time }}</th>
-                                    {% elif application.process == '3' %}
-                                        <th scope="row" style="color: #ff0318">Rad etildi</th>
-                                        <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                        <th>{{ application.canceled_date|date:"SHORT_DATETIME_FORMAT" }}</th>
-                                    {% else %}
-                                        <th scope="row" style="color: #0f6674">Jarayonda</th>
-                                        <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                    {% endif %}
-                                </tr>
-                                </tbody>
-                            </table>
+                            {% include 'application/inc/about_application_part.html' %}
                         </div>
                     </div>
                 </div>

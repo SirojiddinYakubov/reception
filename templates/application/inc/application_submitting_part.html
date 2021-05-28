@@ -1,0 +1,52 @@
+<table id="created_is_person" class="table table-bordered">
+    <tbody>
+    {% if application.service.organization %}
+        <tr>
+            <th scope="row">Tashkilot:</th>
+            <td>{{ application.service.organization.title }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Rahbari:</th>
+            <td>{{ application.service.organization.director }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">STIR raqam:</th>
+            <td>{{ application.service.organization.identification_number }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Yuridik manzil(Viloyat):</th>
+            <td>{{ application.service.organization.legal_address_region }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Yuridik manzil(Tuman):</th>
+            <td>{{ application.service.organization.legal_address_district }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <th scope="row">Familiya:</th>
+            <td>{{ application.created_user.last_name }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Ism:</th>
+            <td>{{ application.created_user.first_name }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Otasining ismi:</th>
+            <td>{{ application.created_user.middle_name }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Passport:</th>
+            <td>{% if application.created_user.passport_seriya %}
+                {{ application.created_user.passport_seriya }}{% endif %}
+                {% if application.created_user.passport_number %}
+                    {{ application.created_user.passport_number }}{% endif %}</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

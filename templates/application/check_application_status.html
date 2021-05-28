@@ -1,0 +1,347 @@
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+{% load applications_tags %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>E-RIB</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    {% block top %}
+
+    {% endblock %}
+
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+    <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152092/smartwizard/smart_wizard.min.css"
+          rel="stylesheet" type="text/css"/>
+    <link href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152091/smartwizard/smart_wizard_theme_arrows.min.css"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div id="load"></div>
+<div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="margin:40px !important;">
+
+        <!-- Main content -->
+
+
+        <section class="py-3 mt-2 bg-info text-light">
+
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <h2>{% trans "Amallar xronologiyasi" %}</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% if application.is_block %}
+            <br>
+            <div class="alert alert-danger">Ariza faollashtirilmagan! Arizani faollashtirish uchun to'lovni
+                amalga
+                oshiring!
+                {#            <a class="close" href="#" data-dismiss="alert">×</a>#}
+            </div>
+        {% endif %}
+        {% include '_parts/messages.html' %}
+        <br>
+        <div class="row">
+            <div class="col-12" style="font-size: 0.9em">
+                <div class="panel-group drop-accordion" id="accordion" role="tablist"
+                     aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapse-controle" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Ariza haqida ma'lumot
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+
+                            </h4>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                             aria-labelledby="headingOne" aria-expanded="false">
+                            <div class="panel-body">
+                               {% include 'application/inc/about_application_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapse-controle collapsed" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                   aria-controls="collapseTwo">
+                                    Ariza topshiruvchi
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
+                            <div class="panel-body">
+                                {% include 'application/inc/application_submitting_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapse-controle collapsed" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                   aria-controls="collapseThree">
+                                    Avtomobil
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingThree" aria-expanded="false" style="height: 0;">
+                            <div class="panel-body">
+                                {% include 'application/inc/application_car_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                   aria-controls="collapseFour">
+                                    Mavjud fayllar
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingFour" aria-expanded="false">
+                            <div class="panel-body">
+                                {% include 'application/inc/application_files_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
+                            <h4 class="panel-title">
+                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
+                                   aria-controls="collapseFifth">
+                                    To'lov
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingFifth" aria-expanded="false">
+                            <div class="panel-body" id="render_div">
+                               {% include 'application/inc/application_payments_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading tab-collapsed" role="tab" id="headingSix">
+                            <h4 class="panel-title">
+                                <a class="collapsed collapse-controle" data-toggle="collapse"
+                                   data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                   aria-controls="collapseSix">
+                                    Ariza holati
+                                    <span class="expand-icon-wrap"><i style="padding: 0.5em"
+                                                                      class="fas fa-angle-double-down"></i></span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel"
+                             aria-labelledby="headingSix" aria-expanded="false">
+                            <div class="panel-body">
+                                {% include 'application/inc/application_status_part.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /#accordion -->
+            </div>
+
+
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer" style="margin: 40px !important;">
+        <strong>Copyright &copy; {% now 'Y' %} <a href="http://sierus.uz">SIERUS GROUP</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 1.0.1
+        </div>
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="{% static 'js/responsive.js' %}"></script>
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+<script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/responsive.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1581152197/smartwizard/jquery.smartWizard.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js"
+        integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A=="
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+{% block bottom %}{% endblock bottom %}
+
+<script type="text/javascript" charset="UTF-8">
+    document.onreadystatechange = function () {
+        var state = document.readyState
+        {#console.log(state)#}
+        if (state === 'interactive') {
+            {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
+        } else if (state === 'complete') {
+            setTimeout(function () {
+                document.getElementById('interactive');
+                document.getElementById('load').style.visibility = "hidden";
+                {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
+            }, 100);
+        }
+    }
+    $(document).ready(function () {
+        $('#collapseOne').collapse('show');
+
+        $('.application_render_pdf').on('click', function () {
+            var applicationId = $(this).data('application')
+            window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());
+        })
+
+        $('#payment_render_pdf').on('click', function () {
+            var element = document.getElementById('render_div'),
+                filename = `To'lov`
+
+            html_to_pdf(element, filename)
+        })
+        calc_total()
+
+        function calc_total() {
+            if (!String.prototype.trim) {
+                String.prototype.trim = function () {
+                    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                };
+            }
+
+            var sum = 0;
+            $(".state_payment").each(function () {
+                sum += parseFloat($(this).text().replace(/\s+/g, ''));
+            });
+            $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+        }
+
+        var token = getCookie('token'),
+            csrftoken = getCookie('csrftoken')
+
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                xhr.setRequestHeader('Authorization', `Token ${token}`)
+            },
+            error: function (response) {
+                if (response.status === 401) {
+                    tokenInvalid()
+                }
+            }
+        })
+
+        $('.payment_checkbox').on('change', function () {
+            let modify
+            if ($(this).prop('checked')) {
+                modify = true
+            } else {
+                modify = false
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "application:modify_payment_checkbox" %}',
+                data: {
+                    'modify': modify,
+                    'payment': $(this).data('payment'),
+                },
+                success: function (res) {
+                    if (res === 'True') {
+                        edit_toast()
+                    } else {
+                        errorFunction()
+                    }
+                },
+                error: function (err) {
+                    errorFunction()
+                }
+            })
+        })
+    })
+
+
+</script>
+
+</body>
+</html>
