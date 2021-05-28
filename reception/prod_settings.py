@@ -18,17 +18,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz']
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reception',
-        'USER': 'pyth',
-        'PASSWORD': 'Siroj@1998',
-        'HOST': 'localhost',
-        'PORT': '3306',
-
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'reception',
+#         'USER': 'pyth',
+#         'PASSWORD': 'Siroj@1998',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#
+#     }
+# }
 
 DATABASES = {
     'default': {
