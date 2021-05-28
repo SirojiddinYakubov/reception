@@ -30,6 +30,24 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'NAME': 'reception_default',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'pyth',
+        'PASSWORD': 'Siroj@1998',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'prod': {
+        'NAME': 'reception_prod',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'pyth',
+        'PASSWORD': 'Siroj@1998',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -45,4 +63,3 @@ logger.add(sys.stderr, format="{time} {level} {messege}", level="DEBUG")
 # logger.debug('DEBUG')
 # logger.info('INFO')
 # logger.error('ERROR')
-
