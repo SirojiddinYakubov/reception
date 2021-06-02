@@ -584,7 +584,7 @@ msgstr ""
 
 #: .\templates\user\role\state_controller\regions_list.html:12
 msgid "Viloyatlar ro'yhati"
-msgstr ""
+msgstr "Regions list"
 
 #: .\templates\user\role\state_controller\regions_list.html:25
 msgid "Nomi"
