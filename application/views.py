@@ -44,10 +44,6 @@ def applications_list(request):
             application.delete()
 
 
-
-
-
-
     try:
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
@@ -65,6 +61,7 @@ def applications_list(request):
                 service__organization__legal_address_district__in=districts) & Q(
                 service__organization__isnull=False))).filter(Q(is_active=True) & Q(is_block=False))
         template = 'user/role/controller/controller_applications_list.html'
+
     elif request.user.role == '4' or request.user.role == '5':
         region = request.user.section.region
         districts = request.user.section.district.all()
@@ -114,8 +111,8 @@ def applications_list(request):
         if request.GET.get('date'):
             today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
             today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-            some_day_last_week = datetime.datetime.combine(timezone.now().date() - datetime.timedelta(days=7),
-                                                           datetime.time.min)
+            some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0, second=0)
+
             some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
             some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
 
@@ -148,9 +145,14 @@ def application_detail(request, id):
 
     application = get_object_or_404(Application, id=id)
 
-    if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
-        if application.created_user != request.user:
-            return redirect(reverse_lazy('application:applications_list'))
+    print(request.user.role)
+    if request.user.role in ['5', '6', '7']:
+        print('good')
+
+    # if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
+    #     if application.created_user != request.user:
+    #         return redirect(reverse_lazy('application:applications_list'))
+
 
     payments = StateDuty.objects.filter(service=application.service)
     if not payments.exists():
@@ -513,7 +515,7 @@ def payment_detail(request, service_id):
 
 @login_required
 def payments(request):
-    if request.user.role == '2' or request.user.role == '3':
+    if request.user.role == '2' or request.user.role == '5' or request.user.role == '6' or request.user.role == '7' or request.user.role == '8' or request.user.role == '9' or request.user.role == '10':
         region = request.user.section.region
         districts_list = request.user.section.district.all()
 

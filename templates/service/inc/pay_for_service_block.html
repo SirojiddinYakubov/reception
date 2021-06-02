@@ -1,0 +1,67 @@
+{% load humanize %}
+<div class="form-card">
+    <div class="row no-gutters d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="payment-info">
+                {#                                                <div class="row">#}
+                {#                                                    <img class="img-fluid cc-img"#}
+                {#                                                         src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">#}
+                {#                                                </div>#}
+                {##}
+                {#                                                <div class="mt-2">#}
+                {#                                                    <label class="credit-card-label label_required">Karta egasi</label>#}
+                {#                                                    <input type="text" class="credit-inputs form-control"#}
+                {#                                                           placeholder="Masalan: Abdullayev Bahtiyor">#}
+                {#                                                </div>#}
+                {#                                                <div class="mt-2">#}
+                {#                                                    <label class="credit-card-label label_required">Karta raqami</label>#}
+                {#                                                    <input type="text" class="credit-inputs form-control"#}
+                {#                                                           placeholder="0000 0000 0000 0000">#}
+                {#                                                </div>#}
+                {#                                                <div class="row mt-2">#}
+                {#                                                    <div class="col-md-6">#}
+                {#                                                        <label class="credit-card-label label_required">Vaqti</label>#}
+                {#                                                        <input type="text" class="credit-inputs form-control"#}
+                {#                                                               placeholder="12/24">#}
+                {#                                                    </div>#}
+                {#                                                    <div class="col-md-6">#}
+                {#                                                        <label class="credit-card-label label_required">Maxfiy#}
+                {#                                                            kod</label>#}
+                {#                                                        <input type="text" class="credit-inputs form-control"#}
+                {#                                                               placeholder="342">#}
+                {#                                                    </div>#}
+                {#                                                </div>#}
+                {#                                                <br>#}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="not_copy">Xizmat turi</th>
+                        <th class="text-center not_copy">Narxi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="col-md-9"><em>Elektron ariza shakllantirish uchun</em></td>
+                        <td class="col-md-3 text-center">{{ PAY_FOR_SERVICE|intcomma }} so'm</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-9"><em>Elektron to'lovlar va bank xizmati haqi</em></td>
+                        <td class="col-md-3 text-center">{{ PAY_FOR_SERVICE_PERCENT|intcomma }} so'm</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div class="text-right mt-3">
+                    <button id="addAmountBtn" class="btn btn-primary col-12"
+                            type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
+                        <span style="float:right;"><span id="amount">{{ PAY_FOR_SERVICE|add:PAY_FOR_SERVICE_PERCENT|intcomma }}</span> so'm &nbsp&nbsp&nbsp<i
+                                class="fas fa-long-arrow-alt-right"></i></span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

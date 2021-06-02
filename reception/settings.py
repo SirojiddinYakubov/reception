@@ -18,6 +18,7 @@ except ImportError:
 
 import os
 import pytz
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'click',
     'clickuz',
     'payments',
+    'modeltranslation',
 
 ]
 
@@ -58,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'reception.urls'
@@ -75,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -234,33 +237,34 @@ SIMPLE_JWT = {
 
 import logging
 
-
 logging.basicConfig(
-    level = logging.INFO,
-    format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/home/pyth/reception/debug.log',)
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s',
+    filename='/home/pyth/reception/debug.log', )
 
-TOKEN_MAX_AGE = 3600        #foydalanuvchiga berilgan tokenning umri
-PHONE_MAX_AGE = 1800        #ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
-MINIMUM_BASE_WAGE = 245000  #eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
+TOKEN_MAX_AGE = 3600  # foydalanuvchiga berilgan tokenning umri
+PHONE_MAX_AGE = 1800  # ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
+MINIMUM_BASE_WAGE = 245000  # eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
+PAY_FOR_SERVICE = int(MINIMUM_BASE_WAGE / 100 * 5)  # eng kam bazaviy hisoblash ish xaqining 5% miqdori
+PAY_FOR_SERVICE_PERCENT = int(PAY_FOR_SERVICE / 100 * 4)  # PAY_FOR_SERVICEning 4% miqdori, to'lov tizimlari foizi
+
 SMS_LOGIN = 'jj39k'
 SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
 
-
 CRONJOBS = [
     # ('0 */2 * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
-    ('*/1 * * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
+    ('*/1 * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
 ]
 
 PAYCOM_SETTINGS = {
     "KASSA_ID": "602a69da2f3eb10fc98597ee",  # token
     "TOKEN": "602a69da2f3eb10fc98597ee",  # token
-    "SECRET_KEY": "dZp&k%s@Qm72ADXHdbK4EWnRrEf&R@xmnUvk",  # password
+    "SECRET_KEY": "eszJcF0D4tq80SQE2NSMS?o6HZXV0oN9vkuK",  # key
+    # "SECRET_KEY": "dZp&k%s@Qm72ADXHdbK4EWnRrEf&R@xmnUvk",  # test key
     "ACCOUNTS": {
         "KEY": "order"
     }
 }
-
 
 CLICK_SETTINGS = {
     'service_id': 17367,
@@ -272,7 +276,6 @@ CLICK_SETTINGS = {
 PAYMENT_HOST = '81.177.139.231:443'
 PAYMENT_USES_SSL = True  # set the True value if you are using the SSL
 PAYMENT_MODEL = 'user.Payment'
-
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -290,3 +293,12 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+gettext = lambda s: s
+LANGUAGES = (
+    ('uz', gettext('Uzbek')),
+    ('ru', gettext('Russian')),
+    # ('cy', gettext('Kiril')),
+    ('en', gettext('English')),
+)
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'

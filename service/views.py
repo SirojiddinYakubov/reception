@@ -12,6 +12,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from application.models import *
+from reception.settings import *
 from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE
 from service.utils import calculation_state_duty_service_price
 from user.models import *
@@ -42,7 +43,8 @@ def account_statement_index(request):
         'devices': devices,
         'bodyTypes': bodyTypes,
         'color': colors,
-
+        'PAY_FOR_SERVICE': PAY_FOR_SERVICE,
+        'PAY_FOR_SERVICE_PERCENT': PAY_FOR_SERVICE_PERCENT
     }
     return render(request, 'service/account_statement/account_statement_index.html', context=context)
 

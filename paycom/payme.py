@@ -15,32 +15,22 @@ from reception.telegram_bot import send_message_to_developer
 class CheckOrder(Paycom):
     def check_order(self, amount, account):
         send_message_to_developer(f'amount {amount}')
-        # amount = amount / 100
-        print(account)
         order_id = account['order']
-
-
+        amount = amount / 100
         try:
-            print(18)
             order = Order.objects.get(id=int(order_id))
-            print(amount)
-            print(type(amount))
-            print(order.amount)
-            print(type(order.amount))
             if int(order.amount) != int(amount):
-                print(19)
                 return status.INVALID_AMOUNT
-            print(21)
             return status.ORDER_FOUND
         except Order.DoesNotExist:
-            print(26)
             return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
         order_id = int(account)
         try:
             order = get_object_or_404(Order, id=order_id)
-
+            order.is_paid = True
+            order.save()
             send_message_to_developer('successfully add payment from payme : ' + order.amount)
         except Order.DoesNotExist:
             send_message_to_developer('successfully add payment from payme, no order object not found: ' + order_id)
@@ -56,12 +46,15 @@ class PayMeView(MerchantAPIView):
 def create_paycom_url_via_order(request):
     try:
         if request.GET:
-            amount = request.GET.get('amount')
+            amount = int(request.GET.get('amount'))
+
+            return_url = request.GET.get('return_url')
             user = get_object_or_404(User, id=request.user.id)
-            order = Order.objects.create(amount=amount,user=user,service='2')
+            order = Order.objects.create(amount=amount, user=user, service='2')
             payme = Paycom()
-            url = payme.create_initialization(order_id=order.id, amount=amount,return_url='http://onless.uz/user/sms-settings/')
-            send_message_to_developer(url)
+            url = payme.create_initialization(order_id=order.id, amount=order.amount,
+                                              return_url=return_url)
+            send_message_to_developer(f"{user}: {request.GET.get('amount')}")
             return redirect(url)
         else:
             return redirect(reverse_lazy('user:sms_settings'))

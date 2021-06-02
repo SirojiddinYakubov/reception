@@ -105,7 +105,7 @@ class MerchantAPIView(APIView):
             obj = PaycomTransaction.objects.create(
                 request_id=validated_data['id'],
                 _id=validated_data['params']['id'],
-                amount=validated_data['params']['amount'],
+                amount=validated_data['params']['amount'] / 100,
                 order_key=validated_data['params']['account']['order'],
                 state=CREATE_TRANSACTION,
                 created_datetime=current_time_to_string

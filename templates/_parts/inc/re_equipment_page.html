@@ -1,9 +1,10 @@
+{% load i18n %}
 <li class="nav-item">
     <a href="{% url 'service:re_equipment_index' %}"
        class="nav-link {% if request.resolver_match.url_name == 're_equipment_index' %}active{% endif %}">
         <i class="nav-icon fas fa-car"></i>
         <p style="width: 50px">
-            Qayta jihozlash
+            {% trans "Qayta jihozlash" %}
         </p>
     </a>
 </li>

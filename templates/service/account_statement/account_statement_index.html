@@ -370,70 +370,7 @@
                                 </form>
                             </fieldset>
                             <fieldset id="fieldset3">
-                                <div class="form-card">
-                                    <div class="row no-gutters d-flex justify-content-center">
-                                        <div class="col-md-10">
-                                            <div class="payment-info">
-                                                <div class="row">
-                                                    <img class="img-fluid cc-img"
-                                                         src="http://www.prepbootstrap.com/Content/images/shared/misc/creditcardicons.png">
-                                                </div>
-
-                                                <div class="mt-2">
-                                                    <label class="credit-card-label label_required">Karta egasi</label>
-                                                    <input type="text" class="credit-inputs form-control"
-                                                           placeholder="Masalan: Abdullayev Bahtiyor">
-                                                </div>
-                                                <div class="mt-2">
-                                                    <label class="credit-card-label label_required">Karta raqami</label>
-                                                    <input type="text" class="credit-inputs form-control"
-                                                           placeholder="0000 0000 0000 0000">
-                                                </div>
-                                                <div class="row mt-2">
-                                                    <div class="col-md-6">
-                                                        <label class="credit-card-label label_required">Vaqti</label>
-                                                        <input type="text" class="credit-inputs form-control"
-                                                               placeholder="12/24">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="credit-card-label label_required">Maxfiy
-                                                            kod</label>
-                                                        <input type="text" class="credit-inputs form-control"
-                                                               placeholder="342">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="not_copy">Xizmat turi</th>
-                                                        <th>#</th>
-                                                        <th class="text-center not_copy">Narxi</th>
-                                                        <th class="text-center not_copy">Jami</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="col-md-9"><em>Elektron ariza shakllantirish</em></td>
-                                                        <td class="col-md-1" style="text-align: center"> 1</td>
-                                                        <td class="col-md-1 text-center">XXXXX</td>
-                                                        <td class="col-md-1 text-center">XXXXX</td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                                <div class="text-right mt-3">
-                                                   <button class="btn btn-primary col-12"
-                                                            type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
-                                                        <span style="float:right;">XXXXX so'm &nbsp&nbsp&nbsp<i
-                                                                class="fas fa-long-arrow-alt-right"></i></span>
-                                                    </button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% include 'service/inc/pay_for_service_block.html' %}
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
                                        id="prev3" value="Oldingi"/>
@@ -486,6 +423,19 @@
         })
 
         $(document).ready(function () {
+
+                $('#addAmountBtn').on('click', function (e) {
+                    addAmount()
+                })
+                var amount = $('#amount').text().replace(/\s+/g, '')
+
+
+                {% if request.GET.payment_type == 'click' %}
+                    window.location.href = "{% url 'click:create_order_url' %}?amount=12345".replace(/12345/, amount.toString());
+                {% elif request.GET.payment_type == 'payme' %}
+                    window.location.href = "{% url 'paycom:create_paycom_url_via_order' %}?amount=12345&return_url=6789&service_id=9791999".replace(/12345/, amount.toString()).replace(/6789/, 'http://e-rib.uz/service/account-statement-index/').replace(/9791999/, 'http://e-rib.uz/service/account-statement-index/');
+                {% endif %}
+
                 $('[data-toggle="tooltip"]').tooltip();
 
                 $('#fuel_types').selectize({
@@ -504,8 +454,8 @@
                 $('#seriya').inputmask({casing: 'upper'});
 
 
-                {#$('#fieldset1').hide()#}
-                {#$('#fieldset2').show()#}
+                $('#fieldset1').hide()
+                $('#fieldset3').show()
                 var is_legal = false,
                     passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
                     firstName = htmlDecode('{{ request.user.first_name }}'),
@@ -663,7 +613,7 @@
                 $('#refresh_next2').on('click', function (e) {
                     $('#fieldset2').hide()
 
-                        $('#fieldset3').show()
+                    $('#fieldset3').show()
 
 
                 })
@@ -884,4 +834,9 @@
         )
     </script>
 {% endblock bottom %}
+
+
+
+
+
 

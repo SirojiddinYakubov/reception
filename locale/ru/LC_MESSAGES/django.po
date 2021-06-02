@@ -1,0 +1,681 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-01 18:54+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\templates\_parts\inc\account_statement_page.html:7
+msgid "Hisob ma'lumotnomasi"
+msgstr ""
+
+#: .\templates\_parts\inc\application_page.html:7
+#: .\templates\application\applications_list.html:12
+#: .\templates\user\role\regional_controller\controller_applications_list.html:12
+#: .\templates\user\role\regional_controller\section_applications_list.html:13
+#: .\templates\user\role\regional_controller\sections_list.html:29
+#: .\templates\user\role\state_controller\regions_list.html:27
+#: .\templates\user\role\technical\technical_applications_list.html:13
+msgid "Arizalar"
+msgstr ""
+
+#: .\templates\_parts\inc\cotract_of_sale_page.html:7
+msgid "Oldi sotdi shartnomasi"
+msgstr ""
+
+#: .\templates\_parts\inc\gift_agreement_page.html:7
+msgid "Xadya yoki Me'ros"
+msgstr "Дарение или Наследство"
+
+#: .\templates\_parts\inc\organizations_page.html:7
+#: .\templates\user\organizations_list.html:10
+msgid "Tashkilotlar"
+msgstr ""
+
+#: .\templates\_parts\inc\payments_page.html:6
+msgid "To'lovlar"
+msgstr ""
+
+#: .\templates\_parts\inc\personal_data_page.html:7
+#: .\templates\user\personal_data.html:8
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Личные данные"
+
+#: .\templates\_parts\inc\re_equipment_page.html:7
+msgid "Qayta jihozlash"
+msgstr ""
+
+#: .\templates\_parts\inc\regions_page.html:7
+msgid "Viloyatlar"
+msgstr ""
+
+#: .\templates\_parts\inc\replace_number_and_tp_page.html:7
+msgid "DRB va TP almashtirish"
+msgstr ""
+
+#: .\templates\_parts\inc\replace_tp_page.html:7
+msgid "TP almashtirish"
+msgstr ""
+
+#: .\templates\_parts\inc\workers_page.html:6
+msgid "Xodimlar"
+msgstr ""
+
+#: .\templates\account\logout.html:5 .\templates\account\logout.html:8
+#: .\templates\account\logout.html:17
+msgid "Tizimdan chiqish"
+msgstr ""
+
+#: .\templates\account\logout.html:10
+msgid "Tizimdan chiqishni hohlaysizmi?"
+msgstr ""
+
+#: .\templates\account\signup.html:43 .\templates\account\signup2.html:27
+msgid "Управление безопасности дорожного движения!"
+msgstr ""
+
+#: .\templates\application\application_detail.html:13
+#: .\templates\application\check_application_status.html:54
+msgid "Amallar xronologiyasi"
+msgstr ""
+
+#: .\templates\application\confirm_application_data.html:8
+msgid "Avtotransport ma'lumotlari"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:10
+msgid "Hisob ma'lumotnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:51
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:51
+#: .\templates\service\gift_agreement\gift_agreement_index.html:51
+#: .\templates\service\re_equipment\re_equipment_index.html:51
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:51
+#: .\templates\service\replace_tp\replace_tp_index.html:51
+msgid "Korxonani tanlang:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:66
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:66
+#: .\templates\service\gift_agreement\gift_agreement_index.html:66
+#: .\templates\service\re_equipment\re_equipment_index.html:66
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:66
+#: .\templates\service\replace_tp\replace_tp_index.html:66
+msgid "Familiya:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:72
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:72
+#: .\templates\service\gift_agreement\gift_agreement_index.html:72
+#: .\templates\service\re_equipment\re_equipment_index.html:72
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:72
+#: .\templates\service\replace_tp\replace_tp_index.html:72
+msgid "Ism:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:80
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:80
+#: .\templates\service\gift_agreement\gift_agreement_index.html:80
+#: .\templates\service\re_equipment\re_equipment_index.html:80
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:80
+#: .\templates\service\replace_tp\replace_tp_index.html:80
+msgid "Otasining ismi:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:85
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:85
+#: .\templates\service\gift_agreement\gift_agreement_index.html:85
+#: .\templates\service\re_equipment\re_equipment_index.html:85
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:85
+#: .\templates\service\replace_tp\replace_tp_index.html:85
+msgid "Passport:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:95
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:95
+#: .\templates\service\gift_agreement\gift_agreement_index.html:95
+#: .\templates\service\re_equipment\re_equipment_index.html:95
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:95
+#: .\templates\service\replace_tp\replace_tp_index.html:95
+msgid "Rahbar:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:100
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:100
+#: .\templates\service\gift_agreement\gift_agreement_index.html:100
+#: .\templates\service\re_equipment\re_equipment_index.html:100
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:100
+#: .\templates\service\replace_tp\replace_tp_index.html:100
+msgid "STIR raqam:"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:108
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:108
+#: .\templates\service\gift_agreement\gift_agreement_index.html:108
+#: .\templates\service\re_equipment\re_equipment_index.html:108
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:108
+#: .\templates\service\replace_tp\replace_tp_index.html:108
+msgid "Yuridik manzil(Viloyat):"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:113
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:113
+#: .\templates\service\gift_agreement\gift_agreement_index.html:113
+#: .\templates\service\re_equipment\re_equipment_index.html:113
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:113
+#: .\templates\service\replace_tp\replace_tp_index.html:113
+msgid "Yuridik manzil(Tuman):"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:135
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:135
+#: .\templates\service\gift_agreement\gift_agreement_index.html:135
+#: .\templates\service\re_equipment\re_equipment_index.html:135
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:135
+#: .\templates\service\replace_tp\replace_tp_index.html:135
+#: .\templates\user\car\edit_car_data.html:23
+msgid "T/v modelini tanlang"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:153
+#: .\templates\service\gift_agreement\gift_agreement_index.html:153
+#: .\templates\service\re_equipment\re_equipment_index.html:153
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:153
+#: .\templates\service\replace_tp\replace_tp_index.html:153
+msgid "T/v turini tanlang"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:162
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:162
+#: .\templates\service\gift_agreement\gift_agreement_index.html:162
+#: .\templates\service\re_equipment\re_equipment_index.html:163
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:162
+#: .\templates\service\replace_tp\replace_tp_index.html:162
+#: .\templates\user\car\edit_car_data.html:53
+msgid "Yoqilg'i turini tanlang"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:174
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:174
+#: .\templates\service\gift_agreement\gift_agreement_index.html:174
+#: .\templates\service\re_equipment\re_equipment_index.html:175
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:174
+#: .\templates\service\replace_tp\replace_tp_index.html:174
+#: .\templates\user\car\edit_car_data.html:68
+msgid "Alohida belgilar"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:188
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:184
+#: .\templates\service\gift_agreement\gift_agreement_index.html:184
+#: .\templates\service\re_equipment\re_equipment_index.html:185
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:184
+#: .\templates\service\replace_tp\replace_tp_index.html:184
+#: .\templates\user\car\edit_car_data.html:80
+msgid "Kuzov turi"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:203
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:199
+#: .\templates\service\gift_agreement\gift_agreement_index.html:199
+#: .\templates\service\re_equipment\re_equipment_index.html:200
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:199
+#: .\templates\service\replace_tp\replace_tp_index.html:199
+#: .\templates\user\car\edit_car_data.html:96
+msgid "Dvigitel raqami"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:206
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:202
+#: .\templates\service\gift_agreement\gift_agreement_index.html:202
+#: .\templates\service\re_equipment\re_equipment_index.html:203
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:202
+#: .\templates\service\replace_tp\replace_tp_index.html:202
+#: .\templates\user\car\edit_car_data.html:100
+msgid "Masalan: B12D12345678DJCCX1234"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:211
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:207
+#: .\templates\service\gift_agreement\gift_agreement_index.html:207
+#: .\templates\service\re_equipment\re_equipment_index.html:208
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:207
+#: .\templates\service\replace_tp\replace_tp_index.html:207
+#: .\templates\user\car\edit_car_data.html:105
+msgid "Kuzov raqami"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:214
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:210
+#: .\templates\service\gift_agreement\gift_agreement_index.html:210
+#: .\templates\service\re_equipment\re_equipment_index.html:211
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:210
+#: .\templates\service\replace_tp\replace_tp_index.html:210
+#: .\templates\user\car\edit_car_data.html:109
+msgid "Masalan: XWBJF69VELA102923"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:223
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:219
+#: .\templates\service\gift_agreement\gift_agreement_index.html:219
+#: .\templates\service\re_equipment\re_equipment_index.html:220
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:219
+#: .\templates\service\replace_tp\replace_tp_index.html:219
+#: .\templates\user\car\edit_car_data.html:118
+msgid "Shassi raqami"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:226
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:222
+#: .\templates\service\gift_agreement\gift_agreement_index.html:222
+#: .\templates\service\re_equipment\re_equipment_index.html:223
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:222
+#: .\templates\service\replace_tp\replace_tp_index.html:222
+#: .\templates\user\car\edit_car_data.html:122
+msgid "Masalan: X8945642519874656"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:234
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:230
+#: .\templates\service\gift_agreement\gift_agreement_index.html:230
+#: .\templates\service\re_equipment\re_equipment_index.html:231
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:230
+#: .\templates\service\replace_tp\replace_tp_index.html:230
+#: .\templates\user\car\edit_car_data.html:130
+msgid "To'la vazni"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:237
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:233
+#: .\templates\service\gift_agreement\gift_agreement_index.html:233
+#: .\templates\service\re_equipment\re_equipment_index.html:234
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:233
+#: .\templates\service\replace_tp\replace_tp_index.html:233
+#: .\templates\user\car\edit_car_data.html:134
+msgid "Masalan: 20500"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:244
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:240
+#: .\templates\service\gift_agreement\gift_agreement_index.html:240
+#: .\templates\service\re_equipment\re_equipment_index.html:241
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:240
+#: .\templates\service\replace_tp\replace_tp_index.html:240
+#: .\templates\user\car\edit_car_data.html:141
+msgid "Yuksiz vazni"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:247
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:243
+#: .\templates\service\gift_agreement\gift_agreement_index.html:243
+#: .\templates\service\re_equipment\re_equipment_index.html:244
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:243
+#: .\templates\service\replace_tp\replace_tp_index.html:243
+#: .\templates\user\car\edit_car_data.html:145
+msgid "Masalan: 19500"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:255
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:251
+#: .\templates\service\gift_agreement\gift_agreement_index.html:251
+#: .\templates\service\re_equipment\re_equipment_index.html:252
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:251
+#: .\templates\service\replace_tp\replace_tp_index.html:251
+#: .\templates\user\car\edit_car_data.html:153
+msgid "Dvigatel quvvati"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:258
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:254
+#: .\templates\service\gift_agreement\gift_agreement_index.html:254
+#: .\templates\service\re_equipment\re_equipment_index.html:255
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:254
+#: .\templates\service\replace_tp\replace_tp_index.html:254
+#: .\templates\user\car\edit_car_data.html:157
+msgid "Masalan: 460"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:264
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:260
+#: .\templates\service\gift_agreement\gift_agreement_index.html:260
+#: .\templates\service\re_equipment\re_equipment_index.html:261
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:260
+#: .\templates\service\replace_tp\replace_tp_index.html:260
+#: .\templates\user\car\edit_car_data.html:163
+msgid "Rangi"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:289
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:285
+#: .\templates\service\gift_agreement\gift_agreement_index.html:283
+#: .\templates\service\re_equipment\re_equipment_index.html:282
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:285
+#: .\templates\service\replace_tp\replace_tp_index.html:285
+#: .\templates\user\car\edit_car_data.html:188
+msgid "Ishlab chiqarilgan vaqti"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:303
+msgid "Hisob ma'lumotnomasi seriyasi va raqami"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:306
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:362
+#: .\templates\service\gift_agreement\gift_agreement_index.html:362
+msgid "Masalan: AAC123456"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:316
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:367
+#: .\templates\service\gift_agreement\gift_agreement_index.html:367
+msgid "Shartnoma tuzilgan sana"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:330
+msgid "T/v narxi"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:333
+msgid "Masalan: 47000000"
+msgstr ""
+
+#: .\templates\service\account_statement\account_statement_index.html:354
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:397
+#: .\templates\service\gift_agreement\gift_agreement_index.html:396
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:372
+#: .\templates\user\car\edit_car_data.html:281
+msgid "Auksion raqami"
+msgstr ""
+
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:10
+msgid "Oldi sotdi shartnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:153
+#: .\templates\user\car\edit_car_data.html:43
+msgid "Avtomobil turini tanlang"
+msgstr ""
+
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:327
+#: .\templates\service\gift_agreement\gift_agreement_index.html:327
+#: .\templates\service\re_equipment\re_equipment_index.html:316
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:328
+#: .\templates\service\replace_tp\replace_tp_index.html:319
+#: .\templates\user\car\edit_car_data.html:232
+msgid "T/v dagi davlat raqam belgisi"
+msgstr ""
+
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:347
+#: .\templates\service\gift_agreement\gift_agreement_index.html:347
+#: .\templates\service\re_equipment\re_equipment_index.html:325
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:348
+#: .\templates\service\replace_tp\replace_tp_index.html:328
+#: .\templates\user\car\edit_car_data.html:253
+msgid "Qayd etish guvohnomasi seriyasi va raqami"
+msgstr ""
+
+#: .\templates\service\contract_of_sale\contract_of_sale_index.html:359
+msgid "Oldi sotdi shartnomasi seriyasi va raqami"
+msgstr ""
+
+#: .\templates\service\gift_agreement\gift_agreement_index.html:10
+msgid "Xadya yoki me'ros shartnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: .\templates\service\gift_agreement\gift_agreement_index.html:359
+msgid "Xadya yoki me'ros shartnomasi seriyasi va raqami"
+msgstr ""
+
+#: .\templates\service\re_equipment\re_equipment_index.html:10
+msgid ""
+"Qayta jihozlashga asosan transport vositasi qayd etish guvohnomasini "
+"almashtirish"
+msgstr ""
+
+#: .\templates\service\re_equipment\re_equipment_index.html:335
+msgid "Qayta jihozlash sababini tanlang"
+msgstr ""
+
+#: .\templates\service\re_equipment\re_equipment_index.html:347
+msgid "Almashtirilayotgan rangni tanlang"
+msgstr ""
+
+#: .\templates\service\re_equipment\re_equipment_index.html:364
+msgid "O'rnatilayotgan qo'shimcha yoqilg'i turini tanlang"
+msgstr ""
+
+#: .\templates\service\replace_number_and_tp\replace_number_and_tp_index.html:10
+msgid "Davlat raqam belgisi va qayd etish guvohnomasini almashtirish"
+msgstr ""
+
+#: .\templates\service\replace_tp\replace_tp_index.html:10
+msgid "Qayd etish guvohnomasini almashtirish"
+msgstr ""
+
+#: .\templates\user\add_organization.html:81
+msgid "Tashkilot qo'shish"
+msgstr ""
+
+#: .\templates\user\car\edit_car_data.html:9
+msgid "Transport vositasi ma'lumotlarini tahrirlash"
+msgstr ""
+
+#: .\templates\user\car\edit_car_data.html:293
+msgid "Transport vositasi oldingi ma'lumotlari"
+msgstr ""
+
+#: .\templates\user\car\view_car_data.html:8
+msgid "Transport vositasi ma'lumotlari"
+msgstr ""
+
+#: .\templates\user\edit_organization.html:10
+msgid "Tashkilotni tahrirlash"
+msgstr ""
+
+#: .\templates\user\edit_personal_data.html:9
+msgid "Shaxsiy ma'lumotlarni tahrirlash"
+msgstr ""
+
+#: .\templates\user\organization\view_organization_data.html:8
+msgid "Tashkilot ma'lumotlari"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:12
+#, fuzzy, python-format
+#| msgid "%(section_title)sga kelib tushgan arizalar"
+msgid ""
+"%(section_title)sga kelib\n"
+"                        tushgan arizalar"
+msgstr "поступившие заявки по %(section_title)s"
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:30
+msgid "Ariza raqami"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:31
+msgid "Xizmat nomi"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:32
+msgid "Hujjat"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:33
+msgid "Avtomobil"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:34
+msgid "Ma'lumotlar mosligi"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:35
+msgid "Texnik ko'rik"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:36
+msgid "To'lov"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:37
+msgid "Topshirdi"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:38
+msgid "Yaratilgan vaqti"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:39
+msgid "Ariza nusxasi"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:40
+msgid "Holati"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:88
+#: .\templates\user\role\regional_controller\sections_list.html:34
+#: .\templates\user\role\state_controller\regions_list.html:33
+msgid "Jarayonda"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:90
+#: .\templates\user\role\regional_controller\sections_list.html:33
+#: .\templates\user\role\state_controller\regions_list.html:32
+msgid "Qabul qilingan"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\section_applications_list.html:92
+#: .\templates\user\role\regional_controller\sections_list.html:35
+#: .\templates\user\role\state_controller\regions_list.html:34
+msgid "Rad etilgan"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\sections_list.html:27
+msgid "Bo'lim nomi"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\sections_list.html:28
+msgid "Biriktirilgan tuman va shaharlar"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\sections_list.html:32
+#: .\templates\user\role\state_controller\regions_list.html:31
+msgid "Jami"
+msgstr ""
+
+#: .\templates\user\role\regional_controller\sections_list.html:60
+#: .\templates\user\role\state_controller\regions_list.html:58
+msgid "Ma'lumot topilmadi!"
+msgstr ""
+
+#: .\templates\user\role\state_controller\regions_list.html:12
+msgid "Viloyatlar ro'yhati"
+msgstr ""
+
+#: .\templates\user\role\state_controller\regions_list.html:25
+msgid "Nomi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\regions_list.html:26
+msgid "TRIBlar soni"
+msgstr ""
+
+#: .\templates\user\view_personal_data.html:8
+msgid "Foydalanuvchi ma'lumotlari"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:346
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:368
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:369
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:384
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:385
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:396
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:397
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:408
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:409
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:44
+msgid "Delete?"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:58
+msgid "View on site"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:478
+#, python-format
+msgid "Add another %(verbose_name)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:481
+#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:495
+msgid "Remove"
+msgstr ""
+
+#, fuzzy, python-format
+#~ msgid " %(parent_section2)s ga qarashli TRIBlar ro'yhati12345"
+#~ msgstr "%(parent_section2)s Cписок ТРИБ по 2"
+
+#, python-format
+#~ msgid "assalomu aleykum! %(parent_section)s "
+#~ msgstr "Здравствуйте! %(parent_section)s "
+
+#~ msgid "Login yoki parol noto'g'ri!"
+#~ msgstr "Неправильный логин или пароль!"
+
+#~ msgid "Muvaffaqiyatli tahrirlandi!"
+#~ msgstr "Успешно отредактировано!"

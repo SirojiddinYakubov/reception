@@ -1,9 +1,10 @@
+{% load i18n %}
 <li class="nav-item">
     <a href="{% url 'service:gift_agreement_index' %}"
        class="nav-link {% if request.resolver_match.url_name == 'gift_agreement_index' %}active{% endif %}">
         <i class="nav-icon fas fa-car"></i>
         <p>
-            Xadya yoki Me'ros
+            {% trans "Xadya yoki Me'ros" %}
         </p>
     </a>
 </li>

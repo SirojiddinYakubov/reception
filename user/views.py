@@ -28,7 +28,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import *
 
 from application.models import Application
-from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE, SMS_LOGIN, SMS_TOKEN
+from application.utils import application_right_filters
+from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE, SMS_LOGIN, SMS_TOKEN, LOCAL_TIMEZONE
 from reception.prod_settings import LOG_FILE_PATH, logger
 from service.models import *
 from service.utils import calculation_state_duty_service_price
@@ -40,7 +41,7 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 
 from user.utils import render_to_pdf
-
+from django.utils.translation import ugettext_lazy as _
 
 @login_required
 def personal_data(request):
@@ -218,7 +219,7 @@ def login_first(request):
                 response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
                 return response
             else:
-                messages.error(request, "Login yoki parol noto'g'ri!")
+                messages.error(request, _("Login yoki parol noto'g'ri!"))
                 context.update(redirect=True)
                 return render(request, 'account/login.html', context)
         except ObjectDoesNotExist:
@@ -288,13 +289,14 @@ def edit_organization(request, organization_id):
     organization = get_object_or_404(Organization, id=organization_id)
     form = EditOrganizationForm(instance=organization)
     created_user = get_object_or_404(User, id=request.user.id)
-
+    regions = Region.objects.all()
     if organization.created_user != created_user or organization.is_active == False:
         return render(request, '_parts/404.html')
 
     context = {
         'organization': organization,
-        'form': form
+        'form': form,
+        'regions': regions
     }
     if request.POST:
         form = EditOrganizationForm(request.POST, instance=organization, )
@@ -310,7 +312,7 @@ def edit_organization(request, organization_id):
                 form.save()
             form.updated_date = timezone.now()
             form.save()
-            messages.success(request, "Muvaffaqiyatli tahrirlandi!")
+            messages.success(request, _("Muvaffaqiyatli tahrirlandi!"))
             return redirect(reverse_lazy('user:edit_organization', kwargs={'organization_id': organization.id}))
         else:
             messages.error(request, 'Formani to\'ldrishda xatolik1')
@@ -732,7 +734,7 @@ def add_worker(request):
                 messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
             except IntegrityError:
                 messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
-    return render(request, 'user/role/controller/add_worker.html')
+    return render(request, 'user/role/regional_controller/add_worker.html')
 
 
 @login_required
@@ -750,7 +752,7 @@ def workers_list(request):
     context = {
         'workers': workers
     }
-    return render(request, 'user/role/controller/workers_list.html', context)
+    return render(request, 'user/role/regional_controller/workers_list.html', context)
 
 
 @login_required
@@ -793,14 +795,14 @@ def worker_edit(request, worker_id):
                     response = requests.get(url)
                     context.update(form=form)
                     messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
-                    return render(request, 'user/role/controller/edit_worker.html', context)
+                    return render(request, 'user/role/regional_controller/edit_worker.html', context)
                 else:
                     messages.error(request, "Formani to'ldirishda xatolik !")
-                    return render(request, 'user/role/controller/edit_worker.html', context)
+                    return render(request, 'user/role/regional_controller/edit_worker.html', context)
             except:
                 messages.error(request, "Formani to'ldirishda xatolik !")
-                return render(request, 'user/role/controller/edit_worker.html', context)
-        return render(request, 'user/role/controller/edit_worker.html', context)
+                return render(request, 'user/role/regional_controller/edit_worker.html', context)
+        return render(request, 'user/role/regional_controller/edit_worker.html', context)
     else:
         return render(request, '_parts/404.html')
 
@@ -1051,3 +1053,46 @@ def getMfy(request):
     id = request.GET.get('id','')
     result = list(MFY.objects.filter(district_id=int(id)).values('id', 'title'))
     return HttpResponse(json.dumps(result), content_type="application/json")
+
+@login_required
+def regions_list(request):
+    if request.user.role == '7':
+        regions_list = Section.objects.filter(parent__isnull=True)
+        context = {
+            'regions_list': regions_list
+        }
+        return render(request, 'user/role/state_controller/regions_list.html', context)
+    else:
+        return render(request, '_parts/404.html')
+
+@login_required
+def sections_list(request, section_id):
+    if request.user.role == '6' or request.user.role == '7':
+        parent_section = get_object_or_404(Section, id=section_id)
+        print(parent_section)
+        sections = Section.objects.filter(parent=parent_section)
+
+        context = {
+            'parent_section': parent_section,
+            'sections': sections,
+
+        }
+        return render(request, 'user/role/regional_controller/sections_list.html', context)
+    else:
+        return render(request, '_parts/404.html')
+
+@login_required
+def section_applications_list(request, section_id):
+    if request.user.role == '5' or request.user.role == '6' or request.user.role == '7':
+        section = get_object_or_404(Section, id=section_id)
+
+        qs = Application.objects.filter(section=section, is_active=True, is_block=False if section.pay_for_service else True)
+        context = {
+            'section': section,
+        }
+
+        context.update(applications=application_right_filters(qs, request.GET))
+
+        return render(request, 'user/role/regional_controller/section_applications_list.html', context)
+    else:
+        return render(request, '_parts/404.html')
