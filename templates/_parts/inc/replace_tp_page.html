@@ -1,9 +1,10 @@
+{% load i18n %}
 <li class="nav-item">
     <a href="{% url 'service:replace_tp_index' %}"
        class="nav-link {% if request.resolver_match.url_name == 'replace_tp_index' %}active{% endif %}">
         <i class="nav-icon fas fa-car"></i>
         <p style="width: 50px">
-            TP almashtirish
+            {% trans "TP almashtirish" %}
         </p>
     </a>
 </li>

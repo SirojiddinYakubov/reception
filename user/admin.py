@@ -62,9 +62,12 @@ class DistrictAdmin(admin.ModelAdmin):
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'region',]
-    list_display_links = ['region',]
+    list_display = ['id', 'parent','title','region','get_districts']
+    list_display_links = ['title',]
     save_on_top = True
+
+    def get_districts(self, obj):
+        return ",\n".join([p.title for p in obj.district.all()])
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):

@@ -42,7 +42,7 @@
     <aside class="main-sidebar elevation-4 sidebar-light-navy">
         <!-- Brand Logo -->
         <a href="" class="brand-link logo-link">
-            <img src="{% static 'img/login/logo.svg' %}" alt="RIB ONLINE" class="brand-logo"
+            <img src="{% static 'img/yhxb.png' %}" alt="RIB ONLINE" class="brand-logo"
                  style="opacity: 1; width: 2em !important;">
             {#      <span class="brand-text font-weight-light">RIB ONLINE</span>#}
         </a>
@@ -86,7 +86,8 @@
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
-            <div class="alert alert-dark text-center" style="padding: 2px; margin-bottom: unset; border-radius: unset"></div>
+            <div class="alert alert-dark text-center"
+                 style="padding: 2px; margin-bottom: unset; border-radius: unset"></div>
             <!-- /.content-header -->
         {% endif %}
         <!-- Main content -->
@@ -164,6 +165,10 @@
             }, 100);
         }
     }
+
+    $('#language').on('change', function () {
+        $('#language_form').submit()
+    })
 </script>
 
 </body>

@@ -1,0 +1,10 @@
+{% load i18n %}
+<li class="nav-item">
+    <a href="{% url 'user:regions_list' %}"
+       class="nav-link {% if request.resolver_match.url_name == 'regions_list' %}active{% endif %}">
+        <i class="nav-icon fas fa-university"></i>
+        <p>
+            {% trans "Viloyatlar" %}
+        </p>
+    </a>
+</li>

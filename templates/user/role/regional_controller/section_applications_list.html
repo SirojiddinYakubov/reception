@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block top %}
+    <link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
+{% endblock top %}
+{% block content %}
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
+                        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
+                {% include '_parts/messages.html' %}
+                {% if applications %}
+                    <div class="table-responsive"
+                         style="border: 1px solid #dbdada; border-radius: 3px; padding: 2% 2% 2% 2%;">
+                        <table id="example1" class="table table-bordered table-hover dataTable"
+                               style="font-size: smaller">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">{% trans "Ariza raqami" %}</th>
+                                <th scope="col">{% trans "Xizmat nomi" %}</th>
+                                <th scope="col">{% trans "Hujjat" %}</th>
+                                <th scope="col">{% trans "Avtomobil" %}</th>
+                                <th scope="col">{% trans "Ma'lumotlar mosligi" %}</th>
+                                <th scope="col">{% trans "Texnik ko'rik" %}</th>
+                                <th scope="col">{% trans "To'lov" %}</th>
+                                <th scope="col">{% trans "Topshirdi" %}</th>
+                                <th scope="col">{% trans "Yaratilgan vaqti" %}</th>
+                                <th scope="col">{% trans "Ariza nusxasi" %}</th>
+                                <th scope="col" style="width: 9rem">{% trans "Holati" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for application in applications %}
+                                <tr>
+                                    <th scope="row" class="text-center">{{ application.id }}</th>
+                                    <td>
+                                        <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
+                                    </td>
+                                    <td>
+                                        {% if application.service.seriya %}
+                                            <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.seriya }}</a>
+                                            {% else %}{% if application.service.car.lost_technical_passport %}yo'qolgan
+                                                {% else %}{{ application.service.car.old_technical_passport }}
+                                            {% endif %}{% endif %}
+                                    </td>
+                                    <td class="text-center"><a
+                                            href="{% url 'user:view_car_data' application.service.car.id %}">{{ application.service.car.model }}
+                                        {% if application.service.car.old_number %}
+                                            {{ application.service.car.old_number }}{% endif %}</a>
+                                    </td>
+                                    <td class="text-center">{% if application.service.car.is_confirm %}
+                                        <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                        <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                    <td class="text-center">{% if application.service.car.is_technical_confirm %}
+                                        <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                        <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                                    <td class="text-center">
+                                        <a href="{% url 'application:payment_detail' application.service.id %}">
+                                            {% if application.is_payment %}
+                                                <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                                <i style="color: red" class="far fa-times-circle"></i>{% endif %}
+                                        </a>
+                                    </td>
+                                    <td>{% if application.service.organization %}
+                                        <a href="{% url 'user:view_organization_data' application.service.organization.id %}">{{ application.service.organization }}</a>{% else %}
+                                        <a href="{% url 'user:view_personal_data' application.created_user.id %}">{{ application.created_user }}</a>{% endif %}
+                                    </td>
+
+                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-outline-primary"
+                                           href="{% url 'application:create_application_doc' application.file_name %}"><i
+                                                class="fas fa-download"></i></a>
+                                    </td>
+                                    <td>
+                                        {% if application.process == '1' %}
+                                            <p style="color: #000000">{% trans "Jarayonda" %}</p>
+                                        {% elif application.process == '2' %}
+                                            <p style="color: #005e00">{% trans "Qabul qilingan" %}</p>
+                                        {% elif application.process == '3' %}
+                                            <p style="color: red"{% trans "Rad etilgan" %}></p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+            <!--/.col (left) -->
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                {% include 'application/right_filter_applications.html' %}
+            </div>
+        </div>
+
+
+        <!-- /.row -->
+    </div>
+{% endblock content %}
+{% block bottom %}
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
+    <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "ordering": true,
+                "order": [[0, "desc"]]
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+        $(document).ready(function () {
+            var token = getCookie('token'),
+                csrftoken = getCookie('csrftoken')
+
+            $.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    xhr.setRequestHeader('Authorization', `Token ${token}`)
+                },
+                error: function (response) {
+                    if (response.status === 401) {
+                        tokenInvalid()
+                    }
+                }
+            })
+
+
+            $('#example1 tbody').on('change', '.change_process', function () {
+
+                var applicationId = $(this).data('id'),
+                    SelectedProcess = $(this).children('option:selected').val(),
+                    cancel_url = "{% url 'application:applications_list' %}",
+                    success_url = "{% url 'application:confirm_application_data' %}"
+
+                $(".change_process").each(function () {
+                    if ($(this).data('id') === applicationId) {
+                        var is_replace_number = $(this).data('replace-number')
+
+                        if (SelectedProcess === 'confirm') {
+                            $(this).css('border', '2px solid #36f406')
+                        } else if (SelectedProcess === 'cancel') {
+                            $(this).css('border', '2px solid #dc3545')
+
+                        } else if (SelectedProcess === 'process') {
+                            $(this).css('border', '2px solid #ecec01')
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
+                            success: function (response) {
+                                if (SelectedProcess === 'confirm') {
+                                    if (is_replace_number) {
+                                        process_confirm_replace_number(success_url, cancel_url, applicationId, response)
+                                    } else {
+                                        process_confirm_not_replace_number(success_url, cancel_url, applicationId)
+                                    }
+
+                                } else if (SelectedProcess === 'cancel') {
+
+                                    process_cancel(success_url, cancel_url, applicationId)
+                                } else if (SelectedProcess === 'process') {
+
+                                    process(success_url, cancel_url, applicationId)
+                                }
+                            },
+                        })
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock bottom %}

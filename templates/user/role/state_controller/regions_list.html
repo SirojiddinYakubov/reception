@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load applications_tags %}
+{% load user_tags %}
+{% load i18n %}
+{% block content %}
+    <div class="row pt-5">
+        <!-- left column -->
+        <div class="col-md-12 col-sm-12">
+            <!-- general form elements -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">{% trans "Viloyatlar ro'yhati" %}</h3>
+                </div>
+                {% include '_parts/messages.html' %}
+                <!-- /.card-header -->
+                <!-- form start -->
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example1"
+                               class="table table-bordered table-hovered table-hover">
+                            <thead>
+                            <tr style="background-color: #ecebeb">
+                                <th style="border: 2px solid #adadad" rowspan="2">№</th>
+                                <th style="border: 2px solid #adadad" rowspan="2">{% trans "Nomi" %}</th>
+                                <th style="border: 2px solid #adadad;text-align: center" rowspan="2">{% trans "TRIBlar soni" %}</th>
+                                <th style="border: 2px solid #adadad;text-align: center" colspan="4">{% trans "Arizalar" %}</th>
+
+                            </tr>
+                            <tr style="background-color: #ecebeb; ">
+                             <th style="border: 2px solid #adadad;text-align: center">{% trans "Jami" %}</th>
+                                <th style="border: 2px solid #adadad;text-align: center">{% trans "Qabul qilingan" %}</th>
+                                <th style="border: 2px solid #adadad;text-align: center">{% trans "Jarayonda" %}</th>
+                                <th style="border: 2px solid #adadad;text-align: center">{% trans "Rad etilgan" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody style="border: 2px solid #adadad">
+                            {% if regions_list %}
+                                {% for region_section in regions_list %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><b><a
+                                                href="{% url 'user:sections_list' region_section.id %}">{{ region_section.title }}</a></b>
+                                        </td>
+                                        {% get_parent_null_sections_count region_section.id as sections_count %}
+                                        <td style="text-align: center">{{ sections_count }}</td>
+                                        {% calculate_applications_count region_section.id as count %}
+                                        <td style="text-align: center">{{ count.all }}</td>
+                                        <td style="text-align: center">{{ count.success }}</td>
+                                        <td style="text-align: center">{{ count.process }}</td>
+                                        <td style="text-align: center">{{ count.cancel }}</td>
+
+
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td style="text-align: center; color:red" colspan="7">{% trans "Ma'lumot topilmadi!" %}</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block bottom %}
+
+{% endblock bottom %}

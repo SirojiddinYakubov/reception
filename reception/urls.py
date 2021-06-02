@@ -19,6 +19,7 @@ from django.urls import path, include
 
 from reception import settings
 from user.views import HelloView, CustomAuthToken
+from django.conf.urls.i18n import i18n_patterns
 
 
 def trigger_error(request):
@@ -26,12 +27,9 @@ def trigger_error(request):
 
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     path('sentry-debug/', trigger_error),
-    path('service/', include('service.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('', include('user.urls')),
-    path('application/', include('application.urls')),
     path('hello/', HelloView.as_view(), name='hello'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
@@ -40,7 +38,15 @@ urlpatterns = [
     path('payme/', include('paycom.urls')),
     path('click/', include('click.urls')),
     path('payments/', include('payments.urls')),
+
 ]
+
+urlpatterns += i18n_patterns(
+    path('service/', include('service.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('', include('user.urls')),
+    path('application/', include('application.urls')),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,10 @@
+{% load i18n %}
 <li class="nav-item">
     <a href="{% url 'application:applications_list' %}"
        class="nav-link {% if request.resolver_match.url_name == 'applications_list' or request.resolver_match.url_name == 'application_detail' %}active{% endif %}">
         <i class="nav-icon fas fa-file-alt"></i>
         <p>
-            Arizalar
+            {% trans "Arizalar" %}
         </p>
     </a>
 </li>

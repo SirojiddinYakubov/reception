@@ -1066,3 +1066,25 @@ function htmlDecode(str) {
     const doc = new DOMParser().parseFromString(str, "text/html");
     return doc.documentElement.textContent;
 }
+
+function addAmount() {
+    Swal.fire({
+        allowOutsideClick: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+        showLoaderOnConfirm: true,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        },
+
+        title: 'To\'lov turini tanlang!',
+        html:
+            '<a href="?payment_type=payme" ><img src="../../static/online/payme.png" style="border: 1px solid black; padding: 5px; border-radius: 5px" alt="payme" height="80" width="190"></a>' +
+            '<a href="?payment_type=click"  ><img src="../../static/online/clickuz.png" style="margin-left: 20px;border: 1px solid black; padding: 5px; border-radius: 5px" alt="click" height="80" width="190"></a>',
+
+        focusConfirm: false,
+    })
+}

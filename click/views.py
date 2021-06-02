@@ -57,7 +57,8 @@ class OrderCheckAndPayment(ClickUz):
         # send_message_to_developer('successfully_payment  order_id ' + order_id + 'transaction '+ transaction)
         try:
             order = get_object_or_404(Order, id=order_id)
-
+            order.is_paid = True
+            order.save()
             send_message_to_developer('successfully add payment from click: ' + order.amount)
         except Order.DoesNotExist:
             send_message_to_developer('successfully add payment from click, no order object not found: ' + order_id)

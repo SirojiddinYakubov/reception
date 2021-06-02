@@ -3,24 +3,53 @@ import datetime
 from urllib.parse import urlencode
 
 from django import template
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 
+from application.models import Application
+from user.models import *
+
 register = template.Library()
 
-# @register.simple_tag
-# def get_service_name(object):
-#     try:
-#         if object.account_statement:
-#             return object.account_statement._meta.verbose_name
-#         elif object.gift_agreement:
-#             return object.gift_agreement._meta.verbose_name
-#         elif object.contract_of_sale:
-#             return object.contract_of_sale._meta.verbose_name
-#         else:
-#             return object._meta.verbose_name
-#     except AttributeError:
-#         return object
+@register.simple_tag
+def calculate_applications_count(section_id):
+    try:
+        section = get_object_or_404(Section, id=section_id)
+        if section.parent == None:
+            region = get_object_or_404(Region, id=section.region.id)
+            sections = Section.objects.filter(region=region,is_active=True, parent__isnull=False)
+            qs = Application.objects.filter(section__in=sections, is_active=True, is_block=False if section.pay_for_service else True)
+            all = qs.count()
+            process = qs.filter(process='1').count()
+            success = qs.filter(process='2').count()
+            cancel = qs.filter(process='3').count()
+            return {
+                'all': all,
+                'success': success,
+                'process': process,
+                'cancel': cancel
+            }
+        else:
+            print('else')
+            qs = Application.objects.filter(section=section, is_active=True,is_block=False if section.pay_for_service else True)
+            all = qs.count()
+            process = qs.filter(process='1').count()
+            success = qs.filter(process='2').count()
+            cancel = qs.filter(process='3').count()
+            return {
+                'all': all,
+                'success': success,
+                'process': process,
+                'cancel': cancel
+            }
+    except:
+        return {
+                'all': 0,
+                'success': 0,
+                'process': 0,
+                'cancel': 0
+            }
 #
 # @register.simple_tag
 # def get_application_submitting(object):

@@ -21,6 +21,7 @@ django-allauth==0.42.0
 django-common-helpers==0.9.2
 django-cron==0.5.1
 django-crontab==0.7.1
+django-modeltranslation==0.17.1
 django-payments==0.14.0
 django-templated-mail==1.1.1
 djangorestframework==3.12.2

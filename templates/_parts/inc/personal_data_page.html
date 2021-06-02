@@ -1,9 +1,10 @@
+{% load i18n %}
 <li class="nav-item">
     <a href="{% url 'user:personal_data' %}"
        class="nav-link {% if request.resolver_match.url_name == 'personal_data' or request.resolver_match.url_name == 'edit_personal_data' %}active{% endif %}">
         <i class="nav-icon fas fa-user-alt"></i>
         <p>
-            Shaxsiy ma'lumotlar
+            {% trans "Shaxsiy ma'lumotlar" %}
         </p>
     </a>
 </li>
