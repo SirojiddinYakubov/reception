@@ -16,7 +16,7 @@ SECRET_KEY = 'x9fq&#!x9v_%^&^*(&*)%$&^%%&^8976jo@-_oq5nvqc($wlbq23)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz']
+ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','194.67.92.171']
 
 # DATABASES = {
 #     'default': {
