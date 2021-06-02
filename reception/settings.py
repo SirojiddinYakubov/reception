@@ -235,12 +235,12 @@ SIMPLE_JWT = {
 #     }
 # }
 
-import logging
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(message)s',
-    filename='/home/pyth/reception/debug.log', )
+# import logging
+#
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format='%(asctime)s %(levelname)s %(message)s',
+#     filename='/home/pyth/reception/debug.log', )
 
 TOKEN_MAX_AGE = 3600  # foydalanuvchiga berilgan tokenning umri
 PHONE_MAX_AGE = 1800  # ro'yhatdan o'tish qismidagi cookiedagi raqamning umri

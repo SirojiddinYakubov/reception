@@ -1089,9 +1089,9 @@ def section_applications_list(request, section_id):
         qs = Application.objects.filter(section=section, is_active=True, is_block=False if section.pay_for_service else True)
         context = {
             'section': section,
+            'applications': application_right_filters(qs, request.GET)
         }
 
-        context.update(applications=application_right_filters(qs, request.GET))
 
         return render(request, 'user/role/regional_controller/section_applications_list.html', context)
     else:
