@@ -1087,6 +1087,7 @@ def section_applications_list(request, section_id):
         section = get_object_or_404(Section, id=section_id)
 
         qs = Application.objects.filter(section=section, is_active=True, is_block=False if section.pay_for_service else True)
+
         context = {
             'section': section,
             'applications': application_right_filters(qs, request.GET)
