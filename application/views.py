@@ -239,14 +239,14 @@ def create_application_doc(request, filename):
 
     application = get_object_or_404(Application, file_name=filename)
 
-    if application.is_block:
-        messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani faollashtirishingiz talab etiladi!')
-        return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
+    section = get_object_or_404(Section, id=application.section.id)
+
+    if section.pay_for_service and request.user.role == '1':
+        if application.is_block:
+            messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani faollashtirishingiz talab etiladi!')
+            return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
+
     service = get_object_or_404(Service, id=application.service.id)
-    if request.user.role == '1':
-        section = Section.objects.get(region=request.user.region, district=request.user.district)
-    else:
-        section = Section.objects.get(id=request.user.section.id)
 
     context = {}
     if service.title == 'account_statement':

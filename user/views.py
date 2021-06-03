@@ -1086,8 +1086,10 @@ def section_applications_list(request, section_id):
     if request.user.role == '5' or request.user.role == '6' or request.user.role == '7':
         section = get_object_or_404(Section, id=section_id)
 
-        qs = Application.objects.filter(section=section, is_active=True, is_block=False if section.pay_for_service else True)
+        qs = Application.objects.filter(section=section, is_active=True, is_block__in=[False,] if section.pay_for_service else [True,False])
 
+        print(qs)
+        print(application_right_filters(qs, request.GET))
         context = {
             'section': section,
             'applications': application_right_filters(qs, request.GET)

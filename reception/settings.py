@@ -302,3 +302,7 @@ LANGUAGES = (
     ('en', gettext('English')),
 )
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
