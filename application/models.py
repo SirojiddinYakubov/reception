@@ -37,7 +37,7 @@ class Application(models.Model):
     is_active = models.BooleanField(default=True)
     is_block = models.BooleanField(default=True)
     cron = models.CharField(choices=CRON_COICES,max_length=15, verbose_name=_("CRON holati"), default=1)
-    section = models.ForeignKey(Section, verbose_name=_("Ariza topshirilgan IIB YHXB bo'limi"), on_delete=models.CASCADE, blank=True, null=True, related_name='application_section', default=1)
+    section = models.ForeignKey(Section, verbose_name=_("Ariza topshirilgan IIB YHXB bo'limi"), on_delete=models.CASCADE, blank=True, null=True, related_name='application_section',)
 
     class Meta:
         verbose_name = 'Ariza'
