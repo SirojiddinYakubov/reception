@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path, include
 
 from reception import settings
@@ -25,6 +26,8 @@ from django.conf.urls.i18n import i18n_patterns
 def trigger_error(request):
     division_by_zero = 1 / 0
 
+def test(request):
+    return HttpResponse(settings.LOCALE_PATHS)
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -38,6 +41,7 @@ urlpatterns = [
     path('payme/', include('paycom.urls')),
     path('click/', include('click.urls')),
     path('payments/', include('payments.urls')),
+    path('test/', test),
 
 ]
 
