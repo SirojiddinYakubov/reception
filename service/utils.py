@@ -4,6 +4,7 @@ from django.contrib.humanize.templatetags.humanize import naturalday, intcomma
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
+from application.models import Application
 from reception.settings import MINIMUM_BASE_WAGE
 from service.models import *
 from user.models import Constant
@@ -11,6 +12,7 @@ from user.models import Constant
 
 def calculation_state_duty_service_price(service):
     service = get_object_or_404(Service, id=service.id)
+    application = get_object_or_404(Application, id=service.application_service.all().first().id)
     car = get_object_or_404(Car, id=service.car.id)
 
     created_user = get_object_or_404(User, id=service.application_service.first().created_user.id)
@@ -30,7 +32,7 @@ def calculation_state_duty_service_price(service):
         registration = None
 
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
-    inspection = StateDutyPercent.objects.filter(person_type=service.person_type, car_type=service.car.type,
+    inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=service.car.type,
                                                   state_duty=3).first()
     if service.contract_date:
         if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):

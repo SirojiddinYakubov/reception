@@ -40,7 +40,7 @@
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td><b><a
-                                                href="{% url 'user:sections_list' region_section.id %}">{{ region_section.title }}</a></b>
+                                                href="{% url 'user:sections_list' region_section.id %}">{{ region_section.title|upper }}</a></b>
                                         </td>
                                         {% get_parent_null_sections_count region_section.id as sections_count %}
                                         <td style="text-align: center">{{ sections_count }}</td>

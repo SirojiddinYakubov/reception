@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="row pt-5" style="margin: auto; ">
+        <!-- left column -->
+        <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12" style="margin: auto">
+            <!-- general form elements -->
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">{% trans "Xodimni tahrirlash" %}</h3>
+                </div>
+
+                {% include '_parts/messages.html' %}
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" method="POST" id="save_edit_form" action="{% url 'user:worker_edit' worker.id %}">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="label_required" for="section">{% trans "Bo'limni tanlang" %}</label>
+                            <select class="form-control" name="section" id="section">
+                                {% for section in  sections %}
+                                    <option {% if form.instance.section == section %}selected{% endif %}
+                                            value="{{ section.id }}">
+                                        {{ section.title }}
+                                    </option>
+                                {% endfor %}
+
+
+                            </select>
+                        </div>
+                        <div class="row justify-content-around">
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required" for="last_name">Familiya</label>
+                                <input type="text" name="last_name" value="{{ form.instance.last_name }}"
+                                       class="form-control" id="last_name"
+                                       placeholder="Masalan: Yoqubov">
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required" for="first_name">Ism</label>
+                                <input type="text" name="first_name" value="{{ form.instance.first_name }}"
+                                       class="form-control" id="first_name"
+                                       placeholder="Masalan: Sirojiddin">
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required" for="middle_name">Otasining ismi</label>
+                                <input type="text" name="middle_name" class="form-control" id="middle_name"
+                                       value="{{ form.instance.middle_name }}"
+                                       placeholder="Masalan: Tojiddinovich">
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+
+                                <label class="label_required" for="passport_seriya">Passport seriya</label>
+                                <input type="text" name="passport_seriya"
+                                       {% if form.instance.passport_seriya %}value="{{ form.instance.passport_seriya }}"{% endif %}
+                                       class="form-control" id="passport_seriya"
+                                       placeholder="Masalan: AA">
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required" for="passport_number">Passport raqami</label>
+                                <input type="number" name="passport_number"
+                                       {% if form.instance.passport_number %}value="{{ form.instance.passport_number }}"{% endif %}
+                                       class="form-control" id="passport_number"
+                                       placeholder="Masalan: 3870293">
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required not_copy" for="region">Viloyat</label>
+                                <select name="region" class="form-control select2" id="region" required>
+                                    <option value="">--Viloyatni tanlang--</option>
+                                    {% for region in regions %}
+                                        <option {% if form.instance.region %}selected{% endif %}
+                                                value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required not_copy"
+                                       for="district">Tuman/Shahar</label>
+                                <select name="district" class="form-control select2" id="district">
+                                    <option {% if form.instance.district %}value="{{ form.instance.district }}" {% endif %}>
+                                        {% if form.instance.district %}{{ form.instance.district }}{% else %}--Tumanni
+                                            tanlang--{% endif %}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required not_copy" for="mfy">MFY</label>
+                                <select name="mfy" class="form-control select2" id="mfy"
+                                        required="required">
+
+                                    <option {% if form.instance.mfy %}value="{{ form.instance.mfy }}" {% endif %}>
+                                        {% if form.instance.mfy %}{{ form.instance.mfy }}{% else %}--MFYni
+                                            tanlang--{% endif %}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required not_copy" for="address">Manzil</label>
+                                <input type="text" class="form-control" id="address" name="address"
+                                       required autocomplete="disabled"
+                                       placeholder="Masalan: M.Iqbol ko'chasi 76-uy"
+                                       {% if form.instance.address %}value="{{ form.instance.address }}"{% endif %}/>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <label class="label_required" for="phone">Telefon raqam/Login</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+998</div>
+                                    </div>
+                                    <input type="text" required="required" class="form-control" id="phone"
+                                           name="phone" value="{{ form.instance.phone }}"
+                                           placeholder="(XX) XXX-XX-XX"
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <div class="password_div">
+                                    <label class="label_required" for="password">Parol</label>
+                                    <div class="input-group password">
+                                        <input type="password" name="password" id="password"
+                                               class="form-control password"
+                                               required value="{{ form.instance.turbo }}"
+                                               autocomplete="disabled"
+                                               placeholder="Masalan: qwerty12345"/>
+                                        <div class="input-group-prepend show_password" data-password="password">
+                                            <div class="input-group-text"><i class="far fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2">
+                                <div class="confirm_password_div">
+                                    <label class="label_required" for="confirm_password">Parolni qayta
+                                        kiriting</label>
+                                    <div class="input-group confirm_password">
+                                        <input type="password" name="confirm_password" id="confirm_password"
+                                               class="form-control password"
+                                               required value="{{ form.instance.turbo }}"
+                                               autocomplete="disabled"
+                                               placeholder="Masalan: qwerty12345"/>
+                                        <div class="input-group-prepend show_password"
+                                             data-password="confirm_password">
+                                            <div class="input-group-text"><i class="far fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row justify-content-end mt-3">
+                            <button type="reset" id="reset" class="action-button-reset">Tozalash</button>
+                            <button type="submit" class="action-button">Saqlash</button>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom %}
+    <script type="text/javascript">
+        $(function () {
+            $('.select2').select2()
+        });
+        $(document).ready(function () {
+
+            $('#passport_seriya').inputmask({casing: 'upper'});
+            $('#phone').inputmask('(99) 999-99-99');
+
+            $('#region').change(function () {
+                var SelectedRegion = $(this).children("option:selected").val()
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_district' %}",
+                    data: {
+                        'region': SelectedRegion, // from form
+                    },
+                    success: function (message) {
+                        $('#district').empty().append(message)
+                        $('#district').css('border', '1px solid blue')
+                        setTimeout(function () {
+                            $('#district').css('border', '1px solid #ced4da')
+                        }, 1000)
+
+                        var SelectedDistrict = $('#district').children("option:selected").val()
+                        $.ajax({
+                            type: "GET",
+                            url: "{% url 'user:get_mfy' %}",
+                            data: {
+                                'district': SelectedDistrict, // from form
+                            },
+                            success: function (message) {
+                                $('#mfy').empty().append(message)
+                                $('#mfy').css('border', '1px solid blue')
+                                setTimeout(function () {
+                                    $('#mfy').css('border', '1px solid #ced4da')
+                                }, 1000)
+
+                            }
+                        });
+                    }
+                });
+            })
+
+            $('#district').change(function () {
+                var SelectedDistrict = $(this).children("option:selected").val()
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_mfy' %}",
+                    data: {
+                        'district': SelectedDistrict, // from form
+                    },
+                    success: function (message) {
+                        $('#mfy').empty().append(message)
+                        $('#mfy').css('border', '1px solid blue')
+                        setTimeout(function () {
+                            $('#mfy').css('border', '1px solid #ced4da')
+                        }, 1000)
+
+                    }
+                });
+            })
+
+            $('#region').on('change', function () {
+                var selectedRegion = $(this).children("option:selected").val();
+                if (parseInt(selectedRegion)) {
+                    $(this).valid()
+
+                }
+            })
+
+            $('#district').on('change', function () {
+                var selectedDistrict = $(this).children("option:selected").val();
+                if (parseInt(selectedDistrict)) {
+                    $(this).valid()
+
+                }
+            })
+
+            $('#mfy').on('change', function () {
+                var selectedMfy = $(this).children("option:selected").val();
+                if (parseInt(selectedMfy)) {
+                    $(this).valid()
+
+                }
+            })
+
+            $('.show_password').on('click', function () {
+                var $Passwords = $('.show_password');
+                var data = $(this).data('password')
+
+                $Passwords.each(function (index, element) {
+                    var $password = $(element)
+
+
+                    if ($password.data('password') === data) {
+                        if ($password.siblings('.password').attr('type') === 'password') {
+                            $password.children('.input-group-text').html('<i class="far fa-eye-slash"></i>')
+                            $password.siblings('.password').attr('type', 'text')
+                        } else {
+                            $password.children('.input-group-text').html('<i class="far fa-eye"></i>')
+                            $password.siblings('.password').attr('type', 'password')
+
+                        }
+                    }
+
+                })
+
+
+            })
+
+            jQuery.validator.addMethod("noSpace", function (value, element) {
+                return value == '' || value.trim().length != 0;
+            }, "Iltimos, bo'sh joy qoldirmang!");
+
+            jQuery.validator.addMethod("passwordCheck",
+                function (value, element, param) {
+                    if (this.optional(element)) {
+                        return true;
+                    }
+                        // else if (!/[A-Z]/.test(value)) {
+                        //   return false;
+                    //  }
+                    else if (!/[a-z]/.test(value)) {
+                        return false;
+                    } else if (!/[0-9]/.test(value)) {
+                        return false;
+                    }
+                    return true;
+                },
+                "Parol raqam va harfdan iborat bo'lishi kerak!");
+            $.validator.addMethod("alphanumeric", function (value, element) {
+                return this.optional(element) || /^\w+$/i.test(value);
+            }, "Faqat harf va raqam kiriting!");
+            var $registrationForm = $('#save_edit_form');
+            if ($registrationForm.length) {
+                $registrationForm.validate({
+                    ignore: ":hidden",
+                    rules: {
+                        //username is the name of the textbox
+                        last_name: {
+                            required: true,
+                            //alphanumeric is the custom method, we defined in the above
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        first_name: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        middle_name: {
+                            required: true,
+                            noSpace: true,
+                        },
+
+                        passport_seriya: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        passport_number: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        password: {
+                            required: true,
+                            minlength: 6,
+                            passwordCheck: true
+                        },
+                        confirm_password: {
+                            required: true,
+                            equalTo: "#password"
+                        },
+                        phone: {
+                            required: true,
+                            minlength: 14,
+
+                        },
+                        region: {
+                            required: true
+                        },
+                        district: {
+                            required: true
+                        },
+                        mfy: {
+                            required: true
+                        },
+                        address: {
+                            required: true,
+                            noSpace: true,
+                        },
+
+
+                    },
+                    messages: {
+                        last_name: {
+                            //error message for the required field
+                            required: 'Familiya kiritilmagan!'
+                        },
+                        first_name: {
+                            required: 'Ism kiritilmagan!'
+                        },
+                        middle_name: {
+                            required: "Otasining ismi kiritilmagan!"
+                        },
+
+                        phone: {
+                            required: 'Telefon raqam kiritilmagan!',
+                        },
+                        passport_seriya: {
+                            required: 'Passport seriyasi kiritilmagan!',
+                        },
+                        passport_number: {
+                            required: 'Passport raqami kiritilmagan!',
+                        },
+                        region: {
+                            required: 'Viloyat tanlanmagan!',
+                        },
+                        district: {
+                            required: 'Tuman tanlanmagan!',
+                        },
+                        mfy: {
+                            required: 'MFY tanlanmagan!',
+                        },
+                        address: {
+                            required: 'Manzil kiritilmagan!',
+                        },
+                        password: {
+                            required: "Parol kiritilmagan!",
+                            minlength: "Kamida 6 ta belgi kiriting!"
+
+                        },
+                        confirm_password: {
+                            required: "Parolni qayta kiriting!",
+                            equalTo: "Parol bir xil emas!"
+                        }
+
+
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.is("#phone")) {
+                            error.appendTo(element.parents('.col-12'));
+                        } else if (element.is("#region")) {
+                            error.appendTo(element.parents('.col-12'));
+                        } else if (element.is("#district")) {
+                            error.appendTo(element.parents('.col-12'));
+                        } else if (element.is("#mfy")) {
+                            error.appendTo(element.parents('.col-12'));
+                        } else if (element.is("#password")) {
+                            error.appendTo(element.parents('.password_div'));
+                        } else if (element.is("#confirm_password")) {
+                            error.appendTo(element.parents('.confirm_password_div'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+
+                    },
+                });
+            }
+        })
+    </script>
+{% endblock bottom %}

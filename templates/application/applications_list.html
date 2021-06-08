@@ -27,15 +27,16 @@
                         <table id="example1" class="table table-bordered table-responsive">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col">Ariza raqami</th>
-                                <th scope="col" style="width: 25%">Xizmat nomi</th>
-                                <th scope="col">Avtomobil</th>
-                                <th scope="col">Topshirdi</th>
-                                <th scope="col">Yaratilgan vaqti</th>
-                                <th scope="col">Ariza nusxasi</th>
-                                <th scope="col">Holati</th>
-                                <th scope="col">Tekshiruv paroli</th>
-                                <th scope="col">O'chirish</th>
+                                <th scope="col">{% trans "Ariza raqami" %}</th>
+                                <th scope="col" style="width: 25%">{% trans "Xizmat nomi" %}</th>
+                                <th scope="col">{% trans "Avtomobil" %}</th>
+                                <th scope="col">{% trans "Topshirdi" %}</th>
+                                <th scope="col">{% trans "Yaratilgan vaqti" %}</th>
+                                <th scope="col">{% trans "Ariza nusxasi" %}</th>
+                                <th scope="col">{% trans "Holati" %}</th>
+                                {% if request.user == application.created_user %}
+                                    <th scope="col">{% trans "O'chirish" %}</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
@@ -43,7 +44,6 @@
                             {% for application in applications %}
                                 <tr>
                                     <th scope="row">{{ application.id }}</th>
-
                                     <td>
                                         <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
                                     </td>
@@ -63,22 +63,28 @@
                                                 class="fas fa-download"></i></a>
                                     </td>
                                     {% if application.process == '1' %}
-                                        <td style="color: #0f6674">Jarayonda</td>
+                                        <td style="color: #0f6674">{% trans "Jarayonda" %}</td>
                                     {% elif application.process == '2' %}
-                                        <td style="color: #44ff00">Qabul qilindi</td>
+                                        <td style="color: #44ff00">{% trans "Qabul qilgan" %}</td>
                                     {% elif application.process == '3' %}
-                                        <td style="color: #ff0318">Rad etildi</td>
+                                        <td style="color: #ff0318">{% trans "Rad etilgan" %}</td>
                                     {% endif %}
-                                    <td style="text-align: center; color: red">{{ application.password }}</td>
-                                    <td style="text-align: center;">
-                                        <button data-application="{{ application.id }}"
-                                                class="btn btn-danger removeBtn"><i class="fas fa-trash"></i></button>
-                                    </td>
+                                    {% if request.user == application.created_user %}
+                                        <td style="text-align: center;">
+
+                                            <button data-application="{{ application.id }}"
+                                                    class="btn btn-danger removeBtn"><i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
+
                             </tbody>
                         </table>
+
                     </div>
+
                 {% endif %}
             </div>
             <!--/.col (left) -->

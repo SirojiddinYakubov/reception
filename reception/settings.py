@@ -111,9 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'uz'
-
+DATETIME_FORMAT = '%d.%m.%Y %H:%M:%S'
+DATE_FORMAT = '%d.%m.%Y'
 TIME_ZONE = 'Asia/Tashkent'
-LOCAL_TIMEZONE = pytz.timezone("Asia/Tashkent")
+LOCAL_TIMEZONE = pytz.timezone(TIME_ZONE)
 
 USE_I18N = True
 
@@ -157,8 +158,8 @@ REST_FRAMEWORK = {
 # smtp
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'djangosc876@gmail.com'
-EMAIL_HOST_PASSWORD = 'F00dz!#0'
+EMAIL_HOST_USER = 'yakubov9791999@gmail.com'
+EMAIL_HOST_PASSWORD = 'yakubov9791999'
 EMAIL_PORT = 587
 
 DJOSER = {
@@ -277,22 +278,22 @@ PAYMENT_HOST = '81.177.139.231:443'
 PAYMENT_USES_SSL = True  # set the True value if you are using the SSL
 PAYMENT_MODEL = 'user.Payment'
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
-sentry_sdk.init(
-    dsn="https://5a04cc3b80bf465ba822bc1cbab24b9c@o732152.ingest.sentry.io/5787270",
-    integrations=[DjangoIntegration()],
-
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
+#
+# sentry_sdk.init(
+#     dsn="https://5a04cc3b80bf465ba822bc1cbab24b9c@o732152.ingest.sentry.io/5787270",
+#     integrations=[DjangoIntegration()],
+#
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     # We recommend adjusting this value in production.
+#     traces_sample_rate=1.0,
+#
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )
 
 gettext = lambda s: s
 LANGUAGES = (

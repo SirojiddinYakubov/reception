@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
     <div class="row pt-5">
         <!-- left column -->
@@ -6,29 +7,29 @@
             <!-- general form elements -->
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Xodimlar ro'yhati</h3>
+                    <h3 class="card-title">{% trans "Xodimlar ro'yhati" %}</h3>
                 </div>
                 {% include '_parts/messages.html' %}
                 <!-- /.card-header -->
                 <!-- form start -->
 
                 <div class="card-body">
-                <a href="{% url 'user:add_worker' %}" class="btn btn-default float-right mb-3">Xodim qo'shish &nbsp;&nbsp;<i class="fas fa-plus"></i></a>
+                <a href="{% url 'user:add_worker' %}" class="btn btn-default float-right mb-3">{% trans "Xodim qo'shish" %} &nbsp;&nbsp;<i class="fas fa-plus"></i></a>
+                    {% if workers %}
                     <div class="table-responsive">
                         <table id="example1"
                                class="table table-bordered table-hovered table-hover">
                             <thead>
                             <tr style="background-color: #ecebeb">
                                 <th>№</th>
-                                <th>Xodimning ism familiyasi</th>
-                                <th>Lavozimi</th>
-                                <th>Tug'ilgan yili</th>
-                                <th>Viloyat</th>
-                                <th>Telefon</th>
-                                <th>Login</th>
-                                <th>Parol</th>
-                                {% if request.user.role == '2' %}
-                                    <th>Tahrirlash/O'chirish</th>
+                                <th>{% trans "Xodimning ism familiyasi" %}</th>
+                                <th>{% trans "Lavozimi" %}</th>
+                                <th>{% trans "Bo'lim" %}</th>
+                                <th>{% trans "Telefon" %}</th>
+                                <th>{% trans "Login" %}</th>
+                                <th>{% trans "Parol" %}</th>
+                                {% if request.user.role == '7' %}
+                                    <th>{% trans "Tahrirlash/O'chirish" %}</th>
                                 {% endif %}
                             </tr>
                             </thead>
@@ -39,15 +40,14 @@
                                     <td>{{ forloop.counter }}</td>
                                     <td><b>{{ worker.last_name }} {{ worker.first_name }} {{ worker.middle_name }}</b>
                                     </td>
-                                    <td><b>{% if worker.role == '3' %}Arizalarni tekshiruvchi xodim{% elif worker.role == '4' %}Ma'lumotlar mosligini tasdiqlovchi xodim{% elif worker.role == '5' %}Texnik ko'rikdan o'tkazuvchi xodim{% endif %}</b></td>
-                                    <td>{% if worker.birthday %}
-                                        {{ worker.birthday|date:'SHORT_DATE_FORMAT' }}{% endif %}</td>
-                                    <td>{% if worker.region %}{{ worker.region }}{% endif %}</td>
+                                    <td><b>{% if worker.section.region %}{{ worker.section.region.title }} {% trans "bosh nazoratchisi" %}{% endif %}</b></td>
+
+                                    <td>{% if worker.section %}{{ worker.section.title }}{% endif %}</td>
                                     <td>+998{{ worker.phone }}</td>
                                     <td>{{ worker.username }}</td>
                                     <td>{{ worker.turbo }}</td>
 
-                                    {% if request.user.role == '2' %}
+                                    {% if request.user.role == '7' %}
                                         <td>
                                             &nbsp;&nbsp;
                                             <a href="{% url 'user:worker_edit' worker.id %}">
@@ -70,6 +70,7 @@
                             </tfoot>
                         </table>
                     </div>
+                {% endif %}
                 </div>
             </div>
         </div>

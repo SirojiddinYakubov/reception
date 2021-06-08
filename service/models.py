@@ -20,7 +20,6 @@ class Service(models.Model):
     title = models.CharField('Xizmat nomi', max_length=50, choices=SERVICE_CHOICES)
     seriya = models.CharField('Seriya', max_length=50, blank=True)
     contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
-    person_type = models.CharField('Shaxs turi', choices=PERSON_CHOICES, max_length=3, default="J")
     organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
                                      blank=True)
     car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True, related_name='service_car')
