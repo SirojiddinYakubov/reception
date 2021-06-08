@@ -13,11 +13,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q, Value, CharField
+from django.db.models.functions import Concat
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views.generic import ListView
 from docxtpl import DocxTemplate
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
@@ -26,8 +28,9 @@ from rest_framework.views import APIView
 
 from application.generators import *
 from application.models import *
+from application.utils import application_right_filters
 from reception.settings import BASE_DIR, SMS_LOGIN, SMS_TOKEN, LOCAL_TIMEZONE
-from service.models import StateDuty, STATE_DUTY_TITLE
+from service.models import StateDuty, STATE_DUTY_TITLE, SERVICE_CHOICES
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 from user.utils import render_to_pdf
@@ -72,67 +75,73 @@ def applications_list(request):
                 service__organization__legal_address_district__in=districts) & Q(
                 service__organization__isnull=False))).filter(Q(is_active=True) & Q(is_block=False))
         template = 'user/role/technical/technical_applications_list.html'
-    else:
-        qs = Application.objects.filter(Q(is_active=True) & Q(created_user=request.user))
-        template = 'application/applications_list.html'
 
-    if request.method == "GET":
-        if request.GET.get('service'):
-            if request.GET.get('service') == 'account_statement':
-                qs = qs.filter(service__title='account_statement')
-                context.update(applications=qs)
-            if request.GET.get('service') == 'gift_agreement':
-                qs = qs.filter(service__title='gift_agreement')
-                context.update(applications=qs)
-            if request.GET.get('service') == 'contract_of_sale':
-                qs = qs.filter(service__title='contract_of_sale')
-                context.update(applications=qs)
-            if request.GET.get('service') == 'replace_tp':
-                qs = qs.filter(service__title='replace_tp')
-                context.update(applications=qs)
-            if request.GET.get('service') == 'replace_number_and_tp':
-                qs = qs.filter(service__title='replace_number_and_tp')
-                context.update(applications=qs)
-        if request.GET.get('person_type'):
-            qs = qs.filter(person_type=request.GET.get('person_type'))
-            context.update(applications=qs)
-        if request.GET.get('process'):
-            qs = qs.filter(process=request.GET.get('process'))
-            context.update(applications=qs)
-        if request.GET.get('payment'):
-            qs = qs.filter(is_payment=request.GET.get('payment'))
-            context.update(applications=qs)
-        if request.GET.get('confirm'):
-            qs = qs.filter(service__car__is_confirm=request.GET.get('confirm'))
-            context.update(applications=qs)
-        if request.GET.get('technical_confirm'):
-            qs = qs.filter(service__car__is_technical_confirm=request.GET.get('technical_confirm'))
-            context.update(applications=qs)
-        if request.GET.get('date'):
-            today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-            today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-            some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0, second=0)
+    elif request.user.role == '7':
+        sections = Section.objects.filter(is_active=True, parent__isnull=False)
+        qs = Application.objects.none()
+        for section in sections:
+            # qs |= Application.objects.filter(section=section, is_active=True, is_block__in=[False,] if section.pay_for_service else [True,False])
 
-            some_day_last_month = datetime.datetime.combine(today_min.replace(day=1), datetime.time.min)
-            some_day_last_year = datetime.datetime.combine(today_min.replace(month=1, day=1), datetime.time.min)
+            template = 'user/role/state_controller/applications_list.html'
+    print(qs)
+    context.update(applications=application_right_filters(qs, request.GET))
 
-            if request.GET.get('date') == 'today':
-                qs = qs.filter(created_date__range=(today_min, today_max))
-                context.update(applications=qs)
-            if request.GET.get('date') == 'last-7-days':
-                qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-                context.update(applications=qs)
-            if request.GET.get('date') == 'month':
-                qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-                context.update(applications=qs)
-            if request.GET.get('date') == 'year':
-                qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-                context.update(applications=qs)
-    context.update(applications=qs)
 
-    if not qs.exists():
-        messages.error(request, "Arizalar mavjud emas!")
     return render(request, template, context)
+
+
+class ApplicationList(ListView):
+    model = Application
+    template_name = 'user/role/state_controller/applications_list.html'
+
+    def myconverter(self,o):
+        if isinstance(o, (datetime.datetime)):
+            return o.strftime("%d.%m.%Y %H:%M").__str__()
+        elif isinstance(o, (datetime.date)):
+            return o.strftime("%d.%m.%Y").__str__()
+
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+
+        qs = self.model.objects.filter(is_active=True,
+                                       service__title__icontains=q,
+                                       service__car__model__title__icontains=q,
+                                       service__car__old_number__icontains=q,
+                                       ).values('id','service','service__car','service__car__old_number','created_user','created_date', 'file_name', 'process'
+                                                ).order_by(self.request.GET.get('order_by'))
+
+        return qs
+
+
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            start = int(request.GET.get('start'))
+            finish = int(request.GET.get('limit'))
+            print('GET')
+
+
+
+            data = self.get_queryset()
+            list_data = []
+            for index, item in enumerate(data[start:start+finish], start):
+                application = get_object_or_404(Application, id=item['id'])
+                item['created_date'] = self.myconverter(item['created_date'])
+                item['service__car'] = '<a href="{0}">{1} <br> {2}</a>'.format(reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}), application.service.car.model.title, application.service.car.old_number)
+                # refund_dict = {key: value for key, value in SERVICE_CHOICES}
+                item['service'] = "<a href='{0}'>{1}</a>".format(reverse('application:application_detail', kwargs={'id': application.id}),application.service.get_title_display())
+                item['created_user'] = "<a href='{0}'>{1}</a>".format(reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2}</a>".format(reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),application.created_user.last_name,application.created_user.first_name)
+                list_data.append(item)
+
+
+            context = {
+                'length': data.count(),
+                'objects': list_data
+            }
+
+            data = json.dumps(context)
+            return HttpResponse(data, content_type='json')
+
 
 
 @login_required
@@ -145,9 +154,9 @@ def application_detail(request, id):
 
     application = get_object_or_404(Application, id=id)
 
-    print(request.user.role)
+
     if request.user.role in ['5', '6', '7']:
-        print('good')
+        pass
 
     # if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
     #     if application.created_user != request.user:

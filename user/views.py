@@ -42,6 +42,7 @@ from reportlab.pdfgen import canvas
 
 from user.utils import render_to_pdf
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 
 @login_required
 def personal_data(request):
@@ -342,7 +343,8 @@ class Remove_Organization(APIView):
 def get_district(request):
     if request.is_ajax():
         districts = District.objects.filter(region=request.GET.get('region'))
-        options = "<option value=''>--- --- ---</option>"
+        # options = "<option value=''>--- --- ---</option>"
+        options = ""
         for district in districts:
             options += f"<option value='{district.id}'>{district.title}</option>"
         return HttpResponse(options)
@@ -424,7 +426,8 @@ def edit_personal_data(request):
 def get_mfy(request):
     if request.is_ajax():
         mfys = MFY.objects.filter(district=request.GET.get('district'))
-        options = "<option value=''>--- --- ---</option>"
+        # options = "<option value=''>--- --- ---</option>"
+        options = ""
         for mfy in mfys:
             options += f"<option value='{mfy.id}'>{mfy.title}</option>"
         return HttpResponse(options)
@@ -686,55 +689,106 @@ def add_worker(request):
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
 
+    context = {}
+    if request.user.role == '7':
+        sections = Section.objects.filter(parent__isnull=True, is_active=True)
+        context.update(sections=sections)
+        template = 'user/role/state_controller/add_worker.html'
+    else:
+        template =  'user/role/regional_controller/add_worker.html'
+
     if request.method == "POST":
-        role = request.POST.get('worker')
-        phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+        if request.user.role == STATE_CONTROLLER:
+            section = request.POST.get('section')
+            phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
 
-        form = AddUserForm(data=request.POST)
-        password = random.randint(1000000, 9999999)
+            form = AddUserForm(data=request.POST)
+            password = random.randint(1000000, 9999999)
 
-        if form.is_valid():
-            last_name = get_name(form.cleaned_data['last_name'])
-            first_name = get_name(form.cleaned_data['first_name'])
-            middle_name = get_name(form.cleaned_data['middle_name'])
-            section = get_object_or_404(Section, id=request.user.section.id)
+            if form.is_valid():
+                last_name = get_name(form.cleaned_data['last_name'])
+                first_name = get_name(form.cleaned_data['first_name'])
+                middle_name = get_name(form.cleaned_data['middle_name'])
+                section = get_object_or_404(Section, id=section)
+                region = get_object_or_404(Region, id=section.region.id)
 
+                try:
+                    user = User.objects.create_user(
+                        username=phone,
+                        turbo=password,
+                        password=password,
+                        last_name=last_name,
+                        first_name=first_name,
+                        middle_name=middle_name,
+                        section=section,
+                        region=region,
+                        phone=phone,
+                        role=REGIONAL_CONTROLLER,
+                        is_superuser=False,
+                        is_staff=True,
+                    )
+                    user.set_password(password)
+                    user.username = phone
+                    user.email = ''
+                    user.save()
 
-            if role == 'technical':
-                role = 5
-            elif role == 'checker':
-                role = 3
-            elif role == 'reviewer':
-                role = 4
+                    # msg = __("Hurmatli ") + str(user.last_name) + ' ' + str(user.first_name) + '!' + __("Sizning shaxsiy login va parolingiz.") + '%0a' + __('Login:') + str(user.username) + '%0a' + __("Parol:")  + str(user.turbo)
+                    # print(msg)
+                    # msg = msg.replace(" ", "+")
+                    # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
+                    # response = requests.get(url)
 
-            try:
-                user = User.objects.create_user(
-                    username=phone,
-                    turbo=password,
-                    password=password,
-                    last_name=last_name,
-                    first_name=first_name,
-                    middle_name=middle_name,
-                    section=section,
-                    phone=phone,
-                    role=str(role),
-                    is_superuser=False,
-                    is_staff=True,
-                )
-                user.set_password(password)
-                user.username = phone
-                user.email = ''
-                user.save()
+                    messages.success(request, _('Xodim muvaffaqiyatli qo\'shildi!'))
+                except IntegrityError:
+                    messages.error(request, _("Bu raqam oldin ro'yhatdan o'tkazilgan !"))
+        else:
+            role = request.POST.get('worker')
+            phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
 
-                msg = f"Hurmatli {user.last_name} {user.first_name}! Sizning shaxsiy login va parolingiz. %0aLogin: {user.username}%0aParol: {user.turbo}"
-                msg = msg.replace(" ", "+")
-                url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
-                response = requests.get(url)
+            form = AddUserForm(data=request.POST)
+            password = random.randint(1000000, 9999999)
 
-                messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
-            except IntegrityError:
-                messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
-    return render(request, 'user/role/regional_controller/add_worker.html')
+            if form.is_valid():
+                last_name = get_name(form.cleaned_data['last_name'])
+                first_name = get_name(form.cleaned_data['first_name'])
+                middle_name = get_name(form.cleaned_data['middle_name'])
+                section = get_object_or_404(Section, id=request.user.section.id)
+
+                if role == 'technical':
+                    role = 5
+                elif role == 'checker':
+                    role = 3
+                elif role == 'reviewer':
+                    role = 4
+
+                try:
+                    user = User.objects.create_user(
+                        username=phone,
+                        turbo=password,
+                        password=password,
+                        last_name=last_name,
+                        first_name=first_name,
+                        middle_name=middle_name,
+                        section=section,
+                        phone=phone,
+                        role=str(role),
+                        is_superuser=False,
+                        is_staff=True,
+                    )
+                    user.set_password(password)
+                    user.username = phone
+                    user.email = ''
+                    user.save()
+
+                    msg = f"Hurmatli {user.last_name} {user.first_name}! Sizning shaxsiy login va parolingiz. %0aLogin: {user.username}%0aParol: {user.turbo}"
+                    msg = msg.replace(" ", "+")
+                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
+                    response = requests.get(url)
+
+                    messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
+                except IntegrityError:
+                    messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
+    return render(request, template,context)
 
 
 @login_required
@@ -744,15 +798,17 @@ def workers_list(request):
         Token.objects.get(key=token)
     except ObjectDoesNotExist:
         return redirect(reverse_lazy('user:custom_logout'))
-
-    workers = User.objects.filter(Q(Q(role=3) | Q(role=4) | Q(role=5)) & Q(is_active=True) & Q(section=request.user.section))
-
+    if request.user.role == '7':
+        workers = User.objects.filter(Q(role=6) & Q(is_active=True))
+    else:
+        workers = User.objects.filter(
+            Q(Q(role=3) | Q(role=4) | Q(role=5)) & Q(is_active=True) & Q(section=request.user.section))
     if not workers.exists():
         messages.error(request, 'Xodimlar mavjud emas!')
     context = {
         'workers': workers
     }
-    return render(request, 'user/role/regional_controller/workers_list.html', context)
+    return render(request, 'user/role/state_controller/workers_list.html', context)
 
 
 @login_required
@@ -767,7 +823,54 @@ def worker_delete(request, worker_id):
 @login_required
 def worker_edit(request, worker_id):
     worker = get_object_or_404(User, id=worker_id)
-    if request.user.role == '2' and request.user.section == worker.section:
+    if request.user.role == STATE_CONTROLLER:
+        sections = Section.objects.filter(is_active=True, parent__isnull=True)
+        regions = Region.objects.all()
+        form = EditWorkerForm(instance=worker)
+        context = {
+            'form': form,
+            'worker': worker,
+            'regions': regions,
+            'sections': sections,
+        }
+
+        if request.method == 'POST':
+            try:
+                phone = request.POST.get('phone').replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
+                form = EditWorkerForm(request.POST, instance=worker)
+                print(request.POST)
+                section = get_object_or_404(Section, id=request.POST.get('section'))
+
+                print(section)
+
+                print(form.errors)
+                if form.is_valid():
+                    password = form.cleaned_data['password']
+                    form = form.save(commit=False)
+                    worker.set_password(password)
+
+                    form.section = section
+                    form.username = phone
+                    form.phone = phone
+                    form.turbo = password
+                    form.save()
+                    form = EditWorkerForm(instance=worker)
+
+                    # msg = __("Hurmatli ") + str(worker.last_name) + ' ' + str(worker.first_name) + '!' + __("Sizning ma'lumotlaringiz tahrirlandi.") + '%0a' + __('Login:') + str(worker.username) + '%0a' + __("Parol:")  + str(worker.turbo)
+                    # msg = msg.replace(" ", "+")
+                    # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
+                    # response = requests.get(url)
+                    context.update(form=form)
+                    messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
+                    return render(request, 'user/role/state_controller/edit_worker.html', context)
+                else:
+                    messages.error(request, "Formani to'ldirishda xatolik !")
+                    return render(request, 'user/role/state_controller/edit_worker.html', context)
+            except:
+                messages.error(request, "Formani to'ldirishda xatolik !")
+                return render(request, 'user/role/state_controller/edit_worker.html', context)
+        return render(request, 'user/role/state_controller/edit_worker.html', context)
+    elif request.user.role == REGIONAL_CONTROLLER:
         regions = Region.objects.all()
         form = EditWorkerForm(instance=worker)
         context = {
@@ -1083,8 +1186,8 @@ def sections_list(request, section_id):
 
 @login_required
 def section_applications_list(request, section_id):
-    if request.user.role == '5' or request.user.role == '6' or request.user.role == '7':
-        section = get_object_or_404(Section, id=section_id)
+    section = get_object_or_404(Section, id=section_id)
+    if ((request.user.role == '2' or request.user.role == '3' or request.user.role == '4' or request.user.role == '5' or request.user.role == '6') and request.user.section == section) or (request.user.role == '7' or request.user.role == '8' or request.user.role == '9' or request.user.role == '10'):
 
         qs = Application.objects.filter(section=section, is_active=True, is_block__in=[False,] if section.pay_for_service else [True,False])
 

@@ -124,7 +124,7 @@ class EditWorkerForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'middle_name','role', 'region','district','mfy', 'address','passport_seriya','passport_number', 'username','turbo','password')
+        fields = ('last_name', 'first_name', 'middle_name', 'section','region','district','mfy', 'address','passport_seriya','passport_number', 'username','turbo','password')
         exclude = ('phone',)
 
 class EditCarForm(ModelForm):
