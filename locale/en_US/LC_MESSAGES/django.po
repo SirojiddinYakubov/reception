@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-01 18:54+0500\n"
+"POT-Creation-Date: 2021-06-08 17:13+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,114 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\application\models.py:10
+msgid "Jarayon"
+msgstr ""
+
+#: .\application\models.py:11
+msgid "Qabul qilish"
+msgstr ""
+
+#: .\application\models.py:12
+msgid "Rad etish"
+msgstr ""
+
+#: .\application\models.py:24
+msgid "Yaratgan shaxs"
+msgstr ""
+
+#: .\application\models.py:25
+msgid "Yaratgan vaqti"
+msgstr ""
+
+#: .\application\models.py:26
+msgid "Tahrirlangan vaqti"
+msgstr ""
+
+#: .\application\models.py:28
+msgid "Holat sababi"
+msgstr ""
+
+#: .\application\models.py:28
+msgid "Ko'rib chiqilmoqda"
+msgstr ""
+
+#: .\application\models.py:29
+msgid "To'lov qilingan"
+msgstr ""
+
+#: .\application\models.py:31
+msgid "Ariza topshiruvchi shaxsi"
+msgstr ""
+
+#: .\application\models.py:33
+msgid "Ariza tekshiruv kodi"
+msgstr ""
+
+#: .\application\models.py:34
+msgid "Berish sanasi"
+msgstr ""
+
+#: .\application\models.py:35
+msgid "Berish vaqti"
+msgstr ""
+
+#: .\application\models.py:36
+msgid "Rad etilgan vaqti"
+msgstr ""
+
+#: .\application\models.py:39
+msgid "CRON holati"
+msgstr ""
+
+#: .\application\models.py:40
+msgid "Ariza topshirilgan IIB YHXB bo'limi"
+msgstr ""
+
+#: .\click\utils.py:45
+msgid "Error in request from click"
+msgstr ""
+
+#: .\click\utils.py:56
+msgid "SIGN CHECK FAILED!"
+msgstr ""
+
+#: .\click\utils.py:62
+msgid "Action not found"
+msgstr ""
+
+#: .\click\utils.py:69
+msgid "User does not exist"
+msgstr ""
+
+#: .\click\utils.py:75
+msgid "Incorrect parameter amount"
+msgstr ""
+
+#: .\click\utils.py:81
+msgid "Already paid"
+msgstr ""
+
+#: .\click\utils.py:90
+msgid "Transaction not found"
+msgstr ""
+
+#: .\click\utils.py:96
+msgid "Transaction cancelled"
+msgstr ""
+
+#: .\reception\settings.py:300
+msgid "Uzbek"
+msgstr ""
+
+#: .\reception\settings.py:301
+msgid "Russian"
+msgstr ""
+
+#: .\reception\settings.py:303
+msgid "English"
+msgstr ""
 
 #: .\templates\_parts\inc\account_statement_page.html:7
 msgid "Hisob ma'lumotnomasi"
@@ -27,6 +135,7 @@ msgstr ""
 #: .\templates\user\role\regional_controller\controller_applications_list.html:12
 #: .\templates\user\role\regional_controller\section_applications_list.html:13
 #: .\templates\user\role\regional_controller\sections_list.html:29
+#: .\templates\user\role\state_controller\applications_list.html:10
 #: .\templates\user\role\state_controller\regions_list.html:27
 #: .\templates\user\role\technical\technical_applications_list.html:13
 msgid "Arizalar"
@@ -90,6 +199,76 @@ msgstr ""
 #: .\templates\application\application_detail.html:13
 #: .\templates\application\check_application_status.html:54
 msgid "Amallar xronologiyasi"
+msgstr ""
+
+#: .\templates\application\applications_list.html:30
+#: .\templates\user\role\regional_controller\section_applications_list.html:30
+#: .\templates\user\role\state_controller\applications_list.html:28
+msgid "Ariza raqami"
+msgstr ""
+
+#: .\templates\application\applications_list.html:31
+#: .\templates\user\role\regional_controller\section_applications_list.html:31
+#: .\templates\user\role\state_controller\applications_list.html:29
+msgid "Xizmat nomi"
+msgstr ""
+
+#: .\templates\application\applications_list.html:32
+#: .\templates\user\role\regional_controller\section_applications_list.html:33
+#: .\templates\user\role\state_controller\applications_list.html:30
+msgid "Avtomobil"
+msgstr ""
+
+#: .\templates\application\applications_list.html:33
+#: .\templates\user\role\regional_controller\section_applications_list.html:37
+#: .\templates\user\role\state_controller\applications_list.html:31
+msgid "Topshirdi"
+msgstr ""
+
+#: .\templates\application\applications_list.html:34
+#: .\templates\user\role\regional_controller\section_applications_list.html:38
+#: .\templates\user\role\state_controller\applications_list.html:32
+msgid "Yaratilgan vaqti"
+msgstr ""
+
+#: .\templates\application\applications_list.html:35
+#: .\templates\user\role\regional_controller\section_applications_list.html:39
+#: .\templates\user\role\state_controller\applications_list.html:33
+msgid "Ariza nusxasi"
+msgstr ""
+
+#: .\templates\application\applications_list.html:36
+#: .\templates\user\role\regional_controller\section_applications_list.html:40
+#: .\templates\user\role\state_controller\applications_list.html:34
+msgid "Holati"
+msgstr ""
+
+#: .\templates\application\applications_list.html:38
+#: .\templates\user\role\state_controller\applications_list.html:36
+msgid "O'chirish"
+msgstr ""
+
+#: .\templates\application\applications_list.html:66
+#: .\templates\user\role\regional_controller\section_applications_list.html:88
+#: .\templates\user\role\regional_controller\sections_list.html:34
+#: .\templates\user\role\state_controller\applications_list.html:64
+#: .\templates\user\role\state_controller\applications_list.html:169
+#: .\templates\user\role\state_controller\regions_list.html:33
+msgid "Jarayonda"
+msgstr ""
+
+#: .\templates\application\applications_list.html:68
+#: .\templates\user\role\state_controller\applications_list.html:66
+msgid "Qabul qilgan"
+msgstr ""
+
+#: .\templates\application\applications_list.html:70
+#: .\templates\user\role\regional_controller\section_applications_list.html:92
+#: .\templates\user\role\regional_controller\sections_list.html:35
+#: .\templates\user\role\state_controller\applications_list.html:68
+#: .\templates\user\role\state_controller\applications_list.html:173
+#: .\templates\user\role\state_controller\regions_list.html:34
+msgid "Rad etilgan"
 msgstr ""
 
 #: .\templates\application\confirm_application_data.html:8
@@ -502,20 +681,8 @@ msgid ""
 "                        tushgan arizalar"
 msgstr "%(section_title)s applications received"
 
-#: .\templates\user\role\regional_controller\section_applications_list.html:30
-msgid "Ariza raqami"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:31
-msgid "Xizmat nomi"
-msgstr ""
-
 #: .\templates\user\role\regional_controller\section_applications_list.html:32
 msgid "Hujjat"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:33
-msgid "Avtomobil"
 msgstr ""
 
 #: .\templates\user\role\regional_controller\section_applications_list.html:34
@@ -530,38 +697,11 @@ msgstr ""
 msgid "To'lov"
 msgstr ""
 
-#: .\templates\user\role\regional_controller\section_applications_list.html:37
-msgid "Topshirdi"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:38
-msgid "Yaratilgan vaqti"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:39
-msgid "Ariza nusxasi"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:40
-msgid "Holati"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:88
-#: .\templates\user\role\regional_controller\sections_list.html:34
-#: .\templates\user\role\state_controller\regions_list.html:33
-msgid "Jarayonda"
-msgstr ""
-
 #: .\templates\user\role\regional_controller\section_applications_list.html:90
 #: .\templates\user\role\regional_controller\sections_list.html:33
+#: .\templates\user\role\state_controller\applications_list.html:171
 #: .\templates\user\role\state_controller\regions_list.html:32
 msgid "Qabul qilingan"
-msgstr ""
-
-#: .\templates\user\role\regional_controller\section_applications_list.html:92
-#: .\templates\user\role\regional_controller\sections_list.html:35
-#: .\templates\user\role\state_controller\regions_list.html:34
-msgid "Rad etilgan"
 msgstr ""
 
 #: .\templates\user\role\regional_controller\sections_list.html:27
@@ -578,8 +718,65 @@ msgid "Jami"
 msgstr ""
 
 #: .\templates\user\role\regional_controller\sections_list.html:60
+#: .\templates\user\role\state_controller\applications_list.html:111
+#: .\templates\user\role\state_controller\applications_list.html:121
 #: .\templates\user\role\state_controller\regions_list.html:58
 msgid "Ma'lumot topilmadi!"
+msgstr ""
+
+#: .\templates\user\role\state_controller\add_worker.html:10
+#: .\templates\user\role\state_controller\workers_list.html:17
+msgid "Xodim qo'shish"
+msgstr ""
+
+#: .\templates\user\role\state_controller\add_worker.html:22
+#: .\templates\user\role\state_controller\edit_worker.html:20
+msgid "Bo'limni tanlang"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:110
+msgid "Qidiruv..."
+msgstr "Search..."
+
+#: .\templates\user\role\state_controller\applications_list.html:113
+#: .\templates\user\role\state_controller\applications_list.html:114
+msgid "Jami: _TOTAL_ ta ariza"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:119
+msgid "Yuklanmoqda..."
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:120
+msgid "Qayta ishlanmoqda..."
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:123
+msgid "Birinchi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:124
+msgid "Oxirgi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:125
+msgid "Keyingi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:126
+msgid "Oldingi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:129
+msgid ": o'sish tartibi faollashtirildi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\applications_list.html:130
+msgid ": kamayish tartibi faollashtirildi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\edit_worker.html:10
+msgid "Xodimni tahrirlash"
 msgstr ""
 
 #: .\templates\user\role\state_controller\regions_list.html:12
@@ -594,74 +791,68 @@ msgstr ""
 msgid "TRIBlar soni"
 msgstr ""
 
+#: .\templates\user\role\state_controller\workers_list.html:10
+#, fuzzy
+#| msgid "Viloyatlar ro'yhati"
+msgid "Xodimlar ro'yhati"
+msgstr "Regions list"
+
+#: .\templates\user\role\state_controller\workers_list.html:25
+msgid "Xodimning ism familiyasi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:26
+msgid "Lavozimi"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:27
+msgid "Bo'lim"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:28
+msgid "Telefon"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:29
+msgid "Login"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:30
+msgid "Parol"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:32
+msgid "Tahrirlash/O'chirish"
+msgstr ""
+
+#: .\templates\user\role\state_controller\workers_list.html:43
+msgid "bosh nazoratchisi"
+msgstr ""
+
 #: .\templates\user\view_personal_data.html:8
 msgid "Foydalanuvchi ma'lumotlari"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
-msgid "Django: the Web framework for perfectionists with deadlines."
+#: .\user\models.py:59
+msgid "Bo'ysinuvchi tashkilot"
 msgstr ""
 
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:346
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
+#: .\user\views.py:223
+msgid "Login yoki parol noto'g'ri!"
+msgstr "Login or password incorrect!"
 
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:368
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
+#: .\user\views.py:316
+msgid "Muvaffaqiyatli tahrirlandi!"
+msgstr "Successfully edited!"
 
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:369
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
-msgstr ""
+#: .\user\views.py:741
+#, fuzzy
+#| msgid "Muvaffaqiyatli tahrirlandi!"
+msgid "Xodim muvaffaqiyatli qo'shildi!"
+msgstr "Successfully edited!"
 
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:384
-msgid "Django Documentation"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:385
-msgid "Topics, references, &amp; how-to’s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:396
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:397
-msgid "Get started with Django"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:408
-msgid "Django Community"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:409
-msgid "Connect, get help, or contribute"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:44
-msgid "Delete?"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:58
-msgid "View on site"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:478
-#, python-format
-msgid "Add another %(verbose_name)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:481
-#: .\venv\Lib\site-packages\django_common\templates\common\admin\nested_tabular.html:495
-msgid "Remove"
+#: .\user\views.py:743
+msgid "Bu raqam oldin ro'yhatdan o'tkazilgan !"
 msgstr ""
 
 #, fuzzy, python-format
@@ -672,9 +863,3 @@ msgstr ""
 #, python-format
 #~ msgid "assalomu aleykum! %(parent_section)s "
 #~ msgstr "Hello! %(parent_section)s "
-
-#~ msgid "Login yoki parol noto'g'ri!"
-#~ msgstr "Login or password incorrect!"
-
-#~ msgid "Muvaffaqiyatli tahrirlandi!"
-#~ msgstr "Successfully edited!"
