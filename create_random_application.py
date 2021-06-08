@@ -11,19 +11,30 @@ django.setup()
 #
 from application.models import Application
 from service.models import Service
-from user.models import User, Section
+from user.models import User, Section, Organization
+
 
 def generate_application(count):
     for i in range(count):
-        print(f'Generated application # {i} . . .')
+
         created_user = User.objects.filter(is_superuser=False).order_by('?')[0]
         service = Service.objects.all().order_by('?')[0]
         section = Section.objects.filter(parent__isnull=False).order_by('?')[0]
-
-        Application.objects.create(
+        organization = Organization.objects.filter(is_active=True).first()
+        application = Application.objects.create(
             created_user=created_user,
             service=service,
-            section=section)
+            section=section,
+
+        )
+        # application.person_type = 'Y' if service.organization else 'J'
+        application.person_type = 'Y'
+        application.save()
+
+        service.organization = organization
+        service.save()
+        print(f'Generated application # {i + 1} | app_id: {application.id}. . .')
+
 
 if __name__ == '__main__':
-    generate_application(100)
+    generate_application(2)

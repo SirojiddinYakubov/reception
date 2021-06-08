@@ -827,6 +827,13 @@ input[type='checkbox'] {
 /*}*/
 
 
+.dataTables_filter, .dataTables_paginate {
+    float: right;
+}
 
-
-
+div.dataTables_wrapper div.dataTables_processing {
+    top: 50%;
+}
+td.dataTables_empty {
+    text-align: center;
+}

@@ -1,10 +1,12 @@
+import operator
+import re
 from datetime import timezone, datetime, timedelta
 from datetime import datetime as dt
 import datetime
 import json
 import os
 import random
-
+from functools import reduce
 
 import pytz
 import requests
@@ -37,14 +39,14 @@ from user.utils import render_to_pdf
 
 @login_required
 def applications_list(request):
-    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=['1','3']))
+    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=['1', '3']))
 
     for application in applications:
 
-        #Rad etilgan ariza 30 kundan so'ng o'chirib yuboriladi
-        if application.process == '3' and not application.is_block and timezone.now() - timedelta(days=30) > application.created_date:
+        # Rad etilgan ariza 30 kundan so'ng o'chirib yuboriladi
+        if application.process == '3' and not application.is_block and timezone.now() - timedelta(
+                days=30) > application.created_date:
             application.delete()
-
 
     try:
         token = request.COOKIES.get('token')
@@ -85,7 +87,6 @@ def applications_list(request):
     print(qs)
     context.update(applications=application_right_filters(qs, request.GET))
 
-
     return render(request, template, context)
 
 
@@ -93,45 +94,60 @@ class ApplicationList(ListView):
     model = Application
     template_name = 'user/role/state_controller/applications_list.html'
 
-    def myconverter(self,o):
+    def myconverter(self, o):
         if isinstance(o, (datetime.datetime)):
             return o.strftime("%d.%m.%Y %H:%M").__str__()
         elif isinstance(o, (datetime.date)):
             return o.strftime("%d.%m.%Y").__str__()
 
-    def get_queryset(self):
-        q = self.request.GET.get('q')
+    def get_choices_value(self, q):
+        services_list = [key for key, value in SERVICE_CHOICES if re.search(q.lower(), value.lower())]
+        return services_list
 
-        qs = self.model.objects.filter(is_active=True,
-                                       service__title__icontains=q,
-                                       service__car__model__title__icontains=q,
-                                       service__car__old_number__icontains=q,
-                                       ).values('id','service','service__car','service__car__old_number','created_user','created_date', 'file_name', 'process'
-                                                ).order_by(self.request.GET.get('order_by'))
+    def get_queryset(self):
+        q = self.request.GET.get('q').lower()
+
+        qs = self.model.objects.filter(is_active=True).filter(
+            Q(service__title__in=self.get_choices_value(q)) | Q(service__car__model__title__icontains=q) | Q(
+                created_user__first_name__icontains=q) | Q(created_user__last_name__icontains=q) | Q(
+                created_user__middle_name__icontains=q) |
+            Q(service__car__old_number__icontains=q) | Q(service__car__given_number__icontains=q) | Q(
+                service__car__old_technical_passport__icontains=q) | Q(
+                service__car__given_technical_passport__icontains=q) | Q(service__car__type__title__icontains=q) | Q(
+                service__organization__title__icontains=q)).values('id', 'service', 'service__car',
+                                                                   'service__car__old_number', 'created_user',
+                                                                   'created_date',
+                                                                   'file_name', 'process'
+                                                                   ).order_by(self.request.GET.get('order_by'))
 
         return qs
-
-
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             start = int(request.GET.get('start'))
             finish = int(request.GET.get('limit'))
-            print('GET')
-
 
 
             data = self.get_queryset()
             list_data = []
-            for index, item in enumerate(data[start:start+finish], start):
+            for index, item in enumerate(data[start:start + finish], start):
                 application = get_object_or_404(Application, id=item['id'])
                 item['created_date'] = self.myconverter(item['created_date'])
-                item['service__car'] = '<a href="{0}">{1} <br> {2}</a>'.format(reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}), application.service.car.model.title, application.service.car.old_number)
+                item['service__car'] = '<a href="{0}">{1} <br> <span style="color: black">{2}</span></a>'.format(
+                    reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}),
+                    application.service.car.model.title,
+                    application.service.car.old_number if application.service.car.old_number else '')
                 # refund_dict = {key: value for key, value in SERVICE_CHOICES}
-                item['service'] = "<a href='{0}'>{1}</a>".format(reverse('application:application_detail', kwargs={'id': application.id}),application.service.get_title_display())
-                item['created_user'] = "<a href='{0}'>{1}</a>".format(reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2}</a>".format(reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),application.created_user.last_name,application.created_user.first_name)
+                item['service'] = "<a href='{0}'>{1}</a>".format(
+                    reverse('application:application_detail', kwargs={'id': application.id}),
+                    application.service.get_title_display())
+                item['created_user'] = "<a href='{0}'>{1}</a>".format(
+                    reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),
+                    application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
+                    reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
+                    application.created_user.last_name, application.created_user.first_name,
+                    application.created_user.middle_name)
                 list_data.append(item)
-
 
             context = {
                 'length': data.count(),
@@ -140,7 +156,6 @@ class ApplicationList(ListView):
 
             data = json.dumps(context)
             return HttpResponse(data, content_type='json')
-
 
 
 @login_required
@@ -153,14 +168,12 @@ def application_detail(request, id):
 
     application = get_object_or_404(Application, id=id)
 
-
     if request.user.role in ['5', '6', '7']:
         pass
 
     # if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
     #     if application.created_user != request.user:
     #         return redirect(reverse_lazy('application:applications_list'))
-
 
     payments = StateDuty.objects.filter(service=application.service)
     if not payments.exists():
@@ -199,7 +212,6 @@ def application_pdf(request, id):
     template_name = 'application/application_detail_pdf.html'
     pdf = render_to_pdf(template_name, context)
 
-
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = "Ariza #%s.pdf" % (application.id)
@@ -218,6 +230,7 @@ def generate_qr_code_image(request, id):
         return response
     except:
         return HttpResponse('APPLICATION NOT FOUND')
+
 
 @login_required
 def get_information(request):
@@ -546,10 +559,12 @@ def payments(request):
 
         if request.method == 'GET':
             try:
-                if request.GET.get('startdate') and request.GET.get('startdate') != 'None' and request.GET.get('startdate') != '':
+                if request.GET.get('startdate') and request.GET.get('startdate') != 'None' and request.GET.get(
+                        'startdate') != '':
                     # startdate = dt.strptime(request.GET.get('startdate'), "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
                     context.update(startdate=request.GET.get('startdate'))
-                if request.GET.get('stopdate') and request.GET.get('stopdate') != 'None' and request.GET.get('stopdate') != '':
+                if request.GET.get('stopdate') and request.GET.get('stopdate') != 'None' and request.GET.get(
+                        'stopdate') != '':
                     # stopdate = dt.strptime(request.GET.get('stopdate'), '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
                     context.update(stopdate=request.GET.get('stopdate'))
                 # if request.GET.get('district') and request.GET.get('district') != 'all':
@@ -624,6 +639,7 @@ def check_application_status(request, id):
         'payments': payments
     }
     return render(request, 'application/check_application_status.html', context)
+
 
 def access_with_qrcode(request, id):
     application = get_object_or_404(Application, id=id)
