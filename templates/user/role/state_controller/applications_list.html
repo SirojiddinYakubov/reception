@@ -111,17 +111,17 @@
             var token = getCookie('token'),
                 csrftoken = getCookie('csrftoken')
 
-            {#$.ajaxSetup({#}
-            {#    beforeSend: function (xhr) {#}
-            {#        xhr.setRequestHeader('X-CSRFToken', csrftoken)#}
-            {#        xhr.setRequestHeader('Authorization', `Token ${token}`)#}
-            {#    },#}
-            {#    error: function (response) {#}
-            {#        if (response.status === 401) {#}
-            {#            tokenInvalid()#}
-            {#        }#}
-            {#    }#}
-            //{#})#}
+            $.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    xhr.setRequestHeader('Authorization', `Token ${token}`)
+                },
+                error: function (response) {
+                    if (response.status === 401) {
+                        tokenInvalid()
+                    }
+                }
+            })
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
