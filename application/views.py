@@ -84,78 +84,168 @@ def applications_list(request):
             # qs |= Application.objects.filter(section=section, is_active=True, is_block__in=[False,] if section.pay_for_service else [True,False])
 
             template = 'user/role/state_controller/applications_list.html'
-    print(qs)
+
     context.update(applications=application_right_filters(qs, request.GET))
 
     return render(request, template, context)
 
 
-class ApplicationList(ListView):
+class ApplicationsList(ListView):
     model = Application
     template_name = 'user/role/state_controller/applications_list.html'
 
-    def myconverter(self, o):
-        if isinstance(o, (datetime.datetime)):
-            return o.strftime("%d.%m.%Y %H:%M").__str__()
-        elif isinstance(o, (datetime.date)):
-            return o.strftime("%d.%m.%Y").__str__()
+    def __init__(self, *args, **kwargs):
+        super(ApplicationsList, self).__init__(*args, **kwargs)
+        self.request_get = dict()
 
-    def get_choices_value(self, q):
-        services_list = [key for key, value in SERVICE_CHOICES if re.search(q.lower(), value.lower())]
-        return services_list
+    def myconverter(self, obj):
+        if isinstance(obj, (datetime.datetime)):
+            return obj.strftime("%d.%m.%Y %H:%M").__str__()
+        elif isinstance(obj, (datetime.date)):
+            return obj.strftime("%d.%m.%Y").__str__()
+
+    def get_choices_value(self, q, choices):
+        choices_list = [key for key, value in choices if re.search(q.lower(), value.lower())]
+        # refund_dict = {key: value for key, value in SERVICE_CHOICES}
+        return choices_list
+
+    def get_applications_values(self, qs):
+        qs = qs.values('id', 'service', 'service__car',
+                  'service__car__old_number', 'created_user',
+                  'created_date',
+                  'file_name', 'process')
+        return qs
 
     def get_queryset(self):
-        q = self.request.GET.get('q').lower()
+        q = self.request.GET.get('q', '').lower()
+        order_by = self.request.GET.get('order_by','created_date')
 
         qs = self.model.objects.filter(is_active=True).filter(
-            Q(service__title__in=self.get_choices_value(q)) | Q(service__car__model__title__icontains=q) | Q(
+            Q(service__title__in=self.get_choices_value(q, SERVICE_CHOICES)) | Q(service__car__model__title__icontains=q) | Q(
                 created_user__first_name__icontains=q) | Q(created_user__last_name__icontains=q) | Q(
                 created_user__middle_name__icontains=q) |
             Q(service__car__old_number__icontains=q) | Q(service__car__given_number__icontains=q) | Q(
                 service__car__old_technical_passport__icontains=q) | Q(
                 service__car__given_technical_passport__icontains=q) | Q(service__car__type__title__icontains=q) | Q(
-                service__organization__title__icontains=q)).values('id', 'service', 'service__car',
-                                                                   'service__car__old_number', 'created_user',
-                                                                   'created_date',
-                                                                   'file_name', 'process'
-                                                                   ).order_by(self.request.GET.get('order_by'))
+                service__organization__title__icontains=q)).order_by(order_by)
 
-        return qs
+        return self.filter_right(qs, self.request_get)
 
     def get(self, request, *args, **kwargs):
+        print('GET', request.GET,135)
+        return self.get_template(self.template_name)
+
+
+    def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            start = int(request.GET.get('start'))
-            finish = int(request.GET.get('limit'))
+            return self.get_json_data()
+        else:
+            return self.get_template(self.template_name)
 
 
-            data = self.get_queryset()
-            list_data = []
-            for index, item in enumerate(data[start:start + finish], start):
-                application = get_object_or_404(Application, id=item['id'])
-                item['created_date'] = self.myconverter(item['created_date'])
-                item['service__car'] = '<a href="{0}">{1} <br> <span style="color: black">{2}</span></a>'.format(
-                    reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}),
-                    application.service.car.model.title,
-                    application.service.car.old_number if application.service.car.old_number else '')
-                # refund_dict = {key: value for key, value in SERVICE_CHOICES}
-                item['service'] = "<a href='{0}'>{1}</a>".format(
-                    reverse('application:application_detail', kwargs={'id': application.id}),
-                    application.service.get_title_display())
-                item['created_user'] = "<a href='{0}'>{1}</a>".format(
-                    reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),
-                    application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
-                    reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
-                    application.created_user.last_name, application.created_user.first_name,
-                    application.created_user.middle_name)
-                list_data.append(item)
+    def get_template(self, template_name):
+        return render(self.request, template_name)
 
-            context = {
-                'length': data.count(),
-                'objects': list_data
-            }
+    def get_json_data(self):
 
-            data = json.dumps(context)
-            return HttpResponse(data, content_type='json')
+        start = int(self.request.POST.get('start'))
+        finish = int(self.request.POST.get('limit'))
+
+        qs = self.get_queryset()
+        data = self.get_applications_values(qs)
+
+        list_data = []
+        for index, item in enumerate(data[start:start + finish], start):
+            application = get_object_or_404(Application, id=item['id'])
+            item['created_date'] = self.myconverter(item['created_date'])
+            item['service__car'] = '<a href="{0}">{1} <br> <span style="color: black">{2}</span></a>'.format(
+                reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}),
+                application.service.car.model.title,
+                application.service.car.old_number if application.service.car.old_number else '')
+
+            item['service'] = "<a href='{0}'>{1}</a>".format(
+                reverse('application:application_detail', kwargs={'id': application.id}),
+                application.service.get_title_display())
+            item['created_user'] = "<a href='{0}'>{1}</a>".format(
+                reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),
+                application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
+                reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
+                application.created_user.last_name, application.created_user.first_name,
+                application.created_user.middle_name)
+            list_data.append(item)
+
+        context = {
+            'length': data.count(),
+            'objects': list_data
+        }
+
+        data = json.dumps(context)
+        return HttpResponse(data, content_type='json')
+
+
+    def filter_right(self, qs, request_get):
+        print(request_get,182)
+        if request_get.get('service'):
+            key = request_get.get('service')
+            if key == 'account_statement':
+                qs = qs.filter(service__title='account_statement')
+
+            if key == 'gift_agreement':
+                qs = qs.filter(service__title='gift_agreement')
+            if key == 'contract_of_sale':
+                print(key,192)
+                print(qs.count(),193)
+                qs = qs.filter(service__title='contract_of_sale')
+                print(qs.count(), 195)
+            if key == 'replace_tp':
+                qs = qs.filter(service__title='replace_tp')
+            if key == 'replace_number_and_tp':
+                qs = qs.filter(service__title='replace_number_and_tp')
+        if request_get.get('person_type'):
+            qs = qs.filter(person_type=request_get.get('person_type'))
+
+        if request_get.get('process'):
+            qs = qs.filter(process=request_get.get('process'))
+
+        if request_get.get('payment'):
+            qs = qs.filter(is_payment=request_get.get('payment'))
+
+        if request_get.get('confirm'):
+            qs = qs.filter(service__car__is_confirm=request_get.get('confirm'))
+
+        if request_get.get('technical_confirm'):
+            qs = qs.filter(service__car__is_technical_confirm=request_get.get('technical_confirm'))
+
+
+        if request_get.get('date'):
+
+            today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
+            today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
+            some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,
+                                                                                       minute=0, second=0)
+            some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
+            some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0,
+                                                        tzinfo=LOCAL_TIMEZONE)
+
+            print(qs.first().created_date)
+            print(today_min)
+            print(today_max)
+            print(some_day_last_week)
+            print(some_day_last_month)
+            print(some_day_last_year)
+            if request_get.get('date') == 'today':
+                qs = qs.filter(created_date__range=(today_min, today_max))
+
+            if request_get.get('date') == 'last-7-days':
+                qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+
+            if request_get.get('date') == 'month':
+                qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+
+            if request_get.get('date') == 'year':
+                qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+
+        return qs
 
 
 @login_required
@@ -398,6 +488,7 @@ def change_get_request(request, key, value):
                     return HttpResponseRedirect(url)
                 return HttpResponseRedirect(url + '?' + query)
             except ValueError:
+                print(url, 484)
                 return HttpResponseRedirect(url)
         else:
             get_params = str(request.META['HTTP_REFERER']).split('?', 1)[1]
@@ -410,16 +501,20 @@ def change_get_request(request, key, value):
                     query_dict[k] = v
                 query = '&'.join([f'{key}={value}', *['{}={}'.format(k, v) for k, v in query_dict.items()]])
                 if query == '':
+                    print(url, 497)
                     return HttpResponseRedirect(url)
                 return HttpResponseRedirect(url + '?' + query)
             except ValueError:
+                print(url,499)
                 return HttpResponseRedirect(url)
 
     except IndexError:
         # mavjud emas
         url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
         if value == 'all':
+            print(url,508)
             return HttpResponseRedirect(url)
+        print('key' + key  + ' ,value: ' + value)
         return HttpResponseRedirect(url + f"?{key}={value}")
 
 

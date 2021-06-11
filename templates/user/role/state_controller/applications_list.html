@@ -26,12 +26,20 @@
                         <thead class="thead-light">
                         <tr>
                             <th class="sorting" scope="col" style="width: auto">{% trans "Ariza raqami" %}</th>
-                            <th scope="col" style="width: 35%">{% trans "Xizmat nomi" %} <i style="float: right" class="fas fa-sort-amount-up"></i></th>
-                            <th scope="col" style="width: 20%">{% trans "Avtomobil" %}<i style="float: right" class="fas fa-sort-amount-up"></i></th>
-                            <th scope="col" style="width: 20%">{% trans "Topshirdi" %}<i style="float: right" class="fas fa-sort-amount-up"></i></th>
-                            <th scope="col" style="width: 20%">{% trans "Yaratilgan vaqti" %}<i style="float: right" class="fas fa-sort-amount-up"></i></th>
-                            <th scope="col" style="width: auto">{% trans "Ariza nusxasi" %}<i style="float: right" class="fas fa-sort-amount-up"></i></th>
-                            <th scope="col" style="width: auto">{% trans "Holati" %}<i style="float: right" class="fas fa-sort-amount-up"></i></th>
+                            <th scope="col" style="width: 35%">{% trans "Xizmat nomi" %} <i style="float: right"
+                                                                                            class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Avtomobil" %}<i style="float: right"
+                                                                                         class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Topshirdi" %}<i style="float: right"
+                                                                                         class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Yaratilgan vaqti" %}<i style="float: right"
+                                                                                                class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: auto">{% trans "Ariza nusxasi" %}</th>
+                            <th scope="col" style="width: auto">{% trans "Holati" %}</th>
                             {% if request.user == application.created_user %}
                                 <th scope="col">{% trans "O'chirish" %}</th>
                             {% endif %}
@@ -100,12 +108,27 @@
     <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
     <script type="text/javascript" class="init">
         $(document).ready(function () {
+            var token = getCookie('token'),
+                csrftoken = getCookie('csrftoken')
+
+            {#$.ajaxSetup({#}
+            {#    beforeSend: function (xhr) {#}
+            {#        xhr.setRequestHeader('X-CSRFToken', csrftoken)#}
+            {#        xhr.setRequestHeader('Authorization', `Token ${token}`)#}
+            {#    },#}
+            {#    error: function (response) {#}
+            {#        if (response.status === 401) {#}
+            {#            tokenInvalid()#}
+            {#        }#}
+            {#    }#}
+            //{#})#}
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
                 "processing": true,
                 'autoWidth': false,
                 "orderCellsTop": true,
+
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
@@ -132,15 +155,16 @@
                     }
                 },
                 "ajax": function (data, callback, settings) {
-                    console.log(data)
 
-                    $.get('{% url "application:applications" %}', {
+
+                    $.post('{% url "application:ApplicationsList" %}', {
                         limit: data.length,
                         start: data.start,
                         q: data.search.value,
                         order_by: data.columns[data.order[0].column].data.replace(/\./g, "__")
                     }, function (res) {
                         console.log(res)
+
                         callback({
                             recordsTotal: res.length,
                             recordsFiltered: res.length,
@@ -178,8 +202,6 @@
                     },
                 ]
             })
-
-
 
 
         })

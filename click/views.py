@@ -28,6 +28,8 @@ def create_order_url(request):
         return redirect(reverse_lazy('user:personal_data'))
 
 class OrderCheckAndPayment(ClickUz):
+
+
     def check_order(self, order_id: str, amount: str):
         send_message_to_developer('check   order_id ' + order_id + ' ' + 'amount ' + amount)
 
