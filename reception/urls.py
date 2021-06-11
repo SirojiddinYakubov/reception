@@ -27,7 +27,8 @@ def trigger_error(request):
     division_by_zero = 1 / 0
 
 def test(request):
-    return HttpResponse(settings.LOCALE_PATHS)
+    print(request)
+    return HttpResponse(request)
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),

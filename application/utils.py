@@ -6,7 +6,7 @@ from reception.settings import LOCAL_TIMEZONE
 
 
 def application_right_filters(qs, request_get):
-    print(request_get)
+
     if request_get.get('service'):
         key = request_get.get('service')
         if key == 'account_statement':
@@ -35,9 +35,9 @@ def application_right_filters(qs, request_get):
     if request_get.get('technical_confirm'):
         qs = qs.filter(service__car__is_technical_confirm=request_get.get('technical_confirm'))
 
-    print('good')
+
     if request_get.get('date'):
-        print('ok')
+
         today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0,second=0)
         today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
         some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0, second=0)
