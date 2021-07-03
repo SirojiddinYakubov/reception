@@ -37,4 +37,4 @@ def generate_application(count):
 
 
 if __name__ == '__main__':
-    generate_application(2)
+    generate_application(20)

@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% block top %}
-    <link rel="stylesheet" href="{% static "plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" %}">
-{% endblock top %}
+
 {% block content %}
     <section class="py-3 mt-2 bg-info text-light">
         <div class="container">
@@ -20,72 +18,38 @@
             <!-- left column -->
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
                 {% include '_parts/messages.html' %}
-                {% if applications %}
-                    <div class="table-responsive"
-                         style="border: 1px solid #dbdada; border-radius: 3px; padding: 2% 2% 2% 2%;">
+                {#                {% if applications %}#}
+                <div class="table-responsive">
 
-                        <table id="example1" class="table table-bordered table-responsive">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col">{% trans "Ariza raqami" %}</th>
-                                <th scope="col" style="width: 25%">{% trans "Xizmat nomi" %}</th>
-                                <th scope="col">{% trans "Avtomobil" %}</th>
-                                <th scope="col">{% trans "Topshirdi" %}</th>
-                                <th scope="col">{% trans "Yaratilgan vaqti" %}</th>
-                                <th scope="col">{% trans "Ariza nusxasi" %}</th>
-                                <th scope="col">{% trans "Holati" %}</th>
-                                {% if request.user == application.created_user %}
-                                    <th scope="col">{% trans "O'chirish" %}</th>
-                                {% endif %}
-                            </tr>
-                            </thead>
-                            <tbody>
+                    <table id="example1" class="table table-bordered table-responsive display" style="width:100%">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="sorting" scope="col" style="width: auto">{% trans "Ariza raqami" %}</th>
+                            <th scope="col" style="width: 35%">{% trans "Xizmat nomi" %} <i style="float: right"
+                                                                                            class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Avtomobil" %}<i style="float: right"
+                                                                                         class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Topshirdi" %}<i style="float: right"
+                                                                                         class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: 20%">{% trans "Yaratilgan vaqti" %}<i style="float: right"
+                                                                                                class="fas fa-sort-amount-up"></i>
+                            </th>
+                            <th scope="col" style="width: auto">{% trans "Ariza nusxasi" %}</th>
+                            <th scope="col" style="width: auto">{% trans "Holati" %}</th>
+                            {% if request.user.role == '1' %}
+                                <th scope="col">{% trans "O'chirish" %}</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
 
-                            {% for application in applications %}
-                                <tr>
-                                    <th scope="row">{{ application.id }}</th>
-                                    <td>
-                                        <a href="{% url 'application:application_detail' application.id %}">{{ application.service.get_title_display }}</a>
-                                    </td>
-                                    <td class="text-center"><a
-                                            href="{% url 'user:view_car_data' application.service.car.id %}">{{ application.service.car.model }}
-                                        {% if application.service.car.old_number %}
-                                            {{ application.service.car.old_number }}{% endif %}</a>
-                                    </td>
-                                    <td>{% if application.service.organization %}
-                                        {{ application.service.organization }}{% else %}
-                                        {{ application.created_user }}{% endif %}</td>
+                    </table>
 
-                                    <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
-                                    <td style="text-align: center;">
-                                        <a class="btn btn-outline-primary"
-                                           href="{% url 'application:create_application_doc' application.file_name %}"><i
-                                                class="fas fa-download"></i></a>
-                                    </td>
-                                    {% if application.process == '1' %}
-                                        <td style="color: #0f6674">{% trans "Jarayonda" %}</td>
-                                    {% elif application.process == '2' %}
-                                        <td style="color: #44ff00">{% trans "Qabul qilgan" %}</td>
-                                    {% elif application.process == '3' %}
-                                        <td style="color: #ff0318">{% trans "Rad etilgan" %}</td>
-                                    {% endif %}
-                                    {% if request.user == application.created_user %}
-                                        <td style="text-align: center;">
+                </div>
 
-                                            <button data-application="{{ application.id }}"
-                                                    class="btn btn-danger removeBtn"><i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                {% endif %}
+                {#                {% endif %}#}
             </div>
             <!--/.col (left) -->
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
@@ -101,26 +65,7 @@
     <script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
     <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true,
-                "autoWidth": false,
-                "ordering": true,
-                "order": [[0, "desc"]],
-
-            });
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-
+    <script type="text/javascript" class="init">
         $(document).ready(function () {
             var token = getCookie('token'),
                 csrftoken = getCookie('csrftoken')
@@ -137,9 +82,93 @@
                 }
             })
 
-            $('.removeBtn').on('click', function () {
+            var table = $("#example1").DataTable({
+                "serverSide": true,
+                "processing": true,
+                'autoWidth': false,
+                "orderCellsTop": true,
+                "order": [[4, "asc"]],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "{% trans 'Qidiruv...' %}",
+                    "emptyTable": `{% trans "Ma'lumot topilmadi!" %}`,
+                    {#"info": "Ko'rsatilgan _END_ dan _START_. Jami: _TOTAL_ ta ma'lumot",#}
+                    "info": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
+                    "infoEmpty": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
+                    "infoFiltered": "(filtered from _MAX_ total entries)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "_MENU_",
+                    "loadingRecords": "{% trans 'Yuklanmoqda...' %}",
+                    "processing": '<div class="spinner-grow" role="status"> <span class="sr-only"></span> </div>',
+                    "zeroRecords": `{% trans "Ma'lumot topilmadi!" %}`,
+                    "paginate": {
+                        "first": "{% trans 'Birinchi' %}",
+                        "last": "{% trans 'Oxirgi' %}",
+                        "next": "{% trans 'Keyingi' %}",
+                        "previous": "{% trans 'Oldingi' %}"
+                    },
+                    "aria": {
+                        "sortAscending": `{% trans ": o'sish tartibi faollashtirildi" %}`,
+                        "sortDescending": `{% trans ": kamayish tartibi faollashtirildi" %}`,
+                    }
+                },
+                "ajax": function (data, callback, settings) {
 
-                var applicationId = $(this).data('application')
+
+                    $.get('{% url "application:ApplicationsList" %}', {
+                        limit: data.length,
+                        start: data.start,
+                        q: data.search.value,
+                        order_by: data.columns[data.order[0].column].data.replace(/\./g, "__")
+                    }, function (res) {
+                        callback({
+                            recordsTotal: res.length,
+                            recordsFiltered: res.length,
+                            data: res.objects
+                        })
+                    })
+                },
+                "columns": [
+                    {"data": "id"},
+                    {"data": "service"},
+                    {"data": `service__car`},
+                    {"data": "created_user"},
+                    {"data": "created_date"},
+                    {
+                        "data": "file_name",
+                        render: function (data, type, row) {
+                            var url = "{% url 'application:create_application_doc' filename=12345 %}".replace(/12345/, row.file_name.toString());
+
+                            return `<a class="btn btn-outline-primary" href="${url}"><i
+                                                class="fas fa-download"></i></a>`
+                        }
+                    },
+                    {
+                        "data": "process",
+                        render: function (data, type, row) {
+                            if (row.process == 1) {
+                                return '<span class="text-warning">{% trans "Jarayonda" %}</span>'
+                            } else if (row.process == 2) {
+                                return '<span class="text-success">{% trans "Qabul qilingan" %}</span>'
+                            } else if (row.process == 3) {
+                                return '<span class="text-danger">{% trans "Rad etilgan" %}</span>'
+                            }
+                        }
+
+                    },
+                    {% if request.user.role == '1' %}
+                        {
+                            defaultContent: '<button  class="btn btn-danger deleteApp"><i class="fas fa-trash"></i></button>'
+                        }
+                    {% endif %}
+                ]
+            })
+
+            $('#example1 tbody').on('click', '.deleteApp', function () {
+                var row = $(this).closest('tr');
+
+                var applicationId = table.row(row).data()["id"];
 
                 swal({
                     title: "Arizani o'chirmoqchimisiz ?",
@@ -166,7 +195,7 @@
                                         text: applicationId + "-raqamli ariza muvaffaqiyatli o'chirildi !",
                                         icon: 'success'
                                     }).then(function () {
-                                        window.location.href = '{% url "application:applications_list" %}';
+                                        window.location.href = '{% url "application:ApplicationsList" %}';
                                     });
                                 } else if (response === 'disabled') {
                                     $.notifyDefaults({
@@ -197,7 +226,10 @@
                         swal("Bekor qilindi", applicationId + "-raqamli ariza ro'yhatda turibti !", "error");
                     }
                 });
-            })
+
+            });
+
+
         })
     </script>
 {% endblock bottom %}
