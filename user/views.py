@@ -231,6 +231,10 @@ def login_first(request):
         return render(request, 'account/login.html')
 
 
+def handler404(request, exception):
+    return render(request, '_parts/404.html', status=404)
+
+
 @login_required
 def organizations_list(request):
     organizations = Organization.objects.filter(created_user=request.user, is_active=True).order_by('-id')

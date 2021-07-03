@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 from reception import settings
 from user.views import HelloView, CustomAuthToken
@@ -26,9 +28,11 @@ from django.conf.urls.i18n import i18n_patterns
 def trigger_error(request):
     division_by_zero = 1 / 0
 
+
 def test(request):
     print(request)
     return HttpResponse(request)
+
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -51,7 +55,13 @@ urlpatterns += i18n_patterns(
     path('accounts/', include('allauth.urls')),
     path('', include('user.urls')),
     path('application/', include('application.urls')),
+    path('error-403/', TemplateView.as_view(template_name='_parts/403.html', ),
+         name='error_403'),
+
 )
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404="user.views.handler404"

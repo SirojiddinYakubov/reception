@@ -421,7 +421,8 @@ function tokenInvalid() {
             '</svg> Xatolik yuz berdi! Token yaroqsiz!'
     })
     setTimeout(function () {
-        window.location.href = '{% url "user:custom_logout" %}'
+
+        window.location.href = '/custom-logout/'
     }, 3000);
 }
 
