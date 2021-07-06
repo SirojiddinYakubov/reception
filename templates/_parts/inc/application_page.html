@@ -1,7 +1,7 @@
 {% load i18n %}
 <li class="nav-item">
     <a href="{% url 'application:ApplicationsList' %}"
-       class="nav-link {% if request.resolver_match.url_name == 'ApplicationsList' %}active{% endif %}">
+       class="nav-link {% if request.resolver_match.url_name == 'ApplicationsList' or request.resolver_match.url_name == 'SectionApplicationsList' %}active{% endif %}">
         <i class="nav-icon fas fa-file-alt"></i>
         <p>
             {% trans "Arizalar" %}

@@ -1176,7 +1176,6 @@ def regions_list(request):
 def sections_list(request, section_id):
     if request.user.role == '6' or request.user.role == '7':
         parent_section = get_object_or_404(Section, id=section_id)
-        print(parent_section)
         sections = Section.objects.filter(parent=parent_section)
 
         context = {
@@ -1188,21 +1187,3 @@ def sections_list(request, section_id):
     else:
         return render(request, '_parts/404.html')
 
-@login_required
-def section_applications_list(request, section_id):
-    section = get_object_or_404(Section, id=section_id)
-    if ((request.user.role == '2' or request.user.role == '3' or request.user.role == '4' or request.user.role == '5' or request.user.role == '6') and request.user.section == section) or (request.user.role == '7' or request.user.role == '8' or request.user.role == '9' or request.user.role == '10'):
-
-        qs = Application.objects.filter(section=section, is_active=True, is_block__in=[False,] if section.pay_for_service else [True,False])
-
-        print(qs)
-        print(application_right_filters(qs, request.GET))
-        context = {
-            'section': section,
-            'applications': application_right_filters(qs, request.GET)
-        }
-
-
-        return render(request, 'user/role/regional_controller/section_applications_list.html', context)
-    else:
-        return render(request, '_parts/404.html')

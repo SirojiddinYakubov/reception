@@ -56,5 +56,5 @@ urlpatterns = [
     path('regions-list/', regions_list, name='regions_list'),
     path('sections-list/<int:section_id>/', sections_list, name='sections_list'),
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
-    path('section-applications-list/<int:section_id>/', section_applications_list, name='section_applications_list'),
+
 ]
