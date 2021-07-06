@@ -7,7 +7,8 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <h2>{% trans "Arizalar" %}</h2>
+                    <h2>{% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
+                        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}</h2>
                 </div>
             </div>
         </div>
@@ -68,8 +69,8 @@
     <script type="text/javascript" class="init">
         $(document).ready(function () {
             var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken')
-
+                csrftoken = getCookie('csrftoken'),
+                url = null
             $.ajaxSetup({
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRFToken', csrftoken)
@@ -114,20 +115,47 @@
                     }
                 },
                 "ajax": function (data, callback, settings) {
+                    {% if section %}
+                        var sectionId = '{{ section.id }}'
+                        url = '{% url "application:SectionApplicationsList" section_id=12345 %}'.replace(/12345/, sectionId.toString());
+                    {% else %}
+                        url = '{% url "application:ApplicationsList" %}'
+                    {% endif %}
 
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: "json",
+                        cache: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: {
+                            limit: data.length,
+                            start: data.start,
+                            q: data.search.value,
+                            order_by: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                            old_request: window.location.search
+                        }
+                    }).then(function (res) {
 
-                    $.get('{% url "application:ApplicationsList" %}', {
-                        limit: data.length,
-                        start: data.start,
-                        q: data.search.value,
-                        order_by: data.columns[data.order[0].column].data.replace(/\./g, "__")
-                    }, function (res) {
                         callback({
                             recordsTotal: res.length,
                             recordsFiltered: res.length,
                             data: res.objects
-                        })
-                    })
+                        });
+                    });
+
+                    {#$.get(url, {#}
+                    {#    limit: data.length,#}
+                    {#    start: data.start,#}
+                    {#    q: data.search.value,#}
+                    {#    order_by: data.columns[data.order[0].column].data.replace(/\./g, "__")#}
+                    //{#}, function (res) {#}
+                    {#    callback({#}
+                    {#        recordsTotal: res.length,#}
+                    {#        recordsFiltered: res.length,#}
+                    {#        data: res.objects#}
+                    {#    })#}
+                    //{#})#}
                 },
                 "columns": [
                     {"data": "id"},
@@ -164,6 +192,7 @@
                     {% endif %}
                 ]
             })
+
 
             $('#example1 tbody').on('click', '.deleteApp', function () {
                 var row = $(this).closest('tr');

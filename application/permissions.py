@@ -21,13 +21,13 @@ def allowed_users(allowed_roles=[]):
             #     print(dir(obj))
             # if obj.request.user.groups.exists():
             #     group = obj.request.user.groups.all()[0].name
-            # try:
-            if obj.request.user.role in allowed_roles:
-                return view_func(obj, *args, **kwargs)
-            else:
+            try:
+                if obj.request.user.role in allowed_roles:
+                    return view_func(obj, *args, **kwargs)
+                else:
+                    return redirect('error_403')
+            except:
                 return redirect('error_403')
-            # except:
-            #     return redirect('user:custom_logout')
 
         return wrapper_func
 

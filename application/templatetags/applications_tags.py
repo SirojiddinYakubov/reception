@@ -31,7 +31,6 @@ def calculate_applications_count(section_id):
                 'cancel': cancel
             }
         else:
-            print('else')
             qs = Application.objects.filter(section=section, is_active=True,is_block=False if section.pay_for_service else True)
             all = qs.count()
             process = qs.filter(process='1').count()

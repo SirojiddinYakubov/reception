@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('access-with-qrcode/<int:id>/', access_with_qrcode, name='access_with_qrcode'),
 
+    path('section-applications-list/<int:section_id>/', SectionApplicationsList.as_view(), name='SectionApplicationsList'),
+
 ]
