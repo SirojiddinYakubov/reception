@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
+    path('handler403/', handler403, name='handler403'),
 
     # other requests
     path('', personal_data, name='personal_data'),
@@ -25,6 +26,7 @@ urlpatterns = [
 
     # ajax requests
     path('get-district/', get_district, name='get_district'),
+    path('get-child-sections/', GetChildSections.as_view(), name='GetChildSections'),
     path('get-mfy/', get_mfy, name='get_mfy'),
     path('get-code/', get_code, name='get_code'),
     path('get-user-pass/', get_user_pass, name='get_user_pass'),

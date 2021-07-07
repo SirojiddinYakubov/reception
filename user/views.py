@@ -1,6 +1,6 @@
 import json
 import random
-
+from django.contrib.auth.mixins import *
 import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, user_logged_out, logout
@@ -9,7 +9,7 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.db.models import Q
-
+from application.mixins import *
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
@@ -17,7 +17,7 @@ from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from docxtpl import DocxTemplate
-
+from django.utils.decorators import *
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -26,7 +26,7 @@ from xhtml2pdf import pisa
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import *
-
+from django.views.generic import ListView, DetailView, View
 from application.models import Application
 from application.utils import application_right_filters
 from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE, SMS_LOGIN, SMS_TOKEN, LOCAL_TIMEZONE
@@ -234,6 +234,10 @@ def login_first(request):
 def handler404(request, exception):
     return render(request, '_parts/404.html', status=404)
 
+def handler403(request, exception):
+    return render(request, '_parts/403.html', status=403)
+
+
 
 @login_required
 def organizations_list(request):
@@ -345,16 +349,39 @@ class Remove_Organization(APIView):
 
 
 def get_district(request):
-    if request.is_ajax():
-        districts = District.objects.filter(region=request.GET.get('region'))
-        # options = "<option value=''>--- --- ---</option>"
-        options = ""
-        for district in districts:
-            options += f"<option value='{district.id}'>{district.title}</option>"
-        return HttpResponse(options)
-    else:
-        return False
+    try:
+        if request.is_ajax():
+            districts = District.objects.filter(region=request.GET.get('region'))
+            # options = "<option value=''>--- --- ---</option>"
+            options = ""
+            for district in districts:
+                options += f"<option value='{district.id}'>{district.title}</option>"
+            return HttpResponse(options,status=200)
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=404)
 
+@method_decorator(login_required, name='dispatch')
+class GetChildSections(AllowedRolesMixin):
+    model = Section
+    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            options = ""
+            for item in self.get_queryset():
+                options += f"<option value='{item.id}'>{item.title}</option>"
+            return HttpResponse(options, status=200)
+        except:
+            return HttpResponse(False, status=404)
+
+    def get_queryset(self, *args, **kwargs):
+        try:
+            qs = self.model.objects.filter(parent=self.request.GET.get('parent_section'))
+            return qs
+        except:
+            return qs
 
 @permission_classes([IsAuthenticated])
 class Get_Organization(APIView):

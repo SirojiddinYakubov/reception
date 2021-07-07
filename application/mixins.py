@@ -1,7 +1,7 @@
 import datetime
 import json
 import re
-
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import QuerySet, Q
@@ -11,12 +11,13 @@ from django.urls import reverse
 from django.views.generic import ListView
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from django.core.exceptions import PermissionDenied
 from application.models import *
 from application.permissions import allowed_users
 from reception.settings import LOCAL_TIMEZONE
 from service.models import *
 from datetime import datetime as dt
+from django.views.generic.base import *
 
 
 @permission_classes([IsAuthenticated])
@@ -43,6 +44,23 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
     #     context.update(foo='bar')
     #     context.update(object_list=self.get_queryset())
     #     return context
+
+    #def dispatch(self, request, *args, **kwargs):
+    #    #allow user to call this View if their Client owns the Survey
+    #    self.survey = get_object_or_404(Survey, hash=self.kwargs['hash'])
+    #    up = get_object_or_404(UserProfile, fk_user=self.request.user)
+    #    self.client = up.fk_client
+    #    if self.survey.fk_client != self.client:
+    #        raise Http404
+    #    return super(AjaxQuestionList, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            token = request.COOKIES.get('token')
+            Token.objects.get(key=token)
+        except Token.DoesNotExist:
+            return redirect(reverse_lazy('landing:home_page'))
+        return super().get(request, *args, **kwargs)
 
     def myconverter(self, obj):
         if isinstance(obj, (datetime.datetime)):
@@ -77,6 +95,8 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
         day_pattern = '^[0-9]{2}$|^[0-9]{2}.$'
         day_and_month_pattern = '^[0-9]{2}.[0-9]{2}$|^[0-9]{2}.[0-9]{2}.$'
 
+
+        #start right filter
         if self.request.GET.get('old_request') != None:
             old_request = re.findall(r"\w{1,}=[\w-]{1,}", self.request.GET.get('old_request'))
             if old_request:
@@ -134,6 +154,9 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
 
             else:
                 print('not match')
+        #stop right filter
+
+        
         qs = qs.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
             Q(service__title__in=self.get_choices_value(q, SERVICE_CHOICES)) |
@@ -193,3 +216,14 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
 
         data = json.dumps(context)
         return HttpResponse(data, content_type='json')
+
+
+
+class AllowedRolesMixin(LoginRequiredMixin, View):
+    allowed_roles = None
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.role in self.allowed_roles:
+            raise Http404
+        return super().dispatch(*args, **kwargs)
+

@@ -7,7 +7,7 @@ import json
 import os
 import random
 from functools import reduce
-
+from django.utils.decorators import *
 import pytz
 import requests
 from django.contrib import messages
@@ -21,7 +21,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from docxtpl import DocxTemplate
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
@@ -446,8 +446,6 @@ def payment_detail(request, service_id):
 @login_required
 def payments(request):
     if request.user.role == '2' or request.user.role == '5' or request.user.role == '6' or request.user.role == '7' or request.user.role == '8' or request.user.role == '9' or request.user.role == '10':
-        region = request.user.section.region
-        districts_list = request.user.section.district.all()
 
         # services = Service.objects.filter(Q(Q(application_service__created_user__region=region) & Q(
         #     application_service__created_user__district__in=districts_list) & Q(
@@ -490,6 +488,29 @@ def payments(request):
     else:
         return render(request, '_parts/404.html')
 
+@method_decorator(login_required, name='dispatch')
+class PaymentsList(AllowedRolesMixin, ListView):
+    model = StateDuty
+    template_name = 'application/payments/payments_list.html'
+    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+    def get_context_data(self, **kwargs):
+        user_role = self.request.user.role
+
+        context = {
+            'pays': STATE_DUTY_TITLE
+        }
+
+        if user_role == STATE_CONTROLLER:
+            parent_sections = Section.objects.filter(parent__isnull=True)
+            context.update(parent_sections=parent_sections)
+            
+            if self.request.GET.get('parent_section', None):
+                if self.request.GET.get('parent_section').isdigit():
+                    parent_section = get_object_or_404(Section, id=self.request.GET.get('parent_section'))
+                    child_sections = Section.objects.filter(parent=parent_section)
+                    context.update(child_sections=child_sections)
+        return context
 
 @permission_classes([IsAuthenticated])
 class Modify_Payment_Checkbox(APIView):

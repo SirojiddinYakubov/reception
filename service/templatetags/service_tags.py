@@ -2,9 +2,9 @@ from django import template
 from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime as dt
-
+from django.shortcuts import get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
-
+from service.models import *
 from reception.settings import LOCAL_TIMEZONE
 from service.models import StateDuty
 from user.models import District
@@ -18,28 +18,30 @@ def get_calculated_payments(context, state_duty_id):
         request = context.get('request')
         startdate = timezone.now().replace(year=2021, month=1, day=1)
         stopdate = timezone.now()
-        region = request.user.section.region
-        districts = request.user.section.district.all()
+        
+        if request.GET.get('parent_section', None):
+            if request.GET.get('parent_section').isdigit():
+                parent_sections = Section.objects.filter(id=request.GET.get('parent_section'))
+            else:
+                parent_sections = Section.objects.filter(parent__isnull=True)
+        
+        if request.GET.get('child_section', None):
+            if request.GET.get('child_section').isdigit():
+                child_sections = Section.objects.filter(id=request.GET.get('child_section'))
+            else:
+                child_sections = Section.objects.filter(parent__id=request.GET.get('parent_section'))
+        
+        print(parent_sections, 38)
+        print(child_sections, 39)
+        if request.GET.get('startdate', None):
+            startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
 
-        try:
-            if request.GET['startdate', None] and request.GET['startdate'] != 'None' and request.GET['startdate'] != '':
-                startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
-        except MultiValueDictKeyError:
-            pass
 
-        try:
-            if request.GET['stopdate'] and request.GET['stopdate'] != 'None' and request.GET['stopdate'] != '':
-                stopdate = dt.strptime(request.GET['stopdate'], '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,
-                                                                                    minute=59, second=59)
-        except MultiValueDictKeyError:
-            pass
+        if request.GET.get('stopdate', None):
+            stopdate = dt.strptime(request.GET['stopdate'], '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,
+                                                                                minute=59, second=59)
 
-        try:
-            if request.GET['district'] and request.GET['district'] != 'all':
-                region = request.user.section.region
-                districts = District.objects.filter(id=request.GET['district'])
-        except MultiValueDictKeyError:
-            pass
+        
 
         payments = StateDuty.objects.filter(Q(Q(service__application_service__created_user__region=region) & Q(
             service__application_service__created_user__district__in=districts) & Q(
@@ -64,8 +66,7 @@ def get_paid_payments(context, state_duty_id):
         request = context.get('request')
         startdate = timezone.now().replace(year=2021, month=1, day=1)
         stopdate = timezone.now()
-        region = request.user.section.region
-        districts = request.user.section.district.all()
+       
 
         try:
             if request.GET['startdate', None] and request.GET['startdate'] != 'None' and request.GET['startdate'] != '':
@@ -111,8 +112,7 @@ def get_unpaid_payments(context, state_duty_id):
         request = context.get('request')
         startdate = timezone.now().replace(year=2021, month=1, day=1)
         stopdate = timezone.now()
-        region = request.user.section.region
-        districts = request.user.section.district.all()
+        
 
         try:
             if request.GET['startdate', None] and request.GET['startdate'] != 'None' and request.GET['startdate'] != '':
