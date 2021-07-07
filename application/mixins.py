@@ -83,9 +83,57 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
                 for item in old_request:
                     key = item.split('=')[0]
                     value = item.split('=')[1]
+                    if key == 'service':
+                        if value == 'account_statement':
+                            qs = qs.filter(service__title='account_statement')
+                        if value == 'gift_agreement':
+                            qs = qs.filter(service__title='gift_agreement')
+                        if value == 'contract_of_sale':
+                            qs = qs.filter(service__title='contract_of_sale')
+                        if value == 'replace_tp':
+                            qs = qs.filter(service__title='replace_tp')
+                        if value == 'replace_number_and_tp':
+                            qs = qs.filter(service__title='replace_number_and_tp')
+                    print(qs, 99)
+                    if key == 'person_type':
+                        qs = qs.filter(person_type=value)
+                    print(qs, 102)
+                    if key == 'process':
+                        qs = qs.filter(process=value)
+
+                    if key == 'payment':
+                        qs = qs.filter(is_payment=value)
+
+                    if key == 'confirm':
+                        qs = qs.filter(service__car__is_confirm=value)
+
+                    if key == 'technical_confirm':
+                        qs = qs.filter(service__car__is_technical_confirm=value)
+
+
+                    if key == 'date':
+
+                        today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
+                        today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
+                        some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,
+                                                                                                minute=0, second=0)
+                        some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
+                        some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0,
+                                                                    tzinfo=LOCAL_TIMEZONE)
+                        if value == 'today':
+                            qs = qs.filter(created_date__range=(today_min, today_max))
+
+                        if value == 'last-7-days':
+                            qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+
+                        if value == 'month':
+                            qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+
+                        if value == 'year':
+                            qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+
             else:
                 print('not match')
-
         qs = qs.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
             Q(service__title__in=self.get_choices_value(q, SERVICE_CHOICES)) |
@@ -145,67 +193,3 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
 
         data = json.dumps(context)
         return HttpResponse(data, content_type='json')
-
-    def filter_right(self, qs, request_get):
-        print(request_get,182)
-        if request_get.get('service'):
-            key = request_get.get('service')
-            if key == 'account_statement':
-                qs = qs.filter(service__title='account_statement')
-
-            if key == 'gift_agreement':
-                qs = qs.filter(service__title='gift_agreement')
-            if key == 'contract_of_sale':
-                print(key,192)
-                print(qs.count(),193)
-                qs = qs.filter(service__title='contract_of_sale')
-                print(qs.count(), 195)
-            if key == 'replace_tp':
-                qs = qs.filter(service__title='replace_tp')
-            if key == 'replace_number_and_tp':
-                qs = qs.filter(service__title='replace_number_and_tp')
-        if request_get.get('person_type'):
-            qs = qs.filter(person_type=request_get.get('person_type'))
-
-        if request_get.get('process'):
-            qs = qs.filter(process=request_get.get('process'))
-
-        if request_get.get('payment'):
-            qs = qs.filter(is_payment=request_get.get('payment'))
-
-        if request_get.get('confirm'):
-            qs = qs.filter(service__car__is_confirm=request_get.get('confirm'))
-
-        if request_get.get('technical_confirm'):
-            qs = qs.filter(service__car__is_technical_confirm=request_get.get('technical_confirm'))
-
-
-        if request_get.get('date'):
-
-            today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
-            today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
-            some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,
-                                                                                       minute=0, second=0)
-            some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
-            some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0,
-                                                        tzinfo=LOCAL_TIMEZONE)
-
-            print(qs.first().created_date)
-            print(today_min)
-            print(today_max)
-            print(some_day_last_week)
-            print(some_day_last_month)
-            print(some_day_last_year)
-            if request_get.get('date') == 'today':
-                qs = qs.filter(created_date__range=(today_min, today_max))
-
-            if request_get.get('date') == 'last-7-days':
-                qs = qs.filter(created_date__range=(some_day_last_week, today_max))
-
-            if request_get.get('date') == 'month':
-                qs = qs.filter(created_date__range=(some_day_last_month, today_max))
-
-            if request_get.get('date') == 'year':
-                qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-
-        return qs

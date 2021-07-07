@@ -45,7 +45,7 @@
 
                                     <td>
                                         {% for district in section.district.all %}
-                                            {{ district.title }},
+                                            {{ district.title }}{% if not forloop.last %}, {% endif %}
                                         {% endfor %}
                                     </td>
                                        {% calculate_applications_count section.id as count %}

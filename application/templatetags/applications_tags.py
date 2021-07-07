@@ -19,7 +19,12 @@ def calculate_applications_count(section_id):
         if section.parent == None:
             region = get_object_or_404(Region, id=section.region.id)
             sections = Section.objects.filter(region=region,is_active=True, parent__isnull=False)
-            qs = Application.objects.filter(section__in=sections, is_active=True, is_block=False if section.pay_for_service else True)
+            id_list = []
+            for sec in sections:
+                items = Application.objects.filter(section=sec, is_active=True, is_block__in=[False,] if sec.pay_for_service else [True, False]).values_list('id', flat=True)
+                for item in items:
+                    id_list.append(int(item))
+            qs = Application.objects.filter(id__in=id_list)
             all = qs.count()
             process = qs.filter(process='1').count()
             success = qs.filter(process='2').count()
@@ -31,7 +36,7 @@ def calculate_applications_count(section_id):
                 'cancel': cancel
             }
         else:
-            qs = Application.objects.filter(section=section, is_active=True,is_block=False if section.pay_for_service else True)
+            qs = Application.objects.filter(section=section, is_active=True,is_block__in=[False,] if section.pay_for_service else [True, False])
             all = qs.count()
             process = qs.filter(process='1').count()
             success = qs.filter(process='2').count()
@@ -44,10 +49,10 @@ def calculate_applications_count(section_id):
             }
     except:
         return {
-                'all': 0,
-                'success': 0,
-                'process': 0,
-                'cancel': 0
+                'all': None,
+                'success': None,
+                'process': None,
+                'cancel': None
             }
 #
 # @register.simple_tag
