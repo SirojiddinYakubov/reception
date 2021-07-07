@@ -755,19 +755,19 @@ msgstr ""
 
 #: .\templates\user\role\state_controller\applications_list.html:123
 msgid "Birinchi"
-msgstr ""
+msgstr "Первый"
 
 #: .\templates\user\role\state_controller\applications_list.html:124
 msgid "Oxirgi"
-msgstr ""
+msgstr "Последний"
 
 #: .\templates\user\role\state_controller\applications_list.html:125
 msgid "Keyingi"
-msgstr ""
+msgstr "Следующий"
 
 #: .\templates\user\role\state_controller\applications_list.html:126
 msgid "Oldingi"
-msgstr ""
+msgstr "Предыдущий"
 
 #: .\templates\user\role\state_controller\applications_list.html:129
 msgid ": o'sish tartibi faollashtirildi"
@@ -779,7 +779,7 @@ msgstr ""
 
 #: .\templates\user\role\state_controller\edit_worker.html:10
 msgid "Xodimni tahrirlash"
-msgstr ""
+msgstr "Редактирование сотрудника"
 
 #: .\templates\user\role\state_controller\regions_list.html:12
 msgid "Viloyatlar ro'yhati"
@@ -805,38 +805,38 @@ msgstr ""
 
 #: .\templates\user\role\state_controller\workers_list.html:26
 msgid "Lavozimi"
-msgstr ""
+msgstr "Должность"
 
 #: .\templates\user\role\state_controller\workers_list.html:27
 msgid "Bo'lim"
-msgstr ""
+msgstr "Отдель"
 
 #: .\templates\user\role\state_controller\workers_list.html:28
 msgid "Telefon"
-msgstr ""
+msgstr "Телефон"
 
 #: .\templates\user\role\state_controller\workers_list.html:29
 msgid "Login"
-msgstr ""
+msgstr "Логин"
 
 #: .\templates\user\role\state_controller\workers_list.html:30
 msgid "Parol"
-msgstr ""
+msgstr "Пароль"
 
 #: .\templates\user\role\state_controller\workers_list.html:32
 msgid "Tahrirlash/O'chirish"
-msgstr ""
+msgstr "Редактировать/Удалить"
 
 #: .\templates\user\role\state_controller\workers_list.html:43
 msgid "bosh nazoratchisi"
 msgstr ""
 
 #: .\templates\user\view_personal_data.html:8
-msgid "Foydalanuvchi ma'lumotlari"
+msgid "Пользовательские данные"
 msgstr ""
 
 #: .\user\models.py:59
-msgid "Bo'ysinuvchi tashkilot"
+msgid "Подчиненная организация"
 msgstr ""
 
 #: .\user\views.py:223
@@ -855,7 +855,7 @@ msgstr "Успешно отредактировано!"
 
 #: .\user\views.py:743
 msgid "Bu raqam oldin ro'yhatdan o'tkazilgan !"
-msgstr ""
+msgstr "Этот номер уже зарегистрирован"
 
 #, fuzzy, python-format
 #~ msgid " %(parent_section2)s ga qarashli TRIBlar ro'yhati12345"

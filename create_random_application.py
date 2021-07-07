@@ -25,7 +25,6 @@ def generate_application(count):
             created_user=created_user,
             service=service,
             section=section,
-
         )
         # application.person_type = 'Y' if service.organization else 'J'
         application.person_type = 'Y'
@@ -33,8 +32,8 @@ def generate_application(count):
 
         service.organization = organization
         service.save()
-        print(f'Generated application # {i + 1} | app_id: {application.id}. . .')
+        print(f'Fake ma\'lumotlar yaratilmoqda # {i + 1} | ID raqam: {application.id}. . .')
 
 
 if __name__ == '__main__':
-    generate_application(2)
+    generate_application(50000)
