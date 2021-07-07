@@ -50,7 +50,7 @@ def personal_data(request):
         token = request.COOKIES.get('token')
         Token.objects.get(key=token)
     except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+        return redirect(reverse_lazy('landing:home_page'))
     # generate pdf
 
     # html holatda ekranga chiqarish
