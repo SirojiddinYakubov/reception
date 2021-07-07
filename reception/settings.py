@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'clickuz',
     'payments',
     'modeltranslation',
+    'reception',
 
 ]
 
