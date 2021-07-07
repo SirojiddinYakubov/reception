@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+
 from .views import *
 
 app_name = 'user'
@@ -10,6 +12,7 @@ urlpatterns = [
     path('login/', login_first, name='login_first'),
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
+    path('handler404/', handler404, name='handler404'),
 
     # other requests
     path('', personal_data, name='personal_data'),
@@ -53,5 +56,5 @@ urlpatterns = [
     path('regions-list/', regions_list, name='regions_list'),
     path('sections-list/<int:section_id>/', sections_list, name='sections_list'),
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
-    path('section-applications-list/<int:section_id>/', section_applications_list, name='section_applications_list'),
+
 ]

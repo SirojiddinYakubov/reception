@@ -6,9 +6,6 @@ from .views import *
 app_name = 'application'
 
 urlpatterns = [
-
-    path('application/', applications_list, name='applications_list'),
-    path( 'applications', TemplateView.as_view(template_name='user/role/state_controller/applications_list.html'), name='applications'),
     path('applications-list/', ApplicationsList.as_view(), name='ApplicationsList'),
 
     path('application-detail/<int:id>/', application_detail, name='application_detail'),
@@ -31,5 +28,7 @@ urlpatterns = [
     path('check-application-status/<int:id>/', check_application_status, name='check_application_status'),
 
     path('access-with-qrcode/<int:id>/', access_with_qrcode, name='access_with_qrcode'),
+
+    path('section-applications-list/<int:section_id>/', SectionApplicationsList.as_view(), name='SectionApplicationsList'),
 
 ]

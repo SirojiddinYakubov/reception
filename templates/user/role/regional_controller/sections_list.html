@@ -40,7 +40,7 @@
                             {% for section in sections %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><b><a href="{% url 'user:section_applications_list' section.id %}">{{ section.title }}</a></b>
+                                    <td><b><a href="{% url 'application:SectionApplicationsList' section.id %}">{{ section.title }}</a></b>
                                     </td>
 
                                     <td>
