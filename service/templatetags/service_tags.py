@@ -19,20 +19,22 @@ def get_calculated_payments(context, state_duty_id):
         startdate = timezone.now().replace(year=2021, month=1, day=1)
         stopdate = timezone.now()
         
+        
         if request.GET.get('parent_section', None):
             if request.GET.get('parent_section').isdigit():
-                parent_sections = Section.objects.filter(id=request.GET.get('parent_section'))
+                parent_sections = Section.objects.filter(id=request.GET.get('parent_section'), parent__isnull=True, is_active=True)
             else:
-                parent_sections = Section.objects.filter(parent__isnull=True)
-        
+                parent_sections = Section.objects.filter(parent__isnull=True, is_active=True)
+                
+
         if request.GET.get('child_section', None):
-            if request.GET.get('child_section').isdigit():
-                child_sections = Section.objects.filter(id=request.GET.get('child_section'))
+            if request.GET.get('parent_section').isdigit() and request.GET.get('child_section').isdigit():
+                child_sections = Section.objects.filter(id=request.GET.get('child_section'), is_active=True, parent__isnull=False)
             else:
-                child_sections = Section.objects.filter(parent__id=request.GET.get('parent_section'))
+                child_sections = Section.objects.filter(parent__in=parent_sections)
+        else:
+            child_sections = Section.objects.filter(parent__isnull=False)
         
-        print(parent_sections, 38)
-        print(child_sections, 39)
         if request.GET.get('startdate', None):
             startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
 
@@ -42,16 +44,22 @@ def get_calculated_payments(context, state_duty_id):
                                                                                 minute=59, second=59)
 
         
-
-        payments = StateDuty.objects.filter(Q(Q(service__application_service__created_user__region=region) & Q(
-            service__application_service__created_user__district__in=districts) & Q(
-            service__organization__isnull=True)) | Q(
-            Q(service__organization__legal_address_region=region) & Q(
-                service__organization__legal_address_district__in=districts) & Q(
-                service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
-                service__application_service__is_active=True) & Q(service__application_service__is_block=False))
-
+        id_list = []
+        for child_section in child_sections:
+            print(child_section)
+            payment = StateDuty.objects.filter(
+                Q(service__application_service__section=child_section) &
+                Q(title=state_duty_id) &
+                Q(is_active=True) &
+                Q(created_date__range=[startdate, stopdate]) &
+                Q(service__application_service__is_active=True) &
+                Q(service__application_service__is_block=True)
+            ).values_list('id', flat=True)
+            
+            id_list.append(*list(payment))
+        
+        print(id_list, 60)
+        
         total = 0
         for payment in payments:
             total += payment.payment
