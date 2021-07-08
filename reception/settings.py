@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from datetime import timedelta
 
+import requests
+
 try:
     from .local_settings import *
 except ImportError:
@@ -56,12 +58,16 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    # 'solid_i18n-1.4.2.dist-info.',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'reception.urls'
@@ -111,17 +117,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'uz'
+
 DATETIME_FORMAT = '%d.%m.%Y %H:%M:%S'
 DATE_FORMAT = '%d.%m.%Y'
 TIME_ZONE = 'Asia/Tashkent'
 LOCAL_TIMEZONE = pytz.timezone(TIME_ZONE)
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -295,7 +295,12 @@ PAYMENT_MODEL = 'user.Payment'
 #     # django.contrib.auth) you may enable sending PII data.
 #     send_default_pii=True
 # )
+LANGUAGE_CODE = 'uz'
+USE_I18N = True
 
+USE_L10N = True
+
+USE_TZ = True
 gettext = lambda s: s
 LANGUAGES = (
     ('uz', gettext('Uzbek')),
