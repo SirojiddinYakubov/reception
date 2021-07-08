@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
-    path('handler403/', handler403, name='handler403'),
+    
 
     # other requests
     path('', personal_data, name='personal_data'),
