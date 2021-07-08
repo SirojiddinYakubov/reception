@@ -494,12 +494,22 @@ class PaymentsList(AllowedRolesMixin, ListView):
     template_name = 'application/payments/payments_list.html'
     allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
+
     def get_context_data(self, **kwargs):
         user_role = self.request.user.role
 
         context = {
             'pays': STATE_DUTY_TITLE
         }
+
+        if self.request.method == 'GET':
+            try:
+                if self.request.GET.get('startdate', None):
+                    context.update(startdate=self.request.GET.get('startdate'))
+                if self.request.GET.get('stopdate', None):
+                    context.update(stopdate=self.request.GET.get('stopdate'))
+            except:
+                pass
 
         if user_role == STATE_CONTROLLER:
             parent_sections = Section.objects.filter(parent__isnull=True)
