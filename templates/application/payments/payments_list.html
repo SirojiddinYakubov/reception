@@ -87,13 +87,11 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <th scope="row" data-key="{{ pay.0 }}">{{ pay.1 }}</th>
-                                {% get_calculated_payments pay.0 as calculated_pay %}
-                                <td><b class="calculated_pay">{{ calculated_pay|intcomma }}</b></td>
-                                {% get_paid_payments pay.0 as paid_pay %}
-                                <td><b class="paid_pay text-green">{{ paid_pay|intcomma }}</b></td>
-                                {% get_unpaid_payments pay.0 as unpaid_pay %}
+                                {% get_calculated_payments pay.0 as payment %}
+                                <td><b class="calculated_pay">{{ payment.total|intcomma }}</b></td>
+                                <td><b class="paid_pay text-green">{{ payment.paid|intcomma }}</b></td>
                                 <td>
-                                    <b class="unpaid_pay text-danger">{{ unpaid_pay|intcomma }}</b>
+                                    <b class="unpaid_pay text-danger">{{ payment.unpaid|intcomma }}</b>
                                 </td>
                             </tr>
 

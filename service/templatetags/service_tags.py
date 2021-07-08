@@ -16,7 +16,7 @@ register = template.Library()
 def get_calculated_payments(context, state_duty_id):
     try:
         request = context.get('request')
-        startdate = timezone.now().replace(year=2021, month=1, day=1)
+        startdate = timezone.now().replace(year=2021, month=1, day=1,hour=00,minute=00, second=00)
         stopdate = timezone.now()
         
         
@@ -27,16 +27,17 @@ def get_calculated_payments(context, state_duty_id):
                 parent_sections = Section.objects.filter(parent__isnull=True, is_active=True)
                 
 
-        if request.GET.get('child_section', None):
+        if request.GET.get('parent_section', None) and request.GET.get('child_section', None):
             if request.GET.get('parent_section').isdigit() and request.GET.get('child_section').isdigit():
                 child_sections = Section.objects.filter(id=request.GET.get('child_section'), is_active=True, parent__isnull=False)
             else:
                 child_sections = Section.objects.filter(parent__in=parent_sections)
         else:
             child_sections = Section.objects.filter(parent__isnull=False)
-        
+
         if request.GET.get('startdate', None):
-            startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
+            startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE,hour=00,
+                                                                                minute=00, second=00)
 
 
         if request.GET.get('stopdate', None):
@@ -44,117 +45,38 @@ def get_calculated_payments(context, state_duty_id):
                                                                                 minute=59, second=59)
 
         
-        id_list = []
+        total = 0
+        paid = 0
+        unpaid = 0
+
         for child_section in child_sections:
-            print(child_section)
-            payment = StateDuty.objects.filter(
+            total_qs = StateDuty.objects.filter(
                 Q(service__application_service__section=child_section) &
                 Q(title=state_duty_id) &
                 Q(is_active=True) &
                 Q(created_date__range=[startdate, stopdate]) &
                 Q(service__application_service__is_active=True) &
-                Q(service__application_service__is_block=True)
-            ).values_list('id', flat=True)
-            
-            id_list.append(*list(payment))
-        
-        print(id_list, 60)
-        
-        total = 0
-        for payment in payments:
-            total += payment.payment
-        return total
+                Q(service__application_service__is_block__in=[False] if child_section.pay_for_service else [True, False])
+            )
+            paid_qs = total_qs.filter(is_paid=True)
+            unpaid_qs = total_qs.filter(is_paid=False)
+
+            for item in total_qs:
+                total += item.payment
+            for item in paid_qs:
+                paid += item.payment
+            for item in unpaid_qs:
+                unpaid += item.payment
+        return {
+            'total': total,
+            'paid': paid,
+            'unpaid': unpaid
+        }
     except:
-        return 0
+        return {
+            'total': 0,
+            'paid': 0,
+            'unpaid': 0
+        }
 
 
-@register.simple_tag(takes_context=True)
-def get_paid_payments(context, state_duty_id):
-    try:
-        request = context.get('request')
-        startdate = timezone.now().replace(year=2021, month=1, day=1)
-        stopdate = timezone.now()
-       
-
-        try:
-            if request.GET['startdate', None] and request.GET['startdate'] != 'None' and request.GET['startdate'] != '':
-                startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
-        except MultiValueDictKeyError:
-            pass
-
-        try:
-            if request.GET['stopdate'] and request.GET['stopdate'] != 'None' and request.GET['stopdate'] != '':
-                stopdate = dt.strptime(request.GET['stopdate'], '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,
-                                                                                    minute=59, second=59)
-        except MultiValueDictKeyError:
-            pass
-
-        try:
-            if request.GET['district'] and request.GET['district'] != 'all':
-                region = request.user.section.region
-                districts = District.objects.filter(id=request.GET['district'])
-        except MultiValueDictKeyError:
-            pass
-
-        payments = StateDuty.objects.filter(Q(Q(service__application_service__created_user__region=region) & Q(
-            service__application_service__created_user__district__in=districts) & Q(
-            service__organization__isnull=True)) | Q(
-            Q(service__organization__legal_address_region=region) & Q(
-                service__organization__legal_address_district__in=districts) & Q(
-                service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
-                is_paid=True) & Q(service__application_service__is_active=True) & Q(
-                service__application_service__is_block=False))
-
-        total = 0
-        for payment in payments:
-            total += payment.payment
-        return total
-    except:
-        return 0
-
-
-@register.simple_tag(takes_context=True)
-def get_unpaid_payments(context, state_duty_id):
-    try:
-        request = context.get('request')
-        startdate = timezone.now().replace(year=2021, month=1, day=1)
-        stopdate = timezone.now()
-        
-
-        try:
-            if request.GET['startdate', None] and request.GET['startdate'] != 'None' and request.GET['startdate'] != '':
-                startdate = dt.strptime(request.GET['startdate'], "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
-        except MultiValueDictKeyError:
-            pass
-
-        try:
-            if request.GET['stopdate'] and request.GET['stopdate'] != 'None' and request.GET['stopdate'] != '':
-                stopdate = dt.strptime(request.GET['stopdate'], '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,
-                                                                                    minute=59, second=59)
-        except MultiValueDictKeyError:
-            pass
-
-        try:
-            if request.GET['district'] and request.GET['district'] != 'all':
-                region = request.user.section.region
-                districts = District.objects.filter(id=request.GET['district'])
-        except MultiValueDictKeyError:
-            pass
-
-        payments = StateDuty.objects.filter(Q(Q(service__application_service__created_user__region=region) & Q(
-            service__application_service__created_user__district__in=districts) & Q(
-            service__organization__isnull=True)) | Q(
-            Q(service__organization__legal_address_region=region) & Q(
-                service__organization__legal_address_district__in=districts) & Q(
-                service__organization__isnull=False))).filter(
-            Q(title=state_duty_id) & Q(is_active=True) & Q(created_date__range=[startdate, stopdate]) & Q(
-                is_paid=False) & Q(service__application_service__is_active=True) & Q(
-                service__application_service__is_block=False))
-
-        total = 0
-        for payment in payments:
-            total += payment.payment
-        return total
-    except:
-        return 0
