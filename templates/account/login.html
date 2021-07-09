@@ -1,3 +1,4 @@
+{% load  i18n %}
 {% load static %}
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,13 +32,13 @@
     <div class="d-flex justify-content-center h-100">
         <div class="card">
             <div class="card-header">
-                <h3 class="not_copy">Tizimga kirish</h3>
+                <h3 class="not_copy">{% trans 'Tizimga kirish' %}</h3>
                 <div class="d-flex justify-content-end social_icon">
 
-                    <a title="Yordam kerakmi?" href="https://t.me/Sirojiddin_Yakubov"><span><i
+                    <a title="{% trans 'Yordam kerakmi?' %}" href="https://t.me/Sirojiddin_Yakubov"><span><i
                             style="color: #0088cc; background-color: whitesmoke; border-radius: 140%"
                             class="fab fa-telegram"></i></span></a>
-                    <a title="Yordam kerakmi?"
+                    <a title="{% trans 'Yordam kerakmi?' %}"
                        href="https://telegra.ph/E-RIB-tizimidanfoydalanish-boyicha-qollanma-08-11"><span><i
                             style="color: #242424; background-color: whitesmoke; border-radius: 120%"
                             class="far fa-question-circle"></i></span></a>
@@ -50,29 +51,28 @@
                 <form method="post" action="{% url 'user:login_first' %}" id="form">
                     {% csrf_token %}
                     <div class="input-group form-group">
-                        <label class="not_copy" style="width: 100%" for="phone">Telefon raqam:</label>
+                        <label class="not_copy" style="width: 100%" for="phone">{% trans 'Telefon raqami:' %}</label>
                         <input id="phoneCode" type="number" class="form-control"
                                placeholder="+998" disabled>
 
                         <input style="width: 63%" type="number" class="form-control" id="phone" name="phone"
                                autocomplete="off"
-                               placeholder="Masalan: 919791999" aria-describedby="passwordHelpBlock" required/>
+                               placeholder="{% trans 'Masalan' %}: 919791999" aria-describedby="passwordHelpBlock" required/>
                         <input type="text" class="form-control not_copy" id="showPhone" style="display: none" disabled/>
 
-                        <div style="display: none" class="valid-feedback">Muvaffaqiyatli to'ldirildi</div>
-                        <div style="display: none" class='invalid-feedback'>Raqam 9 xonali sondan iborat bo'lishi
-                            kerak
+                        <div style="display: none" class="valid-feedback">{% trans 'Muvaffaqiyatli kiritildi' %}</div>
+                        <div style="display: none" class='invalid-feedback'>{% trans "Raqam 9 xonali sondan iborat bo'lishi kerak" %}
                         </div>
 
                         <div class="input-group form-group mt-2">
                             <label id="passwordLabel" class="not_copy" style="width: 100%; display: none;"
-                                   for="password">Parol:</label>
+                                   for="password">{% trans 'Parol:' %}</label>
                             <div class="input-group" id="password_div" style="display: none">
                                 <input type="password" name="password" id="password"
                                        class="form-control password"
                                        required value="{{ form.instance.turbo }}"
                                        autocomplete="disabled"
-                                       placeholder="Masalan: qwerty12345"/>
+                                       placeholder="{% trans 'Masalan: ' %} qwerty12345"/>
                                 <div class="input-group-prepend show_password" data-password="password">
                                     <div class="input-group-text"><i class="far fa-eye"></i></div>
                                 </div>
@@ -80,19 +80,19 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" id="SubmitBtn1" value="Kirish" class="btn fourth">
-                        <input style="display: none" type="submit" id="SubmitBtn2" value="Kirish" class="btn fourth">
+                        <input type="submit" id="SubmitBtn1" value="{% trans 'Kirish' %}" class="btn fourth">
+                        <input style="display: none" type="submit" id="SubmitBtn2" value="{% trans 'Kirish' %}" class="btn fourth">
                     </div>
                 </form>
             </div>
             <div class="card-footer" style="display: none" id="footerBlock">
                 <div class="d-flex justify-content-center links not_copy">
-                    Raqamni o'zgartirmoqchimisiz?
+                    {% trans "Raqamni o'zgartirmoqchimisiz?" %}
 
-                    <a style="display: block" href="{% url 'user:login_first' %}">Raqamni o'zgartirish</a>
+                    <a style="display: block" href="{% url 'user:login_first' %}">{% trans "Raqamni o'zgartirish" %}</a>
                 </div>
                 <div class="d-flex justify-content-center not_copy">
-                    <a href="#" id="forget_pass">Parolni unutdingizmi?</a>
+                    <a href="#" id="forget_pass">{% trans "Parolni unutdingizmi?" %}</a>
                 </div>
             </div>
         </div>
@@ -217,27 +217,27 @@
 
             function sweetAlertFunc() {
                 swal({
-                    title: "Parolni unutdingizmi ?",
+                    title: '{% trans "Parolni unutdingizmi?" %}',
                     {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
                     {#icon: "warning",#}
                     className: "",
                     buttons: [
-                        'Yoq',
-                        'Ha, Parolni tiklash'
+                        "{% trans "Yo'q" %}",
+                        "{% trans "Ha, Parolni tiklash" %}"
                     ],
                     dangerMode: false,
                 }).then(function (isConfirm) {
                     if (isConfirm) {
                         swal({
-                            text: 'Telefon raqamingizni kiriting...',
+                            text: '{% trans "Telefon raqamingizni kiriting..." %}',
                             buttons: [
-                                'Orqaga qaytish',
-                                'Yuborish'
+                                "{% trans "Orqaga qaytish" %}",
+                                "{% trans "Yuborish" %}"
                             ],
                             content: {
                                 element: "input",
                                 attributes: {
-                                    placeholder: "Masalan: 919791999",
+                                    placeholder: "{% trans "Masalan:" %} 919791999",
                                     type: "text",
                                 },
                             },
@@ -253,15 +253,15 @@
                                         if (messege == 'True') {
                                             swal({
                                                 icon: "success",
-                                                text: "Passport va parol raqamingizga sms tarzida jo'natildi!"
+                                                text: "{% trans "Passport va parol raqamingizga sms tarzida jo'natildi!" %}"
                                             });
                                         } else {
                                             swal({
-                                                text: 'Bunday raqam bazada mavjud emas!',
+                                                text: '{% trans "Bunday raqam bazada mavjud emas!" %}',
                                                 icon: 'error',
                                                 buttons: [
-                                                    'Orqaga qaytish',
-                                                    "Ro'yhatdan o'tish"
+                                                    '{% trans "Orqaga qaytish" %}',
+                                                    "{% trans "Ro'yhatdan o'tish" %}"
                                                 ],
                                             }).then(function (isRegister) {
                                                 if (isRegister) {
@@ -274,11 +274,11 @@
                                 })
                             } else {
                                 swal({
-                                    text: 'Raqamni kiritishda xatolik!',
+                                    text: '{% trans "Raqamni kiritishda xatolik!" %}',
                                     icon: 'error',
                                     buttons: [
-                                        'Orqaga qaytish',
-                                        "Qayta urinib ko'rish"
+                                        '{% trans "Orqaga qaytish" %}',
+                                        "{% trans "Qayta urinib ko'rish" %}"
                                     ],
                                 }).then(function (isAgain) {
                                     if (isAgain) {

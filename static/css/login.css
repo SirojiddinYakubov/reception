@@ -4,7 +4,7 @@
 
 html, body {
     /*background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
-    background-image: url("/static/online/login_background.jpg");
+    background-image: url("/static/img/login/17973908.jpg");
     background-size: cover;
     background-position: center;
     font-family: 'Numans', sans-serif;
@@ -20,7 +20,7 @@ html, body {
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
-    background: rgba(255, 255, 255, 0.3); !important;
+    background: rgba(255, 255, 255, 0.8); !important;
     opacity: 1;
 }
 
@@ -143,7 +143,7 @@ input:focus {
 
 
 .social_icon a span i {
-    opacity: 0.5;
+    opacity: 0.8;
     width: 30px !important;
     margin-top: 20px;
     margin-right: 10px;
