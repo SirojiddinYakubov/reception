@@ -273,11 +273,22 @@
                                         <input type="button" style="display: none" id="refresh_next2"
                                                class="action-button"
                                                value="Keyingi"/>
+                                        <button type="button" id="fake" class="action-button-reset">Fake Data</button>
                                     </div>
                                 </form>
                             </fieldset>
                             <fieldset id="fieldset3">
-                                {% include 'service/inc/pay_for_service_block.html' %}
+
+                                <select name="region" class="form-control" id="region">
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <select name="district" class="form-control" id="district">
+                                    <option value="">-- -- --</option>
+                                </select>
+                                {#                                {% include 'service/inc/pay_for_service_block.html' %}#}
 
                                 <input type="button" name="Previous" class="previous action-button-previous"
                                        id="prev3" value="Oldingi"/>
@@ -331,6 +342,16 @@
 
         $(document).ready(function () {
 
+                $('#fake').on('click', function () {
+                    var $fuel_types_selectize = $('#fuel_types').selectize();
+                    $fuel_types_selectize[0].selectize.setValue("1");
+
+                    var capitalLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                    var capitalLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                    $('#engine_number')
+                })
+
+
                 $('#addAmountBtn').on('click', function (e) {
                     addAmount()
                 })
@@ -361,8 +382,8 @@
                 $('#seriya').inputmask({casing: 'upper'});
 
 
-                {#$('#fieldset1').hide()#}
-                {#$('#fieldset3').show()#}
+                $('#fieldset1').hide()
+                $('#fieldset2').show()
                 var is_legal = false,
                     passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
                     firstName = htmlDecode('{{ request.user.first_name }}'),
@@ -742,6 +763,26 @@
 
                     html_to_pdf(element, filename)
                 })
+
+                $('#region').change(function () {
+                    var SelectedRegion = $(this).children("option:selected").val()
+                    $.ajax({
+                        type: "GET",
+                        url: "{% url 'user:get_district' %}",
+                        data: {
+                            'region': SelectedRegion, // from form
+                        },
+                        success: function (message) {
+                            $('#district').empty().append(message)
+                            $('#district').css('border', '1px solid blue')
+                            setTimeout(function () {
+                                $('#district').css('border', '1px solid #ced4da')
+                            }, 1000)
+
+                        }
+                    });
+                })
+
             }
         )
     </script>

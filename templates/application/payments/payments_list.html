@@ -45,24 +45,24 @@
                     <label class="text-dark" style="width: 100%" for="child_section">Tuman/Shahar YHXB RIB:</label>
                     <select name="child_section"
                             class="form-control" id="child_section">
-                            
-                            {% if child_sections %}
+
+                        {% if child_sections %}
                             <option value="all">Barchasi</option>
                             {% for child_section in child_sections %}
-                            
-                            <option {% if request.GET.child_section == child_section.id|stringformat:"i" %}selected{% endif %}
-                                    value="{{ child_section.id }}">{{ child_section.title }}</option>
-                        {% endfor %}
-                        {%else%}
-                        <option value="">-- -- --</option>
-                        {%endif%}
+
+                                <option {% if request.GET.child_section == child_section.id|stringformat:"i" %}selected{% endif %}
+                                        value="{{ child_section.id }}">{{ child_section.title }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option value="">-- -- --</option>
+                        {% endif %}
                     </select>
                 </div>
-                                <div class="col-1" style="margin-top: 1.9rem; text-align: center">
-                                    <button id="payments_filter_form_btn" type="submit"  class="btn btn-info">
-                                            <i  class="fas fa-sync-alt"></i>
-                                    </button>
-                                </div>
+                <div class="col-1" style="margin-top: 1.9rem; text-align: center">
+                    <button id="payments_filter_form_btn" type="submit" class="btn btn-info">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
             </div>
         </form>
         <div class="row justify-content-center">
@@ -113,36 +113,36 @@
 {% block bottom %}
     <script type="text/javascript" charset="UTF-8">
         $(document).ready(function () {
-            
+
             function getChildSections(parenSectionId) {
-                    
-                    $.ajax({
-                        type: "GET",
-                        url: "{% url 'user:GetChildSections' %}",
-                        data: {
-                            'parent_section': parenSectionId, // from form
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:GetChildSections' %}",
+                    data: {
+                        'parent_section': parenSectionId, // from form
+                    },
+                    statusCode: {
+                        200: function (message) {
+                            $('#child_section').empty().append('<option value="all">Barchasi</option>' + message)
+                            $('#child_section').css('border', '1px solid blue')
+                            setTimeout(function () {
+                                $('#child_section').css('border', '1px solid #ced4da')
+
+                            }, 1000)
                         },
-                        statusCode: {
-                            200: function(message) {
-                                $('#child_section').empty().append('<option value="all">Barchasi</option>' + message)
-                                $('#child_section').css('border', '1px solid blue')
-                                setTimeout(function () {
-                                    $('#child_section').css('border', '1px solid #ced4da')
-                                
-                                }, 1000)
-                            },
-                            404: function() {
-                                $('#child_section').empty().append('<option value="all">-- -- --</option>')
-                            }
-                        },
-                        
-                    });
-                }
+                        404: function () {
+                            $('#child_section').empty().append('<option value="all">-- -- --</option>')
+                        }
+                    },
+
+                });
+            }
 
             $('#parent_section').change(function () {
                 var SelectedParentSection = $(this).children("option:selected").val()
                 getChildSections(SelectedParentSection)
-             })
+            })
 
             calc_total()
 
@@ -160,27 +160,27 @@
                 $('#calculated_pay_total').text(calculated_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
 
                 var paid_sum = 0;
-                 $(".paid_pay").each(function () {
+                $(".paid_pay").each(function () {
                     paid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
                 });
-                  $('#paid_pay_total').text(paid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+                $('#paid_pay_total').text(paid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
 
-                  var unpaid_sum = 0;
-                 $(".unpaid_pay").each(function () {
+                var unpaid_sum = 0;
+                $(".unpaid_pay").each(function () {
                     unpaid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
                 });
-                  $('#unpaid_pay_total').text(unpaid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+                $('#unpaid_pay_total').text(unpaid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
 
 
             }
 
             console.log('{{request.GET.parent_section}}')
-            
+
             $('#payments_filter_form_btn').on('click', function () {
                 $('#payments_filter_form').submit()
             })
 
-          
+
         })
     </script>
 {% endblock bottom %}

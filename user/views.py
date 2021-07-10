@@ -366,7 +366,7 @@ def get_district(request):
 
 class GetChildSections(AllowedRolesMixin):
     model = Section
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
         try:
