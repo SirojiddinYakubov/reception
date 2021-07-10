@@ -346,9 +346,35 @@
                     var $fuel_types_selectize = $('#fuel_types').selectize();
                     $fuel_types_selectize[0].selectize.setValue("1");
 
-                    var capitalLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                    var capitalLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                    {#$('#engine_number')#}
+                    function makeStr(length) {
+                        var result = '';
+                        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+                        var charactersLength = characters.length;
+                        for (var i = 0; i < length; i++) {
+                            result += characters.charAt(Math.floor(Math.random() *
+                                charactersLength));
+                        }
+                        return result;
+                    }
+                    function makeNum(length) {
+                        var result = '';
+                        var numbers = '1234567890';
+                        var numbersLength = numbers.length;
+                        for (var i = 0; i < length; i++) {
+                            result += numbers.charAt(Math.floor(Math.random() *
+                                numbersLength));
+                        }
+                        return result;
+                    }
+
+                    $('#engine_number').val(makeStr(15))
+                    $('#seriya').val(makeStr(15))
+                    $('#body_number').val(makeStr(15))
+                    $('#full_weight').val(makeNum(5))
+                    $('#empty_weight').val(makeNum(5))
+                    $('#engine_power').val(makeNum(3))
+                    $('#price').val(makeNum(8))
+
                 })
 
 
