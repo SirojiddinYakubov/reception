@@ -209,7 +209,7 @@ msgstr "Вам нужна помощь?"
 
 #: .\templates\account\login.html:54
 msgid "Telefon raqami:"
-msgstr "Телефонный номер:"
+msgstr "Номер телефона:"
 
 #: .\templates\account\login.html:60
 msgid "Masalan"
@@ -791,7 +791,7 @@ msgstr ""
 
 #: .\templates\user\add_organization.html:81
 msgid "Tashkilot qo'shish"
-msgstr ""
+msgstr "Добавить организацию"
 
 #: .\templates\user\car\edit_car_data.html:9
 msgid "Transport vositasi ma'lumotlarini tahrirlash"
@@ -807,11 +807,11 @@ msgstr ""
 
 #: .\templates\user\edit_organization.html:10
 msgid "Tashkilotni tahrirlash"
-msgstr ""
+msgstr "Редактировать организацию"
 
 #: .\templates\user\edit_personal_data.html:9
 msgid "Shaxsiy ma'lumotlarni tahrirlash"
-msgstr ""
+msgstr "Редактировать личные данные"
 
 #: .\templates\user\organization\view_organization_data.html:8
 msgid "Tashkilot ma'lumotlari"
@@ -819,11 +819,11 @@ msgstr ""
 
 #: .\templates\user\role\regional_controller\sections_list.html:27
 msgid "Bo'lim nomi"
-msgstr ""
+msgstr "Название отдела"
 
 #: .\templates\user\role\regional_controller\sections_list.html:28
 msgid "Biriktirilgan tuman va shaharlar"
-msgstr ""
+msgstr "Прикрепленные районы и города"
 
 #: .\templates\user\role\regional_controller\sections_list.html:32
 #: .\templates\user\role\state_controller\regions_list.html:31
@@ -833,7 +833,7 @@ msgstr ""
 #: .\templates\user\role\state_controller\add_worker.html:10
 #: .\templates\user\role\state_controller\workers_list.html:17
 msgid "Xodim qo'shish"
-msgstr ""
+msgstr "Добавить персонал"
 
 #: .\templates\user\role\state_controller\add_worker.html:22
 #: .\templates\user\role\state_controller\edit_worker.html:20
@@ -894,7 +894,7 @@ msgstr ""
 
 #: .\templates\user\view_personal_data.html:8
 msgid "Foydalanuvchi ma'lumotlari"
-msgstr ""
+msgstr "Информация о пользователе"
 
 #: .\user\models.py:59
 msgid "Bo'ysinuvchi tashkilot"
@@ -902,7 +902,7 @@ msgstr ""
 
 #: .\user\views.py:223
 msgid "Login yoki parol noto'g'ri!"
-msgstr ""
+msgstr "Логин или пароль неверны!"
 
 #: .\user\views.py:324
 msgid "Muvaffaqiyatli tahrirlandi!"
