@@ -1,0 +1,94 @@
+{% load i18n %}
+{% load static %}
+<div class="form-card">
+                                    <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
+
+                                    <div class="col-12">
+                                        <label class="not_copy label_required">Foydalanuvchi shaxsini tanlang </label>&nbsp<i
+                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                            title="Arizani yuridik yoki jismoniy shaxs sifatida yuborishni tanlang!"></i>
+                                        <select class="form-control" style="width: 100%;" id="person_type" required>
+                                            <option value="J">Jismoniy shaxs</option>
+                                            <option value="Y">Yuridik shaxs</option>
+                                        </select>
+                                        <p style="margin-top: 0;margin-bottom: 0; font-size: 0.8em;display: none"
+                                           id="organization_div_alert"
+                                           class="text-danger not_copy">
+                                            Sizda tashkilot mavjud emas. <a
+                                                href="{% url 'user:add_organization' %}?next={{ request.path }}">Tashkilotni
+                                            qo'shish </a> bo'limiga o'tib, tashkilotni ro'yhatga oling
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12" id="div_organization">
+                                        {% if organizations.count > 0 %}
+                                            <div class="form-group">
+                                                <label class="not_copy">{% trans 'Korxonani tanlang:' %}</label>
+                                                <select id="organization"
+                                                        class="form-control select2"
+                                                        style="width: 100%;">
+                                                    {% for organization in organizations %}
+                                                        <option value="{{ organization.id }}">{{ organization.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col-12" id="msdiv1">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="not_copy">{% trans 'Familiya:' %}</label>
+                                                <input type="text" id="last_name" class="form-control"
+                                                       value=""
+                                                       disabled>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="not_copy">{% trans 'Ism:' %}</label>
+                                                <input type="text" id="first_name" class="form-control"
+                                                       value=""
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="not_copy mt-2">{% trans 'Otasining ismi:' %}</label>
+                                                <input type="text" id="middle_name" class="form-control" value=""
+                                                       disabled>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="not_copy mt-2">{% trans 'Passport:' %}</label>
+                                                <input type="text" id="passport" class="form-control" value=""
+                                                       disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12" id="msdiv2" style="display: none">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label>{% trans 'Rahbar:' %}</label>
+                                                <input type="text" id="director" class="form-control" placeholder=""
+                                                       disabled>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label>{% trans 'STIR raqam:' %}</label>
+                                                <input type="text" id="identification_number" class="form-control"
+                                                       placeholder=""
+                                                       disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label>{% trans 'Yuridik manzil(Viloyat):' %}</label>
+                                                <input type="text" id="legal_address_region" class="form-control"
+                                                       placeholder="" disabled>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label>{% trans 'Yuridik manzil(Tuman):' %}</label>
+                                                <input type="text" id="legal_address_district" class="form-control"
+                                                       placeholder="" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>

@@ -1089,3 +1089,7 @@ function addAmount() {
         focusConfirm: false,
     })
 }
+
+function formatMoney(str) {
+    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+}
