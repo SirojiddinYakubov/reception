@@ -79,7 +79,6 @@
                             <th scope="col">Hisoblangan</th>
                             <th scope="col">To'langan</th>
                             <th scope="col">Qarzdorlik</th>
-
                         </tr>
                         </thead>
                         <tbody>
@@ -94,14 +93,12 @@
                                     <b class="unpaid_pay text-danger">{{ payment.unpaid|intcomma }}</b>
                                 </td>
                             </tr>
-
                         {% endfor %}
                         </tbody>
                         <tfoot style="background: lightgray">
                         <tr>
                             <th></th>
                             <th>Jami:</th>
-
                             <th><b id="calculated_pay_total"></b> so'm</th>
                             <th><b id="paid_pay_total" class="text-green"></b> so'm</th>
                             <th><b id="unpaid_pay_total" class="text-danger"></b> so'm</th>
@@ -146,7 +143,6 @@
                 var SelectedParentSection = $(this).children("option:selected").val()
                 getChildSections(SelectedParentSection)
              })
-
 
             calc_total()
 

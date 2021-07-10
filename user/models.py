@@ -304,7 +304,7 @@ class Car(models.Model):
     is_technical_confirm = models.BooleanField(verbose_name='Texnik ko\'rik', default=False)
     technical_confirm_date = models.DateTimeField(null=True, blank=True)
     is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
-    price = models.IntegerField(verbose_name='Avtomobil narxi', default=0, blank=True)
+    price = models.BigIntegerField(verbose_name='Avtomobil narxi', default=0, blank=True)
     history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL, blank=True,
                                 null=True)
     is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')

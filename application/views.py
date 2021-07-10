@@ -27,7 +27,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-
+from reception.mixins import *
 from application.generators import *
 from application.mixins import *
 from application.models import *
@@ -41,16 +41,19 @@ from user.utils import render_to_pdf
 
 
 
-class ApplicationsList(ApplicationCustomMixin):
+class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     model = Application
     template_name = 'application/applications_list.html'
     render_application_values = ['id', 'service', 'service__car', 'service__car__old_number', 'created_user',
                                  'created_date', 'file_name', 'process']
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-    @allowed_users(allowed_roles=[*allowed_roles])
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    def get_queryset(self):
+        role = self.request.user.role
+        qs = super().get_queryset()
+        if role == USER:
+            qs = qs.filter(created_user=self.request.user)
+        return qs
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -588,7 +591,7 @@ def access_with_qrcode(request, id):
     return None
 
 
-class SectionApplicationsList(ApplicationCustomMixin):
+class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     model = Application
     template_name = 'application/applications_list.html'
     render_application_values = ['id', 'service', 'service__car','service__car__old_number', 'created_user','created_date','file_name', 'process']

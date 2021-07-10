@@ -1,0 +1,754 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    <section class="py-3 mt-2 bg-info text-light">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2>{% trans "Hisob ma'lumotnomasiga asosan transport vositasiga raqam olish" %}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row ml-2 mr-2">
+        <div class="col-12 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <div id="msform">
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active not_copy" id="personal"><strong>Foydalanuvchi</strong></li>
+                                <li class="not_copy" id="car_icon"><strong>Transport vositasi</strong></li>
+                                <li class="not_copy" id="payment"><strong>To'lov</strong></li>
+                            </ul> <!-- fieldsets -->
+                            <fieldset id="fieldset1">
+                                {% include 'service/inc/person_type_block.html' %}
+                                <button type="button" id="next1" name="next" class="next action-button">
+                                    Keyingi
+                                </button>
+                            </fieldset>
+                            <fieldset id="fieldset2">
+                                <form action="#" id="save_car_form" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-card">
+                                        <h2 class="fs-title not_copy">Transport vositasi ma'lumotlari</h2>
+                                        <input type='hidden' value="J" name="person_type">
+                                        <input type='hidden' value="" name="organization">
+                                        <input type='hidden' value="" name="devices">
+                                        <label style="display: inline !important;"
+                                               class="label_required">{% trans 'T/v modelini tanlang' %}</label>&nbsp<i
+                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                            title="Transport vositasining modelini tanlang, agar sizning transport vositangiz modeli mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz modelini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining modeli hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"
+                                    ></i>
+
+                                        <div class="input-group mb-3">
+                                            <select id="car" name="car" class="form-control select2">
+                                                {% for car in cars %}
+                                                    <option value="{{ car.id }}">{{ car.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-default" type="button" id="AddCarBtn"><i
+                                                        class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required">{% trans 'T/v turini tanlang' %}</label>
+                                                <select id="car_type" name="car_type" class="form-control select2"
+                                                        style="width: 100%;">
+                                                    {% for car_type in car_types %}
+                                                        <option value="{{ car_type.id }}">{{ car_type.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 fuel_types">
+                                                <label class="label_required">{% trans "Yoqilg'i turini tanlang" %}</label>
+                                                <select id="fuel_types" name="fuel_types" class="form-control"
+                                                        multiple="multiple"
+                                                        style="width: 100%;">
+                                                    {% for fuel_type in fuel_types %}
+                                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label">{% trans "Alohida belgilar" %}</label>
+
+
+                                                <select id="devices" name="devices" class="form-control"
+                                                        multiple="multiple">
+                                                    {% for device in devices %}
+                                                        <option value="{{ device.id }}">{{ device.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label for="body_type"
+                                                       class="label_required">{% trans 'Kuzov turi' %}</label>
+                                                <select id="body_type" name="body_type" class="form-control select2"
+                                                        style="width: 100%;">
+                                                    {% for bodyType in bodyTypes %}
+                                                        <option value="{{ bodyType.id }}">{{ bodyType.title }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="engine_number">{% trans 'Dvigitel raqami' %}</label>
+                                                <input type="text" id="engine_number" name="engine_number"
+                                                       class="form-control"
+                                                       placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}"
+                                                       autocomplete="off">
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="body_number">{% trans 'Kuzov raqami' %}</label>
+                                                <input type="text" id="body_number" name="body_number"
+                                                       class="form-control" autocomplete="off"
+                                                       placeholder="{% trans 'Masalan: XWBJF69VELA102923' %}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+
+
+                                                <label for="chassis_number" id="chassis_number_label"
+                                                       class="mt-2 label_required">{% trans 'Shassi raqami' %}</label>
+                                                <input type="text" id="chassis_number"
+                                                       class="form-control"
+                                                       placeholder="{% trans 'Masalan: X8945642519874656' %}"
+                                                       autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 full_weight">
+                                                <label class="label_required"
+                                                       for="full_weight">{% trans "To'la vazni" %}</label>
+                                                <input type="number" id="full_weight" name="full_weight"
+                                                       class="form-control"
+                                                       placeholder="{% trans 'Masalan: 20500' %}"
+                                                       autocomplete="off">
+                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni kilogrammda
+                                                    kiriting!</p>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 empty_weight">
+                                                <label class="label_required"
+                                                       for="empty_weight">{% trans 'Yuksiz vazni' %}</label>
+                                                <input type="number" id="empty_weight" name="empty_weight"
+                                                       class="form-control" autocomplete="off"
+                                                       placeholder="{% trans 'Masalan: 19500' %}">
+                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni kilogrammda
+                                                    kiriting!</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 engine_power">
+                                                <label class="label_required"
+                                                       for="engine_power">{% trans 'Dvigatel quvvati' %}</label>
+                                                <input type="number" id="engine_power" name="engine_power"
+                                                       class="form-control" autocomplete="off"
+                                                       placeholder="{% trans 'Masalan: 460' %}">
+                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni ot kuchida
+                                                    kiriting!</p>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label style="display: inline !important;" class="label_required"
+                                                       for="color">{% trans 'Rangi' %}</label>&nbsp<i
+                                                    class="fas fa-info-circle" data-toggle="tooltip"
+                                                    title="Transport vositasining rangini tanlang, agar sizning transport vositangiz rangi mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz rangini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining rangini hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"
+                                            ></i>
+
+
+                                                <div class="input-group mb-3">
+                                                    <select id="color" name="color" class="form-control select2 color">
+                                                        {% for color in color %}
+                                                            <option value="{{ color.id }}">{{ color.title }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-default" type="button" id="AddColorBtn">
+                                                            <i
+                                                                    class="fas fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}</label>
+                                                <div class="input-group mb-2">
+                                                    <input id='made_year' name="made_year"
+                                                           type="text"
+                                                           class="form-control datepicker"/>
+                                                    <div class="input-group-prepend datepicker_icon">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"
+                                                                                         aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="seriya">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}</label>
+                                                <input type="text" id="seriya" name="seriya"
+                                                       class="form-control"
+                                                       placeholder="{% trans 'Masalan: AAC123456' %}"
+                                                       autocomplete="off">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="contract_date">{% trans "Shartnoma tuzilgan sana" %}</label>
+                                                <div class="input-group mb-2">
+                                                    <input id='contract_date' name="contract_date"
+                                                           type="text"
+                                                           class="form-control datepicker"/>
+                                                    <div class="input-group-prepend datepicker_icon">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"
+                                                                                         aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 price">
+                                                <label class="label_required"
+                                                       for="price">{% trans 'T/v narxi' %}</label>
+                                                <input type="number" id="price" name="price"
+                                                       class="form-control" autocomplete="off"
+                                                       placeholder="{% trans 'Masalan: 47000000' %}">
+                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni so'mda
+                                                    kiriting!</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <div class="form-check">
+                                                    <input type="checkbox" id="is_auction"
+                                                           class="form-check-input"/>
+                                                    <label class="form-check-label"
+                                                           for="is_auction"><b>Raqam auksiondan olingan</b> <i
+                                                            class="fas fa-info-circle" data-toggle="tooltip"
+                                                            title="Raqam auksiondan olingan bo'lsa ushbu maydonni belgilang"></i></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="auction_number_div">
+                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
+                                                <label class="label_required"
+                                                       for="auction_number">{% trans "Auksion raqami" %}</label>
+                                                <input type="text" id="auction_number"
+                                                       class="form-control" placeholder="Masalan: 80979HBA"
+                                                       autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <input type="button" id="prev2"
+                                               class="previous action-button-previous"
+                                               value="Oldingi"/>
+                                        <button type="submit" id="next2" class="action-button">Keyingi</button>
+                                        <input type="button" style="display: none" id="refresh_next2"
+                                               class="action-button"
+                                               value="Keyingi"/>
+                                    </div>
+                                </form>
+                            </fieldset>
+                            <fieldset id="fieldset3">
+                                {% include 'service/inc/pay_for_service_block.html' %}
+
+                                <input type="button" name="Previous" class="previous action-button-previous"
+                                       id="prev3" value="Oldingi"/>
+                                <a target="_blank" href="#"
+                                   class="action-button copy_application" style="padding: 0.7em !important;">
+                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>
+                                </a>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block bottom %}
+    {#    tooltip js start #}
+    <script src="{% static 'plugins/jquery-ui/jquery-ui.js' %}"></script>
+    {#    tooltip js end #}
+
+    {#    selectize js start #}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.css"
+          integrity="sha512-WJ1jnnij6g+LY1YfSmPDGxY0j2Cq/I6PPA7/s4QJ/5sRca5ypbHhFF+Nam0TGfvpacrw9F0OGeZa0ROdNAsaEQ=="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.css"
+          integrity="sha512-85w5tjZHguXpvARsBrIg9NWdNy5UBK16rAL8VWgnWXK2vMtcRKCBsHWSUbmMu0qHfXW2FVUDiWr6crA+IFdd1A=="
+          crossorigin="anonymous"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sifter/0.5.4/sifter.min.js"
+            integrity="sha512-B60IUvYpG4cibCeQ30J8k/+qtN+fxKAIENb3DL2DVdzIt76IDIynAt92chPEwlCuKejOt//+OZL61i1xsvCIDQ=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.min.js"
+            integrity="sha512-7amIsiQ/hxbdPNawBZwmWBWPiwQRNEJlxTj6eVO+xmWd71fs79Iydr4rYARHwDf0rKHpysFxWbj64fjPRHbqfA=="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/selectize.min.js"
+            integrity="sha512-JiDSvppkBtWM1f9nPRajthdgTCZV3wtyngKUqVHlAs0d5q72n5zpM3QMOLmuNws2vkYmmLn4r1KfnPzgC/73Mw=="
+            crossorigin="anonymous"></script>
+    {#    selectize js end #}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/javascript" charset="UTF-8">
+        $(function () {
+            $('.select2').select2()
+            $('#auction_number_div').hide()
+
+
+        })
+
+        $(document).ready(function () {
+
+                $('#addAmountBtn').on('click', function (e) {
+                    addAmount()
+                })
+                var amount = $('#amount').text().replace(/\s+/g, '')
+
+
+                {% if request.GET.payment_type == 'click' %}
+                    window.location.href = "{% url 'click:create_order_url' %}?amount=12345".replace(/12345/, amount.toString());
+                {% elif request.GET.payment_type == 'payme' %}
+                    window.location.href = "{% url 'paycom:create_paycom_url_via_order' %}?amount=12345&return_url=6789&service_id=9791999".replace(/12345/, amount.toString()).replace(/6789/, 'http://e-rib.uz/service/account-statement-index/').replace(/9791999/, 'http://e-rib.uz/service/account-statement-index/');
+                {% endif %}
+
+                $('[data-toggle="tooltip"]').tooltip();
+
+                $('#fuel_types').selectize({
+                    placeholder: "Masalan: BENZIN",
+                });
+                $('#devices').selectize({
+                    {#inputClass: 'form-control selectize-input',#}
+                    {#dropdownParent: "body",#}
+                    placeholder: "Masalan: MAXSUS O'QUV",
+                });
+
+                $('#auction_number').inputmask({casing: 'upper'});
+                $('#engine_number').inputmask({casing: 'upper'});
+                $('#body_number').inputmask({casing: 'upper'});
+                $('#chassis_number').inputmask({casing: 'upper'});
+                $('#seriya').inputmask({casing: 'upper'});
+
+
+                {#$('#fieldset1').hide()#}
+                {#$('#fieldset3').show()#}
+                var is_legal = false,
+                    passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
+                    firstName = htmlDecode('{{ request.user.first_name }}'),
+                    lastName = htmlDecode('{{ request.user.last_name }}'),
+                    middleName = htmlDecode('{{ request.user.middle_name }}'),
+                    token = getCookie('token'),
+                    csrftoken = getCookie('csrftoken')
+
+                $('#first_name').attr('value', firstName)
+                $('#last_name').attr('value', lastName)
+                $('#middle_name').attr('value', middleName)
+                $('#passport').attr('value', passport)
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                        xhr.setRequestHeader('Authorization', `Token ${token}`)
+                    },
+                    error: function (response) {
+                        if (response.status === 401) {
+                            tokenInvalid()
+                        }
+                    }
+                })
+
+                $('#AddCarBtn').on('click', function () {
+                    addCarModel()
+                })
+
+                $('#AddColorBtn').on('click', function () {
+                    addColor()
+                })
+
+                $('#is_auction').on('change', function () {
+                    if ($(this).prop('checked')) {
+                        $('#auction_number_div').show()
+                        $('#auction_number_div').children('.col-12').children('input').attr('name', 'auction_number')
+                    } else {
+                        $('#auction_number_div').hide()
+                        $('#auction_number_div').children('.col-12').children('input').removeAttr('name')
+
+                    }
+                })
+
+
+                function changeOrganizationValues() {
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "user:get_organization" %}',
+                        data: {'organization': $('#organization option:selected').val()},
+                        success: function (response) {
+
+                            {#$('#auction_number').inputmask("9{2}9{3}A{3}");#}
+                            {#$('#auction_number').attr('placeholder', '80979HBA')#}
+
+                            $('#director').attr('value', response.organization.fields.director)
+                            $('#identification_number').attr('value', response.organization.fields.identification_number)
+                            $('#legal_address_region').attr('value', response.legal_address_region)
+                            $('#legal_address_district').attr('value', response.legal_address_district)
+
+                            $('input[name ="organization"]').val($('#organization option:selected').val())
+
+
+                        }
+                    })
+                }
+
+                $('#div_organization').hide()
+
+                $("#person_type").change(function () {
+                    var selectedPersonType = $(this).children("option:selected").val();
+                    $('input[name ="person_type"]').val(selectedPersonType)
+                    if (selectedPersonType === 'Y') {
+                        changeOrganizationValues()
+
+                        $('#div_organization').show()
+                        $('#msdiv1').hide()
+                        $('#msdiv2').show()
+                        is_legal = true
+
+                        $('#organization').on('change', function () {
+                            changeOrganizationValues()
+                        })
+
+                        if (typeof ($('#organization option').attr('value')) == 'undefined') {
+                            $('#organization_div_alert').show()
+                            $('#next1').attr('disabled', true)
+                        } else {
+                            $('#organization_div_alert').hide()
+                            $('#next1').attr('disabled', false)
+                        }
+                    } else if (selectedPersonType === 'J') {
+                        $('#next1').attr('disabled', false)
+                        $('#organization_div_alert').hide()
+                        $('#msdiv1').show()
+                        $('#msdiv2').hide()
+                        $('#div_organization').css('display', 'none')
+                        is_legal = false
+                    }
+                });
+
+                $('#next1').on('click', function () {
+                    $('#person_type').attr('disabled', true)
+                    $('#organization').attr('disabled', true)
+                    $('#fieldset1').hide()
+                    $('#fieldset2').show()
+                    $('#car_icon').addClass('active')
+                })
+                ChangeCarType()
+
+                function ChangeCarType() {
+                    var selectedCar = $('select#car').children("option:selected").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'user:get_car_type' %}",
+                        data: {
+                            'car': selectedCar, // from form
+                        },
+                        success: function (response) {
+                            if (response === "True") {
+                                //agar yuk avtomobil bo'lsa
+                                $('#chassis_number_label').show()
+                                $('#chassis_number').show()
+                                $('#chassis_number').attr('name', 'chassis_number')
+
+                            } else {
+                                //agar yengil avtomobil bo'lsa
+                                $('#chassis_number_label').hide()
+                                $('#chassis_number').hide()
+                                $('#chassis_number-error').hide()
+                                $('#chassis_number').removeAttr('name')
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response.status)
+                        }
+
+                    });
+                }
+
+                $("select#car").change(function () {
+                    ChangeCarType()
+                });
+
+                $('#prev2').on('click', function () {
+                    $('#fieldset2').hide()
+                    $('#fieldset1').show()
+                })
+
+                $(document).on('click', '#prev3', function () {
+                    $('#fieldset3').hide()
+                    $('#fieldset2').show()
+                })
+
+                $('#refresh_next2').on('click', function (e) {
+                    $('#fieldset2').hide()
+
+                    $('#fieldset3').show()
+
+
+                })
+
+                $('#fuel_types').on('change', function () {
+                    var selectedFuelType = $(this).children("option:selected").val();
+                    if (parseInt(selectedFuelType)) {
+                        $(this).valid()
+
+                    }
+
+                })
+
+                jQuery.validator.addMethod("noSpace", function (value, element) {
+                    return value == '' || value.trim().length != 0;
+                }, "Iltimos, bo'sh joy qoldirmang!");
+                jQuery.validator.addMethod("customEmail", function (value, element) {
+                    return this.optional(element) || /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+                }, "Iltimos, to'g'ri elektron pochta manzilini kiriting!");
+                $.validator.addMethod("alphanumeric", function (value, element) {
+                    return this.optional(element) || /^\w+$/i.test(value);
+                }, "Faqat harf va raqam kiriting!");
+                //   $.validator.addMethod("auctionNumber", function (value, element) {
+                //      return this.optional(element) || /^[A-Z0-9]{8}$/i.test(value);
+                // }, "Raqamni to'liq kiriting!");
+
+                var $registrationForm = $('#save_car_form');
+                if ($registrationForm.length) {
+                    $registrationForm.validate({
+                        ignore: ":hidden:not('#fuel_types')",
+
+                        rules: {
+                            //username is the name of the textbox
+                            engine_number: {
+                                required: true,
+                                //alphanumeric is the custom method, we defined in the above
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            body_number: {
+                                required: true,
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            chassis_number: {
+                                required: true,
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            fuel_types: {
+                                required: true,
+                            },
+                            full_weight: {
+                                required: true,
+                            },
+                            empty_weight: {
+                                required: true,
+                            },
+                            engine_power: {
+                                required: true,
+                            },
+                            price: {
+                                required: true,
+                            },
+                            seriya: {
+                                required: true,
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            auction_number: {
+                                required: true,
+
+                            },
+
+
+                        },
+                        messages: {
+                            engine_number: {
+                                //error message for the required field
+                                required: 'Dvigatel raqami kiritilmagan!'
+                            },
+                            body_number: {
+                                required: 'Kuzov raqami kiritilmagan!'
+                            },
+                            chassis_number: {
+                                required: 'Shassi raqami kiritilmagan!'
+                            },
+                            fuel_types: {
+                                required: "Yoqilg'i turi tanlanmagan!",
+                            },
+                            full_weight: {
+                                required: "To'la vazn kiritilmagan!",
+                            },
+                            empty_weight: {
+                                required: "Yuksiz vazn kiritilmagan!",
+                            },
+                            engine_power: {
+                                required: "Dvigatel quvvati kiritilmagan!",
+                            },
+                            price: {
+                                required: "T/v narxi kiritilmagan!",
+                            },
+                            seriya: {
+                                required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
+                            },
+                            auction_number: {
+                                required: "Auksion raqami kiritilmagan!"
+                            },
+
+
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.is("#fuel_types")) {
+                                error.appendTo(element.parents('.fuel_types'));
+                            } else if (element.is(":checkbox")) {
+                                error.appendTo(element.parents('.devices'));
+                            } else if (element.is("#full_weight")) {
+                                error.appendTo(element.parents('.full_weight'));
+                            } else if (element.is("#empty_weight")) {
+                                error.appendTo(element.parents('.empty_weight'));
+                            } else if (element.is("#engine_power")) {
+                                error.appendTo(element.parents('.engine_power'));
+                            } else if (element.is("#price")) {
+                                error.appendTo(element.parents('.price'));
+                            } else {
+                                error.insertAfter(element);
+                            }
+
+                        },
+
+
+                        submitHandler: function (form) {
+                            $('#next2').attr('disabled', true)
+                            $('#next2').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
+
+                            var devices = []
+                            $('.devices').each(function () {
+                                if ($(this).prop('checked')) {
+                                    devices.push($(this).data('device'))
+                                }
+                            })
+
+                            $('input[name ="devices"]').val(devices)
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'service:AccountStatement' %}",
+                                data: $(form).serialize(),
+
+                                success: function (response) {
+
+                                    var applicationFileName = response[0].application
+                                    var tr = ''
+                                    response.slice(1).forEach(function (value) {
+                                        tr += `<tr><td class="col-md-9"><em>${value.title}</em></td><td class="col-md-3 text-center">${formatMoney(value.payment)} so\'m</td><td class="col-md-3 text-center"><button class="btn btn-primary">To'lov qilish</button></td></tr>`
+                                    });
+
+                                    jQuery("#state_duties_block tbody").before(tr)
+
+                                    if (typeof response === 'object') {
+
+                                        $('#next2').remove()
+                                        $('#refresh_next2').css('display', 'block')
+                                        $('#fieldset2').hide()
+
+                                        $('#fieldset3').show()
+                                        $('#payment').addClass('active')
+
+                                        $('#car').attr('disabled', 'disabled')
+                                        $('#engine_number').attr("disabled", "disabled")
+                                        $('#body_number').attr("disabled", "disabled")
+                                        $('#chassis_number').attr("disabled", "disabled")
+                                        $('#body_type').attr("disabled", "disabled")
+                                        $('#color').attr("disabled", "disabled")
+                                        $('#made_year').attr("disabled", "disabled")
+                                        $('.devices').attr("disabled", "disabled")
+                                        $('#seriya').attr("disabled", "disabled")
+                                        $('#contract_date').attr("disabled", "disabled")
+                                        $('#fuel_types').attr("disabled", "disabled")
+                                        $('#car_type').attr("disabled", "disabled")
+                                        $('#empty_weight').attr("disabled", "disabled")
+                                        $('#full_weight').attr("disabled", "disabled")
+                                        $('#engine_power').attr("disabled", "disabled")
+                                        $('#auction_number').attr("disabled", "disabled")
+                                        $('#is_auction').attr("disabled", "disabled")
+                                        $('#price').attr("disabled", "disabled")
+
+                                        $('.copy_application').data('filename', applicationFileName)
+
+
+                                    } else {
+                                        errorFunction()
+                                        $('#next2').attr('disabled', false)
+                                        $('#next2').html('Keyingi')
+                                        console.log(response.status)
+                                    }
+                                },
+                                error: function (response) {
+                                    $('#next2').attr('disabled', false)
+                                    $('#next2').html('Keyingi')
+                                    errorFunction()
+                                    console.log(response.status)
+                                }
+                            });
+                            return false; // required to block normal submit since you used ajax
+                        }
+                    });
+                }
+
+                $('.copy_application').on('click', function () {
+                    var filename = $(this).data('filename')
+                    var url = "{% url "application:create_application_doc" '123' %}";
+                    document.location.href = url.replace('123', filename);
+                })
+
+                $('#payment_render_pdf').on('click', function () {
+                    var element = document.getElementById('render_div'),
+                        filename = `To'lov`
+
+                    html_to_pdf(element, filename)
+                })
+            }
+        )
+    </script>
+{% endblock bottom %}
+
+
+
+
+
+
