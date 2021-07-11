@@ -6,8 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import QuerySet, Q
 from django.http import Http404, HttpResponse
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -21,7 +21,7 @@ from django.views.generic.base import *
 
 
 @permission_classes([IsAuthenticated])
-class ApplicationCustomMixin(LoginRequiredMixin, ListView):
+class ApplicationCustomMixin(ListView):
     render_application_values = []
     model = None
     request = None
@@ -53,6 +53,10 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
     #    if self.survey.fk_client != self.client:
     #        raise Http404
     #    return super(AjaxQuestionList, self).dispatch(request, *args, **kwargs)
+
+    # @allowed_users(allowed_roles=[*allowed_roles])
+    # def dispatch(self, *args, **kwargs):
+    #     return super().dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         try:
@@ -114,10 +118,8 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
                             qs = qs.filter(service__title='replace_tp')
                         if value == 'replace_number_and_tp':
                             qs = qs.filter(service__title='replace_number_and_tp')
-                    print(qs, 99)
                     if key == 'person_type':
                         qs = qs.filter(person_type=value)
-                    print(qs, 102)
                     if key == 'process':
                         qs = qs.filter(process=value)
 
@@ -219,11 +221,5 @@ class ApplicationCustomMixin(LoginRequiredMixin, ListView):
 
 
 
-class AllowedRolesMixin(LoginRequiredMixin, View):
-    allowed_roles = None
 
-    def dispatch(self, *args, **kwargs):
-        if not self.request.user.role in self.allowed_roles:
-            raise Http404
-        return super().dispatch(*args, **kwargs)
 

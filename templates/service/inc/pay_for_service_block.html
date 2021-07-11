@@ -32,32 +32,39 @@
                 {#                                                    </div>#}
                 {#                                                </div>#}
                 {#                                                <br>#}
-                <table class="table">
+
+                <table class="table" id="state_duties_block">
                     <thead>
                     <tr>
                         <th class="not_copy">Xizmat turi</th>
                         <th class="text-center not_copy">Narxi</th>
+                        <th class="text-center not_copy">Amallar</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="col-md-9"><em>Elektron ariza shakllantirish uchun</em></td>
-                        <td class="col-md-3 text-center">{{ PAY_FOR_SERVICE|intcomma }} so'm</td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-9"><em>Elektron to'lovlar va bank xizmati haqi</em></td>
-                        <td class="col-md-3 text-center">{{ PAY_FOR_SERVICE_PERCENT|intcomma }} so'm</td>
-                    </tr>
+
+
+                    {% if PAY_FOR_SERVICE > 0 and PAY_FOR_SERVICE_PERCENT > 0 %}
+                        <tr>
+                            <td class="col-md-9"><em>Elektron ariza shakllantirish uchun</em></td>
+                            <td class="col-md-3 text-center calculated_payment">{{ PAY_FOR_SERVICE|intcomma }} so'm</td>
+                            <td class="col-md-3 text-center">
+                                <button class="btn btn-primary">To'lov qilish</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-9"><em>Elektron to'lovlar va bank xizmati haqi</em></td>
+                            <td class="col-md-3 text-center calculated_payment">{{ PAY_FOR_SERVICE_PERCENT|intcomma }}
+                                so'm
+                            </td>
+                            <td class="col-md-3 text-center">
+                                <button class="btn btn-primary">To'lov qilish</button>
+                            </td>
+                        </tr>
+                    {% endif %}
 
                     </tbody>
                 </table>
-                <div class="text-right mt-3">
-                    <button id="addAmountBtn" class="btn btn-primary col-12"
-                            type="button"><span style="float:left;" class="pl-1">To'lov qilish</span>
-                        <span style="float:right;"><span id="amount">{{ PAY_FOR_SERVICE|add:PAY_FOR_SERVICE_PERCENT|intcomma }}</span> so'm &nbsp&nbsp&nbsp<i
-                                class="fas fa-long-arrow-alt-right"></i></span>
-                    </button>
-                </div>
 
             </div>
         </div>

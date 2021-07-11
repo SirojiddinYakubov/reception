@@ -29,7 +29,8 @@ from rest_framework.permissions import *
 from django.views.generic import ListView, DetailView, View
 from application.models import Application
 from application.utils import application_right_filters
-from reception.settings import TOKEN_MAX_AGE, PHONE_MAX_AGE, SMS_LOGIN, SMS_TOKEN, LOCAL_TIMEZONE
+from reception.mixins import *
+from reception.settings import *
 from reception.prod_settings import LOG_FILE_PATH, logger
 from service.models import *
 from service.utils import calculation_state_duty_service_price
@@ -362,10 +363,10 @@ def get_district(request):
     except:
         return HttpResponse(status=404)
 
-@method_decorator(login_required, name='dispatch')
+
 class GetChildSections(AllowedRolesMixin):
     model = Section
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
         try:
