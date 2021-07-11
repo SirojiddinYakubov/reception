@@ -446,52 +446,6 @@ def payment_detail(request, service_id):
     return render(request, 'application/payments/payment_detail.html', context)
 
 
-@login_required
-def payments(request):
-    if request.user.role == '2' or request.user.role == '5' or request.user.role == '6' or request.user.role == '7' or request.user.role == '8' or request.user.role == '9' or request.user.role == '10':
-
-        # services = Service.objects.filter(Q(Q(application_service__created_user__region=region) & Q(
-        #     application_service__created_user__district__in=districts_list) & Q(
-        #     organization__isnull=True)) | Q(
-        #     Q(organization__legal_address_region=region) & Q(organization__legal_address_district__in=districts_list) & Q(
-        #         organization__isnull=False))).filter(
-        #     Q(application_service__is_active=True) & Q(application_service__is_block=False))
-
-        context = {
-            'region': region,
-            'districts_list': districts_list,
-            'pays': STATE_DUTY_TITLE
-        }
-
-        # startdate = timezone.now().replace(year=2021,month=1,day=1)
-        # stopdate = timezone.now()
-        # stopdate = datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE)
-
-        if request.method == 'GET':
-            try:
-                if request.GET.get('startdate') and request.GET.get('startdate') != 'None' and request.GET.get(
-                        'startdate') != '':
-                    # startdate = dt.strptime(request.GET.get('startdate'), "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE)
-                    context.update(startdate=request.GET.get('startdate'))
-                if request.GET.get('stopdate') and request.GET.get('stopdate') != 'None' and request.GET.get(
-                        'stopdate') != '':
-                    # stopdate = dt.strptime(request.GET.get('stopdate'), '%Y-%m-%d').replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
-                    context.update(stopdate=request.GET.get('stopdate'))
-                # if request.GET.get('district') and request.GET.get('district') != 'all':
-                #     districts = District.objects.filter(id=request.GET.get('district'))
-                #     context.update(districts=districts)
-                # else:
-                #     context.update(districts=districts_list)
-            except:
-                messages.error(request, 'Xatolik yuz berdi! Sanani tanlashda xatolik!')
-                return render(request, 'application/payments/payments.html', context)
-        # payments = StateDuty.objects.filter(Q(is_active=True) & Q(service__in=services) & Q(created_date__range=[startdate, stopdate]))
-        # context.update(payments=payments)
-        return render(request, 'application/payments/payments.html', context)
-    else:
-        return render(request, '_parts/404.html')
-
-@method_decorator(login_required, name='dispatch')
 class PaymentsList(AllowedRolesMixin, ListView):
     model = StateDuty
     template_name = 'application/payments/payments_list.html'
@@ -617,6 +571,16 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         return context
 
 
+class SaveApplicationSection(AllowedRolesMixin):
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-
+    def post(self, request, *args, **kwargs):
+        region = get_object_or_404(Region, id=request.POST.get('region'))
+        district = get_object_or_404(District, id=request.POST.get('district'))
+        section = Section.objects.filter(region=region, district=district, parent__isnull=False)
+        if section:
+            return redirect(reverse_lazy('application:application_detail', kwargs={'id': 2}))
+        else:
+            # application.delete()
+            return render(request, '_parts/404.html', context={'message': f"{district.title} ga biriktirilgan bo'lim mavjud emas!"})
 

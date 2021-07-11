@@ -20,7 +20,7 @@ urlpatterns = [
     path('remove-application/', RemoveApplication.as_view(), name='remove_application'),
 
     path('payment-detail/<int:service_id>/', payment_detail, name='payment_detail'),
-    path('payments/', payments, name='payments'),
+
     path('payments-list/', PaymentsList.as_view(), name='PaymentsList'),
     path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
 
@@ -31,5 +31,6 @@ urlpatterns = [
     path('access-with-qrcode/<int:id>/', access_with_qrcode, name='access_with_qrcode'),
 
     path('section-applications-list/<int:section_id>/', SectionApplicationsList.as_view(), name='SectionApplicationsList'),
+    path('save-application-section/', SaveApplicationSection.as_view(), name='SaveApplicationSection'),
 
 ]
