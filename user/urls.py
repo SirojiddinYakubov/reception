@@ -9,7 +9,7 @@ app_name = 'user'
 urlpatterns = [
     # signup, login, logout requests
     path('signup/', user_signup, name='signup'),
-    path('login/', login_first, name='login_first'),
+    path('login/', login_view, name='login_view'),
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
@@ -27,7 +27,7 @@ urlpatterns = [
     # ajax requests
     path('get-district/', get_district, name='get_district'),
     path('get-child-sections/', GetChildSections.as_view(), name='GetChildSections'),
-    path('get-mfy/', get_mfy, name='get_mfy'),
+
     path('get-code/', get_code, name='get_code'),
     path('get-user-pass/', get_user_pass, name='get_user_pass'),
     path('forgot-pass/', forgot_pass, name='forgot_pass'),
@@ -52,7 +52,7 @@ urlpatterns = [
     path('save-new-car-model/', Save_New_Car_Model.as_view(), name='save_new_car_model'),
     path('save-new-color/', Save_New_Color.as_view(), name='save_new_color'),
     path('getDistrict/', getDistrict, name='getDistrict'),
-    path('getMfy/', getMfy, name='getMfy'),
+    path('get_quarters/', get_quarters, name='get_quarters'),
 
     # STATE CONTROLLER
     path('regions-list/', regions_list, name='regions_list'),

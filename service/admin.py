@@ -5,10 +5,17 @@ from service.models import *
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['id','title', 'seriya', 'car','organization','contract_date', ]
-    list_display_links = ['seriya']
-    list_filter = [ 'created_date', 'contract_date']
-    search_fields = ['title', 'seriya']
+    list_display = ['id','service_id', 'key',  ]
+    list_display_links = ['service_id']
+    list_filter = [ 'created_date',]
+    search_fields = ['key', ]
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ['id','title',  ]
+    list_display_links = ['title']
+    list_filter = [ 'created_date',]
+    search_fields = ['title', ]
 
 @admin.register(StateDuty)
 class StateDutyAdmin(admin.ModelAdmin):

@@ -6,22 +6,37 @@
 <head>
     <meta charset="utf-8"/>
     <title>Ro'yhatdan o'tish</title>
+
+
     <!-- favicon -->
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checknet.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/signup/style.css' %}">
+
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
-    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css"
+          integrity="sha512-kq3FES+RuuGoBW3a9R2ELYKRywUEQv0wvPTItv3DSGqjpbNtGWVdvT8qwdKkqvPzT93jp8tSF4+oN4IeTEIlQA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {#    <link rel="stylesheet" href="{% static 'plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">#}
+    {#    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">#}
+    {#    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">#}
+    <link rel="stylesheet" href="{% static 'css/signup/responsive.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/account_statement/style.css' %}">
-    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+    <style>
+        .action-button-previous:hover {
+            color: #fff;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -39,7 +54,7 @@
                 <h1>O'zbekiston Respublikasi</h1>
             </div>
             <div class="col-2">
-                <img style="width: 90px" src="{% static 'img/login/logo.svg' %}"
+                <img style="width: 90px" src="{% static 'img/yhxb.png' %}"
                      alt="{% trans 'Управление безопасности дорожного движения!' %}"/>
             </div>
             <div class="col-5">
@@ -68,8 +83,7 @@
                                         <label class="not_copy" for="phone">Tel raqam:</label>
                                         <input
                                                 type="text" id="phone" class="form-control"
-                                                placeholder="{% if phone %}+998{{ phone }}{% else %}{% endif %}"
-                                                disabled/>
+                                        />
                                         <br>
                                         <input type="checkbox"
                                                style="float: left; cursor: pointer; margin-right: 5px; margin-top: 5px; width: auto !important;"
@@ -81,7 +95,8 @@
                                             tanishib
                                             chiqdim</a>
 
-                                        <button style="float: right; height: 50%" id="get_code" type="button"
+                                        <button style="float: right; height: 50%; color:white" id="get_code"
+                                                type="button"
                                                 class="btn btn-info">Parolni olish
                                         </button>
                                         <label id="label_confirm" style="width: 100%; display: none" class="not_copy"
@@ -99,9 +114,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{% url 'user:login_first' %}"
-                               style="text-decoration: none; padding-left: 1.1em !important;padding-right: 1.1em !important;"
-                               class="previous action-button-previous">Raqamni almashtirish</a>
+                            <a href="{% url 'user:login_view' %}" class="previous action-button-previous"
+                               style="text-decoration: none"
+                            >Tizimga kirish</a>
                             <button type="button" id="next1" name="next" class="action-button" disabled>
                                 Tasdiqlash
                             </button>
@@ -113,7 +128,7 @@
                                         {% csrf_token %}
                                         <div class="form-card">
                                             <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
-                                            <input type="hidden" name="phone">
+                                            <input type="hidden" id="render_phone" name="phone">
                                             <div class="row">
                                                 <div class="col-12 col-xl-6">
                                                     <label style="width: 100%;" class="not_copy label_required"
@@ -144,18 +159,14 @@
                                                            autocomplete="disabled"
                                                            placeholder="Masalan: Tojiddinovich"/>
                                                 </div>
-                                                <div class="col-12 col-xl-6">
+                                                <div class="col-12 col-xl-6 birthday">
                                                     <label style="width: 100%;" class="not_copy label_required"
-                                                           for="birthday">Tug'ilgan yil</label>
+                                                           for="birthday">Tug'ilgan vaqt</label>
                                                     <div class="input-group mb-2">
                                                         <input id='birthday' name="birthday"
-                                                               type="text"
+                                                               type="date"
                                                                class="form-control"/>
-                                                        <div class="input-group-prepend birthday_datepicker_icon">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"
-                                                                                             aria-hidden="true"></i>
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,7 +178,7 @@
                                                             required>
                                                         <option value="">--Viloyatni tanlang--</option>
                                                         {% for region in regions %}
-                                                            <option value="{{ region.id }}">{{ region.title }}</option>
+                                                            <option value="{{ region.pk }}">{{ region.title }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -183,11 +194,11 @@
 
 
                                             <div class="row">
-                                                <div class="col-12 col-xl-6 mfy">
-                                                    <label class="label_required not_copy" for="mfy">MFY</label>
-                                                    <select name="mfy" class="form-control select2" id="mfy"
+                                                <div class="col-12 col-xl-6 quarter">
+                                                    <label class="label_required not_copy" for="quarter">Mahalla</label>
+                                                    <select name="quarter" class="form-control select2" id="quarter"
                                                             required="required">
-                                                        <option value="">--MFYni tanlang--</option>
+                                                        <option value="">--Mahallani tanlang--</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-xl-6">
@@ -222,7 +233,6 @@
                                         <div class="form-card">
                                             <h2 class="fs-title">Passport ma'lumotlari</h2>
                                             <div class="row">
-                                                <input type="hidden" name="user_id">
                                                 <div class="col-12 col-lg-5 col-md-12 col-xl-4 col-sm-12"><label
                                                         class="pay label_required not_copy" for="passport_seriya">Passport
                                                     seriya</label>
@@ -265,7 +275,7 @@
                                                 <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5">
                                                     <img class="img-responsive mb-2"
                                                          style="width: 200px; margin: 0 auto" height="auto"
-                                                         src="{% static 'online/person_id.jpg' %}"
+                                                         src="{% static 'img/passport.jpg' %}"
                                                          alt="JShShIR">
                                                 </div>
                                             </div>
@@ -286,88 +296,59 @@
         </div>
     </div>
 </div>
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- AdminLTE -->
-<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-{#<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>#}
-{#<script src="{% static 'dist/js/demo.js' %}"></script>#}
-{#<script src="{% static 'dist/js/pages/dashboard3.js' %}"></script>#}
-<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
-<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
-<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
-<script src="{% static 'plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
-<script src="{% static 'plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
-<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="{% static 'assets/libs/moment/min/moment.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js"
+        integrity="sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/responsive.js' %}"></script>
-<script src="{% static 'js/sign_up.js' %}"></script>
+<script src="{% static 'js/signup/sign_up.js' %}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-{#<script src="{% static 'js/jsPdf/jspdf.js' %}"></script>#}
-{#<script src="{% static 'js/jsPdf/modules/html.js' %}"></script>#}
-{#<script src="{% static 'js/jsPdf/modules/split_text_to_size.js' %}"></script>#}
-{#<script src="{% static 'js/jsPdf/modules/standard_fonts_metrics.js' %}"></script>#}
-{#<script src="{% static 'js/html2canvas.min.js' %}"></script>#}
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+
+<script src="{% static 'assets/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<script src="{% static 'plugins/inputmask/inputmask.js' %}"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript">
     var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/
     $(function () {
-        $("#birthday").datepicker({
-            dateFormat: "dd.mm.yy",
-            // minDate: '-150M',
-            // maxDate: '+5M',
-            defaultDate: '01.01.1990',
-            // value: "7/11/2011",
-            showButtonPanel: true,
-            numberOfMonths: 1,
-            // showOn: '',
-            // startDate: "-130M",
-            //endDate: "+30d",
-            //currentText: 'Today',
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: '1950:',
-
-            //yakshanbalarni chiqarish
-            // beforeShowDay: function (date) {
-            //     var day = date.getDay();
-            //     return [(day !== 0), ''];
-            // },
-
-            onClose: function () {
-                if ($(this).val().match(dateReg)) {
-                    $(this).css("border-bottom", "2px solid green")
-                } else {
-                    $(this).css("border-bottom", "2px solid red")
-                }
-            }
+        $('.select2').select2({
+            theme: "bootstrap",
+            width: 'auto',
         })
-
-        $('.birthday_datepicker_icon').on('click', function () {
-            $('#birthday').datepicker('show')
-        })
-
-        $("#birthday").datepicker('setDate', '01.01.1990');
-
-        $('.select2').select2()
     })
     $(document).ready(function () {
+        var phone_mask = false
+
+        $('#phone').inputmask('+\\9\\98 (99) 999-99-99', {
+            "oncomplete": function () {
+                $('#render_phone').val(encodeURIComponent($('#phone').val()))
+                $('#phone').css('border-color', 'unset')
+                phone_mask = true
+            }, 'autoUnmask': true,
+            "onincomplete": function () {
+                $('#phone').css('border-color', 'red')
+                phone_mask = false
+
+            },
+        });
         $('#input_confirm').inputmask('99999');
         $('#person_id').inputmask('99999999999999');
 
         $('#passport_seriya').inputmask({casing: 'upper'});
         $('#issue_by_whom').inputmask({casing: 'upper'});
 
-        var phoneVal = '{{ phone }}'
 
         $('#accept').on('change', function () {
             if ($(this).prop('checked')) {
@@ -381,9 +362,6 @@
         {#$('#fieldset1').hide()#}
         {#$('#fieldset3').show()#}
 
-        $('#birthday').on('keypress', function () {
-            return false
-        })
 
         $('#agree').on('click', function () {
             instruction_sweet()
@@ -412,15 +390,15 @@
             var SelectedDistrict = $(this).children("option:selected").val()
             $.ajax({
                 type: "GET",
-                url: "{% url 'user:get_mfy' %}",
+                url: "{% url 'user:get_quarters' %}",
                 data: {
                     'district': SelectedDistrict, // from form
                 },
                 success: function (message) {
-                    $('#mfy').empty().append(message)
-                    $('#mfy').css('border', '1px solid blue')
+                    $('#quarter').empty().append(message)
+                    $('#quarter').css('border', '1px solid blue')
                     setTimeout(function () {
-                        $('#mfy').css('border', '1px solid #ced4da')
+                        $('#quarter').css('border', '1px solid #ced4da')
                     }, 1000)
 
                 }
@@ -429,98 +407,105 @@
 
 
         $('#get_code').on('click', function () {
+            if (phone_mask) {
 
-            if ($('#accept').prop('checked')) {
-                $("#get_code").attr("disabled", true);
-                $("#accept").attr("disabled", true);
-
-                let countdowntime = 300;
-                let button = document.getElementById('get_code')
+                if ($('#accept').prop('checked')) {
+                    $("#get_code").attr("disabled", true);
+                    $("#accept").attr("disabled", true);
 
 
-                let interval = setInterval(updateCountDown, 1000)
+                    let countdowntime = 300;
+                    let button = document.getElementById('get_code')
 
-                function updateCountDown() {
-                    let minutes = Math.floor(countdowntime / 60)
-                    let seconds = countdowntime % 60
 
-                    seconds = seconds < 10 ? '0' + seconds : seconds
-                    minutes = minutes < 10 ? '0' + minutes : minutes
+                    let interval = setInterval(updateCountDown, 1000)
 
-                    button.innerHTML = `${minutes}:${seconds} Qayta yuborish`
+                    function updateCountDown() {
+                        let minutes = Math.floor(countdowntime / 60)
+                        let seconds = countdowntime % 60
 
-                    countdowntime--;
+                        seconds = seconds < 10 ? '0' + seconds : seconds
+                        minutes = minutes < 10 ? '0' + minutes : minutes
 
-                    if (countdowntime < 0) {
-                        clearInterval(interval)
-                        $("#get_code").attr("disabled", false);
-                        $("#accept").attr("disabled", false);
-                        button.innerHTML = `Qayta yuborish`
+                        button.innerHTML = `${minutes}:${seconds} Qayta yuborish`
 
-                    }
-                }
+                        countdowntime--;
 
-                $.ajax({
-                    type: "GET",
-                    url: "{% url 'user:get_code' %}",
-                    data: {
-                        'phone': phoneVal, // from form
-                    },
-                    success: function (response) {
-                        if (typeof response === 'object') {
-                            var password = parseInt(response.password)
-                            $('#input_confirm').keyup(function () {
-                                var test = $('#input_confirm').val(),
-                                    pattern = /^\d{5}$/
-                                if (test.match(pattern)) {
-                                    if (test === `${password}`) {
-                                        $('.invalid-feedback').css('display', 'none')
-                                        $('.valid-feedback').css('display', 'block')
-                                        $('#next1').prop('disabled', false)
+                        if (countdowntime < 0) {
+                            clearInterval(interval)
+                            $("#get_code").attr("disabled", false);
+                            $("#accept").attr("disabled", false);
+                            button.innerHTML = `Qayta yuborish`
 
-                                        $("#fieldset1").keyup(function (event) {
-                                            if (event.keyCode === 13) {
-                                                $("#next1").click();
-                                            }
-                                        });
-
-                                        $('input[name ="phone"]').val(phoneVal)
-                                    } else {
-                                        $('.invalid-feedback').css('display', 'block')
-                                        $('.valid-feedback').css('display', 'none')
-                                        $('#next1').prop('disabled', true)
-                                    }
-                                } else {
-                                    $('#next1').prop('disabled', true)
-                                    $('.invalid-feedback').css('display', 'block')
-                                    $('.valid-feedback').css('display', 'none')
-                                }
-                            });
                         }
                     }
-                });
 
-                $.notifyDefaults({
-                    type: 'warning',
-                    allow_dismiss: false,
-                    animate: {
-                        enter: 'animated fadeInRight',
-                        exit: 'animated fadeOutRight'
-                    },
-                });
-                $.notify({
-                    icon: 'glyphicon glyphicon-envelope',
-                    message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                    $('#label_confirm').fadeIn(800)
+                    $('#input_confirm').fadeIn(800)
+                    $('#help_text_code').fadeIn(800)
+
+                    $.ajax({
+                        type: "GET",
+                        url: "{% url 'user:get_code' %}",
+                        data: {
+                            'phone': encodeURIComponent($('#phone').val()), // from form
+                        },
+                        success: function (response) {
+                            if (typeof response === 'object') {
+                                var password = parseInt(response.password)
+                                $('#input_confirm').keyup(function () {
+                                    var test = $('#input_confirm').val(),
+                                        pattern = /^\d{5}$/
+                                    if (test.match(pattern)) {
+                                        if (test === `${password}`) {
+                                            $('.invalid-feedback').css('display', 'none')
+                                            $('.valid-feedback').css('display', 'block')
+                                            $('#next1').prop('disabled', false)
+
+                                            $("#fieldset1").keyup(function (event) {
+                                                if (event.keyCode === 13) {
+                                                    $("#next1").click();
+                                                }
+                                            });
+
+
+                                        } else {
+                                            $('.invalid-feedback').css('display', 'block')
+                                            $('.valid-feedback').css('display', 'none')
+                                            $('#next1').prop('disabled', true)
+                                        }
+                                    } else {
+                                        $('#next1').prop('disabled', true)
+                                        $('.invalid-feedback').css('display', 'block')
+                                        $('.valid-feedback').css('display', 'none')
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    $.notifyDefaults({
+                        type: 'warning',
+                        allow_dismiss: false,
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutRight'
+                        },
+                    });
+                    $.notify({
+                        icon: 'glyphicon glyphicon-envelope',
+                        message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
                         '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
-                        '</svg>  +998${phoneVal} raqamga parol yuborildi !`
-                });
+                        '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga parol yuborildi !`
+                    });
 
-                $('#label_confirm').fadeIn(800)
-                $('#input_confirm').fadeIn(800)
-                $('#help_text_code').fadeIn(800)
+
+                } else {
+                    $('#agree').css('color', 'red')
+                }
 
             } else {
-                $('#agree').css('color', 'red')
+                $('#phone').css('border-color', 'red')
             }
 
 
@@ -569,17 +554,18 @@
             var selectedDistrict = $(this).children("option:selected").val();
             if (parseInt(selectedDistrict)) {
                 $(this).valid()
-
             }
         })
 
-        $('#mfy').on('change', function () {
-            var selectedMfy = $(this).children("option:selected").val();
-            if (parseInt(selectedMfy)) {
+
+        $('#quarter').on('change', function () {
+            var selectedQuarter = $(this).children("option:selected").val();
+            if (parseInt(selectedQuarter)) {
                 $(this).valid()
 
             }
         })
+
 
         jQuery.validator.addMethod("noSpace", function (value, element) {
             return value == '' || value.trim().length != 0;
@@ -616,7 +602,10 @@
                     district: {
                         required: true
                     },
-                    mfy: {
+                    birthday: {
+                        required: true
+                    },
+                    quarter: {
                         required: true
                     },
                     address: {
@@ -641,8 +630,11 @@
                     district: {
                         required: 'Tuman tanlanmagan!',
                     },
-                    mfy: {
-                        required: 'MFY tanlanmagan!',
+                    birthday: {
+                        required: 'Tug\'ilgan vaqt tanlanmagan!',
+                    },
+                    quarter: {
+                        required: 'Mahalla tanlanmagan!',
                     },
                     address: {
                         required: 'Yashash joyi kiritilmagan!',
@@ -655,8 +647,10 @@
                         error.appendTo(element.parents('.region'));
                     } else if (element.is("#district")) {
                         error.appendTo(element.parents('.district'));
-                    } else if (element.is("#mfy")) {
-                        error.appendTo(element.parents('.mfy'));
+                    } else if (element.is("#quarter")) {
+                        error.appendTo(element.parents('.quarter'));
+                    } else if (element.is("#birthday")) {
+                        error.appendTo(element.parents('.birthday'));
                     } else {
                         error.insertAfter(element);
                     }
@@ -678,22 +672,21 @@
                         type: "POST",
                         url: "{% url 'user:save_user_information' %}",
                         data: $(form).serialize(),
-                        success: function (response) {
-                            if (typeof response === 'object') {
+
+                        statusCode: {
+                            200: function () {
                                 $('#next2').remove()
                                 $('#refresh_next2').css('display', 'block')
                                 $('#fieldset2').hide()
                                 $('#fieldset3').show()
                                 $('#payment').addClass('active')
-                                $('input[name ="user_id"]').val(response.user)
-
                                 $('#last_name').attr('disabled', true)
                                 $('#first_name').attr('disabled', true)
                                 $('#middle_name').attr('disabled', true)
                                 $('#birthday').attr('disabled', true)
                                 $('#region').attr('disabled', true)
                                 $('#district').attr('disabled', true)
-                                $('#mfy').attr('disabled', true)
+                                $('#quarter').attr('disabled', true)
                                 $('#address').attr('disabled', true)
 
                                 $("#fieldset2").keyup(function (event) {
@@ -701,36 +694,15 @@
                                         $("#next2").click();
                                     }
                                 });
-                            } else {
-                                console.log(response.status)
+                            },
+                            400: function () {
+                                console.log(400)
+                            },
+                            401: function () {
+                                tokenInvalid()
                             }
                         },
-                        error: function (response) {
-                            if (response.status === 401) {
 
-                                $.notifyDefaults({
-                                    type: 'danger',
-                                    allow_dismiss: false,
-                                    animate: {
-                                        enter: 'animated fadeInRight',
-                                        exit: 'animated fadeOutRight'
-                                    },
-                                    z_index: '9999'
-                                })
-                                $.notify({
-                                    icon: 'glyphicon glyphicon-star',
-                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                        '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                        '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                        '</svg> Xatolik yuz berdi! Token yaroqsiz!'
-                                })
-                                setTimeout(function () {
-                                    window.location.href = '{% url "user:custom_logout" %}'
-                                }, 3000);
-                            } else {
-                                errorFunction()
-                            }
-                        }
                     });
                     return false; // required to block normal submit since you used ajax
                 }
@@ -817,44 +789,26 @@
                         type: "POST",
                         url: "{% url 'user:save_passport_data' %}",
                         data: $(form).serialize(),
-                        success: function (response) {
-                            if (response === 'True') {
-
+                        statusCode: {
+                            200: function () {
                                 setTimeout(function () {
-                                    window.location.href = '{% url "user:personal_data" %}'
+                                    window.location.href = '{% url "service:services_list" %}'
                                 }, 700)
-
-                            } else {
-                                console.log(response.status)
-                            }
-                        },
-                        error: function (response) {
-                            if (response.status === 401) {
-                                $.notifyDefaults({
-                                    type: 'danger',
-                                    allow_dismiss: false,
-                                    animate: {
-                                        enter: 'animated fadeInRight',
-                                        exit: 'animated fadeOutRight'
-                                    },
-                                    z_index: '9999'
-                                })
-                                $.notify({
-                                    icon: 'glyphicon glyphicon-star',
-                                    message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                        '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                        '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                        '</svg> Xatolik yuz berdi! Token yaroqsiz!'
-                                })
-                                setTimeout(function () {
-                                    window.location.href = '{% url "user:custom_logout" %}'
-                                }, 3000);
-                            } else {
-                                errorFunction()
+                            },
+                            400: function () {
+                                error_toast()
+                                $('#next3').attr('disabled', false)
+                                $('#next3').html('Tizimga kirish')
+                            },
+                            401: function () {
+                                tokenInvalid()
+                            },
+                            500: function () {
+                                error_toast()
                                 $('#next3').attr('disabled', false)
                                 $('#next3').html('Tizimga kirish')
                             }
-                        }
+                        },
                     });
                     return false; // required to block normal submit since you used ajax
                 }
@@ -862,6 +816,14 @@
         }
 
     })
+
+</script>
+<script src="{% static 'js/jquery.checknet-1.6.min.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $.fn.checknet();
+    });
 </script>
 </body>
 </html>

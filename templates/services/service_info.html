@@ -1,0 +1,93 @@
+{% extends request.user.is_authenticated|yesno:"base_vertical.html,base_horizontal.html" %}
+{% block top %}
+
+{% endblock top %}
+{% block title %}
+    {{ service.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 info_area">
+            <h2 class="text-center m-1 w-100 text-blue display-6">{{ service.title }}</h2>
+
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                            Bu qanday xizmat?
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            {{ service.desc }}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                            Ariza topshirish uchun nima qilish kerak?
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            {{ service.instruction }}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseThree">
+                            Xizmat ko'rsatilishi muddati
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            {{ service.deadline }} kun ichida
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseFour">
+                            Kerakli xujjatlar
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingFour">
+                        <div class="accordion-body">
+                            <ul>
+
+                                {% for document in service.document.all %}
+                                    <li>{{ document.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                {% with my_url='service:'|add:service.key %}
+                    <a href="{% url my_url %}" class="float-end mt-2 mb-2 btn btn--md btn-primary waves-effect waves-light">Ariza
+                        topshirish</a>
+                {% endwith %}
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock content %}

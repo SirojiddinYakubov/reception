@@ -46,8 +46,8 @@ class RegionAdmin(admin.ModelAdmin):
     inlines = [DistrictInline]
     save_on_top = True
 
-class MFYInline(admin.StackedInline):
-    model = MFY
+class QuarterInline(admin.StackedInline):
+    model = Quarter
     extra = 5
 
 
@@ -56,7 +56,7 @@ class DistrictAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['title']}),
     ]
-    inlines = [MFYInline]
+    inlines = [QuarterInline]
     save_on_top = True
 
 

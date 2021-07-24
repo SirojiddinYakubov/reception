@@ -6,7 +6,7 @@ from .views import *
 app_name = 'application'
 
 urlpatterns = [
-    path('applications-list/', ApplicationsList.as_view(), name='ApplicationsList'),
+    path('applications-list/', ApplicationsList.as_view(), name='applications_list'),
 
     path('application-detail/<int:id>/', application_detail, name='application_detail'),
     path('application-pdf/<int:id>/', application_pdf, name='application_pdf'),

@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+
+    <meta charset="utf-8"/>
+    <title>{% block title %}E-RIB.UZ{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description"/>
+    <meta content="Coderthemes" name="author"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- plugin css -->
+    <link href="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}"
+          rel="stylesheet" type="text/css"/>
+
+    <!-- App css -->
+    <link href="{% static 'assets/css/config/creative/bootstrap.min.css' %}" rel="stylesheet" type="text/css"
+          id="bs-default-stylesheet"/>
+    <link href="{% static 'assets/css/config/creative/app.min.css' %}" rel="stylesheet" type="text/css"
+          id="app-default-stylesheet"/>
+
+    <link href="{% static 'assets/css/config/creative/bootstrap-dark.min.css' %}" rel="stylesheet" type="text/css"
+          id="bs-dark-stylesheet"/>
+    <link href="{% static 'assets/css/config/creative/app-dark.min.css' %}" rel="stylesheet" type="text/css"
+          id="app-dark-stylesheet"/>
+
+    <!-- icons -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    {% block css %}
+
+    {% endblock css %}
+</head>
+
+<body class="loading" data-layout-mode="two-column"
+      data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": false}'>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Topbar Start -->
+    {% include '_parts/navbar.html' %}
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    {% include '_parts/left_bar.html' %}
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>
+                                    <li class="breadcrumb-item active">Two Column</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Two Column</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="content">
+                    {% block content %}
+
+                    {% endblock content %}
+                </div>
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        {% include '_parts/footer.html' %}
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+<!-- Right Sidebar -->
+{% include '_parts/right_bar.html' %}
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+<!-- Vendor js -->
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+
+<!-- Plugins js-->
+<script src="{% static 'assets/libs/jquery-sparkline/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
+
+<!-- Dashboard 2 init -->
+<script src="{% static 'assets/js/pages/dashboard-2.init.js' %}"></script>
+
+<!-- App js -->
+<script src="{% static 'assets/js/app.min.js' %}"></script>
+{% block js %}
+{% endblock js %}
+</body>
+</html>
