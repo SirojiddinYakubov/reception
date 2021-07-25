@@ -1,341 +1,172 @@
-{% load  i18n %}
 {% load static %}
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="uz">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-RIB.UZ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Tizimga kirish</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!--Bootsrap 4 CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/login/style.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-    <!--Fontawesome CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 5s !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
+            -webkit-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.2);
+            -moz-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.2);
+            box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.2);
 
-    <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        }
 
-    <link rel="stylesheet" href="{% static '/plugins/fontawesome-free/css/all.min.css' %}">
+        .form-control, .form-control:active {
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            border-radius: 7px;
 
+        }
+
+        .form-control:hover {
+            -webkit-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            -moz-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            border-radius: 7px;
+        }
+
+        #button_input {
+            border-radius: 3px;
+            background-color: #efe9e2 !important;
+            color: #320365 !important;
+            border-color: #fff !important;
+            font-weight: bold;
+            -webkit-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            -moz-box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            box-shadow: -1px 2px 8px 0px rgba(255, 255, 255, 0.5) !important;
+            display: block;
+            float: right;
+
+        }
+
+
+        .head-title {
+            font-family: 'Righteous', cursive !important;
+            font-size: 3rem;
+            color: #fff;
+
+        }
+
+        .link_row {
+            width: 100%;
+            display: block;
+            overflow: hidden;
+            margin-top: 10px;
+            text-decoration: underline !important;
+        }
+
+        .left_link {
+            float: left;
+            display: block;
+            padding-right: 10%;
+        }
+         .left_link:hover {
+          text-decoration: underline !important;
+        }
+
+        a {
+            text-decoration: underline !important;
+
+        }
+        {#.login-wrap{#}
+        {#    background-color: rgba(255,255,255,0.15);#}
+        {#    padding: 25px !important;#}
+        {#}#}
+
+    </style>
 </head>
-<body>
-<div class="container">
-
-    <div class="d-flex justify-content-center h-100">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="not_copy">{% trans 'Tizimga kirish' %}</h3>
-                <div class="d-flex justify-content-end social_icon">
-
-                    <a title="{% trans 'Yordam kerakmi?' %}" href="https://t.me/Sirojiddin_Yakubov"><span><i
-                            style="color: #0088cc; background-color: whitesmoke; border-radius: 140%"
-                            class="fab fa-telegram"></i></span></a>
-                    <a title="{% trans 'Yordam kerakmi?' %}"
-                       href="https://telegra.ph/E-RIB-tizimidanfoydalanish-boyicha-qollanma-08-11"><span><i
-                            style="color: #242424; background-color: whitesmoke; border-radius: 120%"
-                            class="far fa-question-circle"></i></span></a>
-                </div>
+<body class="img js-fullheight" style="background-image: url({% static '/css/login/bg.jpg' %});">
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h1 class="head-title animate__animated animate__pulse animate__infinite animate__delay-1s">
+                    E-RIB.UZ</h1>
             </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center">Tizimga kirish</h3>
 
-            {% include '_parts/messages.html' %}
-
-            <div class="card-body">
-                <form method="post" action="{% url 'user:login_first' %}" id="form">
-                    {% csrf_token %}
-                    <div class="input-group form-group">
-                        <label class="not_copy" style="width: 100%" for="phone">{% trans 'Telefon raqami:' %}</label>
-                        <input id="phoneCode" type="number" class="form-control"
-                               placeholder="+998" disabled>
-
-                        <input style="width: 63%" type="number" class="form-control" id="phone" name="phone"
-                               autocomplete="off"
-                               placeholder="{% trans 'Masalan' %}: 919791999" aria-describedby="passwordHelpBlock" required/>
-                        <input type="text" class="form-control not_copy" id="showPhone" style="display: none" disabled/>
-
-                        <div style="display: none" class="valid-feedback">{% trans 'Muvaffaqiyatli kiritildi' %}</div>
-                        <div style="display: none" class='invalid-feedback'>{% trans "Raqam 9 xonali sondan iborat bo'lishi kerak" %}
+                    {% include '_parts/messages.html' %}
+                    <form action="{% url 'user:login_view' %}" class="signin-form" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" placeholder="Username" required>
                         </div>
+                        <div class="form-group">
+                            <input id="password-field" type="password" name="password" autocomplete="off"
+                                   class="form-control"
+                                   placeholder="Password"
+                                   required>
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        </div>
+                        <input type="text" hidden name="next" value="{{ request.GET.next }}">
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <div class="w-100">
+                                    <label class="checkbox-wrap checkbox-primary">eslab qol
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
 
-                        <div class="input-group form-group mt-2">
-                            <label id="passwordLabel" class="not_copy" style="width: 100%; display: none;"
-                                   for="password">{% trans 'Parol:' %}</label>
-                            <div class="input-group" id="password_div" style="display: none">
-                                <input type="password" name="password" id="password"
-                                       class="form-control password"
-                                       required value="{{ form.instance.turbo }}"
-                                       autocomplete="disabled"
-                                       placeholder="{% trans 'Masalan: ' %} qwerty12345"/>
-                                <div class="input-group-prepend show_password" data-password="password">
-                                    <div class="input-group-text"><i class="far fa-eye"></i></div>
+                            <div class="col-6 col-sm-6">
+                                <div class="form-group">
+                                    <button type="submit" id="button_input" class=" btn btn-primary submit px-3">
+                                        Kirish
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" id="SubmitBtn1" value="{% trans 'Kirish' %}" class="btn fourth">
-                        <input style="display: none" type="submit" id="SubmitBtn2" value="{% trans 'Kirish' %}" class="btn fourth">
-                    </div>
-                </form>
-            </div>
-            <div class="card-footer" style="display: none" id="footerBlock">
-                <div class="d-flex justify-content-center links not_copy">
-                    {% trans "Raqamni o'zgartirmoqchimisiz?" %}
 
-                    <a style="display: block" href="{% url 'user:login_first' %}">{% trans "Raqamni o'zgartirish" %}</a>
-                </div>
-                <div class="d-flex justify-content-center not_copy">
-                    <a href="#" id="forget_pass">{% trans "Parolni unutdingizmi?" %}</a>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 link_row">
+                                    <a class="right_link" href="#" style="color: #fff">Parolni unutdingizmi?</a>
+                                    <a class="left_link" href="{% url 'user:signup' %}" style="color: #fff">Ro'yhatdan o'tish</a>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </form>
+
+
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
+</section>
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-
-    $(document).ready(function () {
-        var InputPhone = $('#phone'),
-            SubmitBtn1 = $('#SubmitBtn1'),
-            SubmitBtn2 = $('#SubmitBtn2'),
-            redirect = '{{ redirect }}'
-
-        var phone = getCookie('phone')
-
-        if (redirect) {
-            SubmitBtn1.hide()
-            SubmitBtn2.show()
-            $('#footerBlock').show()
-            $('#password_div').show()
-            $('.valid-feedback').css('display', 'none')
-            $('#phoneCode').css('display', 'none')
-            InputPhone.css('display', 'none')
-            $('#showPhone').css('display', 'block')
-            $('#passwordLabel').css('display', 'block')
-            $('#showPhone').attr('value', `+998${phone}`)
-        }
-
-        InputPhone.on('keyup', function () {
-
-            if ($(this).val().length === 9) {
-                InputPhone.css("border-color", "green").css("background", "#e8f0fe");
-                $('.invalid-feedback').css('display', 'none')
-                $('.valid-feedback').css('display', 'block')
-            } else {
-                InputPhone.css("border-color", "red").css("background", "#fcf7f7");
-                $('.invalid-feedback').css('display', 'block')
-                $('.valid-feedback').css('display', 'none')
-            }
-        })
-
-        SubmitBtn1.on('click', function (e) {
-
-            e.preventDefault()
-            if (InputPhone.val().length === 9) {
-                $.ajax({
-                    type: 'GET',
-                    url: '{% url "user:is_register" %}',
-                    data: {
-                        'phone': InputPhone.val(),
-                    },
-                    success: function (messege) {
-                        if (messege == 'True') {
-                            SubmitBtn1.hide()
-                            SubmitBtn2.show()
-                            $('#footerBlock').show()
-                            $('#password_div').show()
-                            $('.valid-feedback').css('display', 'none')
-                            $('#phoneCode').css('display', 'none')
-                            InputPhone.css('display', 'none')
-                            $('#showPhone').css('display', 'block')
-                            $('#passwordLabel').css('display', 'block')
-                            $('#showPhone').attr('value', `+998${InputPhone.val()}`)
-
-                        } else {
-                            window.location.href = '{% url 'user:signup' %}'
-                        }
-                    }
-                })
-            } else {
-                InputPhone.css("border-color", "red").css("background", "#fcf7f7");
-                $('.invalid-feedback').css('display', 'block')
-                $('.valid-feedback').css('display', 'none')
-            }
-        })
-
-
-        SubmitBtn2.on('click', function (e) {
-            // e.preventDefault()
-            $('form').submit()
-
-        })
-
-        $('.show_password').on('click', function () {
-            var $Passwords = $('.show_password');
-            var data = $(this).data('password')
-
-            $Passwords.each(function (index, element) {
-                var $password = $(element)
-
-
-                if ($password.data('password') === data) {
-                    if ($password.siblings('.password').attr('type') === 'password') {
-                        $password.children('.input-group-text').html('<i class="far fa-eye-slash"></i>')
-                        $password.siblings('.password').attr('type', 'text')
-                    } else {
-                        $password.children('.input-group-text').html('<i class="far fa-eye"></i>')
-                        $password.siblings('.password').attr('type', 'password')
-
-                    }
-                }
-
-            })
-
-
-        })
-
-
-//keraksiz
-        var passport = $('#passport'),
-            password = $('#password'),
-            forget_pass = $('#forget_pass')
-
-        forget_pass.on('click', function () {
-            sweetAlertFunc()
-
-            function sweetAlertFunc() {
-                swal({
-                    title: '{% trans "Parolni unutdingizmi?" %}',
-                    {#text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",#}
-                    {#icon: "warning",#}
-                    className: "",
-                    buttons: [
-                        "{% trans "Yo'q" %}",
-                        "{% trans "Ha, Parolni tiklash" %}"
-                    ],
-                    dangerMode: false,
-                }).then(function (isConfirm) {
-                    if (isConfirm) {
-                        swal({
-                            text: '{% trans "Telefon raqamingizni kiriting..." %}',
-                            buttons: [
-                                "{% trans "Orqaga qaytish" %}",
-                                "{% trans "Yuborish" %}"
-                            ],
-                            content: {
-                                element: "input",
-                                attributes: {
-                                    placeholder: "{% trans "Masalan:" %} 919791999",
-                                    type: "text",
-                                },
-                            },
-                        }).then(function (inputValue) {
-                            if (inputValue.length === 9) {
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '{% url "user:forgot_pass" %}',
-                                    data: {
-                                        'phone': inputValue,
-                                    },
-                                    success: function (messege) {
-                                        if (messege == 'True') {
-                                            swal({
-                                                icon: "success",
-                                                text: "{% trans "Passport va parol raqamingizga sms tarzida jo'natildi!" %}"
-                                            });
-                                        } else {
-                                            swal({
-                                                text: '{% trans "Bunday raqam bazada mavjud emas!" %}',
-                                                icon: 'error',
-                                                buttons: [
-                                                    '{% trans "Orqaga qaytish" %}',
-                                                    "{% trans "Ro'yhatdan o'tish" %}"
-                                                ],
-                                            }).then(function (isRegister) {
-                                                if (isRegister) {
-                                                    window.location.href = '{% url 'user:signup' %}'
-                                                }
-                                            });
-                                        }
-                                    }
-
-                                })
-                            } else {
-                                swal({
-                                    text: '{% trans "Raqamni kiritishda xatolik!" %}',
-                                    icon: 'error',
-                                    buttons: [
-                                        '{% trans "Orqaga qaytish" %}',
-                                        "{% trans "Qayta urinib ko'rish" %}"
-                                    ],
-                                }).then(function (isAgain) {
-                                    if (isAgain) {
-                                        sweetAlertFunc()
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-
-
-                //  swal("Write something here:", {
-                //     content: "input",
-                //  })
-                //      .then((value) => {
-                //          swal(`You typed: ${value}`);
-                //     });
-
-            }
-        })
-
-
-        $('#label_remember').on('click', function () {
-            console.log($(".remember input[name='checkbox']:checked").val())
-            if ($(".remember input[name='checkbox']:checked").val()) {
-
-                $(".remember input[name='checkbox']").prop('checked', false);
-            } else {
-
-                $(".remember input[name='checkbox']").prop('checked', true);
-            }
-
-        })
-
-        passport.keypress(PassportInputFilter)
-
-        $('.divWithIcon i').on('click', function () {
-            if ($(this).hasClass('far fa-eye icon-pwd')) {
-                $(this).removeClass().addClass('far fa-eye-slash icon-pwd')
-                $('#password').attr('type', 'text')
-            } else {
-                $(this).removeClass().addClass('far fa-eye icon-pwd')
-                $('#password').attr('type', 'password')
-            }
-        })
-
-        password.keypress(function (e) {
-            var ew = e.which
-            if (ew === 32) {
-                e.preventDefault()
-            }
-        })
-
-    })
-</script>
-
+<script src="{% static 'js/login/jquery.min.js' %}"></script>
+<script src="{% static 'js/login/popper.js' %}"></script>
+<script src="{% static 'js/login/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/login/main.js' %}"></script>
 
 </body>
 </html>
+

@@ -5,7 +5,8 @@ from .views import *
 app_name = 'service'
 
 urlpatterns = [
-    path('account-statement/', AccountStatement.as_view(), name='AccountStatement'),
+    path('account-statement/', AccountStatement.as_view(), name='account_statement'),
+    path('contract-of-sale/', AccountStatement.as_view(), name='contract_of_sale'),
 
     path('gift-agreement-index/', gift_agreement_index, name='gift_agreement_index'),
     path('save-gift-agreement/', Save_Gift_Agreement.as_view(), name='save_gift_agreement'),
@@ -22,8 +23,8 @@ urlpatterns = [
     path('re-equipment-index/', re_equipment_index, name='re_equipment_index'),
     path('save-re-equipment/', Save_Re_Equipment.as_view(), name='save_re_equipment'),
 
-
-
+    path('list/', ServicesList.as_view(), name='services_list'),
+    path('<int:pk>/', ServiceInfo.as_view(), name='service_info'),
 
 
 ]

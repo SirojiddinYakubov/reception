@@ -1,54 +1,80 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from user.models import *
 
-SERVICE_CHOICES = (
-    ('account_statement', 'Hisob ma\'lumotnoma'),
-    ('contract_of_sale', 'Oldi sotdi shartnoma'),
-    ('gift_agreement', 'Xadya shartnoma'),
-    ('registration', 'Ro\'yhatga qo\'yish'),
-    ('de_registration', 'Ro\'yhatdan chiqarish'),
-    ('replace_tp', 'Qayd etish guvohnomasini almashtirish'),
-    ('replace_number_and_tp', 'Davlat raqam belgisi va qayd etish guvohnomasini almashtirish'),
-    ('re_equipment', 'Qayta jihozlash'),
-    ('customs_certificate', 'Bojxona guvohnomasi'),
+# SERVICE_CHOICES = (
+#     ('account_statement', 'Hisob ma\'lumotnoma'),
+#     ('contract_of_sale', 'Oldi sotdi shartnoma'),
+#     ('gift_agreement', 'Xadya shartnoma'),
+#     ('registration', 'Ro\'yhatga qo\'yish'),
+#     ('de_registration', 'Ro\'yhatdan chiqarish'),
+#     ('replace_tp', 'Qayd etish guvohnomasini almashtirish'),
+#     ('replace_number_and_tp', 'Davlat raqam belgisi va qayd etish guvohnomasini almashtirish'),
+#     ('re_equipment', 'Qayta jihozlash'),
+#     ('customs_certificate', 'Bojxona guvohnomasi'),
+#
+# )
 
-)
 
 
 class Service(models.Model):
-    title = models.CharField('Xizmat nomi', max_length=50, choices=SERVICE_CHOICES)
-    seriya = models.CharField('Seriya', max_length=50, blank=True)
-    contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
-    organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
-                                     blank=True)
-    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True, related_name='service_car')
+    title = models.CharField(max_length=200,)
+    service_id = models.IntegerField(unique=True)
+    key = models.CharField(max_length=50, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    desc = models.TextField(blank=True)
+    photo = models.CharField(verbose_name="Foto", blank=True, max_length=255)
+    deadline = models.CharField(verbose_name="Muddati", max_length=20, )
+    instruction = models.TextField(blank=True)
+    document = models.ManyToManyField('Document', related_name='service_document', blank=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 
 
     def __str__(self):
-        return self.get_title_display()
+        return str(self.service_id)
 
     class Meta:
-        verbose_name = 'Xizmat'
-        verbose_name_plural = 'Xizmatlar'
- 
+        verbose_name = 'Servis'
+        verbose_name_plural = 'Servislar'
 
+class Document(models.Model):
+    title = models.CharField(max_length=200,)
+    seriya = models.CharField('Seriya', max_length=50, blank=True)
+    contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
+    created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
+
+    class Meta:
+        verbose_name = 'Hujjat'
+        verbose_name_plural = 'Hujjatlar'
+        ordering = ['-id']
+
+    def __str__(self):
+        return f"Document: {self.title}"
+
+
+ROAD_FUND = 1
+ROAD_FUND_HORSE_POWER = 2
+INSPECTION = 3
+TECHNICAL_PASSPORT = 4
+REGISTRATION = 5
+RE_REGISTRATION = 6
+FINE = 7
 
 STATE_DUTY_TITLE = (
-    ('1', 'Yo\'l fondi'),
-    ('2', 'Yo\'l fondi ot kuchi'),
-    ('3', 'Texnik ko\'rik'),
-    ('4', 'Yangi qayd etish guvohnomasi'),
-    ('5', 'Ro\'yhatlash'),
-    ('6', 'Qayta ro\'yhatlash'),
-    ('7', 'Jarima')
+    (ROAD_FUND, 'Yo\'l fondi'),
+    (ROAD_FUND_HORSE_POWER, 'Yo\'l fondi ot kuchi'),
+    (INSPECTION, 'Texnik ko\'rik'),
+    (TECHNICAL_PASSPORT, 'Yangi qayd etish guvohnomasi'),
+    (REGISTRATION, 'Ro\'yhatlash'),
+    (RE_REGISTRATION, 'Qayta ro\'yhatlash'),
+    (FINE, 'Jarima')
 )
 
 class StateDuty(models.Model):
     service = models.ForeignKey(Service, verbose_name="Xizmat nomi", on_delete=models.CASCADE, null=True, blank=True,
                                 related_name='state_duty_service')
-    title = models.CharField(max_length=20, choices=STATE_DUTY_TITLE, null=True,blank=True)
+    title = models.IntegerField(choices=STATE_DUTY_TITLE, null=True,blank=True)
     payment = models.IntegerField(verbose_name="To'lovi", default=0)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
@@ -56,6 +82,7 @@ class StateDuty(models.Model):
     is_paid = models.BooleanField(default=False, verbose_name="To'langan")
     score = models.ForeignKey('StateDutyScore', verbose_name='Hisob raqam', on_delete=models.SET_NULL, related_name="state_duty_score", null=True, blank=True)
     is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return f"{self.get_title_display()} : {self.payment} so'm"
 
@@ -64,6 +91,7 @@ class StateDuty(models.Model):
         verbose_name_plural = 'Davlat boj to\'lovlari'
 
 class StateDutyPercent(models.Model):
+    from application.models import PERSON_CHOICES
     # service = models.CharField(max_length=50, choices=SERVICE_CHOICES, blank=True, null=True)
     state_duty = models.CharField(max_length=20, choices=STATE_DUTY_TITLE, null=True)
     person_type = models.CharField('Shaxs turi', choices=PERSON_CHOICES, max_length=3, default="J", blank=True, null=True)

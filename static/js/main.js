@@ -290,44 +290,44 @@ $('#id').on('click', function () {
 
 var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/
 
-$(function () {
-    $(".datepicker").datepicker({
-        dateFormat: "dd.mm.yy",
-        // minDate: '-150M',
-        // maxDate: '+5M',
-        defaultDate: '01.01.1990',
-        // value: "7/11/2011",
-        showButtonPanel: true,
-        numberOfMonths: 1,
-        // showOn: '',
-        // startDate: "-130M",
-        //endDate: "+30d",
-        //currentText: 'Today',
-        autoclose: true,
-        changeMonth: true,
-        changeYear: true,
-
-
-        //yakshanbalarni chiqarish
-        // beforeShowDay: function (date) {
-        //     var day = date.getDay();
-        //     return [(day !== 0), ''];
-        // },
-
-        onClose: function () {
-            if ($(this).val().match(dateReg)) {
-                $(this).css("border-bottom", "2px solid green")
-            } else {
-                $(this).css("border-bottom", "2px solid red")
-            }
-        }
-    })
-    $(".datepicker").datepicker('setDate', new Date());
-})
-
-$('.datepicker_icon').on('click', function () {
-    $(this).siblings('.datepicker').datepicker('show')
-})
+// $(function () {
+//     $(".datepicker").datepicker({
+//         dateFormat: "dd.mm.yy",
+//         // minDate: '-150M',
+//         // maxDate: '+5M',
+//         defaultDate: '01.01.1990',
+//         // value: "7/11/2011",
+//         showButtonPanel: true,
+//         numberOfMonths: 1,
+//         // showOn: '',
+//         // startDate: "-130M",
+//         //endDate: "+30d",
+//         //currentText: 'Today',
+//         autoclose: true,
+//         changeMonth: true,
+//         changeYear: true,
+//
+//
+//         //yakshanbalarni chiqarish
+//         // beforeShowDay: function (date) {
+//         //     var day = date.getDay();
+//         //     return [(day !== 0), ''];
+//         // },
+//
+//         onClose: function () {
+//             if ($(this).val().match(dateReg)) {
+//                 $(this).css("border-bottom", "2px solid green")
+//             } else {
+//                 $(this).css("border-bottom", "2px solid red")
+//             }
+//         }
+//     })
+//     $(".datepicker").datepicker('setDate', new Date());
+// })
+//
+// $('.datepicker_icon').on('click', function () {
+//     $(this).siblings('.datepicker').datepicker('show')
+// })
 
 // $('.datepicker').on('keypress', function (e) {
 //     return false
@@ -404,6 +404,7 @@ $('.datepicker_icon').on('click', function () {
 //     })
 
 function tokenInvalid() {
+
     $.notifyDefaults({
         type: 'danger',
         allow_dismiss: false,
@@ -422,7 +423,7 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        window.location.href = '/custom-logout/'
+        // window.location.href = '/custom-logout/'
     }, 3000);
 }
 
@@ -897,11 +898,11 @@ function error_toast() {
     })
     Toast.fire({
         icon: 'error',
-        title: 'Bekor qilindi!'
+        title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
     })
 }
 
-function addColor() {
+function addColor(url = null) {
     const {value: formValues} = Swal.fire({
         allowOutsideClick: false,
         showCancelButton: true,
@@ -935,33 +936,43 @@ function addColor() {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/save-new-color/',
+                    url: url,
                     data: {
                         color: color,
 
                     },
-                    success: function (response) {
-                        if (response !== 'False') {
-                            success_toast()
-                            $('select.color').empty().append(response)
-                            $('select.color').siblings('.select2').css('border', '1px solid blue')
-                            setTimeout(function () {
-                                $('select.color').siblings('.select2').css('border', 'none')
-                            }, 3000)
+                    statusCode: {
+                        200: function (response) {
+                            $('#color').empty().append(response)
+                            let new_val = $('#color option').filter(function () {
+                                return $(this).html() === color;
+                            }).val()
 
-                            $('select.color').empty().append(response)
-                            $('select.color').siblings('.select2').css('border', '1px solid blue')
-                            setTimeout(function () {
-                                $('select.color').siblings('.select2').css('border', 'none')
-                            }, 3000)
-                        } else {
-                            errorFunction()
+                            $("#color").val(new_val).change();
+                            success_toast()
+                        },
+                        400: function () {
+                            error_toast()
+                        },
+                        409: function () {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f5d696',
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: false,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: `${color} ranglar ro'yhatida mavjud!`
+                            })
                         }
                     },
-                    error: function (response) {
-                        console.log(response.status)
-                        errorFunction()
-                    }
                 })
             } else {
                 error_toast()
@@ -974,7 +985,7 @@ function addColor() {
     });
 }
 
-function addCarModel() {
+function addCarModel(url = null) {
     const {value: formValues} = Swal.fire({
         allowOutsideClick: false,
         showCancelButton: true,
@@ -990,13 +1001,13 @@ function addCarModel() {
         title: 'T/v modeli qo\'shish',
         html:
             '<label style="float: left; margin-bottom: 0" class="label_required" for="title">Nomi</label>' +
-            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra">' +
+            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra"><br>' +
             '<label style="margin-bottom: 0; width: 100%; text-align: left; display: block !important;" class="label_required"  for="is_local">Ishlab chiqaruvchi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_local" id="is_local1" value="true" checked>' +
             '<label class="form-check-label" for="is_local1">Mahalliy</label>' +
             '</div>' +
-            '<div class="form-check" style="float: left; margin-left: 10px">' +
+            '<div class="form-check mb-2" style="float: left; margin-left: 10px">' +
             '<input class="form-check-input" type="radio" name="is_local" id="is_local2" value="false" >' +
             '<label class="form-check-label" for="is_local2">Chet el</label>' +
             '</div>' +
@@ -1029,28 +1040,44 @@ function addCarModel() {
             if (title !== '') {
                 $.ajax({
                     type: 'POST',
-                    url: '/save-new-car-model/',
+                    url: url,
                     data: {
                         title: title,
                         is_local: is_local,
                         is_truck: is_truck
                     },
-                    success: function (response) {
-                        if (response !== 'False') {
+                    statusCode: {
+                        200: function (response) {
                             success_toast()
                             $('#car').empty().append(response)
-                            $('#car').siblings('.select2').css('border', '1px solid blue')
-                            setTimeout(function () {
-                                $('#car').siblings('.select2').css('border', 'none')
-                            }, 3000)
-                        } else {
-                            errorFunction()
+                            let new_val = $('#car option').filter(function () {
+                                return $(this).html() === title;
+                            }).val()
+
+                            $("#car").val(new_val).change();
+                        },
+                        400: function () {
+                            error_toast()
+                        },
+                        409: function () {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f5d696',
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: false,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: `${title} modellar ro'yhatida mavjud!`
+                            })
                         }
                     },
-                    error: function (response) {
-                        console.log(response.status)
-                        errorFunction()
-                    }
                 })
             } else {
                 error_toast()

@@ -84,7 +84,7 @@
                     <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">E-RIB.UZ - YHXB RIB tomon tezkor yo'l. </h1>
                     <p class="lead fs-lg mb-7">E-RIB.UZ platformasi orqali YHXB RIB'ga arizalar jo'natish judayam qulay.
                         Eng muhimi vaqtingizni ortiqcha sarflashga hojat yo'q.</p>
-                    <span><a href="{% url 'user:login_first' %}" class="btn btn-primary rounded-pill me-2">Tizimga kirish / Ro'yhatdan o'tish</a></span>
+                    <span><a href="{% url 'service:services_list' %}" class="btn btn-primary rounded-pill me-2">Boshlash</a></span>
                 </div>
                 <!-- /column -->
             </div>
@@ -193,7 +193,7 @@
                         bajaramiz.</p>
                     <div class="row">
                         <div class="col-lg-9">
-                            <span><a href="{% url 'user:login_first' %}" class="btn btn-primary rounded-pill me-2">Tizimga kirish / Ro'yhatdan o'tish</a></span>
+                            <span><a href="{% url 'service:services_list' %}" class="btn btn-primary rounded-pill me-2">Boshlash</a></span>
                         </div>
                         <!-- /column -->
                     </div>
@@ -271,7 +271,7 @@
                     <p>Jarayon uch bosqichda amalga oshiriladi. Quyida sizga barcha bosqichlarni taqdim etamiz.</p>
                     <p>Hoziroq ariza topshiring va YHXB RIB xizmatlaridan masofadan turib foydalaning...</p>
 
-                    <span><a href="{% url 'user:login_first' %}" class="btn btn-primary rounded-pill me-2">Tizimga kirish / Ro'yhatdan o'tish</a></span>
+                    <span><a href="{% url 'service:services_list' %}" class="btn btn-primary rounded-pill me-2">Boshlash</a></span>
                 </div>
                 <!--/column -->
             </div>
@@ -371,7 +371,7 @@
         <div class="d-lg-flex flex-row align-items-lg-center">
             <h3 class="display-4 mb-6 mb-lg-0 pe-lg-20 pe-xl-22 pe-xxl-25 text-white">O'z vaqtingizni o'zingiz tejagan
                 holda YHXB RIB xizmatlaridan hoziroq foydalaning.</h3>
-            <a href="#" class="btn btn-primary rounded-pill mb-0 text-nowrap">A'zo bo'lish / Tizimga kirish</a>
+            <a href="{% url 'service:services_list' %}" class="btn btn-primary rounded-pill mb-0 text-nowrap">Boshlash</a>
         </div>
         <!--/div -->
         <hr class="mt-11 mb-12"/>

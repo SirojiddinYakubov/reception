@@ -17,6 +17,7 @@ from reception import settings
 class Region(models.Model):
     title = models.CharField('Nomi', max_length=255)
     sort = models.IntegerField(blank=True, default=1)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -31,6 +32,7 @@ class District(models.Model):
     title = models.CharField('Nomi', max_length=255)
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True)
     sort = models.IntegerField(blank=True, default=1)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -41,10 +43,11 @@ class District(models.Model):
         verbose_name_plural = 'Tumanlar/Shaharlar'
 
 
-class MFY(models.Model):
+class Quarter(models.Model):
     title = models.CharField('Nomi', max_length=255)
     district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True)
     sort = models.IntegerField(blank=True, default=1)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -72,10 +75,7 @@ class Section(models.Model):
         return f"{self.title}: {self.region.title}"
 
 
-PERSON_CHOICES = (
-    ('Y', 'Yuridik shaxs'),
-    ('J', 'Jismoniy shaxs'),
-)
+
 
 # ROLE_CHOICES = (
 #     ("1", "User"),  # Oddiy foydalanuvchilar
@@ -86,16 +86,16 @@ PERSON_CHOICES = (
 #
 # )
 
-USER = '1'
-CHECKER = '2'
-REVIEWER = '3'
-TECHNICAL = '4'
-DISTRICAL_CONTROLLER = '5'
-REGIONAL_CONTROLLER = '6'
-STATE_CONTROLLER = '7'
-MODERATOR = '8'
-ADMINISTRATOR = '9'
-SUPER_ADMINISTRATOR = '10'
+USER = 1
+CHECKER = 2
+REVIEWER = 3
+TECHNICAL = 4
+DISTRICAL_CONTROLLER = 5
+REGIONAL_CONTROLLER = 6
+STATE_CONTROLLER = 7
+MODERATOR = 8
+ADMINISTRATOR = 9
+SUPER_ADMINISTRATOR = 10
 
 ROLE = (
     (USER, 'Oddiy foydalauvchi'),
@@ -110,11 +110,13 @@ ROLE = (
     (SUPER_ADMINISTRATOR, 'Super administrator')
 )
 
+MAN = 0
+WOMAN = 1
 
-# GENDER_CHOICES = (
-#     ('M', 'Erkak'),
-#     ('W', 'Ayol'),
-# )
+GENDER_CHOICES = (
+    (MAN, _('Erkak')),
+    (WOMAN, _('Ayol')),
+)
 
 def path_and_rename(instance, filename):
     upload_to = 'passport_photos/'
@@ -130,18 +132,18 @@ def path_and_rename(instance, filename):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    last_name = models.CharField('Familiya', max_length=255, blank=True)
-    first_name = models.CharField('Ism', max_length=255, blank=True)
-    middle_name = models.CharField('Otasining ismi', max_length=255, blank=True)
-    role = models.CharField('Foydalanuvchi roli', choices=ROLE, max_length=15, default="1")
+    last_name = models.CharField(verbose_name='Familiya', max_length=255, blank=True)
+    first_name = models.CharField(verbose_name='Ism', max_length=255, blank=True)
+    middle_name = models.CharField(verbose_name='Otasining ismi', max_length=255, blank=True)
+    role = models.IntegerField(verbose_name='Foydalanuvchi roli', choices=ROLE,  default=USER)
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
                                  blank=True)
     section = models.ForeignKey(Section, verbose_name="Bo'lim", on_delete=models.SET_NULL, null=True, blank=True)
-    mfy = models.ForeignKey(MFY, on_delete=models.SET_NULL, verbose_name='MFY', null=True, blank=True)
+    quarter = models.ForeignKey(Quarter, on_delete=models.SET_NULL, verbose_name='Mahalla', null=True, blank=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=254, unique=False, blank=True, default='')
-    birthday = models.DateField(blank=True, verbose_name="Tug'ilgan kuni", null=True, default=datetime.date.today)
+    birthday = models.DateField(blank=True, verbose_name="Tug'ilgan kuni", null=True, default=timezone.now)
     username = models.CharField(max_length=30, unique=True, blank=True)
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
@@ -154,7 +156,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True, blank=True)
     last_login = models.DateTimeField(null=True, auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    # gender = models.CharField('Jinsi', choices=GENDER_CHOICES, max_length=5, default='M')
+    gender = models.IntegerField(verbose_name='Jinsi', choices=GENDER_CHOICES, default=MAN)
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(5)])
 
     USERNAME_FIELD = 'username'
@@ -262,6 +264,7 @@ class CarModel(models.Model):
     is_truck = models.BooleanField('Yuk mashinasi', default=False)
     is_active = models.BooleanField(default=True)
     created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True)
+    created_date = models.DateTimeField(verbose_name="Yaratilgan vaqti", default=timezone.now)
 
     class Meta:
         verbose_name = 'Avtomobil rusumi'

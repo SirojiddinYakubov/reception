@@ -8,7 +8,7 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'birthday', 'person_id', 'phone', 'region', 'district',
-                  'mfy', 'address',
+                  'quarter', 'address',
                   'issue_by_whom']
         exclude = ['password', 'email', 'passport_seriya', 'passport_number']
 
@@ -48,7 +48,7 @@ class EditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['last_name', 'first_name', 'middle_name', 'birthday', 'passport_seriya', 'passport_number',
-                  'issue_by_whom', 'person_id', 'region', 'district', 'mfy', 'address','phone']
+                  'issue_by_whom', 'person_id', 'region', 'district', 'quarter', 'address','phone']
         exclude = []
 
         # labels = {
@@ -124,7 +124,7 @@ class EditWorkerForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'middle_name', 'section','region','district','mfy', 'address','passport_seriya','passport_number', 'username','turbo','password')
+        fields = ('last_name', 'first_name', 'middle_name', 'section','region','district','quarter', 'address','passport_seriya','passport_number', 'username','turbo','password')
         exclude = ('phone',)
 
 class EditCarForm(ModelForm):

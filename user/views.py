@@ -96,92 +96,11 @@ def personal_data(request):
 
 def user_signup(request):
     regions = Region.objects.all()
-    if not request.COOKIES.get('phone'):
-        return redirect(reverse_lazy('user:login_first'))
-    phone = request.COOKIES['phone']
+
     context = {
         'regions': regions,
-        'phone': phone
     }
     return render(request, 'account/signup.html', context)
-
-    # if request.POST:
-    #     form = SignUpForm(request.POST or None)
-    #     password = int(request.POST['confirm_password'])
-    #     phone = int(request.POST['phone'])
-    #     if not User.objects.get(phone=phone, password=password):
-    #         messages.error(request, "Tasdiqlash kodi noto'g'ri")
-    #     if form.is_valid():
-    #         passport = request.POST['passport']
-    #         document_issue = form.cleaned_data['document_issue']
-    #         document_expiry = form.cleaned_data['document_expiry']
-    #         issue_by_whom = form.cleaned_data['issue_by_whom']
-    #         last_name = form.cleaned_data['last_name']
-    #         first_name = form.cleaned_data['first_name']
-    #         middle_name = form.cleaned_data['middle_name']
-    #         region = get_object_or_404(Region, id=request.POST['region'])
-    #         district = get_object_or_404(District, id=request.POST['district'])
-    #         mfy = get_object_or_404(MFY, id=request.POST['mfy'])
-    #         address = form.cleaned_data['address']
-    #         birthday = request.POST['birthday']
-    #         person_id = request.POST.get('person_id', '')
-    #
-    #         l = len(passport)
-    #         integ = ''
-    #         letters = ''
-    #         i = 0
-    #         while i < l:
-    #             passport_int = ''
-    #             a = passport[i]
-    #             while '0' <= a <= '9':
-    #                 passport_int += a
-    #                 i += 1
-    #                 if i < l:
-    #                     a = passport[i]
-    #                 else:
-    #                     break
-    #             else:
-    #                 if a != '':
-    #                     letters += a
-    #
-    #             i += 1
-    #             if passport_int != '':
-    #                 integ += passport_int
-    #
-    #         user = User.objects.create_user(
-    #             username=phone,
-    #             passport_seriya=letters,
-    #             passport_number=int(integ),
-    #             document_issue=document_issue,
-    #             document_expiry=document_expiry,
-    #             issue_by_whom=issue_by_whom,
-    #             turbo=password,
-    #             last_name=last_name,
-    #             first_name=first_name,
-    #             middle_name=middle_name,
-    #             region=region,
-    #             district=district,
-    #             mfy=mfy,
-    #             address=address,
-    #             birthday=birthday,
-    #             phone=phone,
-    #             is_superuser=False,
-    #             person_id=person_id,
-    #         )
-    #         user.set_password(password)
-    #         user.username = passport
-    #         user.email = ''
-    #         user.save()
-    #         user = authenticate(username=phone, password=password)
-    #         if user is not None:
-    #             if user.is_active:
-    #                 login(request, user)
-    #         return redirect(reverse_lazy('user:index'))
-    #     else:
-    #         messages.error(request, "Formani to'ldirishda xatolik !")
-    # else:
-    #     form = SignUpForm()
-    # return render(request, 'account/signup.html', context)
 
 
 @login_required
@@ -193,43 +112,72 @@ class Logout(APIView):
     def get(self, request, format=None):
         # using Django logout
         logout(request)
-        return redirect(reverse_lazy('user:login_first'))
+        return redirect(reverse_lazy('user:login_view'))
 
 
-def login_first(request):
+def login_view(request):
+    print(request.POST)
     if request.method == 'POST':
-        phone = request.POST.get('phone', None)
-        password = request.POST.get('password', '')
-        context = {
-            'phone': phone
-        }
-        if len(str(phone)) != 9:
-            try:
-                phone = request.COOKIES['phone']
-            except KeyError:
-                return redirect(reverse_lazy('user:login_first'))
-        try:
-            user1 = User.objects.get(username=phone)
-            if not user1.is_staff and user1.person_id == None:
-                return redirect(reverse_lazy('user:signup'))
-            user = authenticate(request, username=phone, password=password)
-
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        next = request.POST.get('next', None)
+        if username and password:
+            user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)
-                token, created = Token.objects.get_or_create(user=user)
-                response = redirect(reverse('user:personal_data'))
-                response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
-                return response
+                if user.is_active:
+                    login(request, user)
+
+                    token, created = Token.objects.get_or_create(user=user)
+                    if next:
+                        response = HttpResponseRedirect(next)
+                    else:
+                        response = redirect('service:services_list')
+                    response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
+                    return response
+                else:
+                    messages.warning(request, "Sizning profilingiz faol holatda emas!")
+                    return redirect('user:login_view')
             else:
-                messages.error(request, _("Login yoki parol noto'g'ri!"))
-                context.update(redirect=True)
-                return render(request, 'account/login.html', context)
-        except ObjectDoesNotExist:
-            response = redirect(reverse_lazy('user:signup'))
-            response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
-            return response
+                messages.error(request, "Login yoki parol noto'g'ri!")
+                return redirect('user:login_view')
+        else:
+            messages.error(request, "Formani to'ldirishda xatolik!")
+            return redirect('user:login_view')
     else:
         return render(request, 'account/login.html')
+    # if request.method == 'POST':
+    #     phone = request.POST.get('phone', None)
+    #     password = request.POST.get('password', '')
+    #     context = {
+    #         'phone': phone
+    #     }
+    #     if len(str(phone)) != 9:
+    #         try:
+    #             phone = request.COOKIES['phone']
+    #         except KeyError:
+    #             return redirect(reverse_lazy('user:login_view'))
+    #     try:
+    #         user1 = User.objects.get(username=phone)
+    #         if not user1.is_staff and user1.person_id == None:
+    #             return redirect(reverse_lazy('user:signup'))
+    #         user = authenticate(request, username=phone, password=password)
+    #
+    #         if user is not None:
+    #             login(request, user)
+    #             token, created = Token.objects.get_or_create(user=user)
+    #             response = redirect(reverse('user:personal_data'))
+    #             response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
+    #             return response
+    #         else:
+    #             messages.error(request, _("Login yoki parol noto'g'ri!"))
+    #             context.update(redirect=True)
+    #             return render(request, 'account/login.html', context)
+    #     except ObjectDoesNotExist:
+    #         response = redirect(reverse_lazy('user:signup'))
+    #         response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
+    #         return response
+    # else:
+    #     return render(request, 'account/login.html')
 
 
 def handler404(request, exception):
@@ -353,9 +301,10 @@ def get_district(request):
     try:
         if request.is_ajax():
             districts = District.objects.filter(region=request.GET.get('region'))
-            # options = "<option value=''>--- --- ---</option>"
-            options = ""
+            options = "<option value=''>--- --- ---</option>"
+
             for district in districts:
+
                 options += f"<option value='{district.id}'>{district.title}</option>"
             return HttpResponse(options,status=200)
         else:
@@ -363,6 +312,17 @@ def get_district(request):
     except:
         return HttpResponse(status=404)
 
+
+def get_quarters(request):
+    if request.is_ajax():
+        quarters = Quarter.objects.filter(district=request.GET.get('district'))
+        options = "<option value=''>--- --- ---</option>"
+        # options = ""
+        for quarter in quarters:
+            options += f"<option value='{quarter.id}'>{quarter.title}</option>"
+        return HttpResponse(options)
+    else:
+        return False
 
 class GetChildSections(AllowedRolesMixin):
     model = Section
@@ -386,22 +346,25 @@ class GetChildSections(AllowedRolesMixin):
 
 @permission_classes([IsAuthenticated])
 class Get_Organization(APIView):
-    def get(self, request):
+    def post(self, request):
         if request.is_ajax():
-            organization = get_object_or_404(Organization, id=request.GET.get('organization', None))
-            company = serializers.serialize('json', [organization, ])
-            struct = json.loads(company, )
-            # data = json.dumps(struct[0])
-            context = {
-                'organization': struct[0],
-                'legal_address_district': organization.legal_address_district.title,
-                'legal_address_region': organization.legal_address_region.title,
-                'created_date': datetime.datetime.strftime(organization.created_date, '%d.%m.%Y')
-            }
-            data = json.dumps(context)
+            try:
+                organization = get_object_or_404(Organization, id=request.POST.get('organization', None))
+                company = serializers.serialize('json', [organization, ])
+                struct = json.loads(company, )
+                # data = json.dumps(struct[0])
+                context = {
+                    'organization': struct[0],
+                    'legal_address_district': organization.legal_address_district.title,
+                    'legal_address_region': organization.legal_address_region.title,
+                    'created_date': datetime.datetime.strftime(organization.created_date, '%d.%m.%Y')
+                }
+                data = json.dumps(context)
 
-            return HttpResponse(data, content_type='json')
-        return HttpResponse(False)
+                return HttpResponse(data, content_type='json', status=200)
+            except:
+                return HttpResponse(status=404)
+        return HttpResponse(status=404)
 
 
 @login_required
@@ -455,16 +418,6 @@ def edit_personal_data(request):
     return render(request, 'user/edit_personal_data.html', context)
 
 
-def get_mfy(request):
-    if request.is_ajax():
-        mfys = MFY.objects.filter(district=request.GET.get('district'))
-        # options = "<option value=''>--- --- ---</option>"
-        options = ""
-        for mfy in mfys:
-            options += f"<option value='{mfy.id}'>{mfy.title}</option>"
-        return HttpResponse(options)
-    else:
-        return False
 
 
 def get_code(request):
@@ -476,14 +429,12 @@ def get_code(request):
         except ObjectDoesNotExist:
             password = random.randint(10000, 99999)
             user = User.objects.create(username=phone, phone=phone, password=password, turbo=password)
-            user.set_password(password)
+            user.set_password(str(password))
             user.save()
 
         print(password)
         msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {user.username} %0aParol: {user.turbo}"
-        msg = msg.replace(" ", "+")
-        url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&msg={msg}"
-        response = requests.get(url)
+
 
         token, created = Token.objects.get_or_create(user=user)
 
@@ -620,10 +571,10 @@ class Save_User_Information(APIView):
             last_name = request.POST.get('last_name')
             first_name = request.POST.get('first_name')
             middle_name = request.POST.get('middle_name')
-            birthday = datetime.datetime.strptime(request.POST.get('birthday'), '%d.%m.%Y')
+            birthday = datetime.datetime.strptime(request.POST.get('birthday'), '%Y-%m-%d')
             region = request.POST.get('region')
             district = request.POST.get('district')
-            mfy = request.POST.get('mfy')
+            quarter = request.POST.get('quarter')
             address = request.POST.get('address')
             phone = request.POST.get('phone')
             user = User.objects.get(phone=phone)
@@ -634,25 +585,23 @@ class Save_User_Information(APIView):
                 user.birthday = birthday
                 user.region_id = region
                 user.district_id = district
-                user.mfy_id = mfy
+                user.quarter_id = quarter
                 user.address = address
                 user.save()
-                context = {
-                    'user': user.id
-                }
-                data = json.dumps(context)
-                return HttpResponse(data, content_type='json')
+
+                return HttpResponse(status=200)
             else:
-                return HttpResponse(False)
+                return HttpResponse(status=400)
         else:
-            return HttpResponse(False)
+            return HttpResponse(status=400)
 
 
 @permission_classes([IsAuthenticated])
 class save_passport_data(APIView):
     def post(self, request):
         if request.is_ajax():
-            user = get_object_or_404(User, id=request.POST.get('user_id'))
+            user = get_object_or_404(User, id=request.user.id)
+            user = authenticate(request, username=user.phone, password=user.turbo)
             if user is not None:
                 user.passport_seriya = request.POST.get('passport_seriya')
                 user.passport_number = request.POST.get('passport_number')
@@ -660,13 +609,12 @@ class save_passport_data(APIView):
                 user.person_id = request.POST.get('person_id')
                 user.save()
 
-                user = authenticate(request, username=user.phone, password=user.turbo)
                 login(request, user)
-                return HttpResponse(True)
+                return HttpResponse(status=200)
             else:
-                return HttpResponse(False)
+                return HttpResponse(status=400)
         else:
-            return HttpResponse(False)
+            return HttpResponse(status=400)
 
 
 class HelloView(View):
@@ -701,16 +649,19 @@ class CustomAuthToken(ObtainAuthToken):
 class Get_Car_Type(APIView):
     def post(self, request):
         if request.is_ajax():
-            car_id = request.POST.get('car')
-            car = CarModel.objects.get(id=car_id)
+            try:
+                car_id = request.POST.get('car')
+                car = CarModel.objects.get(id=car_id)
 
-            if car.is_truck:
-                is_truck = True
-            else:
-                is_truck = False
-            return HttpResponse(is_truck)
+                if car.is_truck:
+                    is_truck = True
+                else:
+                    is_truck = False
+                return HttpResponse(is_truck, status=200)
+            except:
+                return HttpResponse(status=400)
         else:
-            return False
+            return HttpResponse(status=400)
 
 
 @login_required
@@ -1149,16 +1100,19 @@ class Save_New_Car_Model(APIView):
                 is_truck = False
 
             try:
+                model = CarModel.objects.filter(title__iexact=request.POST.get('title'),is_truck=is_truck, is_local=is_local)
+                if model.exists():
+                    return HttpResponse(status=409)
                 CarModel.objects.create(title=request.POST.get('title'), is_truck=is_truck, is_local=is_local,created_user=request.user)
                 car_models = CarModel.objects.filter(is_active=True)
                 options = ""
                 for car_model in car_models:
                     options += f"<option value='{car_model.id}'>{car_model.title}</option>"
-                return HttpResponse(options)
+                return HttpResponse(options, status=200)
             except:
-                return HttpResponse(False)
+                return HttpResponse(status=400)
         else:
-            return HttpResponse(False)
+            return HttpResponse(status=400)
 
 
 @permission_classes([IsAuthenticated])
@@ -1166,16 +1120,19 @@ class Save_New_Color(APIView):
     def post(self, request):
         if request.is_ajax():
             try:
+                color = Color.objects.filter(title__iexact=request.POST.get('color'))
+                if color.exists():
+                    return HttpResponse(status=409)
                 Color.objects.create(title=request.POST.get('color'), created_user=request.user)
                 colors = Color.objects.filter(is_active=True)
                 options = ""
                 for color in colors:
                     options += f"<option value='{color.id}'>{color.title}</option>"
-                return HttpResponse(options)
+                return HttpResponse(options, status=200)
             except:
-                return HttpResponse(False)
+                return HttpResponse(status=400)
         else:
-            return HttpResponse(False)
+            return HttpResponse(status=400)
 
 @login_required
 def getDistrict(request):
@@ -1183,11 +1140,9 @@ def getDistrict(request):
     result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-@login_required
-def getMfy(request):
-    id = request.GET.get('id','')
-    result = list(MFY.objects.filter(district_id=int(id)).values('id', 'title'))
-    return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+
 
 @login_required
 def regions_list(request):

@@ -1,210 +1,440 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
-{% block content %}
+{% block css %}
 
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
+    <!-- Plugins css -->
+    <link href="{% static 'assets/libs/mohithg-switchery/switchery.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+
+      <!-- Loading button css -->
+        <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .step {
+            list-style: none;
+            margin: .2rem 0;
+            width: 100%;
+        }
+
+        .step .step-item {
+            -ms-flex: 1 1 0;
+            flex: 1 1 0;
+            margin-top: 0;
+            min-height: 1rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .step .step-item:not(:first-child)::before {
+            background: #3283f6;
+            content: "";
+            height: 2px;
+            left: -50%;
+            position: absolute;
+            top: 9px;
+            width: 100%;
+        }
+
+        .step .step-item span {
+            color: #acb3c2;
+            display: inline-block;
+            padding: 20px 10px 0;
+            text-decoration: none;
+        }
+
+        .step .step-item span::before {
+            background: #3283f6;
+            border: .1rem solid #fff;
+            border-radius: 50%;
+            content: "";
+            display: block;
+            height: .9rem;
+            left: 50%;
+            position: absolute;
+            top: .2rem;
+            transform: translateX(-50%);
+            width: .9rem;
+            z-index: 1;
+        }
+
+        .step .step-item.active span::before {
+            background: #fff;
+            border: .1rem solid #3283f6;
+        }
+
+        .step .step-item.active ~ .step-item::before {
+            background: #e7e9ed;
+        }
+
+        .step .step-item.active ~ .step-item span::before {
+            background: #e7e9ed;
+        }
+
+
+        fieldset {
+
+            width: 90%;
+            position: center;
+            text-align: center;
+            margin: auto;
+            border: 0;
+            margin-bottom: 3%
+
+        }
+
+        legend {
+
+            border-style: none;
+            background-color: #3283f6;
+            font-weight: bold;
+            font-size: 17pt;
+            color: White;
+            width: 30%;
+            padding-left: 10px;
+            margin-left: 3%;
+            margin-bottom: unset !important;
+
+        }
+
+        fieldset form {
+
+            border: 3px solid #3283f6;
+            position: relative;
+            top: -6px;
+            padding-left: 3%;
+            padding-right: 3%;
+            padding-top: 5%;
+            padding-bottom: 2%;
+
+        }
+
+        .btn-info {
+            background: #3283f6;
+            border-color: #3283f6;
+        }
+
+        .btn-info:hover {
+            background: #5296f6;
+            border-color: #5296f6;
+        }
+
+        .selectize-input, .selectize-dropdown-content {
+            text-align: start !important;
+
+        }
+
+    </style>
+{% endblock css %}
+{% block content %}
+    <div class="row ml-2 mr-2">
+
+        <div class="col-12 text-center p-0">
+            <div class="card px-0 pt-4 pb-0 mb-3">
+                <div class="mb-5 text-center">
                     <h2>{% trans "Hisob ma'lumotnomasiga asosan transport vositasiga raqam olish" %}</h2>
                 </div>
-            </div>
-        </div>
-    </section>
-    <div class="row ml-2 mr-2">
-        <div class="col-12 text-center p-0 mt-3 mb-2">
-            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                <div class="row">
-                    <div class="col-md-12 mx-0">
-                        <div id="msform">
-                            <!-- progressbar -->
-                            <ul id="progressbar">
-                                <li class="active not_copy" id="personal"><strong>Foydalanuvchi</strong></li>
-                                <li class="not_copy" id="car_icon"><strong>Transport vositasi</strong></li>
-                                <li class="not_copy" id="payment"><strong>Ariza topshirish hududi</strong></li>
-                            </ul> <!-- fieldsets -->
-                            <fieldset id="fieldset1">
-                                {% include 'service/inc/person_type_block.html' %}
-                                <button type="button" id="next1" name="next" class="next action-button">
-                                    Keyingi
+                <ul class="step d-flex flex-nowrap">
+                    <li id="person_step" class="step-item active">
+                        <span>Foydalanuvchi</span>
+                    </li>
+                    <li id="car_step" class="step-item">
+                        <span>Transport vositasi</span>
+                    </li>
+                    <li id="document_step" class="step-item">
+                        <span>Hisob ma'lumotnomasi</span>
+                    </li>
+                    <li id="place_step" class="step-item">
+                        <span>Ariza topshirish hududi</span>
+                    </li>
+                </ul>
+                <br>
+                <br>
+                <fieldset id="fieldset1">
+                    <legend>Foydalanuvchi</legend>
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        {% include 'service/inc/person_type_block.html' %}
+                        <div class="justify-content-end row">
+                            <div class="col-8 col-xl-9">
+                                <button type="button" class="btn btn-info waves-effect waves-light float-end"
+                                        id="next1">Keyingi
                                 </button>
-                            </fieldset>
+                            </div>
+                        </div>
+
+                    </form>
+                </fieldset>
+
+                <fieldset id="fieldset2" style="display: none">
+                    <legend>Transport vositasi</legend>
+                    <form action="#" id="save_car_form" method="post">
+                        {% csrf_token %}
+                        <input type='hidden' value="0" name="person_type">
+                        <input type='hidden' value="" name="organization">
+                        <input type='hidden' value="" name="devices">
+
+
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="car">{% trans 'Transport vositasi modelini tanlang' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 car">
+                                <select id="car" name="car" required class="form-control select2"
+                                        data-width="100%">
+                                    <option></option>
+                                    <option data-style="color: blue;" value="new">Yangi model qo'shish</option>
+                                    {% for car in cars %}
+                                        <option value="{{ car.id }}">{{ car.title }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="car_type">{% trans 'Transport vositasi turini tanlang' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <select id="car_type" name="car_type" required data-width="100%"
+                                        class="form-control select2">
+                                    {% for car_type in car_types %}
+                                        <option value="{{ car_type.id }}">{{ car_type.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="fuel_types">{% trans "Yoqilg'i turini tanlang" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 fuel_types">
+
+                                <select id="fuel_types" name="fuel_types" class="form-control"
+                                        multiple="multiple">
+                                    {% for fuel_type in fuel_types %}
+                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="devices">{% trans "Alohida belgilar" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+
+                                <select id="devices" name="devices" class="form-control"
+                                        multiple="multiple">
+                                    {% for device in devices %}
+                                        <option value="{{ device.id }}">{{ device.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="body_type">{% trans 'Kuzov turi' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <select id="body_type" name="body_type" class="form-control select2" required
+                                        data-width="100%">
+                                    {% for bodyType in bodyTypes %}
+                                        <option value="{{ bodyType.id }}">{{ bodyType.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="engine_number">{% trans 'Dvigitel raqami' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="engine_number" name="engine_number"
+                                       class="form-control text-uppercase" required
+                                       placeholder="{% trans 'Masalan: WZX5645645456' %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="body_number">{% trans 'Kuzov raqami' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="body_number" name="body_number"
+                                       class="form-control text-uppercase" required
+                                       placeholder="{% trans 'Masalan: XWB6595645456' %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3 chassis_number_div" style="display: none">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="chassis_number">{% trans 'Shassi raqami' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 chassis_number">
+                                <input type="text" id="chassis_number"
+                                       class="form-control text-uppercase" required
+                                       placeholder="{% trans 'Masalan: ZXW5642519873' %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="full_weight">{% trans "To'la vazni" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 full_weight">
+                                <input type="number" id="full_weight" name="full_weight"
+                                       class="form-control" required
+                                       placeholder="{% trans 'Masalan: 20500' %}"
+                                       autocomplete="off">
+                                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                                    qiymatni kilogrammda
+                                    kiriting!</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="empty_weight">{% trans 'Yuksiz vazni' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 empty_weight">
+                                <input type="number" id="empty_weight" name="empty_weight"
+                                       class="form-control" required
+                                       placeholder="{% trans 'Masalan: 19500' %}"
+                                       autocomplete="off">
+                                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                                    qiymatni kilogrammda
+                                    kiriting!</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="engine_power">{% trans 'Dvigatel quvvati' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 engine_power">
+                                <input type="number" id="engine_power" name="engine_power"
+                                       class="form-control"
+                                       placeholder="{% trans 'Masalan: 120' %}"
+                                       autocomplete="off" required>
+                                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                                    qiymatni kilogrammda
+                                    kiriting!</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="color">{% trans 'Rangi' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 color">
+                                <select id="color" name="color" required class="form-control select2 color"
+                                        data-width="100%">
+                                    <option></option>
+                                    <option data-style="color: blue;" value="new">Yangi rang qo'shish</option>
+                                    {% for color in color %}
+                                        <option value="{{ color.id }}">{{ color.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="date" id="made_year" name="made_year"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="price">{% trans 'Transport vositasi narxi' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 price">
+                                <input type="number" id="price" name="price"
+                                       class="form-control" required
+                                       placeholder="{% trans 'Masalan: 47000000' %}"
+                                       autocomplete="off">
+                                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                                    qiymatni so'mda
+                                    kiriting!</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="is_auction">{% trans 'Raqam auksiondan olinganmi?' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <div class="row justify-content-start mt-1">
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                                        <input type="radio" id="is_auction_yes" name="is_auction"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_auction_yes">Ha</label>
+                                    </div>
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                                        <input type="radio" id="is_auction_no" name="is_auction"
+                                               class="form-check-input" checked>
+                                        <label class="form-check-label" for="is_auction_no">Yoq</label>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row mb-3" id="auction_number_div">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="auction_number">{% trans "Auksion raqami" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="auction_number"
+                                       class="form-control text-uppercase" required
+                                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="justify-content-end row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
+                                        id="prev2">Oldingi
+                                </button>
+                                <button type="button" id="next2"
+                                        class="btn btn-info waves-effect waves-light float-end">Keyingi
+                                </button>
+                                <button class="ladda-button btn btn-info" dir="ltr" data-style="zoom-out"><span
+                                        class="ladda-label">Submit
+                                                    </span><span class="ladda-spinner"></span></button>
+                                <button type="button" id="refresh_next2"
+                                        class="btn btn-info waves-effect waves-light float-end">Keyingi
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+                <div class="row" style="display: none">
+                    <div class="col-md-12 mx-0">
+
+
+                        <div id="msform">
+
                             <fieldset id="fieldset2">
-                                <form action="#" id="save_car_form" method="post">
-                                    {% csrf_token %}
+                                <form>
+
                                     <div class="form-card">
-                                        <h2 class="fs-title not_copy">Transport vositasi ma'lumotlari</h2>
-                                        <input type='hidden' value="J" name="person_type">
-                                        <input type='hidden' value="" name="organization">
-                                        <input type='hidden' value="" name="devices">
-                                        <label style="display: inline !important;"
-                                               class="label_required">{% trans 'T/v modelini tanlang' %}</label>&nbsp<i
-                                            class="fas fa-info-circle" data-toggle="tooltip"
-                                            title="Transport vositasining modelini tanlang, agar sizning transport vositangiz modeli mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz modelini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining modeli hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"
-                                    ></i>
-
-                                        <div class="input-group mb-3">
-                                            <select id="car" name="car" class="form-control select2">
-                                                {% for car in cars %}
-                                                    <option value="{{ car.id }}">{{ car.title }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-default" type="button" id="AddCarBtn"><i
-                                                        class="fas fa-plus"></i></button>
-                                            </div>
-                                        </div>
                                         <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required">{% trans 'T/v turini tanlang' %}</label>
-                                                <select id="car_type" name="car_type" class="form-control select2"
-                                                        style="width: 100%;">
-                                                    {% for car_type in car_types %}
-                                                        <option value="{{ car_type.id }}">{{ car_type.title }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 fuel_types">
-                                                <label class="label_required">{% trans "Yoqilg'i turini tanlang" %}</label>
-                                                <select id="fuel_types" name="fuel_types" class="form-control"
-                                                        multiple="multiple"
-                                                        style="width: 100%;">
-                                                    {% for fuel_type in fuel_types %}
-                                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label">{% trans "Alohida belgilar" %}</label>
-
-
-                                                <select id="devices" name="devices" class="form-control"
-                                                        multiple="multiple">
-                                                    {% for device in devices %}
-                                                        <option value="{{ device.id }}">{{ device.title }}</option>
-                                                    {% endfor %}
-                                                </select>
-
-
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label for="body_type"
-                                                       class="label_required">{% trans 'Kuzov turi' %}</label>
-                                                <select id="body_type" name="body_type" class="form-control select2"
-                                                        style="width: 100%;">
-                                                    {% for bodyType in bodyTypes %}
-                                                        <option value="{{ bodyType.id }}">{{ bodyType.title }}</option>
-                                                    {% endfor %}
-                                                </select>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="engine_number">{% trans 'Dvigitel raqami' %}</label>
-                                                <input type="text" id="engine_number" name="engine_number"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: B12D12345678DJCCX1234' %}"
-                                                       autocomplete="off">
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="body_number">{% trans 'Kuzov raqami' %}</label>
-                                                <input type="text" id="body_number" name="body_number"
-                                                       class="form-control" autocomplete="off"
-                                                       placeholder="{% trans 'Masalan: XWBJF69VELA102923' %}">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-
-
-                                                <label for="chassis_number" id="chassis_number_label"
-                                                       class="mt-2 label_required">{% trans 'Shassi raqami' %}</label>
-                                                <input type="text" id="chassis_number"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: X8945642519874656' %}"
-                                                       autocomplete="off">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 full_weight">
-                                                <label class="label_required"
-                                                       for="full_weight">{% trans "To'la vazni" %}</label>
-                                                <input type="number" id="full_weight" name="full_weight"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: 20500' %}"
-                                                       autocomplete="off">
-                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni kilogrammda
-                                                    kiriting!</p>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 empty_weight">
-                                                <label class="label_required"
-                                                       for="empty_weight">{% trans 'Yuksiz vazni' %}</label>
-                                                <input type="number" id="empty_weight" name="empty_weight"
-                                                       class="form-control" autocomplete="off"
-                                                       placeholder="{% trans 'Masalan: 19500' %}">
-                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni kilogrammda
-                                                    kiriting!</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 engine_power">
-                                                <label class="label_required"
-                                                       for="engine_power">{% trans 'Dvigatel quvvati' %}</label>
-                                                <input type="number" id="engine_power" name="engine_power"
-                                                       class="form-control" autocomplete="off"
-                                                       placeholder="{% trans 'Masalan: 460' %}">
-                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni ot kuchida
-                                                    kiriting!</p>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label style="display: inline !important;" class="label_required"
-                                                       for="color">{% trans 'Rangi' %}</label>&nbsp<i
-                                                    class="fas fa-info-circle" data-toggle="tooltip"
-                                                    title="Transport vositasining rangini tanlang, agar sizning transport vositangiz rangi mavjud bo'lmasa, o'ng tomondagi plus tugmasiga bosib transport vositangiz rangini qo'shing. Eslatib o'tamiz qo'shilayotgan har bir ma'lumot uchun javobgar hisoblanasiz. Transport vositasining rangini hisob ma'lumotnomasida qanday yozilgan bo'lsa ushbu maydonda huddi shunday kiriting!"
-                                            ></i>
-
-
-                                                <div class="input-group mb-3">
-                                                    <select id="color" name="color" class="form-control select2 color">
-                                                        {% for color in color %}
-                                                            <option value="{{ color.id }}">{{ color.title }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-default" type="button" id="AddColorBtn">
-                                                            <i
-                                                                    class="fas fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}</label>
-                                                <div class="input-group mb-2">
-                                                    <input id='made_year' name="made_year"
-                                                           type="text"
-                                                           class="form-control datepicker"/>
-                                                    <div class="input-group-prepend datepicker_icon">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"
-                                                                                         aria-hidden="true"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
                                                 <label class="label_required"
                                                        for="seriya">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}</label>
@@ -224,92 +454,59 @@
                                                 <div class="input-group mb-2">
                                                     <input id='contract_date' name="contract_date"
                                                            type="text"
-                                                           class="form-control datepicker"/>
-                                                    <div class="input-group-prepend datepicker_icon">
+                                                           class="form-control"/>
+                                                    <div class="input-group-prepend">
                                                         <div class="input-group-text"><i class="fa fa-calendar"
                                                                                          aria-hidden="true"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2 price">
-                                                <label class="label_required"
-                                                       for="price">{% trans 'T/v narxi' %}</label>
-                                                <input type="number" id="price" name="price"
-                                                       class="form-control" autocomplete="off"
-                                                       placeholder="{% trans 'Masalan: 47000000' %}">
-                                                <p style="font-size: small; margin-bottom: 0">Ushbu qiymatni so'mda
-                                                    kiriting!</p>
-                                            </div>
+                                        </div>
 
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <div class="form-check">
-                                                    <input type="checkbox" id="is_auction"
-                                                           class="form-check-input"/>
-                                                    <label class="form-check-label"
-                                                           for="is_auction"><b>Raqam auksiondan olingan</b> <i
-                                                            class="fas fa-info-circle" data-toggle="tooltip"
-                                                            title="Raqam auksiondan olingan bo'lsa ushbu maydonni belgilang"></i></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" id="auction_number_div">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="auction_number">{% trans "Auksion raqami" %}</label>
-                                                <input type="text" id="auction_number"
-                                                       class="form-control" placeholder="Masalan: 80979HBA"
-                                                       autocomplete="off">
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="row justify-content-center">
-                                        <input type="button" id="prev2"
-                                               class="previous action-button-previous"
-                                               value="Oldingi"/>
-                                        <button type="submit" id="next2" class="action-button">Keyingi</button>
-                                        <input type="button" style="display: none" id="refresh_next2"
-                                               class="action-button"
-                                               value="Keyingi"/>
+
+
                                         <button type="button" id="fake" class="action-button-reset">Fake Data</button>
                                     </div>
                                 </form>
                             </fieldset>
                             <fieldset id="fieldset3">
-                                <form action="{% url 'application:SaveApplicationSection' %}" id="save_section_form" method="POST">
-                                {% csrf_token %}
-                                <div class="form-card">
-                                    <h2 class="fs-title not_copy">Ariza topshirish hududi</h2>
-                                    <div class="col-12 mt-2">
-                                        <label class="label_required"
-                                               style="text-align: left">{% trans 'Ariza topshiradigan viloyatni tanlang' %}</label>
-                                        <select name="region" class="form-control select2" id="region">
-                                            {% for region in regions %}
-                                                <option value="{{ region.id }}">{{ region.title }}</option>
-                                            {% endfor %}
-                                        </select>
+                                <form action="{% url 'application:SaveApplicationSection' %}" id="save_section_form"
+                                      method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-card">
+                                        <h2 class="fs-title not_copy">Ariza topshirish hududi</h2>
+                                        <div class="col-12 mt-2">
+                                            <label class="label_required"
+                                                   style="text-align: left">{% trans 'Ariza topshiradigan viloyatni tanlang' %}</label>
+                                            <select name="region" class="form-control select2" id="region">
+                                                {% for region in regions %}
+                                                    <option value="{{ region.id }}">{{ region.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <label class="label_required">{% trans 'Ariza topshiradigan tuman yoki shaharni tanlang' %}</label>
+                                            <select name="district" class="form-control select2" id="district">
+                                                <option value="">-- -- --</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <label class="label_required">{% trans 'Ariza topshiradigan tuman yoki shaharni tanlang' %}</label>
-                                        <select name="district" class="form-control select2" id="district">
-                                            <option value="">-- -- --</option>
-                                        </select>
-                                    </div>
-                                </div>
 
 
-                                {#                                {% include 'service/inc/pay_for_service_block.html' %}#}
+                                    {#                                {% include 'service/inc/pay_for_service_block.html' %}#}
 
-                                <input type="button" name="Previous" class="previous action-button-previous"
-                                       id="prev3" value="Oldingi"/>
-{#                                <a target="_blank" href="#"#}
-{#                                   class="action-button copy_application" style="padding: 0.7em !important;">#}
-{#                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>#}
-{#                                </a>#}
-                                <input type="submit" name="next3" class="action-button"
-                                       id="next3" value="Saqlash"/>
+                                    <input type="button" name="Previous" class="previous action-button-previous"
+                                           id="prev3" value="Oldingi"/>
+                                    {#                                <a target="_blank" href="#"#}
+                                    {#                                   class="action-button copy_application" style="padding: 0.7em !important;">#}
+                                    {#                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>#}
+                                    {#                                </a>#}
+                                    <input type="submit" name="next3" class="action-button"
+                                           id="next3" value="Saqlash"/>
                                 </form>
                             </fieldset>
                         </div>
@@ -322,53 +519,154 @@
 
 {% endblock content %}
 
-{% block bottom %}
-    {#    tooltip js start #}
-    <script src="{% static 'plugins/jquery-ui/jquery-ui.js' %}"></script>
-    {#    tooltip js end #}
+{% block js %}
+    <script src="{% static 'assets/libs/selectize/js/standalone/selectize.min.js' %}"></script>
+    <script src="{% static 'assets/libs/mohithg-switchery/switchery.min.js' %}"></script>
+    <script src="{% static 'assets/libs/multiselect/js/jquery.multi-select.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
 
-    {#    selectize js start #}
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.css"
-          integrity="sha512-WJ1jnnij6g+LY1YfSmPDGxY0j2Cq/I6PPA7/s4QJ/5sRca5ypbHhFF+Nam0TGfvpacrw9F0OGeZa0ROdNAsaEQ=="
-          crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.css"
-          integrity="sha512-85w5tjZHguXpvARsBrIg9NWdNy5UBK16rAL8VWgnWXK2vMtcRKCBsHWSUbmMu0qHfXW2FVUDiWr6crA+IFdd1A=="
-          crossorigin="anonymous"/>
+    <script src="{% static 'assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sifter/0.5.4/sifter.min.js"
-            integrity="sha512-B60IUvYpG4cibCeQ30J8k/+qtN+fxKAIENb3DL2DVdzIt76IDIynAt92chPEwlCuKejOt//+OZL61i1xsvCIDQ=="
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.min.js"
-            integrity="sha512-7amIsiQ/hxbdPNawBZwmWBWPiwQRNEJlxTj6eVO+xmWd71fs79Iydr4rYARHwDf0rKHpysFxWbj64fjPRHbqfA=="
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/selectize.min.js"
-            integrity="sha512-JiDSvppkBtWM1f9nPRajthdgTCZV3wtyngKUqVHlAs0d5q72n5zpM3QMOLmuNws2vkYmmLn4r1KfnPzgC/73Mw=="
-            crossorigin="anonymous"></script>
-    {#    selectize js end #}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- Sweet Alerts js -->
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+
+
+     <!-- Loading buttons js -->
+        <script src="{% static 'assets/libs/ladda/spin.min.js' %}"></script>
+        <script src="{% static 'assets/libs/ladda/ladda.min.js' %}"></script>
+
+        <!-- Buttons init js-->
+        <script src="{% static 'assets/js/pages/loading-btn.init.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
     <script type="text/javascript" charset="UTF-8">
         $(function () {
             $('.select2').select2()
+
             $('#auction_number_div').hide()
 
 
         })
 
         $(document).ready(function () {
+                var token = getCookie('token'),
+                    csrftoken = getCookie('csrftoken')
 
-            $('#next3').on('click', function (e) {
-                e.preventDefault()
+                $.ajaxSetup({
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                        xhr.setRequestHeader('Authorization', `Token ${token}`)
+                    },
+                    error: function (response) {
+                        if (response.status === 401) {
+                            tokenInvalid()
+                        }
+                    }
+                })
+
+                var passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
+                    firstName = htmlDecode('{{ request.user.first_name }}'),
+                    lastName = htmlDecode('{{ request.user.last_name }}'),
+                    middleName = htmlDecode('{{ request.user.middle_name }}')
 
 
-                if ($('#district').children("option:selected").val()) {
-                      $('#save_section_form').submit()
-                }
+                $('#first_name').attr('value', firstName)
+                $('#last_name').attr('value', lastName)
+                $('#middle_name').attr('value', middleName)
+                $('#passport').attr('value', passport)
+
+                $("#person_type").change(function () {
+                    var selectedPersonType = $(this).children("option:selected").val();
+                    $('input[name ="person_type"]').val(selectedPersonType)
+                    if (selectedPersonType === '1') {
 
 
+                        $('#div_organization').show()
+                        $('#physical_div').hide()
+                        $('#legal_div').show()
+                        is_legal = true
 
 
-            })
+                        if (typeof ($('#organization option').attr('value')) == 'undefined') {
+                            $('#organization_div_alert').show()
+                            $('#next1').attr('disabled', true)
+                        } else {
+                            changeOrganizationValues()
+                            $('#organization_div_alert').hide()
+                            $('#next1').attr('disabled', false)
+                        }
+                    } else if (selectedPersonType === '0') {
+                        $('#next1').attr('disabled', false)
+                        $('#organization_div_alert').hide()
+                        $('#physical_div').show()
+                        $('#legal_div').hide()
+                        $('#div_organization').css('display', 'none')
+                        is_legal = false
+                    }
+                });
+                $('#organization').on('change', function () {
+                    changeOrganizationValues()
+                })
+
+                $('#next1').on('click', function () {
+                    $('#person_type').attr('disabled', true)
+                    $('#organization').attr('disabled', true)
+                    $('#fieldset1').hide()
+                    $('#fieldset2').show()
+                    $('#car_step').addClass('active')
+                    $('#person_step').removeClass('active')
+                })
+
+                function formatState(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+
+                    return $(
+                        '<div style="' + $(state.element).data('style') + '"> ' + state.text + '</div>'
+                    );
+                };
+
+                $('#car').select2({
+                    placeholder: '-- modelni tanlang --',
+                    templateResult: formatState,
+                }).on('select2:close', function () {
+                    var el = $(this);
+                    if (el.val() === "new") {
+                        var newval = addCarModel(url = '{% url 'user:save_new_car_model' %}')
+                        if (newval !== null) {
+                            el.append('<option>' + newval + '</option>').val(newval);
+                        }
+                    }
+                })
+
+                $('#color').select2({
+                    placeholder: '-- rangni tanlang --',
+                    templateResult: formatState,
+                }).on('select2:close', function () {
+                    var el = $(this);
+                    if (el.val() === "new") {
+                        var newval = addColor(url = '{% url 'user:save_new_color' %}')
+                        if (newval !== null) {
+                            el.append('<option>' + newval + '</option>').val(newval);
+                        }
+                    }
+                })
+
+                $('#next3').on('click', function (e) {
+                    e.preventDefault()
+
+
+                    if ($('#district').children("option:selected").val()) {
+                        $('#save_section_form').submit()
+                    }
+
+
+                })
 
 
                 $('#fake').on('click', function () {
@@ -408,78 +706,31 @@
                 })
 
 
-                $('#addAmountBtn').on('click', function (e) {
-                    addAmount()
-                })
-                var amount = $('#amount').text().replace(/\s+/g, '')
-
-
-                {% if request.GET.payment_type == 'click' %}
-                    window.location.href = "{% url 'click:create_order_url' %}?amount=12345".replace(/12345/, amount.toString());
-                {% elif request.GET.payment_type == 'payme' %}
-                    window.location.href = "{% url 'paycom:create_paycom_url_via_order' %}?amount=12345&return_url=6789&service_id=9791999".replace(/12345/, amount.toString()).replace(/6789/, 'http://e-rib.uz/service/account-statement-index/').replace(/9791999/, 'http://e-rib.uz/service/account-statement-index/');
-                {% endif %}
-
-                $('[data-toggle="tooltip"]').tooltip();
-
                 $('#fuel_types').selectize({
+                    inputClass: 'form-control selectize-input',
                     placeholder: "Masalan: BENZIN",
+                    create: true,
+                    sortField: "text",
                 });
                 $('#devices').selectize({
-                    {#inputClass: 'form-control selectize-input',#}
-                    {#dropdownParent: "body",#}
+                    inputClass: 'form-control selectize-input',
+                    dropdownParent: "body",
                     placeholder: "Masalan: MAXSUS O'QUV",
                 });
 
-                $('#auction_number').inputmask({casing: 'upper'});
-                $('#engine_number').inputmask({casing: 'upper'});
-                $('#body_number').inputmask({casing: 'upper'});
-                $('#chassis_number').inputmask({casing: 'upper'});
-                $('#seriya').inputmask({casing: 'upper'});
+
+                {#$('#fieldset1').hide()#}
+                {#$('#fieldset2').show()#}
+                var is_legal = false
 
 
-                $('#fieldset1').hide()
-                $('#fieldset3').show()
-                var is_legal = false,
-                    passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
-                    firstName = htmlDecode('{{ request.user.first_name }}'),
-                    lastName = htmlDecode('{{ request.user.last_name }}'),
-                    middleName = htmlDecode('{{ request.user.middle_name }}'),
-                    token = getCookie('token'),
-                    csrftoken = getCookie('csrftoken')
-
-                $('#first_name').attr('value', firstName)
-                $('#last_name').attr('value', lastName)
-                $('#middle_name').attr('value', middleName)
-                $('#passport').attr('value', passport)
-
-                $.ajaxSetup({
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                        xhr.setRequestHeader('Authorization', `Token ${token}`)
-                    },
-                    error: function (response) {
-                        if (response.status === 401) {
-                            tokenInvalid()
-                        }
-                    }
-                })
-
-                $('#AddCarBtn').on('click', function () {
-                    addCarModel()
-                })
-
-                $('#AddColorBtn').on('click', function () {
-                    addColor()
-                })
-
-                $('#is_auction').on('change', function () {
-                    if ($(this).prop('checked')) {
+                $('input[name=is_auction]').on('change', function () {
+                    if ($('#is_auction_yes').prop('checked')) {
                         $('#auction_number_div').show()
-                        $('#auction_number_div').children('.col-12').children('input').attr('name', 'auction_number')
+                        $('#auction_number').attr('name', 'auction_number')
                     } else {
                         $('#auction_number_div').hide()
-                        $('#auction_number_div').children('.col-12').children('input').removeAttr('name')
+                        $('#auction_number').removeAttr('name')
 
                     }
                 })
@@ -487,68 +738,27 @@
 
                 function changeOrganizationValues() {
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: '{% url "user:get_organization" %}',
                         data: {'organization': $('#organization option:selected').val()},
-                        success: function (response) {
+                        statusCode: {
+                            200: function (response) {
+                                $('#director').attr('value', response.organization.fields.director)
+                                $('#identification_number').attr('value', response.organization.fields.identification_number)
+                                $('#legal_address_region').attr('value', response.legal_address_region)
+                                $('#legal_address_district').attr('value', response.legal_address_district)
 
-                            {#$('#auction_number').inputmask("9{2}9{3}A{3}");#}
-                            {#$('#auction_number').attr('placeholder', '80979HBA')#}
-
-                            $('#director').attr('value', response.organization.fields.director)
-                            $('#identification_number').attr('value', response.organization.fields.identification_number)
-                            $('#legal_address_region').attr('value', response.legal_address_region)
-                            $('#legal_address_district').attr('value', response.legal_address_district)
-
-                            $('input[name ="organization"]').val($('#organization option:selected').val())
-
-
-                        }
+                                $('input[name ="organization"]').val($('#organization option:selected').val())
+                            },
+                            404: function () {
+                                error_toast()
+                            },
+                        },
                     })
                 }
 
                 $('#div_organization').hide()
 
-                $("#person_type").change(function () {
-                    var selectedPersonType = $(this).children("option:selected").val();
-                    $('input[name ="person_type"]').val(selectedPersonType)
-                    if (selectedPersonType === 'Y') {
-                        changeOrganizationValues()
-
-                        $('#div_organization').show()
-                        $('#msdiv1').hide()
-                        $('#msdiv2').show()
-                        is_legal = true
-
-                        $('#organization').on('change', function () {
-                            changeOrganizationValues()
-                        })
-
-                        if (typeof ($('#organization option').attr('value')) == 'undefined') {
-                            $('#organization_div_alert').show()
-                            $('#next1').attr('disabled', true)
-                        } else {
-                            $('#organization_div_alert').hide()
-                            $('#next1').attr('disabled', false)
-                        }
-                    } else if (selectedPersonType === 'J') {
-                        $('#next1').attr('disabled', false)
-                        $('#organization_div_alert').hide()
-                        $('#msdiv1').show()
-                        $('#msdiv2').hide()
-                        $('#div_organization').css('display', 'none')
-                        is_legal = false
-                    }
-                });
-
-                $('#next1').on('click', function () {
-                    $('#person_type').attr('disabled', true)
-                    $('#organization').attr('disabled', true)
-                    $('#fieldset1').hide()
-                    $('#fieldset2').show()
-                    $('#car_icon').addClass('active')
-                })
-                ChangeCarType()
 
                 function ChangeCarType() {
                     var selectedCar = $('select#car').children("option:selected").val();
@@ -558,25 +768,25 @@
                         data: {
                             'car': selectedCar, // from form
                         },
-                        success: function (response) {
-                            if (response === "True") {
-                                //agar yuk avtomobil bo'lsa
-                                $('#chassis_number_label').show()
-                                $('#chassis_number').show()
-                                $('#chassis_number').attr('name', 'chassis_number')
+                        statusCode: {
+                            200: function (response) {
+                                if (response === "True") {
+                                    //agar yuk avtomobil bo'lsa
+                                    $('.chassis_number_div').show()
+                                    $('#chassis_number').attr('name', 'chassis_number')
 
-                            } else {
-                                //agar yengil avtomobil bo'lsa
-                                $('#chassis_number_label').hide()
-                                $('#chassis_number').hide()
-                                $('#chassis_number-error').hide()
-                                $('#chassis_number').removeAttr('name')
+                                } else {
+                                    //agar yengil avtomobil bo'lsa
+
+                                    $('.chassis_number_div').hide()
+                                    $('#chassis_number').removeAttr('name')
+                                }
+                            }, 400: function () {
+                                error_toast()
+                            }, 500: function () {
+                                error_toast()
                             }
                         },
-                        error: function (response) {
-                            console.log(response.status)
-                        }
-
                     });
                 }
 
@@ -596,10 +806,7 @@
 
                 $('#refresh_next2').on('click', function (e) {
                     $('#fieldset2').hide()
-
                     $('#fieldset3').show()
-
-
                 })
 
                 $('#fuel_types').on('change', function () {
@@ -650,6 +857,12 @@
                             fuel_types: {
                                 required: true,
                             },
+                            car: {
+                                required: true,
+                            },
+                             color: {
+                                required: true,
+                            },
                             full_weight: {
                                 required: true,
                             },
@@ -661,6 +874,10 @@
                             },
                             price: {
                                 required: true,
+                            },
+                            made_year: {
+                                required: true,
+                                 date : true,
                             },
                             seriya: {
                                 required: true,
@@ -675,6 +892,10 @@
 
                         },
                         messages: {
+                            car: {
+                                //error message for the required field
+                                required: 'Transport vositasi modeli tanlanmagan!'
+                            },
                             engine_number: {
                                 //error message for the required field
                                 required: 'Dvigatel raqami kiritilmagan!'
@@ -697,8 +918,14 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
+                             made_year: {
+                                required: "Ishlab chiqarilgan vaqti kiritilmagan!",
+                            },
+                             color: {
+                                required: "Transport vositasi rangi tanlanmagan!",
+                            },
                             price: {
-                                required: "T/v narxi kiritilmagan!",
+                                required: "Transport vositasi narxi kiritilmagan!",
                             },
                             seriya: {
                                 required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
@@ -710,9 +937,14 @@
 
                         },
                         errorPlacement: function (error, element) {
-                            if (element.is("#fuel_types")) {
+                            if (element.is("#car")) {
+                                error.appendTo(element.parents('.car'));
+                            }else if (element.is("#fuel_types")) {
                                 error.appendTo(element.parents('.fuel_types'));
-                            } else if (element.is(":checkbox")) {
+                            }else if (element.is("#color")) {
+                                error.appendTo(element.parents('.color'));
+                            }
+                            else if (element.is(":checkbox")) {
                                 error.appendTo(element.parents('.devices'));
                             } else if (element.is("#full_weight")) {
                                 error.appendTo(element.parents('.full_weight'));
@@ -744,18 +976,19 @@
 
                             $.ajax({
                                 type: "POST",
-                                url: "{% url 'service:AccountStatement' %}",
+                                url: "{% url 'service:account_statement' %}",
                                 data: $(form).serialize(),
 
                                 success: function (response) {
+                                    console.log(typeof response)
+                                    var applicationFileName = response.file_name
+                                    console.log(applicationFileName)
+                                    {#var tr = ''#}
+                                    {#response.slice(1).forEach(function (value) {#}
+                                    {#    tr += `<tr><td class="col-md-9"><em>${value.title}</em></td><td class="col-md-3 text-center">${formatMoney(value.payment)} so\'m</td><td class="col-md-3 text-center"><button class="btn btn-primary">To'lov qilish</button></td></tr>`#}
+                                    //{#});#}
 
-                                    var applicationFileName = response[0].application
-                                    var tr = ''
-                                    response.slice(1).forEach(function (value) {
-                                        tr += `<tr><td class="col-md-9"><em>${value.title}</em></td><td class="col-md-3 text-center">${formatMoney(value.payment)} so\'m</td><td class="col-md-3 text-center"><button class="btn btn-primary">To'lov qilish</button></td></tr>`
-                                    });
-
-                                    jQuery("#state_duties_block tbody").before(tr)
+                                    {#jQuery("#state_duties_block tbody").before(tr)#}
 
                                     if (typeof response === 'object') {
 
@@ -842,7 +1075,7 @@
             }
         )
     </script>
-{% endblock bottom %}
+{% endblock js %}
 
 
 

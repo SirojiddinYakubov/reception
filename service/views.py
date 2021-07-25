@@ -2,12 +2,13 @@ import json
 import random
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -107,22 +108,22 @@ class AccountStatement(ServiceCustomMixin):
         application.save()
 
         calculation_state_duty_service_price(service)
+        #
+        # stateDuties = list()
+        # stateDuties.append({'application': application.file_name})
+        # qs = StateDuty.objects.filter(service=service)
+        # print(qs)
+        # for query in qs:
+        #     stateDuties.append({'title':query.get_title_display(), 'payment':query.payment})
 
-        stateDuties = list()
-        stateDuties.append({'application': application.file_name})
-        qs = StateDuty.objects.filter(service=service)
-        print(qs)
-        for query in qs:
-            stateDuties.append({'title':query.get_title_display(), 'payment':query.payment})
-
-        print(stateDuties)
+        # print(stateDuties)
         context = {
             # 'stateDuties': serializers.serialize('json', stateDuties),
             # 'application': application.file_name
         }
-
-        data = json.dumps(stateDuties)
-        return HttpResponse(data, content_type='json')
+        obj_serialize = serializers.serialize('json', [application,])
+        # data = json.dumps(obj_serialize)
+        return HttpResponse(obj_serialize, content_type='json')
 
 
 @login_required
@@ -792,4 +793,31 @@ class Save_Re_Equipment(APIView):
             return HttpResponse(data, content_type='json')
         else:
             return HttpResponse(False)
+
+
+class ServicesList(ListView):
+    model = Service
+    template_name = 'services/services_list.html'
+    ordering = ['id']
+
+    context_object_name = 'services'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(is_active=True)
+        return qs
+
+
+class ServiceInfo(DetailView):
+    model = Service
+    template_name = 'services/service_info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context.update(form_fields=ServiceInputField.objects.filter(service=self.kwargs.get('pk')))
+        return context
+
 
