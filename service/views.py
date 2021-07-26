@@ -29,102 +29,106 @@ class AccountStatement(ServiceCustomMixin):
         return self.get_json_data()
 
     def get_json_data(self):
-        request = self.request
-        print(request.POST)
-        person_type = request.POST.get('person_type')
-        engine_number = request.POST.get('engine_number')
-        full_weight = request.POST.get('full_weight')
-        empty_weight = request.POST.get('empty_weight')
-        engine_power = request.POST.get('engine_power')
-        auction_number = request.POST.get('auction_number')
-        body_number = request.POST.get('body_number')
-        price = request.POST.get('price')
-        color = get_object_or_404(Color, id=request.POST.get('color', None))
-        made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
 
-        devices = []
-        if request.POST.getlist('devices'):
-            for device_id in list(filter(None, request.POST.getlist('devices'))):
-                devices.append(get_object_or_404(Device, id=device_id))
+        try:
+            request = self.request
+            print(request.POST)
+            person_type = request.POST.get('person_type')
+            engine_number = request.POST.get('engine_number')
+            full_weight = request.POST.get('full_weight')
+            empty_weight = request.POST.get('empty_weight')
+            engine_power = request.POST.get('engine_power')
+            auction_number = request.POST.get('auction_number')
+            body_number = request.POST.get('body_number')
+            price = request.POST.get('price')
+            color = get_object_or_404(Color, id=request.POST.get('color', None))
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
 
-        fuel_types = []
-        if request.POST.getlist('fuel_types'):
-            for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
-                fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+            devices = []
+            if request.POST.getlist('devices'):
+                for device_id in list(filter(None, request.POST.getlist('devices'))):
+                    devices.append(get_object_or_404(Device, id=device_id))
 
-        seriya = request.POST.get('seriya')
-        contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None), '%d.%m.%Y')
-        user = get_object_or_404(User, id=request.user.id)
-        get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+            fuel_types = []
+            if request.POST.getlist('fuel_types'):
+                for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
+                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-        # create car
-        car = Car.objects.create(model=get_car)
-        car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
-        if request.POST.get('chassis_number', None):
-            car.chassis_number = request.POST.get('chassis_number', None)
-        car.body_number = body_number
-        car.engine_number = engine_number
-        car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
-        car.made_year = made_year
-        car.full_weight = full_weight
-        car.empty_weight = empty_weight
-        car.engine_power = engine_power
-        car.is_new = True
-        car.is_replace_number = True
-        if get_car.is_local:
-            if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                car.is_road_fund = True
+            seriya = request.POST.get('seriya')
+            if request.POST.get('contract_date', None):
+                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+            user = get_object_or_404(User, id=request.user.id)
+            get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+
+            # create car
+            car = Car.objects.create(model=get_car)
+            car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
+            if request.POST.get('chassis_number', None):
+                car.chassis_number = request.POST.get('chassis_number', None)
+            car.body_number = body_number
+            car.engine_number = engine_number
+            car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
+            car.made_year = made_year
+            car.full_weight = full_weight
+            car.empty_weight = empty_weight
+            car.engine_power = engine_power
+            car.is_new = True
+            car.is_replace_number = True
+            if get_car.is_local:
+                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+                    car.is_road_fund = True
+                else:
+                    car.is_road_fund = False
             else:
-                car.is_road_fund = False
-        else:
-            car.is_road_fund = True
+                car.is_road_fund = True
 
-        car.price = price
-        if request.POST.get('auction_number'):
-            car.is_auction = True
-            car.given_number = auction_number
-        car.color = color
-        for fuel_type in fuel_types:
-            car.fuel_type.add(fuel_type)
-        for device in devices:
-            car.device.add(device)
-        car.save()
+            car.price = price
+            if request.POST.get('auction_number'):
+                car.is_auction = True
+                car.given_number = auction_number
+            car.color = color
+            for fuel_type in fuel_types:
+                car.fuel_type.add(fuel_type)
+            for device in devices:
+                car.device.add(device)
+            car.save()
 
-        # create application and account_statament
-        application = Application.objects.create(created_user=user, created_date=timezone.now())
-        service = Service.objects.create(car=car, title='account_statement',
-                                         contract_date=contract_date)
-        service.seriya = seriya
-        service.created_user = request.user
-        if person_type == 'Y':
-            organization = get_object_or_404(Organization, id=request.POST.get('organization'))
-            application.person_type = person_type
-            service.organization = organization
-        service.save()
+            # create application and account_statament
+            application = Application.objects.create(created_user=user, created_date=timezone.now())
+            if person_type == LEGAL_PERSON:
+                organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                application.person_type = person_type
+                application.organization = organization
+            application.save()
 
-        password = random.randint(1000, 9999)
-        application.password = password
-        application.service = service
-        application.save()
+            password = random.randint(1000, 9999)
+            application.password = password
+            service = get_object_or_404(Service, key='account_statement')
+            application.service = service
+            application.car = car
+            application.save()
 
-        calculation_state_duty_service_price(service)
-        #
-        # stateDuties = list()
-        # stateDuties.append({'application': application.file_name})
-        # qs = StateDuty.objects.filter(service=service)
-        # print(qs)
-        # for query in qs:
-        #     stateDuties.append({'title':query.get_title_display(), 'payment':query.payment})
 
-        # print(stateDuties)
-        context = {
-            # 'stateDuties': serializers.serialize('json', stateDuties),
-            # 'application': application.file_name
-        }
-        obj_serialize = serializers.serialize('json', [application,])
-        # data = json.dumps(obj_serialize)
-        return HttpResponse(obj_serialize, content_type='json')
 
+            # calculation_state_duty_service_price(service)
+            #
+            # stateDuties = list()
+            # stateDuties.append({'application': application.file_name})
+            # qs = StateDuty.objects.filter(service=service)
+            # print(qs)
+            # for query in qs:
+            #     stateDuties.append({'title':query.get_title_display(), 'payment':query.payment})
+
+            # print(stateDuties)
+            context = {
+                # 'stateDuties': serializers.serialize('json', stateDuties),
+                # 'application': application.file_name
+            }
+            obj_serialize = serializers.serialize('json', [application,])
+            # data = json.dumps(obj_serialize)
+            return HttpResponse(application.id, content_type='json', status=200)
+        except:
+            return HttpResponse(status=400)
 
 @login_required
 def gift_agreement_index(request):

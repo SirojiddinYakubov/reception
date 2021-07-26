@@ -39,6 +39,7 @@
       data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "light"}, "showRightSidebarOnPageLoad": false}'>
 
 <!-- Begin page -->
+<div id="load"></div>
 <div id="wrapper">
 
     <!-- Topbar Start -->
@@ -120,6 +121,26 @@
 
 <!-- App js -->
 <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        document.onreadystatechange = function () {
+            var state = document.readyState
+            {#console.log(state)#}
+            if (state === 'interactive') {
+                {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
+            } else if (state === 'complete') {
+                setTimeout(function () {
+                    {#document.getElementById('interactive');#}
+                    document.getElementById('load').style.visibility = "hidden";
+                    {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
+                }, 100);
+            }
+        }
+    })
+</script>
 {% block js %}
 {% endblock js %}
 </body>
