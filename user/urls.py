@@ -51,12 +51,14 @@ urlpatterns = [
     path('get-car-type/', Get_Car_Type.as_view(), name='get_car_type'),
     path('save-new-car-model/', Save_New_Car_Model.as_view(), name='save_new_car_model'),
     path('save-new-color/', Save_New_Color.as_view(), name='save_new_color'),
-    path('getDistrict/', getDistrict, name='getDistrict'),
+    path('getDistricts/', getDistricts, name='getDistricts'),
     path('get_quarters/', get_quarters, name='get_quarters'),
 
     # STATE CONTROLLER
     path('regions-list/', regions_list, name='regions_list'),
     path('sections-list/<int:section_id>/', sections_list, name='sections_list'),
+    path('sections-list-by-region/', SectionsListByRegion.as_view(), name='sections_list_by_region'),
+
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
 
 ]

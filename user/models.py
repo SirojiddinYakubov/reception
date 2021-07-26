@@ -66,6 +66,7 @@ class Section(models.Model):
     district = models.ManyToManyField(District, verbose_name='Tuman/Shahar', blank=True)
     is_active = models.BooleanField(default=True)
     pay_for_service = models.BooleanField(default=True)
+    address = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = "Bo'lim"

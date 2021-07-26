@@ -11,9 +11,9 @@
     <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"
           type="text/css"/>
 
-      <!-- Loading button css -->
-        <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css" />
-        <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Loading button css -->
+    <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css"/>
 
     <!-- Sweet Alert-->
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
@@ -108,6 +108,36 @@
 
         }
 
+        @media only screen and (max-width: 500px) {
+
+            legend {
+                width: 95%;
+                font-size: 0.8rem
+            }
+        }
+
+        @media only screen and (min-width: 500px) and (max-width: 768px) {
+
+            legend {
+                width: 60%;
+                font-size: 0.9rem
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 1500px) {
+
+            legend {
+                width: 50%;
+                font-size: 0.9rem
+            }
+        }
+
+        @media only screen and (min-width: 1500px) and (max-width: 2000px) {
+            legend {
+                width: 40%;
+            }
+        }
+
         fieldset form {
 
             border: 3px solid #3283f6;
@@ -149,13 +179,13 @@
                     <li id="person_step" class="step-item active">
                         <span>Foydalanuvchi</span>
                     </li>
-                    <li id="car_step" class="step-item">
-                        <span>Transport vositasi</span>
-                    </li>
                     <li id="document_step" class="step-item">
                         <span>Hisob ma'lumotnomasi</span>
                     </li>
-                    <li id="place_step" class="step-item">
+                    <li id="car_step" class="step-item">
+                        <span>Transport vositasi</span>
+                    </li>
+                    <li id="section_step" class="step-item">
                         <span>Ariza topshirish hududi</span>
                     </li>
                 </ul>
@@ -176,14 +206,50 @@
 
                     </form>
                 </fieldset>
-
                 <fieldset id="fieldset2" style="display: none">
+                    <legend>Hisob ma'lumotnomasi</legend>
+                    <form action="#" id="save_document_form">
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="seriya">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="seriya" name="seriya"
+                                       class="form-control text-uppercase" required
+                                       placeholder="{% trans 'Masalan: AAC123456' %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="contract_date">{% trans "Shartnoma tuzilgan sana" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="date" id="contract_date" name="contract_date"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="justify-content-end row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
+                                        id="prev2">Oldingi
+                                </button>
+                                <button type="submit" id="next2"
+                                        class="btn btn-info waves-effect waves-light float-end">Keyingi
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+                <fieldset id="fieldset3" style="display: none">
                     <legend>Transport vositasi</legend>
                     <form action="#" id="save_car_form" method="post">
                         {% csrf_token %}
                         <input type='hidden' value="0" name="person_type">
                         <input type='hidden' value="" name="organization">
                         <input type='hidden' value="" name="devices">
+                        <input type='hidden' value="" name="seriya">
+                        <input type='hidden' value="" name="contract_date">
 
 
                         <div class="row mb-3">
@@ -379,12 +445,12 @@
                                     class="text-danger">*</span></label>
                             <div class="col-8 col-xl-9">
                                 <div class="row justify-content-start mt-1">
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
                                         <input type="radio" id="is_auction_yes" name="is_auction"
                                                class="form-check-input">
                                         <label class="form-check-label" for="is_auction_yes">Ha</label>
                                     </div>
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-1">
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
                                         <input type="radio" id="is_auction_no" name="is_auction"
                                                class="form-check-input" checked>
                                         <label class="form-check-label" for="is_auction_no">Yoq</label>
@@ -409,109 +475,57 @@
                         <div class="justify-content-end row">
                             <div class="col-12">
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
-                                        id="prev2">Oldingi
+                                        id="prev3">Oldingi
                                 </button>
-                                <button type="button" id="next2"
-                                        class="btn btn-info waves-effect waves-light float-end">Keyingi
-                                </button>
-                                <button class="ladda-button btn btn-info" dir="ltr" data-style="zoom-out"><span
-                                        class="ladda-label">Submit
-                                                    </span><span class="ladda-spinner"></span></button>
-                                <button type="button" id="refresh_next2"
+                                <button type="button" id="fake" class="btn btn-danger">Fake</button>
+                                <button type="submit" id="next3"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
                             </div>
                         </div>
                     </form>
                 </fieldset>
-                <div class="row" style="display: none">
-                    <div class="col-md-12 mx-0">
-
-
-                        <div id="msform">
-
-                            <fieldset id="fieldset2">
-                                <form>
-
-                                    <div class="form-card">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="seriya">{% trans "Hisob ma'lumotnomasi seriyasi va raqami" %}</label>
-                                                <input type="text" id="seriya" name="seriya"
-                                                       class="form-control"
-                                                       placeholder="{% trans 'Masalan: AAC123456' %}"
-                                                       autocomplete="off">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-
-                                            <div class="col-12 col-md-6 col-sm-6 col-lg-6 col-xl-6 mt-2">
-                                                <label class="label_required"
-                                                       for="contract_date">{% trans "Shartnoma tuzilgan sana" %}</label>
-                                                <div class="input-group mb-2">
-                                                    <input id='contract_date' name="contract_date"
-                                                           type="text"
-                                                           class="form-control"/>
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"
-                                                                                         aria-hidden="true"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="row justify-content-center">
-
-
-                                        <button type="button" id="fake" class="action-button-reset">Fake Data</button>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="fieldset3">
-                                <form action="{% url 'application:SaveApplicationSection' %}" id="save_section_form"
-                                      method="POST">
-                                    {% csrf_token %}
-                                    <div class="form-card">
-                                        <h2 class="fs-title not_copy">Ariza topshirish hududi</h2>
-                                        <div class="col-12 mt-2">
-                                            <label class="label_required"
-                                                   style="text-align: left">{% trans 'Ariza topshiradigan viloyatni tanlang' %}</label>
-                                            <select name="region" class="form-control select2" id="region">
-                                                {% for region in regions %}
-                                                    <option value="{{ region.id }}">{{ region.title }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="col-12 mt-2">
-                                            <label class="label_required">{% trans 'Ariza topshiradigan tuman yoki shaharni tanlang' %}</label>
-                                            <select name="district" class="form-control select2" id="district">
-                                                <option value="">-- -- --</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    {#                                {% include 'service/inc/pay_for_service_block.html' %}#}
-
-                                    <input type="button" name="Previous" class="previous action-button-previous"
-                                           id="prev3" value="Oldingi"/>
-                                    {#                                <a target="_blank" href="#"#}
-                                    {#                                   class="action-button copy_application" style="padding: 0.7em !important;">#}
-                                    {#                                    Ariza nusxasini olish &nbsp&nbsp<i class="fas fa-download"></i>#}
-                                    {#                                </a>#}
-                                    <input type="submit" name="next3" class="action-button"
-                                           id="next3" value="Saqlash"/>
-                                </form>
-                            </fieldset>
+                <fieldset id="fieldset4" style="display: none">
+                    <legend>Ariza topshirish hududi</legend>
+                    <form action="#" method="post" id="save_section_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="application">
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="region">{% trans 'Ariza topshiradigan viloyatni tanlang' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 car">
+                                <select id="region" name="region" required class="form-control select2"
+                                        data-width="100%">
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="card-body">
+                            <h4 class="header-title">Tuman va shahar ro'yhatga olish bo'limlari</h4>
+                            <p class="sub-header">Lorem Ipsum is simply dummy text of the printing and typesetting
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took electronic typesetting, remaining essentially
+                                unchanged.</p>
+
+                            <ol class="list-group list-group-numbered" id="sections_list">
+
+
+                            </ol>
+                        </div>
+                        <div class="justify-content-end row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
+                                        id="prev4">Oldingi
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+
             </div>
 
         </div>
@@ -532,13 +546,7 @@
     <!-- Sweet Alerts js -->
     <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
 
-
-     <!-- Loading buttons js -->
-        <script src="{% static 'assets/libs/ladda/spin.min.js' %}"></script>
-        <script src="{% static 'assets/libs/ladda/ladda.min.js' %}"></script>
-
-        <!-- Buttons init js-->
-        <script src="{% static 'assets/js/pages/loading-btn.init.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
@@ -546,15 +554,17 @@
     <script type="text/javascript" charset="UTF-8">
         $(function () {
             $('.select2').select2()
-
             $('#auction_number_div').hide()
 
+            {#$('#fieldset1').hide()#}
+            {#$('#fieldset4').show()#}
 
         })
 
         $(document).ready(function () {
                 var token = getCookie('token'),
                     csrftoken = getCookie('csrftoken')
+
 
                 $.ajaxSetup({
                     beforeSend: function (xhr) {
@@ -617,8 +627,14 @@
                     $('#organization').attr('disabled', true)
                     $('#fieldset1').hide()
                     $('#fieldset2').show()
-                    $('#car_step').addClass('active')
+                    $('#document_step').addClass('active')
                     $('#person_step').removeClass('active')
+                })
+                $('#next3').on('click', function () {
+                    if ($(this).attr('type') === 'button') {
+                        $('#fieldset3').hide()
+                        $('#fieldset4').show()
+                    }
                 })
 
                 function formatState(state) {
@@ -657,7 +673,48 @@
                     }
                 })
 
-                $('#next3').on('click', function (e) {
+                var $documentForm = $('#save_document_form');
+                if ($documentForm.length) {
+                    $documentForm.validate({
+                        rules: {
+                            seriya: {
+                                required: true,
+                                noSpace: true,
+                            },
+                            contract_date: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            seriya: {
+                                required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
+                            },
+                            contract_date: {
+                                required: "Shartnoma tuzilgan sana kiritilmagan!"
+                            },
+                        },
+
+
+                        submitHandler: function (form) {
+                            var seriya = $('#seriya').val().toUpperCase()
+                            var contract_date = $('#contract_date').val()
+
+                            $('#seriya').attr('disabled', true)
+                            $('#contract_date').attr('disabled', true)
+
+                            $('input[name ="seriya"]').val(seriya)
+                            $('input[name ="contract_date"]').val(contract_date)
+
+                            $('#fieldset2').hide()
+                            $('#fieldset3').show()
+
+                            $('#car_step').addClass('active')
+                            $('#document_step').removeClass('active')
+                        }
+                    });
+                }
+
+                $('#next4').on('click', function (e) {
                     e.preventDefault()
 
 
@@ -672,6 +729,11 @@
                 $('#fake').on('click', function () {
                     var $fuel_types_selectize = $('#fuel_types').selectize();
                     $fuel_types_selectize[0].selectize.setValue("1");
+                    $('#car').select2("val", $("#car option:last").val());
+                    $('#color').select2("val", $("#color option:last").val());
+                    $('#made_year').val('2021-07-26')
+                    $('input[name="contract_date"]').val('2021-07-26')
+
 
                     function makeStr(length) {
                         var result = '';
@@ -696,7 +758,7 @@
                     }
 
                     $('#engine_number').val(makeStr(15))
-                    $('#seriya').val(makeStr(15))
+                    $('input[name="seriya"]').val(makeStr(15))
                     $('#body_number').val(makeStr(15))
                     $('#full_weight').val(makeNum(5))
                     $('#empty_weight').val(makeNum(5))
@@ -709,13 +771,12 @@
                 $('#fuel_types').selectize({
                     inputClass: 'form-control selectize-input',
                     placeholder: "Masalan: BENZIN",
-                    create: true,
                     sortField: "text",
                 });
                 $('#devices').selectize({
                     inputClass: 'form-control selectize-input',
                     dropdownParent: "body",
-                    placeholder: "Masalan: MAXSUS O'QUV",
+                    placeholder: "Masalan: MAXSUS",
                 });
 
 
@@ -798,24 +859,38 @@
                     $('#fieldset2').hide()
                     $('#fieldset1').show()
                 })
+                $('#prev3').on('click', function () {
+                    $('#fieldset3').hide()
+                    $('#fieldset2').show()
+                })
+                $('#prev4').on('click', function () {
+                    $('#fieldset4').hide()
+                    $('#fieldset3').show()
+                })
 
                 $(document).on('click', '#prev3', function () {
                     $('#fieldset3').hide()
                     $('#fieldset2').show()
                 })
 
-                $('#refresh_next2').on('click', function (e) {
-                    $('#fieldset2').hide()
-                    $('#fieldset3').show()
-                })
-
                 $('#fuel_types').on('change', function () {
                     var selectedFuelType = $(this).children("option:selected").val();
                     if (parseInt(selectedFuelType)) {
                         $(this).valid()
-
                     }
+                })
 
+                $('#car').on('change', function () {
+                    var selectedCarModel = $(this).children("option:selected").val();
+                    if (parseInt(selectedCarModel)) {
+                        $(this).valid()
+                    }
+                })
+                $('#color').on('change', function () {
+                    var selectedColor = $(this).children("option:selected").val();
+                    if (parseInt(selectedColor)) {
+                        $(this).valid()
+                    }
                 })
 
                 jQuery.validator.addMethod("noSpace", function (value, element) {
@@ -860,7 +935,7 @@
                             car: {
                                 required: true,
                             },
-                             color: {
+                            color: {
                                 required: true,
                             },
                             full_weight: {
@@ -877,7 +952,7 @@
                             },
                             made_year: {
                                 required: true,
-                                 date : true,
+                                date: true,
                             },
                             seriya: {
                                 required: true,
@@ -918,10 +993,10 @@
                             engine_power: {
                                 required: "Dvigatel quvvati kiritilmagan!",
                             },
-                             made_year: {
+                            made_year: {
                                 required: "Ishlab chiqarilgan vaqti kiritilmagan!",
                             },
-                             color: {
+                            color: {
                                 required: "Transport vositasi rangi tanlanmagan!",
                             },
                             price: {
@@ -939,12 +1014,11 @@
                         errorPlacement: function (error, element) {
                             if (element.is("#car")) {
                                 error.appendTo(element.parents('.car'));
-                            }else if (element.is("#fuel_types")) {
+                            } else if (element.is("#fuel_types")) {
                                 error.appendTo(element.parents('.fuel_types'));
-                            }else if (element.is("#color")) {
+                            } else if (element.is("#color")) {
                                 error.appendTo(element.parents('.color'));
-                            }
-                            else if (element.is(":checkbox")) {
+                            } else if (element.is(":checkbox")) {
                                 error.appendTo(element.parents('.devices'));
                             } else if (element.is("#full_weight")) {
                                 error.appendTo(element.parents('.full_weight'));
@@ -962,8 +1036,8 @@
 
 
                         submitHandler: function (form) {
-                            $('#next2').attr('disabled', true)
-                            $('#next2').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
+                            $('#next3').attr('disabled', true)
+                            $('#next3').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
                             var devices = []
                             $('.devices').each(function () {
@@ -978,26 +1052,20 @@
                                 type: "POST",
                                 url: "{% url 'service:account_statement' %}",
                                 data: $(form).serialize(),
+                                statusCode: {
+                                    200: function (response) {
+                                        $('#fieldset3').hide()
+                                        $('#fieldset4').show()
 
-                                success: function (response) {
-                                    console.log(typeof response)
-                                    var applicationFileName = response.file_name
-                                    console.log(applicationFileName)
-                                    {#var tr = ''#}
-                                    {#response.slice(1).forEach(function (value) {#}
-                                    {#    tr += `<tr><td class="col-md-9"><em>${value.title}</em></td><td class="col-md-3 text-center">${formatMoney(value.payment)} so\'m</td><td class="col-md-3 text-center"><button class="btn btn-primary">To'lov qilish</button></td></tr>`#}
-                                    //{#});#}
+                                        $('#next3').attr('type', 'button');
+                                        $('#next3').attr('disabled', false);
+                                        $('#next3').html('Keyingi')
 
-                                    {#jQuery("#state_duties_block tbody").before(tr)#}
 
-                                    if (typeof response === 'object') {
+                                        $('input[name ="application"]').val(response)
 
-                                        $('#next2').remove()
-                                        $('#refresh_next2').css('display', 'block')
-                                        $('#fieldset2').hide()
-
-                                        $('#fieldset3').show()
-                                        $('#payment').addClass('active')
+                                        $('#section_step').addClass('active')
+                                        $('#car_step').removeClass('active')
 
                                         $('#car').attr('disabled', 'disabled')
                                         $('#engine_number').attr("disabled", "disabled")
@@ -1015,62 +1083,131 @@
                                         $('#full_weight').attr("disabled", "disabled")
                                         $('#engine_power').attr("disabled", "disabled")
                                         $('#auction_number').attr("disabled", "disabled")
-                                        $('#is_auction').attr("disabled", "disabled")
+                                        $('#is_auction_yes').attr("disabled", "disabled")
+                                        $('#is_auction_no').attr("disabled", "disabled")
                                         $('#price').attr("disabled", "disabled")
-
-                                        $('.copy_application').data('filename', applicationFileName)
-
-
-                                    } else {
+                                    },
+                                    400: function () {
                                         errorFunction()
-                                        $('#next2').attr('disabled', false)
-                                        $('#next2').html('Keyingi')
-                                        console.log(response.status)
+                                        $('#next3').attr('type', 'submit')
+                                        $('#next3').attr('disabled', false)
+                                        $('#next3').html('Keyingi')
                                     }
                                 },
-                                error: function (response) {
-                                    $('#next2').attr('disabled', false)
-                                    $('#next2').html('Keyingi')
-                                    errorFunction()
-                                    console.log(response.status)
-                                }
                             });
                             return false; // required to block normal submit since you used ajax
                         }
                     });
                 }
 
-                $('.copy_application').on('click', function () {
-                    var filename = $(this).data('filename')
-                    var url = "{% url "application:create_application_doc" '123' %}";
-                    document.location.href = url.replace('123', filename);
-                })
-
-                $('#payment_render_pdf').on('click', function () {
-                    var element = document.getElementById('render_div'),
-                        filename = `To'lov`
-
-                    html_to_pdf(element, filename)
-                })
+                {#$('.copy_application').on('click', function () {#}
+                {#    var filename = $(this).data('filename')#}
+                {#    var url = "{% url "application:create_application_doc" '123' %}";#}
+                {#    document.location.href = url.replace('123', filename);#}
+                // {#})#}
+                {##}
+                {#$('#payment_render_pdf').on('click', function () {#}
+                {#    var element = document.getElementById('render_div'),#}
+                {#        filename = `To'lov`#}
+                {##}
+                {#    html_to_pdf(element, filename)#}
+                //{#})#}
 
                 $('#region').change(function () {
-                    var SelectedRegion = $(this).children("option:selected").val()
+                    get_sections_list()
+                })
+                get_sections_list()
+
+                $(document).on('click', '.send_application', function () {
+
+                    $('#load').css('visibility', 'visible')
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "application:save_application_section" %}',
+                        data: {
+                            'section': $(this).data("id"),
+                            'application': $('input[name ="application"]').val()
+                        },
+                        statusCode: {
+                            200: function (res) {
+                                $('#load').css('visibility', 'hidden')
+                                console.log($('#load').css('visibility'))
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    background: '#72fabd',
+                                    showConfirmButton: false,
+                                    timer: 5000,
+                                    timerProgressBar: false,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    onClose: (toast) => {
+                                        var url = "{% url "application:application_detail" 12345 %}".replace(/12345/, $('input[name ="application"]').val());
+                                        window.location.href = url
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Arizangiz muvaffaqiyatli topshirildi!'
+                                })
+                            },
+                            400: function () {
+                                error_toast()
+                                $('#load').css('visibility', 'hidden')
+                            },
+                            404: function () {
+                                error_toast()
+                                $('#load').css('visibility', 'hidden')
+                            }
+                        }
+                    })
+
+                });
+
+                function get_sections_list() {
+                    var SelectedRegion = $('#region').children("option:selected").val()
+
+
                     $.ajax({
                         type: "GET",
-                        url: "{% url 'user:get_district' %}",
+                        url: "{% url 'user:sections_list_by_region' %}",
                         data: {
                             'region': SelectedRegion, // from form
                         },
-                        success: function (message) {
-                            $('#district').empty().append(message)
-                            $('#district').css('border', '1px solid blue')
-                            setTimeout(function () {
-                                $('#district').css('border', '1px solid #ced4da')
-                            }, 1000)
+                        statusCode: {
+                            200: function (res) {
+                                var li = ''
 
-                        }
+
+                                $.each(res, function (index, value) {
+
+                                    li += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                                <div class="ms-2 me-auto col-7 col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-9 text-start">
+                                                    <div class="fw-bold text-start text-start">${value.fields.title}</div>
+                                                    ${value.fields.address}
+                                                </div>
+                                                <div class="col-5 col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                                                    <button type="button" data-id="${value.pk}" class="btn btn-info waves-effect waves-light send_application"  >Ariza topshirish
+                                                    </button>
+                                                </div>
+                                            </li>`
+
+
+                                });
+
+
+                                $('#sections_list').html(li)
+                            },
+                            404: function () {
+
+                            }
+                        },
                     });
-                })
+                }
+
 
             }
         )

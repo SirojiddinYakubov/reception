@@ -571,16 +571,18 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         return context
 
 
-class SaveApplicationSection(AllowedRolesMixin):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+
+class SaveApplicationSection(AllowedRolesMixin, View):
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
 
     def post(self, request, *args, **kwargs):
-        region = get_object_or_404(Region, id=request.POST.get('region'))
-        district = get_object_or_404(District, id=request.POST.get('district'))
-        section = Section.objects.filter(region=region, district=district, parent__isnull=False)
-        if section:
-            return redirect(reverse_lazy('application:application_detail', kwargs={'id': 2}))
-        else:
-            # application.delete()
-            return render(request, '_parts/404.html', context={'message': f"{district.title} ga biriktirilgan bo'lim mavjud emas!"})
-
+        print(request.POST)
+        if request.POST.get('section', None) and request.POST.get('application', None):
+            section = get_object_or_404(Section, id=request.POST.get('section'))
+            application = get_object_or_404(Application, id=request.POST.get('application'))
+            application.section = section
+            application.save()
+            return HttpResponse(status=200)
+        return HttpResponse(status=400)

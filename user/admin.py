@@ -38,6 +38,7 @@ class DistrictInline(admin.StackedInline):
     extra = 5
 
 
+
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     fieldsets = [

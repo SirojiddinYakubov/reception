@@ -1135,10 +1135,11 @@ class Save_New_Color(APIView):
             return HttpResponse(status=400)
 
 @login_required
-def getDistrict(request):
-    id = request.GET.get('id','')
-    result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
-    return HttpResponse(json.dumps(result), content_type="application/json")
+def getDistricts(request):
+    id = request.GET.get('id',None)
+    if id:
+        result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
+        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 
@@ -1169,4 +1170,14 @@ def sections_list(request, section_id):
         return render(request, 'user/role/regional_controller/sections_list.html', context)
     else:
         return render(request, '_parts/404.html')
+
+
+class SectionsListByRegion(AllowedRolesMixin, View):
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('region', None):
+            qs = Section.objects.filter(region=request.GET.get('region'), parent__isnull=False)
+            sections = serializers.serialize('json', qs)
+            return HttpResponse(sections, status=200,content_type='application/json')
+        return HttpResponse(status=404)
 

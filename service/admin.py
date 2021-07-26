@@ -5,10 +5,10 @@ from service.models import *
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['id','service_id', 'key',  ]
-    list_display_links = ['service_id']
+    list_display = ['id','title','key', 'service_id',  ]
+    list_display_links = ['title']
     list_filter = [ 'created_date',]
-    search_fields = ['key', ]
+    search_fields = ['title','key' ]
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
