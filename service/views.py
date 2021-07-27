@@ -17,13 +17,18 @@ from application.models import *
 from reception.mixins import AllowedRolesMixin
 from reception.settings import *
 from service.mixins import ServiceCustomMixin
-from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE
+from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE, Document
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 
 
 class AccountStatement(ServiceCustomMixin):
     template_name = 'service/account_statement/account_statement.html'
+
+    def get(self, request, *args, **kwargs):
+        # i = calculation_state_duty_service_price(get_object_or_404(Application, id=22))
+        # print(i, 30)
+        return super().get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
@@ -32,6 +37,7 @@ class AccountStatement(ServiceCustomMixin):
 
         try:
             request = self.request
+            service = get_object_or_404(Service, key='account_statement')
             print(request.POST)
             person_type = request.POST.get('person_type')
             engine_number = request.POST.get('engine_number')
@@ -54,9 +60,7 @@ class AccountStatement(ServiceCustomMixin):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            seriya = request.POST.get('seriya')
-            if request.POST.get('contract_date', None):
-                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
@@ -72,6 +76,7 @@ class AccountStatement(ServiceCustomMixin):
             car.full_weight = full_weight
             car.empty_weight = empty_weight
             car.engine_power = engine_power
+
             car.is_new = True
             car.is_replace_number = True
             if get_car.is_local:
@@ -95,23 +100,28 @@ class AccountStatement(ServiceCustomMixin):
 
             # create application and account_statament
             application = Application.objects.create(created_user=user, created_date=timezone.now())
-            if person_type == LEGAL_PERSON:
+
+
+            if int(person_type) == LEGAL_PERSON:
                 organization = get_object_or_404(Organization, id=request.POST.get('organization'))
                 application.person_type = person_type
                 application.organization = organization
-            application.save()
-
             password = random.randint(1000, 9999)
             application.password = password
-            service = get_object_or_404(Service, key='account_statement')
             application.service = service
             application.car = car
+
+            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                seriya = request.POST.get('seriya')
+                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                application.seriya = seriya
+                application.contract_date = contract_date
             application.save()
 
 
 
-            # calculation_state_duty_service_price(service)
-            #
+            calculation_state_duty_service_price(application)
+
             # stateDuties = list()
             # stateDuties.append({'application': application.file_name})
             # qs = StateDuty.objects.filter(service=service)
@@ -124,7 +134,7 @@ class AccountStatement(ServiceCustomMixin):
                 # 'stateDuties': serializers.serialize('json', stateDuties),
                 # 'application': application.file_name
             }
-            obj_serialize = serializers.serialize('json', [application,])
+            # obj_serialize = serializers.serialize('json', [application,])
             # data = json.dumps(obj_serialize)
             return HttpResponse(application.id, content_type='json', status=200)
         except:

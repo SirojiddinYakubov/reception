@@ -1,101 +1,123 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
 
+{% block css %}
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+     <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+     <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"/>
+{% endblock css %}
+
 {% block content %}
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Tashkilotni tahrirlash" %}</h2>
+    <div class="row ml-2 mr-2">
+
+        <div class="col-12 text-center p-0">
+            <div class="card px-0 pt-4 pb-0 mb-3">
+                <div class="mb-5 text-center">
+                    <h2>{% trans "Yuridik shaxsni ro'yhatga olish oynasi" %}</h2>
                 </div>
+                <fieldset>
+                    <legend>Tashkilotni tahrirlash</legend>
+                    <form action="#" method="POST" id="add_organization_form">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="title">{% trans "Tashkilot nomi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="title" name="title"
+                                       class="form-control" required value="{{ form.instance.title }}"
+                                       placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="director">{% trans "Rahbari" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="director" name="director"
+                                       class="form-control" required value="{{ form.instance.director }}"
+                                       placeholder="Masalan: Sirojiddin Yoqubov"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="identification_number">{% trans "STIR raqam" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="number" id="identification_number" name="identification_number"
+                                       class="form-control" required value="{{ form.instance.identification_number }}"
+                                       placeholder='Masalan: 305897526'
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="legal_address_region">{% trans 'Yuridik manzili(Viloyat)' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 legal_address_region">
+                                <select id="legal_address_region" name="legal_address_region" required
+                                        class="form-control select2"
+                                        data-width="100%">
+                                    <option value="">--Viloyatni tanlang--</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="legal_address_district">{% trans 'Yuridik manzili(Tuman)' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 legal_address_district">
+                                <select id="legal_address_district" name="legal_address_district" required
+                                        class="form-control select2"
+                                        data-width="100%">
+                                    <option value="">--Tumanni tanlang--</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="address_of_garage">{% trans "Garaj manzili" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="address_of_garage" name="address_of_garage"
+                                       class="form-control" required value="{{ form.instance.address_of_garage }}"
+                                       placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                    <div class="justify-content-end row">
+                            <div class="col-12">
+                                 <button type="button" class="btn btn-danger waves-effect waves-light float-start"
+                                        id="deleteBtn" data-title="{{ form.instance.title }}">O'chirish
+                                </button>
+                                <button type="submit" id="saveBtn"
+                                        class="btn btn-info waves-effect waves-light float-end">Saqlash
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
             </div>
         </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <!-- left column -->
-        <fieldset class="pt-5">
-            <div class="form-card">
-                <form id="add_organization_form" action="#" method="POST">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-sm-12">
-                            <label style="float: left" class="label_required not_copy" for="title">Tashkilot
-                                nomi</label>
-                            <input type="text"
-                                   id="title" autocomplete="off" name="title" class="form-control"
-                                   value="{{ form.instance.title }}"
-                                   placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="director">
-                                Rahbari</label>
-                            <input type="text"
-                                   id="director" autocomplete="off" name="director" class="form-control"
-                                   value="{{ form.instance.director }}" placeholder="Masalan: Sirojiddin Yoqubov"/>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="identification_number">STIR
-                                raqam</label>
-                            <input type="number" value="{{ form.instance.identification_number }}"
-                                   id="identification_number" name="identification_number" autocomplete="off"
-                                   class="form-control"
-                                   placeholder='Masalan: 305897526'/>
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 legal_address_region">
-                            <label class="label_required not_copy" for="legal_address_region">Yuridik
-                                manzili(Viloyat)</label>
-                            <select name="legal_address_region" class="form-control select2" id="legal_address_region"
-                                    required>
-                                <option value="">--Viloyatni tanlang--</option>
-                                {% for region in regions %}
-                                    <option value="{{ region.id }}">{{ region.title }}</option>
-                                {% endfor %}
-
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 legal_address_district">
-                            <label class="label_required not_copy" for="legal_address_district">Yuridik
-                                manzili(Tuman)</label>
-                            <select name="legal_address_district" class="form-control select2"
-                                    id="legal_address_district"
-                                    required>
-                                <option value="">--Tumanni tanlang--</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
-                                manzili</label>
-                            <input type="text" value="{{ form.instance.address_of_garage }}"
-                                   id="address_of_garage" autocomplete="off" name="address_of_garage"
-                                   class="form-control"
-                                   placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <div class="row justify-content-center">
-                        <input type="button" id="deleteBtn" data-title="{{ form.instance.title }}"
-                               class="action-button-reset" style="width:11rem"
-                               value="Tashkilotni o'chirish"/>
-                        <button type="submit" id="saveBtn" class="action-button">Saqlash</button>
-                    </div>
-                </form>
-            </div>
-        </fieldset>
     </div>
 {% endblock %}
-{% block bottom %}
+{% block js %}
+     <script src="{% static 'assets/libs/multiselect/js/jquery.multi-select.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript">
         $(function () {
             $('.select2').select2()
@@ -348,6 +370,6 @@
         })
 
     </script>
-{% endblock bottom %}
+{% endblock js %}
 
 

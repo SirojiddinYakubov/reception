@@ -28,8 +28,6 @@ i:hover {
 }
 
 
-
-
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
@@ -39,8 +37,6 @@ i:hover {
         font-size: 18px;
     }
 }
-
-
 
 
 .swal-overlay {
@@ -67,10 +63,6 @@ i:hover {
 }
 
 
-
-
-
-
 @-webkit-keyframes mover {
     0% {
         transform: translateY(0);
@@ -88,7 +80,6 @@ i:hover {
         transform: translateY(-20px);
     }
 }
-
 
 
 .input-error {
@@ -143,7 +134,7 @@ i:hover {
 
 
 label.error {
-    font-size: small;
+    font-size: 0.9em;
     color: #ff0000;
     padding: 3px;
 
@@ -308,7 +299,6 @@ input[type='checkbox'] {
 /*}*/
 
 
-
 /*.input-group .selectize-input:first-child {*/
 /*  border-top-right-radius: 0;*/
 /*  border-bottom-right-radius: 0;*/
@@ -332,6 +322,154 @@ input[type='checkbox'] {
 div.dataTables_wrapper div.dataTables_processing {
     top: 50%;
 }
+
 td.dataTables_empty {
     text-align: center;
+}
+
+.step {
+    list-style: none;
+    margin: .2rem 0;
+    width: 100%;
+}
+
+.step .step-item {
+    -ms-flex: 1 1 0;
+    flex: 1 1 0;
+    margin-top: 0;
+    min-height: 1rem;
+    position: relative;
+    text-align: center;
+}
+
+.step .step-item:not(:first-child)::before {
+    background: #3283f6;
+    content: "";
+    height: 2px;
+    left: -50%;
+    position: absolute;
+    top: 9px;
+    width: 100%;
+}
+
+.step .step-item span {
+    color: #acb3c2;
+    display: inline-block;
+    padding: 20px 10px 0;
+    text-decoration: none;
+}
+
+.step .step-item span::before {
+    background: #3283f6;
+    border: .1rem solid #fff;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: .9rem;
+    left: 50%;
+    position: absolute;
+    top: .2rem;
+    transform: translateX(-50%);
+    width: .9rem;
+    z-index: 1;
+}
+
+.step .step-item.active span::before {
+    background: #fff;
+    border: .1rem solid #3283f6;
+}
+
+.step .step-item.active ~ .step-item::before {
+    background: #e7e9ed;
+}
+
+.step .step-item.active ~ .step-item span::before {
+    background: #e7e9ed;
+}
+
+
+fieldset {
+
+    width: 90%;
+    position: center;
+    text-align: center;
+    margin: auto;
+    border: 0;
+    margin-bottom: 3%
+
+}
+
+legend {
+
+    border-style: none;
+    background-color: #3283f6;
+    font-weight: bold;
+    font-size: 17pt;
+    color: White;
+    width: 30%;
+    padding-left: 10px;
+    margin-left: 3%;
+    margin-bottom: unset !important;
+ z-index: 1000;
+
+    position:relative;
+}
+
+@media only screen and (max-width: 500px) {
+
+    legend {
+        width: 95%;
+        font-size: 0.8rem
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 768px) {
+
+    legend {
+        width: 60%;
+        font-size: 0.9rem
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1500px) {
+
+    legend {
+        width: 50%;
+        font-size: 0.9rem
+    }
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 2000px) {
+    legend {
+        width: 40%;
+    }
+}
+
+fieldset form {
+
+    border: 3px solid #3283f6;
+    /*border: 3px solid #3283f6;*/
+    position: relative;
+    top: -6px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 5%;
+    padding-bottom: 2%;
+    z-index: 0 !important;
+
+}
+
+.btn-info {
+    background: #3283f6;
+    border-color: #3283f6;
+}
+
+.btn-info:hover {
+    background: #5296f6;
+    border-color: #5296f6;
+}
+
+.selectize-input, .selectize-dropdown-content {
+    text-align: start !important;
+
 }

@@ -10,10 +10,10 @@ from service.models import *
 from user.models import Constant
 
 
-def calculation_state_duty_service_price(service):
-    service = get_object_or_404(Service, id=service.id)
-    application = get_object_or_404(Application, id=service.application_service.all().first().id)
-    car = get_object_or_404(Car, id=service.car.id)
+def calculation_state_duty_service_price(application):
+    application = get_object_or_404(Application, id=application.id)
+    service = get_object_or_404(Service, id=application.service.id)
+    car = get_object_or_404(Car, id=application.car.id)
 
     created_user = get_object_or_404(User, id=service.application_service.first().created_user.id)
 
@@ -32,10 +32,10 @@ def calculation_state_duty_service_price(service):
         registration = None
 
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
-    inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=service.car.type,
+    inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
                                                   state_duty=3).first()
-    if service.contract_date:
-        if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
+    if application.contract_date:
+        if datetime.datetime.now().date() > application.contract_date + timedelta(days=10):
             try:
                 fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
             except AttributeError:
@@ -62,20 +62,19 @@ def calculation_state_duty_service_price(service):
         if car.is_new:
             state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
             road_fund = int(int(state_percent) / 100 * int(car.price))
-
         else:
             # ishlab chiqarilganiga 3 yil to'lmagan
-            if some_day_3years_ago <= service.car.made_year:
+            if some_day_3years_ago <= car.made_year:
                 # print('3 yil bo\'lmagan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=0,
                                                                 stop=3).first().percent
             # 3 yil to'lgan lekin 7 yil to'lmagan
-            elif some_day_3years_ago >= service.car.made_year and some_day_7years_ago <= service.car.made_year:
+            elif some_day_3years_ago >= car.made_year and some_day_7years_ago <= car.made_year:
                 # print('3 yil bo\'lgan 7 yil bo\'lmagan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=3,
                                                                 stop=7).first().percent
             # 7 yildan ortiq
-            elif some_day_7years_ago >= service.car.made_year:
+            elif some_day_7years_ago >= car.made_year:
                 # print(' 7 yildan o\'tgan')
                 state_percent = StateDutyPercent.objects.filter(state_duty=2, car_type=car.type, start=7,
                                                                 stop=0).first().percent

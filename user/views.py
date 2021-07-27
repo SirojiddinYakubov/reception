@@ -344,8 +344,9 @@ class GetChildSections(AllowedRolesMixin):
         except:
             return qs
 
-@permission_classes([IsAuthenticated])
-class Get_Organization(APIView):
+
+class Get_Organization(AllowedRolesMixin, View):
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
     def post(self, request):
         if request.is_ajax():
             try:
