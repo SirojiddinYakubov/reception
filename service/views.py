@@ -17,7 +17,7 @@ from application.models import *
 from reception.mixins import AllowedRolesMixin
 from reception.settings import *
 from service.mixins import ServiceCustomMixin
-from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE
+from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE, Document
 from service.utils import calculation_state_duty_service_price
 from user.models import *
 
@@ -32,6 +32,7 @@ class AccountStatement(ServiceCustomMixin):
 
         try:
             request = self.request
+            service = get_object_or_404(Service, key='account_statement')
             print(request.POST)
             person_type = request.POST.get('person_type')
             engine_number = request.POST.get('engine_number')
@@ -54,9 +55,14 @@ class AccountStatement(ServiceCustomMixin):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            seriya = request.POST.get('seriya')
-            if request.POST.get('contract_date', None):
+
+            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                seriya = request.POST.get('seriya')
                 contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+            else:
+                seriya = ''
+                contract_date = timezone.now()
+
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
@@ -95,23 +101,29 @@ class AccountStatement(ServiceCustomMixin):
 
             # create application and account_statament
             application = Application.objects.create(created_user=user, created_date=timezone.now())
-            if person_type == LEGAL_PERSON:
+
+
+            if int(person_type) == LEGAL_PERSON:
+                print(LEGAL_PERSON)
+                print(person_type)
                 organization = get_object_or_404(Organization, id=request.POST.get('organization'))
                 application.person_type = person_type
                 application.organization = organization
-            application.save()
-
             password = random.randint(1000, 9999)
             application.password = password
-            service = get_object_or_404(Service, key='account_statement')
             application.service = service
+
+            # create document
+            document = Document.objects.create(seriya=seriya, contract_date=contract_date, title=service.title)
+            if document:
+                application.document.add(document)
             application.car = car
             application.save()
 
 
 
-            # calculation_state_duty_service_price(service)
-            #
+            # calculation_state_duty_service_price(application)
+            # dfd
             # stateDuties = list()
             # stateDuties.append({'application': application.file_name})
             # qs = StateDuty.objects.filter(service=service)

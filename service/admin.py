@@ -5,15 +5,28 @@ from service.models import *
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['id','title','key', 'service_id',  ]
+
+    # def render_change_form(self, request, context, *args, **kwargs):
+    #     context['adminform'].form.fields['document'].queryset = Document.objects.filter(is_active=False)
+    #
+    #     return super().render_change_form(request, context, *args, **kwargs)
+
+    list_display = ['id','title','key',]
     list_display_links = ['title']
     list_filter = [ 'created_date',]
     search_fields = ['title','key' ]
 
+@admin.register(RequiredItem)
+class RequiredItemAdmin(admin.ModelAdmin):
+    list_display = ['id','title',  ]
+    list_display_links = ['title']
+    list_filter = [ 'created_date',]
+    search_fields = ['title', ]
+
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ['id','title',  ]
-    list_display_links = ['title']
+    list_display_links = ['id','title']
     list_filter = [ 'created_date',]
     search_fields = ['title', ]
 

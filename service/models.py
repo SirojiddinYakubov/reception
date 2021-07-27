@@ -20,14 +20,13 @@ from user.models import *
 
 class Service(models.Model):
     title = models.CharField(max_length=200,)
-    service_id = models.IntegerField(unique=True)
-    key = models.CharField(max_length=50, null=True, blank=True)
+    key = models.CharField(max_length=50,unique=True)
     is_active = models.BooleanField(default=True)
     desc = models.TextField(blank=True)
     photo = models.CharField(verbose_name="Foto", blank=True, max_length=255)
     deadline = models.CharField(verbose_name="Muddati", max_length=20, )
     instruction = models.TextField(blank=True)
-    document = models.ManyToManyField('Document', related_name='service_document', blank=True)
+    required_item = models.ManyToManyField('RequiredItem', related_name='service_required_item', blank=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 
 
@@ -38,11 +37,24 @@ class Service(models.Model):
         verbose_name = 'Servis'
         verbose_name_plural = 'Servislar'
 
+class RequiredItem(models.Model):
+    title = models.CharField(max_length=200,)
+    created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.title)
+
+    class Meta:
+        verbose_name = 'Servise uchun kerakli narsalar'
+        verbose_name_plural = 'Servise uchun kerakli narsalar'
+
 class Document(models.Model):
     title = models.CharField(max_length=200,)
     seriya = models.CharField('Seriya', max_length=50, blank=True)
     contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
     created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Hujjat'

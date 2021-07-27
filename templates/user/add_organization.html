@@ -1,209 +1,116 @@
 {% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
-
+{% block css %}
+    <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock css %}
 {% block content %}
-    <style>
-        #certificatePhotoPreview {
-            padding: 0;
-            margin: 0;
-            width: 200px;
-            border: 5px dashed #4c73d4;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+    <div class="row ml-2 mr-2">
 
-            color: #4c4c4c;
-
-        }
-
-        #certificatePhotoPreview > label {
-            margin: 0;
-            padding: 30px;
-            color: red;
-            cursor: pointer;
-        }
-
-        #certificateRemove {
-            display: block;
-
-
-            color: #4e4e4e;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        #certificateRemove:hover {
-            display: block;
-            color: #000000;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        #licensePhotoPreview {
-            padding: 0;
-            margin: 0;
-            width: 200px;
-            border: 5px dashed #4c73d4;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-
-            color: #4c4c4c;
-
-        }
-
-        #licensePhotoPreview > label {
-            margin: 0;
-            padding: 30px;
-            color: red;
-            cursor: pointer;
-        }
-
-        #licenseRemove {
-            display: block;
-            color: #4e4e4e;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        #licenseRemove:hover {
-            display: block;
-            color: #000000;
-            text-align: center;
-            cursor: pointer;
-        }
-    </style>
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Tashkilot qo'shish" %}</h2>
+        <div class="col-12 text-center p-0">
+            <div class="card px-0 pt-4 pb-0 mb-3">
+                <div class="mb-5 text-center">
+                    <h2>{% trans "Yuridik shaxsni ro'yhatga olish oynasi" %}</h2>
                 </div>
+                <fieldset>
+                    <legend>Tashkilot qo'shish</legend>
+                    <form action="#" method="POST" id="add_organization_form">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="title">{% trans "Tashkilot nomi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="title" name="title"
+                                       class="form-control" required
+                                       placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="director">{% trans "Rahbari" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="director" name="director"
+                                       class="form-control" required
+                                       placeholder="Masalan: Sirojiddin Yoqubov"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="identification_number">{% trans "STIR raqam" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="number" id="identification_number" name="identification_number"
+                                       class="form-control" required
+                                       placeholder='Masalan: 305897526'
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="legal_address_region">{% trans 'Yuridik manzili(Viloyat)' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 legal_address_region">
+                                <select id="legal_address_region" name="legal_address_region" required
+                                        class="form-control select2"
+                                        data-width="100%">
+                                    <option value="">--Viloyatni tanlang--</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="legal_address_district">{% trans 'Yuridik manzili(Tuman)' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 legal_address_district">
+                                <select id="legal_address_district" name="legal_address_district" required
+                                        class="form-control select2"
+                                        data-width="100%">
+                                    <option value="">--Tumanni tanlang--</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="address_of_garage">{% trans "Garaj manzili" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="address_of_garage" name="address_of_garage"
+                                       class="form-control" required
+                                       placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                    <div class="justify-content-end row">
+                            <div class="col-12">
+                                <button type="submit" id="saveBtn"
+                                        class="btn btn-info waves-effect waves-light float-end">Saqlash
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
             </div>
         </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <!-- left column -->
-        <fieldset class="pt-5">
-            <div class="form-card">
-                <form id="add_organization_form" action="#" method="POST">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-12 col-sm-12">
-                            <label style="float: left" class="label_required not_copy" for="title">Tashkilot
-                                nomi</label>
-                            <input type="text"
-                                   id="title" autocomplete="off" name="title" class="form-control"
-                                   placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="director">
-                                Rahbari</label>
-                            <input type="text"
-                                   id="director" autocomplete="off" name="director" class="form-control"
-                                   placeholder="Masalan: Sirojiddin Yoqubov"/>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="identification_number">STIR
-                                raqam</label>
-                            <input type="number"
-                                   id="identification_number" name="identification_number" autocomplete="off"
-                                   class="form-control"
-                                   placeholder='Masalan: 305897526'/>
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2 legal_address_region">
-                            <label class="label_required not_copy" for="legal_address_region">Yuridik
-                                manzili(Viloyat)</label>
-                            <select name="legal_address_region" class="form-control select2" id="legal_address_region"
-                                    required>
-                                <option value="">--Viloyatni tanlang--</option>
-                                {% for region in regions %}
-                                    <option value="{{ region.id }}">{{ region.title }}</option>
-                                {% endfor %}
-
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2 legal_address_district">
-                            <label class="label_required not_copy" for="legal_address_district">Yuridik
-                                manzili(Tuman)</label>
-                            <select name="legal_address_district" class="form-control select2"
-                                    id="legal_address_district"
-                                    required>
-                                <option value="">--Tumanni tanlang--</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <label style="float: left" class="label_required not_copy" for="address_of_garage">Garaj
-                                manzili</label>
-                            <input type="text"
-                                   id="address_of_garage" autocomplete="off" name="address_of_garage"
-                                   class="form-control"
-                                   placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"/>
-                        </div>
-                        {#                    <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">#}
-                        {#                        <div class="row">#}
-                        {#                            <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">#}
-                        {#                                <div id="certificatePhotoPreview">#}
-                        {#                                    <label class="not_copy" for="certificate_photo">Guvohnoma#}
-                        {#                                        suratini yuklang</label>#}
-                        {##}
-                        {#                                    <input type="file" name="photo" hidden#}
-                        {#                                           id="certificate_photo" accept=".jpg, .jpeg, .png, .gif"/>#}
-                        {##}
-                        {#                                    <img style='width: 120px; height: auto;display: none' id='certificateThumbnail'#}
-                        {#                                         src="" title='Image'/>#}
-                        {#                                    <span style="display: none" id='certificateRemove'>O'chirish</span>#}
-                        {#                                </div>#}
-                        {#                                <p id="certificatePhotoError"#}
-                        {#                                   style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"#}
-                        {#                                   class="form-text text-danger">Guvohnoma surati yuklanmagan</p>#}
-                        {#                            </div>#}
-                        {#                            <div class="col-12 col-lg-4 col-md-4 col-xl-4 col-sm-4 mb-2">#}
-                        {##}
-                        {#                                <div id="licensePhotoPreview">#}
-                        {#                                    <label class="not_copy" for="license_photo">Litsenziya#}
-                        {#                                        suratini yuklang</label>#}
-                        {##}
-                        {#                                    <input type="file" name="photo" hidden#}
-                        {#                                           id="license_photo" accept=".jpg, .jpeg, .png, .gif"/>#}
-                        {##}
-                        {#                                    <img style='width: 120px; height: auto;display: none' id='licenseThumbnail'#}
-                        {#                                         src="" title='Image'/>#}
-                        {#                                    <span style="display: none" id='licenseRemove'>O'chirish</span>#}
-                        {#                                </div>#}
-                        {#                                <p id="licensePhotoError"#}
-                        {#                                   style="font-size: smaller; margin-top: 0; padding-top: 0; margin-bottom: 0; display: none; float: left"#}
-                        {#                                   class="form-text text-danger">Litsenziya surati yuklanmagan</p>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
-                        {##}
-                        {#                    </div>#}
-
-                    </div>
-                    <hr>
-
-                    <div class="row justify-content-center">
-                        <input type="reset" id="resetBtn"
-                               class="action-button-reset"
-                               value="Tozalash"/>
-                        <button type="submit" id="saveBtn" class="action-button">Saqlash</button>
-                    </div>
-                </form>
-            </div>
-        </fieldset>
     </div>
 {% endblock %}
-{% block bottom %}
+
+
+
+{% block js %}
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $('.select2').select2()
@@ -226,78 +133,8 @@
                 }
             })
 
-
-            {#$('#certificate_photo').on('change', function (event) {#}
-            {##}
-            {#    var files = event.target.files; //FileList object#}
-            {#    for (var i = 0; i < files.length; i++) {#}
-            {#        var file = files[i];#}
-            {#        console.log(file)#}
-            {#        console.log(`/media/organizations/certificate/2563897.png`)#}
-            {#        //Only pics#}
-            {#        if (!file.type.match('image'))#}
-            {#            continue;#}
-            {#        var picReader = new FileReader();#}
-            {#        picReader.addEventListener("load", function (event) {#}
-            {#            var picFile = event.target;#}
-            {#            //  var div = document.createElement("div");#}
-            {#            $('#certificatePhotoPreview label').hide()#}
-            {#            $('#certificateThumbnail').show()#}
-            {#            $('#certificateRemove').show()#}
-            {#            $('#certificateThumbnail').attr('src', picFile.result)#}
-            {#            $('#certificatePhotoError').hide()#}
-            {#            // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +#}
-            {#            //   "title='Image'/><span  id='remove'>O'chirish</span>";#}
-            {#            //  result.insertBefore(div, null);#}
-            {#            $("#certificateRemove").click(function () {#}
-            {#                $('#certificatePhotoPreview label').show()#}
-            {#                $('#certificateThumbnail').hide()#}
-            {#                $('#certificateRemove').hide()#}
-            {#                $('#certificatePhotoError').show()#}
-            {#            });#}
-            {#        });#}
-            {#        //Read the image#}
-            {#        picReader.readAsDataURL(file);#}
-            {#    }#}
-            //  {#})#}
-            {##}
-            {#$('#license_photo').on('change', function (event) {#}
-            {#    var files = event.target.files; //FileList object#}
-            {#    for (var i = 0; i < files.length; i++) {#}
-            {#        var file = files[i];#}
-            {##}
-            {#        //Only pics#}
-            {#        if (!file.type.match('image'))#}
-            {#            continue;#}
-            {#        var picReader = new FileReader();#}
-            {#        picReader.addEventListener("load", function (event) {#}
-            {#            var picFile = event.target;#}
-            {#            //  var div = document.createElement("div");#}
-            {#            $('#licensePhotoPreview label').hide()#}
-            {#            $('#licenseThumbnail').show()#}
-            {#            $('#licenseRemove').show()#}
-            {#            $('#licenseThumbnail').attr('src', picFile.result)#}
-            {#            $('#licensePhotoError').hide()#}
-            {#            // result.innerHTML = "<img style='width: 150px; height: auto' id='thumbnail' src='" + picFile.result + "'" +#}
-            {#            //   "title='Image'/><span  id='remove'>O'chirish</span>";#}
-            {#            //  result.insertBefore(div, null);#}
-            {#            $("#licenseRemove").click(function () {#}
-            {#                $('#licensePhotoPreview label').show()#}
-            {#                $('#licenseThumbnail').hide()#}
-            {#                $('#licenseRemove').hide()#}
-            {#                $('#licensePhotoError').show()#}
-            {#            });#}
-            {#        });#}
-            {#        //Read the image#}
-            {#        picReader.readAsDataURL(file);#}
-            {#    }#}
-            // {#})#}
-
-
             $('#legal_address_region').change(function () {
                 var SelectedRegion = $(this).children("option:selected").val()
-
-
                 $.ajax({
                     type: "GET",
                     url: "{% url 'user:get_district' %}",
@@ -309,125 +146,6 @@
                     }
                 });
             })
-
-            {#$('#saveBtn').on('click', function () {#}
-            {##}
-            {#    if ($('#title').val() == '') {#}
-            {#        $('#title').css("border-bottom", "2px solid red")#}
-            {#    } else if ($('#director').val() == '') {#}
-            {#        $('#director').css("border-bottom", "2px solid red")#}
-            {#    } else if ($('#identification_number').val() == '') {#}
-            {#        $('#identification_number').css("border-bottom", "2px solid red")#}
-            {#    } else if (isNaN(parseInt($('#legal_address_region').children('option:selected').val()))) {#}
-            {##}
-            {#        $('#legal_address_region').siblings('span').css("border-bottom", "2px solid red")#}
-            {#    } else if (isNaN(parseInt($('#legal_address_district').children('option:selected').val()))) {#}
-            {#        $('#legal_address_district').css("border-bottom", "2px solid red")#}
-            {#    } else if ($('#legal_address').val() == '') {#}
-            {#        $('#legal_address_district').siblings('span').css("border-bottom", "2px solid red")#}
-            {#    } else if ($('#address_of_garage').val() == '') {#}
-            {#        $('#address_of_garage').css("border-bottom", "2px solid red")#}
-            {#    } else if ($('#certificate_photo').val() == '') {#}
-            {#        $('#certificatePhotoError').show()#}
-            {#    } else {#}
-            {#        $('#saveBtn').attr('disabled', true)#}
-            {#        $('#saveBtn').html('Saqlash&nbsp&nbsp<i class="fas fa-spinner fa-spin"></i>')#}
-            {##}
-            {#        // get csrftoken from cookie#}
-            {#        function getCookie(name) {#}
-            {#            var cookieValue = null;#}
-            {#            if (document.cookie && document.cookie !== '') {#}
-            {#                var cookies = document.cookie.split(';');#}
-            {#                for (var i = 0; i < cookies.length; i++) {#}
-            {#                    var cookie = jQuery.trim(cookies[i]);#}
-            {#                    if (cookie.substring(0, name.length + 1) === (name + '=')) {#}
-            {#                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));#}
-            {#                        break;#}
-            {#                    }#}
-            {#                }#}
-            {#            }#}
-            {#            return cookieValue;#}
-            {#        }#}
-            {##}
-            {#        var csrftoken = getCookie('csrftoken');#}
-            {##}
-            {#        // add cookie ajax headers#}
-            {##}
-            {#        $.ajaxSetup({#}
-            {#            beforeSend: function (xhr) {#}
-            {#                xhr.setRequestHeader('X-CSRFToken', csrftoken)#}
-            {#            }#}
-            {#        })#}
-            {##}
-            {#        // add photo in FormData#}
-            {#        var fd = new FormData();#}
-            {#        var license_photo = $('#license_photo')[0].files[0];#}
-            {#        var certificate_photo = $('#certificate_photo')[0].files[0];#}
-            {#        var SelectedLegalRegion = $('#legal_address_region').children("option:selected").val()#}
-            {#        var SelectedLegalDistrict = $('#legal_address_district').children("option:selected").val()#}
-            {##}
-            {#        fd.append('license_photo', license_photo);#}
-            {#        fd.append('certificate_photo', certificate_photo);#}
-            {#        fd.append('title', $('#title').val());#}
-            {#        fd.append('director', $('#director').val());#}
-            {#        fd.append('identification_number', $('#identification_number').val());#}
-            {#        fd.append('legal_address_region', SelectedLegalRegion);#}
-            {#        fd.append('legal_address_district', SelectedLegalDistrict);#}
-            {#        fd.append('address_of_garage', $('#address_of_garage').val());#}
-            {##}
-            {#        // ajax POST request#}
-            {#        $.ajax({#}
-            {#            url: '{% url "user:add_organization" %}',#}
-            {#            type: 'POST',#}
-            {#            data: fd,#}
-            {#            contentType: false,#}
-            {#            processData: false,#}
-            {#            success: function (response) {#}
-            {#                if (response === "True") {#}
-            {##}
-            {#                    $.notifyDefaults({#}
-            {#                        type: 'success',#}
-            {#                        allow_dismiss: false,#}
-            {#                        animate: {#}
-            {#                            enter: 'animated fadeInRight',#}
-            {#                            exit: 'animated fadeOutRight',#}
-            {#                        },#}
-            {#                        z_index: '9999'#}
-            {#                    });#}
-            {#                    $.notify({#}
-            {#                        icon: 'glyphicon glyphicon-star',#}
-            {#                        message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +#}
-            {#                            '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +#}
-            {#                            '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +#}
-            {#                            '</svg> Tashkilot muvaffaqiyatli qo\'shildi!'#}
-            {#                    });#}
-            {##}
-            {#                    setTimeout(function () {#}
-            {#                        window.location.href = '{% url "user:organizations_list" %}'#}
-            {#                    }, 1500);#}
-            {#                } else {#}
-            {#                    errorFunction()#}
-            {#                    $('#saveBtn').attr('disabled', false)#}
-            {#                    $('#saveBtn').html('Saqlash')#}
-            {#                }#}
-            {##}
-            {#            },#}
-            {#            error: function (response) {#}
-            {#                errorFunction()#}
-            {#                $('#saveBtn').attr('disabled', false)#}
-            {#                $('#saveBtn').html('Saqlash')#}
-            {#            }#}
-            {#        })#}
-            {#    }#}
-            // {#})#}
-
-            {#$(document).on('change', '#title, #director, #identification_number, #legal_address, #address_of_garage', function (e) {#}
-            {#    if (e.target.value !== '') {#}
-            {#        $(e.target).css("border-bottom", "2px solid green")#}
-            {#    } else {#}
-            {#        $(e.target).css("border-bottom", "2px solid red")#}
-            {#    }#}
-            //{#})#}
 
 
             $('#legal_address_region').on('change', function () {
@@ -572,4 +290,4 @@
         })
 
     </script>
-{% endblock bottom %}
+{% endblock js %}

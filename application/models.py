@@ -4,7 +4,7 @@ import time
 from django.db import models
 from django.utils import timezone
 
-from service.models import Service
+from service.models import Service, Document
 from user.models import User, Section, Organization, Car
 from django.utils.translation import ugettext_lazy as _
 
@@ -60,6 +60,7 @@ class Application(models.Model):
     updated_date = models.DateTimeField(verbose_name=_('Tahrirlangan vaqti'), null=True, blank=True,
                                         default=timezone.now)
     canceled_date = models.DateTimeField(verbose_name=_('Rad etilgan vaqti'), null=True, blank=True)
+    document = models.ManyToManyField(Document, related_name='application_document', blank=True)
 
     class Meta:
         verbose_name = 'Ariza'
@@ -67,7 +68,8 @@ class Application(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return f"Application: {self.service.service_id}"
+        if self.service.key:
+            return f"Application: {self.service.key}"
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
