@@ -60,7 +60,8 @@ class Application(models.Model):
     updated_date = models.DateTimeField(verbose_name=_('Tahrirlangan vaqti'), null=True, blank=True,
                                         default=timezone.now)
     canceled_date = models.DateTimeField(verbose_name=_('Rad etilgan vaqti'), null=True, blank=True)
-    document = models.ManyToManyField(Document, related_name='application_document', blank=True)
+    seriya = models.CharField('Seriya', max_length=50, blank=True)
+    contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Ariza'

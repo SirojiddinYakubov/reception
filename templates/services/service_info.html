@@ -70,8 +70,8 @@
                         <div class="accordion-body">
                             <ul>
 
-                                {% for required_item in service.required_item.all %}
-                                    <li>{{ required_item.title }}</li>
+                                {% for document in service.document.all %}
+                                    <li>{{ document.title }}</li>
                                 {% endfor %}
                             </ul>
                         </div>

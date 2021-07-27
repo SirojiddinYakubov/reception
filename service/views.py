@@ -25,6 +25,11 @@ from user.models import *
 class AccountStatement(ServiceCustomMixin):
     template_name = 'service/account_statement/account_statement.html'
 
+    def get(self, request, *args, **kwargs):
+        # i = calculation_state_duty_service_price(get_object_or_404(Application, id=22))
+        # print(i, 30)
+        return super().get(self, request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
 
@@ -56,13 +61,6 @@ class AccountStatement(ServiceCustomMixin):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
 
-            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
-                seriya = request.POST.get('seriya')
-                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
-            else:
-                seriya = ''
-                contract_date = timezone.now()
-
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
@@ -78,6 +76,7 @@ class AccountStatement(ServiceCustomMixin):
             car.full_weight = full_weight
             car.empty_weight = empty_weight
             car.engine_power = engine_power
+
             car.is_new = True
             car.is_replace_number = True
             if get_car.is_local:
@@ -104,26 +103,25 @@ class AccountStatement(ServiceCustomMixin):
 
 
             if int(person_type) == LEGAL_PERSON:
-                print(LEGAL_PERSON)
-                print(person_type)
                 organization = get_object_or_404(Organization, id=request.POST.get('organization'))
                 application.person_type = person_type
                 application.organization = organization
             password = random.randint(1000, 9999)
             application.password = password
             application.service = service
-
-            # create document
-            document = Document.objects.create(seriya=seriya, contract_date=contract_date, title=service.title)
-            if document:
-                application.document.add(document)
             application.car = car
+
+            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                seriya = request.POST.get('seriya')
+                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                application.seriya = seriya
+                application.contract_date = contract_date
             application.save()
 
 
 
-            # calculation_state_duty_service_price(application)
-            # dfd
+            calculation_state_duty_service_price(application)
+
             # stateDuties = list()
             # stateDuties.append({'application': application.file_name})
             # qs = StateDuty.objects.filter(service=service)
@@ -136,7 +134,7 @@ class AccountStatement(ServiceCustomMixin):
                 # 'stateDuties': serializers.serialize('json', stateDuties),
                 # 'application': application.file_name
             }
-            obj_serialize = serializers.serialize('json', [application,])
+            # obj_serialize = serializers.serialize('json', [application,])
             # data = json.dumps(obj_serialize)
             return HttpResponse(application.id, content_type='json', status=200)
         except:

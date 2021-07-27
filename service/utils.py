@@ -34,8 +34,8 @@ def calculation_state_duty_service_price(application):
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
                                                   state_duty=3).first()
-    if service.contract_date:
-        if datetime.datetime.now().date() > service.contract_date + timedelta(days=10):
+    if application.contract_date:
+        if datetime.datetime.now().date() > application.contract_date + timedelta(days=10):
             try:
                 fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
             except AttributeError:
@@ -62,7 +62,6 @@ def calculation_state_duty_service_price(application):
         if car.is_new:
             state_percent = StateDutyPercent.objects.filter(state_duty=1).first().percent
             road_fund = int(int(state_percent) / 100 * int(car.price))
-
         else:
             # ishlab chiqarilganiga 3 yil to'lmagan
             if some_day_3years_ago <= car.made_year:

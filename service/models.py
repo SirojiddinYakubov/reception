@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
 from user.models import *
 
 # SERVICE_CHOICES = (
@@ -26,7 +25,7 @@ class Service(models.Model):
     photo = models.CharField(verbose_name="Foto", blank=True, max_length=255)
     deadline = models.CharField(verbose_name="Muddati", max_length=20, )
     instruction = models.TextField(blank=True)
-    required_item = models.ManyToManyField('RequiredItem', related_name='service_required_item', blank=True)
+    document = models.ManyToManyField('Document', related_name='service_document', blank=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 
 
@@ -37,22 +36,8 @@ class Service(models.Model):
         verbose_name = 'Servis'
         verbose_name_plural = 'Servislar'
 
-class RequiredItem(models.Model):
-    title = models.CharField(max_length=200,)
-    created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return str(self.title)
-
-    class Meta:
-        verbose_name = 'Servise uchun kerakli narsalar'
-        verbose_name_plural = 'Servise uchun kerakli narsalar'
-
 class Document(models.Model):
     title = models.CharField(max_length=200,)
-    seriya = models.CharField('Seriya', max_length=50, blank=True)
-    contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
     created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
     is_active = models.BooleanField(default=True)
 
@@ -63,7 +48,6 @@ class Document(models.Model):
 
     def __str__(self):
         return f"Document: {self.title}"
-
 
 ROAD_FUND = 1
 ROAD_FUND_HORSE_POWER = 2
@@ -103,10 +87,10 @@ class StateDuty(models.Model):
         verbose_name_plural = 'Davlat boj to\'lovlari'
 
 class StateDutyPercent(models.Model):
-    from application.models import PERSON_CHOICES
-    # service = models.CharField(max_length=50, choices=SERVICE_CHOICES, blank=True, null=True)
-    state_duty = models.CharField(max_length=20, choices=STATE_DUTY_TITLE, null=True)
-    person_type = models.CharField('Shaxs turi', choices=PERSON_CHOICES, max_length=3, default="J", blank=True, null=True)
+    from application.models import PERSON_CHOICES, PHYSICAL_PERSON
+    # service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    state_duty = models.CharField(max_length=3,choices=STATE_DUTY_TITLE, null=True)
+    person_type = models.IntegerField('Shaxs turi', choices=PERSON_CHOICES,default=PHYSICAL_PERSON, blank=True, null=True)
     car_type = models.ForeignKey(CarType, on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,null=True)
     car_is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
     is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
@@ -120,7 +104,7 @@ class StateDutyPercent(models.Model):
     updated_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.get_state_duty_display()} : {self.percent}%"
+        return f"{self.state_duty} : {self.percent}%"
 
     class Meta:
         verbose_name = 'Davlat boji foizlari'

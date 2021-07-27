@@ -16,13 +16,6 @@ class ServiceAdmin(admin.ModelAdmin):
     list_filter = [ 'created_date',]
     search_fields = ['title','key' ]
 
-@admin.register(RequiredItem)
-class RequiredItemAdmin(admin.ModelAdmin):
-    list_display = ['id','title',  ]
-    list_display_links = ['title']
-    list_filter = [ 'created_date',]
-    search_fields = ['title', ]
-
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ['id','title',  ]

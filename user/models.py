@@ -276,7 +276,7 @@ class CarModel(models.Model):
 
 
 class Car(models.Model):
-    model = models.ForeignKey(CarModel, verbose_name="Model", on_delete=models.SET_NULL, null=True)
+    model = models.ForeignKey(CarModel, verbose_name="Model", on_delete=models.SET_NULL, null=True, related_name='car_model')
     body_type = models.ForeignKey('BodyType', verbose_name='Kuzov turi', on_delete=models.SET_NULL, blank=True,
                                   null=True)
     fuel_type = models.ManyToManyField('FuelType', verbose_name='Yoqilg\'i turi', blank=True,

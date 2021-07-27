@@ -44,6 +44,8 @@ class RegionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['title']}),
     ]
+    list_display = ['id', 'title']
+    list_display_links = ['title']
     inlines = [DistrictInline]
     save_on_top = True
 
@@ -57,6 +59,9 @@ class DistrictAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['title']}),
     ]
+    list_display = ['id', 'title']
+    list_display_links = ['title']
+    list_filter = ['region']
     inlines = [QuarterInline]
     save_on_top = True
 

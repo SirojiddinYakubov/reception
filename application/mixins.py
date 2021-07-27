@@ -161,7 +161,7 @@ class ApplicationCustomMixin(ListView):
         
         qs = qs.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
-            Q(service__title__in=self.get_choices_value(q, SERVICE_CHOICES)) |
+            Q(service__title__icontains=q) |
             Q(service__car__model__title__icontains=q) |
             Q(created_user__first_name__icontains=q) |
             Q(created_user__last_name__icontains=q) |
