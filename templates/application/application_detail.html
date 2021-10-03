@@ -1,163 +1,135 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
 {% load humanize %}
 {% load applications_tags %}
+{% block css %}
+    <style>
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            --bs-table-accent-bg: #e9eef1;
+            color: var(--bs-table-striped-color);
+        }
+    </style>
+{% endblock css %}
+
+{% block page_title %}
+    {% trans 'Amalllar xronologiyasi' %}
+{% endblock page_title %}
+
 {% block content %}
 
-    <section class="py-3 mt-2 bg-info text-light">
-
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Amallar xronologiyasi" %}</h2>
-                </div>
-            </div>
-        </div>
-    </section>
-    {% if application.is_block %}
-        <br>
-        <div class="alert alert-danger">Ariza faollashtirilmagan! Arizani faollashtirish uchun to'lovni amalga
-            oshiring!
-            {#            <a class="close" href="#" data-dismiss="alert">×</a>#}
-        </div>
-    {% endif %}
-    {% include '_parts/messages.html' %}
-    <div class="text-right mt-2 mb-2 mr-5">
-        <button class="btn btn-default m-2 application_render_pdf" data-application="{{ application.id }}">
-            Ariza haqida ma'lumot &nbsp&nbsp <i class="fas fa-download"></i>
-        </button>
-    </div>
     <div class="row">
-        <div class="col-12" style="font-size: 0.9em">
-            <div class="panel-group drop-accordion" id="accordion" role="tablist"
-                 aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a class="collapse-controle" data-toggle="collapse" data-parent="#accordion"
-                               href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Ariza haqida ma'lumot
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-
-                        </h4>
-                    </div>
-
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                         aria-labelledby="headingOne" aria-expanded="false">
-                        <div class="panel-body">
-                           {% include 'application/inc/about_application_part.html' %}
+        {% include '_parts/messages.html' %}
+        <div class="col-12 info_area">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                            <h5>Ariza haqida ma'lumot</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            {% include 'application/inc/about_application_part.html' %}
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapse-controle collapsed" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                               aria-controls="collapseTwo">
-                                Ariza topshiruvchi
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;">
-                        <div class="panel-body">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                            <h5>Ariza topshiruvchi</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
                             {% include 'application/inc/application_submitting_part.html' %}
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="collapse-controle collapsed" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseThree" aria-expanded="false"
-                               aria-controls="collapseThree">
-                                Avtomobil
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;">
-                        <div class="panel-body">
-                   {% include 'application/inc/application_car_part.html' %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                            <h5>Avtomobil</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            {% include 'application/inc/application_car_part.html' %}
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingFour">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseFour" aria-expanded="false"
-                               aria-controls="collapseFour">
-                                Mavjud fayllar
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFour" aria-expanded="false">
-                        <div class="panel-body">
-                            {% include 'application/inc/application_files_part.html' %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseFour">
+                            <h5>Mavjud fayllar</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingFour">
+                        <div class="accordion-body">
+                            <ul>
+                                {% include 'application/inc/application_files_part.html' %}
+                            </ul>
                         </div>
                     </div>
+
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingFifth">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseFifth" aria-expanded="false"
-                               aria-controls="collapseFifth">
-                                To'lov
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseFifth" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingFifth" aria-expanded="false">
-                        <div class="panel-body" id="render_div">
-                            {% include 'application/inc/application_payments_part.html' %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFifth">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFifth" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseFifth">
+                            <h5>To'lov</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFifth" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingFifth">
+                        <div class="accordion-body">
+                            <ul>
+                                {% include 'application/inc/application_payments_part.html' %}
+                            </ul>
                         </div>
                     </div>
+
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading tab-collapsed" role="tab" id="headingSix">
-                        <h4 class="panel-title">
-                            <a class="collapsed collapse-controle" data-toggle="collapse"
-                               data-parent="#accordion" href="#collapseSix" aria-expanded="false"
-                               aria-controls="collapseSix">
-                                Ariza holati
-                                <span class="expand-icon-wrap"><i style="padding: 0.5em"
-                                                                  class="fas fa-angle-double-down"></i></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingSix" aria-expanded="false">
-                        <div class="panel-body">
-                            {% include 'application/inc/application_status_part.html' %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseSix">
+                            <h5>Ariza holati</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingSix">
+                        <div class="accordion-body">
+                            <ul>
+                                {% include 'application/inc/application_status_part.html' %}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /#accordion -->
         </div>
     </div>
 
+
 {% endblock content %}
-{% block bottom %}
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript">
-
-
-        $('#collapseOne').collapse('show');
 
         $('.application_render_pdf').on('click', function () {
             var applicationId = $(this).data('application')
@@ -181,7 +153,7 @@
 
             var sum = 0;
             $(".state_payment").each(function () {
-                sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                sum += parseFloat($(this).text().replace(/[\s+,.]/g, ''));
             });
             $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
         }
@@ -230,4 +202,4 @@
         })
 
     </script>
-{% endblock bottom %}
+{% endblock js %}

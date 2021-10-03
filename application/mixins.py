@@ -46,25 +46,16 @@ class ApplicationCustomMixin(ListView):
     #     return context
 
     #def dispatch(self, request, *args, **kwargs):
-    #    #allow user to call this View if their Client owns the Survey
     #    self.survey = get_object_or_404(Survey, hash=self.kwargs['hash'])
-    #    up = get_object_or_404(UserProfile, fk_user=self.request.user)
+    #    up = get_object_or_404(User, fk_user=self.request.user)
     #    self.client = up.fk_client
     #    if self.survey.fk_client != self.client:
     #        raise Http404
-    #    return super(AjaxQuestionList, self).dispatch(request, *args, **kwargs)
+    #    return super(ApplicationCustomMixin, self).dispatch(request, *args, **kwargs)
 
     # @allowed_users(allowed_roles=[*allowed_roles])
     # def dispatch(self, *args, **kwargs):
     #     return super().dispatch(*args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        try:
-            token = request.COOKIES.get('token')
-            Token.objects.get(key=token)
-        except Token.DoesNotExist:
-            return redirect(reverse_lazy('landing:home_page'))
-        return super().get(request, *args, **kwargs)
 
     def myconverter(self, obj):
         if isinstance(obj, (datetime.datetime)):
@@ -86,12 +77,13 @@ class ApplicationCustomMixin(ListView):
 
     def get_queryset(self):
         id_list = []
-        for item in super().get_queryset():
+        qs = super().get_queryset().filter(is_active=True)
+        for item in qs:
             if item.section.pay_for_service and not item.is_block:
                 id_list.append(item.id)
             elif not item.section.pay_for_service:
                 id_list.append(item.id)
-        qs = super().get_queryset().filter(id__in=id_list, is_active=True)
+        qs = super().get_queryset().filter(id__in=id_list)
 
         q = self.request.GET.get('q', '').lower()
         order_by = self.request.GET.get('order_by', 'created_date')
@@ -108,16 +100,7 @@ class ApplicationCustomMixin(ListView):
                     key = item.split('=')[0]
                     value = item.split('=')[1]
                     if key == 'service':
-                        if value == 'account_statement':
-                            qs = qs.filter(service__title='account_statement')
-                        if value == 'gift_agreement':
-                            qs = qs.filter(service__title='gift_agreement')
-                        if value == 'contract_of_sale':
-                            qs = qs.filter(service__title='contract_of_sale')
-                        if value == 'replace_tp':
-                            qs = qs.filter(service__title='replace_tp')
-                        if value == 'replace_number_and_tp':
-                            qs = qs.filter(service__title='replace_number_and_tp')
+                        qs = qs.filter(service__key=value)
                     if key == 'person_type':
                         qs = qs.filter(person_type=value)
                     if key == 'process':
@@ -127,10 +110,10 @@ class ApplicationCustomMixin(ListView):
                         qs = qs.filter(is_payment=value)
 
                     if key == 'confirm':
-                        qs = qs.filter(service__car__is_confirm=value)
+                        qs = qs.filter(car__is_confirm=value)
 
                     if key == 'technical_confirm':
-                        qs = qs.filter(service__car__is_technical_confirm=value)
+                        qs = qs.filter(car__is_technical_confirm=value)
 
 
                     if key == 'date':
@@ -157,21 +140,20 @@ class ApplicationCustomMixin(ListView):
             else:
                 print('not match')
         #stop right filter
-
-        
         qs = qs.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
-            Q(service__title__icontains=q) |
-            Q(service__car__model__title__icontains=q) |
+            Q(service__short_title__icontains=q) |
+            Q(service__long_title__icontains=q) |
+            Q(car__model__title__icontains=q) |
             Q(created_user__first_name__icontains=q) |
             Q(created_user__last_name__icontains=q) |
             Q(created_user__middle_name__icontains=q) |
-            Q(service__car__old_number__icontains=q) |
-            Q(service__car__given_number__icontains=q) |
-            Q(service__car__old_technical_passport__icontains=q) |
-            Q(service__car__given_technical_passport__icontains=q) |
-            Q(service__car__type__title__icontains=q) |
-            Q(service__organization__title__icontains=q) |
+            Q(car__old_number__icontains=q) |
+            Q(car__given_number__icontains=q) |
+            Q(car__old_technical_passport__icontains=q) |
+            Q(car__given_technical_passport__icontains=q) |
+            Q(car__type__title__icontains=q) |
+            Q(organization__title__icontains=q) |
             Q(process__in=self.get_choices_value(q, PROCESS_CHOICES)) |
             # filter by date_pattern
             Q(Q(created_date__date=dt.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern, q) else Q()) |
@@ -195,17 +177,17 @@ class ApplicationCustomMixin(ListView):
         for index, item in enumerate(data[start:start + finish], start):
             application = get_object_or_404(self.model, id=item['id'])
             item['created_date'] = self.myconverter(item['created_date'])
-            item['service__car'] = '<a href="{0}">{1} <br> <span style="color: black">{2}</span></a>'.format(
-                reverse('user:view_car_data', kwargs={'car_id': application.service.car.id}),
-                application.service.car.model.title,
-                application.service.car.old_number if application.service.car.old_number else '')
+            item['car'] = '<a href="{0}">{1} <br> <span style="color: black">{2}</span></a>'.format(
+                reverse('user:view_car_data', kwargs={'car_id': application.car.id}),
+                application.car.model.title,
+                application.car.old_number if application.car.old_number else '')
 
             item['service'] = "<a href='{0}'>{1}</a>".format(
                 reverse('application:application_detail', kwargs={'id': application.id}),
-                application.service.get_title_display())
+                application.service.short_title)
             item['created_user'] = "<a href='{0}'>{1}</a>".format(
-                reverse('user:view_organization_data', kwargs={'id': application.service.organization.id}),
-                application.service.organization.title) if application.person_type == 'Y' and application.service.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
+                reverse('user:view_organization_data', kwargs={'id': application.organization.id}),
+                application.organization.title) if application.person_type == LEGAL_PERSON and application.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
                 reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
                 application.created_user.last_name, application.created_user.first_name,
                 application.created_user.middle_name)

@@ -1,73 +1,92 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
 
+{% block show_left_bar %}  "size": "condensed"{% endblock show_left_bar %}
+
+{% block css %}
+
+    <!-- third party css -->
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <!-- third party css end -->
+
+{% endblock css %}
+
+{% block page_title %}
+    {% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
+        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}
+{% endblock %}
+
 {% block content %}
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
-                        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}</h2>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <div class="row justify-content-center">
 
-            <!-- left column -->
-            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 col-xl-10 mb-1">
-                {% include '_parts/messages.html' %}
-                {#                {% if applications %}#}
-                <div class="table-responsive">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10">
+                            <table id="example1" class="table dt-responsive nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Ariza raqami" %}</th>
+                                    <th>{% trans "Xizmat nomi" %}</th>
+                                    <th>{% trans "Avtomobil" %}</th>
+                                    <th>{% trans "Topshirdi" %}</th>
+                                    <th>{% trans "Yaratilgan vaqti" %}</th>
+                                    <th>{% trans "Holati" %}</th>
+                                    <th>{% trans "Ariza nusxasi" %}</th>
+                                    <th>{% trans "To'lov" %}</th>
+                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>
+                                    <th>{% trans "Texnik ko'rik" %}</th>
+                                </tr>
+                                </thead>
 
-                    <table id="example1" class="table table-bordered table-responsive display" style="width:100%">
-                        <thead class="thead-light">
-                        <tr>
-                            <th class="sorting" scope="col" style="width: auto">{% trans "Ariza raqami" %}</th>
-                            <th scope="col" style="width: 35%">{% trans "Xizmat nomi" %} <i style="float: right"
-                                                                                            class="fas fa-sort-amount-up"></i>
-                            </th>
-                            <th scope="col" style="width: 20%">{% trans "Avtomobil" %}<i style="float: right"
-                                                                                         class="fas fa-sort-amount-up"></i>
-                            </th>
-                            <th scope="col" style="width: 20%">{% trans "Topshirdi" %}<i style="float: right"
-                                                                                         class="fas fa-sort-amount-up"></i>
-                            </th>
-                            <th scope="col" style="width: 20%">{% trans "Yaratilgan vaqti" %}<i style="float: right"
-                                                                                                class="fas fa-sort-amount-up"></i>
-                            </th>
-                            <th scope="col" style="width: auto">{% trans "Ariza nusxasi" %}</th>
-                            <th scope="col" style="width: auto">{% trans "Holati" %}</th>
-                            {% if request.user.role == '1' %}
-                                <th scope="col">{% trans "O'chirish" %}</th>
-                            {% endif %}
-                        </tr>
-                        </thead>
-                        <tbody style="font-size: small;">
-                            
-                        </tbody>
-                    </table>
 
-                </div>
+                                <tbody>
 
-                {#                {% endif %}#}
-            </div>
-            <!--/.col (left) -->
-            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-2">
-                {% include 'application/right_filter_applications.html' %}
-            </div>
+                                </tbody>
+                            </table>
+                        </div>
 
-        </div>
-        <!-- /.row -->
+                        <div class="col-2" id="right_filter_div">
+                            {% include 'application/right_filter_applications.html' %}
+                        </div>
+                    </div>
+
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+
     </div>
+
 {% endblock content %}
-{% block bottom %}
-    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
-    <script src="{% static "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" %}"></script>
-    <script src="{% static "plugins/datatables-responsive/js/dataTables.responsive.min.js" %}"></script>
+{% block js %}
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <!-- Datatables init -->
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+
+
+
     <script type="text/javascript" class="init">
         $(document).ready(function () {
             var token = getCookie('token'),
@@ -84,6 +103,7 @@
                     }
                 }
             })
+
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
@@ -121,7 +141,7 @@
                         var sectionId = '{{ section.id }}'
                         url = '{% url "application:SectionApplicationsList" section_id=12345 %}'.replace(/12345/, sectionId.toString());
                     {% else %}
-                        url = '{% url "application:ApplicationsList" %}'
+                        url = '{% url "application:applications_list" %}'
                     {% endif %}
 
                     $.ajax({
@@ -151,7 +171,7 @@
                     {#    start: data.start,#}
                     {#    q: data.search.value,#}
                     {#    order_by: data.columns[data.order[0].column].data.replace(/\./g, "__")#}
-                    //{#}, function (res) {#}
+                    // {#}, function (res) {#}
                     {#    callback({#}
                     {#        recordsTotal: res.length,#}
                     {#        recordsFiltered: res.length,#}
@@ -162,30 +182,71 @@
                 "columns": [
                     {"data": "id"},
                     {"data": "service"},
-                    {"data": `service__car`},
+                    {"data": `car`},
                     {"data": "created_user"},
                     {"data": "created_date"},
+                    {
+                        "data": "process",
+                        render: function (data, type, row) {
+                            if (row.process === 0) {
+                                return '<span class="badge label-table bg-warning">Ariza yaratilgan</span>'
+                            } else if (row.process === 1) {
+                                return '<span class="badge label-table bg-info">YXHBga jo\'natilgan</span>'
+                            } else if (row.process === 2) {
+                                return '<span class="badge label-table bg-info">Ko\'rib chiqilyapti</span>'
+                            }  else if (row.process === 3) {
+                                return '<span class="badge label-table bg-warning">To\'lov kutilmoqda</span>'
+                            }
+                             else if (row.process === 4) {
+                                return '<span class="badge label-table bg-warning">Hujjatlarning asl nusxalari kutilmoqda</span>'
+                            }
+                              else if (row.process === 5) {
+                                return '<span class="badge label-table bg-success">Muvaffaqiyatli yakunlangan</span>'
+                            }
+                              else if (row.process === 6) {
+                                return '<span class="badge label-table bg-danger">Rad etilgan</span>'
+                            }
+                        }
+
+                    },
                     {
                         "data": "file_name",
                         render: function (data, type, row) {
                             var url = "{% url 'application:create_application_doc' filename=12345 %}".replace(/12345/, row.file_name.toString());
 
-                            return `<a class="btn btn-outline-primary" href="${url}"><i
-                                                class="fas fa-download"></i></a>`
+                            return `<center><a href="${url}" ><i style="font-size: large" class="fas fa-file-download"></i></a></center>`
+                        }
+                    },
+
+                    {
+                        "data": "is_payment",
+                        render: function (data, type, row) {
+                            if (row.is_payment) {
+                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                            } else {
+                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                            }
                         }
                     },
                     {
-                        "data": "process",
+                        "data": "car__is_confirm",
                         render: function (data, type, row) {
-                            if (row.process == 1) {
-                                return '<span class="text-warning">{% trans "Jarayonda" %}</span>'
-                            } else if (row.process == 2) {
-                                return '<span class="text-success">{% trans "Qabul qilingan" %}</span>'
-                            } else if (row.process == 3) {
-                                return '<span class="text-danger">{% trans "Rad etilgan" %}</span>'
+                            if (row.car__is_confirm) {
+                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                            } else {
+                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
                             }
                         }
-
+                    },
+                    {
+                        "data": "car__is_technical_confirm",
+                        render: function (data, type, row) {
+                            if (row.car__is_technical_confirm) {
+                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                            } else {
+                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                            }
+                        }
                     },
                     {% if request.user.role == '1' %}
                         {
@@ -226,7 +287,7 @@
                                         text: applicationId + "-raqamli ariza muvaffaqiyatli o'chirildi !",
                                         icon: 'success'
                                     }).then(function () {
-                                        window.location.href = '{% url "application:ApplicationsList" %}';
+                                        window.location.href = '{% url "application:applications_list" %}';
                                     });
                                 } else if (response === 'disabled') {
                                     $.notifyDefaults({
@@ -263,4 +324,4 @@
 
         })
     </script>
-{% endblock bottom %}
+{% endblock js %}

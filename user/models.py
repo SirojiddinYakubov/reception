@@ -6,7 +6,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager, PermissionsMixin
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, MaxLengthValidator
@@ -324,6 +324,25 @@ class Car(models.Model):
     def __str__(self):
         return str(self.model)
 
+    def get_absolute_url(self):
+        return reverse_lazy('user:view_car_data', kwargs={'car_id': self.id})
+
+    def save(self, *args, **kwargs):
+        if self.old_technical_passport:
+            self.old_technical_passport = self.old_technical_passport.upper()
+        if self.given_technical_passport:
+            self.given_technical_passport = self.given_technical_passport.upper()
+        if self.body_number:
+            self.body_number = self.body_number.upper()
+        if self.chassis_number:
+            self.chassis_number = self.chassis_number.upper()
+        if self.engine_number:
+            self.engine_number = self.engine_number.upper()
+        if self.old_number:
+            self.old_number = self.old_number.upper()
+        if self.given_number:
+            self.given_number = self.given_number.upper()
+        return super().save(*args, **kwargs)
 
 class CarType(models.Model):
     title = models.CharField('Nomi', max_length=100)

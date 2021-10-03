@@ -11,17 +11,17 @@ class ServiceAdmin(admin.ModelAdmin):
     #
     #     return super().render_change_form(request, context, *args, **kwargs)
 
-    list_display = ['id','title','key',]
-    list_display_links = ['title']
+    list_display = ['id','short_title','key',]
+    list_display_links = ['short_title']
     list_filter = [ 'created_date',]
-    search_fields = ['title','key' ]
+    search_fields = ['short_title','key' ]
 
-@admin.register(Document)
-class DocumentAdmin(admin.ModelAdmin):
-    list_display = ['id','title',  ]
-    list_display_links = ['id','title']
-    list_filter = [ 'created_date',]
-    search_fields = ['title', ]
+# @admin.register(Document)
+# class DocumentAdmin(admin.ModelAdmin):
+#     list_display = ['id','title',  ]
+#     list_display_links = ['id','title']
+#     list_filter = [ 'created_date',]
+#     search_fields = ['title', ]
 
 @admin.register(StateDuty)
 class StateDutyAdmin(admin.ModelAdmin):
@@ -54,3 +54,4 @@ class StateDutyScoreAdmin(admin.ModelAdmin):
     list_filter = ['created_date', 'region', 'state_duty']
     list_display_links = ['id','state_duty']
     save_on_top = True
+

@@ -1,75 +1,86 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load i18n %}
+
+
+{% block title %}
+    {% if organization.title %}{{ organization.title }}{% endif %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Tashkilot ma'lumotlari" %}
+{% endblock page_title %}
+
 {% block content %}
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Tashkilot ma'lumotlari" %}</h2>
+    <div class="row ml-2 mr-2">
+        <div class="col-12 text-center p-0">
+
+            <div class="card px-0 pb-0 mb-3">
+                <div class="card-body">
+                    {% include '_parts/messages.html' %}
+                    <table class="table table-striped table-bordered text-start">
+                        <tr>
+                            <th scope="row">Nomi:</th>
+                            <td>{% if organization.title %}{{ organization.title }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Rahbari:</th>
+                            <td>{% if organization.director %}{{ organization.director }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Yuridik manzil(Viloyat):</th>
+                            <td>{% if organization.legal_address_region %}
+                                {{ organization.legal_address_region }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Yuridik manzil(Tuman):</th>
+                            <td>{% if organization.legal_address_district %}
+                                {{ organization.legal_address_district }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Garaj manzili:</th>
+                            <td>{% if organization.address_of_garage %}
+                                {{ organization.address_of_garage }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">STIR raqami:</th>
+                            <td>{% if organization.identification_number %}
+                                {{ organization.identification_number }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Yaratgan shaxs:</th>
+                            <td>
+                                {% if organization.created_user %}
+                                    <a href="{% url 'user:view_personal_data' organization.created_user.id %}">{{ organization.created_user }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Yaratgan vaqti:</th>
+                            <td>{% if organization.created_date %}
+                                {{ organization.created_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Tahrirlagan vaqti:</th>
+                            <td>{% if organization.updated_date %}
+                                {{ organization.updated_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Holati:</th>
+                            <td>{% if organization.is_active %}
+                                <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                <i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
+                        </tr>
+
+
+                    </table>
                 </div>
-            </div>
-        </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <div class="row justify-content-center">
-            <!-- left column -->
-            <div class="col-md-12">
-                {% include '_parts/messages.html' %}
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th scope="row">Nomi:</th>
-                        <td>{% if organization.title %}{{ organization.title }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Rahbari:</th>
-                        <td>{% if organization.director %}{{ organization.director }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Yuridik manzil(Viloyat):</th>
-                        <td>{% if organization.legal_address_region %}{{ organization.legal_address_region }}{% endif %}</td>
-                    </tr>
-
-                <tr>
-                        <th scope="row">Yuridik manzil(Tuman):</th>
-                        <td>{% if organization.legal_address_district %}{{ organization.legal_address_district }}{% endif %}</td>
-                    </tr>
-                     <tr>
-                        <th scope="row">Garaj manzili:</th>
-                        <td>{% if organization.address_of_garage %}{{ organization.address_of_garage }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">STIR raqami:</th>
-                        <td>{% if organization.identification_number %}{{ organization.identification_number }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Yaratgan shaxs:</th>
-                        <td>
-                            {% if organization.created_user %}
-                                <a href="{% url 'user:view_personal_data' organization.created_user.id %}">{{ organization.created_user }}</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Yaratgan vaqti:</th>
-                        <td>{% if organization.created_date %}{{ organization.created_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
-                    </tr>
-
-                   <tr>
-                        <th scope="row">Tahrirlagan vaqti:</th>
-                        <td>{% if organization.updated_date %}{{ organization.updated_date|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Holati:</th>
-                        <td>{% if organization.is_active %}<i style="color: green" class="far fa-check-circle"></i>{% else %}<i style="color: red" class="far fa-times-circle"></i>{% endif %}</td>
-                    </tr>
-
-
-                </table>
             </div>
         </div>
     </div>

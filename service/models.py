@@ -1,6 +1,11 @@
-from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from user.base import BaseModel
 from user.models import *
+from django.utils.translation import ugettext_lazy as _
+
+from user.models import *
+
 
 # SERVICE_CHOICES = (
 #     ('account_statement', 'Hisob ma\'lumotnoma'),
@@ -16,30 +21,29 @@ from user.models import *
 # )
 
 
-
 class Service(models.Model):
-    title = models.CharField(max_length=200,)
-    key = models.CharField(max_length=50,unique=True)
+    short_title = models.CharField(max_length=40)
+    long_title = models.CharField(max_length=200)
+    key = models.CharField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     desc = models.TextField(blank=True)
     photo = models.CharField(verbose_name="Foto", blank=True, max_length=255)
     deadline = models.CharField(verbose_name="Muddati", max_length=20, )
     instruction = models.TextField(blank=True)
-    document = models.ManyToManyField('Document', related_name='service_document', blank=True)
+    document = models.ManyToManyField('ExampleDocument', blank=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
 
-
     def __str__(self):
-        return str(self.title)
+        return str(self.short_title)
 
     class Meta:
         verbose_name = 'Servis'
         verbose_name_plural = 'Servislar'
 
-class Document(models.Model):
-    title = models.CharField(max_length=200,)
-    created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), default=timezone.now)
-    is_active = models.BooleanField(default=True)
+
+
+class ExampleDocument(BaseModel):
+    title = models.CharField(max_length=200, )
 
     class Meta:
         verbose_name = 'Hujjat'
@@ -48,6 +52,9 @@ class Document(models.Model):
 
     def __str__(self):
         return f"Document: {self.title}"
+
+
+
 
 ROAD_FUND = 1
 ROAD_FUND_HORSE_POWER = 2
@@ -67,16 +74,19 @@ STATE_DUTY_TITLE = (
     (FINE, 'Jarima')
 )
 
+
 class StateDuty(models.Model):
     service = models.ForeignKey(Service, verbose_name="Xizmat nomi", on_delete=models.CASCADE, null=True, blank=True,
                                 related_name='state_duty_service')
-    title = models.IntegerField(choices=STATE_DUTY_TITLE, null=True,blank=True)
+    title = models.IntegerField(choices=STATE_DUTY_TITLE, null=True, blank=True)
     payment = models.IntegerField(verbose_name="To'lovi", default=0)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
-    created_user = models.ForeignKey(User,verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True, blank=True)
+    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True,
+                                     blank=True)
     is_paid = models.BooleanField(default=False, verbose_name="To'langan")
-    score = models.ForeignKey('StateDutyScore', verbose_name='Hisob raqam', on_delete=models.SET_NULL, related_name="state_duty_score", null=True, blank=True)
+    score = models.ForeignKey('StateDutyScore', verbose_name='Hisob raqam', on_delete=models.SET_NULL,
+                              related_name="state_duty_score", null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -86,12 +96,15 @@ class StateDuty(models.Model):
         verbose_name = 'Davlat boj to\'lovi'
         verbose_name_plural = 'Davlat boj to\'lovlari'
 
+
 class StateDutyPercent(models.Model):
     from application.models import PERSON_CHOICES, PHYSICAL_PERSON
     # service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    state_duty = models.CharField(max_length=3,choices=STATE_DUTY_TITLE, null=True)
-    person_type = models.IntegerField('Shaxs turi', choices=PERSON_CHOICES,default=PHYSICAL_PERSON, blank=True, null=True)
-    car_type = models.ForeignKey(CarType, on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,null=True)
+    state_duty = models.CharField(max_length=3, choices=STATE_DUTY_TITLE, null=True)
+    person_type = models.IntegerField('Shaxs turi', choices=PERSON_CHOICES, default=PHYSICAL_PERSON, blank=True,
+                                      null=True)
+    car_type = models.ForeignKey(CarType, on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,
+                                 null=True)
     car_is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
     is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)

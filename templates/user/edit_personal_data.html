@@ -1,307 +1,341 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load static %}
 {% load i18n %}
-{% block content %}
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Shaxsiy ma'lumotlarni tahrirlash" %}</h2>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <fieldset class="pt-5">
-            {% include '_parts/messages.html' %}
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form action="#" id="edit_personal_data_form" method="post">
-                {% csrf_token %}
-                <div class="form-card">
-                    <h2 class="fs-title not_copy">Foydalanuvchi ma'lumotlari</h2>
-                    <input type="hidden" name="phone">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12">
-                            <label style="width: 100%;" class="not_copy label_required"
-                                   for="last_name">Familiya</label>
 
-                            <input type="text" name="last_name" id="last_name"
-                                   class="form-control"
-                                   required
-                                   {% if form.instance.last_name %}value="{{ form.instance.last_name }}"{% endif %}
-                                   autocomplete="disabled"
-                                   placeholder="Masalan: Yoqubov"/>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12">
-                            <label style="width: 100%;" class="not_copy label_required"
-                                   for="first_name">Ism</label>
-                            <input type="text" name="first_name" id="first_name"
-                                   class="form-control"
-                                   {% if form.instance.first_name %}value="{{ form.instance.first_name }}"{% endif %}
-                                   required
-                                   autocomplete="disabled"
-                                   placeholder="Masalan: Sirojiddin"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
-                            <label style="width: 100%;" class="not_copy label_required"
-                                   for="middle_name">Otasining ismi</label>
-                            <input type="text" name="middle_name" id="middle_name"
-                                   class="form-control"
-                                   required
-                                   {% if form.instance.middle_name %}value="{{ form.instance.middle_name }}"{% endif %}
-                                   autocomplete="disabled"
-                                   placeholder="Masalan: Tojiddinovich"/>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 birthday">
-                            <label style="width: 100%;" class="not_copy label_required"
-                                   for="birthday">Tug'ilgan vaqt</label>
-                            <div class="input-group">
-                                <input id='birthday' name="birthday"
-                                       type="text"
-                                       class="form-control"/>
-                                <div class="input-group-prepend birthday_datepicker_icon">
-                                    <div class="input-group-text"><i class="fa fa-calendar"
-                                                                     aria-hidden="true"></i>
-                                    </div>
-                                </div>
+{% block title %}
+    {% if user.last_name %}{{ user.last_name }}{% endif %} {% if user.first_name %}{{ user.first_name }}{% endif %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Shaxsiy ma'lumotlarni tahrirlash" %}
+{% endblock page_title %}
+
+{% block css %}
+    <!-- Plugins css -->
+    <link href="{% static 'assets/libs/mohithg-switchery/switchery.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+
+
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock css %}
+
+{% block content %}
+    <div class="row ml-2 mr-2">
+
+        <div class="col-12 text-center p-0">
+            <div class="card px-0 pt-4 pb-0 mb-3">
+                {% include '_parts/messages.html' %}
+                <fieldset>
+                    <legend>{% trans "Foydalanuvchi ma'lumotlari" %}</legend>
+                    <form method="POST" id="edit_personal_data_form">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="last_name">{% trans "Familiya" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="last_name" name="last_name"
+                                       class="form-control" required
+                                       {% if form.instance.last_name %}value="{{ form.instance.last_name }}"{% endif %}
+                                       placeholder="{% trans 'Masalan: Yoqubov' %}"
+                                       autocomplete="off">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 region">
-                            <label class="label_required not_copy" for="region">Viloyat</label>
-                            <select name="region" class="form-control select2" id="region"
-                                    required>
-                                <option value="">--Viloyatni tanlang--</option>
-                                {% for region in regions %}
-                                    <option value="{{ region.id }}">{{ region.title }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="first_name">{% trans "Ism" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="first_name" name="first_name"
+                                       class="form-control" required
+                                       {% if form.instance.first_name %}value="{{ form.instance.first_name }}"{% endif %}
+                                       placeholder="{% trans 'Masalan: Sirojiddin' %}"
+                                       autocomplete="off">
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 district">
-                            <label class="label_required not_copy"
-                                   for="district">Tuman/Shahar</label>
-                            <select name="district" class="form-control select2" id="district"
-                                    required>
-                                <option value="">--Tumanni tanlang--</option>
-                            </select>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="middle_name">{% trans "Otasining ismi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="middle_name" name="middle_name"
+                                       class="form-control" required
+                                       {% if form.instance.middle_name %}value="{{ form.instance.middle_name }}"{% endif %}
+                                       placeholder="{% trans 'Masalan: Tojiddinovich' %}"
+                                       autocomplete="off">
+                            </div>
                         </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2 mfy">
-                            <label class="label_required not_copy" for="mfy">MFY</label>
-                            <select name="mfy" class="form-control select2" id="mfy"
-                                    required="required">
-                                <option value="">--MFYni tanlang--</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
-                            <label class="label_required not_copy" for="address">Manzil</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                   required autocomplete="disabled"
-                                   placeholder="Masalan: M.Iqbol ko'chasi 76-uy"
-                                   {% if form.instance.address %}value="{{ form.instance.address }}"{% endif %}/>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <input type="hidden" name="user_id">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2"><label
-                                class="pay label_required not_copy" for="passport_seriya">Passport
-                            seriya</label>
-                            <input type="text" id="passport_seriya" class="form-control"
-                                   name="passport_seriya"
-                                   {% if form.instance.passport_seriya %}value="{{ form.instance.passport_seriya }}"{% endif %}
-                                   placeholder="Masalan: AA" autocomplete="off"/>
-                        </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-12 mt-2">
-                            <label for="passport_number"
-                                   class="pay label_required not_copy">Passport raqam</label>
-                            <input type="number" id="passport_number" class="form-control"
-                                   name="passport_number" value="{{ form.instance.passport_number }}"
-                                   autocomplete="off" placeholder="Masalan: 3870293"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12 mt-2">
-                            <label
-                                    class="label_required not_copy">JShShIR</label>
-                            <input type="text" style="margin-bottom: 0" name="person_id"
-                                   class="form-control"
-                                   {% if form.instance.person_id %}value="{{ form.instance.person_id }}"{% endif %}
-                                   id="person_id"
-                                   placeholder=""/>
-                            <p style="font-size: small; margin-bottom: 0">Jismoniy shaxsning
-                                shaxsiy
-                                identifikatsiya
-                                raqamini
-                                kiriting</p>
-                        </div>
-                        <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12 mt-2">
-                            <label class="label_required not_copy" for="issue_by_whom">Kim
-                                tomonidan
-                                berilgan</label>
-                            <input type="text"
-                                   {% if form.instance.issue_by_whom %}value="{{ form.instance.issue_by_whom }}"{% endif %}
-                                   id="issue_by_whom" class="form-control" name="issue_by_whom"
-                                   autocomplete="off" placeholder="Masalan: BUXORO SHAHAR IIB"/>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="birthday">{% trans "Tug'ilgan vaqt" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="date" id="birthday" name="birthday"
+                                       class="form-control" required
+                                       {% if form.instance.birthday %}value="{{ form.instance.birthday|date:"Y-m-d" }}"{% endif %}>
+                            </div>
                         </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 mt-2 phone">
-                            <img class="img-responsive mb-2"
-                                 style="width: 200px; margin: 0 auto" height="auto"
-                                 src="{% static 'online/person_id.jpg' %}"
-                                 alt="JShShIR">
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="birthday">{% trans "Viloyat" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 region">
+                                <select name="region" class="form-select select2" id="region"
+                                        required>
+                                    <option value="">--Viloyatni tanlang--</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-                            <div class="phone_div">
-                                <label class="not_copy label_required"
-                                       for="phone">Tel raqam/Login</label>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="district">{% trans "Tuman/Shahar" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 district">
+                                <select name="district" class="form-select select2" id="district"
+                                        required>
+                                    <option value="">{% trans '--Tumanni tanlang--' %}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="quarter">{% trans "Mahalla" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 quarter">
+                                <select name="quarter" class="form-select select2" id="quarter"
+                                        required>
+                                    <option value="">{% trans '--Mahallani tanlang--' %}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="address">{% trans "Ko'cha/Qishloq" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="address" name="address"
+                                       class="form-control" required
+                                       {% if form.instance.address %}value="{{ form.instance.address }}"{% endif %}
+                                       placeholder="{% blocktrans %}Masalan: M.Iqbol ko'chasi 76-uy{% endblocktrans %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="passport_seriya">{% trans "Passport seriya" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="passport_seriya" name="passport_seriya"
+                                       class="form-control" required
+                                       {% if form.instance.passport_seriya %}value="{{ form.instance.passport_seriya }}"{% endif %}
+                                       placeholder="{% blocktrans %}Masalan: AA{% endblocktrans %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
 
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="passport_number">{% trans "Passport raqam" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="number" id="passport_number" name="passport_number"
+                                       class="form-control" required
+                                       {% if form.instance.passport_number %}value="{{ form.instance.passport_number }}"{% endif %}
+                                       placeholder="{% blocktrans %}Masalan: 3870293{% endblocktrans %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="person_id">{% trans "JShShIR" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 person_id">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="person_id" name="person_id"
+                                           class="form-control" required
+                                           {% if form.instance.person_id %}value="{{ form.instance.person_id }}"{% endif %}
+                                           autocomplete="off">
+                                    <div class="input-group-text" id="person_id_help">
+                                        <i class="far fa-question-circle"></i>
+                                    </div>
+                                </div>
+                                <p style="width:100%;font-size: small; margin-bottom: 0; float: left;text-align: start">{% trans 'Jismoniy shaxsning shaxsiy identifikatsiya raqamini kiriting' %}</p>
+                                <img class="img-responsive mb-2"
+                                     style="width: 200px; margin: 0 auto; display: none" height="auto"
+                                     src="{% static 'online/person_id.jpg' %}"
+                                     alt="JShShIR">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="issue_by_whom">{% trans "Kim tomonidan berilgan" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text" id="issue_by_whom" name="issue_by_whom"
+                                       class="form-control" required
+                                       {% if form.instance.issue_by_whom %}value="{{ form.instance.issue_by_whom }}"{% endif %}
+                                       placeholder="{% blocktrans %}Masalan: BUXORO SHAHAR IIB{% endblocktrans %}"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="phone">{% trans "Tel raqam/Login" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 phone_div">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">+998</div>
                                     </div>
-                                    <input type="text" class="form-control" id="phone" required="required" name="phone"
-                                           placeholder="Masalan: 919791999"
-                                           value="{{ request.user.phone }}"
-                                           autocomplete="disabled">
+                                    <input type="text" id="phone" name="phone"
+                                           class="form-control" required
+                                           {% if form.instance.phone %}value="{{ form.instance.phone }}"{% endif %}
+                                           autocomplete="off">
+
 
                                 </div>
                             </div>
-                            <div class="password_div mt-2">
-                                <label class="label_required" for="password">Parol</label>
-                                <div class="input-group password">
-                                    <input type="password" name="password" id="password"
-                                           class="form-control password"
-                                           required value="{{ form.instance.turbo }}"
-                                           autocomplete="disabled"
-                                           placeholder="Masalan: qwerty12345"/>
-                                    <div class="input-group-prepend show_password" data-password="password">
-                                        <div class="input-group-text"><i class="far fa-eye"></i></div>
+
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="password">{% trans "Parolni kiriting" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 password_div">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" name="password"
+                                           class="form-control" required
+                                           {% if form.instance.turbo %}value="{{ form.instance.turbo }}"{% endif %}
+                                           autocomplete="off"
+                                           placeholder="{% blocktrans %}Masalan: qwerty12345{% endblocktrans %}">
+                                    <div class="input-group-text show_password" data-pwd="password">
+                                        <i class="far fa-eye"></i>
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="confirm_password_div mt-2">
-                                <label class="label_required" for="confirm_password">Parolni qayta kiriting</label>
-                                <div class="input-group confirm_password">
-                                    <input type="password" name="confirm_password" id="confirm_password"
-                                           class="form-control password"
-                                           required value="{{ form.instance.turbo }}"
-                                           autocomplete="disabled"
-                                           placeholder="Masalan: qwerty12345"/>
-                                    <div class="input-group-prepend show_password" data-password="confirm_password">
-                                        <div class="input-group-text"><i class="far fa-eye"></i></div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="confirm_password">{% trans "Parolni qayta kiriting" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9 confirm_password_div">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="confirm_password" name="confirm_password"
+                                           class="form-control" required
+                                           {% if form.instance.turbo %}value="{{ form.instance.turbo }}"{% endif %}
+                                           autocomplete="off"
+                                           placeholder="{% blocktrans %}Masalan: qwerty12345{% endblocktrans %}">
+                                    <div class="input-group-text show_password" data-pwd="confirm_password">
+                                        <i class="far fa-eye"></i>
                                     </div>
                                 </div>
+
                             </div>
-
-
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6 phone">
-
+                        <div class="justify-content-end row">
+                            <div class="col-3">
+                                <button type="submit" id="saveBtn"
+                                        class="btn btn-info waves-effect waves-light float-end">Saqlash
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-6 col-md-6 col-xl-6 col-sm-6">
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row justify-content-center">
-                    <input type="reset"
-                           class="action-button-reset"
-                           value="Tozalash"/>
-                    <button type="submit" id="saveBtn" class="action-button">Saqlash</button>
-
-                </div>
-            </form>
-        </fieldset>
-
-        <!-- /.card -->
-
-
-        <!-- /.row -->
+                    </form>
+                </fieldset>
+            </div>
+        </div>
     </div>
+
 {% endblock content %}
-{% block bottom %}
+{% block js %}
+    <script src="{% static 'assets/libs/selectize/js/standalone/selectize.min.js' %}"></script>
+    <script src="{% static 'assets/libs/mohithg-switchery/switchery.min.js' %}"></script>
+    <script src="{% static 'assets/libs/multiselect/js/jquery.multi-select.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+
+    <script src="{% static 'assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"
+            integrity="sha512-6Jym48dWwVjfmvB0Hu3/4jn4TODd6uvkxdi9GNbBHwZ4nGcRxJUCaTkL3pVY6XUQABqFo3T58EMXFQztbjvAFQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/responsive.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+
     <script type="text/javascript">
-        var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/,
-            birthday = "{{ form.instance.birthday|date:"SHORT_DATE_FORMAT" }}"
+        var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/
+
 
         $(function () {
-            $("#birthday").datepicker({
-                dateFormat: "dd.mm.yy",
-                // minDate: '-150M',
-                // maxDate: '+5M',
-                defaultDate: '01.01.1990',
-                // value: "7/11/2011",
-                showButtonPanel: true,
-                numberOfMonths: 1,
-                // showOn: '',
-                // startDate: "-130M",
-                //endDate: "+30d",
-                //currentText: 'Today',
-                autoclose: true,
-                changeMonth: true,
-                changeYear: true,
-                yearRange: '1950:',
-
-                //yakshanbalarni chiqarish
-                // beforeShowDay: function (date) {
-                //     var day = date.getDay();
-                //     return [(day !== 0), ''];
-                // },
-
-                onClose: function () {
-                    if ($(this).val().match(dateReg)) {
-                        $(this).css("border-bottom", "2px solid green")
-                    } else {
-                        $(this).css("border-bottom", "2px solid red")
-                    }
-                }
-            })
-
-            $('.birthday_datepicker_icon').on('click', function () {
-                $('#birthday').datepicker('show')
-            })
-
-            $("#birthday").datepicker('setDate', birthday);
-
             $('.select2').select2()
         })
 
         $(document).ready(function () {
-            $('#phone').inputmask('999999999');
+            $('#phone').inputmask('99 999-99-99');
             $('#person_id').inputmask('99999999999999');
 
-            $('#passport_seriya').inputmask({casing: 'upper'});
-            $('#issue_by_whom').inputmask({casing: 'upper'});
+            var csrftoken = getCookie('csrftoken')
+
+
+            $.ajaxSetup({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                },
+                statusCode: {
+                    401: function () {
+                        tokenInvalid()
+                    },
+                    403: function () {
+                        tokenInvalid()
+                    }
+                },
+
+            })
+
+
+            $('#person_id_help').on('click', function () {
+
+                var i_path = $(this).parent('.input-group').nextAll('.img-responsive').attr('src');
+                $('body').append('<div id="overlay"></div><div id="magnify"><img src="' + i_path + '"><div id="close-popup"><i></i></div></div>');
+                $('#magnify').css({
+                    left: ($(document).width() - $('#magnify').outerWidth()) / 4,
+                    // top: ($(document).height() - $('#magnify').outerHeight())/2 upd: 24.10.2016
+                    top: ($(window).height() - $('#magnify').outerHeight()) / 4
+                });
+                $('#overlay, #magnify').fadeIn('fast');
+            })
 
             $('.show_password').on('click', function () {
                 var $Passwords = $('.show_password');
-                var data = $(this).data('password')
+                var data = $(this).data('pwd')
 
                 $Passwords.each(function (index, element) {
                     var $password = $(element)
+                    if ($password.data('pwd') === data) {
 
-
-                    if ($password.data('password') === data) {
-                        if ($password.siblings('.password').attr('type') === 'password') {
-                            $password.children('.input-group-text').html('<i class="far fa-eye-slash"></i>')
-                            $password.siblings('.password').attr('type', 'text')
+                        if ($password.prev('input').attr('type') === 'password') {
+                            $password.html('<i class="far fa-eye-slash"></i>')
+                            $password.prev('input').attr('type', 'text')
                         } else {
-                            $password.children('.input-group-text').html('<i class="far fa-eye"></i>')
-                            $password.siblings('.password').attr('type', 'password')
+                            $password.html('<i class="far fa-eye"></i>')
+                            $password.prev('input').attr('type', 'password')
                         }
                     }
                 })
@@ -330,15 +364,15 @@
                 var SelectedDistrict = $(this).children("option:selected").val()
                 $.ajax({
                     type: "GET",
-                    url: "{% url 'user:get_mfy' %}",
+                    url: "{% url 'user:get_quarters' %}",
                     data: {
                         'district': SelectedDistrict, // from form
                     },
                     success: function (message) {
-                        $('#mfy').empty().append(message)
-                        $('#mfy').css('border', '1px solid blue')
+                        $('#quarter').empty().append(message)
+                        $('#quarter').css('border', '1px solid blue')
                         setTimeout(function () {
-                            $('#mfy').css('border', '1px solid #ced4da')
+                            $('#quarter').css('border', '1px solid #ced4da')
                         }, 1000)
 
                     }
@@ -359,8 +393,8 @@
                 return this.optional(element) || /^\d{14}$/.test(value);
             }, "JShShIR 14 raqamdan iborat bo'lishi kerak!");
             jQuery.validator.addMethod("phoneMaxLength", function (value, element) {
-                return this.optional(element) || /^\d{9}$/.test(value);
-            }, "Login 9 ta raqamdan iborat bo'lishi kerak!");
+                return this.optional(element) || /^\d{2}\s\d{3}-\d{2}-\d{2}$/.test(value);
+            }, "Login noto'g'ri kiritilgan!");
             jQuery.validator.addMethod("passwordCheck",
                 function (value, element, param) {
                     if (this.optional(element)) {
@@ -405,7 +439,7 @@
                         district: {
                             required: true
                         },
-                        mfy: {
+                        quarter: {
                             required: true
                         },
                         birthday: {
@@ -465,8 +499,8 @@
                         district: {
                             required: 'Tuman tanlanmagan!',
                         },
-                        mfy: {
-                            required: 'MFY tanlanmagan!',
+                        quarter: {
+                            required: 'Mahalla tanlanmagan!',
                         },
                         birthday: {
                             required: 'Tug\'ilgan vaqti kiritilmagan!',
@@ -501,17 +535,16 @@
                         }
 
                     },
+
                     errorPlacement: function (error, element) {
                         if (element.is("#region")) {
                             error.appendTo(element.parents('.region'));
                         } else if (element.is("#district")) {
                             error.appendTo(element.parents('.district'));
-                        } else if (element.is("#mfy")) {
-                            error.appendTo(element.parents('.mfy'));
-                        }else if (element.is("#birthday")) {
-                            error.appendTo(element.parents('.birthday'));
+                        } else if (element.is("#quarter")) {
+                            error.appendTo(element.parents('.quarter'));
                         } else if (element.is("#person_id")) {
-                            error.appendTo(element.siblings('p'));
+                            error.appendTo(element.parents('.person_id'));
                         } else if (element.is("#phone")) {
                             error.appendTo(element.parents('.phone_div'));
                         } else if (element.is("#password")) {
@@ -524,25 +557,15 @@
 
                     },
 
-                    submitHandler: function (form) {
+                    submitHandler: function (form, e) {
                         $('#saveBtn').html('Saqlash&nbsp<i class="fas fa-spinner fa-spin"></i>')
-
-                        var token = getCookie('token'),
-                            csrftoken = getCookie('csrftoken')
-
-                        $.ajaxSetup({
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                                xhr.setRequestHeader('Authorization', `Token ${token}`)
-                            },
-                        })
 
                         $.ajax({
                             type: "POST",
                             url: "{% url 'user:edit_personal_data' %}",
                             data: $(form).serialize(),
-                            success: function (response) {
-                                if (response === 'True') {
+                            statusCode: {
+                                200: function () {
                                     $('#saveBtn').html('Saqlash')
 
                                     $("fieldset").keyup(function (event) {
@@ -567,37 +590,14 @@
                                             '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                             '</svg> Muvaffaqiyatli tahrirlandi!`
                                     });
-                                } else {
-                                    console.log(response.status)
+                                },
+                                400: function () {
                                     errorFunction()
+                                },
+                                401: function () {
+                                    tokenInvalid()
                                 }
                             },
-                            error: function (response) {
-                                if (response.status === 401) {
-
-                                    $.notifyDefaults({
-                                        type: 'danger',
-                                        allow_dismiss: false,
-                                        animate: {
-                                            enter: 'animated fadeInRight',
-                                            exit: 'animated fadeOutRight'
-                                        },
-                                        z_index: '9999'
-                                    })
-                                    $.notify({
-                                        icon: 'glyphicon glyphicon-star',
-                                        message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                            '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                            '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                            '</svg> Xatolik yuz berdi! Token yaroqsiz!'
-                                    })
-                                    setTimeout(function () {
-                                        window.location.href = '{% url "user:custom_logout" %}'
-                                    }, 3000);
-                                } else {
-                                    errorFunction()
-                                }
-                            }
                         });
                         return false; // required to block normal submit since you used ajax
                     }
@@ -620,9 +620,9 @@
                 }
             })
 
-            $('#mfy').on('change', function () {
-                var selectedMfy = $(this).children("option:selected").val();
-                if (parseInt(selectedMfy)) {
+            $('#quarter').on('change', function () {
+                var selectedQuarter = $(this).children("option:selected").val();
+                if (parseInt(selectedQuarter)) {
                     $(this).valid()
 
                 }
@@ -631,4 +631,4 @@
         })
     </script>
 
-{% endblock bottom %}
+{% endblock js %}

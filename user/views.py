@@ -1,49 +1,23 @@
-import json
 import random
-from django.contrib.auth.mixins import *
-import requests
+
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, user_logged_out, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from django.db.models import Q
-from application.mixins import *
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.template import RequestContext
-from django.template.loader import get_template
-from django.urls import reverse_lazy
-from django.views.generic.base import View
-from docxtpl import DocxTemplate
-from django.utils.decorators import *
-from rest_framework import status
-from rest_framework.authtoken.models import Token
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.decorators import permission_classes
-from xhtml2pdf import pisa
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import *
-from django.views.generic import ListView, DetailView, View
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from application.mixins import *
 from application.models import Application
-from application.utils import application_right_filters
 from reception.mixins import *
 from reception.settings import *
-from reception.prod_settings import LOG_FILE_PATH, logger
-from service.models import *
-from service.utils import calculation_state_duty_service_price
 from user.decorators import *
 from user.forms import *
-import reportlab
-import io
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
 
-from user.utils import render_to_pdf
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext as __
 
 @login_required
 def personal_data(request):
@@ -109,14 +83,13 @@ def user_logout(request):
 
 
 class Logout(APIView):
-    def get(self, request, format=None):
+    def get(self, request, *args, **kwargs):
         # using Django logout
         logout(request)
         return redirect(reverse_lazy('user:login_view'))
 
 
 def login_view(request):
-    print(request.POST)
     if request.method == 'POST':
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -183,21 +156,26 @@ def login_view(request):
 def handler404(request, exception):
     return render(request, '_parts/404.html', status=404)
 
+
 def handler403(request, exception):
     return render(request, '_parts/403.html', status=403)
 
 
+class OrganizationList(AllowedRolesMixin, ListView):
+    model = Organization
+    template_name = 'user/organizations_list.html'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-@login_required
-def organizations_list(request):
-    organizations = Organization.objects.filter(created_user=request.user, is_active=True).order_by('-id')
-    if not organizations.exists():
-        return redirect(reverse_lazy('user:add_organization'))
-    context = {
-        'organizations': organizations,
-        'organization': organizations[0],
-    }
-    return render(request, 'user/organizations_list.html', context)
+    def get_context_data(self, *args, **kwargs):
+        organizations = self.model.objects.filter(created_user=self.request.user, is_active=True).order_by('-id')
+        if not organizations.exists():
+            return redirect(reverse_lazy('user:add_organization'))
+        context = {
+            'organizations': organizations,
+            'organization': organizations[0],
+        }
+        return context
 
 
 @login_required
@@ -304,9 +282,8 @@ def get_district(request):
             options = "<option value=''>--- --- ---</option>"
 
             for district in districts:
-
                 options += f"<option value='{district.id}'>{district.title}</option>"
-            return HttpResponse(options,status=200)
+            return HttpResponse(options, status=200)
         else:
             return HttpResponse(status=404)
     except:
@@ -324,9 +301,11 @@ def get_quarters(request):
     else:
         return False
 
+
 class GetChildSections(AllowedRolesMixin):
     model = Section
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
         try:
@@ -346,7 +325,9 @@ class GetChildSections(AllowedRolesMixin):
 
 
 class Get_Organization(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
+
     def post(self, request):
         if request.is_ajax():
             try:
@@ -370,53 +351,67 @@ class Get_Organization(AllowedRolesMixin, View):
 
 @login_required
 def edit_personal_data(request):
+    print('GET')
 
     form = EditForm(instance=request.user)
     regions = Region.objects.all()
-
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
 
     context = {
         'form': form,
         'regions': regions
     }
     if request.method == 'POST':
-        try:
-            token = request.COOKIES.get('token')
-            Token.objects.get(key=token)
-        except ObjectDoesNotExist:
-            return HttpResponse(False)
+        print(request.POST.get('phone'))
 
-        form = EditForm(request.POST, instance=request.user)
-        if form.is_bound:
-            if form.is_valid():
-                form = form.save(commit=False)
-                form.phone = request.POST.get('phone')
-                form.username = request.POST.get('phone')
-                form.turbo = request.POST.get('password')
-                form.save()
 
-                user = get_object_or_404(User, id=request.user.id)
-                if user:
-                    user.username = request.POST.get('phone')
-                    user.turbo = request.POST.get('password')
-                    user.set_password(request.POST.get('password'))
-                    user.save()
-
-                    user = authenticate(request, username=user.username, password=user.turbo)
-                    if user is not None:
-                        login(request, user)
-                return HttpResponse(True)
-            else:
-                return HttpResponse(False)
-        else:
-            return HttpResponse(False)
 
     return render(request, 'user/edit_personal_data.html', context)
+
+
+class EditPersonalData(AllowedRolesMixin, View):
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
+    template_name = 'user/edit_personal_data.html'
+
+    def get(self, request):
+
+        form = EditForm(instance=request.user)
+        regions = Region.objects.all()
+
+        context = {
+            'form': form,
+            'regions': regions
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+
+        form = EditForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            phone = request.POST.get('phone').replace('-','').replace(' ','')
+            form.phone = phone
+            form.username = phone
+            form.turbo = request.POST.get('password')
+            form.save()
+
+            user = get_object_or_404(User, id=request.user.id)
+            print(user)
+            if user:
+                user.username = phone
+                user.turbo = request.POST.get('password')
+                user.set_password(request.POST.get('password'))
+                user.save()
+
+                user = authenticate(request, username=user.username, password=user.turbo)
+                if user is not None:
+                    login(request, user)
+                    return HttpResponse(status=200)
+                return HttpResponse(status=400)
+            return HttpResponse(status=400)
+        else:
+            return HttpResponse(status=400)
 
 
 
@@ -435,7 +430,6 @@ def get_code(request):
 
         print(password)
         msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {user.username} %0aParol: {user.turbo}"
-
 
         token, created = Token.objects.get_or_create(user=user)
 
@@ -471,7 +465,9 @@ def forgot_pass(request):
             msg = msg.replace(" ", "+")
             url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{phone}&msg={msg}"
             response = requests.get(url)
+            print(msg)
             return HttpResponse(True)
+
         except:
             return HttpResponse(False)
 
@@ -649,6 +645,7 @@ class CustomAuthToken(ObtainAuthToken):
 @permission_classes([IsAuthenticated])
 class Get_Car_Type(APIView):
     def post(self, request):
+        print(request.POST)
         if request.is_ajax():
             try:
                 car_id = request.POST.get('car')
@@ -679,7 +676,7 @@ def add_worker(request):
         context.update(sections=sections)
         template = 'user/role/state_controller/add_worker.html'
     else:
-        template =  'user/role/regional_controller/add_worker.html'
+        template = 'user/role/regional_controller/add_worker.html'
 
     if request.method == "POST":
         if request.user.role == STATE_CONTROLLER:
@@ -768,11 +765,12 @@ def add_worker(request):
                     msg = msg.replace(" ", "+")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{user.phone}&unicode=1&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
 
                     messages.success(request, 'Xodim muvaffaqiyatli qo\'shildi!')
                 except IntegrityError:
                     messages.error(request, "Bu raqam oldin ro'yhatdan o'tkazilgan !")
-    return render(request, template,context)
+    return render(request, template, context)
 
 
 @login_required
@@ -880,6 +878,8 @@ def worker_edit(request, worker_id):
                     msg = msg.replace(" ", "+")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{worker.phone}&unicode=1&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
+
                     context.update(form=form)
                     messages.success(request, 'Muvaffaqiyatli tahrirlandi !')
                     return render(request, 'user/role/regional_controller/edit_worker.html', context)
@@ -894,30 +894,32 @@ def worker_edit(request, worker_id):
         return render(request, '_parts/404.html')
 
 
-@login_required
-def view_car_data(request, car_id):
-    car = get_object_or_404(Car, id=car_id)
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+class ViewCarData(AllowedRolesMixin, DetailView):
+    model = Car
+    template_name = 'user/car/view_car_data.html'
+    pk_url_kwarg = 'car_id'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-    context = {
+    def get(self, request, *args, **kwargs):
+        car = get_object_or_404(Car, id=self.kwargs['car_id'])
 
-        'car': car
-    }
-    return render(request, 'user/car/view_car_data.html', context)
+        if request.user.role == USER:
+            if car.service_car.all().first().created_user == request.user:
+                return super().get(request, *args, **kwargs)
+            return redirect(reverse_lazy('error_403'))
+
+    def get_context_data(self, **kwargs):
+        car = get_object_or_404(Car, id=self.kwargs['car_id'])
+        context = {
+            'car': car,
+        }
+        return context
 
 
 @login_required
 def edit_car_data(request, car_id):
     car = get_object_or_404(Car, id=car_id)
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
 
     form = EditCarForm(instance=car)
 
@@ -936,17 +938,15 @@ def edit_car_data(request, car_id):
         'devices': devices,
         'bodyTypes': bodyTypes,
         'color': colors,
-
         'form': form,
         'car': car,
-
         'histories': histories
     }
 
     if request.method == 'POST':
         try:
             form = EditCarForm(request.POST, instance=car)
-            if request.POST.get('history'):
+            if request.POST.get('history', None):
                 history = get_object_or_404(Car, id=request.POST.get('history'))
             else:
                 history = None
@@ -960,7 +960,6 @@ def edit_car_data(request, car_id):
             if request.POST.getlist('fuel_types'):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
-
 
             if form.is_valid():
                 given_number = request.POST.get('auction_number')
@@ -982,6 +981,84 @@ def edit_car_data(request, car_id):
             return HttpResponse(False)
 
     return render(request, 'user/car/edit_car_data.html', context)
+
+
+class EditCarData(AllowedRolesMixin, View):
+    template_name = 'user/car/edit_car_data.html'
+    pk_url_kwarg = 'car_id'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        car = get_object_or_404(Car, id=self.kwargs[self.pk_url_kwarg])
+
+        form = EditCarForm(instance=car)
+
+        models = CarModel.objects.filter(is_active=True)
+        fuel_types = FuelType.objects.filter(is_active=True)
+        car_types = CarType.objects.filter(is_active=True)
+        devices = Device.objects.filter(is_active=True)
+        bodyTypes = BodyType.objects.filter(is_active=True)
+        colors = Color.objects.filter(is_active=True)
+        histories = Car.objects.all()
+
+        context = {
+            'models': models,
+            'fuel_types': fuel_types,
+            'car_types': car_types,
+            'devices': devices,
+            'bodyTypes': bodyTypes,
+            'colors': colors,
+            'form': form,
+            'car': car,
+            'histories': histories
+        }
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            car = get_object_or_404(Car, id=self.kwargs[self.pk_url_kwarg])
+            form = EditCarForm(request.POST, instance=car)
+
+            devices = []
+            if request.POST.getlist('devices'):
+                for device_id in list(filter(None, request.POST.getlist('devices'))):
+                    devices.append(get_object_or_404(Device, id=device_id))
+
+            fuel_types = []
+            if request.POST.getlist('fuel_types'):
+                for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
+                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+
+            if form.is_valid():
+                form = form.save(commit=False)
+                form.fuel_type.clear()
+                form.device.clear()
+                for fuel_type in fuel_types:
+                    form.fuel_type.add(fuel_type)
+                for device in devices:
+                    form.device.add(device)
+
+                if request.POST.get('history') != 'false':
+                    history = get_object_or_404(Car, id=request.POST.get('history'))
+                    form.history = history
+
+                if request.POST.get('price', None):
+                    price = request.POST.get('price')
+                    form.price = price
+
+                form.save()
+
+                return HttpResponse(status=200)
+            else:
+                return HttpResponse(status=400)
+        except:
+            return HttpResponse(status=400)
+
 
 @login_required
 def view_organization_data(request, id):
@@ -1035,12 +1112,14 @@ def confirm_car_data(request, car_id):
                     car.is_confirm = True
                     car.confirm_date = timezone.now()
 
-                    messages.success(request, f"{car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi!")
+                    messages.success(request,
+                                     f"{car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi!")
 
                     msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizada ko'rsatilgan {car.model} {car.old_number if car.old_number else ''} transport vositasining dvigateli, shassi, kuzovi raqam belgilari muvaffaqiyatli tasdiqlandi! {'Transport vositangizni texnik ko*rikdan o*tkazib,' if not car.is_technical_confirm else ''} {'To*lovlarni kerakli hisob raqamlarga o*tkazib,' if not application.is_payment else ''} Hujjatlarning asl nusxalarini {request.user.section.title}ga olib kelishingizni so*raymiz!"
                     msg = msg.replace(" ", "+").replace('*', "'")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
 
                 elif request.user.role == '5':
                     car.is_technical_confirm = True
@@ -1053,6 +1132,8 @@ def confirm_car_data(request, car_id):
                     msg = msg.replace(" ", "+").replace('*', "'")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
+
                 car.save()
             elif request.GET.get('confirm') == 'False':
                 if request.user.role == '4':
@@ -1065,6 +1146,8 @@ def confirm_car_data(request, car_id):
                     msg = msg.replace(" ", "+").replace('*', "'")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
+
 
                 elif request.user.role == '5':
                     car.is_technical_confirm = False
@@ -1077,6 +1160,8 @@ def confirm_car_data(request, car_id):
                     msg = msg.replace(" ", "+").replace('*', "'")
                     url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
                     response = requests.get(url)
+                    print(msg)
+
                 car.save()
 
             return redirect(reverse_lazy('application:applications_list'))
@@ -1101,10 +1186,12 @@ class Save_New_Car_Model(APIView):
                 is_truck = False
 
             try:
-                model = CarModel.objects.filter(title__iexact=request.POST.get('title'),is_truck=is_truck, is_local=is_local)
+                model = CarModel.objects.filter(title__iexact=request.POST.get('title'), is_truck=is_truck,
+                                                is_local=is_local)
                 if model.exists():
                     return HttpResponse(status=409)
-                CarModel.objects.create(title=request.POST.get('title'), is_truck=is_truck, is_local=is_local,created_user=request.user)
+                CarModel.objects.create(title=request.POST.get('title'), is_truck=is_truck, is_local=is_local,
+                                        created_user=request.user)
                 car_models = CarModel.objects.filter(is_active=True)
                 options = ""
                 for car_model in car_models:
@@ -1135,15 +1222,13 @@ class Save_New_Color(APIView):
         else:
             return HttpResponse(status=400)
 
+
 @login_required
 def getDistricts(request):
-    id = request.GET.get('id',None)
+    id = request.GET.get('id', None)
     if id:
         result = list(District.objects.filter(region_id=int(id)).values('id', 'title'))
         return HttpResponse(json.dumps(result), content_type="application/json")
-
-
-
 
 
 @login_required
@@ -1156,6 +1241,7 @@ def regions_list(request):
         return render(request, 'user/role/state_controller/regions_list.html', context)
     else:
         return render(request, '_parts/404.html')
+
 
 @login_required
 def sections_list(request, section_id):
@@ -1174,11 +1260,13 @@ def sections_list(request, section_id):
 
 
 class SectionsListByRegion(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
+
     def get(self, request, *args, **kwargs):
         if request.GET.get('region', None):
             qs = Section.objects.filter(region=request.GET.get('region'), parent__isnull=False)
             sections = serializers.serialize('json', qs)
-            return HttpResponse(sections, status=200,content_type='application/json')
+            return HttpResponse(sections, status=200, content_type='application/json')
         return HttpResponse(status=404)
 

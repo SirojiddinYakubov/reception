@@ -1,38 +1,16 @@
-import operator
-import re
-from datetime import timezone, datetime, timedelta
-from datetime import datetime as dt
-import datetime
-import json
-import os
-import random
-from functools import reduce
-from django.utils.decorators import *
-import pytz
-import requests
+from datetime import timezone, datetime
+
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import *
-from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, Value, CharField
-from django.db.models.functions import Concat
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.utils import timezone
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import DetailView
 from docxtpl import DocxTemplate
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+from reportlab.pdfgen import canvas
 from rest_framework.views import APIView
-from reception.mixins import *
+
 from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
-from application.utils import application_right_filters
+from reception.mixins import *
 from reception.settings import *
 from service.models import *
 from service.utils import calculation_state_duty_service_price
@@ -40,13 +18,14 @@ from user.models import *
 from user.utils import render_to_pdf
 
 
-
 class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     model = Application
     template_name = 'application/applications_list.html'
-    render_application_values = ['id', 'service', 'service__car', 'service__car__old_number', 'created_user',
-                                 'created_date', 'file_name', 'process']
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
+                                 'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
+                                 'car__is_technical_confirm']
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get_queryset(self):
         role = self.request.user.role
@@ -61,69 +40,34 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         else:
             return super().get(request, *args, **kwargs)
 
+class ApplicationDetail(AllowedRolesMixin, DetailView):
+    model = Application
+    template_name = 'application/application_detail.html'
+    pk_url_kwarg = 'id'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
+    def get(self, request, *args, **kwargs):
+        application = get_object_or_404(Application, id=self.kwargs['id'])
 
+        if request.user.role == USER:
+            if application.created_user == request.user:
+                return super().get(request, *args, **kwargs)
+            return redirect(reverse_lazy('error_403'))
+        elif request.user.role == STATE_CONTROLLER:
+            return super().get(request, *args, **kwargs)
 
-@login_required
-def application_detail(request, id):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+    def get_context_data(self, **kwargs):
+        application = get_object_or_404(Application, id=self.kwargs['id'])
+        payments = StateDuty.objects.filter(service=application.service)
+        if not payments.exists():
+            calculation_state_duty_service_price(application.service)
 
-    application = get_object_or_404(Application, id=id)
-
-    if request.user.role in ['5', '6', '7']:
-        pass
-
-    # if not request.user.role == '2' or request.user.role == '3' or request.user.role == '4':
-    #     if application.created_user != request.user:
-    #         return redirect(reverse_lazy('application:applications_list'))
-
-    payments = StateDuty.objects.filter(service=application.service)
-    if not payments.exists():
-        calculation_state_duty_service_price(application.service)
-
-    context = {
-        'application': application,
-        'payments': payments
-    }
-    return render(request, 'application/application_detail.html', context)
-
-
-@login_required
-def application_pdf(request, id):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
-    application = get_object_or_404(Application, id=id)
-
-    if request.user.role == '1':
-        section = Section.objects.get(region=request.user.region, district=request.user.district)
-    else:
-        section = Section.objects.get(id=request.user.section.id)
-
-    context = {
-        'now_date': datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
-        'created_date': datetime.datetime.strftime(application.created_date, '%d.%m.%Y'),
-        'app': application,
-        'section': section,
-        'request': request,
-    }
-
-    template_name = 'application/application_detail_pdf.html'
-    pdf = render_to_pdf(template_name, context)
-
-    if pdf:
-        response = HttpResponse(pdf, content_type='application/pdf')
-        filename = "Ariza #%s.pdf" % (application.id)
-        content = "attachment; filename=%s" % (filename)
-        response['Content-Disposition'] = content
-        return response
+        context = {
+            'application': application,
+            'payments': payments,
+        }
+        return context
 
 
 def generate_qr_code_image(request, id):
@@ -137,6 +81,53 @@ def generate_qr_code_image(request, id):
     except:
         return HttpResponse('APPLICATION NOT FOUND')
 
+class ApplicationPdf(AllowedRolesMixin, View):
+    template_name = 'application/application_detail_pdf.html'
+    pk_url_kwarg = 'id'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+    def get(self, request, *args, **kwargs):
+        application = get_object_or_404(Application, id=self.kwargs[self.pk_url_kwarg])
+        pdf = render_to_pdf(self.template_name, self.get_context_data())
+        p = canvas.Canvas(pdf)
+        print(type(p))
+        print(p.showPage())
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Ariza #%s.pdf" % (application.id)
+            content = "attachment; filename=%s" % (filename)
+            response['Content-Disposition'] = content
+            return response
+
+
+    def get_context_data(self, *args, **kwargs):
+        application = get_object_or_404(Application, id=self.kwargs[self.pk_url_kwarg])
+
+        context = {
+            'now_date': timezone.now(),
+            'created_date': application.created_date,
+            'app': application,
+            'section': application.section,
+            'request': self.request,
+        }
+        return context
+
+    def create_password(self):
+        from PyPDF2 import PdfFileReader, PdfFileWriter
+        with open('test.pdf', 'rb') as inputfile:
+            # Load PDF file from file
+            pdf_reader = PdfFileReader(inputfile)
+            pdf_writer = PdfFileWriter()
+            # Number of pages
+            num_pages = pdf_reader.getNumPages()
+            for page in range(num_pages):
+                pdf_writer.addPage(pdf_reader.getPage(page))
+            user_password = "PASSSWORD"
+            pdf_writer.encrypt(user_password, "password",)
+
+            with open("print-enable-with-pass.pdf", "wb") as outputfile:
+                pdf_writer.write(outputfile)
 
 @login_required
 def get_information(request):
@@ -158,12 +149,6 @@ def get_information(request):
 
 @login_required
 def create_application_doc(request, filename):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
     application = get_object_or_404(Application, file_name=filename)
 
     section = get_object_or_404(Section, id=application.section.id)
@@ -176,58 +161,58 @@ def create_application_doc(request, filename):
     service = get_object_or_404(Service, id=application.service.id)
 
     context = {}
-    if service.title == 'account_statement':
-        if service.organization:
+    if service.key == 'account_statement':
+        if application.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_legal.docx")
         else:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
-    elif service.title == 'gift_agreement':
-        if service.organization:
+    elif service.key == 'gift_agreement':
+        if application.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_person.docx")
-    elif service.title == 'contract_of_sale':
-        if service.organization:
+    elif service.key == 'contract_of_sale':
+        if application.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_person.docx")
-    elif service.title == 'replace_tp':
-        if service.organization:
+    elif service.key == 'replace_tp':
+        if application.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_person.docx")
-    elif service.title == 'replace_number_and_tp':
-        if service.organization:
+    elif service.key == 'replace_number_and_tp':
+        if application.organization:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_person.docx")
-    elif service.title == 're_equipment':
-        if service.organization:
+    elif service.key == 're_equipment':
+        if application.organization:
             doc = DocxTemplate(f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_person.docx")
 
-    car = get_object_or_404(Car, id=service.car.id)
+    car = get_object_or_404(Car, id=application.car.id)
 
     devices_string = ', '.join([str(i).replace('"', "'") for i in car.device.all()])
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
     re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
-    if service.seriya and service.contract_date:
-        context.update(state=f"{service.seriya} {service.contract_date.strftime('%d.%m.%Y')}")
+    if application.seriya and application.contract_date:
+        context.update(state=f"{application.seriya} {application.contract_date.strftime('%d.%m.%Y')}")
 
     if car.given_technical_passport:
         context.update(given_technical_passport=car.given_technical_passport)
-    if service.organization:
-        context.update(org=service.organization)
+    if application.organization:
+        context.update(org=application.organization)
         context.update(
-            legal_address=f"{service.organization.legal_address_region.title}, {service.organization.legal_address_district.title}")
+            legal_address=f"{application.organization.legal_address_region.title}, {application.organization.legal_address_district.title}")
     context.update(now_date=datetime.datetime.strftime(timezone.now(), '%d.%m.%Y'),
                    devices=devices_string,
                    fuel_types=fuel_types_string,
@@ -321,16 +306,16 @@ def change_get_request(request, key, value):
                     return HttpResponseRedirect(url)
                 return HttpResponseRedirect(url + '?' + query)
             except ValueError:
-                print(url,499)
+                print(url, 499)
                 return HttpResponseRedirect(url)
 
     except IndexError:
         # mavjud emas
         url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
         if value == 'all':
-            print(url,508)
+            print(url, 508)
             return HttpResponseRedirect(url)
-        print('key' + key  + ' ,value: ' + value)
+        print('key' + key + ' ,value: ' + value)
         return HttpResponseRedirect(url + f"?{key}={value}")
 
 
@@ -449,8 +434,12 @@ def payment_detail(request, service_id):
 class PaymentsList(AllowedRolesMixin, ListView):
     model = StateDuty
     template_name = 'application/payments/payments_list.html'
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
 
+    def get(self, request, *args, **kwargs):
+        print(request)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         user_role = self.request.user.role
@@ -471,13 +460,14 @@ class PaymentsList(AllowedRolesMixin, ListView):
         if user_role == STATE_CONTROLLER:
             parent_sections = Section.objects.filter(parent__isnull=True)
             context.update(parent_sections=parent_sections)
-            
+
             if self.request.GET.get('parent_section', None):
                 if self.request.GET.get('parent_section').isdigit():
                     parent_section = get_object_or_404(Section, id=self.request.GET.get('parent_section'))
                     child_sections = Section.objects.filter(parent=parent_section)
                     context.update(child_sections=child_sections)
         return context
+
 
 @permission_classes([IsAuthenticated])
 class Modify_Payment_Checkbox(APIView):
@@ -548,8 +538,10 @@ def access_with_qrcode(request, id):
 class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     model = Application
     template_name = 'application/applications_list.html'
-    render_application_values = ['id', 'service', 'service__car','service__car__old_number', 'created_user','created_date','file_name', 'process']
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    render_application_values = ['id', 'service', 'service__car', 'service__car__old_number', 'created_user',
+                                 'created_date', 'file_name', 'process']
+    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
 
     @allowed_users(allowed_roles=[*allowed_roles])
     def dispatch(self, *args, **kwargs):
@@ -571,8 +563,6 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         return context
 
 
-
-
 class SaveApplicationSection(AllowedRolesMixin, View):
     allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
@@ -583,6 +573,7 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
+            application.is_active = True
             application.save()
             return HttpResponse(status=200)
         return HttpResponse(status=400)

@@ -3,13 +3,14 @@
 
 {% endblock top %}
 {% block title %}
-    {{ service.title }}
+    {{ service.short_title }}
 {% endblock title %}
 
 {% block content %}
+
     <div class="row">
         <div class="col-12 info_area">
-            <h2 class="text-center m-1 w-100 text-blue display-6">{{ service.title }}</h2>
+            <h2 class="text-center m-1 w-100 text-blue display-6">{{ service.long_title }}</h2>
 
             <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
@@ -69,17 +70,18 @@
                          aria-labelledby="panelsStayOpen-headingFour">
                         <div class="accordion-body">
                             <ul>
-
-                                {% for document in service.document.all %}
-                                    <li>{{ document.title }}</li>
-                                {% endfor %}
+    {{ service.document }}
+{#                                {% for document in service.document.all %}#}
+{#                                    <li>{{ document.title }}</li>#}
+{#                                {% endfor %}#}
                             </ul>
                         </div>
                     </div>
 
                 </div>
                 {% with my_url='service:'|add:service.key %}
-                    <a href="{% url my_url %}" class="float-end mt-2 mb-2 btn btn--md btn-primary waves-effect waves-light">Ariza
+                    <a href="{% url my_url %}"
+                       class="float-end mt-2 mb-2 btn btn--md btn-primary waves-effect waves-light">Ariza
                         topshirish</a>
                 {% endwith %}
             </div>
@@ -88,6 +90,4 @@
 
 
     </div>
-
-
 {% endblock content %}

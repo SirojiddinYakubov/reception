@@ -8,8 +8,9 @@ app_name = 'application'
 urlpatterns = [
     path('applications-list/', ApplicationsList.as_view(), name='applications_list'),
 
-    path('application-detail/<int:id>/', application_detail, name='application_detail'),
-    path('application-pdf/<int:id>/', application_pdf, name='application_pdf'),
+    # path('application-detail/<int:id>/', application_detail, name='application_detail2'),
+    path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),
+    path('application-pdf/<int:id>/', ApplicationPdf.as_view(), name='application_pdf'),
     path('get-information/', get_information, name='get_information'),
     path('create-application-doc/<str:filename>/', create_application_doc, name='create_application_doc'),
     path('view-service-data/<int:service_id>/', view_service_data, name='view_service_data'),
@@ -21,7 +22,7 @@ urlpatterns = [
 
     path('payment-detail/<int:service_id>/', payment_detail, name='payment_detail'),
 
-    path('payments-list/', PaymentsList.as_view(), name='PaymentsList'),
+    path('payments-list/', PaymentsList.as_view(), name='payments_list'),
     path('modify-payment-checkbox/', Modify_Payment_Checkbox.as_view(), name='modify_payment_checkbox'),
 
     path('generate-qr-code-image/<int:id>/', generate_qr_code_image, name='generate_qr_code_image'),

@@ -1,9 +1,13 @@
 {% extends request.user.is_authenticated|yesno:"base_vertical.html,base_horizontal.html" %}
+{% load static i18n %}
+{% block css %}
 
-{% block top %}
+{% endblock css %}
 
-{% endblock top %}
-{% load static %}
+{% block page_title %}
+    {% trans "Xizmatlar ro'yhati" %}
+{% endblock page_title %}
+
 {% block content %}
     {#<a href="{% url 'service:applications_list' %}">app</a>#}
     <div class="row">
@@ -27,7 +31,7 @@
     <div class="row">
 
         {% for service in services %}
-            <div class="col-lg-3">
+            <div class="col-lg-6 col-md-6 col-xl-4">
 
                 <a href="{% url 'service:service_info' service.id %}">
                     <div class="card bg-pattern service_list">
@@ -35,12 +39,12 @@
                             <div class="text-center">
                                 <img src="{{ service.photo }}"
                                      alt="logo" class="avatar-xl mb-3">
-                                <h4 class="mb-2  text-blue font-25">{{ service.title|truncatechars:60 }}</h4>
+                                <h4 class="mb-2  text-blue font-25">{{ service.long_title|truncatechars:65 }}</h4>
 
                             </div>
 
                             <p class="font-14 text-center text-muted">
-                                {{ service.desc|truncatechars:75 }}
+                                {{ service.desc|truncatechars:150 }}
                             </p>
 
                             <div class="text-center">
