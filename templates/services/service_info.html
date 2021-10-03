@@ -2,16 +2,24 @@
 {% block top %}
 
 {% endblock top %}
+{% block css %}
+    <style>
+    .link_center{
+        margin-top: 20px;
+    }
+    </style>
+{% endblock %}
 {% block title %}
     {{ service.short_title }}
 {% endblock title %}
 
 {% block content %}
-
     <div class="row">
         <div class="col-12 info_area">
             <h2 class="text-center m-1 w-100 text-blue display-6">{{ service.long_title }}</h2>
-
+          {% with my_url='service:'|add:service.key %}
+            <h2 class="text-center m-1 w-100  display-7 link_center"><a class="link-blue" href="{% url my_url %}">Ariza topshirish</a></h2>
+          {% endwith %}
             <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -70,18 +78,17 @@
                          aria-labelledby="panelsStayOpen-headingFour">
                         <div class="accordion-body">
                             <ul>
-    {{ service.document }}
-{#                                {% for document in service.document.all %}#}
-{#                                    <li>{{ document.title }}</li>#}
-{#                                {% endfor %}#}
+
+                                {% for document in service.document.all %}
+                                    <li>{{ document.title }}</li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
 
                 </div>
                 {% with my_url='service:'|add:service.key %}
-                    <a href="{% url my_url %}"
-                       class="float-end mt-2 mb-2 btn btn--md btn-primary waves-effect waves-light">Ariza
+                    <a href="{% url my_url %}" class="float-end mt-2 mb-2 btn btn--md btn-primary waves-effect waves-light">Ariza
                         topshirish</a>
                 {% endwith %}
             </div>
@@ -90,4 +97,6 @@
 
 
     </div>
+
+
 {% endblock content %}
