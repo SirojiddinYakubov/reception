@@ -50,16 +50,16 @@
 <section class="py-3 mt-2 bg-info text-light">
     <div class="container">
         <div class="row text-center justify-content-around align-items-center">
-            <div class="col-5" style="">
-                <h1>O'zbekiston Respublikasi</h1>
+            <div class="col-12" style="">
+                <h1>E-RIB TIZIMIDA RO'YXATDAN O'TISH</h1>
             </div>
-            <div class="col-2">
-                <img style="width: 90px" src="{% static 'img/yhxb.png' %}"
-                     alt="{% trans 'Управление безопасности дорожного движения!' %}"/>
-            </div>
-            <div class="col-5">
-                <h1>Ichki ishlar Vazirligi YHXB</h1>
-            </div>
+{#            <div class="col-2">#}
+{#                <img style="width: 90px" src="{% static 'img/yhxb.png' %}"#}
+{#                     alt="{% trans 'Управление безопасности дорожного движения!' %}"/>#}
+{#            </div>#}
+{#            <div class="col-5">#}
+{#                <h1>Ichki ishlar Vazirligi YHXB</h1>#}
+{#            </div>#}
         </div>
     </div>
 </section>
@@ -512,6 +512,7 @@
         })
 
         $('#next1').on('click', function () {
+
             $('#fieldset1').hide()
             $('#fieldset2').css('opacity', '1').show()
             $('#input_confirm').prop('disabled', true)
