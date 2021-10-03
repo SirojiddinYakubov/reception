@@ -1,36 +1,30 @@
 <table class="table table-bordered">
-                                    <thead class="thead-light">
-                                    <tr>
-                                        {% if application.process == '2' %}
-                                            <th scope="col">Holat</th>
-                                            <th scope="col">Sababi</th>
-                                            <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
-                                            <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
-                                        {% elif application.process == '3' %}
-                                            <th scope="col">Holat</th>
-                                            <th scope="col">Sababi</th>
-                                            <th scope="col">Rad etilgan vaqti</th>
-                                        {% else %}
-                                            <th scope="col">Holat</th>
-                                            <th scope="col">Sababi</th>
-                                        {% endif %}
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        {% if application.process == '2' %}
-                                            <th scope="row" style="color: #44ff00">Qabul qilindi</th>
-                                            <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                            <th style="color: #0f6674">{{ application.given_date }}</th>
-                                            <th style="color: #0f6674">{{ application.given_time }}</th>
-                                        {% elif application.process == '3' %}
-                                            <th scope="row" style="color: #ff0318">Rad etildi</th>
-                                            <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                            <th>{{ application.canceled_date|date:"SHORT_DATETIME_FORMAT" }}</th>
-                                        {% else %}
-                                            <th scope="row" style="color: #0f6674">Jarayonda</th>
-                                            <th style="color: #0f6674">{{ application.process_sms }}</th>
-                                        {% endif %}
-                                    </tr>
-                                    </tbody>
-                                </table>
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Holat</th>
+        <th scope="col">Sababi</th>
+        {% if application.given_date and application.given_time %}
+            <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
+            <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
+        {% endif %}
+        {% if application.canceled_date %}
+            <th scope="col">Hujjatlar rad etilgan vaqt</th>
+        {% endif %}
+
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
+        <th style="color: #0f6674">{{ application.process_sms }}</th>
+        {% if application.given_date and application.given_time %}
+            <th style="color: #0f6674">{{ application.given_date }}</th>
+            <th style="color: #0f6674">{{ application.given_time }}</th>
+        {% endif %}
+    {% if application.canceled_date %}
+            <th style="color: #0f6674">{{ application.canceled_date }}</th>
+        {% endif %}
+    </tr>
+    </tbody>
+</table>

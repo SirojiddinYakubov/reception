@@ -17,19 +17,16 @@
 </head>
 <body>
 <header class="clearfix">
-    {#    <div id="logo">#}
-    {#        <img src="/ap">#}
-    {#    </div>#}
     <div style="text-align: center">
         <h2 style="font-size: 3em; color: blue"><b>{{ section.title }}</b></h2>
     </div>
     </div>
 </header>
 <main style="font-size: 2em">
-    <div style="text-align: right" class="clearfix">
+    <div style="text-align: left" class="clearfix">
         <div id="invoice">
-            <div class="date">Yaratildi: {{ created_date }}</div>
-            <div class="date">Yuklandi: {{ now_date }}</div>
+            <div class="date">Yaratildi: {{ created_date|date:"SHORT_DATETIME_FORMAT" }}</div>
+            <div class="date">Yuklandi: {{ now_date|date:"SHORT_DATETIME_FORMAT" }}</div>
         </div>
     </div>
     <table class="table table-bordered" style="border: 1px solid dimgray; margin: 30%; padding: 30%">
@@ -44,22 +41,17 @@
         </tr>
         <tr>
             <td><b>Xizmat nomi</b></td>
-            <td>{{ app.service.get_title_display }}</td>
+            <td>{{ app.service.long_title }}</td>
         </tr>
         <tr>
             <td><b>Holati</b></td>
-            {% if app.process == '1' %}
-                <td style="color: #0f6674">Jarayonda</td>
-            {% elif app.process == '2' %}
-                <td style="color: #44ff00">Qabul qilindi</td>
-            {% elif app.process == '3' %}
-                <td style="color: #ff0318">Rad etildi</td>
-            {% endif %}
+            <td style="color: #0f6674">{{ app.get_process_display }}</td>
+
         </tr>
         <tr>
             <td><b>Sababi</b></td>
             <td style="color: #0f6674">
-                {% if app.process_sms %}{{ app.process_sms }}{% else %}O'rganib chiqilmoqda{% endif %}</td>
+                {% if app.process_sms %}{{ app.process_sms }}{% endif %}</td>
         </tr>
         <tr>
             <td><b>Yaratdi</b></td>
@@ -67,7 +59,7 @@
         </tr>
         <tr>
             <td><b>Ariza topshirdi</b></td>
-            <td>{% if app.service.organization %}{{ app.service.organization }}{% else %}
+            <td>{% if app.organization %}{{ app.organization }}{% else %}
                 {{ app.created_user }}{% endif %}</td>
         </tr>
         <tr>
@@ -84,9 +76,9 @@
 
     <div class="row">
         <div class="col-xs-12">
+
             <img width="200px" height="200px"
-                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} />
-            <span style="font-size: xxx-large">1234</span>
+                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} alt="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" 27 %}" />
         </div>
     </div>
 

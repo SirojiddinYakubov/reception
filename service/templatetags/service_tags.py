@@ -19,7 +19,6 @@ def get_calculated_payments(context, state_duty_id):
         startdate = timezone.now().replace(year=2021, month=1, day=1,hour=00,minute=00, second=00)
         stopdate = timezone.now()
         
-        
         if request.GET.get('parent_section', None):
             if request.GET.get('parent_section').isdigit():
                 parent_sections = Section.objects.filter(id=request.GET.get('parent_section'), parent__isnull=True, is_active=True)
@@ -50,6 +49,8 @@ def get_calculated_payments(context, state_duty_id):
         unpaid = 0
 
         for child_section in child_sections:
+            print(child_section)
+            print(StateDuty.objects.filter(service__application_service__section=child_section))
             total_qs = StateDuty.objects.filter(
                 Q(service__application_service__section=child_section) &
                 Q(title=state_duty_id) &
@@ -58,6 +59,7 @@ def get_calculated_payments(context, state_duty_id):
                 Q(service__application_service__is_active=True) &
                 Q(service__application_service__is_block__in=[False] if child_section.pay_for_service else [True, False])
             )
+
             paid_qs = total_qs.filter(is_paid=True)
             unpaid_qs = total_qs.filter(is_paid=False)
 
@@ -80,3 +82,7 @@ def get_calculated_payments(context, state_duty_id):
         }
 
 
+@register.simple_tag
+def get_services_list():
+    services_list = Service.objects.order_by('created_date')
+    return  services_list

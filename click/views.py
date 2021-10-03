@@ -28,8 +28,6 @@ def create_order_url(request):
         return redirect(reverse_lazy('user:personal_data'))
 
 class OrderCheckAndPayment(ClickUz):
-
-
     def check_order(self, order_id: str, amount: str):
         send_message_to_developer('check   order_id ' + order_id + ' ' + 'amount ' + amount)
 
@@ -54,9 +52,7 @@ class OrderCheckAndPayment(ClickUz):
                 send_message_to_developer('ORDER_NOT_FOUND')
                 return self.ORDER_NOT_FOUND
 
-
     def successfully_payment(self, order_id: str, transaction: object):
-        # send_message_to_developer('successfully_payment  order_id ' + order_id + 'transaction '+ transaction)
         try:
             order = get_object_or_404(Order, id=order_id)
             order.is_paid = True

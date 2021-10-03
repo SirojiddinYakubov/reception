@@ -1,4 +1,4 @@
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
     <tbody>
     <tr>
         <th scope="row">Ariza raqami:</th>
@@ -12,23 +12,31 @@
         <th scope="row">Xizmat nomi:</th>
         <td>
             {% if request.user.is_authenticated %}
-                <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
+                <p>{{ application.service.long_title }}</p>
             {% else %}
-                <p>{{ application.service.get_title_display }}</p>
+                <p>{{ application.service.long_title }}</p>
             {% endif %}
         </td>
     </tr>
-    {% if application.service.seriya %}
-     <tr>
-            <th scope="row">Xizmat turi seriyasi va raqami:</th>
+    <tr>
+        <th scope="row">Ariza jo'natilgan YXHB RIB bo'limi:</th>
         <td>
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'application:view_service_data' application.service.id %}">{{ application.service.get_title_display }}</a>
-            {% else %}
-                <p>{{ application.service.get_title_display }}</p>
-            {% endif %}
+            <p>{{ application.section.region.title }}: {{ application.section.title }}</p>
         </td>
     </tr>
+    {% if application.seriya %}
+        <tr>
+            <th scope="row">Xizmat turi seriyasi va raqami:</th>
+            <td>
+                <p>{{ application.seriya }}</p>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Shartnoma tuzilgan sana:</th>
+            <td>
+                <p>{{ application.contract_date|date:"SHORT_DATE_FORMAT" }}</p>
+            </td>
+        </tr>
     {% endif %}
     <tr>
         <th scope="row">Yaratdi:</th>

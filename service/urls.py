@@ -6,7 +6,7 @@ app_name = 'service'
 
 urlpatterns = [
     path('account-statement/', AccountStatement.as_view(), name='account_statement'),
-    path('contract-of-sale/', AccountStatement.as_view(), name='contract_of_sale'),
+    path('contract-of-sale/', ContractOfSale.as_view(), name='contract_of_sale'),
 
     path('gift-agreement-index/', gift_agreement_index, name='gift_agreement_index'),
     path('save-gift-agreement/', Save_Gift_Agreement.as_view(), name='save_gift_agreement'),

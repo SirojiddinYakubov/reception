@@ -1,47 +1,85 @@
 {% load static %}
-{% load i18n %}
-<style>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Xatolik | 403</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static '' %}assets/images/favicon.ico">
 
-    body {
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);
-    }
+		<!-- App css -->
+		<link href="{% static 'assets/css/config/creative/bootstrap.min.css' %}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="{% static 'assets/css/config/creative/app.min.css' %}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-    .error-template {
-        text-align: center;
-        margin-top: 15%;
-    }
+		<link href="{% static 'assets/css/config/creative/bootstrap-dark.min.css' %}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="{% static 'assets/css/config/creative/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
-    .error-actions {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+		<!-- icons -->
+		<link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
 
-    .error-actions .btn {
-        margin-right: 10px;
-    }
-</style>
+    </head>
 
-<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" id="bootstrap-css">
-<script src="{% static 'js/bootstrap.js' %}"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <body class="loading auth-fluid-pages pb-0">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="error-template">
-                <h1>403</h1>
-                <h2>
-                    {% trans "Xatolik! Ruxsat berilmagan!" %}</h2>
-                <div class="error-details">
-                    {% trans "Kechirasiz, Siz izlayotgan sahifaga kirishga ruxsat berilmagan!" %}
-                </div>
-                <div class="error-actions">
-                    <a href="{% url 'user:personal_data' %}" class="btn btn-primary btn-lg"><span
-                            class="glyphicon glyphicon-home"></span>
-                        {% trans "Bosh sahifa" %}</a><a href="#" class="btn btn-secondary btn-lg"><span
-                        class="glyphicon glyphicon-envelope"></span>{% trans "Biz bilan aloqa" %}  </a>
-                </div>
+        <div class="auth-fluid">
+            <!--Auth fluid left content -->
+            <div class="auth-fluid-form-box">
+                <div class="align-items-center d-flex h-100">
+                    <div class="card-body">
+
+                        <!-- Logo -->
+                        <div class="auth-brand text-center text-lg-start">
+                            <div class="auth-logo">
+                                <a href="{% url 'service:services_list' %}" class="logo logo-dark text-center">
+                                    <span class="logo-lg">
+                                        <img src="{% static 'assets/images/logo-dark.png' %}" alt="" height="22">
+                                    </span>
+                                </a>
+
+                                <a href="{% url 'service:services_list' %}" class="logo logo-light text-center">
+                                    <span class="logo-lg">
+                                        <img src="{% static 'assets/images/logo-light.png' %}" alt="" height="22">
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <h1 class="text-error">403</h1>
+                            <h3 class="mt-3 mb-2">Ruxsat berilmagan</h3>
+                            <p class="text-muted mb-3">Ushbu sahiga kirishga sizga ruxsat berilmagan!
+{#                                <a href="" class="text-dark"><b>Support</b></a>#}
+                            </p>
+
+                            <a href="{% url 'service:services_list' %}" class="btn btn-success waves-effect waves-light">Bosh sahifa</a>
+                        </div>
+
+                       <!-- Footer-->
+                        <footer class="footer footer-alt">
+                            <p class="text-muted"><script>document.write(new Date().getFullYear())</script> &copy; Created by <a href="javascript: void(0);" class="text-muted">SIERUS GROUP</a> </p>
+                        </footer>
+
+                    </div> <!-- end .card-body -->
+                </div> <!-- end .align-items-center.d-flex.h-100-->
             </div>
+            <!-- end auth-fluid-form-box-->
+
+            <!-- Auth fluid right content -->
+            <div class="auth-fluid-right text-center">
+            </div>
+            <!-- end Auth fluid right content -->
         </div>
-    </div>
-</div>
+        <!-- end auth-fluid-->
+
+        <!-- Vendor js -->
+        <script src="{% static 'assets/js/vendor.min.js' %}"></script>
+
+        <!-- App js -->
+        <script src="{% static 'assets/js/app.min.js' %}"></script>
+
+    </body>
+</html>

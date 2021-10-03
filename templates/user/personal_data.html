@@ -1,99 +1,112 @@
-{% extends 'base.html' %}
+{% extends 'base_vertical.html' %}
 {% load i18n %}
+
+{% block title %}
+    {% if user.last_name %}{{ user.last_name }}{% endif %} {% if user.first_name %}{{ user.first_name }}{% endif %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Shaxsiy ma'lumotlar" %}
+{% endblock page_title %}
+
 {% block content %}
-    <section class="py-3 mt-2 bg-info text-light">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2>{% trans "Shaxsiy ma'lumotlar" %}</h2>
+
+    <div class="row ml-2 mr-2">
+        <div class="col-12 text-center p-0">
+
+            <div class="card px-0 pb-0 mb-3">
+                <div class="card-body">
+                    {% include '_parts/messages.html' %}
+                    <table class="table table-striped table-bordered text-start">
+                        <tr>
+                            <th scope="row">Familiya:</th>
+                            <td>{% if user.last_name %}{{ user.last_name }}{% endif %}</td>
+
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Ism:</th>
+                            <td>{% if user.first_name %}{{ user.first_name }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Otasining ismi:</th>
+                            <td>{% if user.middle_name %}{{ user.middle_name }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Tug'ilgan yil:</th>
+                            <td>{% if user.birthday %}{{ user.birthday|date:"d.m.Y" }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Yashash manzili:</th>
+                            <td>{% if user.region %}{{ user.region }},{% endif %}
+                                {% if user.district %}{{ user.district }},{% endif %}
+                                {% if user.quarter %}{{ user.quarter }},{% endif %}
+                                {% if user.address %}{{ user.address }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Passport seriyasi:</th>
+                            <td>{% if user.passport_seriya %}{{ user.passport_seriya }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Passport raqami:</th>
+                            <td>{% if user.passport_number %}{{ user.passport_number }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Kim tomonidan berilgan:</th>
+                            <td>{% if user.issue_by_whom %}{{ user.issue_by_whom }}{% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">JShShIR:</th>
+                            <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Tel raqam/Login:</th>
+                            <td>{% if user.phone %}+998{{ user.phone }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Parol:</th>
+                            <td>
+                                {% if user.turbo %}
+                                    <span id="password" data-show="false"
+                                                         data-password="{{ user.turbo }}">******</span>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <span style="cursor: pointer" id="show_password"><i class="far fa-eye"></i></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <a href="{% url 'user:edit_personal_data' %}">
+                        <button style="float: right;margin-bottom: 10px; margin-right: 10px"
+                                class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash
+                        </button>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </section>
-    <div class="container-fluid mt-3">
-        <div class="row justify-content-center">
-            <!-- left column -->
-            <div class="col-md-12">
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th scope="row">Familiya:</th>
-                        <td>{% if user.last_name %}{{ user.last_name }}{% endif %}</td>
-
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Ism:</th>
-                        <td>{% if user.first_name %}{{ user.first_name }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Otasining ismi:</th>
-                        <td>{% if user.middle_name %}{{ user.middle_name }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Tug'ilgan yil:</th>
-                        <td>{% if user.birthday %}{{ user.birthday|date:"d.m.Y" }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Yashash manzili:</th>
-                        <td>{% if user.region %}{{ user.region }}{% endif %},
-                            {% if user.district %}{{ user.district }}{% endif %},
-                            {% if user.mfy %}{{ user.mfy }}{% endif %},
-                            {% if user.address %}{{ user.address }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Passport seriyasi:</th>
-                        <td>{% if user.passport_seriya %}{{ user.passport_seriya }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Passport raqami:</th>
-                        <td>{% if user.passport_number %}{{ user.passport_number }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Kim tomonidan berilgan:</th>
-                        <td>{% if user.issue_by_whom %}{{ user.issue_by_whom }}{% endif %}</td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">JShShIR:</th>
-                        <td>{% if user.person_id %}{{ user.person_id }}{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Tel raqam/Login:</th>
-                        <td>{% if user.phone %}+998{{ user.phone }}{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Parol:</th>
-                        <td>
-                            {% if user.turbo %}<span id="password" data-show="false" data-password="{{ user.turbo }}">***********</span>
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                <span style="cursor: pointer" id="show_password"><i class="far fa-eye"></i></span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                </table>
-                {#                <a href="?download=True"><button style="float: right;margin-bottom: 10px; " class="btn btn-outline-secondary"><i class="fas fa-download"></i>&nbsp&nbsp&nbspKo'chirib olish</button></a>#}
-                <a href="{% url 'user:edit_personal_data' %}">
-                    <button id="addAmountBtn" class="btn btn-primary">
-                        To'lov
-                    </button>
-                    <button style="float: right;margin-bottom: 10px; margin-right: 10px"
-                            class="btn btn-outline-secondary"><i class="fas fa-user-edit"></i>&nbsp&nbsp&nbspTahrirlash
-                    </button>
-                </a>
             </div>
         </div>
     </div>
 {% endblock %}
-{% block bottom %}
+{% block js %}
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+
+            var result = ''
+            for (var i = 0; i < $('#password').data('password').length; i++) {
+                result += '*'
+            }
+            $('#password').text(result)
+
+
+
 
             $('#show_password').on('click', function () {
 
@@ -105,10 +118,8 @@
                 } else {
                     $(this).html('<i class="far fa-eye"></i>')
                     $(this).siblings('#password').data('show', false)
-                    $('#password').text('***********')
+                    $('#password').text(result)
                 }
-
-
             })
             $('#addAmountBtn').on('click', function (e) {
                 e.preventDefault()
@@ -206,4 +217,4 @@
         })
 
     </script>
-{% endblock bottom %}
+{% endblock js %}

@@ -1,3 +1,5 @@
+
+
 // Ruxsat berilgan lotin va kiril bosh harflar, raqamlar
 function PassportInputFilter(e) {
     var ew = e.which
@@ -423,7 +425,7 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        // window.location.href = '/custom-logout/'
+        window.location.href = '/custom-logout/'
     }, 3000);
 }
 

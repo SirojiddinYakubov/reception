@@ -1,5 +1,5 @@
 {% load humanize %}
-<table class="table table-bordered">
+<table class="table table-bordered table-striped" id="render_div">
     <thead class="thead-light">
     <tr>
         <th scope="col">#</th>
@@ -52,15 +52,15 @@
     <p>INN: <b style="color: blue">201122919</b></p>
 </div>
 <hr>
-<div class="text-right mt-3 mb-3 mr-4" data-html2canvas-ignore="true">
-    {% if not application.service.organization %}
-        <button class="btn btn-primary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-            To'lov qilish &nbsp&nbsp&nbsp<i class="fas fa-long-arrow-alt-right"></i>
+<div class="justify-content-end row" data-html2canvas-ignore="true">
+    <div class="col-12">
+          {% if not application.organization %}
+       <button type="button"
+                class="btn btn-info waves-effect waves-light float-start">To'lov qilish &nbsp&nbsp&nbsp<i class="fas fa-long-arrow-alt-right"></i>
         </button>
     {% endif %}
-    <button id="payment_render_pdf"
-            class="btn btn-secondary col-4 col-md-3 col-sm-3 col-lg-3 col-xl-3 m-2">
-        To'lovlarni pdf holatda chiqarish &nbsp&nbsp<i
-            class="fas fa-file-download"></i>
-    </button>
+        <button type="button"  id="payment_render_pdf"
+                class="btn btn-info waves-effect waves-light float-end">To'lovlarni pdf holatda chiqarish
+        </button>
+    </div>
 </div>

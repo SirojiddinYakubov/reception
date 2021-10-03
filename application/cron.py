@@ -1,12 +1,13 @@
 from datetime import timedelta
 
+from django.db.models import Q
 from django.utils import timezone
 
 from application.models import Application
 
 
 def application_crontab():
-    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=['1','3']))
+    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=['1', '3']))
 
     for application in applications:
         # Faollashtirilmagan arizalar
@@ -55,8 +56,7 @@ def application_crontab():
 
             # print(f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz hech qanday amaliyot amalga oshirmaganligingiz sababli e-rib tzimidan o'chirildi!')
 
-
         # Rad etilgan ariza 60 kundan so'ng o'chirib yuboriladi
-        if application.process == '3' and not application.is_block and timezone.now() - timedelta(days=60) > application.created_date:
+        if application.process == '3' and not application.is_block and timezone.now() - timedelta(
+                days=60) > application.created_date:
             application.delete()
-

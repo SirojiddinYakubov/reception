@@ -1,130 +1,139 @@
-{% load applications_tags %}
+{% load applications_tags service_tags %}
+<style>
 
-<div class="card border-info mb-3">
-    <div class="card-header bg-gradient-indigo text-lg" style="padding-top: 0;padding-bottom: 0">Saralash</div>
-    <div class="card-body" style="padding-left: 0;padding-right: 0;padding-top: 0;font-size: smaller" >
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Xizmat turi bo'yicha</h6>
-        <ul class="search-ul">
-            <li class="search-li"><a
-                    {% if request.GET.service == 'all' or not request.GET.service %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'service' 'all' %}">Hammasi</a></li>
-            <li class="search-li"><a {% if request.GET.service == 'account_statement' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'account_statement' %}">Hisob
-                ma'lumotnoma</a></li>
-            <li class="search-li"><a {% if request.GET.service == 'gift_agreement' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'gift_agreement' %}">Xadya
-                shartnomasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.service == 'contract_of_sale' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'contract_of_sale' %}">Oldi
-                sotdi shartnomasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.service == 'replace_tp' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'replace_tp' %}">TP
-                almashtirish</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.service == 'replace_number_and_tp' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'service' 'replace_number_and_tp' %}">DRB
-                va TP
-                almashtirish</a>
-            </li>
-        </ul>
+</style>
+<div style="background-color: #e7fafd; border-radius: 5px" class="p-1">
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Xizmat turi
+        bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a {% if request.GET.service == 'all' or not request.GET.service %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'service' 'all' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span>
+        </a>
 
+        {% get_services_list as services_list %}
+        {% for service in services_list %}
+            <a {% if request.GET.service == service.key %}class="active"{% endif %}
+               href="{% url "application:change_get_request" 'service' service.key %}" class="text-reset d-block">
+                <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+                <span class="mb-0 mt-1">{{ service.short_title }}</span>
+            </a>
+        {% endfor %}
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Holat bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
 
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Holat bo'yicha</h6>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a
-                    {% if request.GET.process == 'all' or not request.GET.process %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'process' 'all' %}">Hammasi</a></li>
-            <li class="search-li"><a {% if request.GET.process == '1' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'process' '1' %}">Jarayon</a></li>
-            <li class="search-li"><a {% if request.GET.process == '2' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'process' '2' %}">Qabul qilingan</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.process == '3' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'process' '3' %}">Rad etilgan</a>
-            </li>
-        </ul>
-
-
-        <h5 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Shaxs turi bo'yicha</h5>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a
-                    {% if request.GET.person_type == 'all' or not request.GET.person_type %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'person_type' 'all' %}">Hammasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.person_type == 'J' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'person_type' 'J' %}">Jismoniy
-                shaxs</a></li>
-            <li class="search-li"><a {% if request.GET.person_type == 'Y' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'person_type' 'Y' %}">Yuridik
-                shaxs</a></li>
-
-        </ul>
-
-
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">To'lov bo'yicha</h6>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a
-                    {% if request.GET.payment == 'all' or not request.GET.payment %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'payment' 'all' %}">Hammasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.payment == 'True' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'payment' 'True' %}">To'lov
-                qilingan</a></li>
-            <li class="search-li"><a {% if request.GET.payment == 'False' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'payment' 'False' %}">To'lov
-                qilinmagan</a></li>
-
-        </ul>
-
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Ma'lumotlar mosligi bo'yicha</h6>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a
-                    {% if request.GET.confirm == 'all' or not request.GET.confirm %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'confirm' 'all' %}">Hammasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.confirm == 'True' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'confirm' 'True' %}">Tasdiqlangan</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.confirm == 'False' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'confirm' 'False' %}">Tasdiqlanmagan</a>
-            </li>
-        </ul>
-
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Texnik ko'rik bo'yicha</h6>
-        <ul class="search-ul" style="">
-            <li class="search-li"><a
-                    {% if request.GET.technical_confirm == 'all' or not request.GET.technical_confirm %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'technical_confirm' 'all' %}">Hammasi</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.technical_confirm == 'True' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'technical_confirm' 'True' %}">Ko'rikdan o'tkazilgan</a>
-            </li>
-            <li class="search-li"><a {% if request.GET.technical_confirm == 'False' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'technical_confirm' 'False' %}">Ko'rikdan o'tkazilmagan</a>
-            </li>
-        </ul>
-
-        <h6 class="card-title text-white mb-1 w-100 bg-gradient-indigo pl-2" style="font-size: medium">Sana bo'yicha</h6>
-
-        <ul class="search-ul">
-
-            <li class="search-li"><a
-                    {% if request.GET.date == 'all' or not request.GET.date %}class="active"{% endif %}
-                    href="{% url "application:change_get_request" 'date' 'all' %}">Istalgan kun</a>
-            </li>
-
-            <li class="search-li"><a {% if request.GET.date == 'today' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'date' 'today' %}">Bugun</a></li>
-
-            <li class="search-li"><a {% if request.GET.date == 'last-7-days' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'date' 'last-7-days' %}">So'nggi 7
-                kun</a></li>
-            <li class="search-li"><a {% if request.GET.date == 'month' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'date' 'month' %}">Shu oyda</a></li>
-            <li class="search-li"><a {% if request.GET.date == 'year' %}class="active"{% endif %}
-                                     href="{% url "application:change_get_request" 'date' 'year' %}">Shu yilda</a></li>
-        </ul>
+        <a
+                {% if request.GET.process == 'all' or not request.GET.process %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'process' 'all' %}" class="text-reset d-block"> <i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span></a>
+        <a {% if request.GET.process == '1' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'process' '1' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Jarayon</span></a>
+        <a {% if request.GET.process == '2' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'process' '2' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Qabul qilingan</span></a>
+        <a {% if request.GET.process == '3' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'process' '3' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Rad etilgan</span></a>
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Shaxs turi
+        bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a
+                {% if request.GET.person_type == 'all' or not request.GET.person_type %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'person_type' 'all' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span> </a>
+        <a {% if request.GET.person_type == '0' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'person_type' '0' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Jismoniy shaxs</span></a>
+        <a {% if request.GET.person_type == '1' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'person_type' '1' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Yuridik shaxs</span></a>
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">To'lov bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a
+                {% if request.GET.payment == 'all' or not request.GET.payment %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'payment' 'all' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span></a>
+        <a {% if request.GET.payment == 'True' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'payment' 'True' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">To'lov qilingan</span></a>
+        <a {% if request.GET.payment == 'False' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'payment' 'False' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">To'lov qilinmagan</span></a>
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Ma'lumotlar mosligi
+        bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a
+                {% if request.GET.confirm == 'all' or not request.GET.confirm %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'confirm' 'all' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span></a>
+        <a {% if request.GET.confirm == 'True' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'confirm' 'True' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Tasdiqlangan</span></a>
+        <a {% if request.GET.confirm == 'False' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'confirm' 'False' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Tasdiqlanmagan</span></a>
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Texnik ko'rik
+        bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a
+                {% if request.GET.technical_confirm == 'all' or not request.GET.technical_confirm %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'technical_confirm' 'all' %}"
+                class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span></a>
+        <a {% if request.GET.technical_confirm == 'True' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'technical_confirm' 'True' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Ko'rikdan o'tkazilgan</span>
+        </a>
+        <a {% if request.GET.technical_confirm == 'False' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'technical_confirm' 'False' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Ko'rikdan o'tkazilmagan</span></a>
+    </div>
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Sana bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a
+                {% if request.GET.date == 'all' or not request.GET.date %}class="active"{% endif %}
+                href="{% url "application:change_get_request" 'date' 'all' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Istalgan kun</span></a>
+        <a {% if request.GET.date == 'today' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'date' 'today' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Bugun</span></a>
+        <a {% if request.GET.date == 'last-7-days' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'date' 'last-7-days' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">So'nggi 7 kun</span></a>
+        <a {% if request.GET.date == 'month' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'date' 'month' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu oyda</span></a>
+        <a {% if request.GET.date == 'year' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'date' 'year' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu yilda</span></a>
     </div>
 </div>
+
