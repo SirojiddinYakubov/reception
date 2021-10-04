@@ -69,7 +69,8 @@ class Command(BaseCommand):
             model_name = model.split('.')[1]
             if ContentType.objects.get(app_label=app_label, model=model_name):
                 Service.objects.create(long_title=fields['title'], short_title=fields['title'], key=fields['key'],
-                                       desc=fields['desc'],photo=fields['photo'], deadline=fields['deadline'],instruction=fields['instruction'])
+                                       desc=fields['desc'], photo=fields['photo'], deadline=fields['deadline'],
+                                       instruction=fields['instruction'])
 
             print(model, id, fields)
         # for instance in self.iter_data(file):
