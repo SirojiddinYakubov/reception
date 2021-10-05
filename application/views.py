@@ -40,6 +40,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         else:
             return super().get(request, *args, **kwargs)
 
+
 class ApplicationDetail(AllowedRolesMixin, DetailView):
     model = Application
     template_name = 'application/application_detail.html'
@@ -81,6 +82,7 @@ def generate_qr_code_image(request, id):
     except:
         return HttpResponse('APPLICATION NOT FOUND')
 
+
 class ApplicationPdf(AllowedRolesMixin, View):
     template_name = 'application/application_detail_pdf.html'
     pk_url_kwarg = 'id'
@@ -99,7 +101,6 @@ class ApplicationPdf(AllowedRolesMixin, View):
             content = "attachment; filename=%s" % (filename)
             response['Content-Disposition'] = content
             return response
-
 
     def get_context_data(self, *args, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs[self.pk_url_kwarg])
@@ -124,10 +125,11 @@ class ApplicationPdf(AllowedRolesMixin, View):
             for page in range(num_pages):
                 pdf_writer.addPage(pdf_reader.getPage(page))
             user_password = "PASSSWORD"
-            pdf_writer.encrypt(user_password, "password",)
+            pdf_writer.encrypt(user_password, "password", )
 
             with open("print-enable-with-pass.pdf", "wb") as outputfile:
                 pdf_writer.write(outputfile)
+
 
 @login_required
 def get_information(request):
@@ -204,8 +206,10 @@ def create_application_doc(request, filename):
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
     re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
-    if application.seriya and application.contract_date:
-        context.update(state=f"{application.seriya} {application.contract_date.strftime('%d.%m.%Y')}")
+    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key)
+
+    if application_document.seriya and application_document.contract_date:
+        context.update(state=f"{application_document.seriya} {application_document.contract_date.strftime('%d.%m.%Y')}")
 
     if car.given_technical_passport:
         context.update(given_technical_passport=car.given_technical_passport)

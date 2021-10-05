@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -36,105 +37,101 @@ class AccountStatement(ServiceCustomMixin):
     def get_json_data(self):
 
         try:
-            request = self.request
-            service = get_object_or_404(Service, key='account_statement')
+            with transaction.atomic():
+                request = self.request
+                service = get_object_or_404(Service, key='account_statement')
 
-            person_type = request.POST.get('person_type')
-            engine_number = request.POST.get('engine_number')
-            full_weight = request.POST.get('full_weight')
-            empty_weight = request.POST.get('empty_weight')
-            engine_power = request.POST.get('engine_power')
-            auction_number = request.POST.get('auction_number')
-            body_number = request.POST.get('body_number')
-            price = request.POST.get('price')
-            color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
+                person_type = request.POST.get('person_type')
+                engine_number = request.POST.get('engine_number')
+                full_weight = request.POST.get('full_weight')
+                empty_weight = request.POST.get('empty_weight')
+                engine_power = request.POST.get('engine_power')
+                auction_number = request.POST.get('auction_number')
+                body_number = request.POST.get('body_number')
+                price = request.POST.get('price')
+                color = get_object_or_404(Color, id=request.POST.get('color', None))
 
-            devices = []
-            if request.POST.getlist('devices'):
-                for device_id in list(filter(None, request.POST.getlist('devices'))):
-                    devices.append(get_object_or_404(Device, id=device_id))
+                made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
 
-            fuel_types = []
-            if request.POST.getlist('fuel_types'):
-                for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
-                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+                devices = []
 
+                if request.POST.getlist('devices'):
+                    for device_id in list(filter(None, request.POST.getlist('devices'))):
+                        devices.append(get_object_or_404(Device, id=device_id))
 
-            user = get_object_or_404(User, id=request.user.id)
-            get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+                fuel_types = []
+                if request.POST.getlist('fuel_types'):
+                    for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
+                        fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
-            # create car
-            car = Car.objects.create(model=get_car)
-            car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
-            if request.POST.get('chassis_number', None):
-                car.chassis_number = request.POST.get('chassis_number', None)
-            car.body_number = body_number
-            car.engine_number = engine_number
-            car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
-            car.made_year = made_year
-            car.full_weight = full_weight
-            car.empty_weight = empty_weight
-            car.engine_power = engine_power
+                user = get_object_or_404(User, id=request.user.id)
 
-            car.is_new = True
-            car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
+                get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+
+                # create car
+                car = Car.objects.create(model=get_car)
+                car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
+                if request.POST.get('chassis_number', None):
+                    car.chassis_number = request.POST.get('chassis_number', None)
+                car.body_number = body_number
+                car.engine_number = engine_number
+                car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
+                car.made_year = made_year
+                car.full_weight = full_weight
+                car.empty_weight = empty_weight
+                car.engine_power = engine_power
+
+                car.is_new = True
+                car.is_replace_number = True
+                if get_car.is_local:
+                    if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+                        car.is_road_fund = True
+                    else:
+                        car.is_road_fund = False
                 else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
+                    car.is_road_fund = True
 
-            car.price = price
-            if request.POST.get('auction_number'):
-                car.is_auction = True
-                car.given_number = auction_number
-            car.color = color
-            for fuel_type in fuel_types:
-                car.fuel_type.add(fuel_type)
-            for device in devices:
-                car.device.add(device)
-            car.save()
+                car.price = price
+                if request.POST.get('auction_number'):
+                    car.is_auction = True
+                    car.given_number = auction_number
+                car.color = color
+                for fuel_type in fuel_types:
+                    car.fuel_type.add(fuel_type)
+                for device in devices:
+                    car.device.add(device)
+                car.save()
 
-            # create application and account_statament
-            application = Application.objects.create(created_user=user, created_date=timezone.now())
+                # create application and account_statament
+                application = Application.objects.create(created_user=user, created_date=timezone.now())
 
-            if int(person_type) == LEGAL_PERSON:
-                organization = get_object_or_404(Organization, id=request.POST.get('organization'))
-                application.person_type = person_type
-                application.organization = organization
-            password = random.randint(1000, 9999)
-            application.password = password
-            application.service = service
-            application.car = car
-            application.is_active = False
-            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
-                seriya = request.POST.get('seriya')
-                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
-                application.seriya = seriya
-                application.contract_date = contract_date
-            application.save()
+                if int(person_type) == LEGAL_PERSON:
+                    organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                    application.person_type = person_type
+                    application.organization = organization
 
-            calculation_state_duty_service_price(application)
+                password = random.randint(1000, 9999)
+                application.password = password
+                application.service = service
+                application.car = car
+                application.is_active = False
+                if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                    seriya = request.POST.get('seriya')
+                    contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                    example_document = ExampleDocument.objects.get(key=service.key)
 
-            # stateDuties = list()
-            # stateDuties.append({'application': application.file_name})
-            # qs = StateDuty.objects.filter(service=service)
-            # print(qs)
-            # for query in qs:
-            #     stateDuties.append({'title':query.get_title_display(), 'payment':query.payment})
-            # print(stateDuties)
-            context = {
-                # 'stateDuties': serializers.serialize('json', stateDuties),
-                # 'application': application.file_name
-            }
-            # obj_serialize = serializers.serialize('json', [application,])
-            # data = json.dumps(obj_serialize)
-            return HttpResponse(application.id, content_type='json', status=200)
+                    ApplicationDocument.objects.create(application=application,
+                                                       example_ducument=example_document, seriya=seriya,
+                                                       contract_date=contract_date)
+                application.save()
+
+                #calculate state duty function
+                calculation_state_duty_service_price(application)
+
+                return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
+
 
 class ContractOfSale(ServiceCustomMixin):
     template_name = 'service/contract_of_sale/contract_of_sale.html'
@@ -186,7 +183,7 @@ class ContractOfSale(ServiceCustomMixin):
             if request.POST.get('lost_number') == 'true':
                 car.lost_number = True
             else:
-                car.old_number = request.POST.get('old_number',None)
+                car.old_number = request.POST.get('old_number', None)
                 car.lost_number = False
 
             if request.POST.get('is_old_number') == 'true':
@@ -206,9 +203,6 @@ class ContractOfSale(ServiceCustomMixin):
             car.full_weight = full_weight
             car.empty_weight = empty_weight
             car.engine_power = engine_power
-
-
-
 
             car.is_replace_number = True
             if get_car.is_local:
@@ -248,6 +242,7 @@ class ContractOfSale(ServiceCustomMixin):
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
+
 
 @login_required
 def gift_agreement_index(request):
@@ -309,7 +304,7 @@ class Save_Gift_Agreement(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -321,7 +316,7 @@ class Save_Gift_Agreement(APIView):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
             seriya = request.POST.get('seriya')
-            contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None),'%d.%m.%Y')
+            contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None), '%d.%m.%Y')
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
@@ -364,7 +359,8 @@ class Save_Gift_Agreement(APIView):
 
             # create application and account_statament
             application = Application.objects.create(created_user=user, created_date=timezone.now())
-            service = Service.objects.create(person_type=person_type, car=car, title='gift_agreement', contract_date=contract_date)
+            service = Service.objects.create(person_type=person_type, car=car, title='gift_agreement',
+                                             contract_date=contract_date)
             service.seriya = seriya
             service.created_user = request.user
             if person_type == 'Y':
@@ -452,7 +448,7 @@ class Save_Contract_Of_Sale(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -464,7 +460,7 @@ class Save_Contract_Of_Sale(APIView):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
 
             seriya = request.POST.get('seriya')
-            contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None),'%d.%m.%Y')
+            contract_date = datetime.datetime.strptime(request.POST.get('contract_date', None), '%d.%m.%Y')
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
@@ -506,7 +502,8 @@ class Save_Contract_Of_Sale(APIView):
 
             # create application and account_statament
             application = Application.objects.create(created_user=user, created_date=timezone.now())
-            service = Service.objects.create(person_type=person_type, car=car, title='contract_of_sale', contract_date=contract_date)
+            service = Service.objects.create(person_type=person_type, car=car, title='contract_of_sale',
+                                             contract_date=contract_date)
             service.seriya = seriya
             service.created_user = request.user
             if person_type == 'Y':
@@ -581,11 +578,10 @@ class Save_Replace_Tp(APIView):
             else:
                 lost_technical_passport = False
 
-
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -713,7 +709,7 @@ class Save_Replace_Number_And_Tp(APIView):
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -723,7 +719,6 @@ class Save_Replace_Number_And_Tp(APIView):
             if request.POST.getlist('fuel_types'):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                     fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
-
 
             user = get_object_or_404(User, id=request.user.id)
             get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
@@ -834,7 +829,6 @@ class Save_Re_Equipment(APIView):
             else:
                 lost_technical_passport = False
 
-
             old_number = request.POST.get('old_number')
             body_number = request.POST.get('body_number')
             color = get_object_or_404(Color, id=request.POST.get('color', None))
@@ -842,7 +836,7 @@ class Save_Re_Equipment(APIView):
                 re_color = get_object_or_404(Color, id=request.POST.get('re_color', None))
             else:
                 re_color = None
-            made_year = datetime.datetime.strptime(request.POST.get('made_year', None),'%d.%m.%Y')
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%d.%m.%Y')
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
@@ -942,5 +936,3 @@ class ServiceInfo(DetailView):
         context = super().get_context_data(**kwargs)
         # context.update(form_fields=ServiceInputField.objects.filter(service=self.kwargs.get('pk')))
         return context
-
-

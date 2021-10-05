@@ -14,14 +14,15 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(ApplicationDocument)
 class ApplicationDocumentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'application', 'example_ducument','seriya', 'contract_date', 'created_at','updated_at']
-    list_display_links = ['application','example_ducument']
-    list_filter = ['application__service__short_title',]
+    list_display = ['id', 'application', 'example_ducument', 'seriya', 'contract_date', 'created_at', 'updated_at']
+    list_display_links = ['application', 'example_ducument']
+    list_filter = ['application__service__short_title', ]
     save_on_top = True
+
 
 @admin.register(ApplicationDocumentAttachment)
 class ApplicationDocumentAttachmentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'application_document', 'attachment', 'created_at','updated_at']
-    list_display_links = ['application_document',]
-    list_filter = ['application_document__application__service__short_title',]
+    list_display = ['id', 'application_document', 'attachment', 'created_at', 'updated_at']
+    list_display_links = ['application_document', ]
+    list_filter = ['application_document__application__service__short_title', ]
     save_on_top = True

@@ -55,3 +55,9 @@ class StateDutyScoreAdmin(admin.ModelAdmin):
     list_display_links = ['id','state_duty']
     save_on_top = True
 
+@admin.register(ExampleDocument)
+class ExampleDocumentAdmin(admin.ModelAdmin):
+    list_display = ['id','title',]
+    list_display_links = ['title']
+    list_filter = [ 'created_at', 'updated_at']
+    search_fields = ['title', ]
