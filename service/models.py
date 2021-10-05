@@ -43,7 +43,8 @@ class Service(models.Model):
 
 
 class ExampleDocument(BaseModel):
-    title = models.CharField(max_length=200, )
+    title = models.CharField(max_length=200)
+    key = models.CharField(max_length=100, unique=True)
 
     class Meta:
         verbose_name = 'Hujjat'

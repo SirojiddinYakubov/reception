@@ -4,7 +4,7 @@ from django.contrib.humanize.templatetags.humanize import naturalday, intcomma
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
-from application.models import Application
+from application.models import Application, ApplicationDocument
 from reception.settings import MINIMUM_BASE_WAGE
 from service.models import *
 from user.models import Constant
@@ -34,8 +34,10 @@ def calculation_state_duty_service_price(application):
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
                                                   state_duty=3).first()
-    if application.contract_date:
-        if datetime.datetime.now().date() > application.contract_date + timedelta(days=10):
+    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key)
+
+    if application_document.contract_date:
+        if datetime.datetime.now().date() > application_document.contract_date + timedelta(days=10):
             try:
                 fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent
             except AttributeError:

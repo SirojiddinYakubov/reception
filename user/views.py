@@ -1193,7 +1193,8 @@ class Save_New_Car_Model(APIView):
                 CarModel.objects.create(title=request.POST.get('title'), is_truck=is_truck, is_local=is_local,
                                         created_user=request.user)
                 car_models = CarModel.objects.filter(is_active=True)
-                options = ""
+
+                options = '<option data-style="color: blue;" value="new">Yangi rang qo\'shish</option>'
                 for car_model in car_models:
                     options += f"<option value='{car_model.id}'>{car_model.title}</option>"
                 return HttpResponse(options, status=200)

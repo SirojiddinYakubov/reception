@@ -160,8 +160,7 @@
 
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="devices">{% trans "Alohida belgilar" %}<span
-                                    class="text-danger">*</span></label>
+                                   for="devices">{% trans "Alohida belgilar" %}</label>
                             <div class="col-8 col-xl-9">
 
                                 <select id="devices" name="devices" class="form-control"
@@ -512,7 +511,8 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addCarModel(url = '{% url 'user:save_new_car_model' %}')
-                        if (newval !== null) {
+
+                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
                     }

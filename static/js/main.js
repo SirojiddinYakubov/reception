@@ -1033,7 +1033,6 @@ function addCarModel(url = null) {
         },
 
     }).then(function (confirm) {
-
         if (confirm.isConfirmed) {
             var title = confirm.value[0],
                 is_local = confirm.value[1],
