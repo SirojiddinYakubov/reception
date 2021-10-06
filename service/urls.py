@@ -11,6 +11,7 @@ urlpatterns = [
     path('gift-agreement/', GiftAgreement.as_view(), name='gift_agreement'),
     path('re-equipment/', ReEquipment.as_view(), name='re_equipment'),
     path('replace-tp/', ReplaceTp.as_view(), name='replace_tp'),
+    path('replace-number-and-tp/', ReplaceNumberAndTp.as_view(), name='replace_number_and_tp'),
 
 
 

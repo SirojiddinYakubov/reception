@@ -24,7 +24,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
                                  'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
                                  'car__is_technical_confirm']
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get_queryset(self):
@@ -68,7 +68,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
     model = Application
     template_name = 'application/application_detail.html'
     pk_url_kwarg = 'id'
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -109,7 +109,7 @@ def generate_qr_code_image(request, id):
 class ApplicationPdf(AllowedRolesMixin, View):
     template_name = 'application/application_detail_pdf.html'
     pk_url_kwarg = 'id'
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -461,7 +461,7 @@ def payment_detail(request, service_id):
 class PaymentsList(AllowedRolesMixin, ListView):
     model = StateDuty
     template_name = 'application/payments/payments_list.html'
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -567,7 +567,7 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     template_name = 'application/applications_list.html'
     render_application_values = ['id', 'service', 'service__car', 'service__car__old_number', 'created_user',
                                  'created_date', 'file_name', 'process']
-    allowed_roles = [DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     @allowed_users(allowed_roles=[*allowed_roles])
@@ -591,7 +591,7 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
 
 class SaveApplicationSection(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def post(self, request, *args, **kwargs):
