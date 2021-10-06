@@ -14,6 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import PermissionDenied
 from application.models import *
 from application.permissions import allowed_users
+from reception.mixins import AllowedRolesMixin
 from reception.settings import LOCAL_TIMEZONE
 from service.models import *
 from datetime import datetime as dt
@@ -22,9 +23,11 @@ from django.views.generic.base import *
 
 @permission_classes([IsAuthenticated])
 class ApplicationCustomMixin(ListView):
-    render_application_values = []
-    model = None
+    model = Application
     request = None
+    render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
+                                 'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
+                                 'car__is_technical_confirm']
 
     # def __init__(self, *args, **kwargs):
     #     super(ApplicationsList, self).__init__(*args, **kwargs)

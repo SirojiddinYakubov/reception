@@ -19,42 +19,23 @@ from user.utils import render_to_pdf
 
 
 class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
-    model = Application
     template_name = 'application/applications_list.html'
-    render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
-                                 'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
-                                 'car__is_technical_confirm']
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == CHECKER:
+            return ['user/role/checker/applications_list.html']
+        return [self.template_name]
+
     def get_queryset(self):
         role = self.request.user.role
-        qs = super().get_queryset()
+        qs = super().get_queryset().filter(created_user=self.request.user)
 
-        if role == USER:
-            qs = qs.filter(created_user=self.request.user)
-
-        return qs
-
-    def get(self, request, *args, **kwargs):
-
-        if request.is_ajax():
-            return super().get_json_data()
-        else:
-            return super().get(request, *args, **kwargs)
-
-
-class CheckerApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
-    model = Application
-    template_name = 'user/role/checker/controller_applications_list.html'
-    render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
-                                 'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
-                                 'car__is_technical_confirm']
-    allowed_roles = [CHECKER]
-
-    def get_queryset(self):
-        qs = super().get_queryset().filter(section=self.request.user.section)
-        print(qs)
+        if role == CHECKER:
+            section = get_object_or_404(Section, id=self.request.user.section.id)
+            qs = qs.filter(section=section)
         return qs
 
     def get(self, request, *args, **kwargs):
@@ -62,6 +43,8 @@ class CheckerApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             return super().get_json_data()
         else:
             return super().get(request, *args, **kwargs)
+
+
 
 
 class ApplicationDetail(AllowedRolesMixin, DetailView):

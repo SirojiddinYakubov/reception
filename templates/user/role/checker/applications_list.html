@@ -188,7 +188,21 @@
                     {
                         "data": "process",
                         render: function (data, type, row) {
-                            if (row.process === 0) {
+
+
+                            return `
+                            <select name="process_select" class="select2 change_process"
+                                                data-id="{{ application.id }}"
+                                                data-replace-number="{% if application.car.is_replace_number %}true{% else %}false{% endif %}"
+                                                style="font-size: smaller;border: 2px solid {% if application.process == '1' %}#ecec01{% elif application.process == '2' %}#36f406{% elif application.process == '3' %}#dc3545;{% endif %} ">
+                                <option value="process">Jarayon</option>
+                                <option value="confirm">Qabul qilish</option>
+                                <option value="cancel">Rad etish</option>
+                            </select>
+                            `
+
+
+                           /* if (row.process === 0) {
                                 return '<span class="badge label-table bg-warning">Ariza yaratilgan</span>'
                             } else if (row.process === 1) {
                                 return '<span class="badge label-table bg-info">YXHBga jo\'natilgan</span>'
@@ -205,7 +219,7 @@
                             }
                               else if (row.process === 6) {
                                 return '<span class="badge label-table bg-danger">Rad etilgan</span>'
-                            }
+                            }*/
                         }
 
                     },

@@ -1393,7 +1393,7 @@ class ServicesList(ListView):
         return context
 
     def get_queryset(self):
-        qs = super().get_queryset().filter(is_active=True)
+        qs = super().get_queryset().filter(is_active=True).order_by('sort')
         return qs
 
 
