@@ -10,7 +10,7 @@ from user.models import *
 
 class ServiceCustomMixin(AllowedRolesMixin, ListView):
     model = Service
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get_context_data(self, **kwargs):
         cars = CarModel.objects.filter(is_active=True)
