@@ -17,12 +17,58 @@
     <tbody>
     <tr>
         <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
-        <th style="color: #0f6674">{{ application.process_sms }}</th>
+
+        <!--Yaratildi-->
+        {% if application.process == 0 %}
+            <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi. Arizangizni jo'natish uchun BHM'ning
+                3% miqdorida ya'ni 8 100 to'lov qilishingiz talab etiladi. Shundan so'ng onlayn arizangiz
+                {{ application.section.region.title }} {{ application.section.title }}ga jo'natiladi.
+            </th>
+
+            <!--Jo'natildi-->
+        {% elif application.process == 1 %}
+            <th style="color: #0f6674"> To'lov muvaffaqiyatli amalga oshirildi.
+                Arizangiz {{ application.section.region.title }} {{ application.section.title }}ga jo'natildi. Javobini
+                SMS xabarnoma tarzida qabul qilasiz.
+            </th>
+            <!--Ko'rib chiqish uchun qabul qilindi-->
+        {% elif application.process == 2 %}
+            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                inspektorlari tomonidan ko'rib
+                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            </th>
+            <!--To'lovni kutmoqda-->
+        {% elif application.process == 3 %}
+            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                inspektorlari tomonidan ko'rib
+                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            </th>
+            <!--Hujjatlarning asl nusxasini kutmoqda-->
+        {% elif application.process == 4 %}
+            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                inspektorlari tomonidan ko'rib
+                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            </th>
+            <!--Muvaffaqiyatli yakunlandi-->
+        {% elif application.process == 5 %}
+            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                inspektorlari tomonidan ko'rib
+                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            </th>
+            <!--Rad etildi-->
+        {% elif application.process == 6 %}
+            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                inspektorlari tomonidan ko'rib
+                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            </th>
+        {% endif %}
+
+
         {% if application.given_date and application.given_time %}
             <th style="color: #0f6674">{{ application.given_date }}</th>
             <th style="color: #0f6674">{{ application.given_time }}</th>
         {% endif %}
-    {% if application.canceled_date %}
+        {% if application.canceled_date %}
             <th style="color: #0f6674">{{ application.canceled_date }}</th>
         {% endif %}
     </tr>

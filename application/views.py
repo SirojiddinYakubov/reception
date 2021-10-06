@@ -26,16 +26,20 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     def get_template_names(self):
         role = self.request.user.role
         if role == CHECKER:
-            return ['user/role/checker/applications_list.html']
+            return ['user/role/checker/checker_applications_list.html']
         return [self.template_name]
 
     def get_queryset(self):
         role = self.request.user.role
-        qs = super().get_queryset().filter(created_user=self.request.user)
+        qs = super().get_queryset()
 
         if role == CHECKER:
             section = get_object_or_404(Section, id=self.request.user.section.id)
-            qs = qs.filter(section=section)
+            qs = qs.filter(section=section).filter(
+            process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
+                         SUCCESS, REJECTED])
+        else:
+            qs = qs.filter(created_user=self.request.user)
         return qs
 
     def get(self, request, *args, **kwargs):
@@ -44,7 +48,10 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         else:
             return super().get(request, *args, **kwargs)
 
-
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update(application=)
+    #     return context
 
 
 class ApplicationDetail(AllowedRolesMixin, DetailView):
@@ -61,7 +68,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
             if application.created_user == request.user:
                 return super().get(request, *args, **kwargs)
             return redirect(reverse_lazy('error_403'))
-        elif request.user.role == STATE_CONTROLLER:
+        elif request.user.role == CHECKER:
             return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -212,9 +219,10 @@ def create_application_doc(request, filename):
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
     re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
-    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key, application=application)
+    application_document = ApplicationDocument.objects.filter(example_ducument__key=service.key,
+                                                              application=application).last()
 
-    if application_document.seriya and application_document.contract_date:
+    if application_document and application_document.contract_date:
         context.update(state=f"{application_document.seriya} {application_document.contract_date.strftime('%d.%m.%Y')}")
 
     if car.given_technical_passport:
@@ -387,8 +395,9 @@ class ConfirmApplicationData(APIView):
 @permission_classes([IsAuthenticated])
 class GetGivenNumber(APIView):
     def post(self, request, id):
+        print('OK')
         application = get_object_or_404(Application, id=id)
-        car = get_object_or_404(Car, id=application.service.car.id)
+        car = get_object_or_404(Car, id=application.car.id)
         if car.is_auction:
             if car.given_number:
                 return HttpResponse(car.given_number)
@@ -574,7 +583,7 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
 
 class SaveApplicationSection(AllowedRolesMixin, View):
-    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def post(self, request, *args, **kwargs):

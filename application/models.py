@@ -15,9 +15,9 @@ CREATED = 0  # Yaratildi
 SHIPPED = 1  # Jo'natildi
 ACCEPTED_FOR_CONSIDERATION = 2  # Ko'rib chiqish uchun qabul qilindi
 WAITING_FOR_PAYMENT = 3  # To'lovni kutmoqda
-WAITING_FOR_ORIGINAL_DOCUMENTS = 4
-SUCCESS = 5
-REJECTED = 6
+WAITING_FOR_ORIGINAL_DOCUMENTS = 4   #Hujjatlarning asl nusxasini kutmoqda
+SUCCESS = 5   #Muvaffaqiyatli yakunlandi
+REJECTED = 6   #Rad etildi
 
 PROCESS_CHOICES = (
     (CREATED, "Ariza yaratildi"),
@@ -51,7 +51,7 @@ class Application(models.Model):
     organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
                                      blank=True)
     process = models.IntegerField(choices=PROCESS_CHOICES, verbose_name="Holat", default=CREATED)
-    process_sms = models.CharField(_('Holat sababi'), max_length=600, blank=True, default=_("Ko'rib chiqilmoqda"))
+
     is_payment = models.BooleanField(_("To\'lov qilingan"), default=False)
     service = models.ForeignKey(Service, verbose_name='Xizmat turi', on_delete=models.CASCADE, blank=True, null=True,
                                 related_name='application_service')

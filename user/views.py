@@ -328,12 +328,13 @@ class GetChildSections(AllowedRolesMixin):
 
 
 class Get_Organization(AllowedRolesMixin, View):
-    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER,CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def post(self, request):
         if request.is_ajax():
             try:
+
                 organization = get_object_or_404(Organization, id=request.POST.get('organization', None))
                 company = serializers.serialize('json', [organization, ])
                 struct = json.loads(company, )
@@ -1263,7 +1264,7 @@ def sections_list(request, section_id):
 
 
 class SectionsListByRegion(AllowedRolesMixin, View):
-    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
