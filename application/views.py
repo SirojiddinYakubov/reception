@@ -30,11 +30,14 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     def get_queryset(self):
         role = self.request.user.role
         qs = super().get_queryset()
+
         if role == USER:
             qs = qs.filter(created_user=self.request.user)
+
         return qs
 
     def get(self, request, *args, **kwargs):
+
         if request.is_ajax():
             return super().get_json_data()
         else:
@@ -206,7 +209,7 @@ def create_application_doc(request, filename):
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
     re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
-    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key)
+    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key, application=application)
 
     if application_document.seriya and application_document.contract_date:
         context.update(state=f"{application_document.seriya} {application_document.contract_date.strftime('%d.%m.%Y')}")

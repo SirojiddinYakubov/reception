@@ -23,7 +23,9 @@ class EditForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Masalan: Tojiddinovich', 'id': 'middle_name'}))
     birthday = forms.DateField(label="Tug'ilgan  kuni", input_formats=settings.DATE_INPUT_FORMATS,
                                widget=forms.DateInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'Masalan: 01.01.2020',
+                                   attrs={'class': 'form-control',
+                                          'type': 'datetime-local',
+                                          'placeholder': 'Masalan: 01.01.2020',
                                           'id': 'birthday'}))
     passport_seriya = forms.CharField(label='Passport seriyasi:', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Masalan: AA', 'id': 'passport_seriya'}))
@@ -46,11 +48,13 @@ class EditForm(forms.ModelForm):
     issue_by_whom = forms.CharField(label='Kim tomonidan berilgan:', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Masalan: BUXORO SHAHAR IIB', 'id': 'issue_by_whom'}))
 
+
+
     class Meta:
         model = User
-        fields = ['last_name', 'first_name', 'middle_name', 'birthday', 'passport_seriya', 'passport_number',
+        fields = ['last_name', 'first_name', 'middle_name', 'passport_seriya', 'passport_number',
                   'issue_by_whom', 'person_id', 'region', 'district', 'quarter', 'address']
-        exclude = ['phone',]
+        exclude = ['phone', 'birthday']
 
         labels = {
             'name': _('Writer'),

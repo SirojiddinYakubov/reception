@@ -1,5 +1,3 @@
-
-
 // Ruxsat berilgan lotin va kiril bosh harflar, raqamlar
 function PassportInputFilter(e) {
     var ew = e.which
@@ -904,7 +902,7 @@ function error_toast() {
     })
 }
 
-function addColor(url = null) {
+function addColor(url = null, select_id = null) {
     const {value: formValues} = Swal.fire({
         allowOutsideClick: false,
         showCancelButton: true,
@@ -941,19 +939,17 @@ function addColor(url = null) {
                     url: url,
                     data: {
                         color: color,
-
                     },
                     statusCode: {
                         200: function (response) {
-                            $('#color').empty().append(response)
-                            let new_val = $('#color option').filter(function () {
+                            success_toast()
+                            $(`#${select_id}`).empty().append(response)
+                            let new_val = $(`#${select_id} option`).filter(function () {
                                 return $(this).html() === color;
                             }).val()
-
-                            $("#color").val(new_val).change();
-                            success_toast()
+                            $(`#${select_id}`).val(new_val).change();
                         },
-                        400: function () {
+                        400: function (error) {
                             error_toast()
                         },
                         409: function () {
@@ -976,16 +972,19 @@ function addColor(url = null) {
                         }
                     },
                 })
-            } else {
-                error_toast()
+
             }
 
 
         } else {
             error_toast()
         }
-    });
+
+
+    })
+
 }
+
 
 function addCarModel(url = null) {
     const {value: formValues} = Swal.fire({

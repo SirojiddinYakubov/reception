@@ -34,7 +34,8 @@ def calculation_state_duty_service_price(application):
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
                                                   state_duty=3).first()
-    application_document = ApplicationDocument.objects.get(example_ducument__key=service.key)
+
+    application_document = ApplicationDocument.objects.get(application=application, example_ducument__key=service.key)
 
     if application_document.contract_date:
         if datetime.datetime.now().date() > application_document.contract_date + timedelta(days=10):
@@ -190,7 +191,7 @@ def calculation_state_duty_service_price(application):
             print('JARIMA SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * fine)
-
+        print(price)
         state_duty = StateDuty.objects.filter(title='7', service=service).first()
         if not state_duty:
             StateDuty.objects.create(title='7', created_user=created_user, payment=price, service=service, score=score)

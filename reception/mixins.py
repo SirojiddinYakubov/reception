@@ -24,7 +24,6 @@ class AllowedRolesMixin(LoginRequiredMixin, View):
             token = self.request.COOKIES.get('token')
             Token.objects.get(key=token)
         except ObjectDoesNotExist:
-
             logout(self.request)
             next = self.request.get_full_path()
             rev = reverse_lazy('user:login_view')
