@@ -4,7 +4,7 @@ import re
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import QuerySet, Q
+from django.db.models import QuerySet, Q, Case, When, IntegerField, F
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
@@ -78,12 +78,14 @@ class ApplicationCustomMixin(ListView):
     def get_queryset(self):
         id_list = []
         qs = super().get_queryset().filter(is_active=True)
-        for item in qs:
-            if item.section.pay_for_service and not item.is_block:
-                id_list.append(item.id)
-            elif not item.section.pay_for_service:
-                id_list.append(item.id)
-        qs = super().get_queryset().filter(id__in=id_list)
+
+        # for item in qs:
+        #     if item.section.pay_for_service and not item.is_block:
+        #         id_list.append(item.id)
+        #     elif not item.section.pay_for_service:
+        #         id_list.append(item.id)
+
+        # qs = super().get_queryset().filter(id__in=id_list)
 
         q = self.request.GET.get('q', '').lower()
         order_by = self.request.GET.get('order_by', 'created_date')

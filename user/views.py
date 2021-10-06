@@ -387,8 +387,10 @@ class EditPersonalData(AllowedRolesMixin, View):
     def post(self, request):
 
         form = EditForm(request.POST, instance=request.user)
-
+        print(request.POST)
+        print(request.POST.get('birthday'))
         if form.is_valid():
+            
             form = form.save(commit=False)
             phone = request.POST.get('phone').replace('-','').replace(' ','')
             form.phone = phone
@@ -411,6 +413,7 @@ class EditPersonalData(AllowedRolesMixin, View):
                 return HttpResponse(status=400)
             return HttpResponse(status=400)
         else:
+            print(form.errors)
             return HttpResponse(status=400)
 
 
@@ -1214,7 +1217,7 @@ class Save_New_Color(APIView):
                     return HttpResponse(status=409)
                 Color.objects.create(title=request.POST.get('color'), created_user=request.user)
                 colors = Color.objects.filter(is_active=True)
-                options = ""
+                options = '<option data-style="color: blue;" value="new">Yangi rang qo\'shish</option>'
                 for color in colors:
                     options += f"<option value='{color.id}'>{color.title}</option>"
                 return HttpResponse(options, status=200)
