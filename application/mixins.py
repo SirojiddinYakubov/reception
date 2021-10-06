@@ -27,7 +27,7 @@ class ApplicationCustomMixin(ListView):
     request = None
     render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
                                  'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
-                                 'car__is_technical_confirm']
+                                 'car__is_technical_confirm','car__is_replace_number']
 
     # def __init__(self, *args, **kwargs):
     #     super(ApplicationsList, self).__init__(*args, **kwargs)
@@ -35,9 +35,9 @@ class ApplicationCustomMixin(ListView):
     # def get_template_names(self):
     #     print(self.request.user.role)
     #     if self.request.user.role == STATE_CONTROLLER:
-    #         template_name = 'user/role/state_controller/applications_list.html'
+    #         template_name = 'user/role/state_controller/checker_applications_list.html'
     #     elif self.request.user.role == USER:
-    #         template_name = 'application/applications_list.html'
+    #         template_name = 'application/checker_applications_list.html'
     #     else:
     #         template_name = self.template_name
     #     return [template_name]
