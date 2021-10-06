@@ -539,22 +539,11 @@ class ReplaceTp(ServiceCustomMixin):
                 car.old_technical_passport = request.POST.get('old_technical_passport', None)
                 car.lost_technical_passport = False
 
-            if request.POST.get('lost_number') == 'true':
-                car.lost_number = True
-            else:
-                car.old_number = request.POST.get('old_number', None)
-                car.lost_number = False
 
-            if request.POST.get('is_old_number') == 'true':
-                car.is_old_number = True
-            else:
-                car.is_old_number = False
+            car.old_number = request.POST.get('old_number', None)
+            car.lost_number = False
+            car.is_old_number = False
 
-            if request.POST.get('is_auction') == 'true':
-                car.is_auction = True
-                car.given_number = request.POST.get('given_number', None)
-            else:
-                car.is_auction = False
             car.body_number = body_number
             car.engine_number = engine_number
             car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
@@ -563,14 +552,10 @@ class ReplaceTp(ServiceCustomMixin):
             car.empty_weight = empty_weight
             car.engine_power = engine_power
 
-            car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
+            car.is_replace_number = False
+
+            car.is_road_fund = False
+
 
             car.color = color
             for fuel_type in fuel_types:
@@ -591,17 +576,17 @@ class ReplaceTp(ServiceCustomMixin):
             application.car = car
             application.is_active = False
 
-            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
-                seriya = request.POST.get('seriya')
-                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
-                example_document = ExampleDocument.objects.get(key=service.key)
-                application_document = ApplicationDocument.objects.filter(application=application,
-                                                                          example_ducument=example_document)
-                if not application_document.exists():
-                    ApplicationDocument.objects.create(application=application,
-                                                       example_ducument=example_document,
-                                                       seriya=seriya,
-                                                       contract_date=contract_date)
+            # if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+            #     seriya = request.POST.get('seriya')
+            #     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                # example_document = ExampleDocument.objects.get(key=service.key)
+                # application_document = ApplicationDocument.objects.filter(application=application,
+                #                                                           example_ducument=example_document)
+                # if not application_document.exists():
+                #     ApplicationDocument.objects.create(application=application,
+                #                                        example_ducument=example_document,
+                #                                        seriya=seriya,
+                #                                        contract_date=contract_date)
             application.save()
 
             calculation_state_duty_service_price(application)
