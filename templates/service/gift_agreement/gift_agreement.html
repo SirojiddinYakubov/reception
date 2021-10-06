@@ -421,44 +421,7 @@
                     </form>
                 </fieldset>
                 <fieldset id="fieldset4" style="display: none">
-                    <legend>Ariza topshirish hududi</legend>
-                    <form action="#" method="post" id="save_section_form">
-                        {% csrf_token %}
-                        <input type="hidden" name="application">
-                        <div class="row mb-3">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="region">{% trans 'Ariza topshiradigan viloyatni tanlang' %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9 car">
-                                <select id="region" name="region" required class="form-control select2"
-                                        data-width="100%">
-                                    {% for region in regions %}
-                                        <option value="{{ region.id }}">{{ region.title }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="header-title">Tuman va shahar ro'yhatga olish bo'limlari</h4>
-                            <p class="sub-header">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took electronic typesetting, remaining essentially
-                                unchanged.</p>
-
-                            <ol class="list-group list-group-numbered" id="sections_list">
-
-
-                            </ol>
-                        </div>
-                        <div class="justify-content-end row">
-                            <div class="col-12">
-                                <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
-                                        id="prev4">Oldingi
-                                </button>
-
-                            </div>
-                        </div>
-                    </form>
+                    {% include 'service/_parts/territory_of_rib.html' %}
                 </fieldset>
 
             </div>

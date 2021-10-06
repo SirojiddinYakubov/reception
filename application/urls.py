@@ -7,6 +7,7 @@ app_name = 'application'
 
 urlpatterns = [
     path('applications-list/', ApplicationsList.as_view(), name='applications_list'),
+    path('checker-applications-list/', CheckerApplicationsList.as_view(), name='checker_applications_list'),
 
     # path('application-detail/<int:id>/', application_detail, name='application_detail2'),
     path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),

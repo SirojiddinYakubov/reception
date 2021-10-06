@@ -104,7 +104,10 @@ def login_view(request):
                     if next:
                         response = HttpResponseRedirect(next)
                     else:
-                        response = redirect('service:services_list')
+                        if user.role == USER:
+                            response = redirect('service:services_list')
+                        elif user.role == CHECKER:
+                            response = redirect('application:checker_applications_list')
                     response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
                     return response
                 else:
@@ -363,8 +366,6 @@ def edit_personal_data(request):
     if request.method == 'POST':
         print(request.POST.get('phone'))
 
-
-
     return render(request, 'user/edit_personal_data.html', context)
 
 
@@ -390,9 +391,9 @@ class EditPersonalData(AllowedRolesMixin, View):
         print(request.POST)
         print(request.POST.get('birthday'))
         if form.is_valid():
-            
+
             form = form.save(commit=False)
-            phone = request.POST.get('phone').replace('-','').replace(' ','')
+            phone = request.POST.get('phone').replace('-', '').replace(' ', '')
             form.phone = phone
             form.username = phone
             form.turbo = request.POST.get('password')
@@ -415,8 +416,6 @@ class EditPersonalData(AllowedRolesMixin, View):
         else:
             print(form.errors)
             return HttpResponse(status=400)
-
-
 
 
 def get_code(request):
@@ -1273,4 +1272,3 @@ class SectionsListByRegion(AllowedRolesMixin, View):
             sections = serializers.serialize('json', qs)
             return HttpResponse(sections, status=200, content_type='application/json')
         return HttpResponse(status=404)
-

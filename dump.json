@@ -1,9 +1,635 @@
 [
 {
+  "model": "user.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$216000$K39Kgjq77S3e$EAmARQhY9/9UwXa2xH/Iwk1xH8APAa8+BBaaHxiSUZg=",
+    "last_name": "",
+    "first_name": "",
+    "middle_name": "",
+    "role": 1,
+    "region": null,
+    "district": null,
+    "section": null,
+    "quarter": null,
+    "address": null,
+    "email": "",
+    "birthday": "2021-10-03",
+    "username": "admin",
+    "phone": null,
+    "passport_seriya": null,
+    "passport_number": null,
+    "person_id": null,
+    "issue_by_whom": null,
+    "is_staff": true,
+    "is_superuser": true,
+    "is_active": true,
+    "last_login": "2021-10-06T03:33:25.771Z",
+    "date_joined": "2021-10-03T10:18:46.583Z",
+    "gender": 0,
+    "turbo": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$216000$i5JrhBZtp2lz$34/zVxfelwYttdKfsQnyqlf/KQ5TI7mig2NzNdcy+d4=",
+    "last_name": "Najbiyev",
+    "first_name": "Azizbek",
+    "middle_name": "Akbarovich",
+    "role": 1,
+    "region": 3,
+    "district": 47,
+    "section": null,
+    "quarter": 1391,
+    "address": "Sharq 1 ko'chasi 7/2 7-xona",
+    "email": "",
+    "birthday": "2003-12-29",
+    "username": "908080908",
+    "phone": 908080908,
+    "passport_seriya": "AA",
+    "passport_number": 1234567,
+    "person_id": 13213213213213,
+    "issue_by_whom": "BUXORO SHAHAR IIB",
+    "is_staff": false,
+    "is_superuser": false,
+    "is_active": true,
+    "last_login": "2021-10-06T03:42:24.133Z",
+    "date_joined": "2021-10-03T13:24:07.992Z",
+    "gender": 0,
+    "turbo": "53212",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$216000$EHEFvqeuPFoB$kwiIDKUIM7DvIN+kq1qzOI44wHtdjBWB2CuPku5oRis=",
+    "last_name": "Yoqubov",
+    "first_name": "Salohiddin",
+    "middle_name": "Tojiddin o'g'li",
+    "role": 1,
+    "region": 3,
+    "district": 47,
+    "section": null,
+    "quarter": 1369,
+    "address": "M.Iqbol",
+    "email": "",
+    "birthday": "2020-01-01",
+    "username": "972800809",
+    "phone": 972800809,
+    "passport_seriya": "AA",
+    "passport_number": 3565655,
+    "person_id": 42554622222623,
+    "issue_by_whom": "BUXORO SHAHAR IIB ",
+    "is_staff": false,
+    "is_superuser": false,
+    "is_active": true,
+    "last_login": "2021-10-05T07:15:47.879Z",
+    "date_joined": "2021-10-04T12:55:10.759Z",
+    "gender": 0,
+    "turbo": "91879",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 1,
+  "fields": {
+    "title": "YUK",
+    "is_active": true,
+    "created_date": "2021-03-24T15:04:51.625Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 2,
+  "fields": {
+    "title": "YENGIL",
+    "is_active": true,
+    "created_date": "2021-03-24T15:04:57.925Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 3,
+  "fields": {
+    "title": "AVTOBUS",
+    "is_active": true,
+    "created_date": "2021-03-25T03:03:33.102Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 4,
+  "fields": {
+    "title": "TIRKAMA",
+    "is_active": true,
+    "created_date": "2021-03-25T03:03:39.740Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 5,
+  "fields": {
+    "title": "MOTONAKLIYOT",
+    "is_active": true,
+    "created_date": "2021-03-25T03:03:49.775Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 6,
+  "fields": {
+    "title": "ELEKTRONAKLIYOT",
+    "is_active": true,
+    "created_date": "2021-03-25T03:03:59.882Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 7,
+  "fields": {
+    "title": "MIKROAVTOBUS",
+    "is_active": true,
+    "created_date": "2021-03-25T03:04:11.360Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 8,
+  "fields": {
+    "title": "MAXSUS",
+    "is_active": true,
+    "created_date": "2021-03-25T03:04:18.122Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 9,
+  "fields": {
+    "title": "BOSHQA",
+    "is_active": true,
+    "created_date": "2021-03-25T03:04:28.921Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 10,
+  "fields": {
+    "title": "YUK-YO'LOVCHI TASHUVCHI",
+    "is_active": true,
+    "created_date": "2021-03-25T03:04:41.370Z"
+  }
+},
+{
+  "model": "user.cartype",
+  "pk": 11,
+  "fields": {
+    "title": "YARIM TIRKAMA",
+    "is_active": true,
+    "created_date": "2021-03-25T03:05:34.841Z"
+  }
+},
+{
+  "model": "user.carmodel",
+  "pk": 1,
+  "fields": {
+    "title": "Gentra",
+    "creator": null,
+    "is_local": true,
+    "is_truck": false,
+    "is_active": true,
+    "created_user": 2,
+    "created_date": "2021-10-03T13:29:34.000Z"
+  }
+},
+{
+  "model": "user.carmodel",
+  "pk": 2,
+  "fields": {
+    "title": "Mercades-benz",
+    "creator": null,
+    "is_local": false,
+    "is_truck": false,
+    "is_active": true,
+    "created_user": 2,
+    "created_date": "2021-10-03T13:33:17.990Z"
+  }
+},
+{
+  "model": "user.carmodel",
+  "pk": 3,
+  "fields": {
+    "title": "Tesla",
+    "creator": null,
+    "is_local": false,
+    "is_truck": false,
+    "is_active": true,
+    "created_user": 2,
+    "created_date": "2021-10-05T04:59:47.626Z"
+  }
+},
+{
+  "model": "user.carmodel",
+  "pk": 4,
+  "fields": {
+    "title": "Lamborgini",
+    "creator": null,
+    "is_local": false,
+    "is_truck": false,
+    "is_active": true,
+    "created_user": 2,
+    "created_date": "2021-10-05T05:22:16.469Z"
+  }
+},
+{
+  "model": "user.color",
+  "pk": 1,
+  "fields": {
+    "title": "OQ",
+    "is_active": true,
+    "created_date": "2021-10-05T05:00:03.959Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 2,
+  "fields": {
+    "title": "OQ (GAZ)",
+    "is_active": true,
+    "created_date": "2021-10-05T06:45:49.046Z",
+    "created_user": 3
+  }
+},
+{
+  "model": "user.color",
+  "pk": 3,
+  "fields": {
+    "title": "Kulrang belodimchaty",
+    "is_active": true,
+    "created_date": "2021-10-05T08:37:34.506Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 4,
+  "fields": {
+    "title": "Yashil",
+    "is_active": true,
+    "created_date": "2021-10-05T09:38:48.031Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 5,
+  "fields": {
+    "title": "ko'k",
+    "is_active": true,
+    "created_date": "2021-10-05T10:21:35.484Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 6,
+  "fields": {
+    "title": "jigar",
+    "is_active": true,
+    "created_date": "2021-10-05T10:24:54.280Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 7,
+  "fields": {
+    "title": "kulrang",
+    "is_active": true,
+    "created_date": "2021-10-05T10:28:33.040Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 59,
+  "fields": {
+    "title": "1",
+    "is_active": true,
+    "created_date": "2021-10-05T12:30:56.724Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 60,
+  "fields": {
+    "title": "2",
+    "is_active": true,
+    "created_date": "2021-10-05T12:32:07.332Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 61,
+  "fields": {
+    "title": "3",
+    "is_active": true,
+    "created_date": "2021-10-05T12:32:49.689Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 62,
+  "fields": {
+    "title": "4",
+    "is_active": true,
+    "created_date": "2021-10-05T12:34:29.398Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 63,
+  "fields": {
+    "title": "5",
+    "is_active": true,
+    "created_date": "2021-10-05T12:35:27.178Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 64,
+  "fields": {
+    "title": "6",
+    "is_active": true,
+    "created_date": "2021-10-05T12:39:01.974Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 65,
+  "fields": {
+    "title": "7",
+    "is_active": true,
+    "created_date": "2021-10-05T12:42:08.167Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 66,
+  "fields": {
+    "title": "8",
+    "is_active": true,
+    "created_date": "2021-10-05T12:43:27.116Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 67,
+  "fields": {
+    "title": "9",
+    "is_active": true,
+    "created_date": "2021-10-05T12:45:47.485Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 68,
+  "fields": {
+    "title": "10",
+    "is_active": true,
+    "created_date": "2021-10-05T12:46:48.826Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 69,
+  "fields": {
+    "title": "11",
+    "is_active": true,
+    "created_date": "2021-10-05T12:48:07.580Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 70,
+  "fields": {
+    "title": "12",
+    "is_active": true,
+    "created_date": "2021-10-05T12:50:07.941Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 71,
+  "fields": {
+    "title": "13",
+    "is_active": true,
+    "created_date": "2021-10-05T12:53:52.495Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 72,
+  "fields": {
+    "title": "14",
+    "is_active": true,
+    "created_date": "2021-10-05T12:58:35.126Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 73,
+  "fields": {
+    "title": "15",
+    "is_active": true,
+    "created_date": "2021-10-05T12:58:49.061Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 74,
+  "fields": {
+    "title": "16",
+    "is_active": true,
+    "created_date": "2021-10-05T13:00:26.834Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 75,
+  "fields": {
+    "title": "16",
+    "is_active": true,
+    "created_date": "2021-10-05T13:00:26.834Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 76,
+  "fields": {
+    "title": "17",
+    "is_active": true,
+    "created_date": "2021-10-05T13:03:54.910Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 77,
+  "fields": {
+    "title": "18",
+    "is_active": true,
+    "created_date": "2021-10-05T13:10:23.164Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 78,
+  "fields": {
+    "title": "19",
+    "is_active": true,
+    "created_date": "2021-10-05T13:23:23.208Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 79,
+  "fields": {
+    "title": "20",
+    "is_active": true,
+    "created_date": "2021-10-05T13:24:02.324Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.color",
+  "pk": 80,
+  "fields": {
+    "title": "21",
+    "is_active": true,
+    "created_date": "2021-10-05T13:24:09.507Z",
+    "created_user": 2
+  }
+},
+{
+  "model": "user.device",
+  "pk": 1,
+  "fields": {
+    "title": "Ambulance",
+    "is_active": true,
+    "created_date": "2021-10-05T06:20:10.793Z"
+  }
+},
+{
+  "model": "user.device",
+  "pk": 2,
+  "fields": {
+    "title": "Migalka",
+    "is_active": true,
+    "created_date": "2021-10-05T06:20:14.807Z"
+  }
+},
+{
+  "model": "user.device",
+  "pk": 3,
+  "fields": {
+    "title": "O'rgatuvchi",
+    "is_active": true,
+    "created_date": "2021-10-05T06:20:20.413Z"
+  }
+},
+{
+  "model": "user.device",
+  "pk": 4,
+  "fields": {
+    "title": "Evakuator",
+    "is_active": true,
+    "created_date": "2021-10-05T06:20:27.737Z"
+  }
+},
+{
+  "model": "user.fueltype",
+  "pk": 1,
+  "fields": {
+    "title": "BENZIN",
+    "is_active": true,
+    "created_date": "2021-10-03T13:30:17.465Z"
+  }
+},
+{
+  "model": "user.bodytype",
+  "pk": 1,
+  "fields": {
+    "title": "SEDAN",
+    "is_active": true,
+    "created_date": "2021-10-03T13:30:28.360Z"
+  }
+},
+{
+  "model": "user.section",
+  "pk": 1,
+  "fields": {
+    "parent": null,
+    "title": "Buxoro viloyat IIB",
+    "region": 3,
+    "is_active": true,
+    "pay_for_service": true,
+    "address": "Buxoro viloyati Buxoro shahri",
+    "district": []
+  }
+},
+{
+  "model": "user.section",
+  "pk": 2,
+  "fields": {
+    "parent": 1,
+    "title": "1-son TRIB",
+    "region": 3,
+    "is_active": true,
+    "pay_for_service": true,
+    "address": "Buxoro shahri Qayum Murtazoyev ko'chasi",
+    "district": [
+      47,
+      48,
+      52,
+      53,
+      55
+    ]
+  }
+},
+{
   "model": "user.region",
   "pk": 1,
   "fields": {
-    "title": "Qoraqalpogæiston Respublikasi",
+    "title": "Qoraqalpog'iston Respublikasi",
     "sort": 1,
     "is_active": true
   }
@@ -102,7 +728,7 @@
   "model": "user.region",
   "pk": 12,
   "fields": {
-    "title": "Fargæona viloyati",
+    "title": "Farg'ona viloyati",
     "sort": 1,
     "is_active": true
   }
@@ -159,7 +785,7 @@
   "model": "user.district",
   "pk": 18,
   "fields": {
-    "title": "Qonlikoæl tumani",
+    "title": "Qonliko'l tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -169,7 +795,7 @@
   "model": "user.district",
   "pk": 19,
   "fields": {
-    "title": "Qoraoæzak tumani",
+    "title": "Qorao'zak tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -179,7 +805,7 @@
   "model": "user.district",
   "pk": 20,
   "fields": {
-    "title": "Qoængæirot tumani",
+    "title": "Qo'ng'irot tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -189,7 +815,7 @@
   "model": "user.district",
   "pk": 21,
   "fields": {
-    "title": "Moæynoq tumani",
+    "title": "Mo'ynoq tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -219,7 +845,7 @@
   "model": "user.district",
   "pk": 24,
   "fields": {
-    "title": "Taxtakoæpir tumani",
+    "title": "Taxtako'pir tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -229,7 +855,7 @@
   "model": "user.district",
   "pk": 25,
   "fields": {
-    "title": "Toærtkoæl tumani",
+    "title": "To'rtko'l tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -239,7 +865,7 @@
   "model": "user.district",
   "pk": 26,
   "fields": {
-    "title": "Xoæjayli tumani",
+    "title": "Xo'jayli tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -249,7 +875,7 @@
   "model": "user.district",
   "pk": 27,
   "fields": {
-    "title": "CHimboy tumani",
+    "title": "Chimboy tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -259,7 +885,7 @@
   "model": "user.district",
   "pk": 28,
   "fields": {
-    "title": "SHumanay tumani",
+    "title": "Shumanay tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -269,7 +895,7 @@
   "model": "user.district",
   "pk": 29,
   "fields": {
-    "title": "Ellikqalæa tumani",
+    "title": "Ellikqal'a tumani",
     "region": 1,
     "sort": 1,
     "is_active": true
@@ -329,7 +955,7 @@
   "model": "user.district",
   "pk": 35,
   "fields": {
-    "title": "Boæz tumani",
+    "title": "Bo'z tumani",
     "region": 2,
     "sort": 1,
     "is_active": true
@@ -369,7 +995,7 @@
   "model": "user.district",
   "pk": 39,
   "fields": {
-    "title": "Qoærgæontepa tumani",
+    "title": "Qo'rg'ontepa tumani",
     "region": 2,
     "sort": 1,
     "is_active": true
@@ -389,7 +1015,7 @@
   "model": "user.district",
   "pk": 41,
   "fields": {
-    "title": "Oltinkoæl tumani",
+    "title": "Oltinko'l tumani",
     "region": 2,
     "sort": 1,
     "is_active": true
@@ -409,7 +1035,7 @@
   "model": "user.district",
   "pk": 43,
   "fields": {
-    "title": "Ulugænor tumani",
+    "title": "Ulug'nor tumani",
     "region": 2,
     "sort": 1,
     "is_active": true
@@ -429,7 +1055,7 @@
   "model": "user.district",
   "pk": 45,
   "fields": {
-    "title": "Xoæjaobod shahri",
+    "title": "Xo'jaobod shahri",
     "region": 2,
     "sort": 1,
     "is_active": true
@@ -479,7 +1105,7 @@
   "model": "user.district",
   "pk": 50,
   "fields": {
-    "title": "Gæijduvon tumani",
+    "title": "G├жijduvon tumani",
     "region": 3,
     "sort": 1,
     "is_active": true
@@ -519,7 +1145,7 @@
   "model": "user.district",
   "pk": 54,
   "fields": {
-    "title": "Qorakoæl tumani",
+    "title": "Qorako├жl tumani",
     "region": 3,
     "sort": 1,
     "is_active": true
@@ -599,7 +1225,7 @@
   "model": "user.district",
   "pk": 62,
   "fields": {
-    "title": "Gæallaorol tumani",
+    "title": "G├жallaorol tumani",
     "region": 4,
     "sort": 1,
     "is_active": true
@@ -609,7 +1235,7 @@
   "model": "user.district",
   "pk": 63,
   "fields": {
-    "title": "Doæstlik tumani",
+    "title": "Do├жstlik tumani",
     "region": 4,
     "sort": 1,
     "is_active": true
@@ -669,7 +1295,7 @@
   "model": "user.district",
   "pk": 69,
   "fields": {
-    "title": "Mirzachoæl tumani",
+    "title": "Mirzacho├жl tumani",
     "region": 4,
     "sort": 1,
     "is_active": true
@@ -709,7 +1335,7 @@
   "model": "user.district",
   "pk": 73,
   "fields": {
-    "title": "Gæuzor tumani",
+    "title": "G├жuzor tumani",
     "region": 5,
     "sort": 1,
     "is_active": true
@@ -839,7 +1465,7 @@
   "model": "user.district",
   "pk": 86,
   "fields": {
-    "title": "Yakkabogæ tumani",
+    "title": "Yakkabog├ж tumani",
     "region": 5,
     "sort": 1,
     "is_active": true
@@ -1009,7 +1635,7 @@
   "model": "user.district",
   "pk": 103,
   "fields": {
-    "title": "Toæraqoærgæon tumani",
+    "title": "To├жraqo├жrg├жon tumani",
     "region": 7,
     "sort": 1,
     "is_active": true
@@ -1029,7 +1655,7 @@
   "model": "user.district",
   "pk": 105,
   "fields": {
-    "title": "Uchqoærgæon tumani",
+    "title": "Uchqo├жrg├жon tumani",
     "region": 7,
     "sort": 1,
     "is_active": true
@@ -1059,7 +1685,7 @@
   "model": "user.district",
   "pk": 108,
   "fields": {
-    "title": "Yangiqoærgæon tumani",
+    "title": "Yangiqo├жrg├жon tumani",
     "region": 7,
     "sort": 1,
     "is_active": true
@@ -1069,7 +1695,7 @@
   "model": "user.district",
   "pk": 109,
   "fields": {
-    "title": "Bulungæur tumani",
+    "title": "Bulung├жur tumani",
     "region": 8,
     "sort": 1,
     "is_active": true
@@ -1099,7 +1725,7 @@
   "model": "user.district",
   "pk": 112,
   "fields": {
-    "title": "Kattaqoærgæon tumani",
+    "title": "Kattaqo├жrg├жon tumani",
     "region": 8,
     "sort": 1,
     "is_active": true
@@ -1109,7 +1735,7 @@
   "model": "user.district",
   "pk": 113,
   "fields": {
-    "title": "Kattaqoærgæon shahri",
+    "title": "Kattaqo├жrg├жon shahri",
     "region": 8,
     "sort": 1,
     "is_active": true
@@ -1119,7 +1745,7 @@
   "model": "user.district",
   "pk": 114,
   "fields": {
-    "title": "Qoæshrabot tumani",
+    "title": "Qo├жshrabot tumani",
     "region": 8,
     "sort": 1,
     "is_active": true
@@ -1169,7 +1795,7 @@
   "model": "user.district",
   "pk": 119,
   "fields": {
-    "title": "Pastargæom tumani",
+    "title": "Pastarg├жom tumani",
     "region": 8,
     "sort": 1,
     "is_active": true
@@ -1259,7 +1885,7 @@
   "model": "user.district",
   "pk": 128,
   "fields": {
-    "title": "Jarqoærgæon tumani",
+    "title": "Jarqo'rg'on tumani",
     "region": 9,
     "sort": 1,
     "is_active": true
@@ -1279,7 +1905,7 @@
   "model": "user.district",
   "pk": 130,
   "fields": {
-    "title": "Qoæmqoærgæon tumani",
+    "title": "Qo'mqo'rg'on tumani",
     "region": 9,
     "sort": 1,
     "is_active": true
@@ -1359,7 +1985,7 @@
   "model": "user.district",
   "pk": 138,
   "fields": {
-    "title": "Shoærchi tumani",
+    "title": "Sho'rchi tumani",
     "region": 9,
     "sort": 1,
     "is_active": true
@@ -1469,7 +2095,7 @@
   "model": "user.district",
   "pk": 149,
   "fields": {
-    "title": "Yangier shahri",
+    "title": "Yangiyer shahri",
     "region": 10,
     "sort": 1,
     "is_active": true
@@ -1509,7 +2135,7 @@
   "model": "user.district",
   "pk": 153,
   "fields": {
-    "title": "Boæka tumani",
+    "title": "Bo'ka tumani",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -1519,7 +2145,7 @@
   "model": "user.district",
   "pk": 154,
   "fields": {
-    "title": "Boæstonliq tumani",
+    "title": "Bo'stonliq tumani",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -1559,7 +2185,7 @@
   "model": "user.district",
   "pk": 158,
   "fields": {
-    "title": "Oqqoærgæon tumani",
+    "title": "Oqqo'rg'on tumani",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -1609,7 +2235,7 @@
   "model": "user.district",
   "pk": 163,
   "fields": {
-    "title": "Oærtachirchiq tumani",
+    "title": "O'rtachirchiq tumani",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -1649,7 +2275,7 @@
   "model": "user.district",
   "pk": 167,
   "fields": {
-    "title": "Yangiyoæl tumani",
+    "title": "Yangiyo'l tumani",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -1669,7 +2295,7 @@
   "model": "user.district",
   "pk": 169,
   "fields": {
-    "title": "Bogædod tumani",
+    "title": "Bog'dod tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1689,7 +2315,7 @@
   "model": "user.district",
   "pk": 171,
   "fields": {
-    "title": "Dangæara tumani",
+    "title": "Dang'ara tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1729,7 +2355,7 @@
   "model": "user.district",
   "pk": 175,
   "fields": {
-    "title": "Qoæqon shahri",
+    "title": "Qo'qon shahri",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1739,7 +2365,7 @@
   "model": "user.district",
   "pk": 176,
   "fields": {
-    "title": "Qoæshtepa tumani",
+    "title": "Qo'shtepa tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1749,7 +2375,7 @@
   "model": "user.district",
   "pk": 177,
   "fields": {
-    "title": "Margæilon shahri",
+    "title": "Marg'ilon shahri",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1779,7 +2405,7 @@
   "model": "user.district",
   "pk": 180,
   "fields": {
-    "title": "Soæx tumani",
+    "title": "So'x tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1799,7 +2425,7 @@
   "model": "user.district",
   "pk": 182,
   "fields": {
-    "title": "Uchkoæprik tumani",
+    "title": "Uchko'prik tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1809,7 +2435,7 @@
   "model": "user.district",
   "pk": 183,
   "fields": {
-    "title": "Oæzbekiston tumani",
+    "title": "O'zbekiston tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1819,7 +2445,7 @@
   "model": "user.district",
   "pk": 184,
   "fields": {
-    "title": "Fargæona tumani",
+    "title": "Farg'ona tumani",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1829,7 +2455,7 @@
   "model": "user.district",
   "pk": 185,
   "fields": {
-    "title": "Fargæona shahri",
+    "title": "Farg'ona shahri",
     "region": 12,
     "sort": 1,
     "is_active": true
@@ -1849,7 +2475,7 @@
   "model": "user.district",
   "pk": 187,
   "fields": {
-    "title": "Bogæot tumani",
+    "title": "Bog'ot tumani",
     "region": 13,
     "sort": 1,
     "is_active": true
@@ -1869,7 +2495,7 @@
   "model": "user.district",
   "pk": 189,
   "fields": {
-    "title": "Qoæshkoæpir tumani",
+    "title": "Qo'shko'pir tumani",
     "region": 13,
     "sort": 1,
     "is_active": true
@@ -1969,7 +2595,7 @@
   "model": "user.district",
   "pk": 199,
   "fields": {
-    "title": "M.Ulugæbek tumani",
+    "title": "M.Ulug'bek tumani",
     "region": 14,
     "sort": 1,
     "is_active": true
@@ -2109,7 +2735,7 @@
   "model": "user.district",
   "pk": 213,
   "fields": {
-    "title": "Yangiyoæl shahri",
+    "title": "Yangiyo'l shahri",
     "region": 11,
     "sort": 1,
     "is_active": true
@@ -18569,7 +19195,7 @@
   "model": "user.quarter",
   "pk": 1808,
   "fields": {
-    "title": "Navoiy QFYá",
+    "title": "Navoiy QFY├б",
     "district": 57,
     "sort": 1,
     "is_active": true
@@ -80299,7 +80925,7 @@
   "model": "user.quarter",
   "pk": 7981,
   "fields": {
-    "title": "QoÆrgÆoncha MFY\r\n",
+    "title": "Qo├Жrg├Жoncha MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -80389,7 +81015,7 @@
   "model": "user.quarter",
   "pk": 7990,
   "fields": {
-    "title": " DoÆstlik MFY\r\n",
+    "title": " Do├Жstlik MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -80409,7 +81035,7 @@
   "model": "user.quarter",
   "pk": 7992,
   "fields": {
-    "title": "SoyboÆyi  MFY\r\n",
+    "title": "Soybo├Жyi  MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -80419,7 +81045,7 @@
   "model": "user.quarter",
   "pk": 7993,
   "fields": {
-    "title": "Yuqori SoyboÆyi MFY\r\n",
+    "title": "Yuqori Soybo├Жyi MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -80489,7 +81115,7 @@
   "model": "user.quarter",
   "pk": 8000,
   "fields": {
-    "title": "YangiboÆston MFY\r\n",
+    "title": "Yangibo├Жston MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -80519,7 +81145,7 @@
   "model": "user.quarter",
   "pk": 8003,
   "fields": {
-    "title": "Markaziy FargÆona MFY\r\n",
+    "title": "Markaziy Farg├Жona MFY\r\n",
     "district": 172,
     "sort": 1,
     "is_active": true
@@ -99519,7 +100145,7 @@
   "model": "user.quarter",
   "pk": 9903,
   "fields": {
-    "title": "OÆrnak OFY",
+    "title": "O├Жrnak OFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -99539,7 +100165,7 @@
   "model": "user.quarter",
   "pk": 9905,
   "fields": {
-    "title": "BoÆston MFY",
+    "title": "Bo├Жston MFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -99619,7 +100245,7 @@
   "model": "user.quarter",
   "pk": 9913,
   "fields": {
-    "title": "TemiryoÆl MFY",
+    "title": "Temiryo├Жl MFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -99829,7 +100455,7 @@
   "model": "user.quarter",
   "pk": 9934,
   "fields": {
-    "title": "KoÆkdaryo OFY",
+    "title": "Ko├Жkdaryo OFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -99849,7 +100475,7 @@
   "model": "user.quarter",
   "pk": 9936,
   "fields": {
-    "title": "QoÆngÆirot OFY",
+    "title": "Qo├Жng├Жirot OFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -99919,7 +100545,7 @@
   "model": "user.quarter",
   "pk": 9943,
   "fields": {
-    "title": "MingjargÆon MFY",
+    "title": "Mingjarg├Жon MFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -100009,7 +100635,7 @@
   "model": "user.quarter",
   "pk": 9952,
   "fields": {
-    "title": "OltinkoÆl ShFY",
+    "title": "Oltinko├Жl ShFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -100049,7 +100675,7 @@
   "model": "user.quarter",
   "pk": 9956,
   "fields": {
-    "title": "QoraqalpogÆiston ShFY",
+    "title": "Qoraqalpog├Жiston ShFY",
     "district": 20,
     "sort": 1,
     "is_active": true
@@ -102009,7 +102635,7 @@
   "model": "user.quarter",
   "pk": 10152,
   "fields": {
-    "title": "MaÆrifat MFY",
+    "title": "Ma├Жrifat MFY",
     "district": 215,
     "sort": 1,
     "is_active": true
@@ -102109,7 +102735,7 @@
   "model": "user.quarter",
   "pk": 10162,
   "fields": {
-    "title": "QizgÆaldoq MFY",
+    "title": "Qizg├Жaldoq MFY",
     "district": 215,
     "sort": 1,
     "is_active": true
@@ -102149,7 +102775,7 @@
   "model": "user.quarter",
   "pk": 10166,
   "fields": {
-    "title": "GÆishtkoÆprik MFY",
+    "title": "G├Жishtko├Жprik MFY",
     "district": 215,
     "sort": 1,
     "is_active": true
@@ -102336,6 +102962,50 @@
   }
 },
 {
+  "model": "service.exampledocument",
+  "pk": 1,
+  "fields": {
+    "created_at": "2021-10-05T04:50:34.988Z",
+    "updated_at": "2021-10-05T05:28:12.568Z",
+    "is_active": true,
+    "title": "Shaxsni tasdiqlovchi hujjat",
+    "key": "passport"
+  }
+},
+{
+  "model": "service.exampledocument",
+  "pk": 2,
+  "fields": {
+    "created_at": "2021-10-05T04:50:46.953Z",
+    "updated_at": "2021-10-05T05:28:06.095Z",
+    "is_active": true,
+    "title": "Hisob ma'lumotnomasi",
+    "key": "account_statement"
+  }
+},
+{
+  "model": "service.exampledocument",
+  "pk": 3,
+  "fields": {
+    "created_at": "2021-10-05T04:50:58.906Z",
+    "updated_at": "2021-10-05T05:27:56.944Z",
+    "is_active": true,
+    "title": "Oldi sotdi shartnomasi",
+    "key": "contract_of_sale"
+  }
+},
+{
+  "model": "service.exampledocument",
+  "pk": 4,
+  "fields": {
+    "created_at": "2021-10-05T04:51:08.114Z",
+    "updated_at": "2021-10-05T05:27:42.250Z",
+    "is_active": true,
+    "title": "Hadya shartnomasi",
+    "key": "gift_agreement"
+  }
+},
+{
   "model": "service.service",
   "pk": 1,
   "fields": {
@@ -102347,8 +103017,11 @@
     "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
     "deadline": "1-10",
     "instruction": "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    "created_date": "2021-10-03T12:05:24.211Z",
-    "document": []
+    "created_date": "2021-10-03T12:05:24Z",
+    "document": [
+      2,
+      1
+    ]
   }
 },
 {
@@ -102363,380 +103036,231 @@
     "photo": "https://www.pngkit.com/png/full/312-3127999_sell-your-junk-car-to-us-sale-car.png",
     "deadline": "1-10",
     "instruction": "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-    "created_date": "2021-10-03T12:05:24.216Z",
-    "document": []
+    "created_date": "2021-10-03T12:05:24Z",
+    "document": [
+      3,
+      1
+    ]
   }
 },
 {
-  "model": "service.statedutyscore",
-  "pk": 1,
-  "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 57,
-    "score": "4014228600062403422232179",
-    "created_date": "2021-03-25T03:08:05.724Z",
-    "updated_date": "2021-03-25T03:08:05.724Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 2,
-  "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 55,
-    "score": "4014228605062323422232179",
-    "created_date": "2021-03-25T03:08:27.690Z",
-    "updated_date": "2021-03-25T03:08:27.690Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
+  "model": "service.service",
   "pk": 3,
   "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 58,
-    "score": "4014228608062423422232179",
-    "created_date": "2021-03-25T03:08:42.435Z",
-    "updated_date": "2021-03-25T03:08:42.435Z"
+    "short_title": "Hadya shartnomasi",
+    "long_title": "Hadya shartnomasiga asosan transport vositasiga davlat raqam belgisi olish",
+    "key": "gift_agreement",
+    "is_active": true,
+    "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
+    "deadline": "1-10",
+    "instruction": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "created_date": "2021-10-05T04:44:53Z",
+    "document": [
+      4,
+      1
+    ]
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.service",
   "pk": 4,
   "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 53,
-    "score": "4014228604064033422231279",
-    "created_date": "2021-03-25T03:08:59.663Z",
-    "updated_date": "2021-03-25T03:08:59.663Z"
+    "short_title": "Qayta jihozlash",
+    "long_title": "Qayta jihozlash",
+    "key": "re_equipment",
+    "is_active": true,
+    "desc": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+    "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
+    "deadline": "10-15",
+    "instruction": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+    "created_date": "2021-10-05T09:01:19Z",
+    "document": [
+      1
+    ]
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.service",
   "pk": 5,
   "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 48,
-    "score": "4014228605062073422232179",
-    "created_date": "2021-03-25T03:09:18.034Z",
-    "updated_date": "2021-03-25T03:09:18.034Z"
+    "short_title": "DRB almashtirish",
+    "long_title": "Davlat raqam belgisini almashtirish",
+    "key": "replace_tp",
+    "is_active": true,
+    "desc": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words",
+    "photo": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwdrfree.com%2Fstock-vector%2Fdriving&psig=AOvVaw1zCreDXPARJviZxUrK_HwU&ust=1633577698652000&source=images&cd=vfe&ved=0CAgQjRxqFwoTCJCv_6bttPMCFQAAAAAdAAAAABAD",
+    "deadline": "1-10",
+    "instruction": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words",
+    "created_date": "2021-10-06T03:33:39Z",
+    "document": [
+      1
+    ]
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
+  "pk": 4,
+  "fields": {
+    "service": 1,
+    "title": 5,
+    "payment": 392000,
+    "created_date": "2021-10-05T05:35:44.436Z",
+    "updated_date": "2021-10-06T03:45:11.420Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 29,
+    "is_active": true
+  }
+},
+{
+  "model": "service.stateduty",
+  "pk": 5,
+  "fields": {
+    "service": 1,
+    "title": 4,
+    "payment": 171500,
+    "created_date": "2021-10-05T05:35:44.444Z",
+    "updated_date": "2021-10-06T03:45:11.426Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 6,
+    "is_active": true
+  }
+},
+{
+  "model": "service.stateduty",
   "pk": 6,
   "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 47,
-    "score": "4014228607064013422232179",
-    "created_date": "2021-03-25T03:09:36.361Z",
-    "updated_date": "2021-03-25T03:09:36.361Z"
+    "service": 1,
+    "title": 3,
+    "payment": 24500,
+    "created_date": "2021-10-05T05:35:44.448Z",
+    "updated_date": "2021-10-06T03:45:11.429Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 19,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 7,
   "fields": {
-    "state_duty": "4",
-    "region": 3,
-    "district": 52,
-    "score": "4014228605062193422232179",
-    "created_date": "2021-03-25T03:09:50.917Z",
-    "updated_date": "2021-03-25T03:09:50.917Z"
+    "service": 1,
+    "title": 7,
+    "payment": 0,
+    "created_date": "2021-10-05T05:35:44.451Z",
+    "updated_date": "2021-10-05T06:40:57.264Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 37,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 8,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 57,
-    "score": "4014228603062403422204179",
-    "created_date": "2021-03-25T03:10:15.843Z",
-    "updated_date": "2021-03-25T03:10:15.843Z"
+    "service": 1,
+    "title": 1,
+    "payment": 180000,
+    "created_date": "2021-10-05T05:35:44.455Z",
+    "updated_date": "2021-10-06T03:45:11.433Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 27,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 9,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 53,
-    "score": "4014228607064033422204179",
-    "created_date": "2021-03-25T03:10:35.352Z",
-    "updated_date": "2021-03-25T03:10:35.352Z"
+    "service": 2,
+    "title": 6,
+    "payment": 24500,
+    "created_date": "2021-10-05T07:51:34.346Z",
+    "updated_date": "2021-10-06T03:49:28.041Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 36,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 10,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 52,
-    "score": "4014228608062193422204179",
-    "created_date": "2021-03-25T03:10:50.061Z",
-    "updated_date": "2021-03-25T03:10:50.061Z"
+    "service": 2,
+    "title": 5,
+    "payment": 1102500,
+    "created_date": "2021-10-05T07:51:34.352Z",
+    "updated_date": "2021-10-06T03:49:28.045Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 29,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 11,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 55,
-    "score": "4014228608062323422204179",
-    "created_date": "2021-03-25T03:11:03.593Z",
-    "updated_date": "2021-03-25T03:11:03.593Z"
+    "service": 2,
+    "title": 4,
+    "payment": 171500,
+    "created_date": "2021-10-05T07:51:34.362Z",
+    "updated_date": "2021-10-06T03:49:28.053Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 6,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 12,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 48,
-    "score": "4014228608062073422204179",
-    "created_date": "2021-03-25T03:11:17.931Z",
-    "updated_date": "2021-03-25T03:11:17.931Z"
+    "service": 2,
+    "title": 3,
+    "payment": 24500,
+    "created_date": "2021-10-05T07:51:34.366Z",
+    "updated_date": "2021-10-06T03:49:28.057Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 19,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 13,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 47,
-    "score": "4014228604064013422204179",
-    "created_date": "2021-03-25T03:11:30.075Z",
-    "updated_date": "2021-03-25T03:11:30.075Z"
+    "service": 2,
+    "title": 7,
+    "payment": 14935200,
+    "created_date": "2021-10-05T07:51:34.369Z",
+    "updated_date": "2021-10-06T03:49:28.060Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 37,
+    "is_active": true
   }
 },
 {
-  "model": "service.statedutyscore",
+  "model": "service.stateduty",
   "pk": 14,
   "fields": {
-    "state_duty": "2",
-    "region": 3,
-    "district": 58,
-    "score": "4014228600062423422204179",
-    "created_date": "2021-03-25T03:11:47.835Z",
-    "updated_date": "2021-03-25T03:11:47.835Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 15,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 57,
-    "score": "4014228602062403422210179",
-    "created_date": "2021-03-25T03:12:28.737Z",
-    "updated_date": "2021-03-25T03:12:28.737Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 16,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 53,
-    "score": "4014228606064033422210179",
-    "created_date": "2021-03-25T03:12:45.394Z",
-    "updated_date": "2021-03-25T03:12:45.394Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 17,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 48,
-    "score": "4014228607062073422210179",
-    "created_date": "2021-03-25T03:12:59.599Z",
-    "updated_date": "2021-03-25T03:12:59.599Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 18,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 55,
-    "score": "4014228607062323422210179",
-    "created_date": "2021-03-25T03:13:13.454Z",
-    "updated_date": "2021-03-25T03:13:13.454Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 19,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 47,
-    "score": "4014228609064013422210179",
-    "created_date": "2021-03-25T03:13:27.335Z",
-    "updated_date": "2021-03-25T03:13:27.335Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 20,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 58,
-    "score": "4014228604062423422210179",
-    "created_date": "2021-03-25T03:13:41.394Z",
-    "updated_date": "2021-03-25T03:13:41.394Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 21,
-  "fields": {
-    "state_duty": "3",
-    "region": 3,
-    "district": 52,
-    "score": "4014228607062193422210179",
-    "created_date": "2021-03-25T03:13:55.085Z",
-    "updated_date": "2021-03-25T03:13:55.085Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 22,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 57,
-    "score": "1000108602062403422221093",
-    "created_date": "2021-03-25T03:14:14.839Z",
-    "updated_date": "2021-03-25T03:14:14.839Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 23,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 53,
-    "score": "1000108606064033422221093",
-    "created_date": "2021-03-25T03:14:33.761Z",
-    "updated_date": "2021-03-25T03:14:33.761Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 24,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 52,
-    "score": "1000108607062193422221093",
-    "created_date": "2021-03-25T03:14:48.294Z",
-    "updated_date": "2021-03-25T03:14:48.294Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 25,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 55,
-    "score": "1000108607062323422221093",
-    "created_date": "2021-03-25T03:15:02.679Z",
-    "updated_date": "2021-03-25T03:15:02.679Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 26,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 48,
-    "score": "1000108607062073422221093",
-    "created_date": "2021-03-25T03:15:15.397Z",
-    "updated_date": "2021-03-25T03:15:15.397Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 27,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 47,
-    "score": "1000108609064013422221093",
-    "created_date": "2021-03-25T03:15:28.134Z",
-    "updated_date": "2021-03-25T03:15:28.134Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 28,
-  "fields": {
-    "state_duty": "1",
-    "region": 3,
-    "district": 58,
-    "score": "1000108604062423422221093",
-    "created_date": "2021-03-25T03:15:40.693Z",
-    "updated_date": "2021-03-25T03:15:40.693Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 29,
-  "fields": {
-    "state_duty": "5",
-    "region": null,
-    "district": null,
-    "score": "4014228603064013422948179",
-    "created_date": "2021-03-25T03:16:26.175Z",
-    "updated_date": "2021-03-25T03:16:26.175Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 36,
-  "fields": {
-    "state_duty": "6",
-    "region": null,
-    "district": null,
-    "score": "4014228603064013422947179",
-    "created_date": "2021-03-25T03:18:05.703Z",
-    "updated_date": "2021-03-25T03:18:05.703Z"
-  }
-},
-{
-  "model": "service.statedutyscore",
-  "pk": 37,
-  "fields": {
-    "state_duty": "7",
-    "region": null,
-    "district": null,
-    "score": "4014228603064013430105179",
-    "created_date": "2021-03-25T03:18:16.182Z",
-    "updated_date": "2021-03-25T03:18:16.182Z"
+    "service": 2,
+    "title": 2,
+    "payment": 14935200,
+    "created_date": "2021-10-05T07:51:34.372Z",
+    "updated_date": "2021-10-06T03:49:28.065Z",
+    "created_user": 2,
+    "is_paid": false,
+    "score": 13,
+    "is_active": true
   }
 },
 {
@@ -103169,6 +103693,378 @@
     "percent": 50.0,
     "created_date": "2021-03-31T12:37:07Z",
     "updated_date": "2021-03-31T12:37:07Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 1,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 57,
+    "score": "4014228600062403422232179",
+    "created_date": "2021-03-25T03:08:05.724Z",
+    "updated_date": "2021-03-25T03:08:05.724Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 2,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 55,
+    "score": "4014228605062323422232179",
+    "created_date": "2021-03-25T03:08:27.690Z",
+    "updated_date": "2021-03-25T03:08:27.690Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 3,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 58,
+    "score": "4014228608062423422232179",
+    "created_date": "2021-03-25T03:08:42.435Z",
+    "updated_date": "2021-03-25T03:08:42.435Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 4,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 53,
+    "score": "4014228604064033422231279",
+    "created_date": "2021-03-25T03:08:59.663Z",
+    "updated_date": "2021-03-25T03:08:59.663Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 5,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 48,
+    "score": "4014228605062073422232179",
+    "created_date": "2021-03-25T03:09:18.034Z",
+    "updated_date": "2021-03-25T03:09:18.034Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 6,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 47,
+    "score": "4014228607064013422232179",
+    "created_date": "2021-03-25T03:09:36.361Z",
+    "updated_date": "2021-03-25T03:09:36.361Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 7,
+  "fields": {
+    "state_duty": "4",
+    "region": 3,
+    "district": 52,
+    "score": "4014228605062193422232179",
+    "created_date": "2021-03-25T03:09:50.917Z",
+    "updated_date": "2021-03-25T03:09:50.917Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 8,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 57,
+    "score": "4014228603062403422204179",
+    "created_date": "2021-03-25T03:10:15.843Z",
+    "updated_date": "2021-03-25T03:10:15.843Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 9,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 53,
+    "score": "4014228607064033422204179",
+    "created_date": "2021-03-25T03:10:35.352Z",
+    "updated_date": "2021-03-25T03:10:35.352Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 10,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 52,
+    "score": "4014228608062193422204179",
+    "created_date": "2021-03-25T03:10:50.061Z",
+    "updated_date": "2021-03-25T03:10:50.061Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 11,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 55,
+    "score": "4014228608062323422204179",
+    "created_date": "2021-03-25T03:11:03.593Z",
+    "updated_date": "2021-03-25T03:11:03.593Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 12,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 48,
+    "score": "4014228608062073422204179",
+    "created_date": "2021-03-25T03:11:17.931Z",
+    "updated_date": "2021-03-25T03:11:17.931Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 13,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 47,
+    "score": "4014228604064013422204179",
+    "created_date": "2021-03-25T03:11:30.075Z",
+    "updated_date": "2021-03-25T03:11:30.075Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 14,
+  "fields": {
+    "state_duty": "2",
+    "region": 3,
+    "district": 58,
+    "score": "4014228600062423422204179",
+    "created_date": "2021-03-25T03:11:47.835Z",
+    "updated_date": "2021-03-25T03:11:47.835Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 15,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 57,
+    "score": "4014228602062403422210179",
+    "created_date": "2021-03-25T03:12:28.737Z",
+    "updated_date": "2021-03-25T03:12:28.737Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 16,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 53,
+    "score": "4014228606064033422210179",
+    "created_date": "2021-03-25T03:12:45.394Z",
+    "updated_date": "2021-03-25T03:12:45.394Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 17,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 48,
+    "score": "4014228607062073422210179",
+    "created_date": "2021-03-25T03:12:59.599Z",
+    "updated_date": "2021-03-25T03:12:59.599Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 18,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 55,
+    "score": "4014228607062323422210179",
+    "created_date": "2021-03-25T03:13:13.454Z",
+    "updated_date": "2021-03-25T03:13:13.454Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 19,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 47,
+    "score": "4014228609064013422210179",
+    "created_date": "2021-03-25T03:13:27.335Z",
+    "updated_date": "2021-03-25T03:13:27.335Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 20,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 58,
+    "score": "4014228604062423422210179",
+    "created_date": "2021-03-25T03:13:41.394Z",
+    "updated_date": "2021-03-25T03:13:41.394Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 21,
+  "fields": {
+    "state_duty": "3",
+    "region": 3,
+    "district": 52,
+    "score": "4014228607062193422210179",
+    "created_date": "2021-03-25T03:13:55.085Z",
+    "updated_date": "2021-03-25T03:13:55.085Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 22,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 57,
+    "score": "1000108602062403422221093",
+    "created_date": "2021-03-25T03:14:14.839Z",
+    "updated_date": "2021-03-25T03:14:14.839Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 23,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 53,
+    "score": "1000108606064033422221093",
+    "created_date": "2021-03-25T03:14:33.761Z",
+    "updated_date": "2021-03-25T03:14:33.761Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 24,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 52,
+    "score": "1000108607062193422221093",
+    "created_date": "2021-03-25T03:14:48.294Z",
+    "updated_date": "2021-03-25T03:14:48.294Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 25,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 55,
+    "score": "1000108607062323422221093",
+    "created_date": "2021-03-25T03:15:02.679Z",
+    "updated_date": "2021-03-25T03:15:02.679Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 26,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 48,
+    "score": "1000108607062073422221093",
+    "created_date": "2021-03-25T03:15:15.397Z",
+    "updated_date": "2021-03-25T03:15:15.397Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 27,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 47,
+    "score": "1000108609064013422221093",
+    "created_date": "2021-03-25T03:15:28.134Z",
+    "updated_date": "2021-03-25T03:15:28.134Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 28,
+  "fields": {
+    "state_duty": "1",
+    "region": 3,
+    "district": 58,
+    "score": "1000108604062423422221093",
+    "created_date": "2021-03-25T03:15:40.693Z",
+    "updated_date": "2021-03-25T03:15:40.693Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 29,
+  "fields": {
+    "state_duty": "5",
+    "region": null,
+    "district": null,
+    "score": "4014228603064013422948179",
+    "created_date": "2021-03-25T03:16:26.175Z",
+    "updated_date": "2021-03-25T03:16:26.175Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 36,
+  "fields": {
+    "state_duty": "6",
+    "region": null,
+    "district": null,
+    "score": "4014228603064013422947179",
+    "created_date": "2021-03-25T03:18:05.703Z",
+    "updated_date": "2021-03-25T03:18:05.703Z"
+  }
+},
+{
+  "model": "service.statedutyscore",
+  "pk": 37,
+  "fields": {
+    "state_duty": "7",
+    "region": null,
+    "district": null,
+    "score": "4014228603064013430105179",
+    "created_date": "2021-03-25T03:18:16.182Z",
+    "updated_date": "2021-03-25T03:18:16.182Z"
   }
 }
 ]

@@ -246,7 +246,7 @@ SIMPLE_JWT = {
 
 TOKEN_MAX_AGE = 3600  # foydalanuvchiga berilgan tokenning umri
 PHONE_MAX_AGE = 1800  # ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
-MINIMUM_BASE_WAGE = 245000  # eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
+MINIMUM_BASE_WAGE = 270000  # eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
 
 PAY_FOR_SERVICE = int(MINIMUM_BASE_WAGE / 100 * 5)  # eng kam bazaviy hisoblash ish xaqining 5% miqdori
 # PAY_FOR_SERVICE = 0
