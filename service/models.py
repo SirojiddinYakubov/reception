@@ -32,6 +32,7 @@ class Service(models.Model):
     instruction = models.TextField(blank=True)
     document = models.ManyToManyField('ExampleDocument', blank=True)
     created_date = models.DateTimeField(verbose_name='Yaratgan vaqti', null=True, default=timezone.now)
+    sort = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.short_title)

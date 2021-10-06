@@ -35,9 +35,10 @@ def calculation_state_duty_service_price(application):
     inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
                                                   state_duty=3).first()
 
-    application_document = ApplicationDocument.objects.get(application=application, example_ducument__key=service.key)
 
-    if application_document.contract_date:
+    application_document = ApplicationDocument.objects.filter(application=application, example_ducument__key=service.key).last()
+
+    if application_document and application_document.contract_date:
         if datetime.datetime.now().date() > application_document.contract_date + timedelta(days=10):
             try:
                 fine = StateDutyPercent.objects.filter(state_duty=7, lost_technical_passport=False).first().percent

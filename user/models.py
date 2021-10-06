@@ -91,7 +91,7 @@ USER = 1
 CHECKER = 2
 REVIEWER = 3
 TECHNICAL = 4
-DISTRICAL_CONTROLLER = 5
+SECTION_CONTROLLER = 5
 REGIONAL_CONTROLLER = 6
 STATE_CONTROLLER = 7
 MODERATOR = 8
@@ -103,7 +103,7 @@ ROLE = (
     (CHECKER, 'Arizalarni tekshiruvchi xodim'),
     (REVIEWER, 'Ma\'lumotlar mosligini tasdiqlovchi xodim'),
     (TECHNICAL, 'Texnik ko\'rik o\'tkazuvchi xodim'),
-    (DISTRICAL_CONTROLLER, 'Tuman nazoratchisi'),
+    (SECTION_CONTROLLER, 'Tuman nazoratchisi'),
     (REGIONAL_CONTROLLER, 'Viloyat nazoratchisi'),
     (STATE_CONTROLLER, 'Davlat nazoratchisi'),
     (MODERATOR, 'Moderator'),

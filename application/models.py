@@ -95,16 +95,6 @@ class Application(models.Model):
         if self.process == CREATED:
             self.process_sms = _(
                 "Ariza yaratilgan lekin YXHB bo'limiga jo'natilmagan! Arizani jo'natish uchun to'lovni amalga oshiring!")
-        # elif self.process == SHIPPED:
-        #     self.process_sms = _("YXHB bo'limiga jo'natildi, lekin sizning arizangizni ko'rib chiqish hali boshlangani yoq!")
-        # elif self.process == ACCEPTED_FOR_CONSIDERATION:
-        #     self.process_sms = _("YXHB bo'limi ko'rib chiqmoqda!")
-        # elif self.process == WAITING_FOR_PAYMENT:
-        #     self.process_sms = _("Kerakli hisob raqamlarga kerakli to'lovlarni amalga oshiring!")
-        # elif self.process == WAITING_FOR_ORIGINAL_DOCUMENTS:
-        #     self.process_sms = _("Arizada ko'rsatilgan barcha hujjatlarning asl nusxalarini YXHB bo'limiga olib borib topshiring!")
-        # elif self.process == SUCCESS:
-        #     self.process_sms = _("Arizangiz muvaffaqiyatli !")
         return super().save(*args, **kwargs)
 
 

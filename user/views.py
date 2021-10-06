@@ -167,7 +167,7 @@ def handler403(request, exception):
 class OrganizationList(AllowedRolesMixin, ListView):
     model = Organization
     template_name = 'user/organizations_list.html'
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get_context_data(self, *args, **kwargs):
@@ -307,7 +307,7 @@ def get_quarters(request):
 
 class GetChildSections(AllowedRolesMixin):
     model = Section
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -328,7 +328,7 @@ class GetChildSections(AllowedRolesMixin):
 
 
 class Get_Organization(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def post(self, request):
@@ -370,7 +370,7 @@ def edit_personal_data(request):
 
 
 class EditPersonalData(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
     template_name = 'user/edit_personal_data.html'
 
@@ -900,7 +900,7 @@ class ViewCarData(AllowedRolesMixin, DetailView):
     model = Car
     template_name = 'user/car/view_car_data.html'
     pk_url_kwarg = 'car_id'
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -988,7 +988,7 @@ def edit_car_data(request, car_id):
 class EditCarData(AllowedRolesMixin, View):
     template_name = 'user/car/edit_car_data.html'
     pk_url_kwarg = 'car_id'
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
@@ -1263,7 +1263,7 @@ def sections_list(request, section_id):
 
 
 class SectionsListByRegion(AllowedRolesMixin, View):
-    allowed_roles = [USER, DISTRICAL_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def get(self, request, *args, **kwargs):
