@@ -15,7 +15,7 @@ def calculation_state_duty_service_price(application):
     service = get_object_or_404(Service, id=application.service.id)
     car = get_object_or_404(Car, id=application.car.id)
 
-    created_user = get_object_or_404(User, id=service.application_service.first().created_user.id)
+    created_user = get_object_or_404(User, id=application.created_user.id)
 
     # Davlat bojlari foizlarini olish
     re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()

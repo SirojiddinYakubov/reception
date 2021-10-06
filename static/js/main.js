@@ -1120,3 +1120,44 @@ function addAmount() {
 function formatMoney(str) {
     return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
+
+function generate_fake_data() {
+    var $fuel_types_selectize = $('#fuel_types').selectize();
+    $fuel_types_selectize[0].selectize.setValue("1");
+    $('#car').select2("val", $("#car option:last").val());
+    $('#made_year').val('2021-07-26')
+
+    $('#color').val($("#color option:last").val())
+    $('#color').trigger('change')
+
+    function makeStr(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
+        }
+        return result;
+    }
+
+    function makeNum(length) {
+        var result = '';
+        var numbers = '1234567890';
+        var numbersLength = numbers.length;
+        for (var i = 0; i < length; i++) {
+            result += numbers.charAt(Math.floor(Math.random() *
+                numbersLength));
+        }
+        return result;
+    }
+
+    $('#engine_number').val(makeStr(15))
+    $('input[name="seriya"]').val(makeStr(15))
+    $('#body_number').val(makeStr(15))
+    $('#full_weight').val(makeNum(5))
+    $('#empty_weight').val(makeNum(5))
+    $('#engine_power').val(makeNum(3))
+    $('#old_technical_passport').val(makeStr(8))
+    $('#old_number').val(makeStr(8))
+}

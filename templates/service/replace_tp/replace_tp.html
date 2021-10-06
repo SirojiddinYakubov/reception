@@ -61,43 +61,6 @@
 
                     </form>
                 </fieldset>
-{#                <fieldset id="fieldset2" style="display: none">#}
-{#                    <legend>{{ service.short_title }}</legend>#}
-{#                    <form action="#" id="save_document_form">#}
-{#                        <div class="row mb-3">#}
-{#                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"#}
-{#                                   for="seriya">#}
-{#                                {% blocktrans with service_title=service.short_title %}{{ service_title }} seriyasi va#}
-{#                                    raqami{% endblocktrans %}<span#}
-{#                                    class="text-danger">*</span></label>#}
-{#                            <div class="col-8 col-xl-9">#}
-{#                                <input type="text" id="seriya" name="seriya"#}
-{#                                       class="form-control text-uppercase" required#}
-{#                                       placeholder="{% trans 'Masalan: AAC123456' %}"#}
-{#                                       autocomplete="off">#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="row mb-3">#}
-{#                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"#}
-{#                                   for="contract_date">{% trans "Shartnoma tuzilgan sana" %}<span#}
-{#                                    class="text-danger">*</span></label>#}
-{#                            <div class="col-8 col-xl-9">#}
-{#                                <input type="date" id="contract_date" name="contract_date"#}
-{#                                       class="form-control" required>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="justify-content-end row">#}
-{#                            <div class="col-12">#}
-{#                                <button type="button" class="btn btn-secondary waves-effect waves-light float-start"#}
-{#                                        id="prev2">Oldingi#}
-{#                                </button>#}
-{#                                <button type="submit" id="next2"#}
-{#                                        class="btn btn-info waves-effect waves-light float-end">Keyingi#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </form>#}
-{#                </fieldset>#}
                 <fieldset id="fieldset2" style="display: none">
                     <legend>Transport vositasi</legend>
                     <form action="#" id="save_car_form" method="post">
@@ -105,8 +68,6 @@
                         <input type='hidden' value="0" name="person_type">
                         <input type='hidden' value="" name="organization">
                         <input type='hidden' value="" name="devices">
-                        <input type='hidden' value="" name="seriya">
-                        <input type='hidden' value="" name="contract_date">
 
 
                         <div class="row mb-3">
@@ -315,28 +276,7 @@
                                        autocomplete="off">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="lost_number">{% trans "Davlat raqam belgisi yo'qolganmi?" %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9">
-                                <div class="row justify-content-start mt-1">
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="lost_number_yes"
-                                               name="lost_number" value="true"
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="lost_number_yes">Ha</label>
-                                    </div>
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="lost_number_no"
-                                               name="lost_number" value="false" checked
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="lost_number_no">Yoq</label>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
                         <div class="row mb-3" id="old_number_div">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                                    for="old_number">{% trans "Davlat raqam belgisi" %}<span
@@ -348,66 +288,10 @@
                                        autocomplete="off">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="is_old_number">{% trans 'Davlat raqam belgisi eskimi?' %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9">
-                                <div class="row justify-content-start mt-1">
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_old_number_yes"
-                                               name="is_old_number" value="true"
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="is_old_number_yes">Ha</label>
-                                    </div>
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_old_number_no" name="is_old_number"
-                                               class="form-check-input" value="false" checked>
-                                        <label class="form-check-label" for="is_old_number_no">Yoq</label>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="is_auction">{% trans 'Yangi raqam auksiondan olinganmi?' %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9">
-                                <div class="row justify-content-start mt-1">
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_auction_yes" value="true" name="is_auction"
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="is_auction_yes">Ha</label>
-                                    </div>
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_auction_no" name="is_auction"
-                                               class="form-check-input" value="false" checked>
-                                        <label class="form-check-label" for="is_auction_no">Yoq</label>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <div class="row mb-3" id="given_number_div">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="given_number">{% trans "Auksion raqami" %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9">
-                                <input type="text" id="given_number"
-                                       class="form-control text-uppercase" required
-                                       placeholder="{% trans 'Masalan: 80979HBA' %}"
-                                       autocomplete="off">
-                            </div>
-                        </div>
                         <div class="justify-content-end row">
                             <div class="col-12">
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
-                                        id="prev3">Oldingi
+                                        id="prev2">Oldingi
                                 </button>
                                 <button type="button" id="fake" class="btn btn-danger">Fake</button>
                                 <button type="submit" id="next2"
@@ -450,7 +334,7 @@
                         <div class="justify-content-end row">
                             <div class="col-12">
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
-                                        id="prev4">Oldingi
+                                        id="prev3">Oldingi
                                 </button>
 
                             </div>
@@ -484,7 +368,7 @@
     <script type="text/javascript" charset="UTF-8">
         $(function () {
             $('.select2').select2()
-            $('#given_number_div').hide()
+
 
             {#$('#fieldset1').hide()#}
             {#$('#fieldset3').show()#}
@@ -606,48 +490,8 @@
                     }
                 })
 
-                var $documentForm = $('#save_document_form');
-                if ($documentForm.length) {
-                    $documentForm.validate({
-                        rules: {
-                            seriya: {
-                                required: true,
-                                noSpace: true,
-                            },
-                            contract_date: {
-                                required: true,
-                            },
-                        },
-                        messages: {
-                            seriya: {
-                                required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
-                            },
-                            contract_date: {
-                                required: "Shartnoma tuzilgan sana kiritilmagan!"
-                            },
-                        },
 
-
-                        submitHandler: function (form) {
-                            var seriya = $('#seriya').val().toUpperCase()
-                            var contract_date = $('#contract_date').val()
-
-                            $('#seriya').attr('disabled', true)
-                            $('#contract_date').attr('disabled', true)
-
-                            $('input[name ="seriya"]').val(seriya)
-                            $('input[name ="contract_date"]').val(contract_date)
-
-                            $('#fieldset2').hide()
-                            $('#fieldset3').show()
-
-                            $('#car_step').addClass('active')
-                            $('#document_step').removeClass('active')
-                        }
-                    });
-                }
-
-                $('#next4').on('click', function (e) {
+                $('#next3').on('click', function (e) {
                     e.preventDefault()
 
 
@@ -660,44 +504,7 @@
 
 
                 $('#fake').on('click', function () {
-                    var $fuel_types_selectize = $('#fuel_types').selectize();
-                    $fuel_types_selectize[0].selectize.setValue("1");
-                    $('#car').select2("val", $("#car option:last").val());
-                    $('#color').select2("val", $("#color option:last").val());
-                    $('#made_year').val('2021-07-26')
-                    $('input[name="contract_date"]').val('2021-07-26')
-
-
-                    function makeStr(length) {
-                        var result = '';
-                        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-                        var charactersLength = characters.length;
-                        for (var i = 0; i < length; i++) {
-                            result += characters.charAt(Math.floor(Math.random() *
-                                charactersLength));
-                        }
-                        return result;
-                    }
-
-                    function makeNum(length) {
-                        var result = '';
-                        var numbers = '1234567890';
-                        var numbersLength = numbers.length;
-                        for (var i = 0; i < length; i++) {
-                            result += numbers.charAt(Math.floor(Math.random() *
-                                numbersLength));
-                        }
-                        return result;
-                    }
-
-                    $('#engine_number').val(makeStr(15))
-                    $('input[name="seriya"]').val(makeStr(15))
-                    $('#body_number').val(makeStr(15))
-                    $('#full_weight').val(makeNum(5))
-                    $('#empty_weight').val(makeNum(5))
-                    $('#engine_power').val(makeNum(3))
-
-
+                    generate_fake_data()
                 })
 
 
@@ -736,43 +543,13 @@
                     }
                 })
 
-                if ($('#is_auction_yes').is(':checked')) {
-                    $('#given_number_div').show()
-                    $('#given_number').attr('name', 'given_number')
-                } else {
-                    $('#given_number_div').hide()
-                    $('#given_number').removeAttr('name')
-                }
 
-                $('input[name=is_auction]').on('change', function () {
-                    if ($('#is_auction_yes').prop('checked')) {
-                        $('#given_number_div').show()
-                        $('#given_number').attr('name', 'given_number')
-                    } else {
-                        $('#given_number_div').hide()
-                        $('#given_number').removeAttr('name')
 
-                    }
-                })
 
-                if ($('#lost_number_no').is(':checked')) {
-                    $('#old_number_div').show()
-                    $('#old_number').attr('name', 'old_number')
-                } else {
-                    $('#old_number_div').hide()
-                    $('#old_number').removeAttr('name')
-                }
 
-                $('input[name=lost_number]').on('change', function () {
-                    if ($('#lost_number_no').prop('checked')) {
-                        $('#old_number_div').show()
-                        $('#old_number').attr('name', 'old_number')
-                    } else {
-                        $('#old_number_div').hide()
-                        $('#old_number').removeAttr('name')
 
-                    }
-                })
+
+
 
 
                 function changeOrganizationValues() {
@@ -841,13 +618,10 @@
                     $('#fieldset2').hide()
                     $('#fieldset1').show()
                 })
+
                 $('#prev3').on('click', function () {
                     $('#fieldset3').hide()
                     $('#fieldset2').show()
-                })
-                $('#prev4').on('click', function () {
-                    $('#fieldset4').hide()
-                    $('#fieldset3').show()
                 })
 
                 $(document).on('click', '#prev3', function () {
@@ -934,19 +708,13 @@
                                 required: true,
                                 date: true,
                             },
-                            seriya: {
-                                required: true,
-                                alphanumeric: true,
-                                noSpace: true,
-                            },
+
                             old_technical_passport: {
                                 required: true,
                                 alphanumeric: true,
                                 noSpace: true,
                             },
-                            given_number: {
-                                required: true,
-                            },
+
                             old_number: {
                                 required: true,
                             },
@@ -987,15 +755,10 @@
                                 required: "Transport vositasi rangi tanlanmagan!",
                             },
 
-                            seriya: {
-                                required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
-                            },
                             old_technical_passport: {
                                 required: "Qayd etish guvohnomasi seriyasi va raqami kiritilmagan!"
                             },
-                            given_number: {
-                                required: "Auksion raqami kiritilmagan!"
-                            },
+
                             old_number: {
                                 required: "Avtomobildagi davlat raqami kiritilmagan!"
                             },
@@ -1036,10 +799,10 @@
                             })
 
                             $('input[name ="devices"]').val(devices)
-
+                            console.log($(form).serialize())
                             $.ajax({
                                 type: "POST",
-                                url: "{% url 'service:contract_of_sale' %}",
+                                url: "{% url 'service:replace_tp' %}",
                                 data: $(form).serialize(),
                                 statusCode: {
                                     200: function (response) {
@@ -1064,18 +827,14 @@
                                         $('#color').attr("disabled", "disabled")
                                         $('#made_year').attr("disabled", "disabled")
                                         $('.devices').attr("disabled", "disabled")
-                                        $('#seriya').attr("disabled", "disabled")
-                                        $('#contract_date').attr("disabled", "disabled")
                                         $('#fuel_types').attr("disabled", "disabled")
                                         $('#car_type').attr("disabled", "disabled")
                                         $('#empty_weight').attr("disabled", "disabled")
                                         $('#full_weight').attr("disabled", "disabled")
                                         $('#engine_power').attr("disabled", "disabled")
-                                        $('#given_number').attr("disabled", "disabled")
-                                        $('input[name=is_auction]').attr("disabled", "disabled")
+
+
                                         $('input[name=lost_technical_passport]').attr("disabled", "disabled")
-                                        $('input[name=lost_number]').attr("disabled", "disabled")
-                                        $('input[name=is_old_number]').attr("disabled", "disabled")
                                         $('input[name=old_technical_passport]').attr("disabled", "disabled")
                                         $('input[name=old_number]').attr("disabled", "disabled")
 
