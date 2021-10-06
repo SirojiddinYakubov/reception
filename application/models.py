@@ -27,7 +27,6 @@ PROCESS_CHOICES = (
     (WAITING_FOR_ORIGINAL_DOCUMENTS, "Hujjatlarni asl nusxasini kutmoqda"),
     (SUCCESS, "Muvaffaqiyatli yakunlandi"),
     (REJECTED, "Rad etildi"),
-
 )
 
 CRON_COICES = (
