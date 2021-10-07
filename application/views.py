@@ -338,15 +338,13 @@ def change_get_request(request, key, value):
 
 
 class ConfirmApplicationData(APIView, AllowedRolesMixin):
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [CHECKER, REVIEWER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def post(self, request):
         try:
             application = get_object_or_404(Application, id=request.POST.get('application'))
             car = get_object_or_404(Car, id=application.car.id)
-            if request.user.role == USER:
-                return HttpResponse(status=404)
 
             if request.is_ajax():
                 if request.method == 'POST':
@@ -355,12 +353,19 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         car.given_number = request.POST.get('given_number')
                         car.given_technical_passport = request.POST.get('technical_passport')
                         car.save()
-                        application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
+
                         application.process = SUCCESS
                         application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
                                                                             "%Y-%m-%d").date()
                         application.given_time = request.POST.get('given_time')
+                        application.inspector = request.user
                         application.save()
+
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
+
+                        # create notification
+                        Notification.objects.create(application=application, sender=request.user,
+                                                    receiver=application.created_user, text=text)
 
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
                         # msg = msg.replace(" ", "+")
@@ -369,9 +374,15 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         return HttpResponse(status=200)
                     elif request.POST.get('process') == 'cancel':
                         application.process = REJECTED
-                        application.process_sms = request.POST.get('process_sms')
                         application.canceled_date = timezone.now()
+                        application.inspector = request.user
                         application.save()
+
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad qilindi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {request.user.section.region.title} {request.user.section.title}"
+
+                        # create notification
+                        Notification.objects.create(application=application, sender=request.user,
+                                                    receiver=application.created_user, text=text)
 
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} bekor qilindi! {request.user.section.title}"
                         # msg = msg.replace(" ", "+")
@@ -379,9 +390,18 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         # response = requests.get(url)
                         return HttpResponse(status=200)
                     elif request.POST.get('process') == 'process':
-                        application.process = SHIPPED
-                        application.process_sms = request.POST.get('process_sms')
+
+                        application.process = ACCEPTED_FOR_CONSIDERATION
+                        application.inspector = request.user
                         application.save()
+
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport voistasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz!"
+
+
+
+                        # create notification
+                        Notification.objects.create(application=application, sender=request.user,
+                                                    receiver=application.created_user, text=text)
 
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} jarayonda turibti! {request.user.section.title}"
                         # msg = msg.replace(" ", "+")

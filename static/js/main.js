@@ -537,6 +537,7 @@ function process_confirm_replace_number(success_url, cancel_url, applicationId, 
                                                 },
                                                 statusCode: {
                                                     200: function (res) {
+                                                        console.log('res', res)
                                                         $.notifyDefaults({
                                                             type: 'success',
                                                             allow_dismiss: false,
@@ -654,8 +655,9 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
                                         'given_date': given_date,
                                         'given_time': given_time
                                     },
-                                    success: function (response) {
-                                        if (response === 'True') {
+                                    statusCode: {
+                                        200: function (res) {
+                                            console.log('res', res)
                                             $.notifyDefaults({
                                                 type: 'success',
                                                 allow_dismiss: false,
@@ -672,14 +674,11 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
                                                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                                                 '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
                                             });
-                                        } else {
+                                        },
+                                        404: function (err) {
                                             errorFunction()
                                         }
                                     },
-                                    error: function (response) {
-                                        console.log(response.status)
-                                        errorFunction()
-                                    }
                                 })
                             } else {
                                 window.location.href = cancel_url
@@ -700,6 +699,7 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
 }
 
 function process_cancel(success_url, cancel_url, applicationId) {
+
     swal({
         title: "Rad etish sababini kiriting",
 
@@ -710,12 +710,14 @@ function process_cancel(success_url, cancel_url, applicationId) {
             'Saqlash'
         ],
         dangerMode: false,
+
         content: {
             element: "input",
             attributes: {
                 placeholder: "Masalan: Kiritilgan ma'lumotlarda xato va kamchiliklar mavjud",
                 type: "text",
             },
+
         },
     }).then(function (process_sms) {
         if (process_sms) {
@@ -727,8 +729,8 @@ function process_cancel(success_url, cancel_url, applicationId) {
                     'process': 'cancel',
                     'process_sms': process_sms
                 },
-                success: function (response) {
-                    if (response === 'True') {
+                statusCode: {
+                    200: function (res) {
                         $.notifyDefaults({
                             type: 'danger',
                             allow_dismiss: false,
@@ -745,16 +747,11 @@ function process_cancel(success_url, cancel_url, applicationId) {
                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                 '</svg> &nbsp${applicationId}-raqamli ariza rad etildi!`
                         });
-
-                    } else {
-
+                    },
+                    404: function (err) {
                         errorFunction()
                     }
                 },
-                error: function (response) {
-                    console.log(response.status)
-                    errorFunction()
-                }
             })
         } else {
             window.location.href = cancel_url
@@ -764,6 +761,7 @@ function process_cancel(success_url, cancel_url, applicationId) {
 
 
 function process(success_url, cancel_url, applicationId) {
+    /*
     swal({
         title: "Jarayon sababini kiriting",
 
@@ -783,16 +781,17 @@ function process(success_url, cancel_url, applicationId) {
         },
     }).then(function (process_sms) {
         if (process_sms) {
+            */
             $.ajax({
                 type: "POST",
                 url: success_url,
                 data: {
                     'application': applicationId,
                     'process': 'process',
-                    'process_sms': process_sms
+                    // 'process_sms': process_sms
                 },
-                success: function (response) {
-                    if (response === 'True') {
+                statusCode: {
+                    200: function (res) {
                         $.notifyDefaults({
                             type: 'warning',
                             allow_dismiss: false,
@@ -809,21 +808,18 @@ function process(success_url, cancel_url, applicationId) {
                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                 '</svg> &nbsp${applicationId}-raqamli ariza jarayon holatida!`
                         });
-
-                    } else {
-
+                    },
+                    404: function (err) {
                         errorFunction()
                     }
                 },
-                error: function (response) {
-                    console.log(response.status)
-                    errorFunction()
-                }
             })
+            /*
         } else {
             window.location.href = cancel_url
         }
     })
+             */
 }
 
 function html_to_pdf(element, filename) {

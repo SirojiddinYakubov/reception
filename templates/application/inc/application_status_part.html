@@ -45,15 +45,11 @@
             </th>
             <!--Hujjatlarning asl nusxasini kutmoqda-->
         {% elif application.process == 4 %}
-            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan ko'rib
-                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib kelishingizni so'raymiz.
             </th>
             <!--Muvaffaqiyatli yakunlandi-->
         {% elif application.process == 5 %}
-            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan ko'rib
-                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+            <th style="color: #0f6674"> Sizning  {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi. Sizdan {{ application.given_date }} {{ application.given_time }} da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi. Manzil: {{ application.section.address }}
             </th>
             <!--Rad etildi-->
         {% elif application.process == 6 %}
@@ -65,7 +61,7 @@
 
 
         {% if application.given_date and application.given_time %}
-            <th style="color: #0f6674">{{ application.given_date }}</th>
+            <th style="color: #0f6674">{{ application.given_date|date:"SHORT_DATE_FORMAT" }}</th>
             <th style="color: #0f6674">{{ application.given_time }}</th>
         {% endif %}
         {% if application.canceled_date %}

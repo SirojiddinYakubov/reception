@@ -1,8 +1,9 @@
 from django import forms
 from django.forms import ModelForm
-
-from user.models import *
 from django.utils.translation import gettext as _
+
+from reception import settings
+from user.models import User, Region, District, Quarter, Organization, Car
 
 
 class SignUpForm(forms.ModelForm):
@@ -40,7 +41,7 @@ class EditForm(forms.ModelForm):
     district = forms.ModelChoiceField(queryset=District.objects.all(), label="Tuman/Shahar:",
                                       widget=forms.Select(attrs={'class': 'form-control', 'id': 'district'}))
     quarter = forms.ModelChoiceField(queryset=Quarter.objects.all(), label="Mahalla:",
-                                 widget=forms.Select(attrs={'class': 'form-control', 'id': 'quarter'}))
+                                     widget=forms.Select(attrs={'class': 'form-control', 'id': 'quarter'}))
     address = forms.CharField(label="Ko'cha/qishloq:", widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': "Masalan: Yangiyo'l ko'chasi 14-uy", 'id': 'address'}))
     # gender = forms.ChoiceField(label="Jins:", choices=GENDER_CHOICES,

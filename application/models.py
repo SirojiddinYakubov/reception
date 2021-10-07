@@ -8,16 +8,16 @@ from django.utils import timezone
 
 from service.models import Service, ExampleDocument
 from user.base import BaseModel
-from user.models import User, Section, Organization, Car
+from user.models import User, Section, Organization, Car, CHECKER
 from django.utils.translation import ugettext_lazy as _
 
 CREATED = 0  # Yaratildi
 SHIPPED = 1  # Jo'natildi
 ACCEPTED_FOR_CONSIDERATION = 2  # Ko'rib chiqish uchun qabul qilindi
 WAITING_FOR_PAYMENT = 3  # To'lovni kutmoqda
-WAITING_FOR_ORIGINAL_DOCUMENTS = 4   #Hujjatlarning asl nusxasini kutmoqda
-SUCCESS = 5   #Muvaffaqiyatli yakunlandi
-REJECTED = 6   #Rad etildi
+WAITING_FOR_ORIGINAL_DOCUMENTS = 4  # Hujjatlarning asl nusxasini kutmoqda
+SUCCESS = 5  # Muvaffaqiyatli yakunlandi
+REJECTED = 6  # Rad etildi
 
 PROCESS_CHOICES = (
     (CREATED, "Ariza yaratildi"),
@@ -46,7 +46,8 @@ PERSON_CHOICES = (
 
 
 class Application(models.Model):
-    created_user = models.ForeignKey(User, verbose_name=_('Yaratgan shaxs'), on_delete=models.SET_NULL, null=True)
+    created_user = models.ForeignKey(User, verbose_name=_('Yaratgan shaxs'), on_delete=models.SET_NULL, null=True,
+                                     related_name='user_application')
     person_type = models.IntegerField(_('Ariza topshiruvchi shaxsi'), choices=PERSON_CHOICES, default=PHYSICAL_PERSON)
     organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
                                      blank=True)
@@ -72,6 +73,9 @@ class Application(models.Model):
     updated_date = models.DateTimeField(verbose_name=_('Tahrirlangan vaqti'), null=True, blank=True,
                                         default=timezone.now)
     canceled_date = models.DateTimeField(verbose_name=_('Rad etilgan vaqti'), null=True, blank=True)
+    confirmed_date = models.DateTimeField(verbose_name=_('Tasdiqlangan vaqti'), null=True, blank=True)
+    inspector = models.ForeignKey(User, verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True, blank=True,
+                                  related_name='inspector_application')
 
     class Meta:
         verbose_name = 'Ariza'
