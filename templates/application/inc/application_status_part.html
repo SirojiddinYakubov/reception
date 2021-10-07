@@ -65,7 +65,7 @@
 
 
         {% if application.given_date and application.given_time %}
-            <th style="color: #0f6674">{{ application.given_date }}</th>
+            <th style="color: #0f6674">{{ application.given_date|date:"SHORT_DATE_FORMAT" }}</th>
             <th style="color: #0f6674">{{ application.given_time }}</th>
         {% endif %}
         {% if application.canceled_date %}

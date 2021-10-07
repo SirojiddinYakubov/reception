@@ -338,15 +338,13 @@ def change_get_request(request, key, value):
 
 
 class ConfirmApplicationData(APIView, AllowedRolesMixin):
-    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+    allowed_roles = [CHECKER, REVIEWER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def post(self, request):
         try:
             application = get_object_or_404(Application, id=request.POST.get('application'))
             car = get_object_or_404(Car, id=application.car.id)
-            if request.user.role == USER:
-                return HttpResponse(status=404)
 
             if request.is_ajax():
                 if request.method == 'POST':
@@ -379,7 +377,7 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         # response = requests.get(url)
                         return HttpResponse(status=200)
                     elif request.POST.get('process') == 'process':
-                        application.process = SHIPPED
+                        application.process = ACCEPTED_FOR_CONSIDERATION
                         application.process_sms = request.POST.get('process_sms')
                         application.save()
 
