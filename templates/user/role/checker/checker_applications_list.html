@@ -153,7 +153,7 @@
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
 
     <!-- Datatables init -->
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
@@ -350,21 +350,32 @@
                         $.ajax({
                             type: 'POST',
                             url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
-                            success: function (response) {
-                                if (SelectedProcess === 'confirm') {
-                                    if (is_replace_number) {
-                                        process_confirm_replace_number(success_url, cancel_url, applicationId, response)
-                                    } else {
-                                        process_confirm_not_replace_number(success_url, cancel_url, applicationId)
+                            statusCode: {
+                                200: function (response) {
+                                    console.log(response)
+                                    if (SelectedProcess === 'confirm') {
+                                        if (is_replace_number) {
+                                            console.log('replace number')
+                                            process_confirm_replace_number(success_url, cancel_url, applicationId, response)
+                                        } else {
+                                            console.log('not replace number')
+                                            process_confirm_not_replace_number(success_url, cancel_url, applicationId)
+                                        }
+
+                                    } else if (SelectedProcess === 'cancel') {
+
+                                        process_cancel(success_url, cancel_url, applicationId)
+                                    } else if (SelectedProcess === 'process') {
+
+                                        process(success_url, cancel_url, applicationId)
                                     }
+                                },
+                                404: function (err) {
+                                    console.log(err)
+                                    errorFunction()
+                                },
 
-                                } else if (SelectedProcess === 'cancel') {
 
-                                    process_cancel(success_url, cancel_url, applicationId)
-                                } else if (SelectedProcess === 'process') {
-
-                                    process(success_url, cancel_url, applicationId)
-                                }
                             },
                         })
                     }

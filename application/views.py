@@ -36,8 +36,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         if role == CHECKER:
             section = get_object_or_404(Section, id=self.request.user.section.id)
             qs = qs.filter(section=section).filter(
-            process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
-                         SUCCESS, REJECTED])
+                process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
+                             SUCCESS, REJECTED])
         else:
             qs = qs.filter(created_user=self.request.user)
         return qs
@@ -337,74 +337,84 @@ def change_get_request(request, key, value):
         return HttpResponseRedirect(url + f"?{key}={value}")
 
 
-@permission_classes([IsAuthenticated])
-class ConfirmApplicationData(APIView):
+class ConfirmApplicationData(APIView, AllowedRolesMixin):
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
     def post(self, request):
-        application = get_object_or_404(Application, id=request.POST.get('application'))
-        car = get_object_or_404(Car, id=application.service.car.id)
-        if request.user.role == '1':
-            return HttpResponse(False)
+        try:
+            application = get_object_or_404(Application, id=request.POST.get('application'))
+            car = get_object_or_404(Car, id=application.car.id)
+            if request.user.role == USER:
+                return HttpResponse(status=404)
 
-        if request.is_ajax():
-            if request.method == 'POST':
-                if request.POST.get('process') == 'confirm':
-                    car.given_number = request.POST.get('given_number')
-                    car.given_technical_passport = request.POST.get('technical_passport')
-                    car.save()
-                    application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
-                    application.process = '2'
-                    application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
-                                                                        "%Y-%m-%d").date()
-                    application.given_time = request.POST.get('given_time')
-                    application.save()
+            if request.is_ajax():
+                if request.method == 'POST':
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                    return HttpResponse(True)
-                elif request.POST.get('process') == 'cancel':
-                    application.process = '3'
-                    application.process_sms = request.POST.get('process_sms')
-                    application.canceled_date = timezone.now()
-                    application.save()
+                    if request.POST.get('process') == 'confirm':
+                        car.given_number = request.POST.get('given_number')
+                        car.given_technical_passport = request.POST.get('technical_passport')
+                        car.save()
+                        application.process_sms = 'Muvaffaqiyatli tasdiqlandi!'
+                        application.process = SUCCESS
+                        application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
+                                                                            "%Y-%m-%d").date()
+                        application.given_time = request.POST.get('given_time')
+                        application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} bekor qilindi! {request.user.section.title}"
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                    return HttpResponse(True)
-                elif request.POST.get('process') == 'process':
-                    application.process = '1'
-                    application.process_sms = request.POST.get('process_sms')
-                    application.save()
+                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
+                        # msg = msg.replace(" ", "+")
+                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                        # response = requests.get(url)
+                        return HttpResponse(status=200)
+                    elif request.POST.get('process') == 'cancel':
+                        application.process = REJECTED
+                        application.process_sms = request.POST.get('process_sms')
+                        application.canceled_date = timezone.now()
+                        application.save()
 
-                    msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} jarayonda turibti! {request.user.section.title}"
-                    msg = msg.replace(" ", "+")
-                    url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                    response = requests.get(url)
-                    return HttpResponse(True)
+                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} bekor qilindi! {request.user.section.title}"
+                        # msg = msg.replace(" ", "+")
+                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                        # response = requests.get(url)
+                        return HttpResponse(status=200)
+                    elif request.POST.get('process') == 'process':
+                        application.process = SHIPPED
+                        application.process_sms = request.POST.get('process_sms')
+                        application.save()
+
+                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} jarayonda turibti! {request.user.section.title}"
+                        # msg = msg.replace(" ", "+")
+                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
+                        # response = requests.get(url)
+                        return HttpResponse(status=200)
+                    else:
+                        HttpResponse(status=404)
                 else:
-                    return HttpResponse(False)
+                    HttpResponse(status=404)
             else:
-                return HttpResponse(False)
-        else:
-            return HttpResponse(False)
+                HttpResponse(status=404)
+        except:
+            return HttpResponse(status=404)
 
 
-@permission_classes([IsAuthenticated])
-class GetGivenNumber(APIView):
+class GetGivenNumber(APIView, AllowedRolesMixin):
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
     def post(self, request, id):
-        print('OK')
-        application = get_object_or_404(Application, id=id)
-        car = get_object_or_404(Car, id=application.car.id)
-        if car.is_auction:
-            if car.given_number:
-                return HttpResponse(car.given_number)
+        try:
+            application = get_object_or_404(Application, id=id)
+            car = get_object_or_404(Car, id=application.car.id)
+            if car.is_auction:
+                if car.given_number:
+                    return HttpResponse(car.given_number, status=200)
+                else:
+                    return HttpResponse(status=200)
             else:
-                return HttpResponse('')
-        else:
-            return HttpResponse('')
+                return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=404)
 
 
 @permission_classes([IsAuthenticated])

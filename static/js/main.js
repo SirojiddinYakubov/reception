@@ -535,8 +535,8 @@ function process_confirm_replace_number(success_url, cancel_url, applicationId, 
                                                     'given_date': given_date,
                                                     'given_time': given_time
                                                 },
-                                                success: function (response) {
-                                                    if (response === 'True') {
+                                                statusCode: {
+                                                    200: function (res) {
                                                         $.notifyDefaults({
                                                             type: 'success',
                                                             allow_dismiss: false,
@@ -553,14 +553,12 @@ function process_confirm_replace_number(success_url, cancel_url, applicationId, 
                                                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                                                 '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
                                                         });
-                                                    } else {
+                                                    },
+                                                    404: function (err) {
+                                                        console.log(err)
                                                         errorFunction()
                                                     }
                                                 },
-                                                error: function (response) {
-                                                    console.log(response.status)
-                                                    errorFunction()
-                                                }
                                             })
                                         } else {
                                             window.location.href = cancel_url
