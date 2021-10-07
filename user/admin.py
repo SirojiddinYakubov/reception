@@ -6,12 +6,13 @@ from user.models import *
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-
-    list_display = ['id', 'role', 'last_name', 'first_name','middle_name', 'phone','fullpassport', 'turbo', 'birthday', 'is_active',
-                    'is_superuser', 'is_staff', 'date_joined','last_login']
-    list_display_links = [ 'role', 'last_name', 'first_name','middle_name',]
-    list_filter = ['role','is_active', ]
-    search_fields = ['last_name', 'first_name','middle_name', 'username', 'phone', 'passport_seriya', 'passport_number','turbo',]
+    list_display = ['id', 'role', 'last_name', 'first_name', 'middle_name', 'phone', 'fullpassport', 'turbo',
+                    'birthday', 'is_active',
+                    'is_superuser', 'is_staff', 'date_joined', 'last_login']
+    list_display_links = ['role', 'last_name', 'first_name', 'middle_name', ]
+    list_filter = ['role', 'is_active', ]
+    search_fields = ['last_name', 'first_name', 'middle_name', 'username', 'phone', 'passport_seriya',
+                     'passport_number', 'turbo', ]
     save_on_top = True
 
     # def get_img(self, obj):
@@ -38,7 +39,6 @@ class DistrictInline(admin.StackedInline):
     extra = 5
 
 
-
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -48,6 +48,7 @@ class RegionAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     inlines = [DistrictInline]
     save_on_top = True
+
 
 class QuarterInline(admin.StackedInline):
     model = Quarter
@@ -68,18 +69,20 @@ class DistrictAdmin(admin.ModelAdmin):
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'parent','title','region','get_districts']
-    list_display_links = ['title',]
+    list_display = ['id', 'parent', 'title', 'region', 'get_districts']
+    list_display_links = ['title', ]
     save_on_top = True
 
     def get_districts(self, obj):
         return ",\n".join([p.title for p in obj.district.all()])
+
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['id', 'title']
     list_display_links = ['title']
     save_on_top = True
+
 
 # @admin.register(UserPassword)
 # class UserPasswordAdmin(admin.ModelAdmin):
@@ -89,9 +92,10 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ['id', 'model','created_date' ]
+    list_display = ['id', 'model', 'created_date']
     list_display_links = ['model']
     save_on_top = True
+
 
 @admin.register(CarModel)
 class CarModelAdmin(admin.ModelAdmin):
@@ -99,11 +103,13 @@ class CarModelAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
+
 @admin.register(FuelType)
 class FuelTypeAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', ]
     list_display_links = ['title']
     save_on_top = True
+
 
 @admin.register(CarType)
 class CarTypeAdmin(admin.ModelAdmin):
@@ -111,33 +117,46 @@ class CarTypeAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     save_on_top = True
 
+
 @admin.register(BodyType)
 class BodyTypeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title','created_date' ]
+    list_display = ['id', 'title', 'created_date']
     list_display_links = ['title']
     save_on_top = True
 
+
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title','created_date' ]
+    list_display = ['id', 'title', 'created_date']
     list_display_links = ['title']
     save_on_top = True
 
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title','created_date' ]
+    list_display = ['id', 'title', 'created_date']
     list_display_links = ['title']
     save_on_top = True
 
 
 from rest_framework.authtoken.admin import TokenAdmin
+
+
 # TokenAdmin.raw_id_fields = ['user']
 
 @admin.register(Constant)
 class ConstantAdmin(admin.ModelAdmin):
-    list_display = ['id', 'info','value' , ]
-    list_display_links = [ 'value', 'info']
+    list_display = ['id', 'info', 'value', ]
+    list_display_links = ['value', 'info']
     search_fields = ['key', 'value']
     readonly_fields = ('info',)
+    save_on_top = True
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'application', 'sender', 'receiver', 'text', 'is_read']
+    list_display_links = ['application', 'sender', 'receiver',]
+    search_fields = ['text']
+    list_filter = ['is_read',]
     save_on_top = True

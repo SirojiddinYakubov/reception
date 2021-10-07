@@ -1,17 +1,15 @@
-from django.db import models
-import datetime
 import os
 from uuid import uuid4
+
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager, PermissionsMixin
+from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
+from django.db import models
 from django.http import Http404
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator, MaxLengthValidator
-
-from reception import settings
+from .base import BaseModel
 
 
 class Region(models.Model):
@@ -76,8 +74,6 @@ class Section(models.Model):
         return f"{self.title}: {self.region.title}"
 
 
-
-
 # ROLE_CHOICES = (
 #     ("1", "User"),  # Oddiy foydalanuvchilar
 #     ("2", "Controller"),  # Xodimlar nazoratchisi
@@ -119,6 +115,7 @@ GENDER_CHOICES = (
     (WOMAN, _('Ayol')),
 )
 
+
 def path_and_rename(instance, filename):
     upload_to = 'passport_photos/'
     ext = filename.split('.')[-1]
@@ -136,7 +133,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(verbose_name='Familiya', max_length=255, blank=True)
     first_name = models.CharField(verbose_name='Ism', max_length=255, blank=True)
     middle_name = models.CharField(verbose_name='Otasining ismi', max_length=255, blank=True)
-    role = models.IntegerField(verbose_name='Foydalanuvchi roli', choices=ROLE,  default=USER)
+    role = models.IntegerField(verbose_name='Foydalanuvchi roli', choices=ROLE, default=USER)
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
                                  blank=True)
@@ -276,7 +273,8 @@ class CarModel(models.Model):
 
 
 class Car(models.Model):
-    model = models.ForeignKey(CarModel, verbose_name="Model", on_delete=models.SET_NULL, null=True, related_name='car_model')
+    model = models.ForeignKey(CarModel, verbose_name="Model", on_delete=models.SET_NULL, null=True,
+                              related_name='car_model')
     body_type = models.ForeignKey('BodyType', verbose_name='Kuzov turi', on_delete=models.SET_NULL, blank=True,
                                   null=True)
     fuel_type = models.ManyToManyField('FuelType', verbose_name='Yoqilg\'i turi', blank=True,
@@ -297,9 +295,11 @@ class Car(models.Model):
                                  blank=True, related_name='car_re_color')
     engine_power = models.IntegerField(verbose_name='Dvigatel quvvati', null=True, blank=True, default=0)
     old_number = models.CharField(verbose_name='Eski DRB', null=True, blank=True, max_length=15)
-    old_technical_passport = models.CharField(verbose_name='Eski texpassport seriyasi va raqami', max_length=30, blank=True)
+    old_technical_passport = models.CharField(verbose_name='Eski texpassport seriyasi va raqami', max_length=30,
+                                              blank=True)
     is_old_number = models.BooleanField(verbose_name='Avtompobildagi DRB eski', default=False)
-    given_technical_passport = models.CharField(verbose_name='Berilgan texpassport seriyasi va raqami', max_length=30, blank=True)
+    given_technical_passport = models.CharField(verbose_name='Berilgan texpassport seriyasi va raqami', max_length=30,
+                                                blank=True)
     created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name='Yaratilgan vaqti')
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
@@ -343,6 +343,7 @@ class Car(models.Model):
         if self.given_number:
             self.given_number = self.given_number.upper()
         return super().save(*args, **kwargs)
+
 
 class CarType(models.Model):
     title = models.CharField('Nomi', max_length=100)
@@ -421,3 +422,11 @@ class Constant(models.Model):
 
     def __str__(self):
         return f"{self.key}: {self.value}"
+
+
+class Notification(BaseModel):
+    application = models.ForeignKey('application.Application', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent')  # application.inspector
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received')  # application.created_user
+    text = models.TextField()
+    is_read = models.BooleanField(default=False)
