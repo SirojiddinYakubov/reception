@@ -1,3 +1,4 @@
+import datetime
 import json
 import random
 
@@ -120,10 +121,10 @@ class AccountStatement(ServiceCustomMixin):
                     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                     example_document = ExampleDocument.objects.get(key=service.key)
                     application_document = ApplicationDocument.objects.filter(application=application,
-                                                                              example_ducument=example_document)
+                                                                              example_document=example_document)
                     if not application_document.exists():
                         application_document = ApplicationDocument.objects.create(application=application,
-                                                                                  example_ducument=example_document,
+                                                                                  example_document=example_document,
                                                                                   seriya=seriya,
                                                                                   contract_date=contract_date)
 
@@ -241,12 +242,13 @@ class ContractOfSale(ServiceCustomMixin):
                 contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                 example_document = ExampleDocument.objects.get(key=service.key)
                 application_document = ApplicationDocument.objects.filter(application=application,
-                                                                          example_ducument=example_document)
+                                                                          example_document=example_document)
                 if not application_document.exists():
                     ApplicationDocument.objects.create(application=application,
-                                                       example_ducument=example_document,
+                                                       example_document=example_document,
                                                        seriya=seriya,
                                                        contract_date=contract_date)
+
             application.save()
 
             calculation_state_duty_service_price(application)
@@ -359,10 +361,10 @@ class GiftAgreement(ServiceCustomMixin):
                 contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                 example_document = ExampleDocument.objects.get(key=service.key)
                 application_document = ApplicationDocument.objects.filter(application=application,
-                                                                          example_ducument=example_document)
+                                                                          example_document=example_document)
                 if not application_document.exists():
                     ApplicationDocument.objects.create(application=application,
-                                                       example_ducument=example_document,
+                                                       example_document=example_document,
                                                        seriya=seriya,
                                                        contract_date=contract_date)
             application.save()
@@ -478,10 +480,10 @@ class ReEquipment(ServiceCustomMixin):
                 contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                 example_document = ExampleDocument.objects.get(key=service.key)
                 application_document = ApplicationDocument.objects.filter(application=application,
-                                                                          example_ducument=example_document)
+                                                                          example_document=example_document)
                 if not application_document.exists():
                     ApplicationDocument.objects.create(application=application,
-                                                       example_ducument=example_document,
+                                                       example_document=example_document,
                                                        seriya=seriya,
                                                        contract_date=contract_date)
             application.save()
@@ -581,10 +583,10 @@ class ReplaceTp(ServiceCustomMixin):
             #     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                 # example_document = ExampleDocument.objects.get(key=service.key)
                 # application_document = ApplicationDocument.objects.filter(application=application,
-                #                                                           example_ducument=example_document)
+                #                                                           example_document=example_document)
                 # if not application_document.exists():
                 #     ApplicationDocument.objects.create(application=application,
-                #                                        example_ducument=example_document,
+                #                                        example_document=example_document,
                 #                                        seriya=seriya,
                 #                                        contract_date=contract_date)
             application.save()
@@ -699,10 +701,10 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
             #     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
             #     example_document = ExampleDocument.objects.get(key=service.key)
             #     application_document = ApplicationDocument.objects.filter(application=application,
-            #                                                               example_ducument=example_document)
+            #                                                               example_document=example_document)
             #     if not application_document.exists():
             #         ApplicationDocument.objects.create(application=application,
-            #                                            example_ducument=example_document,
+            #                                            example_document=example_document,
             #                                            seriya=seriya,
             #                                            contract_date=contract_date)
             application.save()

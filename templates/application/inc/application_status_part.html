@@ -11,6 +11,10 @@
             <th scope="col">Hujjatlar rad etilgan vaqt</th>
         {% endif %}
 
+        {% if application.process == 0 %}
+            <th scope="col">To'lov</th>
+        {% endif %}
+
 
     </tr>
     </thead>
@@ -45,11 +49,16 @@
             </th>
             <!--Hujjatlarning asl nusxasini kutmoqda-->
         {% elif application.process == 4 %}
-            <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib kelishingizni so'raymiz.
+            <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl
+                nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib kelishingizni
+                so'raymiz.
             </th>
             <!--Muvaffaqiyatli yakunlandi-->
         {% elif application.process == 5 %}
-            <th style="color: #0f6674"> Sizning  {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi. Sizdan {{ application.given_date }} {{ application.given_time }} da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi. Manzil: {{ application.section.address }}
+            <th style="color: #0f6674"> Sizning {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi.
+                Sizdan {{ application.given_date }} {{ application.given_time }}
+                da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi.
+                Manzil: {{ application.section.address }}
             </th>
             <!--Rad etildi-->
         {% elif application.process == 6 %}
@@ -66,6 +75,18 @@
         {% endif %}
         {% if application.canceled_date %}
             <th style="color: #0f6674">{{ application.canceled_date }}</th>
+        {% endif %}
+
+        {% if application.process == 0 %}
+            <th>
+
+
+                <button style="margin-left: 2%" type="button"
+                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov qilish
+                    &nbsp&nbsp&nbsp<i
+                            class="fas fa-long-arrow-alt-right"></i>
+                </button>
+            </th>
         {% endif %}
     </tr>
     </tbody>

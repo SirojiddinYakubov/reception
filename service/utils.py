@@ -1,3 +1,4 @@
+import datetime
 from datetime import timedelta
 
 from django.contrib.humanize.templatetags.humanize import naturalday, intcomma
@@ -36,7 +37,7 @@ def calculation_state_duty_service_price(application):
                                                   state_duty=3).first()
 
 
-    application_document = ApplicationDocument.objects.filter(application=application, example_ducument__key=service.key).last()
+    application_document = ApplicationDocument.objects.filter(application=application, example_document__key=service.key).last()
 
     if application_document and application_document.contract_date:
         if datetime.datetime.now().date() > application_document.contract_date + timedelta(days=10):

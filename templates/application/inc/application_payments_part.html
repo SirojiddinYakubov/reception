@@ -56,11 +56,18 @@
 <hr>
 <div class="justify-content-end row" data-html2canvas-ignore="true">
     <div class="col-12">
-        {% if not application.organization %}
-            <button type="button"
-                    class="btn btn-info waves-effect waves-light float-start">To'lov qilish &nbsp&nbsp&nbsp<i
-                    class="fas fa-long-arrow-alt-right"></i>
-            </button>
+      {% if not application.is_payment %}
+{#        {% if not application.organization %}#}
+{#            <button type="button"#}
+{#                    class="btn btn-info waves-effect waves-light float-start">To'lov qilish &nbsp&nbsp&nbsp<i#}
+{#                    class="fas fa-long-arrow-alt-right"></i>#}
+{#            </button>#}
+{#        {% endif %}#}
+
+        <button type="button"
+                class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov qilish &nbsp&nbsp&nbsp<i
+                class="fas fa-long-arrow-alt-right"></i>
+        </button>
         {% endif %}
         <button type="button" id="payment_render_pdf"
                 class="btn btn-info waves-effect waves-light float-end">To'lovlarni pdf holatda chiqarish
