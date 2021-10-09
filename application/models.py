@@ -95,10 +95,6 @@ class Application(models.Model):
         if self.file_name is None:
             b = bytes(f"{self.password}{time.time() * 1000}{self.created_date.time()}", encoding='utf-8')
             self.file_name = hashlib.md5(b).hexdigest()[0:15]
-
-        if self.process == CREATED:
-            self.process_sms = _(
-                "Ariza yaratilgan lekin YXHB bo'limiga jo'natilmagan! Arizani jo'natish uchun to'lovni amalga oshiring!")
         return super().save(*args, **kwargs)
 
 
@@ -109,13 +105,13 @@ def path_and_rename(instance, filename):
     filename = '{}.{}'.format(uuid4().hex, ext)
     upload_to = 'application_attachments/' + str(
         instance.application_document.application.service.short_title) + '/' + str(
-        instance.application_document.example_ducument.title)
+        instance.application_document.example_document.title)
     return os.path.join(upload_to, filename)
 
 
 class ApplicationDocument(BaseModel):
     application = models.ForeignKey(Application, on_delete=models.CASCADE)
-    example_ducument = models.ForeignKey(ExampleDocument, on_delete=models.SET_NULL, null=True)
+    example_document = models.ForeignKey(ExampleDocument, on_delete=models.SET_NULL, null=True)
     seriya = models.CharField('Seriya', max_length=50, blank=True, null=True)
     contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
 
@@ -123,3 +119,17 @@ class ApplicationDocument(BaseModel):
 class ApplicationDocumentAttachment(BaseModel):
     application_document = models.ForeignKey(ApplicationDocument, on_delete=models.CASCADE)
     attachment = models.FileField(upload_to=path_and_rename)
+
+
+APPLICATION_ACTIVATION = 0
+APPLICATION_STATE_DUTY_PAYMENT = 1
+
+APPLICATION_CASH_BY_MODERATOR_STATUS = (
+    (APPLICATION_ACTIVATION, 'Ariza holatini aktivlashtirish'),
+    (APPLICATION_STATE_DUTY_PAYMENT, 'Arizaning davlat bojlarini qabul qilish'),
+)
+
+class ApplicationCashByModerator(BaseModel):
+    status = models.PositiveIntegerField(choices=APPLICATION_CASH_BY_MODERATOR_STATUS)
+    application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True)
+    moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.SET_NULL, null=True)

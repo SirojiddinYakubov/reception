@@ -37,4 +37,5 @@ urlpatterns = [
 
     path('save-application-section/', SaveApplicationSection.as_view(), name='save_application_section'),
 
+    path('application-cash-by-moderator/', ApplicationCashByModeratorView.as_view(), name='application_cash_by_moderator'),
 ]

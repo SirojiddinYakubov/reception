@@ -1,4 +1,7 @@
+import hashlib
 import os
+import time
+import uuid
 from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
@@ -9,6 +12,8 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+from reception.api import PROCESSING, SUCCESS, FAILED
 from .base import BaseModel
 
 
@@ -156,6 +161,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     gender = models.IntegerField(verbose_name='Jinsi', choices=GENDER_CHOICES, default=MAN)
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(5)])
+    secret_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     USERNAME_FIELD = 'username'
 
@@ -164,6 +170,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
 
+    # def save(self, *args, **kwargs):
+    #     if self.id is None:
+    #         if self.role == MODERATOR:
+    #             b = bytes(f"{self.password}{time.time() * 1000}{self.username}", encoding='utf-8')
+    #             self.file_name = hashlib.md5(b).hexdigest()[0:7]
 
 class UserManager(BaseUserManager):
 
@@ -423,6 +434,23 @@ class Constant(models.Model):
     def __str__(self):
         return f"{self.key}: {self.value}"
 
+status = (
+    (SUCCESS, 'Muvaffaqiyatli'),
+    (PROCESSING, 'Kutilmoqda'),
+    (FAILED, 'Yuborilmagan'),
+)
+
+class Sms(BaseModel):
+    sms_count = models.IntegerField(default=0, null=True, blank=True)
+    text = models.TextField()
+    sms_id = models.BigIntegerField(default=0)
+    status = models.IntegerField(choices=status, default=PROCESSING)
+    phone = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'Jo\'natilgan sms'
+        verbose_name_plural = 'Jo\'natilgan smslar'
+        ordering = ['-id']
 
 class Notification(BaseModel):
     application = models.ForeignKey('application.Application', on_delete=models.CASCADE)

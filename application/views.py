@@ -10,6 +10,7 @@ from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
+from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
 from service.models import *
@@ -219,7 +220,7 @@ def create_application_doc(request, filename):
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
     re_fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.re_fuel_type.all()])
 
-    application_document = ApplicationDocument.objects.filter(example_ducument__key=service.key,
+    application_document = ApplicationDocument.objects.filter(example_document__key=service.key,
                                                               application=application).last()
 
     if application_document and application_document.contract_date:
@@ -367,6 +368,9 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         Notification.objects.create(application=application, sender=request.user,
                                                     receiver=application.created_user, text=text)
 
+                        # send sms with eskiz
+                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
                         # msg = msg.replace(" ", "+")
                         # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
@@ -378,11 +382,14 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         application.inspector = request.user
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad qilindi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {request.user.section.region.title} {request.user.section.title}"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {request.user.section.region.title} {request.user.section.title}"
 
                         # create notification
                         Notification.objects.create(application=application, sender=request.user,
                                                     receiver=application.created_user, text=text)
+
+                        # send sms with eskiz
+                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
 
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} bekor qilindi! {request.user.section.title}"
                         # msg = msg.replace(" ", "+")
@@ -397,11 +404,12 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
 
                         text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport voistasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz!"
 
-
-
                         # create notification
                         Notification.objects.create(application=application, sender=request.user,
                                                     receiver=application.created_user, text=text)
+
+                        # send sms with eskiz
+                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
 
                         # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} jarayonda turibti! {request.user.section.title}"
                         # msg = msg.replace(" ", "+")
@@ -626,3 +634,41 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             application.save()
             return HttpResponse(status=200)
         return HttpResponse(status=400)
+
+
+class ApplicationCashByModeratorView(AllowedRolesMixin, View):
+    allowed_roles = [USER, MODERATOR, CHECKER]
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('type') == str(APPLICATION_ACTIVATION):
+            if request.POST.get('application') and request.POST.get('secret_key'):
+                application = get_object_or_404(Application, id=request.POST.get('application'))
+                moderator = get_object_or_404(User, secret_key=request.POST.get('secret_key'),
+                                              role__in=self.allowed_roles)
+                print(application,moderator )
+                if not (application.is_block and application.process == CREATED):
+                    print('Application status already active')
+                    return HttpResponse(status=409)
+                application.is_block = False
+                application.process = SHIPPED
+                application.save()
+                ApplicationCashByModerator.objects.create(status=APPLICATION_ACTIVATION, application=application,
+                                                          moderator=moderator)
+                return HttpResponse(status=200)
+        elif request.POST.get('type') == str(APPLICATION_STATE_DUTY_PAYMENT):
+            if request.POST.get('application') and request.POST.get('secret_key'):
+                application = get_object_or_404(Application, id=request.POST.get('application'))
+                moderator = get_object_or_404(User, secret_key=request.POST.get('secret_key'),
+                                              role__in=self.allowed_roles)
+                if application.is_payment:
+                    print('Application payments already paid')
+                    return HttpResponse(status=409)
+                application.is_payment = True
+                application.save()
+                ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
+                                                          application=application,
+                                                          moderator=moderator)
+                return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=404)
+        return HttpResponse(status=404)

@@ -8,7 +8,7 @@ from user.models import *
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'role', 'last_name', 'first_name', 'middle_name', 'phone', 'fullpassport', 'turbo',
                     'birthday', 'is_active',
-                    'is_superuser', 'is_staff', 'date_joined', 'last_login']
+                    'is_superuser', 'is_staff', 'date_joined', 'last_login', 'secret_key']
     list_display_links = ['role', 'last_name', 'first_name', 'middle_name', ]
     list_filter = ['role', 'is_active', ]
     search_fields = ['last_name', 'first_name', 'middle_name', 'username', 'phone', 'passport_seriya',
@@ -159,4 +159,13 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display_links = ['application', 'sender', 'receiver',]
     search_fields = ['text']
     list_filter = ['is_read',]
+    save_on_top = True
+
+
+@admin.register(Sms)
+class SmsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'phone', 'text', 'sms_count', 'status', 'sms_id']
+    list_display_links = ['phone', 'text', ]
+    search_fields = ['text']
+    list_filter = ['status',]
     save_on_top = True
