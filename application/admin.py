@@ -33,5 +33,6 @@ class ApplicationCashByModeratorAdmin(admin.ModelAdmin):
     list_display = ['id', 'status', 'application', 'moderator', 'created_at']
     list_display_links = ['id', 'status', 'application', ]
     # search_fields = ['application']
-    list_filter = ['status', 'created_at', 'application__service__short_title', 'application__process','moderator__role', 'moderator__region' ]
+    list_filter = ['status', 'created_at', 'application__service__short_title', 'application__process',
+                   'moderator__role', 'moderator__region']
     save_on_top = True
