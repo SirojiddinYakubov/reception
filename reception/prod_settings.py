@@ -16,7 +16,7 @@ SECRET_KEY = 'x9fq&#!x9v_%^&^*(&*)%$&^%%&^8976jo@-_oq5nvqc($wlbq23)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','194.67.92.171']
+ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','89.108.77.160']
 
 # DATABASES = {
 #     'default': {
@@ -31,23 +31,15 @@ ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','194.67.92.171']
 # }
 
 DATABASES = {
-    'default': {
-        'NAME': 'reception_default',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'yakubov',
-        'PASSWORD': 'm6232971',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    },
-    'prod': {
-        'NAME': 'reception_prod',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'yakubov',
-        'PASSWORD': 'm6232971',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+            'default': {
+                        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                                'NAME': 'reception',
+                                        'USER': 'yakubov',
+                                                'PASSWORD': '1999',
+                                                        'HOST': 'localhost',
+                                                                'PORT': '5432',
+                                                                    }
+            }
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
