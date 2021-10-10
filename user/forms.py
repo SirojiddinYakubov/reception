@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, SelectDateWidget
 from django.utils.translation import gettext as _
 
 from reception import settings
@@ -22,7 +22,7 @@ class EditForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Masalan: Sirojiddin', 'id': 'last_name'}))
     middle_name = forms.CharField(label='Otasining ismi:', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Masalan: Tojiddinovich', 'id': 'middle_name'}))
-    birthday = forms.DateField(label="Tug'ilgan  kuni", input_formats=settings.DATE_INPUT_FORMATS,
+    birthday = forms.DateField(label="Tug'ilgan  kuni",
                                widget=forms.DateInput(
                                    attrs={'class': 'form-control',
                                           'type': 'datetime-local',
@@ -49,13 +49,11 @@ class EditForm(forms.ModelForm):
     issue_by_whom = forms.CharField(label='Kim tomonidan berilgan:', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Masalan: BUXORO SHAHAR IIB', 'id': 'issue_by_whom'}))
 
-
-
     class Meta:
         model = User
         fields = ['last_name', 'first_name', 'middle_name', 'passport_seriya', 'passport_number',
                   'issue_by_whom', 'person_id', 'region', 'district', 'quarter', 'address']
-        exclude = ['phone', 'birthday']
+        exclude = ['phone', 'birthday', ]
 
         labels = {
             'name': _('Writer'),
@@ -95,12 +93,15 @@ class EditOrganizationForm(forms.ModelForm):
         attrs={'class': 'form-control'}))
     identification_number = forms.IntegerField(label='STIR:', widget=forms.NumberInput(
         attrs={'class': 'form-control', }))
-    legal_address_region = forms.ModelChoiceField(label='Yuridik manzil(Viloyat)', queryset=Region.objects.all(), widget=forms.Select(
-        attrs={'class': 'form-control' }))
-    legal_address_district = forms.ModelChoiceField(label='Yuridik manzil(tuman)',queryset=District.objects.all(), widget=forms.Select(
-        attrs={'class': 'form-control'}))
+    legal_address_region = forms.ModelChoiceField(label='Yuridik manzil(Viloyat)', queryset=Region.objects.all(),
+                                                  widget=forms.Select(
+                                                      attrs={'class': 'form-control'}))
+    legal_address_district = forms.ModelChoiceField(label='Yuridik manzil(tuman)', queryset=District.objects.all(),
+                                                    widget=forms.Select(
+                                                        attrs={'class': 'form-control'}))
     address_of_garage = forms.CharField(label='Garaj manzili:', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
+
     # certificate_photo = forms.FileField(label='Guvohnoma surati:', required=False, widget=forms.FileInput(
     #     attrs={'class': 'form-control-file',"accept": '.png, .jpg, .jpeg .gif' }))
     # license_photo = forms.FileField(label='Litsenziya surati:',required=False, widget=forms.FileInput(
@@ -108,7 +109,8 @@ class EditOrganizationForm(forms.ModelForm):
 
     class Meta:
         model = Organization
-        fields = ['title', 'director', 'identification_number', 'legal_address_region','legal_address_district', 'address_of_garage',]
+        fields = ['title', 'director', 'identification_number', 'legal_address_region', 'legal_address_district',
+                  'address_of_garage', ]
         # exclude = ['certificate_photo', 'license_photo']
 
 
@@ -122,19 +124,23 @@ class EditOrganizationForm(forms.ModelForm):
 class AddUserForm(ModelForm):
     class Meta:
         model = User
-        fields = ('first_name','last_name','middle_name', )
-        exclude = ('username', 'password',  'pasport','phone',)
+        fields = ('first_name', 'last_name', 'middle_name',)
+        exclude = ('username', 'password', 'pasport', 'phone',)
 
 
 class EditWorkerForm(ModelForm):
-
     class Meta:
         model = User
-        fields = ('last_name', 'first_name', 'middle_name', 'section','region','district','quarter', 'address','passport_seriya','passport_number', 'username','turbo','password')
+        fields = ('last_name', 'first_name', 'middle_name', 'section', 'region', 'district', 'quarter', 'address',
+                  'passport_seriya', 'passport_number', 'username', 'turbo', 'password')
         exclude = ('phone',)
+
 
 class EditCarForm(ModelForm):
     class Meta:
         model = Car
-        fields = ('model','history', 'body_type', 'body_number','chassis_number', 'engine_number','made_year','color','engine_power','old_number','old_technical_passport','lost_technical_passport', 'type', 'fuel_type', 'device', 'is_auction', 'full_weight', 'empty_weight','is_old_number', 'lost_number' ,'given_number' )
+        fields = (
+        'model', 'history', 'body_type', 'body_number', 'chassis_number', 'engine_number', 'made_year', 'color',
+        'engine_power', 'old_number', 'old_technical_passport', 'lost_technical_passport', 'type', 'fuel_type',
+        'device', 'is_auction', 'full_weight', 'empty_weight', 'is_old_number', 'lost_number', 'given_number')
         exclude = ()

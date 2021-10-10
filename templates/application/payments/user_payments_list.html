@@ -1,0 +1,135 @@
+{% extends 'base_vertical.html' %}
+{% load i18n %}
+{% load humanize %}
+{% load service_tags %}
+
+{% block title %}
+    {% trans "E-RIB.UZ" %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Davlat boj to'lovlari" %}
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="row ml-2 mr-2">
+        <div class="col-12 text-center p-0">
+
+            <div class="card px-0 pb-0 mb-3">
+                <div class="card-body">
+                    {% include '_parts/messages.html' %}
+                    <form class="form-group mb-3" id="payments_filter_form" method="GET"
+                          action="{% url 'application:payments_list' %}">
+                        <div class="row text-start">
+                            <div class="col-4">
+                                <label class="text-dark" style="width: 100%" for="application">Arizalar</label>
+                                <form id="application_form" action="{% url 'application:payments_list' %}" method="get">
+                                <select name="application"
+                                        class="form-select" id="application">
+                                    {% for application in applications %}
+                                        <option {% if application.id == application.first %}selected{% endif %}
+                                                value="{{ application.id }}">{{ application.service.short_title }}</option>
+                                    {% endfor %}
+                                </select>
+                                </form>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row justify-content-center">
+
+                        <!-- left column -->
+                        <div class="col-md-12">
+
+                            <div class="panel-body" id="render_div">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light" style="background: #f1f0f0">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="text-start">Davlat boji nomi</th>
+                                        <th scope="col">Hisoblangan</th>
+                                        <th scope="col">To'langan</th>
+                                        <th scope="col">Qarzdorlik</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for pay in pays %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <th class="text-start" scope="row" data-key="{{ pay.0 }}">{{ pay.1 }}</th>
+                                            {% get_calculated_payments pay.0 as payment %}
+                                            <td><b class="calculated_pay">{{ payment.total|intcomma }}</b></td>
+                                            <td><b class="paid_pay text-green">{{ payment.paid|intcomma }}</b></td>
+                                            <td>
+                                                <b class="unpaid_pay text-danger">{{ payment.unpaid|intcomma }}</b>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot style="background: #f1f0f0">
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-start">Jami:</th>
+                                        <th><b id="calculated_pay_total"></b> so'm</th>
+                                        <th><b id="paid_pay_total" class="text-green"></b> so'm</th>
+                                        <th><b id="unpaid_pay_total" class="text-danger"></b> so'm</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" charset="UTF-8">
+        $(document).ready(function () {
+
+            $('#application').change(function () {
+                console.log($('#application_form'))
+                $('#application_form').submit()
+            })
+
+            calc_total()
+
+            function calc_total() {
+                if (!String.prototype.trim) {
+                    String.prototype.trim = function () {
+                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                    };
+                }
+
+                var calculated_sum = 0;
+                $(".calculated_pay").each(function () {
+                    calculated_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#calculated_pay_total').text(calculated_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+                var paid_sum = 0;
+                $(".paid_pay").each(function () {
+                    paid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#paid_pay_total').text(paid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+                var unpaid_sum = 0;
+                $(".unpaid_pay").each(function () {
+                    unpaid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#unpaid_pay_total').text(unpaid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+
+
+            }
+
+            console.log('{{request.GET.parent_section}}')
+
+            $('#payments_filter_form_btn').on('click', function () {
+                $('#payments_filter_form').submit()
+            })
+
+
+        })
+    </script>
+{% endblock js %}

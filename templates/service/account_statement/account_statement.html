@@ -336,7 +336,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
                                         id="prev3">Oldingi
                                 </button>
-                                <button type="button" id="fake" class="btn btn-danger">Fake</button>
+                                {#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
                                 <button type="submit" id="next3"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
@@ -548,44 +548,7 @@
 
 
                 $('#fake').on('click', function () {
-                    var $fuel_types_selectize = $('#fuel_types').selectize();
-                    $fuel_types_selectize[0].selectize.setValue("1");
-                    $('#car').select2("val", $("#car option:last").val());
-                    $('#color').select2("val", $("#color option:last").val());
-                    $('#made_year').val('2021-07-26')
-                    $('input[name="contract_date"]').val('2021-07-26')
-
-
-                    function makeStr(length) {
-                        var result = '';
-                        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-                        var charactersLength = characters.length;
-                        for (var i = 0; i < length; i++) {
-                            result += characters.charAt(Math.floor(Math.random() *
-                                charactersLength));
-                        }
-                        return result;
-                    }
-
-                    function makeNum(length) {
-                        var result = '';
-                        var numbers = '1234567890';
-                        var numbersLength = numbers.length;
-                        for (var i = 0; i < length; i++) {
-                            result += numbers.charAt(Math.floor(Math.random() *
-                                numbersLength));
-                        }
-                        return result;
-                    }
-
-                    $('#engine_number').val(makeStr(15))
-                    $('input[name="seriya"]').val(makeStr(15))
-                    $('#body_number').val(makeStr(15))
-                    $('#full_weight').val(makeNum(5))
-                    $('#empty_weight').val(makeNum(5))
-                    $('#engine_power').val(makeNum(3))
-                    $('#price').val(makeNum(8))
-
+                    generate_fake_data()
                 })
 
 
