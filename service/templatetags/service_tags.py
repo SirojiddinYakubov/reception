@@ -49,8 +49,6 @@ def get_calculated_payments(context, state_duty_id):
         unpaid = 0
 
         for child_section in child_sections:
-            print(child_section)
-            print(StateDuty.objects.filter(service__application_service__section=child_section))
             total_qs = StateDuty.objects.filter(
                 Q(service__application_service__section=child_section) &
                 Q(title=state_duty_id) &

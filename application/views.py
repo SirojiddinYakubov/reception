@@ -491,12 +491,14 @@ def payment_detail(request, service_id):
 class PaymentsList(AllowedRolesMixin, ListView):
     model = StateDuty
     template_name = 'application/payments/payments_list.html'
-    allowed_roles = [SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
-    def get(self, request, *args, **kwargs):
-        print(request)
-        return super().get(request, *args, **kwargs)
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == USER:
+            return ['application/payments/user_payments_list.html']
+        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         user_role = self.request.user.role
@@ -505,16 +507,18 @@ class PaymentsList(AllowedRolesMixin, ListView):
             'pays': STATE_DUTY_TITLE
         }
 
-        if self.request.method == 'GET':
-            try:
-                if self.request.GET.get('startdate', None):
-                    context.update(startdate=self.request.GET.get('startdate'))
-                if self.request.GET.get('stopdate', None):
-                    context.update(stopdate=self.request.GET.get('stopdate'))
-            except:
-                pass
+
 
         if user_role == STATE_CONTROLLER:
+            if self.request.method == 'GET':
+                try:
+                    if self.request.GET.get('startdate', None):
+                        context.update(startdate=self.request.GET.get('startdate'))
+                    if self.request.GET.get('stopdate', None):
+                        context.update(stopdate=self.request.GET.get('stopdate'))
+                except:
+                    pass
+
             parent_sections = Section.objects.filter(parent__isnull=True)
             context.update(parent_sections=parent_sections)
 
@@ -523,7 +527,12 @@ class PaymentsList(AllowedRolesMixin, ListView):
                     parent_section = get_object_or_404(Section, id=self.request.GET.get('parent_section'))
                     child_sections = Section.objects.filter(parent=parent_section)
                     context.update(child_sections=child_sections)
+        elif user_role == USER:
+            applications = Application.objects.filter(is_active=True)
+            context.update(applications=applications)
+
         return context
+
 
 
 @permission_classes([IsAuthenticated])
