@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 from application.mixins import *
 from application.models import Application
+from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
 from user.decorators import *
@@ -389,8 +390,6 @@ class EditPersonalData(AllowedRolesMixin, View):
     def post(self, request):
 
         form = EditForm(request.POST, instance=request.user)
-        print(request.POST)
-        print(request.POST.get('birthday'))
         if form.is_valid():
 
             form = form.save(commit=False)
@@ -401,7 +400,7 @@ class EditPersonalData(AllowedRolesMixin, View):
             form.save()
 
             user = get_object_or_404(User, id=request.user.id)
-            print(user)
+
             if user:
                 user.username = phone
                 user.turbo = request.POST.get('password')
@@ -415,7 +414,6 @@ class EditPersonalData(AllowedRolesMixin, View):
                 return HttpResponse(status=400)
             return HttpResponse(status=400)
         else:
-            print(form.errors)
             return HttpResponse(status=400)
 
 
@@ -432,8 +430,8 @@ def get_code(request):
             user.save()
 
         print(password)
-        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  %0aLogin: {user.username} %0aParol: {user.turbo}"
-
+        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  \nLogin: {user.username} \nParol: {user.turbo}"
+        SendSmsWithApi(message=msg, phone=phone).get()
         token, created = Token.objects.get_or_create(user=user)
 
         context = {
