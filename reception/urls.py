@@ -36,7 +36,7 @@ def test(request):
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
-    path('admin/', admin.site.urls),
+    path('yoz/', admin.site.urls),
     path('sentry-debug/', trigger_error),
     path('hello/', HelloView.as_view(), name='hello'),
     path('auth/', include('djoser.urls')),

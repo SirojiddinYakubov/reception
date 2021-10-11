@@ -14,7 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'x9fq&#!x9v_%^&^*(&*)%$&^%%&^8976jo@-_oq5nvqc($wlbq23)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','89.108.77.160']
 
