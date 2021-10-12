@@ -100,7 +100,6 @@ def login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-
                     token, created = Token.objects.get_or_create(user=user)
                     if next:
                         response = HttpResponseRedirect(next)
@@ -108,7 +107,7 @@ def login_view(request):
                         if user.role == USER:
                             response = redirect('service:services_list')
                         elif user.role == CHECKER:
-                            response = redirect('application:checker_applications_list')
+                            response = redirect('application:applications_list')
                     response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
                     return response
                 else:
