@@ -19,13 +19,13 @@ def calculation_state_duty_service_price(application):
     created_user = get_object_or_404(User, id=application.created_user.id)
 
     # Davlat bojlari foizlarini olish
-    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new,state_duty=6).first()
+    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new, state_duty=6).first()
 
     if car.is_replace_number:
         if not car.is_auction:
             registration = StateDutyPercent.objects.filter(car_type=car.type,
-                                                       lost_number=car.lost_number, is_old_number=car.is_old_number,
-                                                       car_is_new=car.is_new, state_duty=5).first()
+                                                           lost_number=car.lost_number, is_old_number=car.is_old_number,
+                                                           car_is_new=car.is_new, state_duty=5).first()
 
         else:
             registration = None
@@ -34,10 +34,10 @@ def calculation_state_duty_service_price(application):
 
     technical_passport = StateDutyPercent.objects.filter(state_duty=4).first()
     inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
-                                                  state_duty=3).first()
+                                                 state_duty=3).first()
 
-
-    application_document = ApplicationDocument.objects.filter(application=application, example_document__key=service.key).last()
+    application_document = ApplicationDocument.objects.filter(application=application,
+                                                              example_document__key=service.key).last()
 
     if application_document and application_document.contract_date:
         if datetime.datetime.now().date() > application_document.contract_date + timedelta(days=10):
@@ -53,7 +53,8 @@ def calculation_state_duty_service_price(application):
 
     if car.lost_technical_passport:
         try:
-            fine_lost_technical_passport = StateDutyPercent.objects.filter(state_duty=7,lost_technical_passport=car.lost_technical_passport).first().percent
+            fine_lost_technical_passport = StateDutyPercent.objects.filter(state_duty=7,
+                                                                           lost_technical_passport=car.lost_technical_passport).first().percent
             fine = fine + fine_lost_technical_passport
         except AttributeError:
             print("YO'QOLGAN TEX PASSPORT UCHUN JARIMA FOIZI TOPILMADI")
@@ -91,7 +92,7 @@ def calculation_state_duty_service_price(application):
     else:
         road_fund = 0
 
-    #Davlat bojlari hisob raqamlarini olish
+    # Davlat bojlari hisob raqamlarini olish
 
     if re_registration:
         try:
@@ -105,7 +106,8 @@ def calculation_state_duty_service_price(application):
 
         state_duty = StateDuty.objects.filter(title=re_registration.state_duty, service=service).first()
         if not state_duty:
-            StateDuty.objects.create(title=re_registration.state_duty, created_user=created_user, payment=price, service=service, score=score)
+            StateDuty.objects.create(title=re_registration.state_duty, created_user=created_user, payment=price,
+                                     service=service, score=score)
         else:
             state_duty.payment = price
             state_duty.score = score
@@ -129,7 +131,7 @@ def calculation_state_duty_service_price(application):
         state_duty = StateDuty.objects.filter(title=registration.state_duty, service=service).first()
         if not state_duty:
             StateDuty.objects.create(title=registration.state_duty, created_user=created_user, payment=price,
-                                     service=service,score=score)
+                                     service=service, score=score)
         else:
             state_duty.payment = price
             state_duty.score = score
@@ -141,7 +143,8 @@ def calculation_state_duty_service_price(application):
 
     if technical_passport:
         try:
-            score = StateDutyScore.objects.filter(state_duty=technical_passport.state_duty,region=created_user.region, district=created_user.district).first()
+            score = StateDutyScore.objects.filter(state_duty=technical_passport.state_duty, region=created_user.region,
+                                                  district=created_user.district).first()
         except AttributeError:
             score = None
             print('QAYD ETISH GUVOHNOMASI SCORE NOT FOUND')
@@ -150,7 +153,7 @@ def calculation_state_duty_service_price(application):
 
         state_duty = StateDuty.objects.filter(title=technical_passport.state_duty, service=service).first()
         if not state_duty:
-            if score is  not None:
+            if score is not None:
                 StateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
                                          service=service, score=score)
         else:
@@ -165,7 +168,7 @@ def calculation_state_duty_service_price(application):
     if inspection:
         try:
             score = StateDutyScore.objects.filter(state_duty=inspection.state_duty, region=created_user.region,
-                                              district=created_user.district).first()
+                                                  district=created_user.district).first()
         except AttributeError:
             score = None
             print('TEXNIK KO\'RIK SCORE NOT FOUND')
@@ -174,9 +177,9 @@ def calculation_state_duty_service_price(application):
 
         state_duty = StateDuty.objects.filter(title=inspection.state_duty, service=service).first()
         if not state_duty:
-            if score is not None:
+            if car.is_new == False:
                 StateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
-                                     service=service, score=score)
+                                         service=service, score=score)
         else:
             state_duty.payment = price
             state_duty.score = score
@@ -206,16 +209,16 @@ def calculation_state_duty_service_price(application):
     else:
         print('JARIMA PERCENT NOT FOUND')
 
-
     if not road_fund == 0:
         try:
             if car.is_new:
                 score = StateDutyScore.objects.filter(state_duty=1, region=created_user.region,
-                                              district=created_user.district).first()
+                                                      district=created_user.district).first()
 
                 state_duty = StateDuty.objects.filter(title='1', service=service).first()
                 if not state_duty:
-                    StateDuty.objects.create(title='1', created_user=created_user, payment=road_fund, service=service, score=score)
+                    StateDuty.objects.create(title='1', created_user=created_user, payment=road_fund, service=service,
+                                             score=score)
                 else:
                     state_duty.payment = road_fund
                     state_duty.score = score
@@ -227,7 +230,8 @@ def calculation_state_duty_service_price(application):
                                                       district=created_user.district).first()
                 state_duty = StateDuty.objects.filter(title='2', service=service).first()
                 if not state_duty:
-                    StateDuty.objects.create(title='2', created_user=created_user, payment=road_fund, service=service, score=score)
+                    StateDuty.objects.create(title='2', created_user=created_user, payment=road_fund, service=service,
+                                             score=score)
                 else:
                     state_duty.payment = road_fund
                     state_duty.score = score
@@ -238,4 +242,3 @@ def calculation_state_duty_service_price(application):
             print('YO\'L FONDI SCORE NOT FOUND')
     else:
         print('YO\'L FONDI PERCENT NOT FOUND')
-
