@@ -150,8 +150,9 @@ def calculation_state_duty_service_price(application):
 
         state_duty = StateDuty.objects.filter(title=technical_passport.state_duty, service=service).first()
         if not state_duty:
-            StateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
-                                     service=service, score=score)
+            if score is  not None:
+                StateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
+                                         service=service, score=score)
         else:
             state_duty.payment = price
             state_duty.score = score
@@ -173,7 +174,8 @@ def calculation_state_duty_service_price(application):
 
         state_duty = StateDuty.objects.filter(title=inspection.state_duty, service=service).first()
         if not state_duty:
-            StateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
+            if score is not None:
+                StateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
                                      service=service, score=score)
         else:
             state_duty.payment = price
