@@ -407,7 +407,7 @@
             });
         })
 
-
+         var password
         $('#get_code').on('click', function () {
             if (phone_mask) {
 
@@ -472,7 +472,7 @@
                                 $('#input_confirm').fadeIn(800)
                                 $('#help_text_code').fadeIn(800)
 
-                                var password = parseInt(response.password)
+                                password = parseInt(res.password)
 
                             },
                             409: function (err) {
@@ -496,36 +496,39 @@
 
         })
 
+
+        $('#input_confirm').keyup(function () {
+            var test = $('#input_confirm').val()
+
+            /*    pattern = /^\d{5}$/
+            if (test.match(pattern)) {*/
+            if (test === `${password}`) {
+                {#$('.invalid-feedback').css('display', 'none')#}
+                {#$('.valid-feedback').css('display', 'block')#}
+                $('#next1').prop('disabled', false)
+
+                $("#fieldset1").keyup(function (event) {
+                    if (event.keyCode === 13) {
+                        $("#next1").click();
+                    }
+                });
+
+
+            } else {
+                {#$('.invalid-feedback').css('display', 'block')#}
+                {#$('.valid-feedback').css('display', 'none')#}
+                $('#next1').prop('disabled', true)
+            }
+
+            /*} else {
+                $('#next1').prop('disabled', true)
+                $('.invalid-feedback').css('display', 'block')
+                $('.valid-feedback').css('display', 'none')
+            }*/
+        });
+
         $('#next1').on('click', function () {
 
-            $('#input_confirm').keyup(function () {
-                var test = $('#input_confirm').val()
-                /*    pattern = /^\d{5}$/
-                if (test.match(pattern)) {*/
-                if (test === `${password}`) {
-                    $('.invalid-feedback').css('display', 'none')
-                    $('.valid-feedback').css('display', 'block')
-                    $('#next1').prop('disabled', false)
-
-                    $("#fieldset1").keyup(function (event) {
-                        if (event.keyCode === 13) {
-                            $("#next1").click();
-                        }
-                    });
-
-
-                } else {
-                    $('.invalid-feedback').css('display', 'block')
-                    $('.valid-feedback').css('display', 'none')
-                    $('#next1').prop('disabled', true)
-                }
-
-                /*} else {
-                    $('#next1').prop('disabled', true)
-                    $('.invalid-feedback').css('display', 'block')
-                    $('.valid-feedback').css('display', 'none')
-                }*/
-            });
 
             $('#fieldset1').hide()
             $('#fieldset2').css('opacity', '1').show()
