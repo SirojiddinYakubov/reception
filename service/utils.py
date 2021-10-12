@@ -193,7 +193,6 @@ def calculation_state_duty_service_price(application):
             print('JARIMA SCORE NOT FOUND')
 
         price = int(MINIMUM_BASE_WAGE / 100 * fine)
-        print(price)
         state_duty = StateDuty.objects.filter(title='7', service=service).first()
         if not state_duty:
             StateDuty.objects.create(title='7', created_user=created_user, payment=price, service=service, score=score)
