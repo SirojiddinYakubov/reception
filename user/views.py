@@ -432,7 +432,7 @@ def get_code(request):
 
             print(password)
             msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  \nLogin: {user.username} \nParol: {user.turbo}"
-            # SendSmsWithApi(message=msg, phone=phone).get()
+            SendSmsWithApi(message=msg, phone=phone).get()
             token, created = Token.objects.get_or_create(user=user)
 
             context = {
