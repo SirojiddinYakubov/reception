@@ -422,27 +422,28 @@ def get_code(request):
         phone = request.GET.get('phone')
         try:
             user = User.objects.get(phone=phone)
-            password = user.turbo
+            if user is not None:
+                return HttpResponse(status=409)
         except ObjectDoesNotExist:
             password = random.randint(10000, 99999)
             user = User.objects.create(username=phone, phone=phone, password=password, turbo=password)
             user.set_password(str(password))
             user.save()
 
-        print(password)
-        msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  \nLogin: {user.username} \nParol: {user.turbo}"
-        SendSmsWithApi(message=msg, phone=phone).get()
-        token, created = Token.objects.get_or_create(user=user)
+            print(password)
+            msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  \nLogin: {user.username} \nParol: {user.turbo}"
+            SendSmsWithApi(message=msg, phone=phone).get()
+            token, created = Token.objects.get_or_create(user=user)
 
-        context = {
-            'password': password
-        }
-        data = json.dumps(context)
-        response = HttpResponse(data, content_type='json')
-        response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
-        return response
+            context = {
+                'password': password
+            }
+            data = json.dumps(context)
+            response = HttpResponse(data, status=200, content_type='json')
+            response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
+            return response
     else:
-        return HttpResponse(False)
+        return HttpResponse(status=400)
 
 
 def get_user_pass(request):

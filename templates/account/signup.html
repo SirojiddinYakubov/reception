@@ -407,44 +407,12 @@
             });
         })
 
-
+         var password
         $('#get_code').on('click', function () {
             if (phone_mask) {
 
                 if ($('#accept').prop('checked')) {
-                    $("#get_code").attr("disabled", true);
-                    $("#accept").attr("disabled", true);
 
-
-                    let countdowntime = 300;
-                    let button = document.getElementById('get_code')
-
-
-                    let interval = setInterval(updateCountDown, 1000)
-
-                    function updateCountDown() {
-                        let minutes = Math.floor(countdowntime / 60)
-                        let seconds = countdowntime % 60
-
-                        seconds = seconds < 10 ? '0' + seconds : seconds
-                        minutes = minutes < 10 ? '0' + minutes : minutes
-
-                        button.innerHTML = `${minutes}:${seconds} Qayta yuborish`
-
-                        countdowntime--;
-
-                        if (countdowntime < 0) {
-                            clearInterval(interval)
-                            $("#get_code").attr("disabled", false);
-                            $("#accept").attr("disabled", false);
-                            button.innerHTML = `Qayta yuborish`
-
-                        }
-                    }
-
-                    $('#label_confirm').fadeIn(800)
-                    $('#input_confirm').fadeIn(800)
-                    $('#help_text_code').fadeIn(800)
 
                     $.ajax({
                         type: "GET",
@@ -452,53 +420,68 @@
                         data: {
                             'phone': encodeURIComponent($('#phone').val()), // from form
                         },
-                        success: function (response) {
-                            if (typeof response === 'object') {
-                                var password = parseInt(response.password)
-                                $('#input_confirm').keyup(function () {
-                                    var test = $('#input_confirm').val(),
-                                        pattern = /^\d{5}$/
-                                    if (test.match(pattern)) {
-                                        if (test === `${password}`) {
-                                            $('.invalid-feedback').css('display', 'none')
-                                            $('.valid-feedback').css('display', 'block')
-                                            $('#next1').prop('disabled', false)
+                        statusCode: {
+                            200: function (res) {
 
-                                            $("#fieldset1").keyup(function (event) {
-                                                if (event.keyCode === 13) {
-                                                    $("#next1").click();
-                                                }
-                                            });
-
-
-                                        } else {
-                                            $('.invalid-feedback').css('display', 'block')
-                                            $('.valid-feedback').css('display', 'none')
-                                            $('#next1').prop('disabled', true)
-                                        }
-                                    } else {
-                                        $('#next1').prop('disabled', true)
-                                        $('.invalid-feedback').css('display', 'block')
-                                        $('.valid-feedback').css('display', 'none')
-                                    }
+                                $.notifyDefaults({
+                                    type: 'warning',
+                                    allow_dismiss: false,
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight'
+                                    },
                                 });
-                            }
-                        }
-                    });
-
-                    $.notifyDefaults({
-                        type: 'warning',
-                        allow_dismiss: false,
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutRight'
-                        },
-                    });
-                    $.notify({
-                        icon: 'glyphicon glyphicon-envelope',
-                        message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                $.notify({
+                                    icon: 'glyphicon glyphicon-envelope',
+                                    message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
                         '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
                         '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga parol yuborildi !`
+                                });
+
+                                $("#get_code").attr("disabled", true);
+                                $("#accept").attr("disabled", true);
+
+
+                                let countdowntime = 300;
+                                let button = document.getElementById('get_code')
+
+
+                                let interval = setInterval(updateCountDown, 1000)
+
+                                function updateCountDown() {
+                                    let minutes = Math.floor(countdowntime / 60)
+                                    let seconds = countdowntime % 60
+
+                                    seconds = seconds < 10 ? '0' + seconds : seconds
+                                    minutes = minutes < 10 ? '0' + minutes : minutes
+
+                                    button.innerHTML = `${minutes}:${seconds} Qayta yuborish`
+
+                                    countdowntime--;
+
+                                    if (countdowntime < 0) {
+                                        clearInterval(interval)
+                                        $("#get_code").attr("disabled", false);
+                                        $("#accept").attr("disabled", false);
+                                        button.innerHTML = `Qayta yuborish`
+
+                                    }
+                                }
+
+                                $('#label_confirm').fadeIn(800)
+                                $('#input_confirm').fadeIn(800)
+                                $('#help_text_code').fadeIn(800)
+
+                                password = parseInt(res.password)
+
+                            },
+                            409: function (err) {
+                                alert('Bu raqam allaqachon ro\'yhatdan o\'tkazilgan!')
+                            },
+                            400: function (err) {
+                                alert('Xatolik yuz berdi! Sahifani ayngilab qayta urinib ko\'ring!')
+                            }
+                        },
                     });
 
 
@@ -513,7 +496,39 @@
 
         })
 
+
+        $('#input_confirm').keyup(function () {
+            var test = $('#input_confirm').val()
+
+            /*    pattern = /^\d{5}$/
+            if (test.match(pattern)) {*/
+            if (test === `${password}`) {
+                {#$('.invalid-feedback').css('display', 'none')#}
+                {#$('.valid-feedback').css('display', 'block')#}
+                $('#next1').prop('disabled', false)
+
+                $("#fieldset1").keyup(function (event) {
+                    if (event.keyCode === 13) {
+                        $("#next1").click();
+                    }
+                });
+
+
+            } else {
+                {#$('.invalid-feedback').css('display', 'block')#}
+                {#$('.valid-feedback').css('display', 'none')#}
+                $('#next1').prop('disabled', true)
+            }
+
+            /*} else {
+                $('#next1').prop('disabled', true)
+                $('.invalid-feedback').css('display', 'block')
+                $('.valid-feedback').css('display', 'none')
+            }*/
+        });
+
         $('#next1').on('click', function () {
+
 
             $('#fieldset1').hide()
             $('#fieldset2').css('opacity', '1').show()
