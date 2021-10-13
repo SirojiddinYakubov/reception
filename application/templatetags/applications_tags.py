@@ -1,16 +1,18 @@
-
 import datetime
 from urllib.parse import urlencode
 
 from django import template
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 
 from application.models import Application
+from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation
 from user.models import *
 
 register = template.Library()
+
 
 @register.simple_tag
 def calculate_applications_count(section_id):
@@ -18,10 +20,13 @@ def calculate_applications_count(section_id):
         section = get_object_or_404(Section, id=section_id)
         if section.parent == None:
             region = get_object_or_404(Region, id=section.region.id)
-            sections = Section.objects.filter(region=region,is_active=True, parent__isnull=False)
+            sections = Section.objects.filter(region=region, is_active=True, parent__isnull=False)
             id_list = []
             for sec in sections:
-                items = Application.objects.filter(section=sec, is_active=True, is_block__in=[False,] if sec.pay_for_service else [True, False]).values_list('id', flat=True)
+                items = Application.objects.filter(section=sec, is_active=True,
+                                                   is_block__in=[False, ] if sec.pay_for_service else [True,
+                                                                                                       False]).values_list(
+                    'id', flat=True)
                 for item in items:
                     id_list.append(int(item))
             qs = Application.objects.filter(id__in=id_list)
@@ -36,7 +41,8 @@ def calculate_applications_count(section_id):
                 'cancel': cancel
             }
         else:
-            qs = Application.objects.filter(section=section, is_active=True,is_block__in=[False,] if section.pay_for_service else [True, False])
+            qs = Application.objects.filter(section=section, is_active=True,
+                                            is_block__in=[False, ] if section.pay_for_service else [True, False])
             all = qs.count()
             process = qs.filter(process='1').count()
             success = qs.filter(process='2').count()
@@ -49,11 +55,13 @@ def calculate_applications_count(section_id):
             }
     except:
         return {
-                'all': None,
-                'success': None,
-                'process': None,
-                'cancel': None
-            }
+            'all': None,
+            'success': None,
+            'process': None,
+            'cancel': None
+        }
+
+
 #
 # @register.simple_tag
 # def get_application_submitting(object):
@@ -124,3 +132,27 @@ def calculate_applications_count(section_id):
 #     # url = reverse('application:qr_code_generate')
 #     # print(url)
 #     return None
+@register.simple_tag
+def get_payment_score(district, state_duty):
+    try:
+
+        score = StateDutyScore.objects.get(district=district, state_duty=state_duty)
+        if score:
+            return score.score
+        else:
+            return 'sss'
+    except:
+        score = StateDutyScore.objects.get(state_duty=state_duty)
+        return score.score
+
+
+@register.simple_tag
+def get_payment_payment(payment):
+    try:
+        amount_base_calculation = AmountBaseCalculation.objects.get(is_active=True)
+
+        payment = amount_base_calculation.amount / 100 * int(payment)
+        return int(payment)
+    except:
+        return payment
+

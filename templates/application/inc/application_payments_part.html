@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load applications_tags %}
 <table class="table table-bordered table-striped" id="render_div">
     <thead class="thead-light">
     <tr>
@@ -11,13 +12,15 @@
     </tr>
     </thead>
     <tbody>
+
     {% for payment in payments %}
         {% if payment.payment != 0 %}
+            {% if payment.car_type == application.car.type or payment.car_type == None %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <th scope="row">{{ payment.get_title_display }}</th>
-                <td><b>{{ payment.score.score }}</b></td>
-                <td><b class="state_payment">{{ payment.payment|intcomma }}</b> so'm</td>
+                <th scope="row">{{ payment.get_state_duty_display }}</th>
+                <td><b>    {% get_payment_score application.created_user.district payment.state_duty  %}</b></td>
+                <td><b class="state_payment">{% get_payment_payment payment.percent   %}</b> so'm</td>
                 <td>
                     {% if request.user.role == '2' or request.user.role == '3' %}
                         <input name="payment" {% if payment.is_paid %}checked{% endif %}
@@ -30,6 +33,7 @@
                     {% endif %}
                 </td>
             </tr>
+                {% endif %}
         {% endif %}
 
     {% endfor %}

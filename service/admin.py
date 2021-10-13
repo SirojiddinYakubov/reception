@@ -30,10 +30,10 @@ class StateDutyAdmin(admin.ModelAdmin):
     #     models.IntegerField: {'widget': NumberInput(attrs={'size': '300'})},
     # }
 
-    list_display = ['id', 'title', 'payment', 'created_user', 'created_date', 'updated_date']
-    search_fields = ['title', 'payment']
-    list_filter = ['title']
-    list_display_links = ['id', 'title']
+    list_display = ['id', 'application', 'score', 'percent']
+    search_fields = ['application', 'score']
+    list_filter = ['application']
+    list_display_links = ['id', 'application']
     save_on_top = True
 
 
@@ -65,3 +65,11 @@ class ExampleDocumentAdmin(admin.ModelAdmin):
     list_display_links = ['title']
     list_filter = ['created_at', 'updated_at']
     search_fields = ['title', ]
+
+
+@admin.register(AmountBaseCalculation)
+class AmountBaseCalculationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'amount', ]
+    list_display_links = ['amount']
+    list_filter = ['start', 'stop']
+    search_fields = ['amount', ]
