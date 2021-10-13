@@ -1,0 +1,95 @@
+[
+{
+  "model": "service.service",
+  "pk": 1,
+  "fields": {
+    "short_title": "Hisob ma'lumotnomasi",
+    "long_title": "Hisob ma'lumotnomasi",
+    "key": "account_statement",
+    "is_active": true,
+    "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
+    "deadline": "1-10",
+    "instruction": "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "created_date": "2021-10-03T12:05:24Z",
+    "document": [
+      2,
+      1
+    ]
+  }
+},
+{
+  "model": "service.service",
+  "pk": 2,
+  "fields": {
+    "short_title": "Oldi sotdi shartnomasi",
+    "long_title": "Oldi sotdi shartnomasi",
+    "key": "contract_of_sale",
+    "is_active": true,
+    "desc": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    "photo": "https://www.pngkit.com/png/full/312-3127999_sell-your-junk-car-to-us-sale-car.png",
+    "deadline": "1-10",
+    "instruction": "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    "created_date": "2021-10-03T12:05:24Z",
+    "document": [
+      3,
+      1
+    ]
+  }
+},
+{
+  "model": "service.service",
+  "pk": 3,
+  "fields": {
+    "short_title": "Hadya shartnomasi",
+    "long_title": "Hadya shartnomasiga asosan transport vositasiga davlat raqam belgisi olish",
+    "key": "gift_agreement",
+    "is_active": true,
+    "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
+    "deadline": "1-10",
+    "instruction": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "created_date": "2021-10-05T04:44:53Z",
+    "document": [
+      4,
+      1
+    ]
+  }
+},
+{
+  "model": "service.service",
+  "pk": 4,
+  "fields": {
+    "short_title": "Qayta jihozlash",
+    "long_title": "Qayta jihozlash",
+    "key": "re_equipment",
+    "is_active": true,
+    "desc": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+    "photo": "https://www.freeiconspng.com/uploads/contract-icon-0.png",
+    "deadline": "10-15",
+    "instruction": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+    "created_date": "2021-10-05T09:01:19Z",
+    "document": [
+      1
+    ]
+  }
+},
+{
+  "model": "service.service",
+  "pk": 5,
+  "fields": {
+    "short_title": "DRB almashtirish",
+    "long_title": "Davlat raqam belgisini almashtirish",
+    "key": "replace_tp",
+    "is_active": true,
+    "desc": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words",
+    "photo": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwdrfree.com%2Fstock-vector%2Fdriving&psig=AOvVaw1zCreDXPARJviZxUrK_HwU&ust=1633577698652000&source=images&cd=vfe&ved=0CAgQjRxqFwoTCJCv_6bttPMCFQAAAAAdAAAAABAD",
+    "deadline": "1-10",
+    "instruction": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words",
+    "created_date": "2021-10-06T03:33:39Z",
+    "document": [
+      1
+    ]
+  }
+},
+]

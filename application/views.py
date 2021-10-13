@@ -74,13 +74,12 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
-        payments = StateDuty.objects.filter(service=application.service)
-        if not payments.exists():
-            calculation_state_duty_service_price(application.service)
-
+        payments = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type, car_is_new=True)
+        print(payments)
         context = {
             'application': application,
             'payments': payments,
+
         }
         return context
 
@@ -542,7 +541,6 @@ class Modify_Payment_Checkbox(APIView):
             if request.user.role == '2' or request.user.role == '3':
                 get_payment = request.POST.get('payment')
                 modify = request.POST.get('modify')
-
                 if modify == 'true':
                     modify = True
                 else:
@@ -551,7 +549,6 @@ class Modify_Payment_Checkbox(APIView):
                 payment = StateDuty.objects.get(id=get_payment)
                 if payment:
                     payment.is_paid = modify
-
                     service = Service.objects.get(id=payment.service.id)
                     if service:
                         application = Application.objects.get(id=service.application_service.first().id)
@@ -634,13 +631,17 @@ class SaveApplicationSection(AllowedRolesMixin, View):
                      SUPER_ADMINISTRATOR]
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         if request.POST.get('section', None) and request.POST.get('application', None):
+
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
             application.is_active = True
+            # percent = StateDutyPercent.objects.filter(car_is_new=True, person_type=application.person_type, service=application.service)
+            # state_duty = StateDuty.objects.create(percent=percent)
+
             application.save()
+            print(f"{application} 645")
             return HttpResponse(status=200)
         return HttpResponse(status=400)
 

@@ -1,5 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 
+
 from user.base import BaseModel
 from user.models import *
 from django.utils.translation import ugettext_lazy as _
@@ -42,7 +43,6 @@ class Service(models.Model):
         verbose_name_plural = 'Servislar'
 
 
-
 class ExampleDocument(BaseModel):
     title = models.CharField(max_length=200)
     key = models.CharField(max_length=100, unique=True)
@@ -54,8 +54,6 @@ class ExampleDocument(BaseModel):
 
     def __str__(self):
         return f"Document: {self.title}"
-
-
 
 
 ROAD_FUND = 1
@@ -77,32 +75,28 @@ STATE_DUTY_TITLE = (
 )
 
 
-class StateDuty(models.Model):
-    service = models.ForeignKey(Service, verbose_name="Xizmat nomi", on_delete=models.CASCADE, null=True, blank=True,
-                                related_name='state_duty_service')
-    title = models.IntegerField(choices=STATE_DUTY_TITLE, null=True, blank=True)
-    payment = models.IntegerField(verbose_name="To'lovi", default=0)
-    created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(default=timezone.now)
-    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.SET_NULL, null=True,
-                                     blank=True)
-    is_paid = models.BooleanField(default=False, verbose_name="To'langan")
-    score = models.ForeignKey('StateDutyScore', verbose_name='Hisob raqam', on_delete=models.SET_NULL,
-                              related_name="state_duty_score", null=True, blank=True)
-    is_active = models.BooleanField(default=True)
+
+
+# Eng kam bazaviy hisoblash miqdori
+class AmountBaseCalculation(models.Model):
+    amount = models.IntegerField(verbose_name="Miqdori")
+    start = models.DateField(blank=True, null=True, verbose_name="Qaysi sanadan kuchga kirgan")
+    stop = models.DateField(blank=True, null=True, verbose_name="Qaysi sana kuchini yo'qotgan")
+    # is_archive = models.BooleanField(default=False, verbose_name="Arxiv BHM hisoblanadimi?")
+    is_active = models.BooleanField(default=False, verbose_name="Hozirda aktivmi?")
 
     def __str__(self):
-        return f"{self.get_title_display()} : {self.payment} so'm"
+        return f"{self.amount}"
 
     class Meta:
-        verbose_name = 'Davlat boj to\'lovi'
-        verbose_name_plural = 'Davlat boj to\'lovlari'
+        verbose_name = 'Bazaviy hisoblash miqdori'
+        verbose_name_plural = 'Bazaviy hisoblash miqdorlari'
 
 
 class StateDutyPercent(models.Model):
     from application.models import PERSON_CHOICES, PHYSICAL_PERSON
-    # service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    state_duty = models.CharField(max_length=3, choices=STATE_DUTY_TITLE, null=True)
+    service = models.ManyToManyField("service.Service")
+    state_duty = models.IntegerField(choices=STATE_DUTY_TITLE, null=True)
     person_type = models.IntegerField('Shaxs turi', choices=PERSON_CHOICES, default=PHYSICAL_PERSON, blank=True,
                                       null=True)
     car_type = models.ForeignKey(CarType, on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,
@@ -144,3 +138,17 @@ class StateDutyScore(models.Model):
     class Meta:
         verbose_name = 'Davlat boji hisob raqami'
         verbose_name_plural = 'Davlat bojlari hisob raqamlari'
+
+
+class StateDuty(models.Model):
+    application = models.ForeignKey("application.Application", on_delete=models.CASCADE, verbose_name="Ariza", related_name="state_duty_application")
+    score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE, verbose_name="Hisob raqam")
+    percent = models.ForeignKey(StateDutyPercent, on_delete=models.CASCADE, verbose_name="Hisob raqam foizlari")
+    created_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.application} so'm"
+
+    class Meta:
+        verbose_name = "To'lanishi kerak bo'lgan bojlar"
+        verbose_name_plural = "To'lanishi kerak bo'lgan bojlar"
