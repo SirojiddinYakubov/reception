@@ -105,12 +105,12 @@ class StateDutyPercent(models.Model):
     is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
-
+    is_auction = models.BooleanField(default=False, verbose_name="Auktsiondan oligan")
     start = models.IntegerField(default=0)
     stop = models.IntegerField(default=0)
     percent = models.FloatField(default=0)
-    created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(default=timezone.now)
+    # created_date = models.DateTimeField(default=timezone.now)
+    # updated_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.state_duty} : {self.percent}%"
@@ -152,3 +152,4 @@ class StateDuty(models.Model):
     class Meta:
         verbose_name = "To'lanishi kerak bo'lgan bojlar"
         verbose_name_plural = "To'lanishi kerak bo'lgan bojlar"
+

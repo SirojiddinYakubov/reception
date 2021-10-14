@@ -155,4 +155,3 @@ def get_payment_payment(payment):
         return int(payment)
     except:
         return payment
-

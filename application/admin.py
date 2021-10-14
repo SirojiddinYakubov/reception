@@ -36,3 +36,5 @@ class ApplicationCashByModeratorAdmin(admin.ModelAdmin):
     list_filter = ['status', 'created_at', 'application__service__short_title', 'application__process',
                    'moderator__role', 'moderator__region']
     save_on_top = True
+
+admin.site.register(ApplicationDocument)
