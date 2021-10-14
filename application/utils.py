@@ -1,8 +1,12 @@
 from datetime import datetime as dt
 import datetime
+
+from django.db.models import Q
 from django.utils import timezone
 
+
 from reception.settings import LOCAL_TIMEZONE
+from service.models import *
 
 
 def application_right_filters(qs, request_get):
@@ -64,3 +68,28 @@ def application_right_filters(qs, request_get):
 
 
     return qs
+
+
+def reg_new_car(application, ten_day):
+    # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
+    if application.car.is_auction:
+        # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+        if datetime.datetime.now().date() >= ten_day:
+            query1 = StateDutyPercent.objects.filter(
+                Q(service=application.service, person_type=application.person_type, state_duty=REGISTRATION,
+                  is_auction=True) | Q(service=application.service, person_type=application.person_type,
+                                       state_duty=TECHNICAL_PASSPORT) | Q(
+                    lost_technical_passport=False, state_duty=FINE))
+        else:
+            query1 = StateDutyPercent.objects.filter(
+                Q(service=application.service, person_type=application.person_type, car_is_new=True))
+    else:
+        # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+        if datetime.datetime.now().date() >= ten_day:
+            query1 = StateDutyPercent.objects.filter(
+                Q(service=application.service, person_type=application.person_type, car_is_new=True) | Q(
+                    lost_technical_passport=False, state_duty=FINE))
+        else:
+            query1 = StateDutyPercent.objects.filter(
+                Q(service=application.service, person_type=application.person_type, car_is_new=True))
+    return query1
