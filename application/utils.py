@@ -1,16 +1,23 @@
+import itertools
 from datetime import datetime as dt
 import datetime
 
 from django.db.models import Q
 from django.utils import timezone
 
-
+from application.models import ApplicationDocument
 from reception.settings import LOCAL_TIMEZONE
-from service.models import *
+from service.models import (
+    FINE,
+    TECHNICAL_PASSPORT,
+    REGISTRATION,
+    RE_REGISTRATION,
+    INSPECTION,
+    StateDutyPercent
+)
 
 
 def application_right_filters(qs, request_get):
-
     if request_get.get('service'):
         key = request_get.get('service')
         if key == 'account_statement':
@@ -39,14 +46,14 @@ def application_right_filters(qs, request_get):
     if request_get.get('technical_confirm'):
         qs = qs.filter(service__car__is_technical_confirm=request_get.get('technical_confirm'))
 
-
     if request_get.get('date'):
 
-        today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0,second=0)
-        today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23,minute=59,second=59)
-        some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,minute=0, second=0)
-        some_day_last_month = timezone.now().replace(day=1,hour=0,minute=0,second=0,tzinfo=LOCAL_TIMEZONE)
-        some_day_last_year = timezone.now().replace(day=1,month=1,hour=0,minute=0,second=0,tzinfo=LOCAL_TIMEZONE)
+        today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
+        today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
+        some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,
+                                                                                   minute=0, second=0)
+        some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
+        some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
 
         print(qs.first().created_date)
         print(today_min)
@@ -65,7 +72,6 @@ def application_right_filters(qs, request_get):
 
         if request_get.get('date') == 'year':
             qs = qs.filter(created_date__range=(some_day_last_year, today_max))
-
 
     return qs
 
@@ -93,3 +99,62 @@ def reg_new_car(application, ten_day):
             query1 = StateDutyPercent.objects.filter(
                 Q(service=application.service, person_type=application.person_type, car_is_new=True))
     return query1
+
+
+def reg_new_car_v2(application):
+    car = application.car
+    qs = StateDutyPercent.objects.none()
+
+    application_document = ApplicationDocument.objects.get(application=application,
+                                                           example_document__key=application.service.key)
+
+    """Jarima"""
+    last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
+    if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
+            days=1):
+        """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
+        fine1 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=False)
+        """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+        fine2 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+        """Ikkala jarimani birlashtirish"""
+        qs = (fine1 | fine2).distinct()
+    else:
+        """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+        qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+
+    """Yangi qayd etish guvohnomasi"""
+    technical_passport = StateDutyPercent.objects.filter(state_duty=TECHNICAL_PASSPORT)
+    qs = qs.union(technical_passport)
+
+    """Qayta ro'yhatlash"""
+    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new, state_duty=RE_REGISTRATION)
+    qs = qs.union(re_registration)
+
+    """Texnik ko'rik"""
+    inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
+                                                 state_duty=INSPECTION)
+    print(inspection)
+    qs = qs.union(inspection)
+    return qs
+
+    # # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
+    # if application.car.is_auction:
+    #     # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+    #     if datetime.datetime.now().date() >= ten_day:
+    #         query1 = StateDutyPercent.objects.filter(
+    #             Q(service=application.service, person_type=application.person_type, state_duty=REGISTRATION,
+    #               is_auction=True) | Q(service=application.service, person_type=application.person_type,
+    #                                    state_duty=TECHNICAL_PASSPORT) | Q(
+    #                 lost_technical_passport=False, state_duty=FINE))
+    #     else:
+    #         query1 = StateDutyPercent.objects.filter(
+    #             Q(service=application.service, person_type=application.person_type, car_is_new=True))
+    # else:
+    #     # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+    #     if datetime.datetime.now().date() >= ten_day:
+    #         query1 = StateDutyPercent.objects.filter(
+    #             Q(service=application.service, person_type=application.person_type, car_is_new=True) | Q(
+    #                 lost_technical_passport=False, state_duty=FINE))
+    #     else:
+    #         query1 = StateDutyPercent.objects.filter(
+    #             Q(service=application.service, person_type=application.person_type, car_is_new=True))
