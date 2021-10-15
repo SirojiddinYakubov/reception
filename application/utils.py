@@ -111,18 +111,19 @@ def reg_new_car_v2(application):
                                                            example_document__key=application.service.key).last()
 
     """Jarima"""
-    last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
-    if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
-            days=1):
-        """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
-        fine1 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=False)
-        """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-        fine2 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
-        """Ikkala jarimani birlashtirish"""
-        qs = (fine1 | fine2).distinct()
-    else:
-        """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-        qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+    if application_document:
+        last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
+        if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
+                days=1):
+            """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
+            fine1 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=False)
+            """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+            fine2 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+            """Ikkala jarimani birlashtirish"""
+            qs = (fine1 | fine2).distinct()
+        else:
+            """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+            qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
 
     """Yangi qayd etish guvohnomasi"""
     technical_passport = StateDutyPercent.objects.filter(state_duty=TECHNICAL_PASSPORT)
