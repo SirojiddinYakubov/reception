@@ -11,7 +11,7 @@ from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
-from application.utils import reg_new_car
+from application.utils import reg_new_car, reg_new_car_v2
 from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
@@ -76,19 +76,19 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
-
-        payments = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
-                                                   car_is_new=True)
-        application_document = ApplicationDocument.objects.get(application=application,
-                                                               example_document__key=application.service.key)
-        # Ariza yaratilganligiga 10 kun bo'lganligini hisoblash
-        ten_day = application_document.contract_date + timedelta(days=10)
-        if ten_day.weekday() == 6:
-            # Agarda 10-kun Yakshanba bo'lsa, 11-kunda ham jarima yozilmaydi
-            ten_day = application_document.contract_date + timedelta(days=11)
-
-        if application.service.key == 'account_statement':
-            payments = reg_new_car(application, ten_day)
+        payments = reg_new_car_v2(application)
+        # payments = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
+        #                                            car_is_new=True)
+        # application_document = ApplicationDocument.objects.get(application=application,
+        #                                                        example_document__key=application.service.key)
+        # # Ariza yaratilganligiga 10 kun bo'lganligini hisoblash
+        # ten_day = application_document.contract_date + timedelta(days=10)
+        # if ten_day.weekday() == 6:
+        #     # Agarda 10-kun Yakshanba bo'lsa, 11-kunda ham jarima yozilmaydi
+        #     ten_day = application_document.contract_date + timedelta(days=11)
+        #
+        # if application.service.key == 'account_statement':
+        #     payments = reg_new_car(application, ten_day)
 
 
         context = {
