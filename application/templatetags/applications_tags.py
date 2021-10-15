@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from application.models import Application
-from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation
+from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER
 from user.models import *
 
 register = template.Library()
@@ -147,12 +147,16 @@ def get_payment_score(district, state_duty):
 
 
 @register.simple_tag
-def get_payment_payment(payment):
+def get_payment_payment(state_duty_percent, application):
     try:
         amount_base_calculation = AmountBaseCalculation.objects.get(is_active=True)
+        if state_duty_percent.state_duty == ROAD_FUND:
+            payment = int(int(state_duty_percent.percent) / 100 * int(application.car.price))
+        elif state_duty_percent.state_duty == ROAD_FUND_HORSE_POWER:
 
-        payment = amount_base_calculation.amount / 100 * int(payment)
+            payment = int(amount_base_calculation.amount / 100 * int(state_duty_percent.percent) * application.car.engine_power)
+        else:
+            payment = amount_base_calculation.amount / 100 * int(state_duty_percent.percent)
         return int(payment)
     except:
-        return payment
-
+        return state_duty_percent.percent

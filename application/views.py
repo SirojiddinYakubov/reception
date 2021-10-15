@@ -1,4 +1,5 @@
 from datetime import timezone, datetime
+from itertools import chain
 
 from django.contrib import messages
 from django.views.generic import DetailView
@@ -10,6 +11,7 @@ from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
+from application.utils import reg_new_car, reg_new_car_v2
 from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
@@ -74,8 +76,21 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
-        payments = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type, car_is_new=True)
-        print(payments)
+        payments = reg_new_car_v2(application)
+        # payments = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
+        #                                            car_is_new=True)
+        # application_document = ApplicationDocument.objects.get(application=application,
+        #                                                        example_document__key=application.service.key)
+        # # Ariza yaratilganligiga 10 kun bo'lganligini hisoblash
+        # ten_day = application_document.contract_date + timedelta(days=10)
+        # if ten_day.weekday() == 6:
+        #     # Agarda 10-kun Yakshanba bo'lsa, 11-kunda ham jarima yozilmaydi
+        #     ten_day = application_document.contract_date + timedelta(days=11)
+        #
+        # if application.service.key == 'account_statement':
+        #     payments = reg_new_car(application, ten_day)
+
+
         context = {
             'application': application,
             'payments': payments,
@@ -506,8 +521,6 @@ class PaymentsList(AllowedRolesMixin, ListView):
             'pays': STATE_DUTY_TITLE
         }
 
-
-
         if user_role == STATE_CONTROLLER:
             if self.request.method == 'GET':
                 try:
@@ -531,7 +544,6 @@ class PaymentsList(AllowedRolesMixin, ListView):
             context.update(applications=applications)
 
         return context
-
 
 
 @permission_classes([IsAuthenticated])
@@ -632,7 +644,6 @@ class SaveApplicationSection(AllowedRolesMixin, View):
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('section', None) and request.POST.get('application', None):
-
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
@@ -655,7 +666,7 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                 application = get_object_or_404(Application, id=request.POST.get('application'))
                 moderator = get_object_or_404(User, secret_key=request.POST.get('secret_key'),
                                               role__in=self.allowed_roles)
-                print(application,moderator )
+                print(application, moderator)
                 if not (application.is_block and application.process == CREATED):
                     print('Application status already active')
                     return HttpResponse(status=409)

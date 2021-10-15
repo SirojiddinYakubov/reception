@@ -95,22 +95,22 @@ class AmountBaseCalculation(models.Model):
 
 class StateDutyPercent(models.Model):
     from application.models import PERSON_CHOICES, PHYSICAL_PERSON
-    service = models.ManyToManyField("service.Service")
+    title = models.CharField(max_length=255, blank=True, null=True)
+    service = models.ManyToManyField("service.Service", blank=True)
     state_duty = models.IntegerField(choices=STATE_DUTY_TITLE, null=True)
     person_type = models.IntegerField('Shaxs turi', choices=PERSON_CHOICES, default=PHYSICAL_PERSON, blank=True,
                                       null=True)
-    car_type = models.ForeignKey(CarType, on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True,
-                                 null=True)
+    car_type = models.ManyToManyField(CarType, verbose_name='Avtomobil turi', blank=True)
     car_is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
     is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
-
+    is_auction = models.BooleanField(default=False, verbose_name="Auktsiondan oligan")
     start = models.IntegerField(default=0)
     stop = models.IntegerField(default=0)
     percent = models.FloatField(default=0)
-    created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(default=timezone.now)
+    # created_date = models.DateTimeField(default=timezone.now)
+    # updated_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.state_duty} : {self.percent}%"
@@ -152,3 +152,4 @@ class StateDuty(models.Model):
     class Meta:
         verbose_name = "To'lanishi kerak bo'lgan bojlar"
         verbose_name_plural = "To'lanishi kerak bo'lgan bojlar"
+

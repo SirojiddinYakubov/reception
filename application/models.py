@@ -67,7 +67,7 @@ class Application(models.Model):
     section = models.ForeignKey(Section, verbose_name=_("Ariza topshirilgan IIB YHXB bo'limi"),
                                 on_delete=models.CASCADE, blank=True, null=True, related_name='application_section', )
 
-    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.SET_NULL, null=True,
+    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.CASCADE, null=True,
                             related_name='service_car')
     created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), null=True, default=timezone.now)
     updated_date = models.DateTimeField(verbose_name=_('Tahrirlangan vaqti'), null=True, blank=True,

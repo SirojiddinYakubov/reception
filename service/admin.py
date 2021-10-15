@@ -39,10 +39,14 @@ class StateDutyAdmin(admin.ModelAdmin):
 
 @admin.register(StateDutyPercent)
 class StateDutyPercentAdmin(admin.ModelAdmin):
-    list_display = ['id', 'state_duty', 'car_type', 'person_type', 'percent', 'car_is_new', 'is_old_number',
+    def get_car_types(self, obj):
+        return ", ".join([i.title for i in obj.car_type.all()])
+
+    list_display = ['id', 'title','state_duty','get_car_types',  'person_type', 'percent', 'car_is_new', 'is_old_number',
                     'lost_number', 'lost_technical_passport', 'start', 'stop']
     list_display_links = ['id', 'state_duty']
-    list_filter = ['state_duty', 'car_type', 'person_type', 'is_old_number', 'lost_number', 'lost_technical_passport', ]
+    search_fields = ['title']
+    list_filter = ['state_duty',  'person_type', 'is_old_number', 'lost_number', 'lost_technical_passport', ]
     save_on_top = True
 
 

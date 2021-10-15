@@ -5,35 +5,38 @@
     <tr>
         <th scope="col">#</th>
         <th scope="col">Davlat boji nomi</th>
+        <th scope="col">Sababi</th>
         <th scope="col">Hisob raqam</th>
         <th scope="col">To'lov miqdori</th>
         <th scope="col" style="width: 7%">Holati</th>
-
     </tr>
     </thead>
     <tbody>
 
     {% for payment in payments %}
         {% if payment.payment != 0 %}
-            {% if payment.car_type == application.car.type or payment.car_type == None %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <th scope="row">{{ payment.get_state_duty_display }}</th>
-                <td><b>    {% get_payment_score application.created_user.district payment.state_duty  %}</b></td>
-                <td><b class="state_payment">{% get_payment_payment payment.percent   %}</b> so'm</td>
-                <td>
-                    {% if request.user.role == '2' or request.user.role == '3' %}
-                        <input name="payment" {% if payment.is_paid %}checked{% endif %}
-                               data-payment="{{ payment.id }}"
-                               class="payment_checkbox" type="checkbox"/>
-                    {% else %}
-                        {% if payment.is_paid %}
-                            <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                            <i style="color: red" class="far fa-times-circle"></i>{% endif %}
-                    {% endif %}
-                </td>
-            </tr>
-                {% endif %}
+{#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <th scope="row">{{ payment.get_state_duty_display }}</th>
+                    <th scope="row">{{ payment.title }}</th>
+                    <td><b>    {% get_payment_score application.created_user.district payment.state_duty as score %}{{ score|intcomma }}</b></td>
+                    <td><b class="state_payment">
+                        {% get_payment_payment payment application as payment %}{{ payment|intcomma }}</b> so'm
+                    </td>
+                    <td>
+                        {% if request.user.role == '2' or request.user.role == '3' %}
+                            <input name="payment" {% if payment.is_paid %}checked{% endif %}
+                                   data-payment="{{ payment.id }}"
+                                   class="payment_checkbox" type="checkbox"/>
+                        {% else %}
+                            {% if payment.is_paid %}
+                                <i style="color: green" class="far fa-check-circle"></i>{% else %}
+                                <i style="color: red" class="far fa-times-circle"></i>{% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+{#            {% endif %}#}
         {% endif %}
 
     {% endfor %}
@@ -42,11 +45,10 @@
     <tr>
         <th></th>
         <th>Jami</th>
-
+        <th></th>
         <th></th>
         <th><b id="total_state_payments"></b> so'm</th>
         <th></th>
-
     </tr>
     </tfoot>
 </table>
@@ -60,18 +62,19 @@
 <hr>
 <div class="justify-content-end row" data-html2canvas-ignore="true">
     <div class="col-12">
-      {% if not application.is_payment %}
-{#        {% if not application.organization %}#}
-{#            <button type="button"#}
-{#                    class="btn btn-info waves-effect waves-light float-start">To'lov qilish &nbsp&nbsp&nbsp<i#}
-{#                    class="fas fa-long-arrow-alt-right"></i>#}
-{#            </button>#}
-{#        {% endif %}#}
+        {% if not application.is_payment %}
+            {#        {% if not application.organization %}#}
+            {#            <button type="button"#}
+            {#                    class="btn btn-info waves-effect waves-light float-start">To'lov qilish &nbsp&nbsp&nbsp<i#}
+            {#                    class="fas fa-long-arrow-alt-right"></i>#}
+            {#            </button>#}
+            {#        {% endif %}#}
 
-        <button type="button"
-                class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov qilish &nbsp&nbsp&nbsp<i
-                class="fas fa-long-arrow-alt-right"></i>
-        </button>
+            <button type="button"
+                    class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov
+                qilish &nbsp&nbsp&nbsp<i
+                        class="fas fa-long-arrow-alt-right"></i>
+            </button>
         {% endif %}
         <button type="button" id="payment_render_pdf"
                 class="btn btn-info waves-effect waves-light float-end">To'lovlarni pdf holatda chiqarish

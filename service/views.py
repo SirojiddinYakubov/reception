@@ -40,49 +40,35 @@ class AccountStatement(ServiceCustomMixin):
         try:
             with transaction.atomic():
                 request = self.request
-                print(request.POST)
                 service = get_object_or_404(Service, key='account_statement')
-                print(service)
                 person_type = request.POST.get('person_type')
-                print(f"{person_type} 46")
                 engine_number = request.POST.get('engine_number')
-                print(f"{engine_number} 48")
                 full_weight = request.POST.get('full_weight')
-                print(f"{full_weight} 50")
                 empty_weight = request.POST.get('empty_weight')
-                print(f"{empty_weight} 52")
                 engine_power = request.POST.get('engine_power')
-                print(f"{engine_power} 54")
                 auction_number = request.POST.get('auction_number')
-                print(f"{auction_number} 56")
                 body_number = request.POST.get('body_number')
-                print(f"{body_number} 58")
                 price = request.POST.get('price')
-                print(f"{price} 60")
                 color = get_object_or_404(Color, id=request.POST.get('color', None))
-                print(f"{color} 62")
-
                 made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
-                print(f"{made_year} 65")
                 devices = []
-
                 if request.POST.getlist('devices'):
                     for device_id in list(filter(None, request.POST.getlist('devices'))):
                         devices.append(get_object_or_404(Device, id=device_id))
-                print(f"{devices} 71")
+
                 fuel_types = []
                 if request.POST.getlist('fuel_types'):
                     for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                         fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
-                print(f"{fuel_types} 71")
+
                 user = get_object_or_404(User, id=request.user.id)
-                print(f"{user} 79")
+
                 get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
-                print(f"{get_car} 81")
+
                 # create car
                 car = Car.objects.create(model=get_car)
                 car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
-                print(f"{car.body_type} 85")
+
                 if request.POST.get('chassis_number', None):
                     car.chassis_number = request.POST.get('chassis_number', None)
                 car.body_number = body_number
@@ -92,7 +78,7 @@ class AccountStatement(ServiceCustomMixin):
                 car.full_weight = full_weight
                 car.empty_weight = empty_weight
                 car.engine_power = engine_power
-                print(f"{car.engine_power} 95")
+
                 car.is_new = True
                 car.is_replace_number = True
                 if get_car.is_local:
@@ -104,48 +90,40 @@ class AccountStatement(ServiceCustomMixin):
                     car.is_road_fund = True
 
                 car.price = price
-                print(f"{car.price} 107")
                 if request.POST.get('auction_number'):
                     car.is_auction = True
                     car.given_number = auction_number
-                    print(f"{car.is_auction} 111")
-                    print(f"{ car.given_number} 112")
                 car.color = color
                 for fuel_type in fuel_types:
                     car.fuel_type.add(fuel_type)
                 for device in devices:
                     car.device.add(device)
                 car.save()
-                print(f"{request.POST.get('auction_number')} 119")
 
                 # create application and account_statament
                 application = Application.objects.create(created_user=user, created_date=timezone.now())
-                print(f"{person_type} 123")
+
                 if int(person_type) == LEGAL_PERSON:
                     organization = get_object_or_404(Organization, id=request.POST.get('organization'))
                     application.person_type = person_type
                     application.organization = organization
 
                 password = random.randint(1000, 9999)
-                print(f"{password} 130")
-
                 application.password = password
                 application.service = service
                 application.car = car
                 application.is_active = False
-                print(f"{application} 136")
-                # if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
-                #     seriya = request.POST.get('seriya')
-                #     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
-                #     example_document = ExampleDocument.objects.get(key=service.key)
-                #     application_document = ApplicationDocument.objects.filter(application=application,
-                #                                                                     example_document=example_document)
-                #     print(f"{application_document}")
-                #     if not application_document.exists():
-                #         application_document = ApplicationDocument.objects.create(application=application,
-                #                                                                   example_document=example_document,
-                #                                                                   seriya=seriya,
-                #                                                                   contract_date=contract_date)
+                if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                    seriya = request.POST.get('seriya')
+                    contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                example_document = ExampleDocument.objects.get(key=service.key)
+                application_document = ApplicationDocument.objects.filter(application=application,
+                                                                                    example_document=example_document)
+                if not application_document.exists():
+                    application_document = ApplicationDocument.objects.create(application=application,
+                                                                              example_document=example_document,
+                                                                              seriya=seriya,
+                                                                              contract_date=contract_date)
                 #         print(f"{application_document}")
 
                 application.save()
@@ -166,7 +144,6 @@ class ContractOfSale(ServiceCustomMixin):
         return self.get_json_data()
 
     def get_json_data(self):
-        print(self.request.POST)
         try:
             request = self.request
             service = get_object_or_404(Service, key='contract_of_sale')
