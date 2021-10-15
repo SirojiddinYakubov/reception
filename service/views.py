@@ -466,17 +466,17 @@ class ReEquipment(ServiceCustomMixin):
             application.car = car
             application.is_active = False
 
-            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
-                seriya = request.POST.get('seriya')
-                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
-                example_document = ExampleDocument.objects.get(key=service.key)
-                application_document = ApplicationDocument.objects.filter(application=application,
-                                                                          example_document=example_document)
-                if not application_document.exists():
-                    ApplicationDocument.objects.create(application=application,
-                                                       example_document=example_document,
-                                                       seriya=seriya,
-                                                       contract_date=contract_date)
+            # if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+            #     seriya = request.POST.get('seriya')
+            #     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+            #     example_document = ExampleDocument.objects.get(key=service.key)
+            #     application_document = ApplicationDocument.objects.filter(application=application,
+            #                                                               example_document=example_document)
+            #     if not application_document.exists():
+            #         ApplicationDocument.objects.create(application=application,
+            #                                            example_document=example_document,
+            #                                            seriya=seriya,
+            #                                            contract_date=contract_date)
             application.save()
             return HttpResponse(application.id, content_type='json', status=200)
         except:
@@ -577,8 +577,6 @@ class ReplaceTp(ServiceCustomMixin):
             #                                        seriya=seriya,
             #                                        contract_date=contract_date)
             application.save()
-
-            calculation_state_duty_service_price(application)
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
@@ -695,8 +693,6 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
             #                                            seriya=seriya,
             #                                            contract_date=contract_date)
             application.save()
-
-            calculation_state_duty_service_price(application)
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
