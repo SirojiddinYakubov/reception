@@ -15,14 +15,14 @@
 
     {% for payment in payments %}
         {% if payment.payment != 0 %}
-            {% if payment.car_type == application.car.type or payment.car_type == None %}
+{#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <th scope="row">{{ payment.get_state_duty_display }}</th>
                     <th scope="row">{{ payment.title }}</th>
-                    <td><b>    {% get_payment_score application.created_user.district payment.state_duty %}</b></td>
+                    <td><b>    {% get_payment_score application.created_user.district payment.state_duty as score %}{{ score|intcomma }}</b></td>
                     <td><b class="state_payment">
-                        {% get_payment_payment payment.percent as payment %}{{ payment|intcomma }}</b> so'm
+                        {% get_payment_payment payment application as payment %}{{ payment|intcomma }}</b> so'm
                     </td>
                     <td>
                         {% if request.user.role == '2' or request.user.role == '3' %}
@@ -36,7 +36,7 @@
                         {% endif %}
                     </td>
                 </tr>
-            {% endif %}
+{#            {% endif %}#}
         {% endif %}
 
     {% endfor %}

@@ -13,6 +13,8 @@ from service.models import (
     REGISTRATION,
     RE_REGISTRATION,
     INSPECTION,
+    ROAD_FUND,
+    ROAD_FUND_HORSE_POWER,
     StateDutyPercent
 )
 
@@ -131,10 +133,41 @@ def reg_new_car_v2(application):
     qs = qs.union(re_registration)
 
     """Texnik ko'rik"""
-    inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
-                                                 state_duty=INSPECTION)
-    print(inspection)
-    qs = qs.union(inspection)
+    if not car.is_new:
+        inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
+                                                     state_duty=INSPECTION)
+        qs = qs.union(inspection)
+
+    """Yo'l fondi"""
+    some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
+    some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
+
+
+    # if car.is_road_fund:
+    if car.is_new and not car.model.is_local:
+        state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND)
+    else:
+        # ishlab chiqarilganiga 3 yil to'lmagan
+        if some_day_3years_ago <= car.made_year:
+            # print('3 yil bo\'lmagan')
+            state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+                                                            start=0,
+                                                            stop=3)
+        # 3 yil to'lgan lekin 7 yil to'lmagan
+        elif some_day_3years_ago >= car.made_year and some_day_7years_ago <= car.made_year:
+            # print('3 yil bo\'lgan 7 yil bo\'lmagan')
+            state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+                                                            start=3,
+                                                            stop=7)
+        # 7 yildan ortiq
+        elif some_day_7years_ago >= car.made_year:
+            # print(' 7 yildan o\'tgan')
+            state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+                                                            start=7,
+                                                            stop=0)
+        else:
+            state_percent = StateDutyPercent.objects.none()
+    qs = qs.union(state_percent)
     return qs
 
     # # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
