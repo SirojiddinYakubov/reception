@@ -248,8 +248,6 @@ class ContractOfSale(ServiceCustomMixin):
                                                        contract_date=contract_date)
 
             application.save()
-
-            calculation_state_duty_service_price(application)
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
@@ -262,7 +260,6 @@ class GiftAgreement(ServiceCustomMixin):
         return self.get_json_data()
 
     def get_json_data(self):
-        print(self.request.POST)
         try:
             request = self.request
             service = get_object_or_404(Service, key='gift_agreement')
@@ -366,8 +363,6 @@ class GiftAgreement(ServiceCustomMixin):
                                                        seriya=seriya,
                                                        contract_date=contract_date)
             application.save()
-
-            calculation_state_duty_service_price(application)
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
@@ -380,7 +375,6 @@ class ReEquipment(ServiceCustomMixin):
         return self.get_json_data()
 
     def get_json_data(self):
-        print(self.request.POST)
         try:
             request = self.request
             service = get_object_or_404(Service, key='gift_agreement')
@@ -484,8 +478,6 @@ class ReEquipment(ServiceCustomMixin):
                                                        seriya=seriya,
                                                        contract_date=contract_date)
             application.save()
-
-            calculation_state_duty_service_price(application)
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
