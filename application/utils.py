@@ -107,8 +107,8 @@ def reg_new_car_v2(application):
     car = application.car
     qs = StateDutyPercent.objects.none()
 
-    application_document = ApplicationDocument.objects.get(application=application,
-                                                           example_document__key=application.service.key)
+    application_document = ApplicationDocument.objects.filter(application=application,
+                                                           example_document__key=application.service.key).last()
 
     """Jarima"""
     last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
