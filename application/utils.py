@@ -108,7 +108,7 @@ def reg_new_car_v2(application):
     qs = StateDutyPercent.objects.none()
 
     application_document = ApplicationDocument.objects.filter(application=application,
-                                                           example_document__key=application.service.key).last()
+                                                              example_document__key=application.service.key).last()
 
     """Jarima"""
     if application_document:
@@ -118,20 +118,34 @@ def reg_new_car_v2(application):
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
             fine1 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=False)
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            fine2 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+            fine2 = StateDutyPercent.objects.filter(state_duty=FINE,
+                                                    lost_technical_passport=car.lost_technical_passport)
             """Ikkala jarimani birlashtirish"""
             qs = (fine1 | fine2).distinct()
-        else:
+        elif car.lost_technical_passport:
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=car.lost_technical_passport)
+            qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=True)
+
+    """Qayta ro'yhatlash"""
+    re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
+    qs = qs.union(re_registration)
+
+    """Ro'yhatlash ya'ni DRB uchun to'lov"""
+    if not car.is_auction:
+        registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
+                                                       lost_number=car.lost_number, is_old_number=car.is_old_number,
+                                                       car_is_new=car.is_new, state_duty=REGISTRATION)
+    else:
+        registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
+                                                       person_type=application.person_type, lost_number=car.lost_number,
+                                                       is_old_number=car.is_old_number,
+                                                       car_is_new=car.is_new,
+                                                       state_duty=REGISTRATION)
+    qs = qs.union(registration)
 
     """Yangi qayd etish guvohnomasi"""
     technical_passport = StateDutyPercent.objects.filter(state_duty=TECHNICAL_PASSPORT)
     qs = qs.union(technical_passport)
-
-    """Qayta ro'yhatlash"""
-    re_registration = StateDutyPercent.objects.filter(car_is_new=car.is_new, state_duty=RE_REGISTRATION)
-    qs = qs.union(re_registration)
 
     """Texnik ko'rik"""
     if not car.is_new:
@@ -143,9 +157,11 @@ def reg_new_car_v2(application):
     some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
     some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
 
-
-    # if car.is_road_fund:
-    if car.is_new and not car.model.is_local:
+    if car.is_new and car.model.is_local:
+        """Yangi va mahalliy avtomobil"""
+        state_percent = StateDutyPercent.objects.none()
+    elif car.is_new and not car.model.is_local:
+        """Yangi lekin mahalliy bo'lmagan avtomobil"""
         state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND)
     else:
         # ishlab chiqarilganiga 3 yil to'lmagan
@@ -170,25 +186,3 @@ def reg_new_car_v2(application):
             state_percent = StateDutyPercent.objects.none()
     qs = qs.union(state_percent)
     return qs
-
-    # # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
-    # if application.car.is_auction:
-    #     # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
-    #     if datetime.datetime.now().date() >= ten_day:
-    #         query1 = StateDutyPercent.objects.filter(
-    #             Q(service=application.service, person_type=application.person_type, state_duty=REGISTRATION,
-    #               is_auction=True) | Q(service=application.service, person_type=application.person_type,
-    #                                    state_duty=TECHNICAL_PASSPORT) | Q(
-    #                 lost_technical_passport=False, state_duty=FINE))
-    #     else:
-    #         query1 = StateDutyPercent.objects.filter(
-    #             Q(service=application.service, person_type=application.person_type, car_is_new=True))
-    # else:
-    #     # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
-    #     if datetime.datetime.now().date() >= ten_day:
-    #         query1 = StateDutyPercent.objects.filter(
-    #             Q(service=application.service, person_type=application.person_type, car_is_new=True) | Q(
-    #                 lost_technical_passport=False, state_duty=FINE))
-    #     else:
-    #         query1 = StateDutyPercent.objects.filter(
-    #             Q(service=application.service, person_type=application.person_type, car_is_new=True))

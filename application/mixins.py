@@ -27,7 +27,7 @@ class ApplicationCustomMixin(ListView):
     request = None
     render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
                                  'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
-                                 'car__is_technical_confirm','car__is_replace_number']
+                                 'car__is_technical_confirm', 'car__is_replace_number']
 
     # def __init__(self, *args, **kwargs):
     #     super(ApplicationsList, self).__init__(*args, **kwargs)
@@ -48,7 +48,7 @@ class ApplicationCustomMixin(ListView):
     #     context.update(object_list=self.get_queryset())
     #     return context
 
-    #def dispatch(self, request, *args, **kwargs):
+    # def dispatch(self, request, *args, **kwargs):
     #    self.survey = get_object_or_404(Survey, hash=self.kwargs['hash'])
     #    up = get_object_or_404(User, fk_user=self.request.user)
     #    self.client = up.fk_client
@@ -96,8 +96,7 @@ class ApplicationCustomMixin(ListView):
         day_pattern = '^[0-9]{2}$|^[0-9]{2}.$'
         day_and_month_pattern = '^[0-9]{2}.[0-9]{2}$|^[0-9]{2}.[0-9]{2}.$'
 
-
-        #start right filter
+        # start right filter
         if self.request.GET.get('old_request') != None:
             old_request = re.findall(r"\w{1,}=[\w-]{1,}", self.request.GET.get('old_request'))
             if old_request:
@@ -120,14 +119,15 @@ class ApplicationCustomMixin(ListView):
                     if key == 'technical_confirm':
                         qs = qs.filter(car__is_technical_confirm=value)
 
-
                     if key == 'date':
 
                         today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
                         today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
-                        some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(tzinfo=LOCAL_TIMEZONE, hour=0,
-                                                                                                minute=0, second=0)
-                        some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
+                        some_day_last_week = (timezone.now() - datetime.timedelta(days=7)).replace(
+                            tzinfo=LOCAL_TIMEZONE, hour=0,
+                            minute=0, second=0)
+                        some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0,
+                                                                     tzinfo=LOCAL_TIMEZONE)
                         some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0,
                                                                     tzinfo=LOCAL_TIMEZONE)
                         if value == 'today':
@@ -144,7 +144,7 @@ class ApplicationCustomMixin(ListView):
 
             else:
                 print('not match')
-        #stop right filter
+        # stop right filter
         qs = qs.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
             Q(service__short_title__icontains=q) |
@@ -164,12 +164,12 @@ class ApplicationCustomMixin(ListView):
             Q(Q(created_date__date=dt.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern, q) else Q()) |
             # filter by day_pattern
             Q(Q(created_date__day=q[0:2]) if re.match(day_pattern, q) else Q()) |
-             # filter by day_and_month_pattern
-            Q(Q(Q(created_date__day=q[0:2]) & Q(created_date__month=q[3:5])) if re.match(day_and_month_pattern, q) else Q())
+            # filter by day_and_month_pattern
+            Q(Q(Q(created_date__day=q[0:2]) & Q(created_date__month=q[3:5])) if re.match(day_and_month_pattern,
+                                                                                         q) else Q())
         ).order_by(f"-{order_by}")
 
         return qs
-
 
     def get_json_data(self):
         start = int(self.request.GET.get('start'))
@@ -205,8 +205,3 @@ class ApplicationCustomMixin(ListView):
 
         data = json.dumps(context)
         return HttpResponse(data, content_type='json')
-
-
-
-
-

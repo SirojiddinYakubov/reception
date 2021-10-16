@@ -151,7 +151,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
-    passport_number = models.IntegerField(null=True, blank=True)
+    passport_number = models.BigIntegerField(null=True, blank=True)
     person_id = models.BigIntegerField('JShShIR', blank=True, null=True, )
     issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
@@ -170,11 +170,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
 
-    # def save(self, *args, **kwargs):
-    #     if self.id is None:
-    #         if self.role == MODERATOR:
-    #             b = bytes(f"{self.password}{time.time() * 1000}{self.username}", encoding='utf-8')
-    #             self.file_name = hashlib.md5(b).hexdigest()[0:7]
 
 class UserManager(BaseUserManager):
 
@@ -292,8 +287,8 @@ class Car(models.Model):
                                        related_name='car_fuel_type')
     re_fuel_type = models.ManyToManyField('FuelType', verbose_name='Qo\'shimcha o\'rnatilgan yoqilg\'i turi',
                                           blank=True, related_name='car_re_fuel_type')
-    full_weight = models.IntegerField(verbose_name='To\'la vazni', null=True, blank=True, default=0)
-    empty_weight = models.IntegerField(verbose_name='Yuksiz vazni', null=True, blank=True, default=0)
+    full_weight = models.CharField(verbose_name='To\'la vazni', max_length=10, null=True, blank=True, default=0)
+    empty_weight = models.CharField(verbose_name='Yuksiz vazni', max_length=10, null=True, blank=True, default=0)
     type = models.ForeignKey('CarType', on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True, null=True)
     device = models.ManyToManyField('Device', verbose_name='Alohida belgilar', blank=True)
     body_number = models.CharField(verbose_name='Kuzov raqami', max_length=50, blank=True)
@@ -326,7 +321,6 @@ class Car(models.Model):
     given_number = models.CharField(verbose_name='Yangi DRB', max_length=15, blank=True, null=True)
 
     is_replace_number = models.BooleanField(verbose_name='Yangi raqam olish', default=False)
-    is_road_fund = models.BooleanField(verbose_name="Yo'l fondi uchun to'lov", default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'
@@ -434,11 +428,13 @@ class Constant(models.Model):
     def __str__(self):
         return f"{self.key}: {self.value}"
 
+
 status = (
     (SUCCESS, 'Muvaffaqiyatli'),
     (PROCESSING, 'Kutilmoqda'),
     (FAILED, 'Yuborilmagan'),
 )
+
 
 class Sms(BaseModel):
     sms_count = models.IntegerField(default=0, null=True, blank=True)
@@ -451,6 +447,7 @@ class Sms(BaseModel):
         verbose_name = 'Jo\'natilgan sms'
         verbose_name_plural = 'Jo\'natilgan smslar'
         ordering = ['-id']
+
 
 class Notification(BaseModel):
     application = models.ForeignKey('application.Application', on_delete=models.CASCADE)
