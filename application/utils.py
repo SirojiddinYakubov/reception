@@ -129,10 +129,9 @@ def reg_new_car_v2(application):
     """Qayta ro'yhatlash"""
     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
     qs = qs.union(re_registration)
-    print(qs)
+
     """Ro'yhatlash ya'ni DRB uchun to'lov"""
     if not car.is_auction:
-        print('if')
         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                        lost_number=car.lost_number, is_old_number=car.is_old_number,
                                                        car_is_new=car.is_new, state_duty=REGISTRATION)
@@ -142,10 +141,7 @@ def reg_new_car_v2(application):
                                                        is_old_number=car.is_old_number,
                                                        car_is_new=car.is_new,
                                                        state_duty=REGISTRATION)
-        print('else')
-
     qs = qs.union(registration)
-    print(qs)
 
     """Yangi qayd etish guvohnomasi"""
     technical_passport = StateDutyPercent.objects.filter(state_duty=TECHNICAL_PASSPORT)
