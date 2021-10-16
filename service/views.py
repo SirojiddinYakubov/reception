@@ -1,7 +1,6 @@
 import datetime
 import json
 import random
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
@@ -60,9 +59,7 @@ class AccountStatement(ServiceCustomMixin):
                 if request.POST.getlist('fuel_types'):
                     for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
                         fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
-
                 user = get_object_or_404(User, id=request.user.id)
-
                 get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
 
                 # create car
@@ -78,7 +75,6 @@ class AccountStatement(ServiceCustomMixin):
                 car.full_weight = full_weight
                 car.empty_weight = empty_weight
                 car.engine_power = engine_power
-
                 car.is_new = True
                 car.is_replace_number = True
                 if get_car.is_local:
@@ -88,7 +84,6 @@ class AccountStatement(ServiceCustomMixin):
                         car.is_road_fund = False
                 else:
                     car.is_road_fund = True
-
                 car.price = price
                 if request.POST.get('auction_number'):
                     car.is_auction = True
@@ -124,16 +119,13 @@ class AccountStatement(ServiceCustomMixin):
                                                                               example_document=example_document,
                                                                               seriya=seriya,
                                                                               contract_date=contract_date)
-                #         print(f"{application_document}")
 
                 application.save()
                 print(f"152")
                 # calculate state duty function
                 # calculation_state_duty_service_price(application)
-
                 return HttpResponse(application.id, content_type='json', status=200)
         except:
-
             return HttpResponse(status=400)
 
 
