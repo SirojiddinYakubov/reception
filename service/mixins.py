@@ -13,14 +13,14 @@ class ServiceCustomMixin(AllowedRolesMixin, ListView):
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
     def get_context_data(self, **kwargs):
-        cars = CarModel.objects.filter(is_active=True)
+        cars = CarModel.objects.filter(is_active=True).order_by('title')
         fuel_types = FuelType.objects.filter(is_active=True)
         car_types = CarType.objects.filter(is_active=True)
         devices = Device.objects.filter(is_active=True)
         bodyTypes = BodyType.objects.filter(is_active=True)
-        colors = Color.objects.filter(is_active=True)
-        organizations = Organization.objects.filter(created_user=self.request.user, is_active=True)
-        regions = Region.objects.all()
+        colors = Color.objects.filter(is_active=True).order_by('title')
+        organizations = Organization.objects.filter(created_user=self.request.user, is_active=True).order_by('title')
+        regions = Region.objects.all().order_by('title')
         service = get_object_or_404(Service, key=resolve(self.request.path_info).url_name)
 
         context = {

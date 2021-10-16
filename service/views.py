@@ -3,24 +3,18 @@ import json
 import random
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+
 from application.models import *
-from reception.mixins import AllowedRolesMixin
-from reception.settings import *
 from service.mixins import ServiceCustomMixin
-from service.models import StateDutyPercent, StateDuty, STATE_DUTY_TITLE
-from service.utils import calculation_state_duty_service_price
 from user.models import *
 
 
@@ -28,15 +22,12 @@ class AccountStatement(ServiceCustomMixin):
     template_name = 'service/account_statement/account_statement.html'
 
     def get(self, request, *args, **kwargs):
-        # i = calculation_state_duty_service_price(get_object_or_404(Application, id=22))
-        # print(i, 30)
         return super().get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
 
     def get_json_data(self):
-
         try:
             with transaction.atomic():
                 request = self.request
@@ -81,13 +72,7 @@ class AccountStatement(ServiceCustomMixin):
 
                 car.is_new = True
                 car.is_replace_number = True
-                if get_car.is_local:
-                    if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                        car.is_road_fund = True
-                    else:
-                        car.is_road_fund = False
-                else:
-                    car.is_road_fund = True
+
 
                 car.price = price
                 if request.POST.get('auction_number'):
@@ -120,17 +105,11 @@ class AccountStatement(ServiceCustomMixin):
                 application_document = ApplicationDocument.objects.filter(application=application,
                                                                                     example_document=example_document)
                 if not application_document.exists():
-                    application_document = ApplicationDocument.objects.create(application=application,
+                    ApplicationDocument.objects.create(application=application,
                                                                               example_document=example_document,
                                                                               seriya=seriya,
                                                                               contract_date=contract_date)
-                #         print(f"{application_document}")
-
                 application.save()
-                print(f"152")
-                # calculate state duty function
-                # calculation_state_duty_service_price(application)
-
                 return HttpResponse(application.id, content_type='json', status=200)
         except:
 
@@ -208,13 +187,7 @@ class ContractOfSale(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
+
 
             car.color = color
             for fuel_type in fuel_types:
@@ -324,13 +297,7 @@ class GiftAgreement(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
+
 
             car.color = color
             for fuel_type in fuel_types:
@@ -439,13 +406,6 @@ class ReEquipment(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
 
             car.color = color
             for fuel_type in fuel_types:
@@ -543,8 +503,6 @@ class ReplaceTp(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = False
-
-            car.is_road_fund = False
 
             car.color = color
             for fuel_type in fuel_types:
@@ -654,13 +612,6 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
 
             car.color = color
             for fuel_type in fuel_types:
@@ -792,14 +743,6 @@ class Save_Gift_Agreement(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-            car.is_road_fund = False
-            # if get_car.is_local:
-            #     if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-            #         car.is_road_fund = True
-            #     else:
-            #         car.is_road_fund = False
-            # else:
-            #     car.is_road_fund = True
 
             if request.POST.get('auction_number'):
                 car.is_auction = True
@@ -829,7 +772,6 @@ class Save_Gift_Agreement(APIView):
             application.save()
 
             context = {
-                'html': calculation_state_duty_service_price(service),
                 'application': application.file_name
             }
 
@@ -936,13 +878,6 @@ class Save_Contract_Of_Sale(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-            if get_car.is_local:
-                if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
-                    car.is_road_fund = True
-                else:
-                    car.is_road_fund = False
-            else:
-                car.is_road_fund = True
 
             if request.POST.get('auction_number'):
                 car.is_auction = True
@@ -1065,7 +1000,7 @@ class Save_Replace_Tp(APIView):
             car.empty_weight = empty_weight
             car.engine_power = engine_power
             car.is_replace_number = False
-            car.is_road_fund = False
+
             car.color = color
             for fuel_type in fuel_types:
                 car.fuel_type.add(fuel_type)
@@ -1093,7 +1028,6 @@ class Save_Replace_Tp(APIView):
             # data = json.dumps(struct[0])
             # return HttpResponse(data, content_type='json')
             context = {
-                'html': calculation_state_duty_service_price(service),
                 'application': application.file_name
             }
 
@@ -1195,7 +1129,7 @@ class Save_Replace_Number_And_Tp(APIView):
             car.lost_number = lost_number
             car.is_old_number = is_old_number
             car.is_replace_number = True
-            car.is_road_fund = False
+
             if request.POST.get('auction_number'):
                 car.is_auction = True
                 car.given_number = auction_number
@@ -1227,7 +1161,6 @@ class Save_Replace_Number_And_Tp(APIView):
             # data = json.dumps(struct[0])
             # return HttpResponse(data, content_type='json')
             context = {
-                'html': calculation_state_duty_service_price(service),
                 'application': application.file_name
             }
 
@@ -1325,7 +1258,7 @@ class Save_Re_Equipment(APIView):
             car.empty_weight = empty_weight
             car.engine_power = engine_power
             car.is_replace_number = False
-            car.is_road_fund = False
+
             car.color = color
             car.re_color = re_color
             for fuel_type in fuel_types:
@@ -1356,7 +1289,6 @@ class Save_Re_Equipment(APIView):
             # data = json.dumps(struct[0])
             # return HttpResponse(data, content_type='json')
             context = {
-                'html': calculation_state_duty_service_price(service),
                 'application': application.file_name
             }
 

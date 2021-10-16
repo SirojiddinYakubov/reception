@@ -782,44 +782,44 @@ function process(success_url, cancel_url, applicationId) {
     }).then(function (process_sms) {
         if (process_sms) {
             */
-            $.ajax({
-                type: "POST",
-                url: success_url,
-                data: {
-                    'application': applicationId,
-                    'process': 'process',
-                    // 'process_sms': process_sms
-                },
-                statusCode: {
-                    200: function (res) {
-                        $.notifyDefaults({
-                            type: 'warning',
-                            allow_dismiss: false,
-                            animate: {
-                                enter: 'animated fadeInRight',
-                                exit: 'animated fadeOutRight',
-                            },
-                            z_index: '9999'
-                        });
-                        $.notify({
-                            icon: 'glyphicon glyphicon-star',
-                            message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+    $.ajax({
+        type: "POST",
+        url: success_url,
+        data: {
+            'application': applicationId,
+            'process': 'process',
+            // 'process_sms': process_sms
+        },
+        statusCode: {
+            200: function (res) {
+                $.notifyDefaults({
+                    type: 'warning',
+                    allow_dismiss: false,
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutRight',
+                    },
+                    z_index: '9999'
+                });
+                $.notify({
+                    icon: 'glyphicon glyphicon-star',
+                    message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
                                 '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                 '</svg> &nbsp${applicationId}-raqamli ariza jarayon holatida!`
-                        });
-                    },
-                    404: function (err) {
-                        errorFunction()
-                    }
-                },
-            })
-            /*
-        } else {
-            window.location.href = cancel_url
-        }
+                });
+            },
+            404: function (err) {
+                errorFunction()
+            }
+        },
     })
-             */
+    /*
+} else {
+    window.location.href = cancel_url
+}
+})
+     */
 }
 
 function html_to_pdf(element, filename) {

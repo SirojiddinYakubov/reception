@@ -45,7 +45,7 @@
     <tr>
         <th scope="row">Ishlab chiqarilgan yili:</th>
         <td>{% if application.car.made_year %}
-            {{ application.car.made_year|date:"SHORT_DATE_FORMAT" }}{% endif %}</td>
+            {{ application.car.made_year|date:"Y" }}{% endif %}</td>
     </tr>
 
     <tr>
@@ -81,15 +81,36 @@
             {{ application.car.engine_power }}{% endif %}</td>
     </tr>
     <tr>
-        <th scope="row">Eski texpassport seriyasi va raqami:</th>
-        <td>{% if application.car.old_technical_passport %}
-            {{ application.car.old_technical_passport }}{% endif %}</td>
+        <th scope="row">Davlat raqam belgisi yo'qolganmi?</th>
+        <td>{% if application.car.lost_number %}
+            Ha{% else %}
+            Yo'q{% endif %}</td>
     </tr>
+    {% if not application.car.lost_number %}
+        <tr>
+            <th scope="row">Davlat raqam belgisi:</th>
+            <td>{% if application.car.old_number %}
+                {{ application.car.old_number }}{% endif %}</td>
+        </tr>
+    {% endif %}
     <tr>
-        <th scope="row">Texnik passport yo'qolgan:</th>
+        <th scope="row">Davlat raqam belgisi eskimi?</th>
+        <td>{% if application.car.is_old_number %}
+            Ha{% else %}
+            Yo'q{% endif %}</td>
+    </tr>
+    {% if not application.car.lost_technical_passport %}
+        <tr>
+            <th scope="row">Texpassport seriyasi va raqami:</th>
+            <td>{% if application.car.old_technical_passport %}
+                {{ application.car.old_technical_passport }}{% endif %}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th scope="row">Texnik passport yo'qolganmi?</th>
         <td>{% if application.car.lost_technical_passport %}
-            Yo'qolgan{% else %}
-            Yo'qolmagan{% endif %}</td>
+            Ha{% else %}
+            Yo'q{% endif %}</td>
     </tr>
     {% if application.car.is_auction %}
         <tr>

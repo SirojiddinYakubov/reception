@@ -63,6 +63,7 @@ TECHNICAL_PASSPORT = 4
 REGISTRATION = 5
 RE_REGISTRATION = 6
 FINE = 7
+# POLICE_INSPECTION = 8
 
 STATE_DUTY_TITLE = (
     (ROAD_FUND, 'Yo\'l fondi'),
@@ -71,7 +72,8 @@ STATE_DUTY_TITLE = (
     (TECHNICAL_PASSPORT, 'Yangi qayd etish guvohnomasi'),
     (REGISTRATION, 'Ro\'yhatlash'),
     (RE_REGISTRATION, 'Qayta ro\'yhatlash'),
-    (FINE, 'Jarima')
+    (FINE, 'Jarima'),
+
 )
 
 
@@ -113,7 +115,7 @@ class StateDutyPercent(models.Model):
     # updated_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.state_duty} : {self.percent}%"
+        return f"{self.get_state_duty_display()}({self.id}) : {self.percent}%"
 
     class Meta:
         verbose_name = 'Davlat boji foizlari'

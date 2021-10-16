@@ -16,7 +16,6 @@ from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
 from service.models import *
-from service.utils import calculation_state_duty_service_price
 from user.models import *
 from user.utils import render_to_pdf
 
@@ -593,8 +592,6 @@ class Modify_Payment_Checkbox(APIView):
 def check_application_status(request, id):
     application = get_object_or_404(Application, id=id)
     payments = StateDuty.objects.filter(service=application.service)
-    if not payments.exists():
-        calculation_state_duty_service_price(application.service)
 
     context = {
         'application': application,
