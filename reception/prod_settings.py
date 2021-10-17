@@ -13,33 +13,26 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'x9fq&#!x9v_%^&^*(&*)%$&^%%&^8976jo@-_oq5nvqc($wlbq23)'
 
+from dotenv import load_dotenv
+
+env_path = "./deploy/.env"
+load_dotenv(dotenv_path=env_path)
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz','89.108.77.160']
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'reception',
-#         'USER': 'pyth',
-#         'PASSWORD': 'Siroj@1998',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#
-#     }
-# }
+ALLOWED_HOSTS = ['e-rib.uz', 'www.e-rib.uz', '89.108.77.160']
 
 DATABASES = {
-            'default': {
-                        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                                'NAME': 'reception',
-                                        'USER': 'yakubov',
-                                                'PASSWORD': '1999',
-                                                        'HOST': 'localhost',
-                                                                'PORT': '5432',
-                                                                    }
-            }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+    }
+}
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
