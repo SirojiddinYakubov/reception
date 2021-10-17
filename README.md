@@ -1,29 +1,43 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Create deploy/.env file 
 
-### What is this repository for? ###
+Copy example from deploy/env.md
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+[comment]: <> (This README would normally document whatever steps are necessary to get your application up and running.)
 
-### How do I get set up? ###
+[comment]: <> (### What is this repository for? ###)
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+[comment]: <> (* Quick summary)
 
-### Contribution guidelines ###
+[comment]: <> (* Version)
 
-* Writing tests
-* Code review
-* Other guidelines
+[comment]: <> (* [Learn Markdown]&#40;https://bitbucket.org/tutorials/markdowndemo&#41;)
 
-### Who do I talk to? ###
+[comment]: <> (### How do I get set up? ###)
 
-* Repo owner or admin
-* Other community or team contact
+[comment]: <> (* Summary of set up)
+
+[comment]: <> (* Configuration)
+
+[comment]: <> (* Dependencies)
+
+[comment]: <> (* Database configuration)
+
+[comment]: <> (* How to run tests)
+
+[comment]: <> (* Deployment instructions)
+
+[comment]: <> (### Contribution guidelines ###)
+
+[comment]: <> (* Writing tests)
+
+[comment]: <> (* Code review)
+
+[comment]: <> (* Other guidelines)
+
+[comment]: <> (### Who do I talk to? ###)
+
+[comment]: <> (* Repo owner or admin)
+
+[comment]: <> (* Other community or team contact)
