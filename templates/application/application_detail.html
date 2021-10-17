@@ -229,6 +229,7 @@
 
 
         $('.application-state-duty-payment').on('click', function () {
+            var paymentId = $(this).data('payment')
             const {value: formValues} = Swal.fire({
                 allowOutsideClick: false,
                 showCancelButton: true,
@@ -263,6 +264,7 @@
                                 secret_key: secret_key,  // moderator secret_key
                                 application: '{{ application.id }}',
                                 type: 1,  // application state duty payment type
+                                payment: paymentId,
                             },
                             statusCode: {
                                 200: function (response) {

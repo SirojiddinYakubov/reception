@@ -89,7 +89,6 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
         # if application.service.key == 'account_statement':
         #     payments = reg_new_car(application, ten_day)
 
-
         context = {
             'application': application,
             'payments': payments,
@@ -484,7 +483,7 @@ def payment_detail(request, service_id):
 
     service = get_object_or_404(Service, id=service_id)
     application = get_object_or_404(Application, id=service.application_service.all().first().id)
-    payments = StateDuty.objects.filter(service=service, is_active=True)
+    payments = PaidStateDuty.objects.filter(service=service, is_active=True)
     if request.user.role == '1':
         section = Section.objects.get(region=request.user.region, district=request.user.district)
     else:
@@ -502,7 +501,7 @@ def payment_detail(request, service_id):
 
 
 class PaymentsList(AllowedRolesMixin, ListView):
-    model = StateDuty
+    model = PaidStateDuty
     template_name = 'application/payments/payments_list.html'
     allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
@@ -557,14 +556,14 @@ class Modify_Payment_Checkbox(APIView):
                 else:
                     modify = False
 
-                payment = StateDuty.objects.get(id=get_payment)
+                payment = PaidStateDuty.objects.get(id=get_payment)
                 if payment:
                     payment.is_paid = modify
                     service = Service.objects.get(id=payment.service.id)
                     if service:
                         application = Application.objects.get(id=service.application_service.first().id)
                         if application:
-                            payments = StateDuty.objects.filter(service=service)
+                            payments = PaidStateDuty.objects.filter(service=service)
                             if payments.exists():
                                 payment.save()
                                 if all(payment.is_paid for payment in payments):
@@ -591,7 +590,7 @@ class Modify_Payment_Checkbox(APIView):
 
 def check_application_status(request, id):
     application = get_object_or_404(Application, id=id)
-    payments = StateDuty.objects.filter(service=application.service)
+    payments = PaidStateDuty.objects.filter(service=application.service)
 
     context = {
         'application': application,
@@ -646,7 +645,7 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             application.section = section
             application.is_active = True
             # percent = StateDutyPercent.objects.filter(car_is_new=True, person_type=application.person_type, service=application.service)
-            # state_duty = StateDuty.objects.create(percent=percent)
+            # state_duty = PaidStateDuty.objects.create(percent=percent)
 
             application.save()
             print(f"{application} 645")
@@ -674,19 +673,30 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                                                           moderator=moderator)
                 return HttpResponse(status=200)
         elif request.POST.get('type') == str(APPLICATION_STATE_DUTY_PAYMENT):
-            if request.POST.get('application') and request.POST.get('secret_key'):
+            print(request.POST)
+            if request.POST.get('application') and request.POST.get('secret_key') and request.POST.get('payment'):
+                payment_id = request.POST.get('payment')
                 application = get_object_or_404(Application, id=request.POST.get('application'))
                 moderator = get_object_or_404(User, secret_key=request.POST.get('secret_key'),
                                               role__in=self.allowed_roles)
-                if application.is_payment:
+                percent = get_object_or_404(StateDutyPercent, id=payment_id)
+                try:
+                    score = StateDutyScore.objects.get(district=application.created_user.district,
+                                                       state_duty=percent.state_duty)
+                except:
+                    score = StateDutyScore.objects.get(state_duty=percent.state_duty)
+
+                paid_state_duty = PaidStateDuty.objects.filter(application=application, score=score, percent=percent).last()
+
+                if paid_state_duty:
                     print('Application payments already paid')
                     return HttpResponse(status=409)
-                application.is_payment = True
-                application.save()
-                ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
-                                                          application=application,
-                                                          moderator=moderator)
-                return HttpResponse(status=200)
+                else:
+                    paid_state_duty = PaidStateDuty.objects.create(application=application, score=score, percent=percent)
+                    ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
+                                                              application=application, paid_state_duty=paid_state_duty,
+                                                              moderator=moderator)
+                    return HttpResponse(status=200)
         else:
             return HttpResponse(status=404)
         return HttpResponse(status=404)

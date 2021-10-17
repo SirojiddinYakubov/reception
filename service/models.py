@@ -142,16 +142,17 @@ class StateDutyScore(models.Model):
         verbose_name_plural = 'Davlat bojlari hisob raqamlari'
 
 
-class StateDuty(models.Model):
+class PaidStateDuty(models.Model):
     application = models.ForeignKey("application.Application", on_delete=models.CASCADE, verbose_name="Ariza", related_name="state_duty_application")
-    score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE, verbose_name="Hisob raqam")
+    score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE,  verbose_name="Hisob raqam")
     percent = models.ForeignKey(StateDutyPercent, on_delete=models.CASCADE, verbose_name="Hisob raqam foizlari")
+    is_return = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.application} so'm"
 
     class Meta:
-        verbose_name = "To'lanishi kerak bo'lgan bojlar"
-        verbose_name_plural = "To'lanishi kerak bo'lgan bojlar"
+        verbose_name = "To'langan bojlar"
+        verbose_name_plural = "To'langan bojlar"
 

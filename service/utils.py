@@ -104,9 +104,9 @@ from user.models import Constant
 #
 #         price = int(MINIMUM_BASE_WAGE / 100 * re_registration.percent)
 #
-#         state_duty = StateDuty.objects.filter(title=re_registration.state_duty, service=service).first()
+#         state_duty = PaidStateDuty.objects.filter(title=re_registration.state_duty, service=service).first()
 #         if not state_duty:
-#             StateDuty.objects.create(title=re_registration.state_duty, created_user=created_user, payment=price,
+#             PaidStateDuty.objects.create(title=re_registration.state_duty, created_user=created_user, payment=price,
 #                                      service=service, score=score)
 #         else:
 #             state_duty.payment = price
@@ -128,9 +128,9 @@ from user.models import Constant
 #
 #         price = int(MINIMUM_BASE_WAGE / 100 * registration.percent)
 #
-#         state_duty = StateDuty.objects.filter(title=registration.state_duty, service=service).first()
+#         state_duty = PaidStateDuty.objects.filter(title=registration.state_duty, service=service).first()
 #         if not state_duty:
-#             StateDuty.objects.create(title=registration.state_duty, created_user=created_user, payment=price,
+#             PaidStateDuty.objects.create(title=registration.state_duty, created_user=created_user, payment=price,
 #                                      service=service, score=score)
 #         else:
 #             state_duty.payment = price
@@ -151,10 +151,10 @@ from user.models import Constant
 #
 #         price = int(MINIMUM_BASE_WAGE / 100 * technical_passport.percent)
 #
-#         state_duty = StateDuty.objects.filter(title=technical_passport.state_duty, service=service).first()
+#         state_duty = PaidStateDuty.objects.filter(title=technical_passport.state_duty, service=service).first()
 #         if not state_duty:
 #             if score is not None:
-#                 StateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
+#                 PaidStateDuty.objects.create(title=technical_passport.state_duty, created_user=created_user, payment=price,
 #                                          service=service, score=score)
 #         else:
 #             state_duty.payment = price
@@ -175,10 +175,10 @@ from user.models import Constant
 #
 #         price = int(MINIMUM_BASE_WAGE / 100 * inspection.percent)
 #
-#         state_duty = StateDuty.objects.filter(title=inspection.state_duty, service=service).first()
+#         state_duty = PaidStateDuty.objects.filter(title=inspection.state_duty, service=service).first()
 #         if not state_duty:
 #             if car.is_new == False:
-#                 StateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
+#                 PaidStateDuty.objects.create(title=inspection.state_duty, created_user=created_user, payment=price,
 #                                          service=service, score=score)
 #         else:
 #             state_duty.payment = price
@@ -198,9 +198,9 @@ from user.models import Constant
 #             print('JARIMA SCORE NOT FOUND')
 #
 #         price = int(MINIMUM_BASE_WAGE / 100 * fine)
-#         state_duty = StateDuty.objects.filter(title='7', service=service).first()
+#         state_duty = PaidStateDuty.objects.filter(title='7', service=service).first()
 #         if not state_duty:
-#             StateDuty.objects.create(title='7', created_user=created_user, payment=price, service=service, score=score)
+#             PaidStateDuty.objects.create(title='7', created_user=created_user, payment=price, service=service, score=score)
 #         else:
 #             state_duty.payment = road_fund
 #             state_duty.score = score
@@ -215,9 +215,9 @@ from user.models import Constant
 #                 score = StateDutyScore.objects.filter(state_duty=1, region=created_user.region,
 #                                                       district=created_user.district).first()
 #
-#                 state_duty = StateDuty.objects.filter(title='1', service=service).first()
+#                 state_duty = PaidStateDuty.objects.filter(title='1', service=service).first()
 #                 if not state_duty:
-#                     StateDuty.objects.create(title='1', created_user=created_user, payment=road_fund, service=service,
+#                     PaidStateDuty.objects.create(title='1', created_user=created_user, payment=road_fund, service=service,
 #                                              score=score)
 #                 else:
 #                     state_duty.payment = road_fund
@@ -228,9 +228,9 @@ from user.models import Constant
 #             else:
 #                 score = StateDutyScore.objects.filter(state_duty=2, region=created_user.region,
 #                                                       district=created_user.district).first()
-#                 state_duty = StateDuty.objects.filter(title='2', service=service).first()
+#                 state_duty = PaidStateDuty.objects.filter(title='2', service=service).first()
 #                 if not state_duty:
-#                     StateDuty.objects.create(title='2', created_user=created_user, payment=road_fund, service=service,
+#                     PaidStateDuty.objects.create(title='2', created_user=created_user, payment=road_fund, service=service,
 #                                              score=score)
 #                 else:
 #                     state_duty.payment = road_fund
