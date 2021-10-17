@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.datastructures import MultiValueDictKeyError
 from service.models import *
 from reception.settings import LOCAL_TIMEZONE
-from service.models import StateDuty
+# from service.models import PaidStateDuty
+from service.models import PaidStateDuty
 from user.models import District
 
 register = template.Library()
@@ -49,7 +50,7 @@ def get_calculated_payments(context, state_duty_id):
         unpaid = 0
 
         for child_section in child_sections:
-            total_qs = StateDuty.objects.filter(
+            total_qs = PaidStateDuty.objects.filter(
                 Q(service__application_service__section=child_section) &
                 Q(title=state_duty_id) &
                 Q(is_active=True) &

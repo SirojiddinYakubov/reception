@@ -24,15 +24,15 @@ class ServiceAdmin(admin.ModelAdmin):
 #     list_filter = [ 'created_date',]
 #     search_fields = ['title', ]
 
-@admin.register(StateDuty)
-class StateDutyAdmin(admin.ModelAdmin):
+@admin.register(PaidStateDuty)
+class PaidStateDutyAdmin(admin.ModelAdmin):
     # formfield_overrides = {
     #     models.IntegerField: {'widget': NumberInput(attrs={'size': '300'})},
     # }
 
     list_display = ['id', 'application', 'score', 'percent']
     search_fields = ['application', 'score']
-    list_filter = ['application']
+    list_filter = ['score__state_duty', 'created_date', 'is_return', 'application__created_user__region']
     list_display_links = ['id', 'application']
     save_on_top = True
 
@@ -45,7 +45,7 @@ class StateDutyPercentAdmin(admin.ModelAdmin):
     def services(self, obj):
         return ", ".join([i.short_title for i in obj.service.all()])
 
-    list_display = ['id', 'title', 'state_duty', 'services', 'get_car_types', 'person_type', 'percent', 'car_is_new',
+    list_display = ['id', 'title', 'state_duty', 'services', 'get_car_types', 'person_type', 'percent','is_auction', 'car_is_new',
                     'is_old_number',
                     'lost_number', 'lost_technical_passport', 'start', 'stop']
     list_display_links = ['id', 'state_duty']

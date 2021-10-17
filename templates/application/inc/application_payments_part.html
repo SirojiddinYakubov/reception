@@ -1,6 +1,9 @@
 {% load humanize %}
 {% load applications_tags %}
-<table class="table table-bordered table-striped" id="render_div">
+<div id="render_div">
+
+
+<table class="table table-bordered table-striped" >
     <thead class="thead-light">
     <tr>
         <th scope="col">#</th>
@@ -22,7 +25,7 @@
                     <th scope="row">{{ payment.title }}</th>
                     <td><b>    {% get_payment_score application.created_user.district payment.state_duty as score %}{{ score|intcomma }}</b></td>
                     <td><b class="state_payment">
-                        {% get_payment_payment payment application as payment %}{{ payment|intcomma }}</b> so'm
+                        {% get_payment_payment payment application as pay %}{{ pay|intcomma }}</b> so'm
                     </td>
                     <td>
                         {% if request.user.role == '2' or request.user.role == '3' %}
@@ -30,9 +33,9 @@
                                    data-payment="{{ payment.id }}"
                                    class="payment_checkbox" type="checkbox"/>
                         {% else %}
-                            {% if payment.is_paid %}
+                            {% if payment|check_payment_paid %}
                                 <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                <i style="color: red" class="far fa-times-circle"></i>{% endif %}
+                                <div class="application-state-duty-payment"  data-payment="{{ payment.id }}"><i style="color: red" class="far fa-times-circle"></i></div>{% endif %}
                         {% endif %}
                     </td>
                 </tr>
@@ -59,7 +62,9 @@
     <p>MFO: <b style="color: blue">00014</b></p>
     <p>INN: <b style="color: blue">201122919</b></p>
 </div>
+</div>
 <hr>
+<p>Ushbu summa to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam yoki ko'p o'tgan to'lov uchun E-RIB ma'muriyati javobgar emas.</p>
 <div class="justify-content-end row" data-html2canvas-ignore="true">
     <div class="col-12">
         {% if not application.is_payment %}
@@ -70,11 +75,11 @@
             {#            </button>#}
             {#        {% endif %}#}
 
-            <button type="button"
-                    class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov
-                qilish &nbsp&nbsp&nbsp<i
-                        class="fas fa-long-arrow-alt-right"></i>
-            </button>
+{#            <button type="button"#}
+{#                    class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov#}
+{#                qilish &nbsp&nbsp&nbsp<i#}
+{#                        class="fas fa-long-arrow-alt-right"></i>#}
+{#            </button>#}
         {% endif %}
         <button type="button" id="payment_render_pdf"
                 class="btn btn-info waves-effect waves-light float-end">To'lovlarni pdf holatda chiqarish

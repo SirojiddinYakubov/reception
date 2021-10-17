@@ -84,7 +84,7 @@ class Application(models.Model):
 
     def __str__(self):
         if self.service.key:
-            return f"Application: {self.service.key}"
+            return f"Application({self.id}): {self.service.key}"
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
@@ -133,3 +133,4 @@ class ApplicationCashByModerator(BaseModel):
     status = models.PositiveIntegerField(choices=APPLICATION_CASH_BY_MODERATOR_STATUS)
     application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True)
     moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.SET_NULL, null=True)
+    paid_state_duty = models.ForeignKey('service.PaidStateDuty', on_delete=models.SET_NULL, null=True)
