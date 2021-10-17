@@ -24,3 +24,4 @@ service/migrations/
 click/migrations/
 paycom/migrations/
 venv39/
+deploy/.env
