@@ -150,7 +150,8 @@ def reg_new_car_v2(application):
 
     """Texnik ko'rik"""
     if not car.is_new:
-        inspection = StateDutyPercent.objects.filter(person_type=application.person_type, car_type=car.type,
+        inspection = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
+                                                     car_type=car.type,
                                                      state_duty=INSPECTION)
         qs = qs.union(inspection)
 
