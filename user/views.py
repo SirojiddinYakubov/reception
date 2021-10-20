@@ -1,3 +1,4 @@
+import json
 import random
 
 from django.contrib import messages
@@ -172,12 +173,12 @@ class OrganizationList(AllowedRolesMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         organizations = self.model.objects.filter(created_user=self.request.user, is_active=True).order_by('-id')
-        if not organizations.exists():
-            return redirect(reverse_lazy('user:add_organization'))
+
         context = {
             'organizations': organizations,
-            'organization': organizations[0],
         }
+        if organizations:
+            context.update(organization=organizations[0])
         return context
 
 
@@ -328,7 +329,7 @@ class GetChildSections(AllowedRolesMixin):
 
 
 class Get_Organization(AllowedRolesMixin, View):
-    allowed_roles = [USER,CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
     def post(self, request):
@@ -1234,6 +1235,14 @@ def getDistricts(request):
 
 
 @login_required
+def getQuarters(request):
+    id = request.GET.get('id', None)
+    if id:
+        result = list(Quarter.objects.filter(district_id=int(id)).values('id', 'title'))
+        return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+@login_required
 def regions_list(request):
     if request.user.role == '7':
         regions_list = Section.objects.filter(parent__isnull=True)
@@ -1267,7 +1276,11 @@ class SectionsListByRegion(AllowedRolesMixin, View):
 
     def get(self, request, *args, **kwargs):
         if request.GET.get('region', None):
-            qs = Section.objects.filter(region=request.GET.get('region'), parent__isnull=False)
-            sections = serializers.serialize('json', qs)
-            return HttpResponse(sections, status=200, content_type='application/json')
+            qs = list(Section.objects.filter(region=request.GET.get('region'), parent__isnull=False).values_list('id',
+                                                                                                                 'title',
+                                                                                                                 'region__title',
+                                                                                                                 'located_district__title',
+                                                                                                                 'quarter__title',
+                                                                                                                 'street'))
+            return HttpResponse(json.dumps(qs), status=200, content_type='application/json')
         return HttpResponse(status=404)

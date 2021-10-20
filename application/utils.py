@@ -116,7 +116,7 @@ def reg_new_car_v2(application):
         if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
                 days=1):
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
-            fine1 = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=False)
+            fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=False)
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
             fine2 = StateDutyPercent.objects.filter(state_duty=FINE,
                                                     lost_technical_passport=car.lost_technical_passport)
@@ -124,7 +124,7 @@ def reg_new_car_v2(application):
             qs = (fine1 | fine2).distinct()
         elif car.lost_technical_passport:
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            qs = StateDutyPercent.objects.filter(state_duty=FINE, lost_technical_passport=True)
+            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=True)
 
     """Qayta ro'yhatlash"""
     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
@@ -132,11 +132,13 @@ def reg_new_car_v2(application):
 
     """Ro'yhatlash ya'ni DRB uchun to'lov"""
     if not car.is_auction:
+        print('if')
         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                        lost_number=car.lost_number, is_old_number=car.is_old_number,
                                                        is_auction=car.is_auction,
                                                        car_is_new=car.is_new, state_duty=REGISTRATION)
     else:
+        print('else')
         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                        person_type=application.person_type, lost_number=car.lost_number,
                                                        is_old_number=car.is_old_number,

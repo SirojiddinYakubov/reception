@@ -968,7 +968,7 @@
 
                             $.ajax({
                                 type: "POST",
-                                url: "{% url 'service:contract_of_sale' %}",
+                                url: "{% url 'service:gift_agreement' %}",
                                 data: $(form).serialize(),
                                 statusCode: {
                                     200: function (response) {
@@ -1105,13 +1105,13 @@
 
                                 $.each(res, function (index, value) {
 
-                                    li += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                     li += `<li class="list-group-item d-flex justify-content-between align-items-start">
                                                 <div class="ms-2 me-auto col-7 col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-9 text-start">
-                                                    <div class="fw-bold text-start text-start">${value.fields.title}</div>
-                                                    ${value.fields.address}
+                                                    <div class="fw-bold text-start text-start">${value[1]}</div>
+                                                    ${value[2]} ${value[3]} ${value[4]}
                                                 </div>
                                                 <div class="col-5 col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                                                    <button type="button" data-id="${value.pk}" class="btn btn-info waves-effect waves-light send_application"  >Ariza topshirish
+                                                    <button type="button" data-id="${value[0]}" class="btn btn-info waves-effect waves-light send_application"  >Ariza topshirish
                                                     </button>
                                                 </div>
                                             </li>`

@@ -69,8 +69,8 @@ class DistrictAdmin(admin.ModelAdmin):
 
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'parent', 'title', 'region', 'get_districts']
-    list_display_links = ['title', ]
+    list_display = ['id', 'parent', 'title', 'get_districts', 'region', 'located_district', 'quarter', 'street', ]
+    list_display_links = ['parent', 'title', 'get_districts']
     save_on_top = True
 
     def get_districts(self, obj):
@@ -156,9 +156,9 @@ class ConstantAdmin(admin.ModelAdmin):
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ['id', 'application', 'sender', 'receiver', 'text', 'is_read']
-    list_display_links = ['application', 'sender', 'receiver',]
+    list_display_links = ['application', 'sender', 'receiver', ]
     search_fields = ['text']
-    list_filter = ['is_read',]
+    list_filter = ['is_read', ]
     save_on_top = True
 
 
@@ -167,5 +167,5 @@ class SmsAdmin(admin.ModelAdmin):
     list_display = ['id', 'phone', 'text', 'sms_count', 'status', 'sms_id']
     list_display_links = ['phone', 'text', ]
     search_fields = ['text']
-    list_filter = ['status',]
+    list_filter = ['status', ]
     save_on_top = True

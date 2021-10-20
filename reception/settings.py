@@ -67,7 +67,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 
-
 ]
 
 ROOT_URLCONF = 'reception.urls'

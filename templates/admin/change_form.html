@@ -7,27 +7,26 @@
         $(function () {
             // inspect html to check id of category select dropdown.
             $(document).on('change', "select#id_region", function () {
-
                 $.getJSON("{% url 'user:getDistricts' %}", {id: $(this).val()}, function (j) {
-                    {#var options = '<option value="">---------</option>';#}
-                    var options = '';
+                    var options = '<option value="">---------</option>';
+                    {#var options = '';#}
                     for (var i = 0; i < j.length; i++) {
                         options += '<option value="' + j[i].id + '">' + j[i].title + '</option>';
                     }
 
                     $("select#id_district").html(options);
+                    $("select#id_located_district").html(options);
                 });
             });
 
-             $(document).on('change', "select#id_district", function () {
-
-                $.getJSON("{% url 'user:get_quarters' %}", {id: $(this).val()}, function (j) {
-                    {#var options = '<option value="">---------</option>';#}
-                    var options = '';
+             $(document).on('change', "select#id_located_district", function () {
+                $.getJSON("{% url 'user:getQuarters' %}", {id: $(this).val()}, function (j) {
+                     console.log(j)
+                    var options = '<option value="">---------</option>';
+                    {#var options = '';#}
                     for (var i = 0; i < j.length; i++) {
                         options += '<option value="' + j[i].id + '">' + j[i].title + '</option>';
                     }
-
                     $("select#id_quarter").html(options);
                 });
             });

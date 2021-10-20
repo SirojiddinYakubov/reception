@@ -173,6 +173,15 @@ class ContractOfSale(ServiceCustomMixin):
             else:
                 car.is_old_number = False
 
+            if request.POST.get('save_old_number') == 'true':
+                car.save_old_number = True
+                car.is_replace_number = False
+            else:
+                car.save_old_number = False
+                car.is_replace_number = True
+
+
+
             if request.POST.get('is_auction') == 'true':
                 car.is_auction = True
                 car.given_number = request.POST.get('given_number', None)
@@ -186,7 +195,7 @@ class ContractOfSale(ServiceCustomMixin):
             car.empty_weight = empty_weight
             car.engine_power = engine_power
 
-            car.is_replace_number = True
+
 
 
             car.color = color
