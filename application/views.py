@@ -648,7 +648,6 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             # state_duty = PaidStateDuty.objects.create(percent=percent)
 
             application.save()
-            print(f"{application} 645")
             return HttpResponse(status=200)
         return HttpResponse(status=400)
 

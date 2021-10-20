@@ -6,6 +6,7 @@ from uuid import uuid4
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, UserManager, PermissionsMixin
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from django.db import models
 from django.http import Http404
@@ -65,11 +66,13 @@ class Section(models.Model):
     parent = models.ForeignKey('self', verbose_name=_("Bo'ysinuvchi tashkilot"), on_delete=models.CASCADE, null=True,
                                blank=True)
     title = models.CharField(max_length=300, verbose_name="Bo'lim nomi", blank=True, null=True)
-    region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
-    district = models.ManyToManyField(District, verbose_name='Tuman/Shahar', blank=True)
+    region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.CASCADE, null=True, blank=True)
+    district = models.ManyToManyField(District, verbose_name='Hizmat ko\'rsatish tuman/shaharlari', blank=True)
+    located_district = models.ForeignKey(District, verbose_name='Tashkilot joylashgan tuman/shahar', on_delete=models.CASCADE, null=True, blank=True, related_name='located_district_section')
+    quarter = models.ForeignKey(Quarter, on_delete=models.CASCADE, verbose_name='Mahalla', null=True, blank=True)
+    street = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     pay_for_service = models.BooleanField(default=True)
-    address = models.CharField(max_length=100)
 
     class Meta:
         verbose_name = "Bo'lim"
@@ -321,6 +324,7 @@ class Car(models.Model):
     given_number = models.CharField(verbose_name='Yangi DRB', max_length=15, blank=True, null=True)
 
     is_replace_number = models.BooleanField(verbose_name='Yangi raqam olish', default=False)
+    save_old_number = models.BooleanField("Eski raqamni saqlab qolish", default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'

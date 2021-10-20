@@ -84,16 +84,18 @@
                         </table>
 
                         <hr>
-                        <div class="row">
-                            <a href="{% url 'user:edit_organization' organization.id %}" style="margin: 3%"
-                               class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-secondary">Tashkilotni
-                                tahrirlash
-                            </a>
-                            <a href="{% url 'user:add_organization' %}" style="margin: 3%"
-                               class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-primary">Tashkilot qo'shish
-                            </a>
+                        {% if organizations %}
+                            <div class="row">
+                                <a href="{% url 'user:edit_organization' organization.id %}" style="margin: 3%"
+                                   class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-secondary">Tashkilotni
+                                    tahrirlash
+                                </a>
+                                <a href="{% url 'user:add_organization' %}" style="margin: 3%"
+                                   class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-primary">Tashkilot qo'shish
+                                </a>
 
-                        </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

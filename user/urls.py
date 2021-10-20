@@ -55,6 +55,7 @@ urlpatterns = [
     path('save-new-car-model/', Save_New_Car_Model.as_view(), name='save_new_car_model'),
     path('save-new-color/', Save_New_Color.as_view(), name='save_new_color'),
     path('getDistricts/', getDistricts, name='getDistricts'),
+    path('getQuarters/', getQuarters, name='getQuarters'),
     path('get_quarters/', get_quarters, name='get_quarters'),
 
     # STATE CONTROLLER

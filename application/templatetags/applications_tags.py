@@ -139,10 +139,9 @@ def get_payment_score(district, state_duty):
         if score:
             return score.score
         else:
-            return 'sss'
+            return '{0} hisob raqami topilmadi!'.format(district.title)
     except:
-        score = StateDutyScore.objects.get(state_duty=state_duty)
-        return score.score
+        return '{0} hisob raqami topilmadi!'.format(district.title)
 
 
 @register.simple_tag

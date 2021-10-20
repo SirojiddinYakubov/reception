@@ -6,15 +6,20 @@ from django.utils import timezone
 from application.models import Application
 from reception.api import SendSmsWithApi
 from application.models import (
-CREATED,
-ACCEPTED_FOR_CONSIDERATION
+    CREATED,
+    ACCEPTED_FOR_CONSIDERATION
 )
+
 
 def application_crontab():
     applications = Application.objects.filter(Q(is_active=True) & Q(process__in=[CREATED, ACCEPTED_FOR_CONSIDERATION]))
 
     for application in applications:
         # Faollashtirilmagan arizalar
+
+        # activ holatda bo'lmagan arizalarni bazadan o'chirish
+        if timezone.now() - timedelta(days=3) > application.created_date and not application.is_active:
+            application.delete()
 
         # ariza jarayonda lekin ariza faollashtirilmagan. 3 kun davomida
         if application.process == CREATED and application.cron == '1' and application.is_block and timezone.now() - timedelta(
@@ -65,7 +70,6 @@ def application_crontab():
 
             text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz hech qanday amaliyot amalga oshirmaganligingiz sababli e-rib tizimidan o\'chirildi!'
             SendSmsWithApi(message=text, phone=application.created_user.phone).get()
-
 
         # Rad etilgan ariza 60 kundan so'ng o'chirib yuboriladi
         if application.process == '3' and not application.is_block and timezone.now() - timedelta(
