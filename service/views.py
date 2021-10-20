@@ -343,6 +343,114 @@ class GiftAgreement(ServiceCustomMixin):
         except:
             return HttpResponse(status=400)
 
+class InheritanceAgreement(ServiceCustomMixin):
+    template_name = 'service/inheritance_agreement /inheritance_agreement.html'
+
+    def post(self, request, *args, **kwargs):
+        return self.get_json_data()
+
+    def get_json_data(self):
+        try:
+            request = self.request
+            service = get_object_or_404(Service, key='inheritance_agreement')
+
+            person_type = request.POST.get('person_type')
+            engine_number = request.POST.get('engine_number')
+            full_weight = request.POST.get('full_weight')
+            empty_weight = request.POST.get('empty_weight')
+            engine_power = request.POST.get('engine_power')
+            body_number = request.POST.get('body_number')
+
+            color = get_object_or_404(Color, id=request.POST.get('color', None))
+            made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
+
+            devices = []
+            if request.POST.getlist('devices'):
+                for device_id in list(filter(None, request.POST.getlist('devices'))):
+                    devices.append(get_object_or_404(Device, id=device_id))
+
+            fuel_types = []
+            if request.POST.getlist('fuel_types'):
+                for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
+                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+
+            user = get_object_or_404(User, id=request.user.id)
+            get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+
+            # create car
+            car = Car.objects.create(model=get_car)
+            car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
+            if request.POST.get('chassis_number', None):
+                car.chassis_number = request.POST.get('chassis_number', None)
+
+            if request.POST.get('lost_technical_passport') == 'true':
+                car.lost_technical_passport = True
+            else:
+                car.old_technical_passport = request.POST.get('old_technical_passport', None)
+                car.lost_technical_passport = False
+
+            if request.POST.get('lost_number') == 'true':
+                car.lost_number = True
+            else:
+                car.old_number = request.POST.get('old_number', None)
+                car.lost_number = False
+
+            if request.POST.get('is_old_number') == 'true':
+                car.is_old_number = True
+            else:
+                car.is_old_number = False
+
+            if request.POST.get('is_auction') == 'true':
+                car.is_auction = True
+                car.given_number = request.POST.get('given_number', None)
+            else:
+                car.is_auction = False
+            car.body_number = body_number
+            car.engine_number = engine_number
+            car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
+            car.made_year = made_year
+            car.full_weight = full_weight
+            car.empty_weight = empty_weight
+            car.engine_power = engine_power
+
+            car.is_replace_number = True
+
+
+            car.color = color
+            for fuel_type in fuel_types:
+                car.fuel_type.add(fuel_type)
+            for device in devices:
+                car.device.add(device)
+            car.save()
+
+            application = Application.objects.create(created_user=user, created_date=timezone.now())
+
+            if int(person_type) == LEGAL_PERSON:
+                organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                application.person_type = person_type
+                application.organization = organization
+            password = random.randint(1000, 9999)
+            application.password = password
+            application.service = service
+            application.car = car
+            application.is_active = False
+
+            if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
+                seriya = request.POST.get('seriya')
+                contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
+                example_document = ExampleDocument.objects.get(key=service.key)
+                application_document = ApplicationDocument.objects.filter(application=application,
+                                                                          example_document=example_document)
+                if not application_document.exists():
+                    ApplicationDocument.objects.create(application=application,
+                                                       example_document=example_document,
+                                                       seriya=seriya,
+                                                       contract_date=contract_date)
+            application.save()
+            return HttpResponse(application.id, content_type='json', status=200)
+        except:
+            return HttpResponse(status=400)
+
 
 class ReEquipment(ServiceCustomMixin):
     template_name = 'service/re_equipment/re_equipment.html'
