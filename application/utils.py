@@ -118,7 +118,7 @@ def reg_new_car_v2(application):
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
             fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=False)
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            fine2 = StateDutyPercent.objects.filter(state_duty=FINE,
+            fine2 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
                                                     lost_technical_passport=car.lost_technical_passport)
             """Ikkala jarimani birlashtirish"""
             qs = (fine1 | fine2).distinct()
