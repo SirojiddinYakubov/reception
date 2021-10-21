@@ -123,7 +123,7 @@ class StateDutyPercent(models.Model):
 
 
 class StateDutyScore(models.Model):
-    state_duty = models.CharField(max_length=20, choices=STATE_DUTY_TITLE)
+    state_duty = models.IntegerField(choices=STATE_DUTY_TITLE)
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
                                  blank=True)
