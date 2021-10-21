@@ -238,7 +238,7 @@ class GiftAgreement(ServiceCustomMixin):
     def get_json_data(self):
         try:
             request = self.request
-            service = get_object_or_404(Service, key='gift_agreement')
+            service = Service.objects.get(key='gift_agreement')
 
             person_type = request.POST.get('person_type')
             engine_number = request.POST.get('engine_number')
@@ -247,25 +247,25 @@ class GiftAgreement(ServiceCustomMixin):
             engine_power = request.POST.get('engine_power')
             body_number = request.POST.get('body_number')
 
-            color = get_object_or_404(Color, id=request.POST.get('color', None))
+            color = Color.objects.get(id=request.POST.get('color', None))
             made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
 
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
-                    devices.append(get_object_or_404(Device, id=device_id))
+                    devices.append(Device.objects.get(id=device_id))
 
             fuel_types = []
             if request.POST.getlist('fuel_types'):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
-                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+                    fuel_types.append(FuelType.objects.get(id=fuel_type_id))
 
-            user = get_object_or_404(User, id=request.user.id)
-            get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+            user = User.objects.get(id=request.user.id)
+            get_car = CarModel.objects.get(id=request.POST.get('car'))
 
             # create car
             car = Car.objects.create(model=get_car)
-            car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
+            car.body_type = BodyType.objects.get(id=request.POST.get('body_type', None))
             if request.POST.get('chassis_number', None):
                 car.chassis_number = request.POST.get('chassis_number', None)
 
@@ -293,7 +293,7 @@ class GiftAgreement(ServiceCustomMixin):
                 car.is_auction = False
             car.body_number = body_number
             car.engine_number = engine_number
-            car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
+            car.type = CarType.objects.get(id=request.POST.get('car_type'))
             car.made_year = made_year
             car.full_weight = full_weight
             car.empty_weight = empty_weight
@@ -311,7 +311,7 @@ class GiftAgreement(ServiceCustomMixin):
             application = Application.objects.create(created_user=user, created_date=timezone.now())
 
             if int(person_type) == LEGAL_PERSON:
-                organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                organization = Organization.objects.get(id=request.POST.get('organization'))
                 application.person_type = person_type
                 application.organization = organization
             password = random.randint(1000, 9999)
@@ -333,8 +333,8 @@ class GiftAgreement(ServiceCustomMixin):
                                                        contract_date=contract_date)
             application.save()
             return HttpResponse(application.id, content_type='json', status=200)
-        except:
-            return HttpResponse(status=400)
+        except Exception as e:
+            return HttpResponse(e, status=400)
 
 
 class InheritanceAgreement(ServiceCustomMixin):
