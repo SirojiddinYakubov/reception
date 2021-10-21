@@ -225,6 +225,12 @@ def create_application_doc(request, filename):
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_person.docx")
+    elif service.key == 'inheritance_agreement':
+        if application.organization:
+            doc = DocxTemplate(f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_legal.docx")
+        else:
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_person.docx")
 
     car = get_object_or_404(Car, id=application.car.id)
 
