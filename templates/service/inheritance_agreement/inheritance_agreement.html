@@ -551,7 +551,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addCarModel(url = '{% url 'user:save_new_car_model' %}')
-
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -566,7 +566,8 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}')
-                        if (newval !== null) {
+                        console.log(newval)
+                        if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
                     }
@@ -595,6 +596,7 @@
 
 
                         submitHandler: function (form) {
+                            console.log(form)
                             var seriya = $('#seriya').val().toUpperCase()
                             var contract_date = $('#contract_date').val()
 
@@ -711,6 +713,7 @@
                         data: {'organization': $('#organization option:selected').val()},
                         statusCode: {
                             200: function (response) {
+                                console.log(response)
                                 $('#director').attr('value', response.organization.fields.director)
                                 $('#identification_number').attr('value', response.organization.fields.identification_number)
                                 $('#legal_address_region').attr('value', response.legal_address_region)
@@ -718,7 +721,8 @@
 
                                 $('input[name ="organization"]').val($('#organization option:selected').val())
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                             },
                         },
@@ -740,6 +744,7 @@
                             },
                             statusCode: {
                                 200: function (response) {
+                                    console.log(response)
                                     if (response === "True") {
                                         //agar yuk avtomobil bo'lsa
                                         $('.chassis_number_div').show()
@@ -751,9 +756,11 @@
                                         $('.chassis_number_div').hide()
                                         $('#chassis_number').removeAttr('name')
                                     }
-                                }, 400: function () {
+                                }, 400: function (err) {
+                                    console.log(err)
                                     error_toast()
-                                }, 500: function () {
+                                }, 500: function (err) {
+                                    console.log(err)
                                     error_toast()
                                 }
                             },
@@ -954,6 +961,7 @@
 
 
                         submitHandler: function (form) {
+                            console.log(form)
                             $('#next3').attr('disabled', true)
                             $('#next3').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
@@ -972,6 +980,7 @@
                                 data: $(form).serialize(),
                                 statusCode: {
                                     200: function (response) {
+                                        console.log(response)
                                         $('#fieldset3').hide()
                                         $('#fieldset4').show()
 
@@ -1010,7 +1019,8 @@
 
 
                                     },
-                                    400: function () {
+                                    400: function (err) {
+                                        console.log(err)
                                         errorFunction()
                                         $('#next3').attr('type', 'submit')
                                         $('#next3').attr('disabled', false)
@@ -1054,6 +1064,7 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: 'top-end',
@@ -1075,11 +1086,13 @@
                                     title: 'Arizangiz muvaffaqiyatli topshirildi!'
                                 })
                             },
-                            400: function () {
+                            400: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             }
@@ -1100,6 +1113,7 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 var li = ''
 
 
@@ -1122,8 +1136,8 @@
 
                                 $('#sections_list').html(li)
                             },
-                            404: function () {
-
+                            404: function (err) {
+                                console.log(err)
                             }
                         },
                     });

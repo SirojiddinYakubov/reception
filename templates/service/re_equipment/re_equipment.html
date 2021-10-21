@@ -409,7 +409,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
                                         id="prev3">Oldingi
                                 </button>
-{#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
+                                {#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
                                 <button type="submit" id="next3"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
@@ -449,8 +449,8 @@
             $('.select2').select2()
             $('#given_number_div').hide()
 
-            $('#fieldset1').hide()
-            $('#fieldset3').show()
+            {#$('#fieldset1').hide()#}
+            {#$('#fieldset3').show()#}
 
         })
 
@@ -548,7 +548,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addCarModel(url = '{% url 'user:save_new_car_model' %}')
-
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -563,7 +563,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}', select_id = 'color')
-
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -577,7 +577,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}', select_id = 're_color')
-
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -608,6 +608,7 @@
 
 
                         submitHandler: function (form) {
+                            console.log(form)
                             var seriya = $('#seriya').val().toUpperCase()
                             var contract_date = $('#contract_date').val()
 
@@ -638,7 +639,7 @@
                 })
 
 
-                 $('#fake').on('click', function () {
+                $('#fake').on('click', function () {
                     generate_fake_data()
                 })
 
@@ -706,6 +707,7 @@
                         data: {'organization': $('#organization option:selected').val()},
                         statusCode: {
                             200: function (response) {
+                                console.log(response)
                                 $('#director').attr('value', response.organization.fields.director)
                                 $('#identification_number').attr('value', response.organization.fields.identification_number)
                                 $('#legal_address_region').attr('value', response.legal_address_region)
@@ -713,7 +715,8 @@
 
                                 $('input[name ="organization"]').val($('#organization option:selected').val())
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                             },
                         },
@@ -735,6 +738,7 @@
                             },
                             statusCode: {
                                 200: function (response) {
+                                    console.log(response)
                                     if (response === "True") {
                                         //agar yuk avtomobil bo'lsa
                                         $('.chassis_number_div').show()
@@ -746,9 +750,11 @@
                                         $('.chassis_number_div').hide()
                                         $('#chassis_number').removeAttr('name')
                                     }
-                                }, 400: function () {
+                                }, 400: function (err) {
+                                    console.log(err)
                                     error_toast()
-                                }, 500: function () {
+                                }, 500: function (err) {
+                                    console.log(err)
                                     error_toast()
                                 }
                             },
@@ -949,6 +955,7 @@
 
 
                         submitHandler: function (form) {
+                            console.log(form)
                             $('#next3').attr('disabled', true)
                             $('#next3').html('Keyingi&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
@@ -967,6 +974,7 @@
                                 data: $(form).serialize(),
                                 statusCode: {
                                     200: function (response) {
+                                        console.log(response)
                                         $('#fieldset3').hide()
                                         $('#fieldset4').show()
 
@@ -1005,7 +1013,8 @@
 
 
                                     },
-                                    400: function () {
+                                    400: function (err) {
+                                        console.log(err)
                                         errorFunction()
                                         $('#next3').attr('type', 'submit')
                                         $('#next3').attr('disabled', false)
@@ -1049,6 +1058,7 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: 'top-end',
@@ -1070,11 +1080,13 @@
                                     title: 'Arizangiz muvaffaqiyatli topshirildi!'
                                 })
                             },
-                            400: function () {
+                            400: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             }
@@ -1095,12 +1107,13 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 var li = ''
 
 
                                 $.each(res, function (index, value) {
 
-                                        li += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                    li += `<li class="list-group-item d-flex justify-content-between align-items-start">
                                                 <div class="ms-2 me-auto col-7 col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-9 text-start">
                                                     <div class="fw-bold text-start text-start">${value[1]}</div>
                                                     ${value[2]} ${value[3]} ${value[4]}
@@ -1117,7 +1130,8 @@
 
                                 $('#sections_list').html(li)
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
 
                             }
                         },
