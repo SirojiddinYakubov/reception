@@ -338,7 +338,7 @@ class GiftAgreement(ServiceCustomMixin):
 
 
 class InheritanceAgreement(ServiceCustomMixin):
-    template_name = 'service/inheritance_agreement /inheritance_agreement.html'
+    template_name = 'service/inheritance_agreement/inheritance_agreement.html'
 
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
