@@ -31,7 +31,7 @@ class AccountStatement(ServiceCustomMixin):
         try:
             with transaction.atomic():
                 request = self.request
-                service = get_object_or_404(Service, key='account_statement')
+                service = Service.objects.get(key='account_statement')
                 person_type = request.POST.get('person_type')
                 engine_number = request.POST.get('engine_number')
                 full_weight = request.POST.get('full_weight')
@@ -40,31 +40,31 @@ class AccountStatement(ServiceCustomMixin):
                 auction_number = request.POST.get('auction_number')
                 body_number = request.POST.get('body_number')
                 price = request.POST.get('price')
-                color = get_object_or_404(Color, id=request.POST.get('color', None))
+                color = Color.objects.get(id=request.POST.get('color', None))
                 made_year = datetime.datetime.strptime(request.POST.get('made_year', None), '%Y-%m-%d')
                 devices = []
                 if request.POST.getlist('devices'):
                     for device_id in list(filter(None, request.POST.getlist('devices'))):
-                        devices.append(get_object_or_404(Device, id=device_id))
+                        devices.append(Device.objects.get(id=device_id))
 
                 fuel_types = []
                 if request.POST.getlist('fuel_types'):
                     for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
-                        fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+                        fuel_types.append(FuelType.objects.get(id=fuel_type_id))
 
-                user = get_object_or_404(User, id=request.user.id)
+                user = User.objects.get(id=request.user.id)
 
-                get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+                get_car = CarModel.objects.get(id=request.POST.get('car'))
 
                 # create car
                 car = Car.objects.create(model=get_car)
-                car.body_type = get_object_or_404(BodyType, id=request.POST.get('body_type', None))
+                car.body_type = BodyType.objects.get(id=request.POST.get('body_type', None))
 
                 if request.POST.get('chassis_number', None):
                     car.chassis_number = request.POST.get('chassis_number', None)
                 car.body_number = body_number
                 car.engine_number = engine_number
-                car.type = get_object_or_404(CarType, id=request.POST.get('car_type'))
+                car.type = CarType.objects.get(id=request.POST.get('car_type'))
                 car.made_year = made_year
                 car.full_weight = full_weight
                 car.empty_weight = empty_weight
@@ -72,7 +72,6 @@ class AccountStatement(ServiceCustomMixin):
 
                 car.is_new = True
                 car.is_replace_number = True
-
 
                 car.price = price
                 if request.POST.get('auction_number'):
@@ -89,7 +88,7 @@ class AccountStatement(ServiceCustomMixin):
                 application = Application.objects.create(created_user=user, created_date=timezone.now())
 
                 if int(person_type) == LEGAL_PERSON:
-                    organization = get_object_or_404(Organization, id=request.POST.get('organization'))
+                    organization = Organization.objects.get(id=request.POST.get('organization'))
                     application.person_type = person_type
                     application.organization = organization
 
@@ -103,17 +102,17 @@ class AccountStatement(ServiceCustomMixin):
                     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
                 example_document = ExampleDocument.objects.get(key=service.key)
                 application_document = ApplicationDocument.objects.filter(application=application,
-                                                                                    example_document=example_document)
+                                                                          example_document=example_document)
                 if not application_document.exists():
                     ApplicationDocument.objects.create(application=application,
-                                                                              example_document=example_document,
-                                                                              seriya=seriya,
-                                                                              contract_date=contract_date)
+                                                       example_document=example_document,
+                                                       seriya=seriya,
+                                                       contract_date=contract_date)
                 application.save()
-                return HttpResponse(application.id, content_type='json', status=200)
-        except:
 
-            return HttpResponse(status=400)
+                return HttpResponse(application.id, content_type='json', status=200)
+        except Exception as e:
+            return HttpResponse(e, status=400)
 
 
 class ContractOfSale(ServiceCustomMixin):
@@ -180,8 +179,6 @@ class ContractOfSale(ServiceCustomMixin):
                 car.save_old_number = False
                 car.is_replace_number = True
 
-
-
             if request.POST.get('is_auction') == 'true':
                 car.is_auction = True
                 car.given_number = request.POST.get('given_number', None)
@@ -194,9 +191,6 @@ class ContractOfSale(ServiceCustomMixin):
             car.full_weight = full_weight
             car.empty_weight = empty_weight
             car.engine_power = engine_power
-
-
-
 
             car.color = color
             for fuel_type in fuel_types:
@@ -307,7 +301,6 @@ class GiftAgreement(ServiceCustomMixin):
 
             car.is_replace_number = True
 
-
             car.color = color
             for fuel_type in fuel_types:
                 car.fuel_type.add(fuel_type)
@@ -342,6 +335,7 @@ class GiftAgreement(ServiceCustomMixin):
             return HttpResponse(application.id, content_type='json', status=200)
         except:
             return HttpResponse(status=400)
+
 
 class InheritanceAgreement(ServiceCustomMixin):
     template_name = 'service/inheritance_agreement /inheritance_agreement.html'
@@ -414,7 +408,6 @@ class InheritanceAgreement(ServiceCustomMixin):
             car.engine_power = engine_power
 
             car.is_replace_number = True
-
 
             car.color = color
             for fuel_type in fuel_types:
