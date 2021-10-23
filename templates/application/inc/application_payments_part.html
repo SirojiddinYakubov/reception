@@ -23,7 +23,7 @@
                     <td>{{ forloop.counter }}</td>
                     <th scope="row">{{ payment.get_state_duty_display }}</th>
                     <th scope="row">{{ payment.title }}</th>
-                    <td><b>    {% get_payment_score application.created_user.district payment.state_duty as score %}{{ score|intcomma }}</b></td>
+                    <td><b>    {% get_payment_score application.created_user payment.state_duty as score %} {{ score }}</b></td>
                     <td><b class="state_payment">
                         {% get_payment_payment payment application as pay %}{{ pay|intcomma }}</b> so'm
                     </td>

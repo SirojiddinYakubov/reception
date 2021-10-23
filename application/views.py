@@ -88,7 +88,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
         #
         # if application.service.key == 'account_statement':
         #     payments = reg_new_car(application, ten_day)
-
+        print(payments)
         context = {
             'application': application,
             'payments': payments,

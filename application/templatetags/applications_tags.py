@@ -133,16 +133,25 @@ def calculate_applications_count(section_id):
 #     # print(url)
 #     return None
 @register.simple_tag
-def get_payment_score(district, state_duty):
+def get_payment_score(user, state_duty):
+    from service.models import FINE, REGISTRATION, RE_REGISTRATION
     try:
-        score = StateDutyScore.objects.get(district=district, state_duty=state_duty)
-        if score:
-            return score.score
-        else:
-            return '{0} hisob raqami topilmadi!'.format(district.title)
-    except:
-        return '{0} hisob raqami topilmadi!'.format(district.title)
+        if state_duty != FINE or state_duty != REGISTRATION or state_duty != RE_REGISTRATION:
 
+            state_duty = StateDutyScore.objects.get(state_duty=state_duty, district=user.district)
+            if state_duty is None:
+                print("Buxoro obl gai tarkibida, tuman raqami")
+            else:
+                print("boshqa shaharda, Boxoro shahar raqami")
+
+        else:
+            state_duty = StateDutyScore.objects.get(state_duty=state_duty)
+            return state_duty.score
+
+
+    except:
+        state_duty = StateDutyScore.objects.get(state_duty=state_duty)
+        return state_duty.score
 
 @register.simple_tag
 def get_payment_payment(state_duty_percent, application):
@@ -152,12 +161,14 @@ def get_payment_payment(state_duty_percent, application):
             payment = int(int(state_duty_percent.percent) / 100 * int(application.car.price))
         elif state_duty_percent.state_duty == ROAD_FUND_HORSE_POWER:
 
-            payment = int(amount_base_calculation.amount / 100 * int(state_duty_percent.percent) * application.car.engine_power)
+            payment = int(
+                amount_base_calculation.amount / 100 * int(state_duty_percent.percent) * application.car.engine_power)
         else:
             payment = amount_base_calculation.amount / 100 * int(state_duty_percent.percent)
         return int(payment)
     except:
         return state_duty_percent.percent
+
 
 # @register.simple_tag
 # def check_payment_paid(state_duty_percent):
