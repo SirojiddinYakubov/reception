@@ -437,7 +437,6 @@
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
-
                     }
                 })
 
@@ -448,7 +447,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}')
-                        if (newval !== null) {
+                        if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
                     }

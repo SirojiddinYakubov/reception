@@ -29,6 +29,7 @@
                                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                             </svg>
                                         </a>
+                                        {% if request.user.role == 1 %}
                                         <a class="nav-link" href="#apps" title="Apps">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -40,6 +41,7 @@
                                                 <rect x="3" y="14" width="7" height="7"></rect>
                                             </svg>
                                         </a>
+                                        {% endif %}
 {#                                        <a class="nav-link" href="#pages" title="Pages">#}
 {#                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"#}
 {#                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"#}
