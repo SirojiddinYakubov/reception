@@ -215,7 +215,8 @@ def create_application_doc(request, filename):
                 f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_person.docx")
     elif service.key == 'inheritance_agreement':
         if application.organization:
-            doc = DocxTemplate(f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_legal.docx")
+            doc = DocxTemplate(
+                f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_legal.docx")
         else:
             doc = DocxTemplate(
                 f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_person.docx")
@@ -679,13 +680,15 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                 except:
                     score = StateDutyScore.objects.get(state_duty=percent.state_duty)
 
-                paid_state_duty = PaidStateDuty.objects.filter(application=application, score=score, percent=percent).last()
+                paid_state_duty = PaidStateDuty.objects.filter(application=application, score=score,
+                                                               percent=percent).last()
 
                 if paid_state_duty:
                     print('Application payments already paid')
                     return HttpResponse(status=409)
                 else:
-                    paid_state_duty = PaidStateDuty.objects.create(application=application, score=score, percent=percent)
+                    paid_state_duty = PaidStateDuty.objects.create(application=application, score=score,
+                                                                   percent=percent)
                     ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
                                                               application=application, paid_state_duty=paid_state_duty,
                                                               moderator=moderator)

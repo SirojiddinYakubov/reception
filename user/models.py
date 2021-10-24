@@ -9,6 +9,7 @@ from django.contrib.auth.models import AbstractUser, UserManager, PermissionsMix
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from django.db import models
+from django.db.models import Count, F
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -81,10 +82,17 @@ class Section(models.Model):
     def __str__(self):
         return f"{self.title}: {self.region.title}"
 
-    # def save(self, *args, **kwags):
-    #     if self.id is None:
-    #         self.district
-    #     return super().save(*args, **kwags)
+    # def save(self, *args, **kwargs):
+    #     if self.id:
+    #         print(self.district.all())
+    #         for district in self.district.all():
+    #             print(district.title)
+    #             if Section.objects.exclude(id=self.id).filter(district=district).exists():
+    #                 print('Validation error')
+    #     return super(Section, self).save(*args, **kwargs)
+    #     # if self.id is None:
+    #     #     self.district
+
 
 # ROLE_CHOICES = (
 #     ("1", "User"),  # Oddiy foydalanuvchilar
