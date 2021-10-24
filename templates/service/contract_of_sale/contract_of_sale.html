@@ -474,8 +474,8 @@
             $('.select2').select2()
             $('#given_number_div').hide()
 
-            $('#fieldset1').hide()
-            $('#fieldset3').show()
+            {#$('#fieldset1').hide()#}
+            {#$('#fieldset3').show()#}
 
         })
 
@@ -589,7 +589,7 @@
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}')
                         console.log(newval)
-                        if (newval !== null) {
+                        if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
                     }
