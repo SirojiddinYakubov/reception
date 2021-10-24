@@ -133,25 +133,27 @@ def calculate_applications_count(section_id):
 #     # print(url)
 #     return None
 @register.simple_tag
-def get_payment_score(user, state_duty):
+def get_payment_score(section, user, percent):
     from service.models import FINE, REGISTRATION, RE_REGISTRATION
     try:
-        if state_duty != FINE or state_duty != REGISTRATION or state_duty != RE_REGISTRATION:
-
-            state_duty = StateDutyScore.objects.get(state_duty=state_duty, district=user.district)
-            if state_duty is None:
+        percent = StateDutyPercent.objects.get(id=percent.id)
+        if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
+            section = Section.objects.get(id=section.id)
+            if user.district in section.district.all():
                 print("Buxoro obl gai tarkibida, tuman raqami")
+                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=user.district).last()
             else:
                 print("boshqa shaharda, Boxoro shahar raqami")
-
+                state_duty = StateDutyScore.objects.filter(region=section.region, state_duty=percent.state_duty).last()
         else:
-            state_duty = StateDutyScore.objects.get(state_duty=state_duty)
-            return state_duty.score
-
-
-    except:
-        state_duty = StateDutyScore.objects.get(state_duty=state_duty)
+            print('else')
+            state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
         return state_duty.score
+    except Exception as e:
+        print(e)
+        state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
+        return state_duty.score
+
 
 @register.simple_tag
 def get_payment_payment(state_duty_percent, application):

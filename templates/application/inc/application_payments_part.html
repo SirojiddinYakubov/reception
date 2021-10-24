@@ -16,26 +16,26 @@
     </thead>
     <tbody>
 
-    {% for payment in payments %}
-        {% if payment.payment != 0 %}
+    {% for percent in percents %}
+        {% if percent.payment != 0 %}
 {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <th scope="row">{{ payment.get_state_duty_display }}</th>
-                    <th scope="row">{{ payment.title }}</th>
-                    <td><b>    {% get_payment_score application.created_user payment.state_duty as score %} {{ score }}</b></td>
+                    <th scope="row">{{ percent.get_state_duty_display }}</th>
+                    <th scope="row">{{ percent.title }}</th>
+                    <td><b>    {% get_payment_score application.section application.created_user percent as score %} {{ score }}</b></td>
                     <td><b class="state_payment">
-                        {% get_payment_payment payment application as pay %}{{ pay|intcomma }}</b> so'm
+                        {% get_payment_payment percent application as pay %}{{ pay|intcomma }}</b> so'm
                     </td>
                     <td>
                         {% if request.user.role == '2' or request.user.role == '3' %}
-                            <input name="payment" {% if payment.is_paid %}checked{% endif %}
-                                   data-payment="{{ payment.id }}"
+                            <input name="payment" {% if percent.is_paid %}checked{% endif %}
+                                   data-payment="{{ percent.id }}"
                                    class="payment_checkbox" type="checkbox"/>
                         {% else %}
-                            {% if payment|check_payment_paid %}
+                            {% if percent|check_payment_paid %}
                                 <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                <div class="application-state-duty-payment"  data-payment="{{ payment.id }}"><i style="color: red" class="far fa-times-circle"></i></div>{% endif %}
+                                <div class="application-state-duty-payment"  data-payment="{{ percent.id }}"><i style="color: red" class="far fa-times-circle"></i></div>{% endif %}
                         {% endif %}
                     </td>
                 </tr>

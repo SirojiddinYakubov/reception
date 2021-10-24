@@ -81,6 +81,10 @@ class Section(models.Model):
     def __str__(self):
         return f"{self.title}: {self.region.title}"
 
+    # def save(self, *args, **kwags):
+    #     if self.id is None:
+    #         self.district
+    #     return super().save(*args, **kwags)
 
 # ROLE_CHOICES = (
 #     ("1", "User"),  # Oddiy foydalanuvchilar

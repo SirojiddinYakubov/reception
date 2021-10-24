@@ -132,13 +132,11 @@ def reg_new_car_v2(application):
 
     """Ro'yhatlash ya'ni DRB uchun to'lov"""
     if not car.is_auction:
-        print('if')
         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                        lost_number=car.lost_number, is_old_number=car.is_old_number,
                                                        is_auction=car.is_auction,
                                                        car_is_new=car.is_new, state_duty=REGISTRATION)
     else:
-        print('else')
         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                        person_type=application.person_type, lost_number=car.lost_number,
                                                        is_old_number=car.is_old_number,
