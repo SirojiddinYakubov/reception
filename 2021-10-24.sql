@@ -3933,108 +3933,108 @@ COPY public.user_organization (id, title, identification_number, address_of_gara
 --
 
 COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
-1	Amir Temur nomli ovul fuqarolar yig'ini	1	t	15
-2	Tosh Yop ovul fuqarolar yig'ini	1	t	15
-3	O'rta qal'a ovul fuqarolar yig'ini	1	t	15
-4	O'rta qal'a ovul fuqarolar yig'ini tarkibidagi "Arna bo'yi" MFY	1	t	15
-5	O'rta qal'a ovul fuqarolar yig'ini tarkibidagi "Bog'" MFY	1	t	15
-6	Qilichboy ovul fuqarolar yig'ini	1	t	15
-7	Qilichboy ovul fuqarolar yig'ini tarkibidagi "Xizr eli" MFY	1	t	15
-8	Qilichboy ovul fuqarolar yig'ini tarkibidagi "Besh ovul" MFY	1	t	15
-9	Qilichboy ovul fuqarolar yig'ini tarkibidagi "Tosh qal'a" MFY	1	t	15
-10	Qilichboy ovul fuqarolar yig'ini tarkibidagi "Yuqori qishloq" MFY	1	t	15
-11	Xalimbeg ovul fuqarolar yig'ini	1	t	15
-12	Xalimbeg ovul fuqarolar yig'ini tarkibidagi "AYoqchi" MFY	1	t	15
-13	Do'rman ovul fuqarolar yig'ini	1	t	15
-14	Do'rman ovul fuqarolar yig'ini tarkibidagi "Qoramon" MFY	1	t	15
-15	Do'rman ovul fuqarolar yig'ini tarkibidagi "Bo'z solma" MFY	1	t	15
-16	Bo'z Yop ovul fuqarolar yig'ini	1	t	15
-17	Xitoy ovul fuqarolar yig'ini	1	t	15
-18	Xitoy ovul fuqarolar yig'ini tarkibidagi "Tor Yop" MFY	1	t	15
-19	Xitoy ovul fuqarolar yig'ini tarkibidagi "Namuna" MFY	1	t	15
-20	Kuyuk ko'pir ovul fuqarolar yig'ini	1	t	15
-21	Kuyuk ko'pir ovul fuqarolar yig'ini tarkibidagi "O'zbekiston" MFY	1	t	15
-22	Kuyuk ko'pir ovul fuqarolar yig'ini tarkibidagi "Qizilcholi" MFY	1	t	15
-23	Jumurtov shaharcha fuqarolar yig'ini	1	t	15
-24	Z.M.Bobur nomli ovul fuqarolar yig'ini	1	t	15
-25	Z.M.Bobur nomli ovul fuqarolar yig'ini tarkibidagi "Jumur ovul" MFY	1	t	15
-26	Oq oltin ovul fuqarolar yig'ini	1	t	15
-27	To'lqin ovul fuqarolar yig'ini	1	t	15
-28	Choyko'l ovul fuqarolar yig'ini	1	t	15
-29	Choyko'l ovul fuqarolar yig'ini tarkibidagi "Bosuv" MFY	1	t	15
-30	Qipchoq ovul fuqarolar yig'ini	1	t	15
-31	Qipchoq ovul fuqarolar yig'ini tarkibidagi "Daryo bo'yi" MFY	1	t	15
-32	Qipchoq ovul fuqarolar yig'ini tarkibidagi "Uyshin" MFY	1	t	15
-33	Qipchoq ovul fuqarolar yig'ini tarkibidagi "Besh tom" MFY	1	t	15
-34	Qangli ovul fuqarolar yig'ini	1	t	15
-35	Qangli ovul fuqarolar yig'ini tarkibidagi "Qum Yop" MFY	1	t	15
-36	Nazarxon ovul fuqarolar yig'ini	1	t	15
+1	Amir Temur nomli ovul fuqarolar yig`ini	1	t	15
+2	Tosh Yop ovul fuqarolar yig`ini	1	t	15
+3	O`rta qal`a ovul fuqarolar yig`ini	1	t	15
+4	O`rta qal`a ovul fuqarolar yig`ini tarkibidagi "Arna bo`yi" MFY	1	t	15
+5	O`rta qal`a ovul fuqarolar yig`ini tarkibidagi "Bog`" MFY	1	t	15
+6	Qilichboy ovul fuqarolar yig`ini	1	t	15
+7	Qilichboy ovul fuqarolar yig`ini tarkibidagi "Xizr eli" MFY	1	t	15
+8	Qilichboy ovul fuqarolar yig`ini tarkibidagi "Besh ovul" MFY	1	t	15
+9	Qilichboy ovul fuqarolar yig`ini tarkibidagi "Tosh qal`a" MFY	1	t	15
+10	Qilichboy ovul fuqarolar yig`ini tarkibidagi "Yuqori qishloq" MFY	1	t	15
+11	Xalimbeg ovul fuqarolar yig`ini	1	t	15
+12	Xalimbeg ovul fuqarolar yig`ini tarkibidagi "AYoqchi" MFY	1	t	15
+13	Do`rman ovul fuqarolar yig`ini	1	t	15
+14	Do`rman ovul fuqarolar yig`ini tarkibidagi "Qoramon" MFY	1	t	15
+15	Do`rman ovul fuqarolar yig`ini tarkibidagi "Bo`z solma" MFY	1	t	15
+16	Bo`z Yop ovul fuqarolar yig`ini	1	t	15
+17	Xitoy ovul fuqarolar yig`ini	1	t	15
+18	Xitoy ovul fuqarolar yig`ini tarkibidagi "Tor Yop" MFY	1	t	15
+19	Xitoy ovul fuqarolar yig`ini tarkibidagi "Namuna" MFY	1	t	15
+20	Kuyuk ko`pir ovul fuqarolar yig`ini	1	t	15
+21	Kuyuk ko`pir ovul fuqarolar yig`ini tarkibidagi "O`zbekiston" MFY	1	t	15
+22	Kuyuk ko`pir ovul fuqarolar yig`ini tarkibidagi "Qizilcholi" MFY	1	t	15
+23	Jumurtov shaharcha fuqarolar yig`ini	1	t	15
+24	Z.M.Bobur nomli ovul fuqarolar yig`ini	1	t	15
+25	Z.M.Bobur nomli ovul fuqarolar yig`ini tarkibidagi "Jumur ovul" MFY	1	t	15
+26	Oq oltin ovul fuqarolar yig`ini	1	t	15
+27	To`lqin ovul fuqarolar yig`ini	1	t	15
+28	Choyko`l ovul fuqarolar yig`ini	1	t	15
+29	Choyko`l ovul fuqarolar yig`ini tarkibidagi "Bosuv" MFY	1	t	15
+30	Qipchoq ovul fuqarolar yig`ini	1	t	15
+31	Qipchoq ovul fuqarolar yig`ini tarkibidagi "Daryo bo`yi" MFY	1	t	15
+32	Qipchoq ovul fuqarolar yig`ini tarkibidagi "Uyshin" MFY	1	t	15
+33	Qipchoq ovul fuqarolar yig`ini tarkibidagi "Besh tom" MFY	1	t	15
+34	Qangli ovul fuqarolar yig`ini	1	t	15
+35	Qangli ovul fuqarolar yig`ini tarkibidagi "Qum Yop" MFY	1	t	15
+36	Nazarxon ovul fuqarolar yig`ini	1	t	15
 37	A.Navoiy nomli MFY	1	t	15
 38	Chordara MFY	1	t	15
 39	Boy ovul MFY	1	t	15
 40	Durunki MFY	1	t	15
-41	Do'stlik MFY	1	t	15
+41	Do`stlik MFY	1	t	15
 42	Yangiobod MFY	1	t	15
 43	Beruniy nomli MFY	1	t	15
 44	Olmazor MFY	1	t	15
 45	Gulzor MFY	1	t	15
 46	Oybek nomli MFY	1	t	15
-47	Bo'ston MFY	1	t	15
-85	Kegeyli shaharchasi fuqarolar yig'ini	1	t	17
+47	Bo`ston MFY	1	t	15
+85	Kegeyli shaharchasi fuqarolar yig`ini	1	t	17
 86	Kegeyli shaharchasi 1-sonli MFY	1	t	17
 87	Kegeyli shaharchasi 2-sonli MFY	1	t	17
 88	Kegeyli shaharchasi 3-sonli MFY	1	t	17
 89	Kegeyli shaharchasi 4-sonli MFY	1	t	17
-90	Xalaqabad shaharchasi fuqarolar yig'ini	1	t	17
+90	Xalaqabad shaharchasi fuqarolar yig`ini	1	t	17
 91	Xalaqabad shaharchasi 1-sonli MFY	1	t	17
 92	Xalaqabad shaharchasi 2-sonli MFY	1	t	17
 93	Xalaqabad shaharchasi 3-sonli MFY	1	t	17
 94	Xalaqabad shaharchasi 4-sonli MFY	1	t	17
-95	Aktuba ovul fuqarolar yig'ini	1	t	17
-96	Abat ovul fuqarolar yig'ini	1	t	17
-97	Janabazar ovul fuqarolar yig'ini	1	t	17
-98	Juzim bag ovul fuqarolar yig'ini	1	t	17
-99	Jalpak jap ovul fuqarolar yig'ini	1	t	17
-100	Kumshungil ovul fuqarolar yig'ini	1	t	17
-101	Yerkindarya ovul fuqarolar yig'ini	1	t	17
+95	Aktuba ovul fuqarolar yig`ini	1	t	17
+96	Abat ovul fuqarolar yig`ini	1	t	17
+97	Janabazar ovul fuqarolar yig`ini	1	t	17
+98	Juzim bag ovul fuqarolar yig`ini	1	t	17
+99	Jalpak jap ovul fuqarolar yig`ini	1	t	17
+100	Kumshungil ovul fuqarolar yig`ini	1	t	17
+101	Yerkindarya ovul fuqarolar yig`ini	1	t	17
 102	Kazanketken SHFY	1	t	17
-103	Kusxanatau ovul fuqarolar yig'ini	1	t	17
-104	Aspantay ovul fuqarolar yig'ini	1	t	17
-117	Qorao'zak shaharcha fuqarolai yig'ini	1	t	19
+103	Kusxanatau ovul fuqarolar yig`ini	1	t	17
+104	Aspantay ovul fuqarolar yig`ini	1	t	17
+117	Qorao`zak shaharcha fuqarolai yig`ini	1	t	19
 118	1-sonli MFY	1	t	19
 119	2-sonli MFY	1	t	19
 120	3-sonli MFY	1	t	19
 121	4-sonli MFY	1	t	19
-122	Berdax ovul fuqarolar yig'ini	1	t	19
-123	Qorako'l ovul fuqarolar yig'ini	1	t	19
-124	Qorabug'a ovul fuqarolar yig'ini	1	t	19
-125	Qoybaq ovul fuqarolar yig'ini	1	t	19
-126	Madeniyat ovul fuqarolar yig'ini	1	t	19
-127	Alg'abas ovul fuqarolar yig'ini	1	t	19
-128	Qorao'zak ovul fuqarolar yig'ini	1	t	19
-129	Yesimo'zak ovul fuqarolar yig'ini	1	t	19
+122	Berdax ovul fuqarolar yig`ini	1	t	19
+123	Qorako`l ovul fuqarolar yig`ini	1	t	19
+124	Qorabug`a ovul fuqarolar yig`ini	1	t	19
+125	Qoybaq ovul fuqarolar yig`ini	1	t	19
+126	Madeniyat ovul fuqarolar yig`ini	1	t	19
+127	Alg`abas ovul fuqarolar yig`ini	1	t	19
+128	Qorao`zak ovul fuqarolar yig`ini	1	t	19
+129	Yesimo`zak ovul fuqarolar yig`ini	1	t	19
 167	1 sonli MFY	1	t	21
 168	2 sonli MFY	1	t	21
 169	3 sonli MFY	1	t	21
 170	4 sonli MFY	1	t	21
 171	5 sonli MFY	1	t	21
-172	Uchsay ovul fuqarolar yig'ini 	1	t	21
-173	Tikuzyak ovul fuqarolar yig'ini 	1	t	21
-174	Bozatoo' ovul fuqarolar yig'ini 	1	t	21
-175	Madeli ovul fuqarolar yig'ini 	1	t	21
-176	Hakim-ota ovul fuqarolar yig'ini 	1	t	21
-177	Qazaxdarya ovul fuqarolar yig'ini 	1	t	21
-187	Botanika bog'i MFY	1	t	23
-188	Havo Yo'li MFY	1	t	23
-189	Aydin Yo'l MFY	1	t	23
+172	Uchsay ovul fuqarolar yig`ini 	1	t	21
+173	Tikuzyak ovul fuqarolar yig`ini 	1	t	21
+174	Bozatoo` ovul fuqarolar yig`ini 	1	t	21
+175	Madeli ovul fuqarolar yig`ini 	1	t	21
+176	Hakim-ota ovul fuqarolar yig`ini 	1	t	21
+177	Qazaxdarya ovul fuqarolar yig`ini 	1	t	21
+187	Botanika bog`i MFY	1	t	23
+188	Havo Yo`li MFY	1	t	23
+189	Aydin Yo`l MFY	1	t	23
 190	Chimboy choyxona MFY	1	t	23
-191	Xalqlar do'stligi MFY	1	t	23
-192	Shig'is MFY	1	t	23
+191	Xalqlar do`stligi MFY	1	t	23
+192	Shig`is MFY	1	t	23
 193	Shoirlar ovuli MFY	1	t	23
 194	Tinchlik MFY	1	t	23
-195	Do'stlik MFY	1	t	23
+195	Do`stlik MFY	1	t	23
 196	Sarbinoz MFY	1	t	23
-197	Tung'ish ko'nis MFY	1	t	23
+197	Tung`ish ko`nis MFY	1	t	23
 198	Qurilishchi MFY	1	t	23
 199	13-sonli Qoskol-2 MFY	1	t	23
 200	14-sonli Almazar MFY	1	t	23
@@ -4049,7 +4049,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 209	23-sonli Qum ovul MFY	1	t	23
 210	24-sonli Jeke terek MFY	1	t	23
 211	25-sonli Turan MFY	1	t	23
-212	26-sonli Ko'k o'zak MFY	1	t	23
+212	26-sonli Ko`k o`zak MFY	1	t	23
 213	27-sonli Temir jol MFY	1	t	23
 214	28-sonli Ornek MFY	1	t	23
 215	29-sonli Nur MFY	1	t	23
@@ -4058,24 +4058,24 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 218	32-sonli May ovul MFY	1	t	23
 219	33-conli Qizil qum MFY	1	t	23
 220	34-sonli Jayhun MFY	1	t	23
-221	35-sonli Navro'z MFY	1	t	23
-222	36-sonli Nao'qan bag' MFY	1	t	23
+221	35-sonli Navro`z MFY	1	t	23
+222	36-sonli Nao`qan bag` MFY	1	t	23
 223	37-sonli Juvozchi MFY	1	t	23
 224	38-conliBes pobe MFY	1	t	23
 225	39-sonli Jiydeli boysin-1 MFY	1	t	23
 226	40-sonli Jiydeli baysin-2 MFY	1	t	23
-227	41-sonli Aq jag'is MFY	1	t	23
+227	41-sonli Aq jag`is MFY	1	t	23
 228	42-sonli Samanbay-1 MFY	1	t	23
 229	43-sonli Samanbay-2 MFY	1	t	23
 230	44-sonli Qoratov MFY	1	t	23
 231	45-sonli Boz ovul MFY	1	t	23
 232	46-sonli Qutli qonis MFY	1	t	23
 233	47-sonli Qumbiz ovul MFY	1	t	23
-234	48-sonli Aq otao' MFY	1	t	23
+234	48-sonli Aq otao` MFY	1	t	23
 235	49-sonli Guzar MFY	1	t	23
 236	50-sonli Beket MFY	1	t	23
-237	51-sonli G'arezsizlik MFY	1	t	23
-238	52-sonli Nao'bahar MFY	1	t	23
+237	51-sonli G`arezsizlik MFY	1	t	23
+238	52-sonli Nao`bahar MFY	1	t	23
 239	53-sonli AllaniYaz Qaharman MFY	1	t	23
 240	54-sonli Xojan ovul MFY	1	t	23
 241	55-sonli MFY	1	t	23
@@ -4087,38 +4087,38 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 264	Yangiobod MFY	1	t	25
 265	Beruniy MFY	1	t	25
 266	Ibn-Sino MFY	1	t	25
-267	To'rtko'l MFY	1	t	25
+267	To`rtko`l MFY	1	t	25
 268	Turkiston MFY	1	t	25
 269	Markazobod MFY	1	t	25
 270	Toshkent MFY	1	t	25
-271	G'alaba MFY	1	t	25
+271	G`alaba MFY	1	t	25
 272	Mustaqillik MFY	1	t	25
-273	Bog'Yop MFY	1	t	25
+273	Bog`Yop MFY	1	t	25
 274	Navoiy MFY	1	t	25
-275	O'zbekiston MFY	1	t	25
+275	O`zbekiston MFY	1	t	25
 276	Istiqlol MFY	1	t	25
 277	Xamza MFY	1	t	25
 278	Gagarin MFY	1	t	25
-279	Navro'z MFY	1	t	25
-280	Do'stlik MFY	1	t	25
+279	Navro`z MFY	1	t	25
+280	Do`stlik MFY	1	t	25
 281	Yoshlik MFY	1	t	25
-282	Oqqamish ovul fuqarolar yig'ini	1	t	25
-283	Oqboshli ovul fuqarolar yig'ini	1	t	25
-284	O'zbekiston ovul fuqarolar yig'ini	1	t	25
-285	Sho'raxon ovul fuqarolar yig'ini	1	t	25
-286	Ko'na-To'rtko'l ovul fuqarolar yig'ini	1	t	25
-287	Paxtachi ovul fuqarolar yig'ini	1	t	25
-288	Ullubog' ovul fuqarolar yig'ini	1	t	25
-289	Tozabog'Yop ovul fuqarolar yig'ini	1	t	25
-290	A.Durdiev nomli ovul fuqarolar yig'ini	1	t	25
-291	Kelteminor ovul fuqarolar yig'ini	1	t	25
-292	Yonboshqal'a ovul fuqarolar yig'ini	1	t	25
-293	Ko'kcha ovul fuqarolar yig'ini	1	t	25
-294	Paxtaobod ovul fuqarolar yig'ini	1	t	25
-295	Qumbasqan ovul fuqarolar yig'ini	1	t	25
-296	Atauba ovul fuqarolar yig'ini	1	t	25
-297	O'zbekiston ovul fuqarolar yig'ini tasarrufidagi Do'stlik MFY	1	t	25
-298	Ko'na-To'rtko'l ovul fuqarolar yig'ini tasarrufidagi Anxorli MFY	1	t	25
+282	Oqqamish ovul fuqarolar yig`ini	1	t	25
+283	Oqboshli ovul fuqarolar yig`ini	1	t	25
+284	O`zbekiston ovul fuqarolar yig`ini	1	t	25
+285	Sho`raxon ovul fuqarolar yig`ini	1	t	25
+286	Ko`na-To`rtko`l ovul fuqarolar yig`ini	1	t	25
+287	Paxtachi ovul fuqarolar yig`ini	1	t	25
+288	Ullubog` ovul fuqarolar yig`ini	1	t	25
+289	Tozabog`Yop ovul fuqarolar yig`ini	1	t	25
+290	A.Durdiev nomli ovul fuqarolar yig`ini	1	t	25
+291	Kelteminor ovul fuqarolar yig`ini	1	t	25
+292	Yonboshqal`a ovul fuqarolar yig`ini	1	t	25
+293	Ko`kcha ovul fuqarolar yig`ini	1	t	25
+294	Paxtaobod ovul fuqarolar yig`ini	1	t	25
+295	Qumbasqan ovul fuqarolar yig`ini	1	t	25
+296	Atauba ovul fuqarolar yig`ini	1	t	25
+297	O`zbekiston ovul fuqarolar yig`ini tasarrufidagi Do`stlik MFY	1	t	25
+298	Ko`na-To`rtko`l ovul fuqarolar yig`ini tasarrufidagi Anxorli MFY	1	t	25
 338	1-sonli MFY	1	t	27
 339	2-sonli MFY	1	t	27
 340	3-sonli MFY	1	t	27
@@ -4130,47 +4130,47 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 346	9-sonli MFY	1	t	27
 347	10-sonli MFY	1	t	27
 348	11-sonli MFY	1	t	27
-349	Tazg'ara ovul fuqarolar yig'ini	1	t	27
-350	Tag'jap ovul fuqarolar yig'ini	1	t	27
-351	Tazajol ovul fukarolar yig'ini	1	t	27
-352	Kenes ovul fuqarolar yig'ini	1	t	27
-353	Qosterek ovul fuqarolar yig'ini	1	t	27
-354	Mayjap ovul fuqarolar yig'ini	1	t	27
-355	Baxitli ovul fuqarolar yig'ini	1	t	27
-356	Qamis-arik ovul fuqarolar yig'ini	1	t	27
-357	Qizil-uzak ovul fuqarolar yig'ini	1	t	27
-358	Pashenttao' ovul fuqarolar yig'ini	1	t	27
-359	Kok-su ovul fuqarolar yig'ini	1	t	27
-372	Do'stlik ovul fuqarolar yig'ini	1	t	29
-373	Amirobod ovul fuqarolar yig'ini	1	t	29
-374	Toza-bog' ovul fuqarolar yig'ini	1	t	29
-375	Guldursun ovul fuqarolar yig'ini	1	t	29
-376	Qirqqiz ovul fuqarolar yig'ini	1	t	29
-377	QiliChinoq ovul fuqarolar yig'ini	1	t	29
-378	Saribiy ovul fuqarolar yig'ini	1	t	29
-379	Guliston ovul fuqarolar yig'ini	1	t	29
-380	Navoiy ovul fuqarolar yig'ini	1	t	29
-381	Ellikqal'a ovul fuqarolar yig'ini	1	t	29
-382	AqChako'l ovul fuqarolar yig'ini	1	t	29
-383	Sharq-Yulduzi ovul fuqarolar yig'ini	1	t	29
-384	Qizil-Qum ovul fuqarolar yig'ini	1	t	29
+349	Tazg`ara ovul fuqarolar yig`ini	1	t	27
+350	Tag`jap ovul fuqarolar yig`ini	1	t	27
+351	Tazajol ovul fukarolar yig`ini	1	t	27
+352	Kenes ovul fuqarolar yig`ini	1	t	27
+353	Qosterek ovul fuqarolar yig`ini	1	t	27
+354	Mayjap ovul fuqarolar yig`ini	1	t	27
+355	Baxitli ovul fuqarolar yig`ini	1	t	27
+356	Qamis-arik ovul fuqarolar yig`ini	1	t	27
+357	Qizil-uzak ovul fuqarolar yig`ini	1	t	27
+358	Pashenttao` ovul fuqarolar yig`ini	1	t	27
+359	Kok-su ovul fuqarolar yig`ini	1	t	27
+372	Do`stlik ovul fuqarolar yig`ini	1	t	29
+373	Amirobod ovul fuqarolar yig`ini	1	t	29
+374	Toza-bog` ovul fuqarolar yig`ini	1	t	29
+375	Guldursun ovul fuqarolar yig`ini	1	t	29
+376	Qirqqiz ovul fuqarolar yig`ini	1	t	29
+377	QiliChinoq ovul fuqarolar yig`ini	1	t	29
+378	Saribiy ovul fuqarolar yig`ini	1	t	29
+379	Guliston ovul fuqarolar yig`ini	1	t	29
+380	Navoiy ovul fuqarolar yig`ini	1	t	29
+381	Ellikqal`a ovul fuqarolar yig`ini	1	t	29
+382	AqChako`l ovul fuqarolar yig`ini	1	t	29
+383	Sharq-Yulduzi ovul fuqarolar yig`ini	1	t	29
+384	Qizil-Qum ovul fuqarolar yig`ini	1	t	29
 385	Chuqurqoq MFY	1	t	29
 386	Oq oltin MFY	1	t	29
 387	Ixlos MFY	1	t	29
 388	Koinot MFY	1	t	29
-389	Dumanqal'a MFY	1	t	29
+389	Dumanqal`a MFY	1	t	29
 390	Paxtachi MFY	1	t	29
-391	Cho'pon MFY	1	t	29
+391	Cho`pon MFY	1	t	29
 392	Usmon-Yusupov MFY	1	t	29
 393	Chayka MFY	1	t	29
-394	Tuproqal'a MFY	1	t	29
-395	Bo'ston MFY	1	t	29
+394	Tuproqal`a MFY	1	t	29
+395	Bo`ston MFY	1	t	29
 396	Ibn-Sino MFY	1	t	29
 397	Abay MFY	1	t	29
 398	Toshkent MFY	1	t	29
 399	A.Navoiy MFY	1	t	29
-400	Qavatqal'a MFY	1	t	29
-401	SaxtiYon shaharcha fuqarolar yig'ini	1	t	29
+400	Qavatqal`a MFY	1	t	29
+401	SaxtiYon shaharcha fuqarolar yig`ini	1	t	29
 402	1 son MFY	1	t	30
 403	2 son MFY	1	t	30
 404	3 son MFY	1	t	30
@@ -4208,7 +4208,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 436	Madaniyat MFY	1	t	30
 437	Maydonbozor MFY	1	t	30
 438	Maorif MFY	1	t	30
-439	Ma'rifat MFY	1	t	30
+439	Ma`rifat MFY	1	t	30
 440	Mexnat MFY	1	t	30
 441	Mirpustin MFY	1	t	30
 442	Mustakillik MFY	1	t	30
@@ -4221,7 +4221,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 449	Paxtakor MFY	1	t	30
 450	Pistamozor MFY	1	t	30
 451	Sanoat MFY	1	t	30
-452	Sa'diy MFY	1	t	30
+452	Sa`diy MFY	1	t	30
 453	Soy MFY	1	t	30
 454	Sulton Jura MFY	1	t	30
 455	Taxtakuprik MFY	1	t	30
@@ -4236,7 +4236,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 464	Xakikat MFY	1	t	30
 465	Xursandlik MFY	1	t	30
 466	Xutanarik MFY	1	t	30
-467	Cho'lpon 100 yilligi MFY	1	t	30
+467	Cho`lpon 100 yilligi MFY	1	t	30
 468	Shifokor MFY	1	t	30
 469	Shodlik MFY	1	t	30
 470	Erkin MFY	1	t	30
@@ -4246,79 +4246,79 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 474	X. Axmedov MFY	1	t	30
 475	Buyuk Turon MFY	1	t	30
 476	Oyjamol MFY	1	t	31
-477	Daryobo'yi MFY	1	t	31
+477	Daryobo`yi MFY	1	t	31
 478	Sanoat MFY	1	t	31
 479	BFK-Baxt MFY	1	t	31
 480	Kuyganyor SHFY	1	t	31
 481	Istiqlol MFY	1	t	31
-482	No'xatak MFY	1	t	31
-483	Qo'shariq MFY	1	t	31
+482	No`xatak MFY	1	t	31
+483	Qo`shariq MFY	1	t	31
 484	M.Soliev MFY	1	t	31
 485	Tolmozor MFY	1	t	31
 486	Nayman MFY	1	t	31
 487	Poloson MFY	1	t	31
 488	Mirobod MFY	1	t	31
-489	Xo'ja tojik MFY	1	t	31
+489	Xo`ja tojik MFY	1	t	31
 490	Oqyor QFY	1	t	31
 491	Orol MFY	1	t	31
 492	Guliston MFY	1	t	31
 493	Maorif MFY	1	t	31
 494	Orol QFY	1	t	31
 495	Pistamozor MFY	1	t	31
-496	Bo'riboy MFY	1	t	31
+496	Bo`riboy MFY	1	t	31
 497	Gumbaz MFY	1	t	31
 498	Zangibobo MFY	1	t	31
 499	Qurama MFY	1	t	31
-500	Og'ullik MFY	1	t	31
+500	Og`ullik MFY	1	t	31
 501	Darxon MFY	1	t	31
 502	Chem MFY	1	t	31
 503	Madraximxoji MFY	1	t	31
 504	Abduraxmonmingboshi MFY	1	t	31
-505	Qum ko'chasi MFY	1	t	31
+505	Qum ko`chasi MFY	1	t	31
 506	Qoratut MFY	1	t	31
 507	Xokan QFY	1	t	31
 508	Ayrilish MFY	1	t	31
 509	Damariq MFY	1	t	31
-510	Beshbo'ynoq MFY	1	t	31
+510	Beshbo`ynoq MFY	1	t	31
 511	Ekin- tikin MFY	1	t	31
 512	Guliston MFY	1	t	31
-513	Chorbog' MFY	1	t	31
+513	Chorbog` MFY	1	t	31
 514	Yorboshi QFY	1	t	31
 515	Mart MFY	1	t	31
 516	Mustaqillik MFY	1	t	31
-517	Navro'z MFY	1	t	31
+517	Navro`z MFY	1	t	31
 518	Rovvot MFY	1	t	31
 519	Istiqlol MFY	1	t	31
 520	Maorif MFY	1	t	31
 521	Dexqon MFY	1	t	31
 522	Namuna MFY	1	t	31
-523	To'pabjuvoz MFY	1	t	31
-524	Bo'taqora QFY	1	t	31
-525	Do'stlik MFY	1	t	31
+523	To`pabjuvoz MFY	1	t	31
+524	Bo`taqora QFY	1	t	31
+525	Do`stlik MFY	1	t	31
 526	Toshloq MFY	1	t	31
 527	Terak tagi MFY	1	t	31
 528	J.Saidov MFY	1	t	31
 529	Jaxarmasjid MFY	1	t	31
-530	Mingo'rik MFY	1	t	31
+530	Mingo`rik MFY	1	t	31
 531	Rovvot MFY	1	t	31
-532	Qo'nji QFY	1	t	31
-533	O'rikzor MFY	1	t	31
+532	Qo`nji QFY	1	t	31
+533	O`rikzor MFY	1	t	31
 534	Islomobod MFY	1	t	31
-535	Yangi to'lqin MFY	1	t	31
+535	Yangi to`lqin MFY	1	t	31
 536	Jevachi MFY	1	t	31
 537	Guzar MFY	1	t	31
 538	Yu.Mamajonov MFY	1	t	31
 539	Teraktagi MFY	1	t	31
-540	Afg'on MFY	1	t	31
+540	Afg`on MFY	1	t	31
 541	Joxonobod MFY	1	t	31
 542	Xortum QFY	1	t	31
 543	Yangiobod MFY	1	t	31
 544	Gulobod MFY	1	t	31
-545	Qo'qonlik MFY	1	t	31
-546	Bobog'ozi MFY	1	t	31
+545	Qo`qonlik MFY	1	t	31
+546	Bobog`ozi MFY	1	t	31
 547	Aylanpa MFY	1	t	31
-548	Do'dir MFY	1	t	31
-549	Cho'ngbog'iCh MFY	1	t	31
+548	Do`dir MFY	1	t	31
+549	Cho`ngbog`iCh MFY	1	t	31
 550	Chavkandaryo MFY	1	t	31
 551	Bekobod MFY	1	t	31
 552	Qoraqolpoq MFY	1	t	31
@@ -4328,14 +4328,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 556	Guliston MFY	1	t	31
 557	Xaqiqat MFY	1	t	31
 558	Otchopar MFY	1	t	31
-559	Do'ng qishloq MFY	1	t	31
+559	Do`ng qishloq MFY	1	t	31
 560	Kattaguzar MFY	1	t	31
 561	Sharq Yulduzi MFY	1	t	31
 562	Chilon MFY	1	t	31
 563	Xrabek QFY	1	t	31
 564	Zarbdor KFY	1	t	32
 565	Saidobod MFY	1	t	32
-566	Ne'matobod MFY	1	t	32
+566	Ne`matobod MFY	1	t	32
 567	Ergashobod MFY	1	t	32
 568	Dung MFY	1	t	32
 569	Yangisor MFY	1	t	32
@@ -4402,8 +4402,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 630	Baynalminal MFY	1	t	32
 631	Bobur MFY	1	t	32
 632	Birlik MFY	1	t	32
-633	Do'stlik MFY	1	t	32
-634	Xamdo'stlik MFY	1	t	32
+633	Do`stlik MFY	1	t	32
+634	Xamdo`stlik MFY	1	t	32
 635	Nurafshon MFY	1	t	32
 636	Qadiryat MFY	1	t	32
 637	Istiqlol MFY	1	t	32
@@ -4412,8 +4412,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 640	T.Matyoqubov MFY	1	t	32
 641	Shodlik MFY	1	t	32
 642	Ibn-Sino MFY	1	t	32
-643	O'zbekiston MFY	1	t	32
-644	Ulug'bek MFY	1	t	32
+643	O`zbekiston MFY	1	t	32
+644	Ulug`bek MFY	1	t	32
 645	Siza QFY	1	t	33
 646	Oq-tepa MFY	1	t	33
 647	Siza MFY	1	t	33
@@ -4422,71 +4422,71 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 650	Nasriddinobod MFY	1	t	33
 651	Eskihaqulobod QFY	1	t	33
 652	Yettiqashqa MFY	1	t	33
-653	O'lmas MFY	1	t	33
+653	O`lmas MFY	1	t	33
 654	Eskihaqulobod MFY	1	t	33
-655	Dog'iston MFY	1	t	33
+655	Dog`iston MFY	1	t	33
 656	Yangi hayot MFY	1	t	33
 657	Mustaqillik MFY	1	t	33
 658	Tulkiobod MFY	1	t	33
 659	Tovuldi MFY	1	t	33
 660	Yangiqishloq MFY	1	t	33
-661	Xo'jaobod QFY	1	t	33
+661	Xo`jaobod QFY	1	t	33
 662	Madaminov MFY	1	t	33
 663	Guzar MFY	1	t	33
 664	Qahramon MFY	1	t	33
 665	Buloqboshi MFY	1	t	33
-666	Qo'rg'oncha MFY	1	t	33
+666	Qo`rg`oncha MFY	1	t	33
 667	Fayzobod MFY	1	t	33
-668	A'lam MFY	1	t	33
+668	A`lam MFY	1	t	33
 669	Oxunboboev QFY	1	t	33
 670	Omonariq MFY	1	t	33
 671	Chinobod MFY	1	t	33
-672	Sho'r MFY	1	t	33
+672	Sho`r MFY	1	t	33
 673	Tumor MFY	1	t	33
 674	Botir MFY	1	t	33
 675	Baliqchi MFY	1	t	33
 676	Zaxkash MFY	1	t	33
-677	To'da MFY	1	t	33
+677	To`da MFY	1	t	33
 678	Qiyali MFY	1	t	33
 679	Qumtepa MFY	1	t	33
 680	Sarnavul MFY	1	t	33
-681	Qo'rg'oncha MFY	1	t	33
+681	Qo`rg`oncha MFY	1	t	33
 682	Olimbek QFY	1	t	33
 683	Olimbek MFY	1	t	33
-684	Do'stlik MFY	1	t	33
+684	Do`stlik MFY	1	t	33
 685	Fayzaobod MFY	1	t	33
-686	Polvonko'l MFY	1	t	33
-687	Do'ngsaroy MFY	1	t	33
+686	Polvonko`l MFY	1	t	33
+687	Do`ngsaroy MFY	1	t	33
 688	Eshonchek MFY	1	t	33
 689	Zulfiqor MFY	1	t	33
 690	Xalfachek MFY	1	t	33
-691	O'rmonbek QFY	1	t	33
-692	O'rmonbek MFY	1	t	33
-693	Bo'z MFY	1	t	33
+691	O`rmonbek QFY	1	t	33
+692	O`rmonbek MFY	1	t	33
+693	Bo`z MFY	1	t	33
 694	Xolmurod MFY	1	t	33
 695	Buston QFY	1	t	33
 696	Alchazor MFY	1	t	33
-697	Bo'ston MFY	1	t	33
+697	Bo`ston MFY	1	t	33
 698	Jartepa MFY	1	t	33
 699	Eshonqishloq MFY	1	t	33
 700	Aralxon MFY	1	t	33
 701	Guliston QFY	1	t	33
-702	Ko'lbo'yi MFY	1	t	33
+702	Ko`lbo`yi MFY	1	t	33
 703	Guliston MFY	1	t	33
-704	Oqqo'rg'on MFY	1	t	33
+704	Oqqo`rg`on MFY	1	t	33
 705	Sheralichek MFY	1	t	33
 706	Mirzaboshichek MFY	1	t	33
 707	Balikchi QFY	1	t	33
-708	Qo'rg'oncha MFY	1	t	33
-709	O'rtaqo'rg'on MFY	1	t	33
-710	Go'rovon MFY	1	t	33
+708	Qo`rg`oncha MFY	1	t	33
+709	O`rtaqo`rg`on MFY	1	t	33
+710	Go`rovon MFY	1	t	33
 711	Yakkatol MFY	1	t	33
 712	Baliqchi MFY	1	t	33
 713	Kattabuloq MFY	1	t	33
 714	Markaz MFY	1	t	33
 715	Islomobod MFY	1	t	33
-716	Oqqo'rg'on MFY	1	t	33
-717	Ko'l MFY	1	t	33
+716	Oqqo`rg`on MFY	1	t	33
+717	Ko`l MFY	1	t	33
 718	Bulokboshi QFY	1	t	34
 719	Toshkechik MFY	1	t	34
 720	Guliston MFY	1	t	34
@@ -4531,16 +4531,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 759	Sanoat MFY	1	t	34
 760	Balandchek MFY	1	t	34
 761	Oxunboboev MFY	1	t	35
-762	A.Yo'lchiev MFY	1	t	35
+762	A.Yo`lchiev MFY	1	t	35
 763	Nasirdinbek MFY	1	t	35
 764	Guzar MFY	1	t	35
-765	Bo'ston MFY	1	t	35
-766	O'rda to'p MFY	1	t	35
-767	Do'stlik MFY	1	t	35
+765	Bo`ston MFY	1	t	35
+766	O`rda to`p MFY	1	t	35
+767	Do`stlik MFY	1	t	35
 768	Axmadobod MFY	1	t	35
-769	Bo'z SHFY	1	t	35
+769	Bo`z SHFY	1	t	35
 770	Dexqonobod MFY	1	t	35
-771	Ma'rufobod MFY	1	t	35
+771	Ma`rufobod MFY	1	t	35
 772	Mexnatobod MFY	1	t	35
 773	Xovos MFY	1	t	35
 774	Guliston MFY	1	t	35
@@ -4553,7 +4553,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 781	Yangi obod MFY	1	t	35
 782	Holdevonbek QFY	1	t	35
 783	M.Jalolov MFY	1	t	35
-784	Navro'z MFY	1	t	35
+784	Navro`z MFY	1	t	35
 785	Yangi hayot MFY	1	t	35
 786	Darmonqulota MFY	1	t	35
 787	Yangi turmush MFY	1	t	35
@@ -4640,56 +4640,56 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 868	M.Usmonov MFY	1	t	37
 869	A.Navoiy MFY	1	t	37
 870	U.Mansurov MFY	1	t	37
-871	M.To'xtaboev MFY	1	t	37
+871	M.To`xtaboev MFY	1	t	37
 872	Obod MFY	1	t	37
 873	Yuqori-Jonobod MFY	1	t	37
 874	Yangi obod MFY	1	t	37
 875	Zarbdor MFY	1	t	37
 876	Daminboychek MFY	1	t	37
 877	Oq-oltin MFY	1	t	37
-878	Qo'shko'prik MFY	1	t	37
+878	Qo`shko`prik MFY	1	t	37
 879	Jonobod MFY	1	t	37
 880	Birlashgan MFY	1	t	37
-881	O'rtoqlar KFY	1	t	37
-882	Navro'zobod MFY	1	t	37
+881	O`rtoqlar KFY	1	t	37
+882	Navro`zobod MFY	1	t	37
 883	Birlashgan MFY	1	t	37
 884	A.Jomiy MFY	1	t	37
 885	Tuyachi MFY	1	t	37
 886	Yangizamon MFY	1	t	37
-887	Bo'ston MFY	1	t	37
-888	Do'stlik MFY	1	t	37
+887	Bo`ston MFY	1	t	37
+888	Do`stlik MFY	1	t	37
 889	Yangizamon KFY	1	t	37
 890	Guliston MFY	1	t	37
-891	Qo'g'ay MFY	1	t	37
+891	Qo`g`ay MFY	1	t	37
 892	Beshterak MFY	1	t	37
 893	Urganji MFY	1	t	37
 894	Kuygan-yor MFY	1	t	37
-895	O'rta-qishloq MFY	1	t	37
+895	O`rta-qishloq MFY	1	t	37
 896	Erkin KFY	1	t	37
 897	Gurkirov-1 MFY	1	t	37
 898	Gurkirov-2 MFY	1	t	37
 899	Toshkechik MFY	1	t	37
-900	Uzun-ko'chasi MFY	1	t	37
-901	Qum-ko'chasi MFY	1	t	37
+900	Uzun-ko`chasi MFY	1	t	37
+901	Qum-ko`chasi MFY	1	t	37
 902	Beshmirza MFY	1	t	37
 903	Qora-yantoq MFY	1	t	37
 904	Yukori-Chuvama MFY	1	t	37
-905	Cho'rtanliq MFY	1	t	37
+905	Cho`rtanliq MFY	1	t	37
 906	Izboskan KFY	1	t	37
 907	Yuqori hosil MFY	1	t	37
 908	Moygir MFY	1	t	37
-909	Daryo-bo'yi MFY	1	t	37
+909	Daryo-bo`yi MFY	1	t	37
 910	Sorboshi MFY	1	t	37
 911	Moygir KFY	1	t	37
 912	Botirobod MFY	1	t	37
-913	To'rtko'l MFY	1	t	37
+913	To`rtko`l MFY	1	t	37
 914	T.Shokirov MFY	1	t	37
 915	A.Ikromov MFY	1	t	37
 916	Guzar MFY	1	t	37
 917	Shermatobod KFY	1	t	37
-918	To'raobod MFY	1	t	37
+918	To`raobod MFY	1	t	37
 919	Yakkatut MFY	1	t	37
-920	Y.Po'latov MFY	1	t	37
+920	Y.Po`latov MFY	1	t	37
 921	Yakkatut KFY	1	t	37
 922	Boy mahalla MFY	1	t	37
 923	Urganji MFY	1	t	37
@@ -4706,10 +4706,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 934	A.Temur MFY	1	t	38
 935	A.Yassaviy MFY	1	t	38
 936	B.Ahmedov MFY	1	t	38
-937	Bo'rilik MFY	1	t	38
+937	Bo`rilik MFY	1	t	38
 938	Z.M.Bobur MFY	1	t	38
 939	Paxtachi MFY	1	t	38
-940	M.Ulug'bek MFY	1	t	38
+940	M.Ulug`bek MFY	1	t	38
 941	Mustaqillik MFY	1	t	38
 942	Mustaqillikning 15 y. MFY	1	t	38
 943	Uch tegirmon MFY	1	t	38
@@ -4717,30 +4717,30 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 945	A.Navoiy MFY	1	t	39
 946	Guliston MFY	1	t	39
 947	Ibn Sino MFY	1	t	39
-948	Qo'rg'ontepa MFY	1	t	39
+948	Qo`rg`ontepa MFY	1	t	39
 949	Mustaqillik MFY	1	t	39
-950	Navro'z MFY	1	t	39
+950	Navro`z MFY	1	t	39
 951	S.Raximov MFY	1	t	39
 952	Savay MFY	1	t	39
-953	Toshqo'rg'on MFY	1	t	39
+953	Toshqo`rg`on MFY	1	t	39
 954	U.YusupovMFY	1	t	39
-955	Xon ko'chasi MFY	1	t	39
+955	Xon ko`chasi MFY	1	t	39
 956	Shaxrixonsoy MFY	1	t	39
 957	EshonqishloqMFY	1	t	39
 958	Yangi hayotMFY	1	t	39
-959	Qo'rg'ontepa QFY	1	t	39
+959	Qo`rg`ontepa QFY	1	t	39
 960	Bobur MFY	1	t	39
 961	Bozorboshi MFY	1	t	39
-962	G'ayrat MFY	1	t	39
+962	G`ayrat MFY	1	t	39
 963	Dexqonobod MFY	1	t	39
 964	Ijtimoyat MFY	1	t	39
-965	Qo'tkar MFY	1	t	39
-966	Qo'shtepa MFY	1	t	39
-967	Ma'murobod MFY	1	t	39
+965	Qo`tkar MFY	1	t	39
+966	Qo`shtepa MFY	1	t	39
+967	Ma`murobod MFY	1	t	39
 968	T.Sodiqov MFY	1	t	39
 969	Toshloq MFY	1	t	39
 970	Uchqun MFY	1	t	39
-971	Ho'jatepa MFY	1	t	39
+971	Ho`jatepa MFY	1	t	39
 972	Sultonobod QFY	1	t	39
 973	Ittifoq MFY	1	t	39
 974	Mirabdullaev MFY	1	t	39
@@ -4751,21 +4751,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 979	Xamza MFY	1	t	39
 980	Savay QFY	1	t	39
 981	Birlashgan MFY	1	t	39
-982	G'alaba MFY	1	t	39
+982	G`alaba MFY	1	t	39
 983	Mustaqillik MFY	1	t	39
 984	Obodon MFY	1	t	39
 985	R.Boboxonov MFY	1	t	39
 986	Savay MFY	1	t	39
 987	Chorvador MFY	1	t	39
-988	Yangi-bo'ston MFY	1	t	39
+988	Yangi-bo`ston MFY	1	t	39
 989	Chimyon QFY	1	t	39
 990	Beshkaltak MFY	1	t	39
 991	Dehqonchek MFY	1	t	39
-992	Do'stlik MFY	1	t	39
+992	Do`stlik MFY	1	t	39
 993	Navoiy MFY	1	t	39
 994	Namuna MFY	1	t	39
-995	Norbo'ta MFY	1	t	39
-996	O.Yo'lboev MFY	1	t	39
+995	Norbo`ta MFY	1	t	39
+996	O.Yo`lboev MFY	1	t	39
 997	Ozod MFY	1	t	39
 998	Oltinsoy MFY	1	t	39
 999	SutkonMFY	1	t	39
@@ -4775,7 +4775,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1003	Dardoq MFY	1	t	39
 1004	DardoqtepaMFY	1	t	39
 1005	Yortibosh MFY	1	t	39
-1006	Qizilto'qay MFY	1	t	39
+1006	Qizilto`qay MFY	1	t	39
 1007	Qirlik MFY	1	t	39
 1008	Navoiy MFY	1	t	39
 1009	Nodira MFY	1	t	39
@@ -4794,7 +4794,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1022	Oybek MFY	1	t	40
 1023	Nayman MFY	1	t	40
 1024	Yangi xayot MFY	1	t	40
-1025	Qoraqo'rg'on QFY	1	t	40
+1025	Qoraqo`rg`on QFY	1	t	40
 1026	T. Yusupov MFY	1	t	40
 1027	Korakurgon MFY	1	t	40
 1028	Bozorboshi MFY	1	t	40
@@ -4805,13 +4805,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1033	Gar-gar MFY	1	t	40
 1034	Jiydamozor MFY	1	t	40
 1035	Ok bosh MFY	1	t	40
-1036	Ko'tarma QFY	1	t	40
+1036	Ko`tarma QFY	1	t	40
 1037	Kutarma MFY	1	t	40
 1038	Ukchi MFY	1	t	40
 1039	Dustlik MFY	1	t	40
 1040	Uvaysiy MFY	1	t	40
 1041	Dorboz MFY	1	t	40
-1042	Qorabag'ish QFY	1	t	40
+1042	Qorabag`ish QFY	1	t	40
 1043	Korabogish MFY	1	t	40
 1044	Roxat MFY	1	t	40
 1045	Chilon MFY	1	t	40
@@ -4835,8 +4835,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1063	Polvontosh shaxarcha	1	t	40
 1064	S. Raximov MFY	1	t	40
 1065	Markaziy MFY	1	t	40
-1066	Oltinko'l QFY	1	t	41
-1067	Bo'ston MFY	1	t	41
+1066	Oltinko`l QFY	1	t	41
+1067	Bo`ston MFY	1	t	41
 1068	Saroy-1 MFY	1	t	41
 1069	Saroy-2 MFY	1	t	41
 1070	Ittifoq MFY	1	t	41
@@ -4850,14 +4850,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1078	Oxunboboev QFY	1	t	41
 1079	Qayirma MFY	1	t	41
 1080	Madiyorchek MFY	1	t	41
-1081	Temirxo'ja MFY	1	t	41
-1082	Xondibog'i MFY	1	t	41
+1081	Temirxo`ja MFY	1	t	41
+1082	Xondibog`i MFY	1	t	41
 1083	Jalabek QFY	1	t	41
 1084	Dalvarzin MFY	1	t	41
 1085	Jalabek MFY	1	t	41
-1086	Qo'shtepa MFY	1	t	41
+1086	Qo`shtepa MFY	1	t	41
 1087	Mexnat MFY	1	t	41
-1088	Uyg'ur MFY	1	t	41
+1088	Uyg`ur MFY	1	t	41
 1089	Yangi chek MFY	1	t	41
 1090	Kumakay QFY	1	t	41
 1091	Ayshaxonum MFY	1	t	41
@@ -4865,14 +4865,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1093	Sadda MFY	1	t	41
 1094	Uyshin MFY	1	t	41
 1095	Chek MFY	1	t	41
-1096	Cho'ntak MFY	1	t	41
-1097	Qo'shtepasaroy KFY	1	t	41
+1096	Cho`ntak MFY	1	t	41
+1097	Qo`shtepasaroy KFY	1	t	41
 1098	Andijon MFY	1	t	41
-1099	Qo'shko'prik MFY	1	t	41
+1099	Qo`shko`prik MFY	1	t	41
 1100	Saroy MFY	1	t	41
 1101	Safarobod MFY	1	t	41
 1102	Toptiq MFY	1	t	41
-1103	O'rta MFY	1	t	41
+1103	O`rta MFY	1	t	41
 1104	Sharq yulduzi MFY	1	t	41
 1105	Oqtumor MFY	1	t	41
 1106	Maslaxat QFY	1	t	41
@@ -4888,22 +4888,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1116	Ganjirovon MFY	1	t	41
 1117	Jiyanbek MFY	1	t	41
 1118	Qipchoq MFY	1	t	41
-1119	Ko'tarmachek MFY	1	t	41
+1119	Ko`tarmachek MFY	1	t	41
 1120	Uzun kucha MFY	1	t	41
 1121	Suvyulduz QFY	1	t	41
 1122	Ayronchi MFY	1	t	41
-1123	Gulbog'-Ittifoq MFY	1	t	41
+1123	Gulbog`-Ittifoq MFY	1	t	41
 1124	Mirobod MFY	1	t	41
 1125	ORS MFY	1	t	41
 1126	Suvyulduz MFY	1	t	41
 1127	Chaqqon-1 MFY	1	t	41
 1128	Chaqqon-2 MFY	1	t	41
 1129	Qashqar MFY	1	t	41
-1130	Navro'z MFY	1	t	42
+1130	Navro`z MFY	1	t	42
 1131	Yuqori MFY	1	t	42
 1132	Shomat MFY	1	t	42
 1133	Z.Xabibiy MFY	1	t	42
-1134	Qo'qonqishloq MFY	1	t	42
+1134	Qo`qonqishloq MFY	1	t	42
 1135	Nodirabegim MFY	1	t	42
 1136	Qashqar MFY	1	t	42
 1137	Muazzinboy MFY	1	t	42
@@ -4912,68 +4912,68 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1140	Bobur MFY	1	t	42
 1141	Ittifoq QFY	1	t	42
 1142	Sangraobod MFY	1	t	42
-1143	Qo'yi Sangraobod MFY	1	t	42
-1144	To'pajuvoz MFY	1	t	42
+1143	Qo`yi Sangraobod MFY	1	t	42
+1144	To`pajuvoz MFY	1	t	42
 1145	Tojikqishloq MFY	1	t	42
 1146	Xayraobod-1 MFY	1	t	42
 1147	Xayraobod-2 MFY	1	t	42
 1148	Guliston-Pastqishloq MFY	1	t	42
 1149	Shuvoqzor-Boykechik MFY	1	t	42
-1150	Uyg'ur QFY	1	t	42
+1150	Uyg`ur QFY	1	t	42
 1151	Paynob MFY	1	t	42
-1152	Omonjo'ra-1 MFY	1	t	42
-1153	Omonjo'ra-2 MFY	1	t	42
-1154	Do'ngkishlok MFY	1	t	42
+1152	Omonjo`ra-1 MFY	1	t	42
+1153	Omonjo`ra-2 MFY	1	t	42
+1154	Do`ngkishlok MFY	1	t	42
 1155	Soxil MFY	1	t	42
 1156	Guzar MFY	1	t	42
-1157	To'qqizbog' MFY	1	t	42
+1157	To`qqizbog` MFY	1	t	42
 1158	Shovruq MFY	1	t	42
 1159	Pushmon MFY	1	t	42
 1160	Ittifoq MFY	1	t	42
 1161	Soy MFY	1	t	42
-1162	Uchqurg'on MFY	1	t	42
+1162	Uchqurg`on MFY	1	t	42
 1163	Paxtakor QFY	1	t	42
 1164	Yangi chek MFY	1	t	42
 1165	Ovushqa MFY	1	t	42
-1166	Cho'ngqirg'iz MFY	1	t	42
+1166	Cho`ngqirg`iz MFY	1	t	42
 1167	Teraktagi MFY	1	t	42
 1168	Qumshaydon MFY	1	t	42
-1169	Ko'kto'nlik MFY	1	t	42
-1170	Eskiqo'rg'on MFY	1	t	42
-1171	Uchko'za MFY	1	t	42
+1169	Ko`kto`nlik MFY	1	t	42
+1170	Eskiqo`rg`on MFY	1	t	42
+1171	Uchko`za MFY	1	t	42
 1172	Fayzaobod MFY	1	t	42
-1173	To'raobod MFY	1	t	42
-1174	Yolg'izbog'-1 MFY	1	t	42
-1175	Yolg'izbog'-2 MFY	1	t	42
-1176	Qoraqo'rg'on MFY	1	t	42
+1173	To`raobod MFY	1	t	42
+1174	Yolg`izbog`-1 MFY	1	t	42
+1175	Yolg`izbog`-2 MFY	1	t	42
+1176	Qoraqo`rg`on MFY	1	t	42
 1177	Qayir MFY	1	t	42
 1178	Madaniyat QFY	1	t	42
-1179	Bo'ston MFY	1	t	42
+1179	Bo`ston MFY	1	t	42
 1180	Xamza MFY	1	t	42
-1181	Bodrog'obod MFY	1	t	42
+1181	Bodrog`obod MFY	1	t	42
 1182	Guliston MFY	1	t	42
-1183	Qirg'izqo'rg'on MFY	1	t	42
-1184	Do'stlik MFY	1	t	42
-1185	Chorbog' MFY	1	t	42
+1183	Qirg`izqo`rg`on MFY	1	t	42
+1184	Do`stlik MFY	1	t	42
+1185	Chorbog` MFY	1	t	42
 1186	Mustaqillik MFY	1	t	42
 1187	Madaniyat MFY	1	t	42
 1188	Izboskan MFY	1	t	42
 1189	Sanoat MFY	1	t	42
 1190	Tinchlik MFY	1	t	42
 1191	Yangi xayot MFY	1	t	42
-1192	Toshqo'rg'on MFY	1	t	42
+1192	Toshqo`rg`on MFY	1	t	42
 1193	Soxil MFY	1	t	42
 1194	Andijon MFY	1	t	42
 1195	Ittifoq MFY	1	t	42
 1196	Xolboyota MFY	1	t	42
 1197	Buston QFY	1	t	42
-1198	Bo'ston MFY	1	t	42
+1198	Bo`ston MFY	1	t	42
 1199	Navbaxor MFY	1	t	42
 1200	Yangi xayot MFY	1	t	42
-1201	Do'stlik MFY	1	t	42
+1201	Do`stlik MFY	1	t	42
 1202	Oq-oltin QFY	1	t	43
 1203	Obod MFY	1	t	43
-1204	Ulug'bek MFY	1	t	43
+1204	Ulug`bek MFY	1	t	43
 1205	Bobur MFY	1	t	43
 1206	Shaxriobod MFY	1	t	43
 1207	Ovulmat MFY	1	t	43
@@ -4981,19 +4981,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1209	Navoiy QFY	1	t	43
 1210	Sariqsuv MFY	1	t	43
 1211	Yangiobod MFY	1	t	43
-1212	To'rttol MFY	1	t	43
+1212	To`rttol MFY	1	t	43
 1213	Oq tom MFY	1	t	43
 1214	Guliston MFY	1	t	43
 1215	Mingbuloq QFY	1	t	43
-1216	Cho'lobod MFY	1	t	43
+1216	Cho`lobod MFY	1	t	43
 1217	Mingbuloq MFY	1	t	43
 1218	Terakzor MFY	1	t	43
-1219	Bo'ston MFY	1	t	43
+1219	Bo`ston MFY	1	t	43
 1220	Dexqonobod MFY	1	t	43
-1221	O'zbekiston MFY	1	t	43
+1221	O`zbekiston MFY	1	t	43
 1222	Mingchinor QFY	1	t	43
 1223	Mingchinor MFY	1	t	43
-1224	Uchko'prik MFY	1	t	43
+1224	Uchko`prik MFY	1	t	43
 1225	Kampirravot MFY	1	t	44
 1226	Teyit MFY	1	t	44
 1227	Mustaqillik MFY	1	t	44
@@ -5012,46 +5012,46 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1240	Andijon MFY	1	t	45
 1241	Beshkaram MFY	1	t	45
 1242	Navoiy MFY	1	t	45
-1243	Jo'me MFY	1	t	45
+1243	Jo`me MFY	1	t	45
 1244	Baxrin MFY	1	t	45
 1245	Guliston MFY	1	t	45
-1246	Uzun ko'chasi MFY	1	t	45
+1246	Uzun ko`chasi MFY	1	t	45
 1247	Bobur MFY	1	t	45
 1248	Chimbuloq MFY	1	t	45
 1249	Kurama MFY	1	t	45
-1250	So'qaloq MFY	1	t	45
+1250	So`qaloq MFY	1	t	45
 1251	Yetmishmergan MFY	1	t	45
 1252	Guraguri MFY	1	t	45
-1253	Xo'jaobod QFY	1	t	45
+1253	Xo`jaobod QFY	1	t	45
 1254	Sanoatchilar SHFY	1	t	45
 1255	Ipakchi MFY	1	t	45
 1256	Beshqovoq MFY	1	t	45
 1257	Solpi MFY	1	t	45
 1258	Oltin vodiy QFY	1	t	45
-1259	Ko'tarma SHFY	1	t	45
+1259	Ko`tarma SHFY	1	t	45
 1260	Sarqamish MFY	1	t	45
 1261	Xidirsha MFY	1	t	45
 1262	Yangi xayot MFY	1	t	45
 1263	Qorabuloq MFY	1	t	45
-1264	Uch ko'chasi MFY	1	t	45
+1264	Uch ko`chasi MFY	1	t	45
 1265	Mustaxkam MFY	1	t	45
-1266	Ko'prikboshi MFY	1	t	45
+1266	Ko`prikboshi MFY	1	t	45
 1267	Birlashgan QFY	1	t	45
 1268	Manak MFY	1	t	45
-1269	Yangi Farg'ona MFY	1	t	45
+1269	Yangi Farg`ona MFY	1	t	45
 1270	Egamberdiobod MFY	1	t	45
 1271	Faqirqishloq MFY	1	t	45
-1272	To'raobod MFY	1	t	45
+1272	To`raobod MFY	1	t	45
 1273	Dilkushod MFY	1	t	45
 1274	Quvvatmurod MFY	1	t	45
 1275	Karnaychi MFY	1	t	45
 1276	Orday MFY	1	t	45
-1277	Nishobbo'yi MFY	1	t	45
+1277	Nishobbo`yi MFY	1	t	45
 1278	Tosh ota MFY	1	t	45
 1279	Guliston MFY	1	t	45
 1280	Manak QFY	1	t	45
-1281	Do'rman MFY	1	t	46
-1282	Xo'jaobod MFY	1	t	46
+1281	Do`rman MFY	1	t	46
+1282	Xo`jaobod MFY	1	t	46
 1283	Segaza MFY	1	t	46
 1284	Yonbosh durman MFY	1	t	46
 1285	Begbachcha MFY	1	t	46
@@ -5059,82 +5059,82 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1287	Qum MFY	1	t	46
 1288	Paxtaobod Q.F.Y	1	t	46
 1289	Polason MFY	1	t	46
-1290	Oqto'nnik MFY	1	t	46
+1290	Oqto`nnik MFY	1	t	46
 1291	Axmadbek MFY	1	t	46
 1292	Shaydo MFY	1	t	46
 1293	Qalacha MFY	1	t	46
 1294	Toshtepa Q.F.Y	1	t	46
-1295	Qibchaqo'rg'on MFY	1	t	46
+1295	Qibchaqo`rg`on MFY	1	t	46
 1296	Yuzlar MFY	1	t	46
 1297	Nayman MFY	1	t	46
 1298	Markaz MFY	1	t	46
-1299	Yangi yo'l Q.F.Y	1	t	46
+1299	Yangi yo`l Q.F.Y	1	t	46
 1300	Vaxim MFY	1	t	46
 1301	Yangi vaxim MFY	1	t	46
 1302	Beshmaxalla MFY	1	t	46
 1303	Karnaychi MFY	1	t	46
 1304	Guliston Q.F.Y	1	t	46
 1305	Tegirmon boshi MFY	1	t	46
-1306	Qoziqo'rg'on MFY	1	t	46
+1306	Qoziqo`rg`on MFY	1	t	46
 1307	Andijonlik MFY	1	t	46
 1308	Shokirboy MFY	1	t	46
 1309	Yangi maxalla MFY	1	t	46
-1310	O'rta sharhon Q.F.Y	1	t	46
-1311	Qo'rg'oncha MFY	1	t	46
+1310	O`rta sharhon Q.F.Y	1	t	46
+1311	Qo`rg`oncha MFY	1	t	46
 1312	Nazarmaxram MFY	1	t	46
 1313	Qumtepa MFY	1	t	46
 1314	Nazarmaxram Q.F.Y	1	t	46
 1315	Bayroq MFY	1	t	46
 1316	Maslaxattepa MFY	1	t	46
-1317	Qo'rg'oncha MFY	1	t	46
+1317	Qo`rg`oncha MFY	1	t	46
 1318	Bobochik MFY	1	t	46
 1319	Nayman MFY	1	t	46
-1320	O'zbekiston Q.F.Y	1	t	46
+1320	O`zbekiston Q.F.Y	1	t	46
 1321	Yangi naynavo MFY	1	t	46
-1322	Qorabo'yin MFY	1	t	46
-1323	Qushqo'noq MFY	1	t	46
+1322	Qorabo`yin MFY	1	t	46
+1323	Qushqo`noq MFY	1	t	46
 1324	Qum ariq MFY	1	t	46
 1325	Azamat MFY	1	t	46
-1326	To'lqin MFY	1	t	46
+1326	To`lqin MFY	1	t	46
 1327	Naynavo Q.F.Y	1	t	46
-1328	Cho'ja MFY	1	t	46
+1328	Cho`ja MFY	1	t	46
 1329	Eshon qishloq MFY	1	t	46
-1330	Bo'ston MFY	1	t	46
-1331	Do'stlik MFY	1	t	46
+1330	Bo`ston MFY	1	t	46
+1331	Do`stlik MFY	1	t	46
 1332	Quruqsor MFY	1	t	46
-1333	Cho'ja Q.F.Y	1	t	46
-1334	So'zoq MFY	1	t	46
+1333	Cho`ja Q.F.Y	1	t	46
+1334	So`zoq MFY	1	t	46
 1335	Abdubiy MFY	1	t	46
-1336	Shurqo'rg'on MFY	1	t	46
-1337	Oqto'nlik MFY	1	t	46
+1336	Shurqo`rg`on MFY	1	t	46
+1337	Oqto`nlik MFY	1	t	46
 1338	Birlashkan MFY	1	t	46
 1339	Qumqayroq MFY	1	t	46
 1340	Abdubiy Q.F.Y	1	t	46
 1341	Qashqar MFY	1	t	46
 1342	Saroy MFY	1	t	46
-1343	Paxtako'l MFY	1	t	46
+1343	Paxtako`l MFY	1	t	46
 1344	Dorilamo MFY	1	t	46
 1345	Xaqiqat Q.F.Y	1	t	46
 1346	Soxiobod MFY	1	t	46
 1347	Tumor MFY	1	t	46
 1348	Yangi maxalla MFY	1	t	46
-1349	Do'lan MFY	1	t	46
+1349	Do`lan MFY	1	t	46
 1350	Yuqori shahrixon Q.F.Y	1	t	46
 1351	Abdusamad MFY	1	t	46
 1352	Andijonlik MFY	1	t	46
 1353	Beshariq MFY	1	t	46
 1354	Buvayda MFY	1	t	46
-1355	Bo'ston MFY	1	t	46
-1356	Qayrog'ich guzar MFY	1	t	46
-1357	Qorako'rpa MFY	1	t	46
+1355	Bo`ston MFY	1	t	46
+1356	Qayrog`ich guzar MFY	1	t	46
+1357	Qorako`rpa MFY	1	t	46
 1358	Mullaboy MFY	1	t	46
 1359	Mustaqillik MFY	1	t	46
 1360	Navbaxor MFY	1	t	46
-1361	Navro'z MFY	1	t	46
+1361	Navro`z MFY	1	t	46
 1362	Nomozgox MFY	1	t	46
 1363	Taraqqiyot MFY	1	t	46
 1364	Teraktagi MFY	1	t	46
-1365	O'zbekiston MFY	1	t	46
+1365	O`zbekiston MFY	1	t	46
 1366	Shahrixon MFY	1	t	46
 1367	Yakka tut MFY	1	t	46
 1368	Yangi xayot MFY	1	t	46
@@ -5142,36 +5142,36 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1370	2-son S.Boxarziy MFY	1	t	47
 1371	3-son Furqat MFY	1	t	47
 1372	4-son A.Navoiy MFY	1	t	47
-1373	5-son G'.G'ulom MFY	1	t	47
-1374	6-son Ko'kaldosh MFY	1	t	47
+1373	5-son G`.G`ulom MFY	1	t	47
+1374	6-son Ko`kaldosh MFY	1	t	47
 1375	7-son Imom-al Buxoriy MFY	1	t	47
 1376	8-son H.Olimjon MFY	1	t	47
 1377	9-son J.Ikromiy MFY	1	t	47
 1378	10-son A.Fitrat MFY	1	t	47
 1379	11-son S.Sheroziy MFY	1	t	47
-1380	12-son Xo'ja Xunjoriy MFY	1	t	47
-1381	13- son "Jo'ybor" MFY	1	t	47
+1380	12-son Xo`ja Xunjoriy MFY	1	t	47
+1381	13- son "Jo`ybor" MFY	1	t	47
 1382	14- son Abu Ali ibn Sino MFY	1	t	47
 1383	15- son Nizomiy MFY	1	t	47
 1384	16- son M.Ashrafiy MFY	1	t	47
 1385	17-son S.Raximov MFY	1	t	47
 1386	18-son Dilkusho MFY	1	t	47
-1387	19- son F.Xo'jaev MFY	1	t	47
+1387	19- son F.Xo`jaev MFY	1	t	47
 1388	20-son M.Ulugbek MFY	1	t	47
 1389	21-son Shergiron MFY	1	t	47
 1390	22-son Chorbaxosa MFY	1	t	47
-1391	23-son Ko'ksaroy MFY	1	t	47
+1391	23-son Ko`ksaroy MFY	1	t	47
 1392	24-son Shayx-ul Olam MFY	1	t	47
 1393	25-son Sitorai Moxi-xosa MFY	1	t	47
 1394	26- son Turki Jandi MFY	1	t	47
 1395	27-son Sharq Yulduzi MFY	1	t	47
 1396	28-son M.Burxonov MFY	1	t	47
-1397	29-son Gulchorbog' MFY	1	t	47
+1397	29-son Gulchorbog` MFY	1	t	47
 1398	30-son Xavzi Nav MFY	1	t	47
 1399	31-son Yangiobod MFY	1	t	47
 1400	32-son Guliston MFY	1	t	47
-1401	33-son A.G'ijduvoniy MFY	1	t	47
-1402	34-son Navro'z MFY	1	t	47
+1401	33-son A.G`ijduvoniy MFY	1	t	47
+1402	34-son Navro`z MFY	1	t	47
 1403	35-son Bunyodkor MFY	1	t	47
 1404	36-son Zarafshon MFY	1	t	47
 1405	37-son A.Temur MFY	1	t	47
@@ -5180,10 +5180,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1408	40-son R.Xamroev MFY	1	t	47
 1409	41-son Gulshan MFY	1	t	47
 1410	42-son Varaxsha MFY	1	t	47
-1411	43-son Olim Xo'jaev MFY	1	t	47
-1412	44-son To'qimachi MFY	1	t	47
+1411	43-son Olim Xo`jaev MFY	1	t	47
+1412	44-son To`qimachi MFY	1	t	47
 1413	45-son Foshun MFY	1	t	47
-1414	46-son Do'stlik MFY	1	t	47
+1414	46-son Do`stlik MFY	1	t	47
 1415	47-son Istiqlol MFY	1	t	47
 1416	48-son Yoshlik MFY	1	t	47
 1417	49-son Navbaxor MFY	1	t	47
@@ -5212,7 +5212,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1440	Turkon MFY	1	t	48
 1441	Istikbol QFY	1	t	48
 1442	Rabotak MFY	1	t	48
-1443	Kunji-kal'a QFY	1	t	48
+1443	Kunji-kal`a QFY	1	t	48
 1444	Novmetan MFY	1	t	48
 1445	Zarmanok MFY	1	t	48
 1446	Shergiron QFY	1	t	48
@@ -5238,12 +5238,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1466	Oybek MFY	1	t	48
 1467	Kumushkent QFY	1	t	49
 1468	Rozmoz MFY	1	t	49
-1469	Xo'jarabod MFY	1	t	49
+1469	Xo`jarabod MFY	1	t	49
 1470	Cariosiyo MFY	1	t	49
 1471	Xalvogaron MFY	1	t	49
 1472	Exson QFY	1	t	49
 1473	Garibshox MFY	1	t	49
-1474	Ko'lxatib MFY	1	t	49
+1474	Ko`lxatib MFY	1	t	49
 1475	Teraklik MFY	1	t	49
 1476	Kipchok QFY	1	t	49
 1477	Mirvoshi MFY	1	t	49
@@ -5256,13 +5256,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1484	Beshrabod MFY	1	t	49
 1485	Xajivon MFY	1	t	49
 1486	Roxkent QFY	1	t	49
-1487	Qo'qin MFY	1	t	49
+1487	Qo`qin MFY	1	t	49
 1488	Guliston MFY	1	t	49
 1489	Arabxona MFY	1	t	49
 1490	Pirmast QFY	1	t	49
 1491	Bozorjoyi MFY	1	t	49
 1492	Anjirbog MFY	1	t	49
-1493	Ko'lodina MFY	1	t	49
+1493	Ko`lodina MFY	1	t	49
 1494	Xalach QFY	1	t	49
 1495	Latifsobungar MFY	1	t	49
 1496	Shakarkent MFY	1	t	49
@@ -5271,7 +5271,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1499	Katagan MFY	1	t	49
 1500	Panob MFY	1	t	49
 1501	Nayman MFY	1	t	49
-1502	Xargo'sh MFY	1	t	49
+1502	Xargo`sh MFY	1	t	49
 1503	Xayrobodcha QFY	1	t	49
 1504	Pushmon MFY	1	t	49
 1505	Uzbakon MFY	1	t	49
@@ -5297,15 +5297,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1525	Ayirtom MFY	1	t	50
 1526	Toshloq MFY	1	t	50
 1527	Ulfatbibi QFY	1	t	50
-1528	Rostgo'y MFY	1	t	50
+1528	Rostgo`y MFY	1	t	50
 1529	Oqrabot MFY	1	t	50
 1530	Baqqollar MFY	1	t	50
-1531	G'ishti MFY	1	t	50
+1531	G`ishti MFY	1	t	50
 1532	Beshtuvo MFY	1	t	50
 1533	Baraka MFY	1	t	50
 1534	Qaraxoni QFY	1	t	50
-1535	Qarabog' MFY	1	t	50
-1536	Qo'riq MFY	1	t	50
+1535	Qarabog` MFY	1	t	50
+1536	Qo`riq MFY	1	t	50
 1537	Olmazor MFY	1	t	50
 1538	Soktari QFY	1	t	50
 1539	Mirakon MFY	1	t	50
@@ -5315,66 +5315,66 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1543	Kalon MFY	1	t	50
 1544	Tavariyon MFY	1	t	50
 1545	Zarangari QFY	1	t	50
-1546	Bo'lakiyon MFY	1	t	50
+1546	Bo`lakiyon MFY	1	t	50
 1547	Mahalla MFY	1	t	50
 1548	Mustaqillik MFY	1	t	50
-1549	G'ovshun QFY	1	t	50
+1549	G`ovshun QFY	1	t	50
 1550	Xatcha MFY	1	t	50
-1551	O'zanon MFY	1	t	50
+1551	O`zanon MFY	1	t	50
 1552	Mahallai Mirzayon MFY	1	t	50
 1553	Mazragan MFY	1	t	50
 1554	Biyosin MFY	1	t	50
 1555	Sarmijon QFY	1	t	50
-1556	Ko'lijabbor MFY	1	t	50
-1557	Labiro't MFY	1	t	50
+1556	Ko`lijabbor MFY	1	t	50
+1557	Labiro`t MFY	1	t	50
 1558	Gajdumak MFY	1	t	50
 1559	Jovgari MFY	1	t	50
 1560	Firishkent QFY	1	t	50
-1561	Sho'rcha MFY	1	t	50
+1561	Sho`rcha MFY	1	t	50
 1562	Sohibiyon MFY	1	t	50
 1563	Qassabon MFY	1	t	50
 1564	Zargaron MFY	1	t	50
 1565	Armechan QFY	1	t	50
-1566	Cho'g'alon MFY	1	t	50
+1566	Cho`g`alon MFY	1	t	50
 1567	Todon MFY	1	t	50
 1568	Denov MFY	1	t	50
 1569	Buktaroy QFY	1	t	50
-1570	Chag'dari MFY	1	t	50
+1570	Chag`dari MFY	1	t	50
 1571	Buktaroy MFY	1	t	50
 1572	Vazirshox MFY	1	t	50
-1573	Ko'shk MFY	1	t	50
+1573	Ko`shk MFY	1	t	50
 1574	Taxtaxon MFY	1	t	50
 1575	Pozagari QFY	1	t	50
 1576	Dodarak MFY	1	t	50
 1577	Qumoq MFY	1	t	50
 1578	Karna MFY	1	t	50
-1579	Ko'kcha QFY	1	t	50
+1579	Ko`kcha QFY	1	t	50
 1580	Zafarobod SHFY	1	t	50
 1581	Chorsu MFY	1	t	50
 1582	Sardor MFY	1	t	50
-1583	Qo'rg'on MFY	1	t	50
-1584	A.G'ijduvoniy MFY	1	t	50
+1583	Qo`rg`on MFY	1	t	50
+1584	A.G`ijduvoniy MFY	1	t	50
 1585	Dilkusho MFY	1	t	50
-1586	F.Xo'jaev MFY	1	t	50
+1586	F.Xo`jaev MFY	1	t	50
 1587	Sharq MFY	1	t	50
 1588	A.Qahhor MFY	1	t	50
-1589	Pomo'za MFY	1	t	50
+1589	Pomo`za MFY	1	t	50
 1590	Guliston MFY	1	t	50
 1591	Bobur MFY	1	t	50
 1592	F.Yunusov MFY	1	t	50
 1593	Nodirabegim MFY	1	t	50
-1594	Ulug'bek MFY	1	t	50
+1594	Ulug`bek MFY	1	t	50
 1595	Degrezon MFY	1	t	50
 1596	Samonchuq QFY	1	t	51
-1597	Murg'ak MFY	1	t	51
+1597	Murg`ak MFY	1	t	51
 1598	Samonchuq shfy	1	t	51
 1599	Xumdonak QFY	1	t	51
 1600	Ushot MFY	1	t	51
 1601	Pasana MFY	1	t	51
-1602	Ko'liyon MFY	1	t	51
-1603	Po'loti QFY	1	t	51
+1602	Ko`liyon MFY	1	t	51
+1603	Po`loti QFY	1	t	51
 1604	Zangi MFY	1	t	51
-1605	Sho'robot MFY	1	t	51
+1605	Sho`robot MFY	1	t	51
 1606	Demun MFY	1	t	51
 1607	Hazorman MFY	1	t	51
 1608	Xumin QFY	1	t	51
@@ -5383,7 +5383,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1611	Boloiob MFY	1	t	51
 1612	Qaroli QFY	1	t	51
 1613	Dovud MFY	1	t	51
-1614	Xo'jaxayron MFY	1	t	51
+1614	Xo`jaxayron MFY	1	t	51
 1615	Eronshox MFY	1	t	51
 1616	Yangiobod MFY	1	t	51
 1617	Sapatta QFY	1	t	51
@@ -5392,7 +5392,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1620	Darveshi MFY	1	t	51
 1621	Navrabot QFY	1	t	51
 1622	Bahoriston MFY	1	t	51
-1623	Oytug'di MFY	1	t	51
+1623	Oytug`di MFY	1	t	51
 1624	Pochchoyi MFY	1	t	51
 1625	Qorovul MFY	1	t	51
 1626	Aleli QFY	1	t	51
@@ -5419,7 +5419,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1647	Beklar QFY	1	t	52
 1648	Istiqbol MFY	1	t	52
 1649	Niyoz hoji QFY	1	t	52
-1650	O'ba-cho'li MFY	1	t	52
+1650	O`ba-cho`li MFY	1	t	52
 1651	Mustaqillik MFY	1	t	52
 1652	Nurafshon QFY	1	t	52
 1653	Xukumatobod MFY	1	t	52
@@ -5427,15 +5427,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1655	Geofizika MFY	1	t	52
 1656	Tutkunda MFY	1	t	52
 1657	Sarayon QFY	1	t	52
-1658	Navro'z MFY	1	t	52
-1659	O'rta-cho'l MFY	1	t	52
+1658	Navro`z MFY	1	t	52
+1659	O`rta-cho`l MFY	1	t	52
 1660	Choloki MFY	1	t	52
 1661	Siyozpoyon QFY	1	t	52
 1662	Tuniroq MFY	1	t	52
 1663	Kogon QFY	1	t	52
 1664	Naqshband QFY	1	t	52
 1665	Suxor MFY	1	t	52
-1666	Xo'ja-yakshaba QFY	1	t	52
+1666	Xo`ja-yakshaba QFY	1	t	52
 1667	Yangi-hayot QFY	1	t	52
 1668	Arabxona MFY	1	t	53
 1669	F.Xujaev MFY	1	t	53
@@ -5448,7 +5448,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1676	Xuja bargi MFY	1	t	53
 1677	Bobur MFY	1	t	53
 1678	B.Zokirov MFY	1	t	53
-1679	Temir yo'lchi MFY	1	t	53
+1679	Temir yo`lchi MFY	1	t	53
 1680	A.Temur MFY	1	t	53
 1681	Istiklol MFY	1	t	53
 1682	Navzirabod MFY	1	t	53
@@ -5458,7 +5458,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1686	Turkiston MFY	1	t	53
 1687	Ulugbek MFY	1	t	53
 1688	Mustakillik MFY	1	t	53
-1689	Eski kal'a MFY	1	t	54
+1689	Eski kal`a MFY	1	t	54
 1690	Zarafshon MFY	1	t	54
 1691	Paxtakor MFY	1	t	54
 1692	Chekirchi MFY	1	t	54
@@ -5486,7 +5486,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1714	Kuyi Yangibozor QFY	1	t	54
 1715	Arna MFY	1	t	54
 1716	Koraun QFY	1	t	54
-1717	Mirzakal'a MFY	1	t	54
+1717	Mirzakal`a MFY	1	t	54
 1718	Yangi zamon MFY	1	t	54
 1719	Sort MFY	1	t	54
 1720	Chovli QFY	1	t	54
@@ -5506,12 +5506,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1734	Kulonchi QFY	1	t	54
 1735	Chandirobod QFY	1	t	54
 1736	Kuvvacha QFY	1	t	54
-1737	Yangi kal'a MFY	1	t	54
+1737	Yangi kal`a MFY	1	t	54
 1738	Al-Buxoriy MFY	1	t	55
-1739	Cho'lquvar MFY	1	t	55
+1739	Cho`lquvar MFY	1	t	55
 1740	Tinchlik MFY	1	t	55
-1741	Bo'ston MFY	1	t	55
-1742	Bo'zachi MFY	1	t	55
+1741	Bo`ston MFY	1	t	55
+1742	Bo`zachi MFY	1	t	55
 1743	Navbahor QFY	1	t	55
 1744	Jarqoq QFY	1	t	55
 1745	Jumabozor QFY	1	t	56
@@ -5562,7 +5562,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1790	Chiqirchi MFY	1	t	57
 1791	Istiqbol QFY	1	t	57
 1792	Navbahor MFY	1	t	57
-1793	Bog'imuso QFY	1	t	57
+1793	Bog`imuso QFY	1	t	57
 1794	Valfajr MFY	1	t	57
 1795	Ibn Sino QFY	1	t	57
 1796	Sadir MFY	1	t	57
@@ -5571,9 +5571,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1799	Bobohoji MFY	1	t	57
 1800	Xorkash MFY	1	t	57
 1801	Qoraqalpoq QFY	1	t	57
-1802	Do'stlik MFY	1	t	57
+1802	Do`stlik MFY	1	t	57
 1803	Yangiobod MFY	1	t	57
-1804	Xo'lbor MFY	1	t	57
+1804	Xo`lbor MFY	1	t	57
 1805	KalaymirishkorQFY	1	t	57
 1806	So'sana MFY	1	t	57
 1807	Talisobun MFY	1	t	57
@@ -5581,7 +5581,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1809	Uzbek MFY	1	t	57
 1810	Varaxsho QFY	1	t	57
 1811	Turkiston MFY	1	t	57
-1812	Kuyovxo'ja MFY	1	t	57
+1812	Kuyovxo`ja MFY	1	t	57
 1813	MFY	1	t	57
 1814	Navgoxon MFY	1	t	57
 1815	SHFYB	1	t	57
@@ -5597,38 +5597,38 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1825	Tarnavut MFY	1	t	58
 1826	Attaron MFY	1	t	58
 1827	Mirishkor MFY	1	t	58
-1828	Bog'cha MFY	1	t	58
-1829	O'ba MFY	1	t	58
+1828	Bog`cha MFY	1	t	58
+1829	O`ba MFY	1	t	58
 1830	Qahramon MFY	1	t	58
-1831	Q,Chorbog' MFY	1	t	58
-1832	Mug'oncha MFY	1	t	58
+1831	Q,Chorbog` MFY	1	t	58
+1832	Mug`oncha MFY	1	t	58
 1833	Chelongu QFY	1	t	58
 1834	Chandir MFY	1	t	58
 1835	Toshrabot MFY	1	t	58
 1836	Urganjiyon MFY	1	t	58
 1837	Xosa MFY	1	t	58
 1838	Decha MFY	1	t	58
-1839	G'azberon MFY	1	t	58
-1840	Qo'rg'on QFY	1	t	58
+1839	G`azberon MFY	1	t	58
+1840	Qo`rg`on QFY	1	t	58
 1841	Baxtiyorchi MFY	1	t	58
 1842	Azizon MFY	1	t	58
 1843	Samosiy MFY	1	t	58
-1844	O'zbekiston MFY	1	t	58
-1845	Bog'iturkon QFY	1	t	58
+1844	O`zbekiston MFY	1	t	58
+1845	Bog`iturkon QFY	1	t	58
 1846	Qumrabot MFY	1	t	58
-1847	Bog'isaydon MFY	1	t	58
-1848	Xo'jaubbon MFY	1	t	58
+1847	Bog`isaydon MFY	1	t	58
+1848	Xo`jaubbon MFY	1	t	58
 1849	Marziya MFY	1	t	58
 1850	Hofizrabot MFY	1	t	58
 1851	Hazortut MFY	1	t	58
-1852	Sho'rcha QFY	1	t	58
-1853	O'tabek MFY	1	t	58
-1854	Sho'robod MFY	1	t	58
-1855	Yomg'ir MFY	1	t	58
-1856	Mo'ri MFY	1	t	58
-1857	Sho'rcha MFY	1	t	58
+1852	Sho`rcha QFY	1	t	58
+1853	O`tabek MFY	1	t	58
+1854	Sho`robod MFY	1	t	58
+1855	Yomg`ir MFY	1	t	58
+1856	Mo`ri MFY	1	t	58
+1857	Sho`rcha MFY	1	t	58
 1858	Qoqishtuvon MFY	1	t	58
-1859	Poyjo'y MFY	1	t	58
+1859	Poyjo`y MFY	1	t	58
 1860	Qizilravot QFY	1	t	58
 1861	MFY	1	t	58
 1862	MFY	1	t	58
@@ -5689,81 +5689,81 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1917	Savrak MFY	1	t	59
 1918	Zarchabek MFY	1	t	59
 1919	O.Vodiy QFY	1	t	60
-1920	Yangibo'ston QFY	1	t	60
+1920	Yangibo`ston QFY	1	t	60
 1921	Zarafshon QFY	1	t	60
-1922	Do'stlik QFY	1	t	60
-1923	Bo'ston QFY	1	t	60
-1924	Cho'lquvar QFY	1	t	60
+1922	Do`stlik QFY	1	t	60
+1923	Bo`ston QFY	1	t	60
+1924	Cho`lquvar QFY	1	t	60
 1925	Toshkent MFY	1	t	60
-1926	G'.G'ulom MFY	1	t	60
+1926	G`.G`ulom MFY	1	t	60
 1927	Bobur MFY	1	t	60
 1928	Forish MFY	1	t	60
 1929	Baxtli MFY	1	t	60
 1930	Chinobod MFY	1	t	60
 1931	Tinchlik MFY	1	t	60
-1932	O'smat SHFY	1	t	61
-1933	Qutlug'obod MFY	1	t	61
+1932	O`smat SHFY	1	t	61
+1933	Qutlug`obod MFY	1	t	61
 1934	Oyqor QFY	1	t	61
 1935	Baxmal QFY	1	t	61
-1936	Mo'g'ol QFY	1	t	61
+1936	Mo`g`ol QFY	1	t	61
 1937	Oqtosh QFY	1	t	61
-1938	Do'stlik MFY	1	t	61
+1938	Do`stlik MFY	1	t	61
 1939	Novqa MFY	1	t	61
 1940	Saroy MFY	1	t	61
 1941	Tongotar QFY	1	t	61
 1942	Shodmon MFY	1	t	61
 1943	Qatortol MFY	1	t	61
-1944	Bo'ron MFY	1	t	61
-1945	Do'smat MFY	1	t	61
+1944	Bo`ron MFY	1	t	61
+1945	Do`smat MFY	1	t	61
 1946	Muzbuloq MFY	1	t	61
 1947	Alamli MFY	1	t	61
 1948	Madaniyat MFY	1	t	61
-1949	G'allakon MFY	1	t	61
-1950	Yangibog' MFY	1	t	61
+1949	G`allakon MFY	1	t	61
+1950	Yangibog` MFY	1	t	61
 1951	Toypoqsoy MFY	1	t	61
 1952	Nushkent MFY	1	t	61
 1953	Uzunbuloq QFY	1	t	61
 1954	Barlos QFY	1	t	61
-1955	Bog'ishamol QFY	1	t	61
+1955	Bog`ishamol QFY	1	t	61
 1956	Sangzor QFY	1	t	61
 1957	Gulbuloq QFY	1	t	61
 1958	Marjonbuloq SHFY	1	t	62
-1959	Qo'ytosh SHFY	1	t	62
-1960	Do'stlik MFY	1	t	62
+1959	Qo`ytosh SHFY	1	t	62
+1960	Do`stlik MFY	1	t	62
 1961	Alamli MFY	1	t	62
 1962	Samarqand MFY	1	t	62
-1963	G'.G'ulom MFY	1	t	62
+1963	G`.G`ulom MFY	1	t	62
 1964	Olimlar MFY	1	t	62
 1965	Baxt MFY	1	t	62
 1966	Madaniyat QFY	1	t	62
 1967	Buloqboshi QFY	1	t	62
 1968	Guliston QFY	1	t	62
-1969	Tozaurug' QFY	1	t	62
+1969	Tozaurug` QFY	1	t	62
 1970	Mirzabuloq QFY	1	t	62
 1971	Mulkush QFY	1	t	62
 1972	Moltob QFY	1	t	62
-1973	G'o'bdin QFY	1	t	62
-1974	Xonimqo'rg'on QFY	1	t	62
+1973	G`o`bdin QFY	1	t	62
+1974	Xonimqo`rg`on QFY	1	t	62
 1975	Qipchoqsuv QFY	1	t	62
 1976	Jiydali QFY	1	t	62
 1977	Korizquduq QFY	1	t	62
 1978	Gulchambar QFY	1	t	62
-1979	Ko'kbuloq QFY	1	t	62
+1979	Ko`kbuloq QFY	1	t	62
 1980	Qashqabuloq QFY	1	t	62
 1981	Oqtosh MFY	1	t	62
 1982	Sarbozor MFY	1	t	62
 1983	Savruk MFY	1	t	62
 1984	A.Navoiy MFY	1	t	63
-1985	G'.G'ulom MFY	1	t	63
+1985	G`.G`ulom MFY	1	t	63
 1986	Xamza MFY	1	t	63
-1987	Xolxo'jaev MFY	1	t	63
+1987	Xolxo`jaev MFY	1	t	63
 1988	Qahramon QFY	1	t	63
 1989	Yangiobod QFY	1	t	63
 1990	Saritepa QFY	1	t	63
 1991	Bunyodkor QFY	1	t	63
 1992	Istiqlol QFY	1	t	63
-1993	Navro'z QFY	1	t	63
-1994	Bog'zor QFY	1	t	63
+1993	Navro`z QFY	1	t	63
+1994	Bog`zor QFY	1	t	63
 1995	Mevazor QFY	1	t	63
 1996	Ziyokor QFY	1	t	64
 1997	Ziyokor MFY	1	t	64
@@ -5771,7 +5771,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 1999	Jizzaxlik MFY	1	t	64
 2000	Sovungarlik MFY	1	t	64
 2001	Qulama QFY	1	t	64
-2002	Qo'shko'prik MFY	1	t	64
+2002	Qo`shko`prik MFY	1	t	64
 2003	Toshkentlik MFY	1	t	64
 2004	Mulkanlik MFY	1	t	64
 2005	Qatortol MFY	1	t	64
@@ -5786,8 +5786,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2014	Xamzaobod QFY	1	t	64
 2015	Ittifoq MFY	1	t	64
 2016	Olmachi MFY	1	t	64
-2017	G'ozg'ontepa MFY	1	t	64
-2018	Pastki So'loqli MFY	1	t	64
+2017	G`ozg`ontepa MFY	1	t	64
+2018	Pastki So`loqli MFY	1	t	64
 2019	Oq oltin QFY	1	t	64
 2020	Qorayantoq MFY	1	t	64
 2021	Yangiobod MFY	1	t	64
@@ -5814,22 +5814,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2042	Umar MFY	1	t	64
 2043	Nonsingil MFY	1	t	64
 2044	Uchqiz yangiqishloq MFY	1	t	64
-2045	Qo'shbarmoq QFY	1	t	64
+2045	Qo`shbarmoq QFY	1	t	64
 2046	Qaxramon MFY	1	t	64
 2047	Qulpisar MFY	1	t	64
-2048	Ko'rpasoy MFY	1	t	64
+2048	Ko`rpasoy MFY	1	t	64
 2049	Ittifoq MFY	1	t	65
 2050	Yoshlik MFY	1	t	65
 2051	Qaliya MFY	1	t	65
-2052	So'loqli MFY	1	t	65
+2052	So`loqli MFY	1	t	65
 2053	Bobur MFY	1	t	65
 2054	Zargarlik MFY	1	t	65
 2055	Xalqabod MFY	1	t	65
 2056	Olmazor MFY	1	t	65
 2057	Qassoblik MFY	1	t	65
-2058	O'ratepalik MFY	1	t	65
+2058	O`ratepalik MFY	1	t	65
 2059	X.Abdujabborov MFY	1	t	65
-2060	Oqqo'rg'onlik MFY	1	t	65
+2060	Oqqo`rg`onlik MFY	1	t	65
 2061	Toshloq MFY	1	t	65
 2062	Zilol MFY	1	t	65
 2063	Jizzaxlik MFY	1	t	65
@@ -5837,28 +5837,28 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2065	Xamzaobod MFY	1	t	65
 2066	Sayiljoyi MFY	1	t	65
 2067	Kimyogar MFY	1	t	65
-2068	Ko'tarma MFY	1	t	65
+2068	Ko`tarma MFY	1	t	65
 2069	Madaniyat MFY	1	t	65
-2070	Ulug'bek MFY	1	t	65
+2070	Ulug`bek MFY	1	t	65
 2071	Tinchlik MFY	1	t	65
 2072	Xayrobod MFY	1	t	65
 2073	Sayxon MFY	1	t	65
 2074	Qipchoq MFY	1	t	65
 2075	Jelli-gulli MFY	1	t	65
-2076	Navro'z MFY	1	t	65
+2076	Navro`z MFY	1	t	65
 2077	Bunyod MFY	1	t	65
 2078	H.Olimjon MFY	1	t	65
 2079	A.Navoiy MFY	1	t	65
 2080	Sangzor MFY	1	t	65
-2081	Do'stlik MFY	1	t	65
+2081	Do`stlik MFY	1	t	65
 2082	Bunyodkor MFY	1	t	65
 2083	Mustaqillik MFY	1	t	66
 2084	Oybek MFY	1	t	66
 2085	Tinchlik MFY	1	t	66
 2086	Oqbuloq MFY	1	t	66
 2087	Shodlik MFY	1	t	66
-2088	Do'stlik MFY	1	t	66
-2089	Navro'z MFY	1	t	66
+2088	Do`stlik MFY	1	t	66
+2089	Navro`z MFY	1	t	66
 2090	Yangiobod MFY	1	t	66
 2091	Lalmikor QFY	1	t	66
 2092	Taraqqiyot MFY	1	t	66
@@ -5868,46 +5868,46 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2096	Yangikent QFY	1	t	66
 2097	Nurafshon MFY	1	t	66
 2098	Adirobod QFY	1	t	66
-2099	Tozaurug' MFY	1	t	66
+2099	Tozaurug` MFY	1	t	66
 2100	Andijon QFY	1	t	66
 2101	Sharq yulduzi QFY	1	t	66
 2102	Zafarobod SHFY	1	t	67
-2103	Bo'ston MFY	1	t	67
+2103	Bo`ston MFY	1	t	67
 2104	Samarqand MFY	1	t	67
 2105	S.Sindarov QFY	1	t	67
 2106	Yorqin QFY	1	t	67
 2107	Birlik QFY	1	t	67
 2108	Xulkar SHFY	1	t	67
 2109	Lolazor QFY	1	t	67
-2110	Chimqo'rg'on QFY	1	t	67
+2110	Chimqo`rg`on QFY	1	t	67
 2111	Temiryazov QFY	1	t	67
-2112	Ulug'bek MFY	1	t	68
+2112	Ulug`bek MFY	1	t	68
 2113	Xamza MFY	1	t	68
 2114	Beruniy MFY	1	t	68
 2115	Paxtakor MFY	1	t	68
-2116	O'zbekiston MFY	1	t	68
+2116	O`zbekiston MFY	1	t	68
 2117	Qoratepa MFY	1	t	68
 2118	Baxt MFY	1	t	68
 2119	H.Olimjon MFY	1	t	68
 2120	Zomin SHFY	1	t	68
-2121	Bog'ishamol MFY	1	t	68
+2121	Bog`ishamol MFY	1	t	68
 2122	Birlik MFY	1	t	68
-2123	Kattabog' MFY	1	t	68
+2123	Kattabog` MFY	1	t	68
 2124	Qayirma MFY	1	t	68
 2125	Navbahor MFY	1	t	68
 2126	Oqtepa MFY	1	t	68
 2127	S.Rahimov MFY	1	t	68
 2128	Sh.Rashidov MFY	1	t	68
-2129	Qo'rg'on MFY	1	t	68
-2130	G'.G'ulom MFY	1	t	68
+2129	Qo`rg`on MFY	1	t	68
+2130	G`.G`ulom MFY	1	t	68
 2131	Beshkubi QFY	1	t	68
 2132	Gulshan QFY	1	t	68
 2133	Teshiktepa MFY	1	t	68
 2134	Duoba QFY	1	t	68
 2135	Istiqlol QFY	1	t	68
 2136	Navoiy QFY	1	t	68
-2137	Qo'shtol MFY	1	t	68
-2138	Pishog'ar MFY	1	t	68
+2137	Qo`shtol MFY	1	t	68
+2138	Pishog`ar MFY	1	t	68
 2139	Yoshlik MFY	1	t	68
 2140	Achchi MFY	1	t	68
 2141	Obi-hayot QFY	1	t	68
@@ -5917,30 +5917,30 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2145	Chorvador QFY	1	t	68
 2146	Turkman MFY	1	t	68
 2147	Shirin QFY	1	t	68
-2148	G'allakor QFY	1	t	68
-2149	To'rttom MFY	1	t	68
+2148	G`allakor QFY	1	t	68
+2149	To`rttom MFY	1	t	68
 2150	Laylak uya MFY	1	t	68
 2151	Yangi hayot QFY	1	t	68
 2152	Chilonzor MFY	1	t	68
 2153	Yerjar MFY	1	t	69
 2154	Mustaqillik MFY	1	t	69
-2155	Do'stlik MFY	1	t	69
-2156	G'alaba MFY	1	t	69
-2157	Ipak yo'li QFY	1	t	69
+2155	Do`stlik MFY	1	t	69
+2156	G`alaba MFY	1	t	69
+2157	Ipak yo`li QFY	1	t	69
 2158	Mirzadala QFY	1	t	69
 2159	Toshkent QFY	1	t	69
 2160	Yangidala QFY	1	t	69
 2161	Paxtazor QFY	1	t	69
-2162	O'zbekiston QFY	1	t	69
+2162	O`zbekiston QFY	1	t	69
 2163	Gulzor QFY	1	t	69
-2164	Bog'bon QFY	1	t	69
-2165	Do'stlik MFY	1	t	70
+2164	Bog`bon QFY	1	t	69
+2165	Do`stlik MFY	1	t	70
 2166	Dilorom MFY	1	t	70
 2167	Toshkent MFY	1	t	70
 2168	Samarqand MFY	1	t	70
 2169	Suvonobod MFY	1	t	70
-2170	G'alaba MFY	1	t	70
-2171	Oltinko'l MFY	1	t	70
+2170	G`alaba MFY	1	t	70
+2171	Oltinko`l MFY	1	t	70
 2172	A.Ikromov QFY	1	t	70
 2173	Paxtakor QFY	1	t	70
 2174	Samarqand QFY	1	t	70
@@ -5950,8 +5950,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2178	Oq-buloq QFY	1	t	70
 2179	Yangiqishloq SHFY	1	t	71
 2180	E.Kamolov MFY	1	t	71
-2181	Bog'don MFY	1	t	71
-2182	O'zbekiston MFY	1	t	71
+2181	Bog`don MFY	1	t	71
+2182	O`zbekiston MFY	1	t	71
 2183	Uchquloch SHFY	1	t	71
 2184	Xonbandi MFY	1	t	71
 2185	Omonkeldi QFY	1	t	71
@@ -5967,7 +5967,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2195	Garasha MFY	1	t	71
 2196	Ilonli MFY	1	t	71
 2197	Forish QFY	1	t	71
-2198	Qo'lba MFY	1	t	71
+2198	Qo`lba MFY	1	t	71
 2199	Uchma MFY	1	t	71
 2200	Osmonsoy QFY	1	t	71
 2201	Osmonsoy MFY	1	t	71
@@ -5978,27 +5978,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2206	Narvon MFY	1	t	71
 2207	Yassikechuv MFY	1	t	71
 2208	Mustaqillik MFY	1	t	71
-2209	O'xum QFY	1	t	71
-2210	O'xum MFY	1	t	71
+2209	O`xum QFY	1	t	71
+2210	O`xum MFY	1	t	71
 2211	Xovos QFY	1	t	72
-2212	Puchug'oy MFY	1	t	72
+2212	Puchug`oy MFY	1	t	72
 2213	Balandchaqir MFY	1	t	72
 2214	Sovot QFY	1	t	72
 2215	Sovot MFY	1	t	72
 2216	Sarmich QFY	1	t	72
 2217	Yuqori Sarmich MFY	1	t	72
 2218	Pastki sarmich MFY	1	t	72
-2219	Xo'jamushkent QFY	1	t	72
+2219	Xo`jamushkent QFY	1	t	72
 2220	Erganakli MFY	1	t	72
-2221	Xovotog' QFY	1	t	72
-2222	Qo'shqand MFY	1	t	72
+2221	Xovotog` QFY	1	t	72
+2222	Qo`shqand MFY	1	t	72
 2223	Yangiobod MFY	1	t	72
 2224	Batosh QFY	1	t	73
-2225	Mo'minobod MFY	1	t	73
-2226	Bo'ston QFY	1	t	73
+2225	Mo`minobod MFY	1	t	73
+2226	Bo`ston QFY	1	t	73
 2227	Avchonboch MFY	1	t	73
 2228	Guliston QFY	1	t	73
-2229	Do'ltali MFY	1	t	73
+2229	Do`ltali MFY	1	t	73
 2230	Toshguzar MFY	1	t	73
 2231	Chugurtma QFY	1	t	73
 2232	Gulshan QFY	1	t	73
@@ -6008,25 +6008,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2236	Zarbdor QFY	1	t	73
 2237	ch	1	t	73
 2238	Qovchin MFY	1	t	73
-2239	Qorako'l QFY	1	t	73
+2239	Qorako`l QFY	1	t	73
 2240	Eshonquduq MFY	1	t	73
-2241	Qo'shtepa QFY	1	t	73
+2241	Qo`shtepa QFY	1	t	73
 2242	Apardi MFY	1	t	73
 2243	ch	1	t	73
 2244	Mexnatobod QFY	1	t	73
 2245	ch	1	t	73
 2246	Parmiston MFY	1	t	73
-2247	Cho'michli MFY	1	t	73
+2247	Cho`michli MFY	1	t	73
 2248	Pachkamar QFY	1	t	73
 2249	Xalqobod QFY	1	t	73
 2250	Xalqobod MFY	1	t	73
 2251	Shakarbuloq QFY	1	t	73
 2252	Yangikent MFY	1	t	73
 2253	Sherali QFY	1	t	73
-2254	Xo'jaguzar MFY	1	t	73
+2254	Xo`jaguzar MFY	1	t	73
 2255	Chanoq MFY	1	t	73
 2256	Iqbol Egamberdieva	1	t	73
-2257	Navro'z MFY	1	t	73
+2257	Navro`z MFY	1	t	73
 2258	h	1	t	73
 2259	Paxtazor MFY	1	t	73
 2260	Amir Temur MFY	1	t	73
@@ -6262,11 +6262,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2490	Komilon QFY	1	t	78
 2491	Mesit MFY	1	t	78
 2492	Chulkuvar QFY	1	t	78
-2493	Xo'jaxayron MFY	1	t	78
+2493	Xo`jaxayron MFY	1	t	78
 2494	Mushqoqi MFY	1	t	78
 2495	Paxtaobod QFY	1	t	79
 2496	Qaynarbuloq QFY	1	t	79
-2497	Qatorbog' QFY	1	t	79
+2497	Qatorbog` QFY	1	t	79
 2498	Jilisuv QFY	1	t	79
 2499	Sevaz QFY	1	t	79
 2500	Palandara QFY	1	t	79
@@ -6274,7 +6274,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2502	Quyioqboy QFY	1	t	79
 2503	Bektemir QFY	1	t	79
 2504	Tupchoq QFY	1	t	79
-2505	Bog'bon QFY	1	t	79
+2505	Bog`bon QFY	1	t	79
 2506	Beshterak QFY	1	t	79
 2507	Kuxsor MFY	1	t	79
 2508	Surum MFY	1	t	79
@@ -6290,12 +6290,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2518	Yakkatut MFY	1	t	79
 2519	Oeqchi MFY	1	t	79
 2520	Hoji MFY	1	t	79
-2521	Yo'ldosh shaxarcha MFY	1	t	79
+2521	Yo`ldosh shaxarcha MFY	1	t	79
 2522	S.Raximov MFY	1	t	79
 2523	Toshkent MFY	1	t	79
 2524	H.Olimjon MFY	1	t	79
 2525	Guliston MFY	1	t	79
-2526	Ulug'bek MFY	1	t	79
+2526	Ulug`bek MFY	1	t	79
 2527	A.Qushchi MFY	1	t	79
 2528	X.Dustligi MFY	1	t	79
 2529	Xiromiy MFY	1	t	79
@@ -6371,21 +6371,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2599	Navbahor QFY	1	t	81
 2600	Obod QFY	1	t	81
 2601	Yangiobod QFY	1	t	81
-2602	Avazcho'l QFY (chegara xudud)	1	t	81
+2602	Avazcho`l QFY (chegara xudud)	1	t	81
 2603	Pomuq QFY (chegara xudud)	1	t	81
 2604	Chamanzor QFY	1	t	81
 2605	Chandir QFY	1	t	81
 2606	Vori QFY(chegara xudud)	1	t	81
-2607	Gulshanbog' QFY (chegara xudud)	1	t	81
+2607	Gulshanbog` QFY (chegara xudud)	1	t	81
 2608	Yangi Mirishkor MFY	1	t	81
 2609	Obodon MFY	1	t	81
 2610	Kalta MFY	1	t	81
 2611	Qumbangi MFY	1	t	81
 2612	Okmachit MFY	1	t	81
-2613	O'zbekiston MFY	1	t	81
+2613	O`zbekiston MFY	1	t	81
 2614	Yangi Jeynov MFY	1	t	81
 2615	Avvona MFY	1	t	81
-2616	Anxo'y MFY	1	t	81
+2616	Anxo`y MFY	1	t	81
 2617	Ayzabod MFY	1	t	81
 2618	Kattapoy MFY	1	t	81
 2619	Oltin boshoq MFY	1	t	81
@@ -6408,7 +6408,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2636	Dustlik MFY	1	t	82
 2637	A.Navoiy MFY	1	t	82
 2638	Geolog MFY	1	t	82
-2639	Mash'al MFY	1	t	82
+2639	Mash`al MFY	1	t	82
 2640	Quruvchilar MFY	1	t	82
 2641	Sariq QFY	1	t	82
 2642	A.Temur MFY	1	t	82
@@ -6423,20 +6423,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2651	K.Shoniyozov MFY	1	t	82
 2652	Sardoba MFY	1	t	82
 2653	baynalmilal MFY	1	t	83
-2654	ulug'bek MFY	1	t	83
+2654	ulug`bek MFY	1	t	83
 2655	Navbaxor MFY	1	t	83
 2656	Paxtakor MFY	1	t	83
 2657	Yuksalish MFY	1	t	83
 2658	Paxtaobod MFY	1	t	83
 2659	Nuriston shfy	1	t	83
-2660	Navro'z QFY	1	t	83
+2660	Navro`z QFY	1	t	83
 2661	Guliston MFY	1	t	83
 2662	Samarqand MFY	1	t	83
 2663	Istiqbol MFY	1	t	83
 2664	Yangiobod MFY	1	t	83
 2665	Qirqquloch QFY (chegara xudud )	1	t	83
 2666	Obod MFY(chegara xudud)	1	t	83
-2667	Do'stlik MFY(chegara xudud)	1	t	83
+2667	Do`stlik MFY(chegara xudud)	1	t	83
 2668	Obixayot MFY(chegara xudud)	1	t	83
 2669	Tinchlik MFY(chegara xudud)	1	t	83
 2670	Shirinobod QFY	1	t	83
@@ -6451,9 +6451,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2679	Kimyogar MFY	1	t	83
 2680	Nurchi MFY	1	t	83
 2681	Chiroqchi MFY	1	t	84
-2682	Bog'ishamol MFY	1	t	84
+2682	Bog`ishamol MFY	1	t	84
 2683	Kishmishtepa MFY	1	t	84
-2684	O'zbekiston MFY	1	t	84
+2684	O`zbekiston MFY	1	t	84
 2685	Yangiobod MFY	1	t	84
 2686	Choshtepa MFY	1	t	84
 2687	A.Navoiy MFY	1	t	84
@@ -6467,37 +6467,37 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2695	Uymovut QFY	1	t	84
 2696	Xumo QFY	1	t	84
 2697	Yangiobod MFY	1	t	84
-2698	Ko'ktosh MFY	1	t	84
+2698	Ko`ktosh MFY	1	t	84
 2699	Jar QFY	1	t	84
 2700	Qizilchovra MFY	1	t	84
 2701	Dodiq QFY	1	t	84
-2702	Navro'z MFY	1	t	84
+2702	Navro`z MFY	1	t	84
 2703	Qaxramon QFY	1	t	84
 2704	Buronjuz MFY	1	t	84
 2705	Dursun MFY	1	t	84
 2706	Uyshun QFY	1	t	84
-2707	G'allachi MFY	1	t	84
+2707	G`allachi MFY	1	t	84
 2708	Oq oltin MFY	1	t	84
 2709	Oq tosh MFY	1	t	84
 2710	Mirzatup QFY	1	t	84
 2711	Arabbandi MFY	1	t	84
 2712	Chiyal QFY	1	t	84
 2713	Uymovut MFY	1	t	84
-2714	To'qmor MFY	1	t	84
-2715	G'allakor MFY	1	t	84
+2714	To`qmor MFY	1	t	84
+2715	G`allakor MFY	1	t	84
 2716	Qumdaryo QFY	1	t	84
 2717	Suvliq MFY	1	t	84
-2718	Annaro'z MFY	1	t	84
+2718	Annaro`z MFY	1	t	84
 2719	Chuvilloq MFY	1	t	84
 2720	Qalqama QFY	1	t	84
 2721	Galabek MFY	1	t	84
 2722	Langar QFY	1	t	84
 2723	Quruqsoy MFY	1	t	84
 2724	Kukdala QFY	1	t	84
-2725	Soybo'yi MFY	1	t	84
-2726	O'tamayli MFY	1	t	84
+2725	Soybo`yi MFY	1	t	84
+2726	O`tamayli MFY	1	t	84
 2727	Beglamish MFY	1	t	84
-2728	Torjilg'a QFY	1	t	84
+2728	Torjilg`a QFY	1	t	84
 2729	Guliston MFY	1	t	84
 2730	Eski anhor QFY	1	t	84
 2731	Ayritom MFY	1	t	84
@@ -6505,21 +6505,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2733	Yangihayot QFY	1	t	84
 2734	Taloqtepa MFY	1	t	84
 2735	Xarduri MFY	1	t	84
-2736	Sho'rbozor MFY	1	t	84
+2736	Sho`rbozor MFY	1	t	84
 2737	Chorvador QFY	1	t	84
 2738	Qanotli MFY	1	t	84
-2739	Sho'rquduq QFY	1	t	84
+2739	Sho`rquduq QFY	1	t	84
 2740	Naymansaroy MFY	1	t	84
 2741	Umakay MFY	1	t	84
 2742	Chanbil MFY	1	t	84
-2743	Qirg'iz MFY	1	t	84
-2744	O'rda MFY	1	t	85
+2743	Qirg`iz MFY	1	t	84
+2744	O`rda MFY	1	t	85
 2745	Zingiron MFY	1	t	85
 2746	Kulollik MFY	1	t	85
 2747	Zargarlik MFY	1	t	85
-2748	Qo'shxovuzMFY	1	t	85
+2748	Qo`shxovuzMFY	1	t	85
 2749	Qoziguzar MFY	1	t	85
-2750	Sa'diy MFY	1	t	85
+2750	Sa`diy MFY	1	t	85
 2751	X. Baxshi MFY	1	t	85
 2752	Kunchiqar MFY	1	t	85
 2753	Qushxona MFY	1	t	85
@@ -6527,14 +6527,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2755	NamozgoxMFY	1	t	85
 2756	Oq saroy MFY	1	t	85
 2757	XabarlikMFY	1	t	85
-2758	Navro'zMFY	1	t	85
+2758	Navro`zMFY	1	t	85
 2759	SariosiyoMFY	1	t	85
-2760	Cho'lponMFY	1	t	85
+2760	Cho`lponMFY	1	t	85
 2761	G'ulom MFY	1	t	85
 2762	Ipak Yuli MFY	1	t	85
 2763	Paxtakor MFY	1	t	85
 2764	Kesh MFY	1	t	85
-2765	Do'stlik MFY	1	t	85
+2765	Do`stlik MFY	1	t	85
 2766	Turon MFY	1	t	85
 2767	Pillakashlik MFY	1	t	85
 2768	Tutzor MFY	1	t	85
@@ -6542,11 +6542,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2770	Pisandi MFY	1	t	85
 2771	KamolotMFY	1	t	85
 2772	A.Jomiy MFY	1	t	85
-2773	Ma'rifat MFY	1	t	85
-2774	Sinabog' MFY	1	t	85
+2773	Ma`rifat MFY	1	t	85
+2774	Sinabog` MFY	1	t	85
 2775	Kunchiqar QFY	1	t	85
 2776	Shamaton QFY	1	t	85
-2777	O'zbekiston QFY	1	t	85
+2777	O`zbekiston QFY	1	t	85
 2778	Namaton QFY	1	t	85
 2779	Duqchi QFY	1	t	85
 2780	Muminobod QFY	1	t	85
@@ -6561,21 +6561,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2789	Avazmalik MFY	1	t	85
 2790	Uymovut MFY	1	t	85
 2791	Xitoy	1	t	85
-2792	G'elon (chegara xudud)	1	t	85
+2792	G`elon (chegara xudud)	1	t	85
 2793	Choshtepa MFY	1	t	85
 2794	Chorshanbe MFY	1	t	85
 2795	Yangiqishloq MFY	1	t	85
 2796	K.Novqat MFY	1	t	85
 2797	Paxtakor MFY	1	t	85
 2798	Xujaxuroson MFY	1	t	85
-2799	Urtaqurg'on MFY	1	t	85
+2799	Urtaqurg`on MFY	1	t	85
 2800	A.Temur MFY	1	t	85
 2801	Tudamaydon MFY	1	t	85
 2802	Xazara MFY	1	t	85
 2803	Qutchi MFY	1	t	85
-2804	Achchig'i MFY	1	t	85
+2804	Achchig`i MFY	1	t	85
 2805	Saroy MFY	1	t	85
-2806	Ommag'on MFY	1	t	85
+2806	Ommag`on MFY	1	t	85
 2807	Chuqun MFY	1	t	85
 2808	Furkat MFY	1	t	86
 2809	Oxunboboev MFY	1	t	86
@@ -6639,7 +6639,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2867	Yangi ariq QFY	1	t	88
 2868	Varq MFY	1	t	88
 2869	Kalovot MFY	1	t	88
-2870	Arg'un MFY	1	t	88
+2870	Arg`un MFY	1	t	88
 2871	Yangi ariq MFY	1	t	88
 2872	Talqoq MFY	1	t	88
 2873	Katta machit MFY	1	t	88
@@ -6647,14 +6647,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2875	Uyrot MFY	1	t	88
 2876	Ayronchi MFY	1	t	88
 2877	Yangiobod MFY	1	t	88
-2878	Xoncharbog' MFY	1	t	88
+2878	Xoncharbog` MFY	1	t	88
 2879	Durman QFY	1	t	88
 2880	Durman MFY	1	t	88
 2881	Azamat MFY	1	t	88
 2882	Qahramon MFY	1	t	88
 2883	Malikrabot QFY	1	t	88
 2884	Sardoba MFY	1	t	88
-2885	Do'stlik MFY	1	t	88
+2885	Do`stlik MFY	1	t	88
 2886	Xazora QFY	1	t	88
 2887	Malik MFY	1	t	88
 2888	Toshrabod MFY	1	t	88
@@ -6662,18 +6662,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2890	Arabxona MFY	1	t	88
 2891	Narpay QFY	1	t	88
 2892	T. Gafurov MFY	1	t	88
-2893	Navro'z MFY	1	t	88
+2893	Navro`z MFY	1	t	88
 2894	Paxtaobod MFY	1	t	88
 2895	S. Umarov MFY	1	t	88
 2896	Jaloir QFY	1	t	88
 2897	Allon MFY	1	t	88
 2898	Gurda MFY	1	t	88
-2899	Yuqori bo'g' MFY	1	t	88
+2899	Yuqori bo`g` MFY	1	t	88
 2900	Shibzon MFY	1	t	88
 2901	Arabxona MFY	1	t	88
 2902	Mirsaid Baxrom MFY	1	t	88
 2903	Xisrav MFY	1	t	88
-2904	Ko'hna Qurg'on MFY	1	t	88
+2904	Ko`hna Qurg`on MFY	1	t	88
 2905	Gulobod MFY	1	t	88
 2906	A.Navoiy MFY	1	t	88
 2907	U. Yusupov MFY	1	t	88
@@ -6687,7 +6687,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 2915	Malikobod MFY	1	t	89
 2916	Uzilishkent MFY	1	t	89
 2917	Saroy MFY	1	t	89
-2918	Kal'ayi-Azizon MFY	1	t	89
+2918	Kal`ayi-Azizon MFY	1	t	89
 2919	Xujakurgon MFY	1	t	89
 2920	Okrabot MFY	1	t	89
 2921	Bobodugi MFY	1	t	89
@@ -6780,7 +6780,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3008	Mexnat M.F.Y	1	t	91
 3009	Xalovat-tepa M.F.Y	1	t	91
 3010	Yosh kuch MFY.	1	t	91
-3011	Mirzo Ulug'bek	1	t	91
+3011	Mirzo Ulug`bek	1	t	91
 3012	Arabsaroy KFY	1	t	91
 3013	Karvon MFY	1	t	91
 3014	Sovungar MFY	1	t	91
@@ -6795,7 +6795,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3023	Yangi kuch MFY	1	t	91
 3024	Yaltirabot M.F.Y	1	t	91
 3025	Qizilrabot MFY	1	t	91
-3026	Yangiqurg'on QFY	1	t	91
+3026	Yangiqurg`on QFY	1	t	91
 3027	Charvokguzar M.F.Y	1	t	91
 3028	Navkar M.F.Y	1	t	91
 3029	Sarbozor MFY	1	t	91
@@ -6806,18 +6806,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3034	Binokor MFY	1	t	92
 3035	Janubiy MFY	1	t	92
 3036	Bunyodkor MFY	1	t	92
-3037	O'zbekiston MFY	1	t	92
-3038	G'alaba MFY	1	t	92
+3037	O`zbekiston MFY	1	t	92
+3038	G`alaba MFY	1	t	92
 3039	Zarafshon MFY	1	t	92
 3040	Yangiobod MFY	1	t	92
 3041	Lochin MFY	1	t	92
-3042	Me'mor MFY	1	t	92
+3042	Me`mor MFY	1	t	92
 3043	Muruvvat MFY	1	t	92
 3044	Orzu MFY	1	t	92
 3045	Umid MFY	1	t	92
 3046	Baxor MFY	1	t	92
 3047	Xumo MFY	1	t	92
-3048	Do'stlik MFY	1	t	92
+3048	Do`stlik MFY	1	t	92
 3049	Oltin Vodiy MFY	1	t	92
 3050	Matonat MFY	1	t	92
 3051	Gulzor MFY	1	t	92
@@ -6857,7 +6857,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3085	Dexibaland MFY	1	t	93
 3086	Avazsoy MFY	1	t	93
 3087	Orasoy MFY	1	t	93
-3088	G'ozgon KFY	1	t	93
+3088	G`ozgon KFY	1	t	93
 3089	Guliston MFY	1	t	93
 3090	Shayxon MFY	1	t	93
 3091	Marmar-obod MFY	1	t	93
@@ -6880,7 +6880,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3108	Aytim MFY	1	t	95
 3109	Navoiy MFY	1	t	95
 3110	Abay MFY	1	t	95
-3111	Ko'kpatas MFY	1	t	95
+3111	Ko`kpatas MFY	1	t	95
 3112	L.Murashimov OFY	1	t	95
 3113	Bozdun OFY	1	t	95
 3114	Mingbulok OFY	1	t	95
@@ -6925,7 +6925,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3153	J.Hamroev MFY	1	t	96
 3154	K.Arab MFY	1	t	96
 3155	A.Temur MFY	1	t	96
-3156	Qurg'oncha MFY	1	t	96
+3156	Qurg`oncha MFY	1	t	96
 3157	T.Shirinov MFY	1	t	96
 3158	Yangiyul QFY	1	t	96
 3159	Paxtakor MFY	1	t	96
@@ -6943,15 +6943,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3171	T.Narzullaev MFY	1	t	96
 3172	Jaloyir MFY	1	t	96
 3173	A.Jumanov MFY	1	t	96
-3174	M.Ulug'bek MFY	1	t	96
+3174	M.Ulug`bek MFY	1	t	96
 3175	N.Uroqov MFY	1	t	96
 3176	Madaniyat MFY	1	t	96
 3177	Xonaqa QFY	1	t	96
 3178	Yangi MFY	1	t	96
-3179	Bug'irdoq MFY	1	t	96
+3179	Bug`irdoq MFY	1	t	96
 3180	Jaloer MFY	1	t	96
 3181	Uyshun MFY	1	t	96
-3182	Chag'atoy MFY	1	t	96
+3182	Chag`atoy MFY	1	t	96
 3183	Tasmachi MFY	1	t	96
 3184	Oltinobod MFY	1	t	96
 3185	Mirdosh MFY	1	t	96
@@ -6995,11 +6995,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3223	Koson QFY	1	t	97
 3224	Kozokovul MFY	1	t	97
 3225	Kukumboy MFY	1	t	97
-3226	M'azam MFY	1	t	97
+3226	M`azam MFY	1	t	97
 3227	Navbaxor MFY	1	t	97
 3228	Navbaxor-1 MFY	1	t	97
 3229	Navruz MFY	1	t	97
-3230	o'Ashirov MFY	1	t	97
+3230	o`Ashirov MFY	1	t	97
 3231	Obod MFY	1	t	97
 3232	Obodon MFY	1	t	97
 3233	Olmazor MFY	1	t	97
@@ -7022,7 +7022,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3250	Urikzor MFY	1	t	97
 3251	Urta kucha MFY	1	t	97
 3252	Urta tukay MFY	1	t	97
-3253	O'zbekiston MFY	1	t	97
+3253	O`zbekiston MFY	1	t	97
 3254	Uzunkishlok MFY	1	t	97
 3255	Xonkurgon MFY	1	t	97
 3256	Xuriyat MFY	1	t	97
@@ -7038,13 +7038,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3266	Baland Gurtepa MFY	1	t	98
 3267	Birlashgan MFY	1	t	98
 3268	Bozorboshi MFY	1	t	98
-3269	Bo'ston qfy	1	t	98
+3269	Bo`ston qfy	1	t	98
 3270	Chordona MFY	1	t	98
 3271	Damkul MFY	1	t	98
 3272	Dovduq QFY	1	t	98
 3273	Farovon MFY	1	t	98
 3274	Guliston MFY	1	t	98
-3275	Gulobog' QFY	1	t	98
+3275	Gulobog` QFY	1	t	98
 3276	Gurtepa QFY	1	t	98
 3277	Ingichka MFY	1	t	98
 3278	Jomashuy SHFY	1	t	98
@@ -7067,7 +7067,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3295	Mulkobod MFY	1	t	98
 3296	Mustakillik MFY	1	t	98
 3297	Nayman MFY	1	t	98
-3298	Oltinko'l QFY	1	t	98
+3298	Oltinko`l QFY	1	t	98
 3299	Oyb?k MFY	1	t	98
 3300	Paxtakor MFY	1	t	98
 3301	Serxarakat MFY	1	t	98
@@ -7079,28 +7079,28 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3307	Uzgarish MFY	1	t	98
 3308	Xayitobod MFY	1	t	98
 3309	Yakkatol MFY	1	t	98
-3310	Yangi Gulbog' MFY	1	t	98
+3310	Yangi Gulbog` MFY	1	t	98
 3311	Yangiobod MFY	1	t	98
 3312	Yoshlik MFY	1	t	98
 3313	Anjirzor MFY	1	t	99
 3314	Bektemir (jamoatchi) MFY	1	t	99
 3315	Beshkapa MFY	1	t	99
 3316	Bodomzor (jamoatchi) MFY	1	t	99
-3317	Bog' kucha MFY	1	t	99
-3318	Bog' mahalla MFY	1	t	99
-3319	Bog'ishamol QFY	1	t	99
+3317	Bog` kucha MFY	1	t	99
+3318	Bog` mahalla MFY	1	t	99
+3319	Bog`ishamol QFY	1	t	99
 3320	Bozorboshi MFY	1	t	99
-3321	Bo'ston MFY	1	t	99
-3322	Chag'ir MFY	1	t	99
+3321	Bo`ston MFY	1	t	99
+3322	Chag`ir MFY	1	t	99
 3323	Dasht MFY	1	t	99
 3324	Elatan MFY	1	t	99
 3325	Eshobod MFY	1	t	99
-3326	G'alcha-1 MFY	1	t	99
-3327	G'alcha-2 MFY	1	t	99
-3328	G'alcha-3 MFY	1	t	99
-3329	G'lcha QFY	1	t	99
-3330	G'irvon QFY	1	t	99
-3331	G'uldirov MFY	1	t	99
+3326	G`alcha-1 MFY	1	t	99
+3327	G`alcha-2 MFY	1	t	99
+3328	G`alcha-3 MFY	1	t	99
+3329	G`lcha QFY	1	t	99
+3330	G`irvon QFY	1	t	99
+3331	G`uldirov MFY	1	t	99
 3332	I.Raxmatov QFY	1	t	99
 3333	Irvadon -1 MFY	1	t	99
 3334	Irvadon -2 MFY	1	t	99
@@ -7110,9 +7110,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3338	Kaykovus MFY	1	t	99
 3339	Kichik qurama MFY	1	t	99
 3340	Kichik Toshbuloq MFY	1	t	99
-3341	Ko'l bo'yi MFY	1	t	99
-3342	Ko'lqo'rg'on (jamoatchi) MFY	1	t	99
-3343	Qumkurg'on QFY	1	t	99
+3341	Ko`l bo`yi MFY	1	t	99
+3342	Ko`lqo`rg`on (jamoatchi) MFY	1	t	99
+3343	Qumkurg`on QFY	1	t	99
 3344	Kurmak MFY	1	t	99
 3345	Mallahovuz MFY	1	t	99
 3346	Mallaxovuz MFY	1	t	99
@@ -7121,48 +7121,48 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3349	Mirishkor-2 MFY	1	t	99
 3350	Mullakudung-1 MFY	1	t	99
 3351	Mullakudung-2 MFY	1	t	99
-3352	Ne'matjon MFY	1	t	99
-3353	No'g'ayqo'rg'on MFY	1	t	99
+3352	Ne`matjon MFY	1	t	99
+3353	No`g`ayqo`rg`on MFY	1	t	99
 3354	Olaxamak MFY	1	t	99
 3355	Oq ?r MFY	1	t	99
 3356	Oq buloq MFY	1	t	99
 3357	Oq-Er MFY	1	t	99
 3358	Orzu MFY	1	t	99
 3359	Oxunboboev QFY	1	t	99
-3360	O'lmas MFY	1	t	99
-3361	O'rta G'irvon MFY	1	t	99
-3362	O'rta Rovuston MFY	1	t	99
+3360	O`lmas MFY	1	t	99
+3361	O`rta G`irvon MFY	1	t	99
+3362	O`rta Rovuston MFY	1	t	99
 3363	Past Qiyot MFY	1	t	99
-3364	Qirg'izqo'rg'on MFY	1	t	99
-3365	Qorako'l MFY	1	t	99
+3364	Qirg`izqo`rg`on MFY	1	t	99
+3365	Qorako`l MFY	1	t	99
 3366	Qoratepa 1 MFY	1	t	99
 3367	Qoratepa 2 MFY	1	t	99
-3368	Qo'qon-qishloq MFY	1	t	99
-3369	Qumqo'rg'on 1 MFY	1	t	99
-3370	Qumqo'rg'on 2 MFY	1	t	99
+3368	Qo`qon-qishloq MFY	1	t	99
+3369	Qumqo`rg`on 1 MFY	1	t	99
+3370	Qumqo`rg`on 2 MFY	1	t	99
 3371	Qurama MFY	1	t	99
-3372	Quyi G'irvon MFY	1	t	99
+3372	Quyi G`irvon MFY	1	t	99
 3373	Quyi Rovuston MFY	1	t	99
 3374	Sherbuloq MFY	1	t	99
-3375	Shamsiko'l MFY	1	t	99
+3375	Shamsiko`l MFY	1	t	99
 3376	Shishaki MFY	1	t	99
-3377	Sho'rqishloq MFY	1	t	99
-3378	Sho'rqo'rg'on MFY	1	t	99
+3377	Sho`rqishloq MFY	1	t	99
+3378	Sho`rqo`rg`on MFY	1	t	99
 3379	Shurkishlok QFY	1	t	99
 3380	Tepa MFY	1	t	99
 3381	Tepa Qiyot MFY	1	t	99
-3382	Tepakurg'on QFY	1	t	99
-3383	Tepaqo'rg'on MFY	1	t	99
+3382	Tepakurg`on QFY	1	t	99
+3383	Tepaqo`rg`on MFY	1	t	99
 3384	Toshbuloq SHFY	1	t	99
-3385	To'sar MFY	1	t	99
+3385	To`sar MFY	1	t	99
 3386	Urganji MFY	1	t	99
 3387	Uzbekiston QFY	1	t	99
 3388	Xonobod QFY	1	t	99
 3389	Xonobod MFY	1	t	99
-3390	xo'jaqishloq-1 MFY	1	t	99
-3391	xo'jaqishloq-2 MFY	1	t	99
-3392	Yangi yo'l MFY	1	t	99
-3393	Yuqori G'irvon MFY	1	t	99
+3390	xo`jaqishloq-1 MFY	1	t	99
+3391	xo`jaqishloq-2 MFY	1	t	99
+3392	Yangi yo`l MFY	1	t	99
+3393	Yuqori G`irvon MFY	1	t	99
 3394	Yuqori Rovuston MFY	1	t	99
 3395	A.Beruniy MFY	1	t	100
 3396	A.Fazliy MFY	1	t	100
@@ -7177,12 +7177,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3405	Buston MFY	1	t	100
 3406	Chinor MFY	1	t	100
 3407	Chorsu MFY	1	t	100
-3408	Dambog' MFY	1	t	100
-3409	Dashtbog' MFY	1	t	100
+3408	Dambog` MFY	1	t	100
+3409	Dashtbog` MFY	1	t	100
 3410	Davlatobod MFY	1	t	100
-3411	Do'stlik MFY	1	t	100
+3411	Do`stlik MFY	1	t	100
 3412	Furqat MFY	1	t	100
-3413	G'isht kuprik MFY	1	t	100
+3413	G`isht kuprik MFY	1	t	100
 3414	Gulbog MFY	1	t	100
 3415	Guliston MFY	1	t	100
 3416	Gulpora MFY	1	t	100
@@ -7200,11 +7200,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3428	M.Maorif MFY	1	t	100
 3429	Mexnatobod MFY	1	t	100
 3430	Mexribonlik MFY	1	t	100
-3431	Ma'naviyat MFY	1	t	100
-3432	Ma'rifat MFY	1	t	100
+3431	Ma`naviyat MFY	1	t	100
+3432	Ma`rifat MFY	1	t	100
 3433	Madaniy MFY	1	t	100
 3434	Majnuntol MFY	1	t	100
-3435	Marg'ilon MFY	1	t	100
+3435	Marg`ilon MFY	1	t	100
 3436	Mashrab MFY	1	t	100
 3437	Mingchinor MFY	1	t	100
 3438	Mingterak MFY	1	t	100
@@ -7218,7 +7218,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3446	Olvalizor MFY	1	t	100
 3447	Oromgox MFY	1	t	100
 3448	Ozod MFY	1	t	100
-3449	O'zbekiston MFY	1	t	100
+3449	O`zbekiston MFY	1	t	100
 3450	Porloq MFY	1	t	100
 3451	Qadamjoy MFY	1	t	100
 3452	R.Mumin MFY	1	t	100
@@ -7230,8 +7230,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3458	Soxibkor MFY	1	t	100
 3459	Sufizoda MFY	1	t	100
 3460	Tinchlik MFY	1	t	100
-3461	To'quvchi MFY	1	t	100
-3462	Uch yog'och MFY	1	t	100
+3461	To`quvchi MFY	1	t	100
+3462	Uch yog`och MFY	1	t	100
 3463	Umid MFY	1	t	100
 3464	Haqiqat MFY	1	t	100
 3465	Xalklar dustligi MFY	1	t	100
@@ -7254,7 +7254,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3482	Buzulmas MFY	1	t	101
 3483	Changitma MFY	1	t	101
 3484	Dumar MFY	1	t	101
-3485	Do'stlik MFY	1	t	101
+3485	Do`stlik MFY	1	t	101
 3486	Furqat MFY	1	t	101
 3487	Kemaboshi MFY	1	t	101
 3488	Katta Ulmas MFY	1	t	101
@@ -7265,8 +7265,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3493	Kozokovul MFY	1	t	101
 3494	Kukmozor MFY	1	t	101
 3495	Qurama MFY	1	t	101
-3496	Qurg'oncha MFY	1	t	101
-3497	Kurg'ontepa QFY	1	t	101
+3496	Qurg`oncha MFY	1	t	101
+3497	Kurg`ontepa QFY	1	t	101
 3498	Kusharik MFY	1	t	101
 3499	Kushchek MFY	1	t	101
 3500	Kuyultepa MFY	1	t	101
@@ -7298,13 +7298,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3526	Tulkin MFY	1	t	101
 3527	Uchtepa QFY	1	t	101
 3528	Uchtepa MFY	1	t	101
-3529	O'zbekiston MFY	1	t	101
+3529	O`zbekiston MFY	1	t	101
 3530	Xajintoli MFY	1	t	101
-3531	Xo'jaqurgoncha MFY	1	t	101
-3532	Xo'jaobod QFY	1	t	101
-3533	Xo'jaobod MFY	1	t	101
+3531	Xo`jaqurgoncha MFY	1	t	101
+3532	Xo`jaobod QFY	1	t	101
+3533	Xo`jaobod MFY	1	t	101
 3534	Yangi tong MFY	1	t	101
-3535	Yangi-Farg'ona MFY	1	t	101
+3535	Yangi-Farg`ona MFY	1	t	101
 3536	Yashik MFY	1	t	101
 3537	Yaydok MFY	1	t	101
 3538	Yuqori-Chuja MFY	1	t	101
@@ -7322,18 +7322,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3550	Chodak QFY	1	t	102
 3551	Chorkesar MFY	1	t	102
 3552	Chorkesar SHFY	1	t	102
-3553	Do'stlik MFY	1	t	102
-3554	Do'stlik MFY	1	t	102
+3553	Do`stlik MFY	1	t	102
+3554	Do`stlik MFY	1	t	102
 3555	Eski qishloq MFY	1	t	102
 3556	Guliston MFY	1	t	102
-3557	G'urumsaroy MFY	1	t	102
+3557	G`urumsaroy MFY	1	t	102
 3558	Guzar MFY	1	t	102
 3559	Imom ota MFY	1	t	102
 3560	Iskovut MFY	1	t	102
 3561	Ittifoq MFY	1	t	102
 3562	Kenagas MFY	1	t	102
 3563	Kalqurbon MFY	1	t	102
-3564	Kandig'on MFY	1	t	102
+3564	Kandig`on MFY	1	t	102
 3565	Qushminor MFY	1	t	102
 3566	Qushtepa MFY	1	t	102
 3567	M.Toshmatov QFY	1	t	102
@@ -7366,19 +7366,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3594	Shayxon MFY	1	t	102
 3595	Shomozor MFY	1	t	102
 3596	Soxibkor MFY	1	t	102
-3597	Temir yo'l usti. MFY	1	t	102
-3598	Tepaqurg'on MFY	1	t	102
+3597	Temir yo`l usti. MFY	1	t	102
+3598	Tepaqurg`on MFY	1	t	102
 3599	Tinchlik MFY	1	t	102
-3600	Toshqurg'on MFY	1	t	102
+3600	Toshqurg`on MFY	1	t	102
 3601	Tuman-1 MFY	1	t	102
 3602	U.Ikromov MFY	1	t	102
 3603	uch uyli MFY	1	t	102
 3604	Ultarma MFY	1	t	102
-3605	Uyg'ur QFY	1	t	102
-3606	Uyg'ursoy SHFY	1	t	102
-3607	Uyg'ursoy SHFY	1	t	102
-3608	Uyg'ur MFY	1	t	102
-3609	O'zbekiston MFY	1	t	102
+3605	Uyg`ur QFY	1	t	102
+3606	Uyg`ursoy SHFY	1	t	102
+3607	Uyg`ursoy SHFY	1	t	102
+3608	Uyg`ur MFY	1	t	102
+3609	O`zbekiston MFY	1	t	102
 3610	Vodiy MFY	1	t	102
 3611	H.Olimjon MFY	1	t	102
 3612	Xalkobod-1 MFY	1	t	102
@@ -7388,8 +7388,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3616	Xalqabod SHFY	1	t	102
 3617	Hamza MFY	1	t	102
 3618	Hazrati bob MFY	1	t	102
-3619	Xo'jaobod-1 MFY	1	t	102
-3620	Xo'jaobod-2 MFY	1	t	102
+3619	Xo`jaobod-1 MFY	1	t	102
+3620	Xo`jaobod-2 MFY	1	t	102
 3621	Xonobod urta MFY	1	t	102
 3622	Yakkatut MFY	1	t	102
 3623	Yangier MFY	1	t	102
@@ -7413,27 +7413,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3641	Buramatut QFY	1	t	103
 3642	Buramatut MFY	1	t	103
 3643	Ch.Kuprik	1	t	103
-3644	Chorbog' MFY	1	t	103
+3644	Chorbog` MFY	1	t	103
 3645	Dasht MFY	1	t	103
 3646	Dukat MFY	1	t	103
 3647	Eshonchek MFY	1	t	103
 3648	Fayziobod MFY	1	t	103
-3649	Go'zal	1	t	103
+3649	Go`zal	1	t	103
 3650	Guliston MFY	1	t	103
 3651	Gulkishloq MFY	1	t	103
 3652	Ibrat MFY	1	t	103
 3653	Isvaxon MFY	1	t	103
 3654	Kalvak MFY	1	t	103
 3655	Qashqarguzar MFY	1	t	103
-3656	Qatag'on MFY	1	t	103
-3657	Qatag'on-Saroy QFY	1	t	103
-3658	Katta Qo'rg'oncha MFY	1	t	103
+3656	Qatag`on MFY	1	t	103
+3657	Qatag`on-Saroy QFY	1	t	103
+3658	Katta Qo`rg`oncha MFY	1	t	103
 3659	Katta-Qurama MFY	1	t	103
-3660	Kichik Qo'rg'oncha MFY	1	t	103
+3660	Kichik Qo`rg`oncha MFY	1	t	103
 3661	Kodirobod MFY	1	t	103
 3662	Kujron MFY	1	t	103
 3663	Kumidon MFY	1	t	103
-3664	Qushqayrag'och MFY	1	t	103
+3664	Qushqayrag`och MFY	1	t	103
 3665	Kuymazor MFY	1	t	103
 3666	Langarbobo MFY	1	t	103
 3667	M.Kayumov MFY	1	t	103
@@ -7463,10 +7463,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3691	Toshkent MFY	1	t	103
 3692	Toshlok MFY	1	t	103
 3693	Turkiston MFY	1	t	103
-3694	O'rda MFY	1	t	103
-3695	O'rta qishloq MFY	1	t	103
-3696	O'zbekiston MFY	1	t	103
-3697	O'zbekiston MFY	1	t	103
+3694	O`rda MFY	1	t	103
+3695	O`rta qishloq MFY	1	t	103
+3696	O`zbekiston MFY	1	t	103
+3697	O`zbekiston MFY	1	t	103
 3698	H.Olimjon	1	t	103
 3699	Xolmatov QFY	1	t	103
 3700	Xujand MFY	1	t	103
@@ -7481,30 +7481,30 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3709	Yortepa MFY	1	t	103
 3710	Yu.Mugultoy	1	t	103
 3711	Zarbdor MFY	1	t	103
-3712	A.Mo'minov MFY	1	t	104
+3712	A.Mo`minov MFY	1	t	104
 3713	Beruniy MFY	1	t	104
 3714	Balandariq MFY	1	t	104
 3715	Birlashgan QFY	1	t	104
-3716	Bog' ko'cha MFY	1	t	104
-3717	Bog' MFY	1	t	104
+3716	Bog` ko`cha MFY	1	t	104
+3717	Bog` MFY	1	t	104
 3718	Boyagon MFY	1	t	104
 3719	Bsston MFY	1	t	104
 3720	Churtuk MFY	1	t	104
 3721	Dexqon MFY	1	t	104
 3722	Dexqonobod MFY	1	t	104
 3723	Daxyakota MFY	1	t	104
-3724	Do'stlik MFY	1	t	104
-3725	Do'stlik MFY	1	t	104
+3724	Do`stlik MFY	1	t	104
+3725	Do`stlik MFY	1	t	104
 3726	Ezgulik MFY	1	t	104
 3727	Fayziobod MFY	1	t	104
-3728	g'ayrat MFY	1	t	104
-3729	g'ayrat QFY	1	t	104
-3730	Gulbog' MFY	1	t	104
+3728	g`ayrat MFY	1	t	104
+3729	g`ayrat QFY	1	t	104
+3730	Gulbog` MFY	1	t	104
 3731	Guliston MFY	1	t	104
 3732	Gulzor MFY	1	t	104
 3733	Gumbaz MFY	1	t	104
 3734	Guzar MFY	1	t	104
-3735	I.Ro'ziba?v MFY	1	t	104
+3735	I.Ro`ziba?v MFY	1	t	104
 3736	Islomobod MFY	1	t	104
 3737	Ittifoq MFY	1	t	104
 3738	Jiydakapa QFY	1	t	104
@@ -7521,18 +7521,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3749	Oltitosh MFY	1	t	104
 3750	Oqtosh MFY	1	t	104
 3751	Oxunbobo?v MFY	1	t	104
-3752	O'nxayat MFY	1	t	104
-3753	O'nxayat SHFY	1	t	104
-3754	o'urriyat MFY	1	t	104
+3752	O`nxayat MFY	1	t	104
+3753	O`nxayat SHFY	1	t	104
+3754	o`urriyat MFY	1	t	104
 3755	Pastguzar MFY	1	t	104
 3756	Qashqar MFY	1	t	104
 3757	Qaxramon MFY	1	t	104
-3758	Qo'rg'oncha MFY	1	t	104
+3758	Qo`rg`oncha MFY	1	t	104
 3759	Qumtepa MFY	1	t	104
 3760	Quvurboshi MFY	1	t	104
 3761	Rovot SHFY	1	t	104
 3762	Sanoat MFY	1	t	104
-3763	Sh.Xo'jamb?rdi?v MFY	1	t	104
+3763	Sh.Xo`jamb?rdi?v MFY	1	t	104
 3764	Shaftoli MFY	1	t	104
 3765	Shifokor MFY	1	t	104
 3766	Soku MFY	1	t	104
@@ -7543,14 +7543,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3771	Uychi SHFY	1	t	104
 3772	Xizirobod MFY	1	t	104
 3773	Xojiobod MFY	1	t	104
-3774	Xo'jaobod MFY	1	t	104
+3774	Xo`jaobod MFY	1	t	104
 3775	Yakkatut MFY	1	t	104
 3776	Yangi er MFY	1	t	104
 3777	Yangi xayot MFY	1	t	104
 3778	Yangich?k MFY	1	t	104
 3779	Yorkatay MFY	1	t	104
 3780	Yorkatay QFY	1	t	104
-3781	Yorqo'rg'on QFY	1	t	104
+3781	Yorqo`rg`on QFY	1	t	104
 3782	Yuksalish MFY	1	t	104
 3783	Ziyokor MFY	1	t	104
 3784	A.Rustamov MFY	1	t	105
@@ -7564,8 +7564,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3792	Chek MFY	1	t	105
 3793	Chorvador MFY	1	t	105
 3794	Dexkonobod MFY	1	t	105
-3795	Do'stlik MFY	1	t	105
-3796	Do'stlik MFY	1	t	105
+3795	Do`stlik MFY	1	t	105
+3796	Do`stlik MFY	1	t	105
 3797	Elatan MFY	1	t	105
 3798	Eshontupi MFY	1	t	105
 3799	Fargona MFY	1	t	105
@@ -7631,24 +7631,24 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3859	A.Navoiy MFY	1	t	106
 3860	Alixon MFY	1	t	106
 3861	Alixon QFY	1	t	106
-3862	Arbag'ish MFY	1	t	106
+3862	Arbag`ish MFY	1	t	106
 3863	Beshkapa MFY	1	t	106
 3864	Beshkapa MFY	1	t	106
 3865	Beshtol MFY	1	t	106
-3866	Baliq-ko'l MFY	1	t	106
-3867	Bog' MFY	1	t	106
-3868	Bog' MFY	1	t	106
-3869	Bog'iston MFY	1	t	106
-3870	Bog'iston QFY	1	t	106
+3866	Baliq-ko`l MFY	1	t	106
+3867	Bog` MFY	1	t	106
+3868	Bog` MFY	1	t	106
+3869	Bog`iston MFY	1	t	106
+3870	Bog`iston QFY	1	t	106
 3871	Bozorboshi MFY	1	t	106
 3872	Bulon MFY	1	t	106
 3873	Bulon MFY	1	t	106
-3874	Chig'atoy MFY(Jamoatchilik)	1	t	106
+3874	Chig`atoy MFY(Jamoatchilik)	1	t	106
 3875	Chorsu MFY	1	t	106
 3876	Dehqonobod MFY	1	t	106
 3877	Damariq MFY	1	t	106
-3878	Do'stlik MFY	1	t	106
-3879	Do'stlik MFY	1	t	106
+3878	Do`stlik MFY	1	t	106
+3879	Do`stlik MFY	1	t	106
 3880	Guldirov MFY	1	t	106
 3881	Gulshan MFY	1	t	106
 3882	Gulshan QFY	1	t	106
@@ -7664,7 +7664,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3892	Namangan MFY	1	t	106
 3893	Navbaxor MFY	1	t	106
 3894	Navbaxor MFY	1	t	106
-3895	Navro'z MFY	1	t	106
+3895	Navro`z MFY	1	t	106
 3896	Oltitosh MFY(Jamoatchilik)	1	t	106
 3897	Oqterak MFY	1	t	106
 3898	Ora-ariq MFY	1	t	106
@@ -7672,11 +7672,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3900	Oromgox MFY	1	t	106
 3901	Oyqiron MFY	1	t	106
 3902	Oyqiron QFY	1	t	106
-3903	O'rikzor MFY	1	t	106
-3904	O'zbekiston MFY	1	t	106
-3905	O'zbekiston MFY	1	t	106
-3906	Peshqo'rg'on QFY	1	t	106
-3907	Qorabog' MFY	1	t	106
+3903	O`rikzor MFY	1	t	106
+3904	O`zbekiston MFY	1	t	106
+3905	O`zbekiston MFY	1	t	106
+3906	Peshqo`rg`on QFY	1	t	106
+3907	Qorabog` MFY	1	t	106
 3908	Qoramurt MFY	1	t	106
 3909	S.Raximov MFY	1	t	106
 3910	S.Raximov MFY	1	t	106
@@ -7689,11 +7689,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3917	Soz-soy	1	t	106
 3918	Tinchlik MFY	1	t	106
 3919	Tinchlik MFY	1	t	106
-3920	To'pqayrag'och MFY	1	t	106
+3920	To`pqayrag`och MFY	1	t	106
 3921	Turiq MFY	1	t	106
 3922	Turkiston MFY	1	t	106
 3923	Turkiston MFY	1	t	106
-3924	Uzunko'cha MFY	1	t	106
+3924	Uzunko`cha MFY	1	t	106
 3925	Hazratishox MFY	1	t	106
 3926	Hazratishox QFY	1	t	106
 3927	Yangiobod MFY	1	t	106
@@ -7702,8 +7702,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3930	Z.Diyor MFY	1	t	106
 3931	Z.Diyor MFY	1	t	106
 3932	Zangobod MFY	1	t	106
-3933	Ettiqo'rg'on MFY	1	t	107
-3934	Ariqbo'yi MFY	1	t	107
+3933	Ettiqo`rg`on MFY	1	t	107
+3934	Ariqbo`yi MFY	1	t	107
 3935	Aqcha QFY	1	t	107
 3936	Baliqchi MFY	1	t	107
 3937	Baymoq MFY	1	t	107
@@ -7712,18 +7712,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3940	Birlik MFY	1	t	107
 3941	Birlik MFY	1	t	107
 3942	Bofanda MFY	1	t	107
-3943	Bog'ieram MFY	1	t	107
-3944	Bog'ormos MFY	1	t	107
+3943	Bog`ieram MFY	1	t	107
+3944	Bog`ormos MFY	1	t	107
 3945	Bolo MFY	1	t	107
 3946	Bozorboshi MFY	1	t	107
 3947	Buloqboshi MFY	1	t	107
-3948	Chustnon-Do'stlarobod MFY	1	t	107
+3948	Chustnon-Do`stlarobod MFY	1	t	107
 3949	Dehqonobod MFY	1	t	107
 3950	Dam MFY	1	t	107
-3951	Do'stlik MFY	1	t	107
-3952	Do'stlik MFY	1	t	107
-3953	Do'zanda MFY	1	t	107
-3954	G'ova QFY	1	t	107
+3951	Do`stlik MFY	1	t	107
+3952	Do`stlik MFY	1	t	107
+3953	Do`zanda MFY	1	t	107
+3954	G`ova QFY	1	t	107
 3955	Guliston MFY	1	t	107
 3956	Guliston MFY	1	t	107
 3957	Guzar MFY	1	t	107
@@ -7731,18 +7731,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3959	Kamarsada MFY	1	t	107
 3960	Karkidon QFY	1	t	107
 3961	Karnon QFY	1	t	107
-3962	Ko'cha MFY	1	t	107
-3963	Ko'ktosh MFY	1	t	107
+3962	Ko`cha MFY	1	t	107
+3963	Ko`ktosh MFY	1	t	107
 3964	Laylakuya MFY	1	t	107
 3965	Mehnatobod MFY	1	t	107
 3966	Mashxad MFY	1	t	107
 3967	Maydon MFY	1	t	107
-3968	Mo'nchoqtepa MFY	1	t	107
+3968	Mo`nchoqtepa MFY	1	t	107
 3969	Mustaqillik MFY	1	t	107
 3970	Navbahor MFY	1	t	107
-3971	Navro'z MFY	1	t	107
-3972	Og'asaroy MFY	1	t	107
-3973	Og'asaroy QFY	1	t	107
+3971	Navro`z MFY	1	t	107
+3972	Og`asaroy MFY	1	t	107
+3973	Og`asaroy QFY	1	t	107
 3974	Olmos QFY	1	t	107
 3975	Pansada MFY	1	t	107
 3976	Pilol MFY	1	t	107
@@ -7750,7 +7750,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3978	Qayirma MFY	1	t	107
 3979	Qiziltepa MFY	1	t	107
 3980	Qorakapa MFY	1	t	107
-3981	Qoraqo'rg'on MFY	1	t	107
+3981	Qoraqo`rg`on MFY	1	t	107
 3982	Quyi Karnon MFY	1	t	107
 3983	Rezaksoy MFY	1	t	107
 3984	Serob MFY	1	t	107
@@ -7760,18 +7760,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 3988	Sarqamish-Mirzaobod MFY	1	t	107
 3989	Shoyon MFY	1	t	107
 3990	Shoyon QFY	1	t	107
-3991	Sho'rbuloq MFY	1	t	107
+3991	Sho`rbuloq MFY	1	t	107
 3992	Shurkent QFY	1	t	107
 3993	Shuvar MFY	1	t	107
-3994	Tepaqo'rg'on MFY	1	t	107
-3995	Toshqo'rg'on MFY	1	t	107
+3994	Tepaqo`rg`on MFY	1	t	107
+3995	Toshqo`rg`on MFY	1	t	107
 3996	Toymas-1 MFY	1	t	107
 3997	Toymas-2 MFY	1	t	107
 3998	Varzigon MFY	1	t	107
 3999	Varzik QFY	1	t	107
 4000	Xisorak MFY	1	t	107
 4001	Xisorak QFY	1	t	107
-4002	Xo'jaobod MFY	1	t	107
+4002	Xo`jaobod MFY	1	t	107
 4003	Yakkabuloq MFY	1	t	107
 4004	Yangichak MFY	1	t	107
 4005	Yangihayot MFY	1	t	107
@@ -7817,7 +7817,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4045	Korayontok MFY	1	t	108
 4046	Kukyor MFY	1	t	108
 4047	Kurik MFY	1	t	108
-4048	Kutlug'tol MFY	1	t	108
+4048	Kutlug`tol MFY	1	t	108
 4049	Kuyikorapolvon MFY	1	t	108
 4050	Madaniyat MFY	1	t	108
 4051	Madaniyat MFY	1	t	108
@@ -7866,25 +7866,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4094	A.Temur MFY	1	t	109
 4095	Avliyo Parpi	1	t	109
 4096	Beshkuvi MFY	1	t	109
-4097	Beshqo'ton MFY	1	t	109
-4098	Beshqo'ton QFY	1	t	109
-4099	Bog'bon MFY	1	t	109
-4100	Bo'dana MFY	1	t	109
-4101	Bulung'ur MFY	1	t	109
-4102	Bulung'ur-ariq MFY	1	t	109
+4097	Beshqo`ton MFY	1	t	109
+4098	Beshqo`ton QFY	1	t	109
+4099	Bog`bon MFY	1	t	109
+4100	Bo`dana MFY	1	t	109
+4101	Bulung`ur MFY	1	t	109
+4102	Bulung`ur-ariq MFY	1	t	109
 4103	Changal MFY	1	t	109
 4104	Changal-1 MFY	1	t	109
 4105	Changalpayon MFY	1	t	109
-4106	Chorbog' MFY	1	t	109
-4107	Do'stlik MFY	1	t	109
+4106	Chorbog` MFY	1	t	109
+4107	Do`stlik MFY	1	t	109
 4108	Erganakli MFY	1	t	109
 4109	Esonturdi MFY	1	t	109
-4110	FYo'ldosh QFY	1	t	109
-4111	G'o'bdin MFY	1	t	109
+4110	FYo`ldosh QFY	1	t	109
+4111	G`o`bdin MFY	1	t	109
 4112	Guliston MFY	1	t	109
 4113	Gulobod MFY	1	t	109
 4114	Gulzor MFY	1	t	109
-4115	Isori O'roqli	1	t	109
+4115	Isori O`roqli	1	t	109
 4116	Istiqlol MFY	1	t	109
 4117	Kaptarxona MFY	1	t	109
 4118	Kattqishloq MFY	1	t	109
@@ -7897,31 +7897,31 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4125	Mextar MFY	1	t	109
 4126	Mingchinor MFY	1	t	109
 4127	Mingtepa MFY	1	t	109
-4128	Mo'g'ol MFY	1	t	109
-4129	Nebo'sa MFY	1	t	109
+4128	Mo`g`ol MFY	1	t	109
+4129	Nebo`sa MFY	1	t	109
 4130	Navbahor MFY	1	t	109
 4131	Navoiy QFY	1	t	109
 4132	Niyozmat MFY	1	t	109
-4133	Nurli yo'l MFY	1	t	109
+4133	Nurli yo`l MFY	1	t	109
 4134	Olmazor MFY	1	t	109
 4135	Oqtepa MFY	1	t	109
 4136	Oqtosh MFY	1	t	109
-4137	O'roqli MFY	1	t	109
-4138	O'rtabuloq QFY	1	t	109
+4137	O`roqli MFY	1	t	109
+4138	O`rtabuloq QFY	1	t	109
 4139	Qirqshodi MFY	1	t	109
-4140	Qo'ng'irot MFY	1	t	109
+4140	Qo`ng`irot MFY	1	t	109
 4141	Samarqand MFY	1	t	109
 4142	Sarpichoq MFY	1	t	109
 4143	Sayiltepa MFY	1	t	109
 4144	Soxibkor MFY	1	t	109
 4145	Soxibkor QFY	1	t	109
-4146	Suluqo'rg'on MFY	1	t	109
-4147	Ulug'bek MFY	1	t	109
-4148	Xo'jabachcha MFY	1	t	109
-4149	Xo'jamazgil MFY	1	t	109
+4146	Suluqo`rg`on MFY	1	t	109
+4147	Ulug`bek MFY	1	t	109
+4148	Xo`jabachcha MFY	1	t	109
+4149	Xo`jamazgil MFY	1	t	109
 4150	Yangiariq MFY	1	t	109
 4151	Yangiobod MFY	1	t	109
-4152	Yangiqo'rg'on MFY	1	t	109
+4152	Yangiqo`rg`on MFY	1	t	109
 4153	Zarafshon MFY	1	t	109
 4154	A.Navoiy MFY	1	t	110
 4155	A.Qurbonov MFY	1	t	110
@@ -7930,7 +7930,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4158	Dexqonobod MFY	1	t	110
 4159	Eski Jomboy MFY	1	t	110
 4160	Eski Jomboy QFY	1	t	110
-4161	G'azira MFY	1	t	110
+4161	G`azira MFY	1	t	110
 4162	Guliston MFY	1	t	110
 4163	Juriyat MFY	1	t	110
 4164	Juriyat QFY	1	t	110
@@ -7940,30 +7940,30 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4168	Naymantepa MFY	1	t	110
 4169	Nazar MFY	1	t	110
 4170	Nogaxon MFY	1	t	110
-4171	No'sh MFY	1	t	110
+4171	No`sh MFY	1	t	110
 4172	Olmazor MFY	1	t	110
 4173	Polvonariq MFY	1	t	110
-4174	Qang'li MFY	1	t	110
-4175	Qang'li QFY	1	t	110
-4176	Qoramo'yin MFY	1	t	110
-4177	Qoramo'yin QFY	1	t	110
-4178	Qo'lbosti MFY	1	t	110
-4179	Qo'ng'irot MFY	1	t	110
-4180	Qo'ng'irot QFY	1	t	110
-4181	Qo'rg'onsalomon MFY	1	t	110
+4174	Qang`li MFY	1	t	110
+4175	Qang`li QFY	1	t	110
+4176	Qoramo`yin MFY	1	t	110
+4177	Qoramo`yin QFY	1	t	110
+4178	Qo`lbosti MFY	1	t	110
+4179	Qo`ng`irot MFY	1	t	110
+4180	Qo`ng`irot QFY	1	t	110
+4181	Qo`rg`onsalomon MFY	1	t	110
 4182	Quduqli MFY	1	t	110
 4183	Samarqand MFY	1	t	110
 4184	Sarichashma MFY	1	t	110
 4185	Sariqipchoq MFY	1	t	110
 4186	Saroy MFY	1	t	110
-4187	Sherqo'rg'on MFY	1	t	110
-4188	Sherqo'rg'on QFY	1	t	110
+4187	Sherqo`rg`on MFY	1	t	110
+4188	Sherqo`rg`on QFY	1	t	110
 4189	Shirinkent MFY	1	t	110
 4190	Shodlik MFY	1	t	110
-4191	So'xmon MFY	1	t	110
+4191	So`xmon MFY	1	t	110
 4192	Taldirazzoq MFY	1	t	110
 4193	Toshkent MFY	1	t	110
-4194	To'qqizboy MFY	1	t	110
+4194	To`qqizboy MFY	1	t	110
 4195	Tut MFY	1	t	110
 4196	Xitoypayon MFY	1	t	110
 4197	Xolvoyi MFY	1	t	110
@@ -7985,19 +7985,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4213	Chagatoy MFY	1	t	111
 4214	Chakar MFY	1	t	111
 4215	Chayjavul MFY	1	t	111
-4216	Chimkurg'on MFY	1	t	111
+4216	Chimkurg`on MFY	1	t	111
 4217	Chinortepa MFY	1	t	111
 4218	Chordara QFY	1	t	111
 4219	Dehqonobod MFY	1	t	111
 4220	Damarik MFY	1	t	111
-4221	Do'stlik MFY	1	t	111
+4221	Do`stlik MFY	1	t	111
 4222	Fayziobod QFY	1	t	111
-4223	g' G'ulom MFY	1	t	111
+4223	g` G`ulom MFY	1	t	111
 4224	Ishtixon MFY	1	t	111
 4225	J.Mahmudov MFY	1	t	111
 4226	K. Qarshiev MFY	1	t	111
-4227	Qatag'on MFY	1	t	111
-4228	Kattakang'li MFY	1	t	111
+4227	Qatag`on MFY	1	t	111
+4228	Kattakang`li MFY	1	t	111
 4229	Qayirma MFY	1	t	111
 4230	Qirqyigit MFY	1	t	111
 4231	Qiyot MFY	1	t	111
@@ -8005,7 +8005,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4233	Kubay MFY	1	t	111
 4234	Kuktepa MFY	1	t	111
 4235	Kuljamol MFY	1	t	111
-4236	Qung'irot MFY	1	t	111
+4236	Qung`irot MFY	1	t	111
 4237	Kurilish MFY	1	t	111
 4238	Kurli QFY	1	t	111
 4239	Kutarma MFY	1	t	111
@@ -8017,12 +8017,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4245	Namuna MFY	1	t	111
 4246	Odil MFY	1	t	111
 4247	Orlot MFY	1	t	111
-4248	O'zbekiston MFY	1	t	111
-4249	Qoraqo'yli MFY	1	t	111
+4248	O`zbekiston MFY	1	t	111
+4249	Qoraqo`yli MFY	1	t	111
 4250	Ravot MFY	1	t	111
 4251	Ravot QFY	1	t	111
-4252	Safoxo'ja MFY	1	t	111
-4253	Sh'yxlar MFY	1	t	111
+4252	Safoxo`ja MFY	1	t	111
+4253	Sh`yxlar MFY	1	t	111
 4254	Shayxlarkent MFY	1	t	111
 4255	Shayxislom MFY	1	t	111
 4256	Sugat MFY	1	t	111
@@ -8031,7 +8031,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4259	Toytuyok MFY	1	t	111
 4260	Tupor MFY	1	t	111
 4261	Urtakishlok QFY	1	t	111
-4262	O'zbekqo'rg'on MFY	1	t	111
+4262	O`zbekqo`rg`on MFY	1	t	111
 4263	Haqiqat QFY	1	t	111
 4264	Xalqobod MFY	1	t	111
 4265	Xalqobod QFY	1	t	111
@@ -8046,15 +8046,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4274	Andoksoy MFY	1	t	112
 4275	Balandchordara MFY	1	t	112
 4276	Balandravot MFY	1	t	112
-4277	Bog'ot MFY	1	t	112
+4277	Bog`ot MFY	1	t	112
 4278	Burgansoy MFY	1	t	112
 4279	Chagatoy MFY	1	t	112
-4280	Charog'on MFY	1	t	112
+4280	Charog`on MFY	1	t	112
 4281	Chiganok MFY	1	t	112
 4282	Chuyanchi MFY	1	t	112
 4283	Durbesh QFY	1	t	112
-4284	Do'stlik MFY	1	t	112
-4285	Do'stlik MFY	1	t	112
+4284	Do`stlik MFY	1	t	112
+4285	Do`stlik MFY	1	t	112
 4286	Fayzikent MFY	1	t	112
 4287	Girdikurgon QFY	1	t	112
 4288	Javlon MFY	1	t	112
@@ -8069,7 +8069,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4297	Kattaming QFY	1	t	112
 4298	Kattaming MFY	1	t	112
 4299	Kichikmundiyon QFY	1	t	112
-4300	Qirg'iz MFY	1	t	112
+4300	Qirg`iz MFY	1	t	112
 4301	Qiyot MFY	1	t	112
 4302	Koksoy MFY	1	t	112
 4303	Korakulcha MFY	1	t	112
@@ -8081,14 +8081,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4309	Qushtepa QFY	1	t	112
 4310	Qushtepa MFY	1	t	112
 4311	Qushxovuz MFY	1	t	112
-4312	M.Ulug'bek MFY	1	t	112
-4313	Melixo'ja MFY	1	t	112
+4312	M.Ulug`bek MFY	1	t	112
+4313	Melixo`ja MFY	1	t	112
 4314	Madrasa MFY	1	t	112
 4315	Moybuloq MFY	1	t	112
 4316	Moybuloq QFY	1	t	112
 4317	Mullakurpa MFY	1	t	112
-4318	Mullatog'ay MFY	1	t	112
-4319	Muminxo'ja MFY	1	t	112
+4318	Mullatog`ay MFY	1	t	112
+4319	Muminxo`ja MFY	1	t	112
 4320	Mundiyon MFY	1	t	112
 4321	Murodkosimov MFY	1	t	112
 4322	Navbaxor MFY	1	t	112
@@ -8104,8 +8104,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4332	Payshanba SHFY	1	t	112
 4333	Polvontepa MFY	1	t	112
 4334	Sebuston MFY	1	t	112
-4335	Saraykurg'on MFY	1	t	112
-4336	Saroykur'gon QFY	1	t	112
+4335	Saraykurg`on MFY	1	t	112
+4336	Saroykur`gon QFY	1	t	112
 4337	Shurak MFY	1	t	112
 4338	Suv hovuzi SHFY	1	t	112
 4339	Tarnov MFY	1	t	112
@@ -8113,17 +8113,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4341	Uyshun MFY	1	t	112
 4342	Valijon MFY	1	t	112
 4343	Vayrot MFY	1	t	112
-4344	Yakkabog' MFY	1	t	112
+4344	Yakkabog` MFY	1	t	112
 4345	Yangi hayot MFY	1	t	112
 4346	Yangiqiyot MFY	1	t	112
-4347	Yangiqo'rg'oncha MFY	1	t	112
+4347	Yangiqo`rg`oncha MFY	1	t	112
 4348	Yangiobod MFY	1	t	112
 4349	Yangirabot MFY	1	t	112
-4350	Yaniqo'rg'oncha QFY	1	t	112
-4351	Yodgorxo'ja MFY	1	t	112
+4350	Yaniqo`rg`oncha QFY	1	t	112
+4351	Yodgorxo`ja MFY	1	t	112
 4352	Yonboshsoy MFY	1	t	112
 4353	Yovi MFY	1	t	112
-4354	Zarqo'rg'on MFY	1	t	112
+4354	Zarqo`rg`on MFY	1	t	112
 4355	Er machit MFY	1	t	113
 4356	Abdulla Qahhor MFY	1	t	113
 4357	Alisher Navoiy MFY	1	t	113
@@ -8132,8 +8132,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4360	Bahoriston MFY	1	t	113
 4361	Baland chordara MFY	1	t	113
 4362	Chordara MFY	1	t	113
-4363	Do'stlik MFY	1	t	113
-4364	G'arib Machit MFY	1	t	113
+4363	Do`stlik MFY	1	t	113
+4364	G`arib Machit MFY	1	t	113
 4365	Ingichka SHFY	1	t	113
 4366	Islom Shoir MFY	1	t	113
 4367	Kuchaxur MFY	1	t	113
@@ -8141,33 +8141,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4369	Meli Razzoqov MFY	1	t	113
 4370	Miyonkol MFY	1	t	113
 4371	Muxammad Daminov MFY	1	t	113
-4372	Narzullo Tog'aev MFY	1	t	113
+4372	Narzullo Tog`aev MFY	1	t	113
 4373	Navbahor MFY	1	t	113
 4374	Nizomiddin Zokirov MFY	1	t	113
 4375	Noqis MFY	1	t	113
 4376	Nurobod MFY	1	t	113
 4377	Ochildi Murod Miriy MFY	1	t	113
 4378	Oq oltin MFY	1	t	113
-4379	O'rikzor MFY	1	t	113
+4379	O`rikzor MFY	1	t	113
 4380	Qorirovot MFY	1	t	113
 4381	Rahima Islomova MFY	1	t	113
 4382	Safar Xushnazarov MFY	1	t	113
 4383	Sarmazor MFY	1	t	113
 4384	Siplon MFY	1	t	113
-4385	So'fi Olloyor MFY	1	t	113
+4385	So`fi Olloyor MFY	1	t	113
 4386	Umar Norov MFY	1	t	113
 4387	Usmon Nosir MFY	1	t	113
 4388	Xaydarchaman MFY	1	t	113
 4389	Xojikurbon MFY	1	t	113
 4390	Zarifobod MFY	1	t	113
 4391	Boypurushli MFY	1	t	114
-4392	Boyto'p MFY	1	t	114
+4392	Boyto`p MFY	1	t	114
 4393	Bozorjoy MFY	1	t	114
 4394	Bulok MFY	1	t	114
 4395	Bulokboshi MFY	1	t	114
 4396	Chinok MFY	1	t	114
 4397	Chorlok MFY	1	t	114
-4398	Do'stlik MFY	1	t	114
+4398	Do`stlik MFY	1	t	114
 4399	Jonbulok MFY	1	t	114
 4400	Jush QFY	1	t	114
 4401	Jush ota MFY	1	t	114
@@ -8218,9 +8218,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4446	Shakar QFY	1	t	115
 4447	Charxin MFY	1	t	115
 4448	Chaykal MFY	1	t	115
-4449	Chorbog' MFY	1	t	115
+4449	Chorbog` MFY	1	t	115
 4450	Dedan MFY	1	t	115
-4451	Do'stlik MFY	1	t	115
+4451	Do`stlik MFY	1	t	115
 4452	Guliston MFY	1	t	115
 4453	I.Shoir QFY	1	t	115
 4454	I.Shoir MFY	1	t	115
@@ -8233,7 +8233,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4461	Kosogoron QFY	1	t	115
 4462	Kozikent MFY	1	t	115
 4463	Koziyokli MFY	1	t	115
-4464	Ko'k-ota MFY	1	t	115
+4464	Ko`k-ota MFY	1	t	115
 4465	Magit MFY	1	t	115
 4466	Maydakozok MFY	1	t	115
 4467	Mirbozor SHFY	1	t	115
@@ -8242,15 +8242,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4470	Mustaqillik MFY	1	t	115
 4471	N.Urinov MFY	1	t	115
 4472	Narpay MFY	1	t	115
-4473	Navro'z MFY	1	t	115
-4474	Nog'araxona MFY	1	t	115
-4475	Nug'ay MFY	1	t	115
-4476	o'Abduraximov MFY	1	t	115
-4477	Olti ug'il QFY	1	t	115
-4478	Olti ug'il MFY	1	t	115
+4473	Navro`z MFY	1	t	115
+4474	Nog`araxona MFY	1	t	115
+4475	Nug`ay MFY	1	t	115
+4476	o`Abduraximov MFY	1	t	115
+4477	Olti ug`il QFY	1	t	115
+4478	Olti ug`il MFY	1	t	115
 4479	Oq-oltin MFY	1	t	115
-4480	O'zbekiston MFY	1	t	115
-4481	O'zbekkenti MFY	1	t	115
+4480	O`zbekiston MFY	1	t	115
+4481	O`zbekkenti MFY	1	t	115
 4482	R.Olchin MFY	1	t	115
 4483	Salovat MFY	1	t	115
 4484	Sarbozor MFY	1	t	115
@@ -8258,18 +8258,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4486	Sohibkor MFY	1	t	115
 4487	T.Roziqov MFY	1	t	115
 4488	Tepa MFY	1	t	115
-4489	Tepaqo'rg'on MFY	1	t	115
+4489	Tepaqo`rg`on MFY	1	t	115
 4490	Tinchlik MFY	1	t	115
 4491	Tortuvli MFY	1	t	115
-4492	Toshko'prik MFY	1	t	115
+4492	Toshko`prik MFY	1	t	115
 4493	Totkent MFY	1	t	115
-4494	To'ron MFY	1	t	115
+4494	To`ron MFY	1	t	115
 4495	X. Aliqulov MFY	1	t	115
 4496	Xalqobod MFY	1	t	115
-4497	Xo'jakarzon MFY	1	t	115
-4498	Xo'jaqo'rg'on MFY	1	t	115
+4497	Xo`jakarzon MFY	1	t	115
+4498	Xo`jaqo`rg`on MFY	1	t	115
 4499	Yangi ariq MFY	1	t	115
-4500	Yangiqo'rg'on QFY	1	t	115
+4500	Yangiqo`rg`on QFY	1	t	115
 4501	Yangirabod QFY	1	t	115
 4502	Zirabulok MFY	1	t	115
 4503	Zoir ota MFY	1	t	115
@@ -8277,9 +8277,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4505	Amir-Temur MFY	1	t	116
 4506	Arab-ota MFY	1	t	116
 4507	Boshkuduk MFY	1	t	116
-4508	Do'stlik MFY	1	t	116
+4508	Do`stlik MFY	1	t	116
 4509	Eshat MFY	1	t	116
-4510	Girdikurg'on MFY	1	t	116
+4510	Girdikurg`on MFY	1	t	116
 4511	Jarkuduk MFY	1	t	116
 4512	Jarquduq QFY	1	t	116
 4513	Jom QFY	1	t	116
@@ -8297,12 +8297,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4525	Olga MFY	1	t	116
 4526	Omondara MFY	1	t	116
 4527	Pulatchi MFY	1	t	116
-4528	Qo'rg'oncha MFY	1	t	116
+4528	Qo`rg`oncha MFY	1	t	116
 4529	Sepki MFY	1	t	116
 4530	Sarikul MFY	1	t	116
 4531	Saroy MFY	1	t	116
-4532	Sazag'on QFY	1	t	116
-4533	Sazag'on MFY	1	t	116
+4532	Sazag`on QFY	1	t	116
+4533	Sazag`on MFY	1	t	116
 4534	Sharq-Yulduzi MFY	1	t	116
 4535	Shaxar mfylari	1	t	116
 4536	Shurobod MFY	1	t	116
@@ -8322,30 +8322,30 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4550	Avazali MFY	1	t	117
 4551	Boshdarxon MFY	1	t	117
 4552	Bozorjoy MFY	1	t	117
-4553	Charbog' 2 MFY	1	t	117
+4553	Charbog` 2 MFY	1	t	117
 4554	Dahbed MFY	1	t	117
 4555	Dahbed SHFY	1	t	117
 4556	Galaravot MFY	1	t	117
-4557	Ko'ksoqol MFY	1	t	117
+4557	Ko`ksoqol MFY	1	t	117
 4558	Kumushkent MFY	1	t	117
 4559	Loyish MFY	1	t	117
 4560	Loyish SHFY	1	t	117
 4561	Moykovok MFY	1	t	117
 4562	Mustaqillik MFY	1	t	117
 4563	Navoiy MFY	1	t	117
-4564	Navro'z MFY	1	t	117
+4564	Navro`z MFY	1	t	117
 4565	Oqdaryo MFY	1	t	117
-4566	Oytamg'ali MFY	1	t	117
-4567	O'zbekiston MFY	1	t	117
+4566	Oytamg`ali MFY	1	t	117
+4567	O`zbekiston MFY	1	t	117
 4568	Paxtaobod MFY	1	t	117
-4569	Po'latdarxon MFY	1	t	117
+4569	Po`latdarxon MFY	1	t	117
 4570	Primknt MFY	1	t	117
 4571	Primkent QFY	1	t	117
 4572	Qorateri QFY	1	t	117
-4573	Rayimqo'lov MFY	1	t	117
+4573	Rayimqo`lov MFY	1	t	117
 4574	Sarka MFY	1	t	117
 4575	Shermatov MFY	1	t	117
-4576	Sug'onchi MFY	1	t	117
+4576	Sug`onchi MFY	1	t	117
 4577	Temirak MFY	1	t	117
 4578	Uchtepa MFY	1	t	117
 4579	Uzunqishloq MFY	1	t	117
@@ -8353,8 +8353,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4581	Yangikent QFY	1	t	117
 4582	Yangiobod MFY	1	t	117
 4583	Yangiqishloq MFY	1	t	117
-4584	Yangiqo'rg'on MFY	1	t	117
-4585	Yangiqo'rg'on QFY	1	t	117
+4584	Yangiqo`rg`on MFY	1	t	117
+4585	Yangiqo`rg`on QFY	1	t	117
 4586	Yangiravot-1MFY	1	t	117
 4587	Yangiravot-2 MFY	1	t	117
 4588	Zarafshon QFY	1	t	117
@@ -8363,56 +8363,56 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4591	A Primov MFY	1	t	118
 4592	A Yassaviy MFY	1	t	118
 4593	Aliobod MFY	1	t	118
-4594	Beshqo'rg'on MFY	1	t	118
+4594	Beshqo`rg`on MFY	1	t	118
 4595	Bahor MFY	1	t	118
 4596	Baxrin MFY	1	t	118
 4597	Birlashgan QFY	1	t	118
 4598	Birlashuv MFY	1	t	118
-4599	Boshcho'rosh MFY	1	t	118
-4600	Bo'ri MFY	1	t	118
+4599	Boshcho`rosh MFY	1	t	118
+4600	Bo`ri MFY	1	t	118
 4601	Bunyodkor MFY	1	t	118
 4602	Chelak SHFY	1	t	118
-4603	Cholmo'yin MFY	1	t	118
+4603	Cholmo`yin MFY	1	t	118
 4604	Choporoshli QFY	1	t	118
 4605	Choshtepa MFY	1	t	118
 4606	Choshtepa QFY	1	t	118
 4607	Dehqonobod MFY	1	t	118
 4608	Darvishiq MFY	1	t	118
-4609	Do'stlarobod MFY	1	t	118
-4610	Do'stlik MFY	1	t	118
+4609	Do`stlarobod MFY	1	t	118
+4610	Do`stlik MFY	1	t	118
 4611	Emalach MFY	1	t	118
-4612	Ernazarqo'rg'on MFY	1	t	118
+4612	Ernazarqo`rg`on MFY	1	t	118
 4613	Farovon MFY	1	t	118
 4614	Fidokor MFY	1	t	118
-4615	g'allakor MFY	1	t	118
-4616	G'oyibota MFY	1	t	118
-4617	Go'zal MFY	1	t	118
+4615	g`allakor MFY	1	t	118
+4616	G`oyibota MFY	1	t	118
+4617	Go`zal MFY	1	t	118
 4618	Guliston MFY	1	t	118
 4619	Guliston QFY	1	t	118
 4620	I Ergashev MFY	1	t	118
-4621	Ilg'or MFY	1	t	118
+4621	Ilg`or MFY	1	t	118
 4622	Istiqlol MFY	1	t	118
 4623	Juvozxona MFY	1	t	118
 4624	Kattasaydov MFY	1	t	118
-4625	Ko'kdala QFY	1	t	118
-4626	Ko'ktepa MFY	1	t	118
-4627	Ko'lto'sin MFY	1	t	118
-4628	Ko'paki MFY	1	t	118
-4629	Kulto'sin QFY	1	t	118
-4630	M Ulug'bek MFY	1	t	118
+4625	Ko`kdala QFY	1	t	118
+4626	Ko`ktepa MFY	1	t	118
+4627	Ko`lto`sin MFY	1	t	118
+4628	Ko`paki MFY	1	t	118
+4629	Kulto`sin QFY	1	t	118
+4630	M Ulug`bek MFY	1	t	118
 4631	Madaniyat MFY	1	t	118
 4632	Maniobod MFY	1	t	118
 4633	Mustaqillik MFY	1	t	118
 4634	Muxammadi MFY	1	t	118
 4635	Nakurt MFY	1	t	118
 4636	Navbahor MFY	1	t	118
-4637	Navro'z MFY	1	t	118
+4637	Navro`z MFY	1	t	118
 4638	Olmazor MFY	1	t	118
-4639	Oqqo'rg'on MFY	1	t	118
-4640	Oqqo'rg'on QFY	1	t	118
-4641	Oytamg'ali QFY	1	t	118
-4642	O'rtasaydov QFY	1	t	118
-4643	O'zbekiston MFY	1	t	118
+4639	Oqqo`rg`on MFY	1	t	118
+4640	Oqqo`rg`on QFY	1	t	118
+4641	Oytamg`ali QFY	1	t	118
+4642	O`rtasaydov QFY	1	t	118
+4643	O`zbekiston MFY	1	t	118
 4644	Polvonariq MFY	1	t	118
 4645	Qahramon MFY	1	t	118
 4646	Qirqovul MFY	1	t	118
@@ -8420,19 +8420,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4648	Qumchuq MFY	1	t	118
 4649	Rayim MFY	1	t	118
 4650	Sanoat QFY	1	t	118
-4651	Sho'rtepa MFY	1	t	118
+4651	Sho`rtepa MFY	1	t	118
 4652	Sorisuv MFY	1	t	118
 4653	T Axmedov MFY	1	t	118
-4654	T Jo'raev MFY	1	t	118
+4654	T Jo`raev MFY	1	t	118
 4655	Tamoyrot MFY	1	t	118
 4656	Toshhavuz MFY	1	t	118
 4657	Toxirshayx MFY	1	t	118
-4658	To'polos MFY	1	t	118
+4658	To`polos MFY	1	t	118
 4659	Turkibola MFY	1	t	118
 4660	X.Ismoil MFY	1	t	118
 4661	Xolqobod MFY	1	t	118
 4662	Xosa MFY	1	t	118
-4663	Xo'jaobod MFY	1	t	118
+4663	Xo`jaobod MFY	1	t	118
 4664	Zarafshon MFY	1	t	118
 4665	A.Temur MFY	1	t	119
 4666	Agron MFY	1	t	119
@@ -8464,14 +8464,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4692	Dimishkibola QFY	1	t	119
 4693	Durmonsoy MFY	1	t	119
 4694	Durmontepa QFY	1	t	119
-4695	Do'stlik MFY	1	t	119
+4695	Do`stlik MFY	1	t	119
 4696	Elbek MFY	1	t	119
 4697	Esaboy MFY	1	t	119
 4698	Eski Juma MFY	1	t	119
 4699	Furkat MFY	1	t	119
 4700	Galatut MFY	1	t	119
-4701	Go'zalkent QFY	1	t	119
-4702	Go'zalkent MFY	1	t	119
+4701	Go`zalkent QFY	1	t	119
+4702	Go`zalkent MFY	1	t	119
 4703	Gulakandoz MFY	1	t	119
 4704	Guliston MFY	1	t	119
 4705	Gulobod MFY	1	t	119
@@ -8526,8 +8526,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4754	Sh.Rashidov MFY	1	t	119
 4755	Shombuloq MFY	1	t	119
 4756	Sinchi MFY	1	t	119
-4757	Temir yo'l MFY	1	t	119
-4758	Temirxo'ja MFY	1	t	119
+4757	Temir yo`l MFY	1	t	119
+4758	Temirxo`ja MFY	1	t	119
 4759	Tinchlik MFY	1	t	119
 4760	Torarik MFY	1	t	119
 4761	Torarik QFY	1	t	119
@@ -8538,20 +8538,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4766	Turt Aygir MFY	1	t	119
 4767	Turt tom MFY	1	t	119
 4768	Uch tepa MFY	1	t	119
-4769	Ulug'bek MFY	1	t	119
+4769	Ulug`bek MFY	1	t	119
 4770	Un ikki MFY	1	t	119
 4771	Urta Charxin MFY	1	t	119
 4772	Usku MFY	1	t	119
 4773	Utarchi MFY	1	t	119
 4774	Xavuzak MFY	1	t	119
 4775	Xindiboy MFY	1	t	119
-4776	Xonchorbog' MFY	1	t	119
+4776	Xonchorbog` MFY	1	t	119
 4777	Yangi avlod MFY	1	t	119
 4778	Yangikishlok MFY	1	t	119
 4779	Yangiobod MFY	1	t	119
 4780	Yangiravot MFY	1	t	119
 4781	Yangisanoat MFY	1	t	119
-4782	Yuqori bog'onali MFY	1	t	119
+4782	Yuqori bog`onali MFY	1	t	119
 4783	Zangiboy MFY	1	t	119
 4784	Zormon MFY	1	t	119
 4785	Alisher Navoiy MFY	1	t	120
@@ -8559,19 +8559,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4787	Amirobod MFY	1	t	120
 4788	Bobon MFY	1	t	120
 4789	Bodoy MFY	1	t	120
-4790	Bog'oloni MFY	1	t	120
+4790	Bog`oloni MFY	1	t	120
 4791	Boltali MFY	1	t	120
-4792	Bo'ston MFY	1	t	120
+4792	Bo`ston MFY	1	t	120
 4793	Burqut MFY	1	t	120
 4794	Chashma MFY	1	t	120
-4795	Chorgo'sha MFY	1	t	120
+4795	Chorgo`sha MFY	1	t	120
 4796	Choshtepa MFY	1	t	120
-4797	Dabus qal'a MFY	1	t	120
-4798	Do'ng MFY	1	t	120
-4799	Do'stobod QFY	1	t	120
+4797	Dabus qal`a MFY	1	t	120
+4798	Do`ng MFY	1	t	120
+4799	Do`stobod QFY	1	t	120
 4800	Eshmatjobi MFY	1	t	120
-4801	Farovon yo'ldoshobod	1	t	120
-4802	Go'ro'g'li MFY	1	t	120
+4801	Farovon yo`ldoshobod	1	t	120
+4802	Go`ro`g`li MFY	1	t	120
 4803	Guliston MFY	1	t	120
 4804	Ismoilobod MFY	1	t	120
 4805	Istiqbol MFY	1	t	120
@@ -8579,11 +8579,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4807	Jahonobod MFY	1	t	120
 4808	Jona MFY	1	t	120
 4809	Keshtali MFY	1	t	120
-4810	Ko'rpa MFY	1	t	120
+4810	Ko`rpa MFY	1	t	120
 4811	Mirkent MFY	1	t	120
 4812	Mirsiddiq Hashmat	1	t	120
 4813	Mirza Salimiy MFY	1	t	120
-4814	Mirzo Ulug'bek MFY	1	t	120
+4814	Mirzo Ulug`bek MFY	1	t	120
 4815	Mirzo Nodim MFY	1	t	120
 4816	Mirzo Olim MFY	1	t	120
 4817	Misit QFY	1	t	120
@@ -8593,33 +8593,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4821	Niyozjobi MFY	1	t	120
 4822	Nurafshon MFY	1	t	120
 4823	Oqtepa MFY	1	t	120
-4824	O'rta MFY	1	t	120
+4824	O`rta MFY	1	t	120
 4825	Pastburqut MFY	1	t	120
 4826	Poyonigumbaz MFY	1	t	120
-4827	Po'latchi QFY	1	t	120
+4827	Po`latchi QFY	1	t	120
 4828	Qarnab QFY	1	t	120
 4829	Qirguli MFY	1	t	120
 4830	Qodiris MFY	1	t	120
 4831	Qoratepa MFY	1	t	120
 4832	Qoraunos MFY	1	t	120
-4833	Qo'shhovuz MFY	1	t	120
+4833	Qo`shhovuz MFY	1	t	120
 4834	Quvondiq MFY	1	t	120
-4835	Quyibog' QFY	1	t	120
+4835	Quyibog` QFY	1	t	120
 4836	Sadr ziyo MFY	1	t	120
 4837	Sardoba MFY	1	t	120
 4838	Saroy MFY	1	t	120
 4839	Shamsnazar MFY	1	t	120
-4840	Sohil bo'yi MFY	1	t	120
+4840	Sohil bo`yi MFY	1	t	120
 4841	Sotiboldi MFY	1	t	120
 4842	Sultonobod QFY	1	t	120
-4843	Suluvqo'rg'on MFY	1	t	120
+4843	Suluvqo`rg`on MFY	1	t	120
 4844	Tadbirkor MFY	1	t	120
 4845	Taraqqiyot MFY	1	t	120
 4846	Tinchlik MFY	1	t	120
-4847	Toshko'prik MFY	1	t	120
-4848	To'g'olon MFY	1	t	120
+4847	Toshko`prik MFY	1	t	120
+4848	To`g`olon MFY	1	t	120
 4849	Ukrash MFY	1	t	120
-4850	Urg'uch MFY	1	t	120
+4850	Urg`uch MFY	1	t	120
 4851	Urganji MFY	1	t	120
 4852	Hayitelbegi MFY	1	t	120
 4853	Xayrobod QFY	1	t	120
@@ -8631,71 +8631,71 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4859	Andijoni MFY	1	t	121
 4860	Angarolmos MFY	1	t	121
 4861	Badal MFY	1	t	121
-4862	Bo'zi MFY	1	t	121
+4862	Bo`zi MFY	1	t	121
 4863	Buxori MFY	1	t	121
 4864	Chaqqa MFY	1	t	121
 4865	Chorshanba MFY	1	t	121
 4866	Chumchuqli MFY	1	t	121
 4867	Dehnav MFY	1	t	121
 4868	Dashtakibolo QFY	1	t	121
-4869	Dashtiso'xta MFY	1	t	121
-4870	Gulbog' MFY	1	t	121
+4869	Dashtiso`xta MFY	1	t	121
+4870	Gulbog` MFY	1	t	121
 4871	Gulobod MFY	1	t	121
 4872	Ipakchi MFY	1	t	121
 4873	Jarqishloq MFY	1	t	121
-4874	Jo'yisoy MFY	1	t	121
-4875	Kattako'rgonariq QFY	1	t	121
+4874	Jo`yisoy MFY	1	t	121
+4875	Kattako`rgonariq QFY	1	t	121
 4876	Konigil MFY	1	t	121
-4877	Ko'saxo MFY	1	t	121
+4877	Ko`saxo MFY	1	t	121
 4878	Kulba MFY	1	t	121
 4879	Kulbaipoyon QFY	1	t	121
 4880	Markaziy Arabxona MFY	1	t	121
 4881	Mirishkor MFY	1	t	121
 4882	Mironqul MFY	1	t	121
-4883	Navbog' MFY	1	t	121
+4883	Navbog` MFY	1	t	121
 4884	Navobod MFY	1	t	121
 4885	Navobod MFY	1	t	121
-4886	Navro'z MFY	1	t	121
-4887	Navro'z MFY	1	t	121
+4886	Navro`z MFY	1	t	121
+4887	Navro`z MFY	1	t	121
 4888	Nayzat?ppa MFY	1	t	121
 4889	Obod MFY	1	t	121
 4890	Ohalik QFY	1	t	121
 4891	Oqmachit MFY	1	t	121
-4892	O'rta Arabxona MFY	1	t	121
-4893	O'rta Ohalik MFY	1	t	121
-4894	O'rta Turkman MFY	1	t	121
-4895	O'rtashiq MFY	1	t	121
-4896	O'zbekkenti MFY	1	t	121
+4892	O`rta Arabxona MFY	1	t	121
+4893	O`rta Ohalik MFY	1	t	121
+4894	O`rta Turkman MFY	1	t	121
+4895	O`rtashiq MFY	1	t	121
+4896	O`zbekkenti MFY	1	t	121
 4897	Parrandachi MFY	1	t	121
 4898	Past Oxalik MFY	1	t	121
-4899	Pulimug'ob MFY	1	t	121
+4899	Pulimug`ob MFY	1	t	121
 4900	Qavchinon MFY	1	t	121
 4901	Qavchinonibolo MFY	1	t	121
 4902	Qaynama QFY	1	t	121
 4903	Qorasuv MFY	1	t	121
 4904	Qoziariq MFY	1	t	121
-4905	Qoziqo'rg'on MFY	1	t	121
-4906	Qo'shko'pruk MFY	1	t	121
-4907	Qo'shmachit MFY	1	t	121
-4908	Qo'shtamg'ali MFY	1	t	121
-4909	Qo'shtamg'ali QFY	1	t	121
-4910	Qo'yi Arabxona MFY	1	t	121
-4911	Qo'yi Chordara MFY	1	t	121
-4912	Qo'yi Qaynama MFY	1	t	121
-4913	Qo'yi Turkman MFY	1	t	121
+4905	Qoziqo`rg`on MFY	1	t	121
+4906	Qo`shko`pruk MFY	1	t	121
+4907	Qo`shmachit MFY	1	t	121
+4908	Qo`shtamg`ali MFY	1	t	121
+4909	Qo`shtamg`ali QFY	1	t	121
+4910	Qo`yi Arabxona MFY	1	t	121
+4911	Qo`yi Chordara MFY	1	t	121
+4912	Qo`yi Qaynama MFY	1	t	121
+4913	Qo`yi Turkman MFY	1	t	121
 4914	Qumzor MFY	1	t	121
 4915	Rajabamin MFY	1	t	121
 4916	Ravonak MFY	1	t	121
 4917	Rustam MFY	1	t	121
 4918	Sarimazor MFY	1	t	121
-4919	Shalg'amon MFY	1	t	121
-4920	Sho'rboi-1 MFY	1	t	121
-4921	Sho'rboi-2 MFY	1	t	121
-4922	Sho'rboicha MFY	1	t	121
+4919	Shalg`amon MFY	1	t	121
+4920	Sho`rboi-1 MFY	1	t	121
+4921	Sho`rboi-2 MFY	1	t	121
+4922	Sho`rboicha MFY	1	t	121
 4923	Sulfakabutak MFY	1	t	121
 4924	Talibarzui bolo MFY	1	t	121
 4925	Talibarzui poyon MFY	1	t	121
-4926	Ulug'bek QFY	1	t	121
+4926	Ulug`bek QFY	1	t	121
 4927	Urganji MFY	1	t	121
 4928	Xaymari bolo MFY	1	t	121
 4929	Xaymari poyon MFY	1	t	121
@@ -8731,22 +8731,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4959	Beklar MFY	1	t	122
 4960	Bekxo MFY	1	t	122
 4961	Besh chinor MFY	1	t	122
-4962	Beshg'ujum MFY	1	t	122
+4962	Beshg`ujum MFY	1	t	122
 4963	Baraka MFY	1	t	122
 4964	Baxor MFY	1	t	122
 4965	Birlik MFY	1	t	122
-4966	Bog'i baland MFY	1	t	122
-4967	Bog'i maydon MFY	1	t	122
-4968	Bog'bonlar MFY	1	t	122
-4969	Bog'dod MFY	1	t	122
-4970	Bog'i baland-2 MFY	1	t	122
-4971	Bog'i maydon 2 MFY	1	t	122
-4972	Bog'i saroy MFY	1	t	122
-4973	Bog'i shamol MFY	1	t	122
-4974	Bog'i shifo MFY	1	t	122
-4975	Bog'i Temur MFY	1	t	122
-4976	Bog'ichinor MFY	1	t	122
-4977	Bog'iston MFY	1	t	122
+4966	Bog`i baland MFY	1	t	122
+4967	Bog`i maydon MFY	1	t	122
+4968	Bog`bonlar MFY	1	t	122
+4969	Bog`dod MFY	1	t	122
+4970	Bog`i baland-2 MFY	1	t	122
+4971	Bog`i maydon 2 MFY	1	t	122
+4972	Bog`i saroy MFY	1	t	122
+4973	Bog`i shamol MFY	1	t	122
+4974	Bog`i shifo MFY	1	t	122
+4975	Bog`i Temur MFY	1	t	122
+4976	Bog`ichinor MFY	1	t	122
+4977	Bog`iston MFY	1	t	122
 4978	Botir Zokirov MFY	1	t	122
 4979	Bunyod MFY	1	t	122
 4980	Bunyodkor MFY	1	t	122
@@ -8755,7 +8755,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4983	Chashma MFY	1	t	122
 4984	Chilkuduk MFY	1	t	122
 4985	Chilstun MFY	1	t	122
-4986	Chorbog' MFY	1	t	122
+4986	Chorbog` MFY	1	t	122
 4987	Chupon ota MFY	1	t	122
 4988	D. Samarqandiy MFY	1	t	122
 4989	D.Qalandarxona MFY	1	t	122
@@ -8763,18 +8763,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 4991	Dehqon MFY	1	t	122
 4992	Dahbediy MFY	1	t	122
 4993	Damarik-1 MFY	1	t	122
-4994	Darg'om MFY	1	t	122
+4994	Darg`om MFY	1	t	122
 4995	Dari Zanjir MFY	1	t	122
 4996	Dukchiyon MFY	1	t	122
-4997	Do'stlik MFY	1	t	122
+4997	Do`stlik MFY	1	t	122
 4998	Eski Qalandarxona MFY	1	t	122
 4999	Eski Xazora MFY	1	t	122
-5000	Farog'at MFY	1	t	122
+5000	Farog`at MFY	1	t	122
 5001	Farovonlik MFY	1	t	122
 5002	Farxod shfy	1	t	122
 5003	Furqat MFY	1	t	122
-5004	G'afur G'ulom MFY	1	t	122
-5005	G'iyosiddin Jamshid MFY	1	t	122
+5004	G`afur G`ulom MFY	1	t	122
+5005	G`iyosiddin Jamshid MFY	1	t	122
 5006	Geofizika MFY	1	t	122
 5007	Galaosiyo MFY	1	t	122
 5008	Garmako MFY	1	t	122
@@ -8787,7 +8787,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5015	Ilmobod MFY	1	t	122
 5016	Ilxom MFY	1	t	122
 5017	Imom Vose MFY	1	t	122
-5018	Ipak yo'li MFY	1	t	122
+5018	Ipak yo`li MFY	1	t	122
 5019	Islohot MFY	1	t	122
 5020	Istiqlol MFY	1	t	122
 5021	Istiqbol MFY	1	t	122
@@ -8825,7 +8825,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5053	Madaniyat MFY	1	t	122
 5054	Maroqand MFY	1	t	122
 5055	Marxabo MFY	1	t	122
-5056	Mash'al MFY	1	t	122
+5056	Mash`al MFY	1	t	122
 5057	Matonat MFY	1	t	122
 5058	Maqsud Shayxzoda MFY	1	t	122
 5059	Maysazor MFY	1	t	122
@@ -8840,8 +8840,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5068	Namozgoh MFY	1	t	122
 5069	Navbaxor MFY	1	t	122
 5070	Navbogchiyon MFY	1	t	122
-5071	Navro'z MFY	1	t	122
-5072	Navro'z-2 MFY	1	t	122
+5071	Navro`z MFY	1	t	122
+5072	Navro`z-2 MFY	1	t	122
 5073	Nayman MFY	1	t	122
 5074	Nodirabegim MFY	1	t	122
 5075	Nurafshon MFY	1	t	122
@@ -8860,9 +8860,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5088	Raim Shokirbekov MFY	1	t	122
 5089	Raxmatobod MFY	1	t	122
 5090	Rohat MFY	1	t	122
-5091	Semurg' MFY	1	t	122
+5091	Semurg` MFY	1	t	122
 5092	Sevali MFY	1	t	122
-5093	Sa'di Sheroziy MFY	1	t	122
+5093	Sa`di Sheroziy MFY	1	t	122
 5094	Sadaf MFY	1	t	122
 5095	Sadriddin Ayniy MFY	1	t	122
 5096	Safedi MFY	1	t	122
@@ -8880,7 +8880,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5108	Shukrona MFY	1	t	122
 5109	Shuxrat MFY	1	t	122
 5110	Siyobcha MFY	1	t	122
-5111	So'lim shfy	1	t	122
+5111	So`lim shfy	1	t	122
 5112	Sufi Roziq MFY	1	t	122
 5113	Sugdiyona MFY	1	t	122
 5114	Suzangaron MFY	1	t	122
@@ -8909,23 +8909,23 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5137	Xazora MFY	1	t	122
 5138	Hilol MFY	1	t	122
 5139	Hofiz Sheroziy MFY	1	t	122
-5140	Xo'ja Abdu Darun MFY	1	t	122
-5141	Xo'ja Axrori Vali MFY	1	t	122
-5142	Xo'ja Chorrux MFY	1	t	122
-5143	Xo'ja gunjoyish MFY	1	t	122
-5144	Xo'ja gunjoyish-2 MFY	1	t	122
-5145	Xo'ja Qishloq MFY	1	t	122
-5146	Xo'ja Soat MFY	1	t	122
-5147	Xo'ja Yusuf MFY	1	t	122
-5148	Xo'jandiy MFY	1	t	122
-5149	Yangi Qo'rg'on MFY	1	t	122
+5140	Xo`ja Abdu Darun MFY	1	t	122
+5141	Xo`ja Axrori Vali MFY	1	t	122
+5142	Xo`ja Chorrux MFY	1	t	122
+5143	Xo`ja gunjoyish MFY	1	t	122
+5144	Xo`ja gunjoyish-2 MFY	1	t	122
+5145	Xo`ja Qishloq MFY	1	t	122
+5146	Xo`ja Soat MFY	1	t	122
+5147	Xo`ja Yusuf MFY	1	t	122
+5148	Xo`jandiy MFY	1	t	122
+5149	Yangi Qo`rg`on MFY	1	t	122
 5150	Yangi obod MFY	1	t	122
 5151	Yangi Hayot MFY	1	t	122
 5152	Yangi Xayrabod MFY	1	t	122
 5153	Yominiy MFY	1	t	122
 5154	Yoshlar MFY	1	t	122
 5155	Yoshlik MFY	1	t	122
-5156	Yuqori Xo'ja Soat MFY	1	t	122
+5156	Yuqori Xo`ja Soat MFY	1	t	122
 5157	Yulduz MFY	1	t	122
 5158	Zarafshon MFY	1	t	122
 5159	Zarduzlar MFY	1	t	122
@@ -8938,12 +8938,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5166	Adas QFY	1	t	123
 5167	Bachki MFY	1	t	123
 5168	Baxshitepa MFY	1	t	123
-5169	Bog'izog'on QFY	1	t	123
+5169	Bog`izog`on QFY	1	t	123
 5170	Bogizogon MFY	1	t	123
 5171	Butboy MFY	1	t	123
 5172	Chorboktepa MFY	1	t	123
 5173	Davlatobod MFY	1	t	123
-5174	Do'stlik MFY	1	t	123
+5174	Do`stlik MFY	1	t	123
 5175	Eskijuma MFY	1	t	123
 5176	Fayziobod MFY	1	t	123
 5177	Gadoykushchi MFY	1	t	123
@@ -8964,7 +8964,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5192	Nayman-1 MFY	1	t	123
 5193	Nayman-2 MFY	1	t	123
 5194	Payshanbasiyob MFY	1	t	123
-5195	Qo'rg'oncha QFY	1	t	123
+5195	Qo`rg`oncha QFY	1	t	123
 5196	Ravot MFY	1	t	123
 5197	Saribozor MFY	1	t	123
 5198	Sariosiyo MFY	1	t	123
@@ -8981,20 +8981,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5209	Tayloq QFY	1	t	123
 5210	Ukrach MFY	1	t	123
 5211	Uray-Elipok MFY	1	t	123
-5212	O'rtaqishloq MFY	1	t	123
-5213	O'zbekiston MFY	1	t	123
+5212	O`rtaqishloq MFY	1	t	123
+5213	O`zbekiston MFY	1	t	123
 5214	Uzunqishloq MFY	1	t	123
 5215	Vorsin MFY	1	t	123
-5216	Xo'jaqishloq MFY	1	t	123
-5217	Xo'jayuz MFY	1	t	123
-5218	Yalang'och MFY	1	t	123
+5216	Xo`jaqishloq MFY	1	t	123
+5217	Xo`jayuz MFY	1	t	123
+5218	Yalang`och MFY	1	t	123
 5219	Yangi Tayloq MFY	1	t	123
 5220	Yangi Hayot MFY	1	t	123
 5221	Yastepa MFY	1	t	123
 5222	Yuqori Tayloq MFY	1	t	123
 5223	Zarafshon MFY	1	t	123
 5224	Etti uylik MFY	1	t	124
-5225	A'loxotin MFY	1	t	124
+5225	A`loxotin MFY	1	t	124
 5226	Algar MFY	1	t	124
 5227	Andak MFY	1	t	124
 5228	Bekravot MFY	1	t	124
@@ -9003,23 +9003,23 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5231	Beshkapa -1 MFY	1	t	124
 5232	Beshkapa MFY	1	t	124
 5233	Beshkapa-2 MFY	1	t	124
-5234	Beshyog'och MFY	1	t	124
+5234	Beshyog`och MFY	1	t	124
 5235	Baxrin MFY	1	t	124
 5236	Baxrin QFY	1	t	124
-5237	Bog'ishamol MFY	1	t	124
+5237	Bog`ishamol MFY	1	t	124
 5238	Boybul MFY	1	t	124
 5239	Chagizmon MFY	1	t	124
 5240	Chor-chinor MFY	1	t	124
 5241	Chorraha MFY	1	t	124
 5242	Choshtepa MFY	1	t	124
 5243	Chumchuqli MFY	1	t	124
-5244	Do'stlik MFY	1	t	124
-5245	Do'stlik MFY	1	t	124
-5246	G'o's QFY	1	t	124
+5244	Do`stlik MFY	1	t	124
+5245	Do`stlik MFY	1	t	124
+5246	G`o`s QFY	1	t	124
 5247	Gijduvon MFY	1	t	124
 5248	Gisht machti MFY	1	t	124
 5249	Goyibota MFY	1	t	124
-5250	Go'slik MFY	1	t	124
+5250	Go`slik MFY	1	t	124
 5251	Guliston MFY	1	t	124
 5252	Guliston MFY	1	t	124
 5253	Gulobod MFY	1	t	124
@@ -9069,8 +9069,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5297	Navbog MFY	1	t	124
 5298	Nisbot MFY	1	t	124
 5299	Okmachit MFY	1	t	124
-5300	Omonqo'tan MFY	1	t	124
-5301	O'ramas QFY	1	t	124
+5300	Omonqo`tan MFY	1	t	124
+5301	O`ramas QFY	1	t	124
 5302	P. Kalangar MFY	1	t	124
 5303	Paxmob MFY	1	t	124
 5304	Pochvon MFY	1	t	124
@@ -9085,7 +9085,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5313	Shahar mfylari	1	t	124
 5314	Soy guzar MFY	1	t	124
 5315	Soygus MFY	1	t	124
-5316	So'fiyon MFY	1	t	124
+5316	So`fiyon MFY	1	t	124
 5317	Sufi MFY	1	t	124
 5318	Terak MFY	1	t	124
 5319	Tersak MFY	1	t	124
@@ -9115,33 +9115,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5343	Chinobod MFY	1	t	125
 5344	Dehqonbirlashuv MFY	1	t	125
 5345	Dehqonittifok MFY	1	t	125
-5346	Do'stlik MFY	1	t	125
-5347	Do'stlik QFY	1	t	125
+5346	Do`stlik MFY	1	t	125
+5347	Do`stlik QFY	1	t	125
 5348	Gilambob MFY	1	t	125
 5349	Gilambob MFY	1	t	125
 5350	Guliston MFY	1	t	125
 5351	Gulzor MFY	1	t	125
-5352	Ilg'or MFY	1	t	125
+5352	Ilg`or MFY	1	t	125
 5353	Istiqlol QFY	1	t	125
 5354	Karvon MFY	1	t	125
 5355	Kattakum MFY	1	t	125
 5356	Kayran MFY	1	t	125
 5357	Kayran QFY	1	t	125
-5358	Qo'shtegirmon MFY	1	t	125
+5358	Qo`shtegirmon MFY	1	t	125
 5359	Madaniyat MFY	1	t	125
 5360	Markaz MFY	1	t	125
 5361	Navoiy MFY	1	t	125
-5362	Navro'z MFY	1	t	125
+5362	Navro`z MFY	1	t	125
 5363	Navshaxar MFY	1	t	125
 5364	Ozod Buxoro MFY	1	t	125
-5365	O'zbekiston MFY	1	t	125
-5366	Qorabog' MFY	1	t	125
+5365	O`zbekiston MFY	1	t	125
+5366	Qorabog` MFY	1	t	125
 5367	Qorasuv MFY	1	t	125
 5368	Tallashkon MFY	1	t	125
 5369	Tallimaron MFY	1	t	125
 5370	Tallimaron QFY	1	t	125
-5371	To'lkin MFY	1	t	125
-5372	Ulug'bek MFY	1	t	125
+5371	To`lkin MFY	1	t	125
+5372	Ulug`bek MFY	1	t	125
 5373	Xomkon MFY	1	t	125
 5374	Xujanko MFY	1	t	125
 5375	Y. Oxunboboev MFY	1	t	125
@@ -9149,7 +9149,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5377	Yangiobod MFY	1	t	125
 5378	Yangiobod QFY	1	t	125
 5379	Yuqori Tallashqon MFY	1	t	125
-5380	Yuqori Xo'jakiya MFY	1	t	125
+5380	Yuqori Xo`jakiya MFY	1	t	125
 5381	Zang QFY	1	t	125
 5382	Zartepa MFY	1	t	125
 5383	Avlod QFY	1	t	126
@@ -9157,14 +9157,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5385	Ariq usti MFY	1	t	126
 5386	Avlod MFY	1	t	126
 5387	Bibishirin MFY	1	t	126
-5388	Bog'ibolo MFY	1	t	126
+5388	Bog`ibolo MFY	1	t	126
 5389	Boysun QFY	1	t	126
 5390	Chilonzor MFY	1	t	126
 5391	Chorchinor MFY	1	t	126
 5392	Dexibolo (Jamoatchi) MFY	1	t	126
 5393	Darband MFY	1	t	126
 5394	Darband QFY	1	t	126
-5395	Dashtig'oz MFY	1	t	126
+5395	Dashtig`oz MFY	1	t	126
 5396	Duoba MFY	1	t	126
 5397	Gaza MFY	1	t	126
 5398	Inkabot MFY	1	t	126
@@ -9173,16 +9173,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5401	Machay QFY	1	t	126
 5402	Munchok MFY	1	t	126
 5403	Mustakillik MFY	1	t	126
-5404	N'a'zamov MFY	1	t	126
+5404	N`a`zamov MFY	1	t	126
 5405	Obi MFY	1	t	126
-5406	O'rta Machay MFY	1	t	126
+5406	O`rta Machay MFY	1	t	126
 5407	Pasurxi MFY	1	t	126
 5408	Poygaboshi MFY	1	t	126
 5409	Pulhokim MFY	1	t	126
 5410	Qizilnavr (Jamoatchi) MFY	1	t	126
-5411	Qorabo'yin MFY	1	t	126
-5412	Qo'rg'oncha MFY	1	t	126
-5413	Qo'rgoncha QFY	1	t	126
+5411	Qorabo`yin MFY	1	t	126
+5412	Qo`rg`oncha MFY	1	t	126
+5413	Qo`rgoncha QFY	1	t	126
 5414	Quduqsoy MFY	1	t	126
 5415	Rabot MFY	1	t	126
 5416	Rabot QFY	1	t	126
@@ -9190,15 +9190,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5418	Sariosiyo MFY	1	t	126
 5419	Sayrob MFY	1	t	126
 5420	Sayrob QFY	1	t	126
-5421	Sho'rob (Jamoatchi)	1	t	126
-5422	Sho'rsoy MFY	1	t	126
+5421	Sho`rob (Jamoatchi)	1	t	126
+5422	Sho`rsoy MFY	1	t	126
 5423	Tangumush MFY	1	t	126
 5424	Tuda (Jamoatchi) MFY	1	t	126
 5425	Tuzbozor MFY	1	t	126
-5426	Xo'jabulg'on MFY	1	t	126
+5426	Xo`jabulg`on MFY	1	t	126
 5427	Yu.Qodirov MFY	1	t	126
 5428	Yuqori machay MFY	1	t	126
-5429	Bobotog' (Jamoatchi) MFY	1	t	127
+5429	Bobotog` (Jamoatchi) MFY	1	t	127
 5430	Mingbuloq MFY	1	t	127
 5431	Sh.Norqobilov MFY	1	t	127
 5432	A.Ikromov MFY	1	t	127
@@ -9208,7 +9208,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5436	Abbos Malik MFY	1	t	127
 5437	Anbarsoy QFY	1	t	127
 5438	Anorbuloq (Jamoatchi) MFY	1	t	127
-5439	B.G'ulomov (sina 1) MFY	1	t	127
+5439	B.G`ulomov (sina 1) MFY	1	t	127
 5440	B.Yusupov MFY	1	t	127
 5441	Bandixon (Jamoatchi) MFY	1	t	127
 5442	Baynalminal MFY	1	t	127
@@ -9224,13 +9224,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5452	Davlatsoy MFY	1	t	127
 5453	Daxana QFY MFY	1	t	127
 5454	Daxana MFY	1	t	127
-5455	Dug'ob (Jamoatchi) MFY	1	t	127
+5455	Dug`ob (Jamoatchi) MFY	1	t	127
 5456	Dunyotepa MFY	1	t	127
-5457	Do'stlik QFY	1	t	127
-5458	Do'stlik MFY	1	t	127
+5457	Do`stlik QFY	1	t	127
+5458	Do`stlik MFY	1	t	127
 5459	E.Mirzaxmedov MFY	1	t	127
 5460	Elobod MFY	1	t	127
-5461	Farg'ona QFY	1	t	127
+5461	Farg`ona QFY	1	t	127
 5462	Guliston MFY	1	t	127
 5463	Guliston MFY	1	t	127
 5464	Gulobod MFY	1	t	127
@@ -9265,15 +9265,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5493	Muqumiy MFY	1	t	127
 5494	Namozgox MFY	1	t	127
 5495	Navbaxor MFY	1	t	127
-5496	Navro'z MFY	1	t	127
+5496	Navro`z MFY	1	t	127
 5497	Obodon MFY	1	t	127
 5498	Olovuddin MFY	1	t	127
 5499	Ostona MFY	1	t	127
 5500	Oxlar MFY	1	t	127
 5501	Oxtom MFY	1	t	127
 5502	Ozod MFY	1	t	127
-5503	O'rtaqishloq MFY	1	t	127
-5504	O'zgarish MFY	1	t	127
+5503	O`rtaqishloq MFY	1	t	127
+5504	O`zgarish MFY	1	t	127
 5505	Pastkiziljar MFY	1	t	127
 5506	Paxtakurash MFY	1	t	127
 5507	Pistamozor QFY	1	t	127
@@ -9295,15 +9295,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5523	Tortuvli QFY	1	t	127
 5524	U.Qoraev MFY	1	t	127
 5525	U.Nabiev MFY	1	t	127
-5526	O'rta qishloq MFY	1	t	127
+5526	O`rta qishloq MFY	1	t	127
 5527	Ushor MFY	1	t	127
-5528	O'zbekiston MFY	1	t	127
+5528	O`zbekiston MFY	1	t	127
 5529	X.Maxmudov MFY	1	t	127
 5530	X.Murodov MFY	1	t	127
 5531	X.Ostonaqulov MFY	1	t	127
 5532	X.X.Niyoziy MFY	1	t	127
 5533	Xayrabod QFY	1	t	127
-5534	Xazorbog' QFY	1	t	127
+5534	Xazorbog` QFY	1	t	127
 5535	Xitoyan MFY	1	t	127
 5536	Xolchayon QFY	1	t	127
 5537	Xolchayon MFY	1	t	127
@@ -9311,8 +9311,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5539	Xujaxalki MFY	1	t	127
 5540	Y.Oxunboboev MFY	1	t	127
 5541	Yangi hayot MFY	1	t	127
-5542	Yangi hazarbog' MFY	1	t	127
-5543	Yangibog' QFY	1	t	127
+5542	Yangi hazarbog` MFY	1	t	127
+5543	Yangibog` QFY	1	t	127
 5544	Yangiqishloq MFY	1	t	127
 5545	Yangikuch MFY	1	t	127
 5546	Yangiobod QFY	1	t	127
@@ -9329,25 +9329,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5557	A.Navoiy MFY	1	t	128
 5558	Avlod MFY	1	t	128
 5559	Beshbuloq MFY	1	t	128
-5560	Bobotog' MFY	1	t	128
-5561	Bobotog' MFY	1	t	128
+5560	Bobotog` MFY	1	t	128
+5561	Bobotog` MFY	1	t	128
 5562	Bobur MFY	1	t	128
 5563	Boymoqli MFY	1	t	128
-5564	Chorjo'y MFY	1	t	128
-5565	Chorjo'y QFY	1	t	128
+5564	Chorjo`y MFY	1	t	128
+5565	Chorjo`y QFY	1	t	128
 5566	Dehqonobod MFY	1	t	128
 5567	Dehqonobod QFY	1	t	128
 5568	Dam MFY	1	t	128
-5569	Do'stlik MFY	1	t	128
+5569	Do`stlik MFY	1	t	128
 5570	Eskiqishloq MFY	1	t	128
-5571	g'ur-g'ur MFY	1	t	128
+5571	g`ur-g`ur MFY	1	t	128
 5572	Garang MFY	1	t	128
 5573	Guliston MFY	1	t	128
 5574	Gulxovuz MFY	1	t	128
 5575	I.Turopov MFY	1	t	128
 5576	Ismoil tepa MFY	1	t	128
 5577	Istiqlol MFY	1	t	128
-5578	Jarqurg'on QFY	1	t	128
+5578	Jarqurg`on QFY	1	t	128
 5579	Jinjaktepa MFY	1	t	128
 5580	Kakaydi QFY	1	t	128
 5581	Kamar MFY	1	t	128
@@ -9366,33 +9366,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5594	Mustakillik MFY	1	t	128
 5595	N.Boymurodov MFY	1	t	128
 5596	Namuna MFY	1	t	128
-5597	Navro'z MFY	1	t	128
-5598	Oqqurg'on MFY	1	t	128
-5599	Oqqurg'on QFY	1	t	128
+5597	Navro`z MFY	1	t	128
+5598	Oqqurg`on MFY	1	t	128
+5599	Oqqurg`on QFY	1	t	128
 5600	Oqtepa MFY	1	t	128
 5601	Oqtepa MFY	1	t	128
 5602	Oqtepa MFY	1	t	128
-5603	O'zbekiston MFY	1	t	128
+5603	O`zbekiston MFY	1	t	128
 5604	Paxtaobod MFY	1	t	128
 5605	Paxtazavod MFY	1	t	128
 5606	Qahramon MFY	1	t	128
 5607	Qiron MFY	1	t	128
-5608	Qorabo'ra MFY	1	t	128
+5608	Qorabo`ra MFY	1	t	128
 5609	Qoraqursoq MFY	1	t	128
 5610	Qorayantoq MFY	1	t	128
-5611	Qorayog'och MFY	1	t	128
+5611	Qorayog`och MFY	1	t	128
 5612	Qumqishloq MFY	1	t	128
 5613	Sh.Yulduzi QFY	1	t	128
 5614	Soqchi MFY	1	t	128
 5615	Surxon QFY	1	t	128
 5616	T.Shoburov MFY	1	t	128
 5617	U.Xudoyberdiev MFY	1	t	128
-5618	Ulug'bek MFY	1	t	128
-5619	Ulug'bek MFY	1	t	128
+5618	Ulug`bek MFY	1	t	128
+5619	Ulug`bek MFY	1	t	128
 5620	H.Olimjon MFY	1	t	128
 5621	Xalqabod MFY	1	t	128
 5622	Xayitobod MFY	1	t	128
-5623	Xo'jaqishloq MFY	1	t	128
+5623	Xo`jaqishloq MFY	1	t	128
 5624	Yangi usul MFY	1	t	128
 5625	Yangiariq MFY	1	t	128
 5626	Yangiobod MFY	1	t	128
@@ -9404,14 +9404,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5632	Bandixon MFY	1	t	129
 5633	Bandixon QFY	1	t	129
 5634	Birdamlik MFY	1	t	129
-5635	Bog'iston MFY	1	t	129
+5635	Bog`iston MFY	1	t	129
 5636	Buston QFY	1	t	129
 5637	Buston MFY	1	t	129
 5638	Chinor MFY	1	t	129
 5639	Chorvador QFY	1	t	129
-5640	Do'stlik MFY	1	t	129
+5640	Do`stlik MFY	1	t	129
 5641	Gilambob MFY	1	t	129
-5642	Gulbog' MFY	1	t	129
+5642	Gulbog` MFY	1	t	129
 5643	Guliston MFY	1	t	129
 5644	Gulobod MFY	1	t	129
 5645	Gulzor MFY	1	t	129
@@ -9429,16 +9429,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5657	Navruz MFY	1	t	129
 5658	Okjar MFY	1	t	129
 5659	Olmazor QFY	1	t	129
-5660	Oqqo'ton MFY	1	t	129
+5660	Oqqo`ton MFY	1	t	129
 5661	Oxunbobo?v MFY	1	t	129
-5662	O'rgilsoy MFY	1	t	129
+5662	O`rgilsoy MFY	1	t	129
 5663	Paxtakor QFY	1	t	129
 5664	Polvontosh MFY	1	t	129
-5665	Qaldirg'och MFY	1	t	129
+5665	Qaldirg`och MFY	1	t	129
 5666	Qizil qoloq MFY	1	t	129
 5667	Qiziriq QFY	1	t	129
-5668	Qong'isoy MFY	1	t	129
-5669	Qo'sh qo'ton MFY	1	t	129
+5668	Qong`isoy MFY	1	t	129
+5669	Qo`sh qo`ton MFY	1	t	129
 5670	Rabatak MFY	1	t	129
 5671	Sarik SHFY	1	t	129
 5672	Saroy MFY	1	t	129
@@ -9448,17 +9448,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5676	Tinchlik MFY	1	t	129
 5677	Xalkobod MFY	1	t	129
 5678	Xomkon MFY	1	t	129
-5679	Xo'jaipok MFY	1	t	129
+5679	Xo`jaipok MFY	1	t	129
 5680	Yakka terak MFY	1	t	129
 5681	Yangi turmush MFY	1	t	129
 5682	Yangi hayot QFY	1	t	129
 5683	Yangi hayot MFY	1	t	129
-5684	Yangi yo'l QFY	1	t	129
-5685	Yangi yo'l MFY	1	t	129
+5684	Yangi yo`l QFY	1	t	129
+5685	Yangi yo`l MFY	1	t	129
 5686	Yangiobod MFY	1	t	129
 5687	Zevar MFY	1	t	129
 5688	Zarbdor MFY	1	t	129
-5689	A.Jo'raev MFY	1	t	130
+5689	A.Jo`raev MFY	1	t	130
 5690	Achamoyli MFY	1	t	130
 5691	Arigoshgan MFY	1	t	130
 5692	Arpapoya MFY	1	t	130
@@ -9466,14 +9466,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5694	Arslonboyli MFY	1	t	130
 5695	Azlarsoy MFY	1	t	130
 5696	Bobolochin MFY	1	t	130
-5697	Bobotog' MFY	1	t	130
+5697	Bobotog` MFY	1	t	130
 5698	Bogaro MFY	1	t	130
 5699	Boymoqli MFY	1	t	130
 5700	Buston MFY	1	t	130
 5701	Chayontepa MFY	1	t	130
 5702	Chukirli MFY	1	t	130
-5703	Do'stlik MFY	1	t	130
-5704	G'alaba MFY	1	t	130
+5703	Do`stlik MFY	1	t	130
+5704	G`alaba MFY	1	t	130
 5705	Guliston MFY	1	t	130
 5706	Gultepa MFY	1	t	130
 5707	Imom tepa MFY	1	t	130
@@ -9489,7 +9489,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5717	Kattakul MFY	1	t	130
 5718	Kindiktepa MFY	1	t	130
 5719	Kuganli MFY	1	t	130
-5720	Qumqurg'on MFY	1	t	130
+5720	Qumqurg`on MFY	1	t	130
 5721	M.Qoraboev MFY	1	t	130
 5722	M.Xujamkulov MFY	1	t	130
 5723	Mexrobod MFY	1	t	130
@@ -9500,19 +9500,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5728	Oqsoy MFY	1	t	130
 5729	Oqtom MFY	1	t	130
 5730	Oqjar QFY	1	t	130
-5731	Oqqopchig'ay QFY	1	t	130
-5732	O'zbekiston 5 yiligi MFY	1	t	130
-5733	O'zbekiston QFY	1	t	130
+5731	Oqqopchig`ay QFY	1	t	130
+5732	O`zbekiston 5 yiligi MFY	1	t	130
+5733	O`zbekiston QFY	1	t	130
 5734	Pastxam MFY	1	t	130
 5735	Paxtaobod MFY	1	t	130
-5736	Qumqo'rg'on QFY	1	t	130
+5736	Qumqo`rg`on QFY	1	t	130
 5737	Sherozi MFY	1	t	130
 5738	T.Muqimov MFY	1	t	130
 5739	Tebat MFY	1	t	130
 5740	Tarvuzpoya MFY	1	t	130
 5741	Tayfang MFY	1	t	130
 5742	Tuda MFY	1	t	130
-5743	Ulug'bek MFY	1	t	130
+5743	Ulug`bek MFY	1	t	130
 5744	UYaS MFY	1	t	130
 5745	Xalaki MFY	1	t	130
 5746	Xalkobod MFY	1	t	130
@@ -9530,19 +9530,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5758	A.Navoiy MFY	1	t	131
 5759	At-Termiziy MFY	1	t	131
 5760	Avjun MFY	1	t	131
-5761	Beshqo'ton QFY	1	t	131
+5761	Beshqo`ton QFY	1	t	131
 5762	Boldir MFY	1	t	131
 5763	Boldir QFY	1	t	131
-5764	Bo'ston (Jamoatchi) MFY	1	t	131
+5764	Bo`ston (Jamoatchi) MFY	1	t	131
 5765	Ch.Quvondiqov-1 MFY	1	t	131
 5766	Ch.Quvondiqov-2 MFY	1	t	131
 5767	Chegarachi MFY	1	t	131
 5768	Dehibolo-Nazariy MFY	1	t	131
 5769	Dehqonobod MFY	1	t	131
 5770	Darband MFY	1	t	131
-5771	Do'stlik MFY	1	t	131
+5771	Do`stlik MFY	1	t	131
 5772	Duoba MFY	1	t	131
-5773	E.Jo'raev MFY	1	t	131
+5773	E.Jo`raev MFY	1	t	131
 5774	Fayziobod MFY	1	t	131
 5775	Gagarin MFY	1	t	131
 5776	Guliston MFY	1	t	131
@@ -9552,10 +9552,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5780	Muzrabot QFY	1	t	131
 5781	N.Mengliev MFY	1	t	131
 5782	Navbahor QFY	1	t	131
-5783	Navro'z MFY	1	t	131
+5783	Navro`z MFY	1	t	131
 5784	Obodon QFY	1	t	131
 5785	Olachapon (Jamoatchi) MFY	1	t	131
-5786	Oltinko'l MFY	1	t	131
+5786	Oltinko`l MFY	1	t	131
 5787	Paxtakor MFY	1	t	131
 5788	Q.Qurbonova MFY	1	t	131
 5789	Qahramon MFY	1	t	131
@@ -9563,25 +9563,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5791	Qora-kamar QFY	1	t	131
 5792	Qozoyoqli MFY	1	t	131
 5793	Sh.Boboev MFY	1	t	131
-5794	Sho'rob MFY	1	t	131
-5795	Sho'rob QFY	1	t	131
+5794	Sho`rob MFY	1	t	131
+5795	Sho`rob QFY	1	t	131
 5796	Soppollitepa MFY	1	t	131
-5797	X.Jo'raev MFY	1	t	131
+5797	X.Jo`raev MFY	1	t	131
 5798	Xalqobod QFY MFY	1	t	131
 5799	Yangier MFY	1	t	131
 5800	Yangiobod MFY	1	t	131
 5801	Z.Nozimov MFY	1	t	131
-5802	Z.Qo'ldoshev MFY	1	t	131
+5802	Z.Qo`ldoshev MFY	1	t	131
 5803	Botosh MFY	1	t	132
 5804	Ipok MFY	1	t	132
-5805	A.Bo'taev MFY	1	t	132
+5805	A.Bo`taev MFY	1	t	132
 5806	Besh bola pahlavon MFY	1	t	132
 5807	Barkamol avlod MFY	1	t	132
 5808	Bibizaynab MFY	1	t	132
 5809	Chep MFY	1	t	132
 5810	Chep QFY	1	t	132
 5811	Chinor MFY	1	t	132
-5812	Do'goba QFY	1	t	132
+5812	Do`goba QFY	1	t	132
 5813	Dugoba MFY	1	t	132
 5814	Ekraz MFY	1	t	132
 5815	Gulchechak MFY	1	t	132
@@ -9593,7 +9593,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5821	Kaptarxona MFY	1	t	132
 5822	Karsagan MFY	1	t	132
 5823	Korlik MFY	1	t	132
-5824	Ko'sh archa MFY	1	t	132
+5824	Ko`sh archa MFY	1	t	132
 5825	M.Omonov MFY	1	t	132
 5826	Madaniyat MFY	1	t	132
 5827	Markaz MFY	1	t	132
@@ -9601,9 +9601,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5829	Mingchinor MFY	1	t	132
 5830	Mirshodi QFY	1	t	132
 5831	Mirshodi MFY	1	t	132
-5832	Mo'minkul MFY	1	t	132
+5832	Mo`minkul MFY	1	t	132
 5833	Must.10-yilligi MFY	1	t	132
-5834	Navro'z MFY	1	t	132
+5834	Navro`z MFY	1	t	132
 5835	Obshir (Jamoatchi) MFY	1	t	132
 5836	Oltinsoy QFY	1	t	132
 5837	Oq-oltin QFY	1	t	132
@@ -9619,16 +9619,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5847	Sayrak MFY	1	t	132
 5848	Shakar.qamish MFY	1	t	132
 5849	Shoxcha MFY	1	t	132
-5850	To'xtamish MFY	1	t	132
+5850	To`xtamish MFY	1	t	132
 5851	Vaxshivor QFY	1	t	132
 5852	Vaxshivor-1 MFY	1	t	132
 5853	Vaxshivor-2 MFY	1	t	132
 5854	Xalqobod MFY	1	t	132
 5855	Xayrandara MFY	1	t	132
 5856	Xidirsho MFY	1	t	132
-5857	Xo'jaipok MFY	1	t	132
-5858	Xo'jasoat QFY	1	t	132
-5859	Xo'jasoat-2 MFY	1	t	132
+5857	Xo`jaipok MFY	1	t	132
+5858	Xo`jasoat QFY	1	t	132
+5859	Xo`jasoat-2 MFY	1	t	132
 5860	Yakka tut MFY	1	t	132
 5861	Yangi qurilish MFY	1	t	132
 5862	Yangiariq MFY	1	t	132
@@ -9641,31 +9641,31 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5869	Birlik MFY	1	t	133
 5870	Bodomzor MFY	1	t	133
 5871	Bodomzor QFY	1	t	133
-5872	Bog'isamarqand (Jamoatchi) MFY	1	t	133
-5873	Buyrapo'sh MFY	1	t	133
+5872	Bog`isamarqand (Jamoatchi) MFY	1	t	133
+5873	Buyrapo`sh MFY	1	t	133
 5874	Chinor MFY	1	t	133
 5875	Daragiston (Jamoatchi) MFY	1	t	133
-5876	Do'stlik MFY	1	t	133
-5877	Do'stlik MFY	1	t	133
+5876	Do`stlik MFY	1	t	133
+5877	Do`stlik MFY	1	t	133
 5878	Erkin MFY	1	t	133
 5879	Erkin QFY	1	t	133
 5880	Erman MFY	1	t	133
 5881	Esoqi MFY	1	t	133
-5882	Fozilko'chdi MFY	1	t	133
-5883	G'alaba MFY	1	t	133
-5884	g'ayrat MFY	1	t	133
+5882	Fozilko`chdi MFY	1	t	133
+5883	G`alaba MFY	1	t	133
+5884	g`ayrat MFY	1	t	133
 5885	Galabutta MFY	1	t	133
 5886	Galabutta MFY	1	t	133
 5887	Gazarak QFY	1	t	133
 5888	Gazarik MFY	1	t	133
 5889	Gulshan MFY	1	t	133
 5890	Kenguzar MFY	1	t	133
-5891	Ko'lob MFY	1	t	133
-5892	M.Ulug'bek MFY	1	t	133
+5891	Ko`lob MFY	1	t	133
+5892	M.Ulug`bek MFY	1	t	133
 5893	Madaniyat MFY	1	t	133
 5894	Madaniyat QFY	1	t	133
-5895	Navro'z MFY	1	t	133
-5896	Navro'z QFY	1	t	133
+5895	Navro`z MFY	1	t	133
+5896	Navro`z QFY	1	t	133
 5897	Nilova MFY	1	t	133
 5898	Nilu (Jamoatchi) MFY	1	t	133
 5899	Olmazor MFY	1	t	133
@@ -9673,27 +9673,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5901	Oxunboboev MFY	1	t	133
 5902	Oxunboboev MFY	1	t	133
 5903	Oxunbobov MFY	1	t	133
-5904	O'zbekiston MFY	1	t	133
-5905	O'zgarish MFY	1	t	133
+5904	O`zbekiston MFY	1	t	133
+5905	O`zgarish MFY	1	t	133
 5906	Paxtakor MFY	1	t	133
 5907	Pistamozor MFY	1	t	133
 5908	Qorasuv MFY	1	t	133
-5909	Qo'shchinor MFY	1	t	133
-5910	Qo'shchinor QFY	1	t	133
+5909	Qo`shchinor MFY	1	t	133
+5910	Qo`shchinor QFY	1	t	133
 5911	Qulmozor MFY	1	t	133
 5912	S.Raximov MFY	1	t	133
 5913	Sangardak MFY	1	t	133
 5914	Sangardak QFY	1	t	133
 5915	Sarijar MFY	1	t	133
-5916	Sarixo'y MFY	1	t	133
+5916	Sarixo`y MFY	1	t	133
 5917	Shoqishloq MFY	1	t	133
 5918	Shoximardon MFY	1	t	133
-5919	So'fiyon MFY	1	t	133
+5919	So`fiyon MFY	1	t	133
 5920	Tolpakchinor MFY	1	t	133
 5921	Tamshush MFY\r\n	1	t	138
 5922	Tirgaron MFY	1	t	133
 5923	Tokchiyon MFY	1	t	133
-5924	Torto'li MFY	1	t	133
+5924	Torto`li MFY	1	t	133
 5925	Xovzqoq MFY	1	t	133
 5926	Xufar MFY	1	t	133
 5927	Xurvatan MFY	1	t	133
@@ -9708,17 +9708,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5936	At-Termiziy MFY	1	t	134
 5937	Ayritom MFY	1	t	134
 5938	Chegara MFY	1	t	134
-5939	Do'stlik MFY	1	t	134
+5939	Do`stlik MFY	1	t	134
 5940	Gulbahor MFY	1	t	134
 5941	Guliston MFY	1	t	134
 5942	Istiqlol MFY	1	t	134
-5943	Jo'yijangal MFY	1	t	134
+5943	Jo`yijangal MFY	1	t	134
 5944	Kokildor-ota MFY	1	t	134
 5945	M.Eshtemirov MFY	1	t	134
 5946	Manguzar MFY	1	t	134
 5947	Mustaqilik MFY	1	t	134
 5948	Namuna MFY	1	t	134
-5949	Navro'z MFY	1	t	134
+5949	Navro`z MFY	1	t	134
 5950	Orol MFY	1	t	134
 5951	Parandachilik MFY	1	t	134
 5952	Patakesar MFY	1	t	134
@@ -9726,7 +9726,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5954	Paxtaobod QFY	1	t	134
 5955	Qahramon MFY	1	t	134
 5956	Qoraxon MFY	1	t	134
-5957	Qo'ng'irot MFY	1	t	134
+5957	Qo`ng`irot MFY	1	t	134
 5958	Quyoshli yurt MFY	1	t	134
 5959	Sh.Rashidov MFY	1	t	134
 5960	Sharq MFY	1	t	134
@@ -9743,9 +9743,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5971	Alpomish MFY	1	t	135
 5972	Amu Soxillari MFY	1	t	135
 5973	Baynalminal MFY	1	t	135
-5974	Bog'ishamol MFY	1	t	135
-5975	Bo'ston MFY	1	t	135
-5976	Do'stlik MFY	1	t	135
+5974	Bog`ishamol MFY	1	t	135
+5975	Bo`ston MFY	1	t	135
+5976	Do`stlik MFY	1	t	135
 5977	Farxod MFY	1	t	135
 5978	Garm MFY	1	t	135
 5979	Guliston MFY	1	t	135
@@ -9755,10 +9755,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5983	Juyjangal MFY	1	t	135
 5984	Katta-bog MFY	1	t	135
 5985	Mexrobod MFY	1	t	135
-5986	Ma'rifat MFY	1	t	135
+5986	Ma`rifat MFY	1	t	135
 5987	Navruz MFY	1	t	135
 5988	Ozodlik MFY	1	t	135
-5989	O'zbekiston MFY	1	t	135
+5989	O`zbekiston MFY	1	t	135
 5990	Pattakesar MFY	1	t	135
 5991	R.Uzoqova MFY	1	t	135
 5992	Shifokor MFY	1	t	135
@@ -9769,12 +9769,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 5997	Uchkun MFY	1	t	135
 5998	Yulduz MFY	1	t	135
 5999	Beshkapa MFY	1	t	136
-6000	Bobotog' QFY	1	t	136
+6000	Bobotog` QFY	1	t	136
 6001	Chaqar MFY	1	t	136
 6002	Chinor MFY	1	t	136
 6003	Chosh (Jamoatchi) MFY	1	t	136
 6004	Dehqon MFY	1	t	136
-6005	Do'stlik MFY	1	t	136
+6005	Do`stlik MFY	1	t	136
 6006	Fayzabod MFY	1	t	136
 6007	Fayzova MFY	1	t	136
 6008	Fayzova QFY	1	t	136
@@ -9796,13 +9796,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6024	Oqostona MFY	1	t	136
 6025	Oqostona QFY	1	t	136
 6026	Oqtumshuq MFY	1	t	136
-6027	O'lanqul MFY	1	t	136
-6028	O'zbekiston MFY	1	t	136
+6027	O`lanqul MFY	1	t	136
+6028	O`zbekiston MFY	1	t	136
 6029	Qarashi MFY	1	t	136
 6030	Serharakat MFY	1	t	136
 6031	Tolpakchinor QFY	1	t	136
 6032	Tojikobod MFY	1	t	136
-6033	Toltug'ay MFY	1	t	136
+6033	Toltug`ay MFY	1	t	136
 6034	Tomchi (Jamoatchi) MFY	1	t	136
 6035	U.Yusupov MFY	1	t	136
 6036	Uzun QFY	1	t	136
@@ -9812,33 +9812,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6040	Xonjiza QFY	1	t	136
 6041	Xursand MFY	1	t	136
 6042	Yangi obod MFY	1	t	136
-6043	Yangi ro'zg'or MFY	1	t	136
+6043	Yangi ro`zg`or MFY	1	t	136
 6044	Yangi shahar MFY	1	t	136
 6045	Yangikuch MFY	1	t	136
 6046	Yangixayot MFY	1	t	136
-6047	Yangiyo'l MFY	1	t	136
+6047	Yangiyo`l MFY	1	t	136
 6048	Yor Hakimov MFY	1	t	136
 6049	Yoshlik MFY	1	t	136
-6050	Oqqo'rg'on QFY	1	t	137
+6050	Oqqo`rg`on QFY	1	t	137
 6051	A. Ikromov MFY	1	t	137
 6052	Ayinni MFY	1	t	137
 6053	Balxiguzar MFY	1	t	137
 6054	Boybuloq MFY	1	t	137
 6055	Boyqishloq MFY	1	t	137
-6056	Bo'ston QFY	1	t	137
-6057	Chag'atoy MFY	1	t	137
+6056	Bo`ston QFY	1	t	137
+6057	Chag`atoy MFY	1	t	137
 6058	Chinobod MFY	1	t	137
 6059	Chinobod QFY	1	t	137
-6060	Chorbog' MFY	1	t	137
-6061	Cho'mishli MFY	1	t	137
-6062	Cho'yinchi MFY	1	t	137
-6063	Chuqurko'l MFY	1	t	137
-6064	Do'stlik MFY	1	t	137
-6065	G'alaba MFY	1	t	137
-6066	g'ambur MFY	1	t	137
-6067	g'o'rin Gilambob MFY	1	t	137
-6068	g'urjak MFY	1	t	137
-6069	g'urjak-2 MFY	1	t	137
+6060	Chorbog` MFY	1	t	137
+6061	Cho`mishli MFY	1	t	137
+6062	Cho`yinchi MFY	1	t	137
+6063	Chuqurko`l MFY	1	t	137
+6064	Do`stlik MFY	1	t	137
+6065	G`alaba MFY	1	t	137
+6066	g`ambur MFY	1	t	137
+6067	g`o`rin Gilambob MFY	1	t	137
+6068	g`urjak MFY	1	t	137
+6069	g`urjak-2 MFY	1	t	137
 6070	Galaguzar MFY	1	t	137
 6071	Guliston MFY	1	t	137
 6072	Hakimobod MFY	1	t	137
@@ -9847,16 +9847,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6075	Kilkon MFY	1	t	137
 6076	Laylagon MFY	1	t	137
 6077	Mehnatobod MFY	1	t	137
-6078	Navbog' MFY	1	t	137
+6078	Navbog` MFY	1	t	137
 6079	Navbur MFY	1	t	137
-6080	Oqqo'rg'on MFY	1	t	137
+6080	Oqqo`rg`on MFY	1	t	137
 6081	Oqtepa MFY	1	t	137
 6082	Oxunboboev MFY	1	t	137
 6083	Paxtaobod MFY	1	t	137
 6084	Poshxurt MFY	1	t	137
 6085	Qishloqbozor MFY	1	t	137
 6086	Qizil olma MFY	1	t	137
-6087	Qorabog' MFY	1	t	137
+6087	Qorabog` MFY	1	t	137
 6088	Qulluqsho MFY	1	t	137
 6089	Rabatak QFY	1	t	137
 6090	Seplon MFY	1	t	137
@@ -9866,29 +9866,29 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6094	Sherobod MFY	1	t	137
 6095	Tallashqon QFY	1	t	137
 6096	Taroqli MFY	1	t	137
-6097	Uch yog'och MFY	1	t	137
+6097	Uch yog`och MFY	1	t	137
 6098	Vandob (Jamoatchi) MFY	1	t	137
-6099	Xo'jaqiya-1 MFY	1	t	137
-6100	Xo'jaqiya-2 MFY	1	t	137
-6101	Xo'jgi MFY	1	t	137
+6099	Xo`jaqiya-1 MFY	1	t	137
+6100	Xo`jaqiya-2 MFY	1	t	137
+6101	Xo`jgi MFY	1	t	137
 6102	Yangi turmush QFY	1	t	137
 6103	Yangiariq MFY	1	t	137
 6104	Yoshlik MFY	1	t	137
-6105	Zarabog' MFY	1	t	137
-6106	Zarabog'QFY	1	t	137
+6105	Zarabog` MFY	1	t	137
+6106	Zarabog`QFY	1	t	137
 6107	5 yillik MFY	1	t	138
 6108	8-mart. MFY	1	t	138
 6109	A.Navoiy MFY	1	t	138
 6110	Baxshitepa 1 MFY	1	t	138
 6111	Baxshitepa MFY	1	t	138
 6112	Baxtlit?pa QFY	1	t	138
-6113	Bobotog' MFY	1	t	138
+6113	Bobotog` MFY	1	t	138
 6114	Bobur MFY	1	t	138
-6115	Bo'ston MFY	1	t	138
+6115	Bo`ston MFY	1	t	138
 6116	Dalvarzin 1 MFY	1	t	138
 6117	Dalvarzin 2 MFY	1	t	138
 6118	Dalvarzin QFY	1	t	138
-6119	Do'stlik MFY	1	t	138
+6119	Do`stlik MFY	1	t	138
 6120	Elboyon MFY	1	t	138
 6121	Elboyon SHFY	1	t	138
 6122	Elobod QFY	1	t	138
@@ -9900,32 +9900,32 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6128	Kakan MFY	1	t	138
 6129	Kakaydi MFY	1	t	138
 6130	Konobod MFY	1	t	138
-6131	Ko'klam MFY	1	t	138
+6131	Ko`klam MFY	1	t	138
 6132	Kultepa 1 MFY	1	t	138
 6133	Kultepa MFY	1	t	138
 6134	Laylakxona MFY	1	t	138
-6135	Navro'z MFY	1	t	138
+6135	Navro`z MFY	1	t	138
 6136	Obodon MFY	1	t	138
 6137	Olatemir MFY	1	t	138
 6138	Oqkamar MFY	1	t	138
-6139	Oqqo'rg'on MFY	1	t	138
+6139	Oqqo`rg`on MFY	1	t	138
 6140	Oqtumshuq MFY	1	t	138
 6141	Oxunboboev QFY	1	t	138
 6142	Oynakul MFY	1	t	138
 6143	Ozod MFY	1	t	138
-6144	O'rmoncha (Jamoatchi) MFY	1	t	138
+6144	O`rmoncha (Jamoatchi) MFY	1	t	138
 6145	Polvontosh MFY	1	t	138
 6146	Qorariq MFY	1	t	138
-6147	Qo'ldosh MFY	1	t	138
-6148	Qo'ldosh QFY	1	t	138
-6149	Qo'shtegirmon MFY	1	t	138
-6150	Serg'ayrat MFY	1	t	138
+6147	Qo`ldosh MFY	1	t	138
+6148	Qo`ldosh QFY	1	t	138
+6149	Qo`shtegirmon MFY	1	t	138
+6150	Serg`ayrat MFY	1	t	138
 6151	Saksonkappa MFY	1	t	138
 6152	Saurtera MFY	1	t	138
 6153	Savur QFY	1	t	138
-6154	Shakarko'l MFY	1	t	138
+6154	Shakarko`l MFY	1	t	138
 6155	Shaldiroq MFY	1	t	138
-6156	Sho'rchi QFY	1	t	138
+6156	Sho`rchi QFY	1	t	138
 6157	Sovjiranbobo MFY	1	t	138
 6158	Soxibkor QFY	1	t	138
 6159	Tolli MFY	1	t	138
@@ -9933,11 +9933,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6161	Xayrobod MFY	1	t	138
 6162	Xojibobo MFY	1	t	138
 6163	Xurlik MFY	1	t	138
-6164	Yakkabog' MFY	1	t	138
+6164	Yakkabog` MFY	1	t	138
 6165	Yalti MFY	1	t	138
 6166	Yangiariq MFY	1	t	138
 6167	Yangibozor QFY	1	t	138
-6168	Yorug'lik MFY	1	t	138
+6168	Yorug`lik MFY	1	t	138
 6169	Yoshgayrat MFY	1	t	138
 6170	Zarbdor MFY	1	t	138
 6171	1-Boyovut QFY	1	t	139
@@ -9950,17 +9950,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6178	Bunyodkor MFY	1	t	139
 6179	Dehqonobod QFY	1	t	139
 6180	Darvozakir QFY	1	t	139
-6181	Do'stlik MFY	1	t	139
-6182	Do'stlik MFY	1	t	139
-6183	Do'stlik QFY	1	t	139
+6181	Do`stlik MFY	1	t	139
+6182	Do`stlik MFY	1	t	139
+6183	Do`stlik QFY	1	t	139
 6184	Farhod MFY	1	t	139
 6185	Gallakor QFY	1	t	139
 6186	Gulbog MFY	1	t	139
 6187	Istiqlol MFY	1	t	139
 6188	J.Usmonov QFY	1	t	139
-6189	Jo'langar MFY	1	t	139
+6189	Jo`langar MFY	1	t	139
 6190	Laylakkul QFY	1	t	139
-6191	Ma'naviyat MFY	1	t	139
+6191	Ma`naviyat MFY	1	t	139
 6192	Madaniyat QFY	1	t	139
 6193	Madaniyat MFY	1	t	139
 6194	Markaz MFY	1	t	139
@@ -9971,14 +9971,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6199	Navbahor MFY	1	t	139
 6200	Navoiy-2 MFY	1	t	139
 6201	Navoiy-3 MFY	1	t	139
-6202	Navro'z MFY	1	t	139
+6202	Navro`z MFY	1	t	139
 6203	Olmazor QFY	1	t	139
 6204	Olmazor MFY	1	t	139
 6205	Ozodlik MFY	1	t	139
-6206	O'zbekiston MFY	1	t	139
+6206	O`zbekiston MFY	1	t	139
 6207	Paxtakor MFY	1	t	139
 6208	Qarapchi MFY	1	t	139
-6209	S'ayniy MFY	1	t	139
+6209	S`ayniy MFY	1	t	139
 6210	Sarmich MFY	1	t	139
 6211	Sh.Rashidov MFY	1	t	139
 6212	Shirin QFY	1	t	139
@@ -9989,9 +9989,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6217	Umurzoqobod MFY	1	t	139
 6218	Usmonobod QFY	1	t	139
 6219	Usmonobod MFY	1	t	139
-6220	Yangibo'ston MFY	1	t	139
+6220	Yangibo`ston MFY	1	t	139
 6221	Yangiobod MFY	1	t	139
-6222	Etti urug' MFY	1	t	140
+6222	Etti urug` MFY	1	t	140
 6223	A .Turdiev QFY	1	t	140
 6224	A.Qahhor MFY	1	t	140
 6225	A.Sultonov MFY	1	t	140
@@ -10006,8 +10006,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6234	Chortoq QFY	1	t	140
 6235	Chorvador MFY	1	t	140
 6236	Dehqonobod SHFY	1	t	140
-6237	Do'stlik MFY	1	t	140
-6238	Do'stlik MFY	1	t	140
+6237	Do`stlik MFY	1	t	140
+6238	Do`stlik MFY	1	t	140
 6239	Furqat MFY	1	t	140
 6240	G.Yunusov MFY	1	t	140
 6241	Islomobod MFY	1	t	140
@@ -10018,20 +10018,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6246	Mustaqillik MFY	1	t	140
 6247	Navoiy MFY	1	t	140
 6248	Oq oltin MFY	1	t	140
-6249	Oltin O'rda QFY	1	t	140
+6249	Oltin O`rda QFY	1	t	140
 6250	Oltin Tepa QFY	1	t	140
 6251	Sh.Eshonqulov MFY	1	t	140
 6252	Shark haqiqati MFY	1	t	140
 6253	Soxilobod QFY	1	t	140
 6254	Soyibobod QFY	1	t	140
-6255	T'azizov MFY	1	t	140
+6255	T`azizov MFY	1	t	140
 6256	Tajribakor MFY	1	t	140
 6257	Turkiston MFY	1	t	140
 6258	Turkovul MFY	1	t	140
 6259	Uyuvli MFY	1	t	140
-6260	O'zbekiston MFY	1	t	140
-6261	O'zbekiston MFY	1	t	140
-6262	O'zbekiston MFY	1	t	140
+6260	O`zbekiston MFY	1	t	140
+6261	O`zbekiston MFY	1	t	140
+6262	O`zbekiston MFY	1	t	140
 6263	X.Olimjon 1-MFY	1	t	140
 6264	X.Olimjon 2-MFY	1	t	140
 6265	Xalqobod MFY	1	t	140
@@ -10042,8 +10042,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6270	Zarbdor QFY	1	t	140
 6271	Ahillik MFY	1	t	141
 6272	Baxor QFY	1	t	141
-6273	Bo'ston MFY	1	t	141
-6274	Do'stlik QFY	1	t	141
+6273	Bo`ston MFY	1	t	141
+6274	Do`stlik QFY	1	t	141
 6275	Farxod MFY	1	t	141
 6276	Istiqlol MFY	1	t	141
 6277	Madaniyat MFY	1	t	141
@@ -10052,47 +10052,47 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6280	Navbaxor MFY	1	t	141
 6281	Sayqal MFY	1	t	141
 6282	Sh.Rashidov MFY	1	t	141
-6283	T'axmedov MFY	1	t	141
+6283	T`axmedov MFY	1	t	141
 6284	Taraqqiyot MFY	1	t	141
 6285	U.Yusupov MFY	1	t	141
-6286	Ulug'obod QFY	1	t	141
+6286	Ulug`obod QFY	1	t	141
 6287	Yangi hayot MFY	1	t	141
 6288	Beruniy MFY	1	t	142
 6289	Birlashgan QFY	1	t	142
-6290	Bog'iston MFY	1	t	142
+6290	Bog`iston MFY	1	t	142
 6291	Boxoriston QFY	1	t	142
 6292	Dehqonobod MFY	1	t	142
-6293	Do'ngariq MFY	1	t	142
+6293	Do`ngariq MFY	1	t	142
 6294	Juvonsiyroq MFY	1	t	142
-6295	M.Ulug'bek MFY	1	t	142
+6295	M.Ulug`bek MFY	1	t	142
 6296	Mexnatobod QFY	1	t	142
-6297	Mirzacho'l QFY	1	t	142
+6297	Mirzacho`l QFY	1	t	142
 6298	Navbaxor QFY	1	t	142
-6299	Navro'z MFY	1	t	142
+6299	Navro`z MFY	1	t	142
 6300	Nurafshon QFY	1	t	142
 6301	Oqoltin MFY	1	t	142
 6302	Oqoltin QFY	1	t	142
 6303	Oydin MFY	1	t	142
-6304	T'ahmedov MFY	1	t	142
+6304	T`ahmedov MFY	1	t	142
 6305	Toshkent MFY	1	t	142
 6306	Toshkent QFY	1	t	142
 6307	U.Yusupov MFY	1	t	142
 6308	Yangi hayot-9 MFY	1	t	142
 6309	Yangiovul MFY	1	t	142
 6310	Yangihayot MFY	1	t	142
-6311	Yo'ldoshobod QFY	1	t	142
+6311	Yo`ldoshobod QFY	1	t	142
 6312	A.Ikromov MFY	1	t	143
 6313	A.Navoiy MFY	1	t	143
 6314	A.Yassaviy MFY	1	t	143
 6315	Ahillik QFY	1	t	143
 6316	Andijon QFY	1	t	143
-6317	Bog'iston MFY	1	t	143
-6318	Bo'ston QFY	1	t	143
-6319	Do'stlik MFY	1	t	143
-6320	Farg'ona SHFY	1	t	143
-6321	G.G'ulom MFY	1	t	143
-6322	G.G'ulom MFY	1	t	143
-6323	G'alaba MFY	1	t	143
+6317	Bog`iston MFY	1	t	143
+6318	Bo`ston QFY	1	t	143
+6319	Do`stlik MFY	1	t	143
+6320	Farg`ona SHFY	1	t	143
+6321	G.G`ulom MFY	1	t	143
+6322	G.G`ulom MFY	1	t	143
+6323	G`alaba MFY	1	t	143
 6324	Mustaqillik MFY	1	t	143
 6325	Obod MFY	1	t	143
 6326	S.Rahimov MFY	1	t	143
@@ -10107,7 +10107,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6335	"Axchob" MFY	1	t	144
 6336	"Baxmal" MFY	1	t	144
 6337	"Boltoy" MFY	1	t	144
-6338	"Do'stlik" MFY	1	t	144
+6338	"Do`stlik" MFY	1	t	144
 6339	"Gulbuloq" MFY	1	t	144
 6340	"Guliston" MFY	1	t	144
 6341	"Istiqlol" QFY	1	t	144
@@ -10120,10 +10120,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6348	"Nurmatobod" MFY	1	t	144
 6349	"Nurota" QFY	1	t	144
 6350	"Obodon" MFY	1	t	144
-6351	"Olg'abos" MFY	1	t	144
+6351	"Olg`abos" MFY	1	t	144
 6352	"Otamakon" MFY	1	t	144
-6353	"O'zbekiston" MFY	1	t	144
-6354	"O'zbekiston" QFY	1	t	144
+6353	"O`zbekiston" MFY	1	t	144
+6354	"O`zbekiston" QFY	1	t	144
 6355	"Parpi ota" MFY	1	t	144
 6356	"Paxtakon" MFY	1	t	144
 6357	"Paxtaobod" MFY	1	t	144
@@ -10139,8 +10139,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6367	"Sh. Rashidov" MFY	1	t	144
 6368	"Shal-Kushek" MFY	1	t	144
 6369	"Shodlik" MFY	1	t	144
-6370	"Sho'ro'zak" MFY	1	t	144
-6371	"Sho'ro'zak" SHFY	1	t	144
+6370	"Sho`ro`zak" MFY	1	t	144
+6371	"Sho`ro`zak" SHFY	1	t	144
 6372	"Soxil" SHFY	1	t	144
 6373	"Turkovul" MFY	1	t	144
 6374	"Turon" MFY	1	t	144
@@ -10154,25 +10154,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6382	"Zarbdor-1" MFY	1	t	144
 6383	Baxmal MFY	1	t	145
 6384	Birlashgan MFY	1	t	145
-6385	Bog'ishamol MFY	1	t	145
-6386	Bo'ston MFY	1	t	145
-6387	Cho'lquvar QFY	1	t	145
+6385	Bog`ishamol MFY	1	t	145
+6386	Bo`ston MFY	1	t	145
+6387	Cho`lquvar QFY	1	t	145
 6388	Chubor MFY	1	t	145
-6389	Do'stlik MFY	1	t	145
-6390	F.Xo'jaev MFY	1	t	145
+6389	Do`stlik MFY	1	t	145
+6390	F.Xo`jaev MFY	1	t	145
 6391	Guliston QFY	1	t	145
 6392	Gulzor QFY	1	t	145
 6393	Gumbaz MFY	1	t	145
 6394	Manas MFY	1	t	145
 6395	Navoiy MFY	1	t	145
-6396	Navro'z MFY	1	t	145
+6396	Navro`z MFY	1	t	145
 6397	Paxtakor MFY	1	t	145
 6398	Paxtaobod SHFY	1	t	145
-6399	Qo'rg'ontepa QFY	1	t	145
+6399	Qo`rg`ontepa QFY	1	t	145
 6400	Ravot MFY	1	t	145
 6401	S.Raximov MFY	1	t	145
-6402	Ulug'bek MFY	1	t	145
-6403	Ulug'bek MFY	1	t	145
+6402	Ulug`bek MFY	1	t	145
+6403	Ulug`bek MFY	1	t	145
 6404	H.Olimjon MFY	1	t	145
 6405	Xalqobod MFY	1	t	145
 6406	Yangiobod QFY	1	t	145
@@ -10190,8 +10190,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6418	Chultukay QFY	1	t	146
 6419	Dehqonobod MFY	1	t	146
 6420	Dehqonobod MFY	1	t	146
-6421	Do'stlik-2 MFY	1	t	146
-6422	Do'stlik-6 MFY	1	t	146
+6421	Do`stlik-2 MFY	1	t	146
+6422	Do`stlik-6 MFY	1	t	146
 6423	Furqat MFY	1	t	146
 6424	Kozokovul MFY	1	t	146
 6425	Quyosh MFY	1	t	146
@@ -10199,9 +10199,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6427	Malik MFY	1	t	146
 6428	Navbaxor MFY	1	t	146
 6429	Navoiy MFY	1	t	146
-6430	Navro'z MFY	1	t	146
-6431	Navro'z-3 MFY	1	t	146
-6432	Oq-yo'l MFY	1	t	146
+6430	Navro`z MFY	1	t	146
+6431	Navro`z-3 MFY	1	t	146
+6432	Oq-yo`l MFY	1	t	146
 6433	Paxtakor MFY	1	t	146
 6434	Paxtakor-4 MFY	1	t	146
 6435	Paxtazor QFY	1	t	146
@@ -10220,8 +10220,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6448	Turkiston MFY	1	t	146
 6449	Turon QFY	1	t	146
 6450	U.Yusupov QFY	1	t	146
-6451	Ulug'bek MFY	1	t	146
-6452	O'zbekiston MFY	1	t	146
+6451	Ulug`bek MFY	1	t	146
+6452	O`zbekiston MFY	1	t	146
 6453	Haqiqat QFY	1	t	146
 6454	Haqiqat MFY	1	t	146
 6455	Haqiqat-2 MFY	1	t	146
@@ -10236,14 +10236,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6464	Amur Temur MFY	1	t	147
 6465	ashi MFY	1	t	147
 6466	Binokor QFY	1	t	147
-6467	Bog'iston MFY	1	t	147
+6467	Bog`iston MFY	1	t	147
 6468	Boymurodobod MFY	1	t	147
 6469	Chamanzor QFY	1	t	147
 6470	Chamanzor MFY	1	t	147
 6471	Chambil MFY	1	t	147
 6472	Chiroy MFY	1	t	147
-6473	Do'stlik MFY	1	t	147
-6474	Do'stlik MFY	1	t	147
+6473	Do`stlik MFY	1	t	147
+6474	Do`stlik MFY	1	t	147
 6475	Farxod QFY	1	t	147
 6476	Fayziobod MFY	1	t	147
 6477	Gulbaxor QFY	1	t	147
@@ -10257,12 +10257,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6485	Kayirma MFY	1	t	147
 6486	Koraqum MFY	1	t	147
 6487	Kukoni .Karapchi MFY	1	t	147
-6488	Qo'shqand MFY	1	t	147
+6488	Qo`shqand MFY	1	t	147
 6489	Kuzi-Takaev MFY	1	t	147
 6490	Mustaqillik MFY	1	t	147
 6491	Navoiy MFY	1	t	147
 6492	Navoiy MFY	1	t	147
-6493	Navro'z MFY	1	t	147
+6493	Navro`z MFY	1	t	147
 6494	Okchangal MFY	1	t	147
 6495	Parchayuz MFY	1	t	147
 6496	Pastki-Kayirma MFY	1	t	147
@@ -10275,21 +10275,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6503	Turkiston QFY	1	t	147
 6504	Turkiston MFY	1	t	147
 6505	Uvok MFY	1	t	147
-6506	O'zbekiston Tukinchiligi MFY	1	t	147
+6506	O`zbekiston Tukinchiligi MFY	1	t	147
 6507	Xovos Sh.FY	1	t	147
-6508	Xovotog' QFY	1	t	147
+6508	Xovotog` QFY	1	t	147
 6509	Xusnobod QFY	1	t	147
 6510	Zafarobod QFY	1	t	147
 6511	A.Qodiriy MFY	1	t	148
 6512	A.Temur MFY	1	t	148
-6513	Do'stlik MFY	1	t	148
+6513	Do`stlik MFY	1	t	148
 6514	Farhod MFY	1	t	148
 6515	M.Ulugbek MFY	1	t	148
 6516	Nurobod MFY	1	t	148
 6517	A.Jomiy MFY	1	t	149
 6518	Binokor MFY	1	t	149
-6519	Ma'rifat MFY	1	t	149
-6520	Navro'zobod MFY	1	t	149
+6519	Ma`rifat MFY	1	t	149
+6520	Navro`zobod MFY	1	t	149
 6521	Obod yurt MFY	1	t	149
 6522	Shodlik MFY	1	t	149
 6523	T.Malik ify	1	t	149
@@ -10304,8 +10304,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6532	Chotkol MFY	1	t	150
 6533	Chotkol-1 MFY	1	t	150
 6534	Dorilfunun MFY	1	t	150
-6535	Do'stlik MFY	1	t	150
-6536	g'Gulom MFY	1	t	150
+6535	Do`stlik MFY	1	t	150
+6536	g`Gulom MFY	1	t	150
 6537	Geolog MFY	1	t	150
 6538	Grum MFY	1	t	150
 6539	Gulbog MFY	1	t	150
@@ -10318,7 +10318,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6546	Kimyogar-051 MFY	1	t	150
 6547	Korabog MFY	1	t	150
 6548	Kotogon MFY	1	t	150
-6549	Krasnogorsk qo'rg'oni MFY	1	t	150
+6549	Krasnogorsk qo`rg`oni MFY	1	t	150
 6550	KuktErak MFY	1	t	150
 6551	LashkErak MFY	1	t	150
 6552	Maydon MFY	1	t	150
@@ -10355,12 +10355,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6583	Baxoriston MFY(jamoatchi)	1	t	151
 6584	Baxoriston QFY	1	t	151
 6585	Bobur Mirzo MFY	1	t	151
-6586	Bog'ishomol MFY	1	t	151
-6587	Bo'ston MFY	1	t	151
+6586	Bog`ishomol MFY	1	t	151
+6587	Bo`ston MFY	1	t	151
 6588	Chanoq QFY	1	t	151
 6589	Dexqonobod MFY	1	t	151
 6590	Dalvarzin QFY	1	t	151
-6591	Do'stlik MFY	1	t	151
+6591	Do`stlik MFY	1	t	151
 6592	Farxod MFY	1	t	151
 6593	Guliston MFY	1	t	151
 6594	Guliston QFY	1	t	151
@@ -10376,20 +10376,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6604	Oltin vodiy MFY	1	t	151
 6605	Oqtepa MFY	1	t	151
 6606	Oxunbobo?v QFY	1	t	151
-6607	O'rikzor MFY	1	t	151
-6608	O'zbekiston MFY	1	t	151
-6609	O'zbekobod MFY	1	t	151
+6607	O`rikzor MFY	1	t	151
+6608	O`zbekiston MFY	1	t	151
+6609	O`zbekobod MFY	1	t	151
 6610	Parchayuz MFY	1	t	151
 6611	Pastki kerayit MFY	1	t	151
 6612	Paxtakor MFY	1	t	151
 6613	Pushkin QFY	1	t	151
 6614	Qiyot QFY	1	t	151
-6615	Qolg'ansir MFY	1	t	151
-6616	Qora qo'yli MFY	1	t	151
-6617	Qo'qoni MFY	1	t	151
-6618	Qo'rg'on MFY	1	t	151
+6615	Qolg`ansir MFY	1	t	151
+6616	Qora qo`yli MFY	1	t	151
+6617	Qo`qoni MFY	1	t	151
+6618	Qo`rg`on MFY	1	t	151
 6619	Qushchi MFY	1	t	151
-6620	Qushtamg'ali MFY	1	t	151
+6620	Qushtamg`ali MFY	1	t	151
 6621	Saryuz MFY	1	t	151
 6622	Savrak MFY	1	t	151
 6623	Shova MFY	1	t	151
@@ -10413,27 +10413,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6641	Al-Xorazmiy MFY	1	t	152
 6642	Andijon MFY	1	t	152
 6643	Bobur MFY	1	t	152
-6644	Bog'i shamol MFY	1	t	152
+6644	Bog`i shamol MFY	1	t	152
 6645	Buloq ariq MFY	1	t	152
-6646	Do'stlik MFY	1	t	152
-6647	Farg'ona MFY	1	t	152
+6646	Do`stlik MFY	1	t	152
+6647	Farg`ona MFY	1	t	152
 6648	Farxod MFY	1	t	152
 6649	Jomiy MFY	1	t	152
-6650	M.Turg'unboeva MFY	1	t	152
+6650	M.Turg`unboeva MFY	1	t	152
 6651	Muqumiy MFY	1	t	152
 6652	Mustaqillik MFY	1	t	152
 6653	Muxammedov MFY	1	t	152
-6654	Navro'z MFY	1	t	152
+6654	Navro`z MFY	1	t	152
 6655	Nurli yul MFY	1	t	152
-6656	O'zbekiston MFY	1	t	152
+6656	O`zbekiston MFY	1	t	152
 6657	Paxtakor MFY	1	t	152
 6658	Q.Farmanov MFY	1	t	152
-6659	Q.To'rdiev MFY	1	t	152
+6659	Q.To`rdiev MFY	1	t	152
 6660	Rudakiy MFY	1	t	152
-6661	S'ayniy MFY	1	t	152
+6661	S`ayniy MFY	1	t	152
 6662	S.Raximov MFY	1	t	152
 6663	Samarqand MFY	1	t	152
-6664	Sh.Qo'ziboev MFY	1	t	152
+6664	Sh.Qo`ziboev MFY	1	t	152
 6665	Shirin MFY	1	t	152
 6666	Sirdaryo MFY	1	t	152
 6667	Tinchlik MFY	1	t	152
@@ -10445,23 +10445,23 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6673	Achamayli Fayz-Baraka	1	t	153
 6674	Achamayli MFY	1	t	153
 6675	Beshkapa MFY	1	t	153
-6676	Bo'ka MFY	1	t	153
-6677	Bo'ka sh Madaniyat MFY	1	t	153
-6678	Bo'ka sh. Guliston MFY	1	t	153
-6679	Bo'ka sh. Navruz MFY	1	t	153
-6680	Bo'ka sh. O'zbek MFY	1	t	153
-6681	Bo'ka sh. Toshloq MFY	1	t	153
-6682	Bo'ka sh. Yangiobod MFY	1	t	153
-6683	Bo'ka sh.Do'stlik MFY	1	t	153
-6684	Bo'ka sh.Yangihayot MFY	1	t	153
-6685	Bo'ston QFY	1	t	153
+6676	Bo`ka MFY	1	t	153
+6677	Bo`ka sh Madaniyat MFY	1	t	153
+6678	Bo`ka sh. Guliston MFY	1	t	153
+6679	Bo`ka sh. Navruz MFY	1	t	153
+6680	Bo`ka sh. O`zbek MFY	1	t	153
+6681	Bo`ka sh. Toshloq MFY	1	t	153
+6682	Bo`ka sh. Yangiobod MFY	1	t	153
+6683	Bo`ka sh.Do`stlik MFY	1	t	153
+6684	Bo`ka sh.Yangihayot MFY	1	t	153
+6685	Bo`ston QFY	1	t	153
 6686	Buston MFY	1	t	153
-6687	Chig'atoy QFY	1	t	153
-6688	Cho'lobod MFY	1	t	153
+6687	Chig`atoy QFY	1	t	153
+6688	Cho`lobod MFY	1	t	153
 6689	Dashtobod MFY	1	t	153
 6690	Guliston MFY	1	t	153
 6691	Guliston MFY	1	t	153
-6692	Jag'albayli MFY	1	t	153
+6692	Jag`albayli MFY	1	t	153
 6693	Katta ravot MFY	1	t	153
 6694	Kiyikchi MFY	1	t	153
 6695	Kukorol MFY	1	t	153
@@ -10470,14 +10470,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6698	Namuna QFY	1	t	153
 6699	Navobod MFY	1	t	153
 6700	Oltish MFY	1	t	153
-6701	O'rta tepa MFY	1	t	153
+6701	O`rta tepa MFY	1	t	153
 6702	Parkent MFY	1	t	153
 6703	Qoraq-uyli MFY	1	t	153
 6704	Qoraq-uyli QFY	1	t	153
 6705	Qoraquduq MFY	1	t	153
-6706	Qo'chqors-uygan MFY	1	t	153
-6707	Qo'ldoshtepa MFY	1	t	153
-6708	Qo'shtepa QFY	1	t	153
+6706	Qo`chqors-uygan MFY	1	t	153
+6707	Qo`ldoshtepa MFY	1	t	153
+6708	Qo`shtepa QFY	1	t	153
 6709	Quldiroq MFY	1	t	153
 6710	Ramadon MFY	1	t	153
 6711	Ravot MFY	1	t	153
@@ -10485,21 +10485,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6713	Ravot QFY	1	t	153
 6714	Samarqand MFY	1	t	153
 6715	Turon QFY	1	t	153
-6716	Xo'jaqurg'on MFY	1	t	153
+6716	Xo`jaqurg`on MFY	1	t	153
 6717	Yangiobod MFY	1	t	153
-6718	Yangiqo'rg'on MFY	1	t	153
+6718	Yangiqo`rg`on MFY	1	t	153
 6719	Zafarobod MFY	1	t	153
 6720	Achchisay MFY	1	t	154
-6721	Alg'abas MFY	1	t	154
+6721	Alg`abas MFY	1	t	154
 6722	Ashirbek MFY	1	t	154
 6723	Aydarali MFY	1	t	154
 6724	Besh-tut MFY	1	t	154
 6725	Barraj MFY	1	t	154
 6726	Birlik MFY	1	t	154
-6727	Bog'iston MFY	1	t	154
+6727	Bog`iston MFY	1	t	154
 6728	Boladala MFY	1	t	154
-6729	Bo'ston MFY	1	t	154
-6730	Bo'stonliq MFY	1	t	154
+6729	Bo`ston MFY	1	t	154
+6730	Bo`stonliq MFY	1	t	154
 6731	Burchmullo MFY	1	t	154
 6732	Chimboyliq MFY	1	t	154
 6733	Chimboyliq MFY	1	t	154
@@ -10509,16 +10509,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6737	Dadaboev MFY	1	t	154
 6738	Daxana MFY	1	t	154
 6739	Dumaloq MFY	1	t	154
-6740	g'azalkent MFY	1	t	154
+6740	g`azalkent MFY	1	t	154
 6741	Iskandar MFY	1	t	154
 6742	Iskandar MFY	1	t	154
 6743	Istiqlol MFY	1	t	154
 6744	Jaxonobod MFY	1	t	154
 6745	Kichiksoy MFY	1	t	154
-6746	Ko'kto'nli MFY	1	t	154
-6747	Ma'rifat MFY	1	t	154
+6746	Ko`kto`nli MFY	1	t	154
+6747	Ma`rifat MFY	1	t	154
 6748	Markaziy MFY	1	t	154
-6749	Navro'z MFY	1	t	154
+6749	Navro`z MFY	1	t	154
 6750	Novobod MFY	1	t	154
 6751	Nurchilar MFY	1	t	154
 6752	Ozodbosh MFY	1	t	154
@@ -10529,8 +10529,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6757	Qoramanas MFY	1	t	154
 6758	Qoramozor MFY	1	t	154
 6759	Qoronqul MFY	1	t	154
-6760	Qo'shqo'rg'on MFY	1	t	154
-6761	Qo'shqo'rg'on MFY	1	t	154
+6760	Qo`shqo`rg`on MFY	1	t	154
+6761	Qo`shqo`rg`on MFY	1	t	154
 6762	Qurbonov MFY	1	t	154
 6763	S. Raximov MFY	1	t	154
 6764	S. Xondoyliqiy MFY	1	t	154
@@ -10540,21 +10540,21 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6768	Soyliq MFY	1	t	154
 6769	Talpin MFY	1	t	154
 6770	Tovoqsoy MFY	1	t	154
-6771	To'labi MFY	1	t	154
+6771	To`labi MFY	1	t	154
 6772	Uyenkulsay MFY	1	t	154
 6773	Uzun MFY	1	t	154
 6774	Xondoyliq MFY	1	t	154
-6775	Xo'jakent MFY	1	t	154
-6776	Xo'jakent MFY	1	t	154
+6775	Xo`jakent MFY	1	t	154
+6776	Xo`jakent MFY	1	t	154
 6777	Xumsan MFY	1	t	154
 6778	Xumsan MFY	1	t	154
 6779	Yakkatut MFY	1	t	154
 6780	Yangiaul MFY	1	t	154
 6781	Yangimahalla MFY	1	t	154
-6782	A.g'aniev MFY	1	t	155
+6782	A.g`aniev MFY	1	t	155
 6783	A.Mirkomilov MFY	1	t	155
 6784	A.Navoiy MFY	1	t	155
-6785	A.Navoiy-Navro'z MFY	1	t	155
+6785	A.Navoiy-Navro`z MFY	1	t	155
 6786	A.Shorahmedov MFY	1	t	155
 6787	A.Temur MFY	1	t	155
 6788	Abdujalilbob MFY	1	t	155
@@ -10568,12 +10568,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6796	Bel-ariq MFY	1	t	155
 6797	Baliqchi (jamoatchi) MFY	1	t	155
 6798	Birlik (jamoatchi) MFY	1	t	155
-6799	Bog'ishamol MFY	1	t	155
-6800	Bog'zor MFY	1	t	155
-6801	Bo'ston MFY	1	t	155
-6802	Bo'z-suv QFY	1	t	155
-6803	Chig'atoy MFY	1	t	155
-6804	Chig'atoy-Oqt?pa QFY	1	t	155
+6799	Bog`ishamol MFY	1	t	155
+6800	Bog`zor MFY	1	t	155
+6801	Bo`ston MFY	1	t	155
+6802	Bo`z-suv QFY	1	t	155
+6803	Chig`atoy MFY	1	t	155
+6804	Chig`atoy-Oqt?pa QFY	1	t	155
 6805	Chinor MFY	1	t	155
 6806	Chosh tepa QFY	1	t	155
 6807	Chuvalachi MFY	1	t	155
@@ -10582,20 +10582,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6810	Daliguzar MFY	1	t	155
 6811	Darxon MFY	1	t	155
 6812	Diydor MFY	1	t	155
-6813	Do'stlik MFY	1	t	155
+6813	Do`stlik MFY	1	t	155
 6814	Erkin MFY	1	t	155
 6815	Erkin QFY	1	t	155
 6816	Eshonguzar MFY	1	t	155
 6817	Eshonguzar QFY	1	t	155
-6818	Eski qal'a MFY	1	t	155
+6818	Eski qal`a MFY	1	t	155
 6819	Farobiy MFY	1	t	155
 6820	Fayz MFY	1	t	155
-6821	g'isht-ko'prik MFY	1	t	155
+6821	g`isht-ko`prik MFY	1	t	155
 6822	Gul tepa MFY	1	t	155
 6823	Guliston QFY	1	t	155
 6824	Gulobod MFY	1	t	155
 6825	Gulzor MFY	1	t	155
-6826	Halimko'p MFY	1	t	155
+6826	Halimko`p MFY	1	t	155
 6827	Harakat MFY	1	t	155
 6828	Hiyobon MFY	1	t	155
 6829	Huvaydo MFY	1	t	155
@@ -10604,7 +10604,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6832	Ibrat MFY	1	t	155
 6833	Ibrat MFY	1	t	155
 6834	Iftihor MFY	1	t	155
-6835	Ilg'or MFY	1	t	155
+6835	Ilg`or MFY	1	t	155
 6836	Iqbol (jamoatchi) MFY	1	t	155
 6837	Iqbol MFY	1	t	155
 6838	Istiqlol MFY	1	t	155
@@ -10614,22 +10614,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6842	Kalas MFY	1	t	155
 6843	Katta-chinor MFY	1	t	155
 6844	Katta-tepa MFY	1	t	155
-6845	Ko'k - terak QFY MFY	1	t	155
-6846	Ko'k-terak MFY	1	t	155
-6847	Ko'ksaroy MFY	1	t	155
-6848	Ko'ksaroy QFY	1	t	155
-6849	Ko'xi-nur MFY	1	t	155
+6845	Ko`k - terak QFY MFY	1	t	155
+6846	Ko`k-terak MFY	1	t	155
+6847	Ko`ksaroy MFY	1	t	155
+6848	Ko`ksaroy QFY	1	t	155
+6849	Ko`xi-nur MFY	1	t	155
 6850	M.Fozilov MFY	1	t	155
 6851	M.Ma.murov MFY	1	t	155
 6852	M.Musaev MFY	1	t	155
-6853	M.Yo'ldosh?va MFY	1	t	155
+6853	M.Yo`ldosh?va MFY	1	t	155
 6854	Mevazor MFY	1	t	155
 6855	Madaniyat (jamoatchi) MFY	1	t	155
 6856	Madaniyat-Oybek MFY	1	t	155
 6857	Majnuntol MFY	1	t	155
 6858	Masalboy QFY	1	t	155
 6859	Mustaqillik MFY	1	t	155
-6860	N'amin MFY	1	t	155
+6860	N`amin MFY	1	t	155
 6861	N.Odilova MFY	1	t	155
 6862	Namdanak MFY	1	t	155
 6863	Nayman MFY	1	t	155
@@ -10646,42 +10646,42 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6874	Oq-tosh MFY	1	t	155
 6875	Oqibat MFY	1	t	155
 6876	Oydin xayot MFY	1	t	155
-6877	O'ratepa (jamoatchi) MFY	1	t	155
-6878	O'rikzor MFY	1	t	155
-6879	O'rta MFY	1	t	155
-6880	O'rtaovul MFY	1	t	155
-6881	O'rtaovul QFY	1	t	155
-6882	O'zgarish QFY	1	t	155
+6877	O`ratepa (jamoatchi) MFY	1	t	155
+6878	O`rikzor MFY	1	t	155
+6879	O`rta MFY	1	t	155
+6880	O`rtaovul MFY	1	t	155
+6881	O`rtaovul QFY	1	t	155
+6882	O`zgarish QFY	1	t	155
 6883	Past-Darxon MFY	1	t	155
 6884	Qahramon MFY	1	t	155
 6885	Qashqarlik MFY	1	t	155
 6886	Qatortol QFY	1	t	155
 6887	Qir-ariq MFY	1	t	155
 6888	Qir-guzar MFY	1	t	155
-6889	Qizg'aldoq QFY	1	t	155
-6890	Qorabo'rik MFY	1	t	155
-6891	Qorako'sa MFY	1	t	155
+6889	Qizg`aldoq QFY	1	t	155
+6890	Qorabo`rik MFY	1	t	155
+6891	Qorako`sa MFY	1	t	155
 6892	Qorasaroy MFY	1	t	155
 6893	Qorasuv MFY	1	t	155
-6894	Qoravoy to'pi (jamoatchi) MFY	1	t	155
+6894	Qoravoy to`pi (jamoatchi) MFY	1	t	155
 6895	Qum-ariq MFY	1	t	155
 6896	Qurilish MFY	1	t	155
 6897	Quruvchi MFY	1	t	155
-6898	Qush-qo'ndi MFY	1	t	155
+6898	Qush-qo`ndi MFY	1	t	155
 6899	Quyoshli MFY	1	t	155
-6900	R.Dadaxo'ja?v MFY	1	t	155
+6900	R.Dadaxo`ja?v MFY	1	t	155
 6901	Rahbar obod MFY	1	t	155
 6902	Ramadon MFY	1	t	155
 6903	S.Rahimov MFY	1	t	155
 6904	Sabzavot MFY	1	t	155
-6905	Sag'bon MFY	1	t	155
+6905	Sag`bon MFY	1	t	155
 6906	Sahovat MFY	1	t	155
 6907	Sanoat MFY	1	t	155
 6908	Sarka MFY	1	t	155
 6909	Shamsiobod MFY	1	t	155
 6910	Shirin MFY	1	t	155
 6911	Shodlik MFY	1	t	155
-6912	Sirg'ali MFY	1	t	155
+6912	Sirg`ali MFY	1	t	155
 6913	Sohibkor MFY	1	t	155
 6914	Sohibkor MFY	1	t	155
 6915	Sort?pa MFY	1	t	155
@@ -10690,28 +10690,28 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6918	Tinchlik MFY	1	t	155
 6919	Tokzor MFY	1	t	155
 6920	Toshkent MFY	1	t	155
-6921	To'qayzor (jamoatchi) MFY	1	t	155
-6922	To'qimachi MFY	1	t	155
+6921	To`qayzor (jamoatchi) MFY	1	t	155
+6922	To`qimachi MFY	1	t	155
 6923	Turkiston MFY	1	t	155
 6924	Turkiston QFY	1	t	155
 6925	Turopobod MFY	1	t	155
 6926	Tutzor MFY	1	t	155
 6927	Uch sada MFY	1	t	155
-6928	Ulug'bek (jamoatchi) MFY	1	t	155
-6929	X'abdulla?v MFY	1	t	155
+6928	Ulug`bek (jamoatchi) MFY	1	t	155
+6929	X`abdulla?v MFY	1	t	155
 6930	X.Umarov MFY	1	t	155
 6931	Xasanboy guzar MFY	1	t	155
 6932	Xasanboy MFY	1	t	155
 6933	Xasanboy QFY	1	t	155
 6934	Xonobod MFY	1	t	155
 6935	Xonobod QFY	1	t	155
-6936	Xo'ja mozor MFY	1	t	155
+6936	Xo`ja mozor MFY	1	t	155
 6937	Y.Karimov MFY	1	t	155
 6938	Y.Oxunbobo?v MFY	1	t	155
 6939	Yangi hayot MFY	1	t	155
 6940	Yunus obod QFY	1	t	155
 6941	Z.Jalilov MFY	1	t	155
-6942	Z.Po'latov MFY	1	t	155
+6942	Z.Po`latov MFY	1	t	155
 6943	Z.Zokirova MFY	1	t	155
 6944	Zangiota QFY	1	t	155
 6945	Zarafshon (jamoatchi) MFY	1	t	155
@@ -10725,27 +10725,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6953	Akademiklar (jamoatchi) MFY	1	t	156
 6954	Alisherobod MFY	1	t	156
 6955	Amir Temur MFY	1	t	156
-6956	Arg'in MFY	1	t	156
-6957	Arg'in MFY	1	t	156
+6956	Arg`in MFY	1	t	156
+6957	Arg`in MFY	1	t	156
 6958	Beruniy MFY	1	t	156
 6959	Bahor MFY	1	t	156
-6960	Baytqo'rg'on MFY	1	t	156
-6961	Baytqo'rg'on QFY	1	t	156
+6960	Baytqo`rg`on MFY	1	t	156
+6961	Baytqo`rg`on QFY	1	t	156
 6962	Birlik (jamoatchi) MFY	1	t	156
 6963	Birlik MFY	1	t	156
 6964	Bobur MFY	1	t	156
 6965	Botanika MFY	1	t	156
 6966	Boyjigit MFY	1	t	156
-6967	Bo'ston MFY	1	t	156
+6967	Bo`ston MFY	1	t	156
 6968	Chingeldi MFY	1	t	156
 6969	Chinobod MFY	1	t	156
 6970	Chinobod QFY	1	t	156
 6971	Darxon MFY	1	t	156
-6972	Do'rmon MFY	1	t	156
-6973	Do'stlik MFY	1	t	156
-6974	Do'stlik MFY	1	t	156
-6975	Do'stlik MFY	1	t	156
-6976	g'afur g'ulom MFY	1	t	156
+6972	Do`rmon MFY	1	t	156
+6973	Do`stlik MFY	1	t	156
+6974	Do`stlik MFY	1	t	156
+6975	Do`stlik MFY	1	t	156
+6976	g`afur g`ulom MFY	1	t	156
 6977	G?ofizika MFY	1	t	156
 6978	Guliston . 1 MFY	1	t	156
 6979	Guliston MFY	1	t	156
@@ -10756,19 +10756,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 6984	Istiqlol MFY	1	t	156
 6985	Jarboshi (jamoatchi) MFY	1	t	156
 6986	Kodiriya GES (jamoatchi) MFY	1	t	156
-6987	Ko'prik boshi MFY	1	t	156
-6988	M.Ulug'bek MFY	1	t	156
+6987	Ko`prik boshi MFY	1	t	156
+6988	M.Ulug`bek MFY	1	t	156
 6989	Mevazor MFY	1	t	156
 6990	Mexnat MFY	1	t	156
 6991	Madaniyat MFY	1	t	156
 6992	Matkabulov QFY	1	t	156
 6993	May MFY	1	t	156
 6994	May QFY	1	t	156
-6995	Mirzo Ulug'bek MFY	1	t	156
+6995	Mirzo Ulug`bek MFY	1	t	156
 6996	Mustaqillik MFY	1	t	156
 6997	Muxtor MFY	1	t	156
 6998	Navbahor MFY	1	t	156
-6999	Navro'z MFY	1	t	156
+6999	Navro`z MFY	1	t	156
 7000	Normuxamedov MFY	1	t	156
 7001	Nurafshon MFY	1	t	156
 7002	Nurobod MFY	1	t	156
@@ -10777,12 +10777,12 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7005	Oq-qovoq QFY	1	t	156
 7006	Otamuxamedov MFY	1	t	156
 7007	Oybek MFY	1	t	156
-7008	O'nqo'rg'on . 1 MFY	1	t	156
-7009	O'nqo'rg'on MFY	1	t	156
-7010	O'nqo'rg'on QFY	1	t	156
-7011	O'tkir MFY	1	t	156
+7008	O`nqo`rg`on . 1 MFY	1	t	156
+7009	O`nqo`rg`on MFY	1	t	156
+7010	O`nqo`rg`on QFY	1	t	156
+7011	O`tkir MFY	1	t	156
 7012	Pastki yuz MFY	1	t	156
-7013	Po'lat qadam MFY	1	t	156
+7013	Po`lat qadam MFY	1	t	156
 7014	Qibray SHFY	1	t	156
 7015	Qichoq QFY	1	t	156
 7016	Qipchoq MFY	1	t	156
@@ -10801,17 +10801,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7029	Taraqqiy MFY	1	t	156
 7030	Toshisti MFY	1	t	156
 7031	Tovkentepa MFY	1	t	156
-7032	To'qaytepa MFY	1	t	156
+7032	To`qaytepa MFY	1	t	156
 7033	Tuzel MFY	1	t	156
 7034	Uzumzor MFY	1	t	156
-7035	X'amirov MFY	1	t	156
+7035	X`amirov MFY	1	t	156
 7036	Xosildor MFY	1	t	156
-7037	Yalang'och ota MFY	1	t	156
+7037	Yalang`och ota MFY	1	t	156
 7038	Yangiobod MFY	1	t	156
 7039	Yangiobod QFY MFY	1	t	156
 7040	Yangixayot MFY	1	t	156
 7041	Yangixayot MFY	1	t	156
-7042	Yangiyo'l MFY	1	t	156
+7042	Yangiyo`l MFY	1	t	156
 7043	Yonariq MFY	1	t	156
 7044	Yonariq QFY	1	t	156
 7045	Yoshlik MFY	1	t	156
@@ -10827,15 +10827,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7055	Balikchi MFY	1	t	157
 7056	Birlik MFY	1	t	157
 7057	Chakmok MFY	1	t	157
-7058	Do'stlik MFY	1	t	157
-7059	Do'stlik-1 MFY	1	t	157
+7058	Do`stlik MFY	1	t	157
+7059	Do`stlik-1 MFY	1	t	157
 7060	Galabotir MFY(jamoat)	1	t	157
 7061	Gul MFY	1	t	157
 7062	Gul QFY	1	t	157
 7063	I.Yunusov MFY(jamoat)	1	t	157
 7064	Istiqlol QFY	1	t	157
 7065	Ittifoq MFY(jamoat)	1	t	157
-7066	Jumag'ul MFY(jamoat)	1	t	157
+7066	Jumag`ul MFY(jamoat)	1	t	157
 7067	Ketmontepa QFY	1	t	157
 7068	Kushek MFY(jamoat)	1	t	157
 7069	Mevazor MFY(jamoat)	1	t	157
@@ -10844,11 +10844,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7072	Ming Chinor MFY	1	t	157
 7073	Nurboy ota MFY	1	t	157
 7074	Otajonov MFY	1	t	157
-7075	O'jakent MFY(jamoat)	1	t	157
-7076	O'zbekiston QFY	1	t	157
+7075	O`jakent MFY(jamoat)	1	t	157
+7076	O`zbekiston QFY	1	t	157
 7077	Paxtachi MFY	1	t	157
 7078	Paxtazor MFY	1	t	157
-7079	Qo'rg'oncha QFY	1	t	157
+7079	Qo`rg`oncha QFY	1	t	157
 7080	Seregli MFY(jamoat)	1	t	157
 7081	Surum MFY	1	t	157
 7082	Tinchlik MFY(jamoat)	1	t	157
@@ -10865,14 +10865,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7093	Yulduz MFY	1	t	157
 7094	Achchi QFY	1	t	158
 7095	Birlik MFY	1	t	158
-7096	Boyg'uli MFY	1	t	158
+7096	Boyg`uli MFY	1	t	158
 7097	Buka (jamoatchi) MFY	1	t	158
 7098	Dexkonobod (jamoatchi) MFY	1	t	158
-7099	Do'stlik QFY	1	t	158
+7099	Do`stlik QFY	1	t	158
 7100	Eltamgali (jamoatchi) MFY	1	t	158
 7101	Eltamgali QFY	1	t	158
 7102	Erkinlik QFY	1	t	158
-7103	Jag'alboyli MFY	1	t	158
+7103	Jag`alboyli MFY	1	t	158
 7104	Kalyas MFY	1	t	158
 7105	Kanka (jamoatchi) MFY	1	t	158
 7106	Kaxramon MFY	1	t	158
@@ -10887,11 +10887,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7115	Navoiy MFY(jamoatchi)	1	t	158
 7116	Navruz MFY	1	t	158
 7117	Olimkent QFY	1	t	158
-7118	Oqqo'rg'on QFY	1	t	158
+7118	Oqqo`rg`on QFY	1	t	158
 7119	Oxunboboev MFY	1	t	158
-7120	Oytamg'ali QFY	1	t	158
-7121	Qo'rg'oncha MFY	1	t	158
-7122	Qo'rg'ontepa MFY	1	t	158
+7120	Oytamg`ali QFY	1	t	158
+7121	Qo`rg`oncha MFY	1	t	158
+7122	Qo`rg`ontepa MFY	1	t	158
 7123	S.Raximov MFY	1	t	158
 7124	S.Raximov MFY(jamoatchi)	1	t	158
 7125	S.Sezgizboev MFY	1	t	158
@@ -10901,7 +10901,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7129	Suvti MFY	1	t	158
 7130	Tolovul MFY	1	t	158
 7131	Tortuvli MFY	1	t	158
-7132	Toshto'g'on QFY	1	t	158
+7132	Toshto`g`on QFY	1	t	158
 7133	Usta Normat MFY	1	t	158
 7134	Xalkaobod MFY	1	t	158
 7135	Xamzaobod MFY	1	t	158
@@ -10912,7 +10912,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7140	Zafar QFY	1	t	158
 7141	Zarafshon MFY	1	t	158
 7142	Zarbdor QFY	1	t	158
-7143	A'avloniy MFY	1	t	159
+7143	A`avloniy MFY	1	t	159
 7144	A.Ikromov MFY	1	t	159
 7145	A.Kaxxor MFY	1	t	159
 7146	A.Kodiriy MFY	1	t	159
@@ -10922,9 +10922,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7150	Buston MFY	1	t	159
 7151	Chambil MFY	1	t	159
 7152	Chulpon MFY	1	t	159
-7153	Do'stlik MFY	1	t	159
+7153	Do`stlik MFY	1	t	159
 7154	Furkat MFY	1	t	159
-7155	g'Gulom MFY	1	t	159
+7155	g`Gulom MFY	1	t	159
 7156	GRE MFY	1	t	159
 7157	Gultepa MFY	1	t	159
 7158	Ibn-Sino MFY	1	t	159
@@ -10962,29 +10962,29 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7190	Birlik MFY	1	t	160
 7191	Birlik MFY(jamoat asosida)	1	t	160
 7192	Birlik QFY	1	t	160
-7193	Bo'ston MFY	1	t	160
-7194	Bo'ston MFY(jamoat asosida)	1	t	160
+7193	Bo`ston MFY	1	t	160
+7194	Bo`ston MFY(jamoat asosida)	1	t	160
 7195	Buloq MFY(jamoat asosida)	1	t	160
 7196	Chetsuv MFY(jamoat asosida)	1	t	160
 7197	Chinor MFY(jamoat asosida)	1	t	160
 7198	Chuvildoq MFY(jamoat asosida)	1	t	160
-7199	Do'stlik MFY	1	t	160
-7200	Do'stlik QFY	1	t	160
-7201	Do'tlik MFY(jamoat asosida)	1	t	160
+7199	Do`stlik MFY	1	t	160
+7200	Do`stlik QFY	1	t	160
+7201	Do`tlik MFY(jamoat asosida)	1	t	160
 7202	Eyval?k MFY(jamoat asosida)	1	t	160
-7203	g'alla-Quduq MFY	1	t	160
-7204	Go'shsoy MFY	1	t	160
+7203	g`alla-Quduq MFY	1	t	160
+7204	Go`shsoy MFY	1	t	160
 7205	Guliston MFY	1	t	160
 7206	Gulobod MFY(jamoat asosida)	1	t	160
-7207	Ilg'or MFY(jamoat asosida)	1	t	160
+7207	Ilg`or MFY(jamoat asosida)	1	t	160
 7208	Iloq MFY	1	t	160
-7209	Ko'ksaroy MFY	1	t	160
-7210	Markaziy qo'rg'on MFY(jamoat asosida)	1	t	160
-7211	Mo'minobod MFY(jamoat asosida)	1	t	160
+7209	Ko`ksaroy MFY	1	t	160
+7210	Markaziy qo`rg`on MFY(jamoat asosida)	1	t	160
+7211	Mo`minobod MFY(jamoat asosida)	1	t	160
 7212	Mustaqillik MFY	1	t	160
 7213	Namuna MFY	1	t	160
 7214	Navbahor MFY	1	t	160
-7215	Nog'oyqo'rg'on MFY(jamoat asosida)	1	t	160
+7215	Nog`oyqo`rg`on MFY(jamoat asosida)	1	t	160
 7216	Obiz MFY(jamoat asosida)	1	t	160
 7217	Olmazor MFY(jamoat asosida)	1	t	160
 7218	Orzu MFY	1	t	160
@@ -10992,25 +10992,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7220	Oybuloq MFY(jamoat asosida)	1	t	160
 7221	Ozodlik MFY(jamoat asosida)	1	t	160
 7222	Ozodlik QFY	1	t	160
-7223	O'bayd MFY(jamoat asosida)	1	t	160
-7224	O'zar MFY(jamoat asosida)	1	t	160
-7225	O'zbekiston MFY(jamoat asosida)	1	t	160
+7223	O`bayd MFY(jamoat asosida)	1	t	160
+7224	O`zar MFY(jamoat asosida)	1	t	160
+7225	O`zbekiston MFY(jamoat asosida)	1	t	160
 7226	Qayirma MFY(jamoat asosida)	1	t	160
 7227	Qiziloy MFY	1	t	160
 7228	Qorabaliq MFY(jamoat asosida)	1	t	160
 7229	Qorasuvyoqa MFY(jamoat asosida)	1	t	160
 7230	Qoraxitoy QFY	1	t	160
-7231	Qo'rg'on MFY	1	t	160
+7231	Qo`rg`on MFY	1	t	160
 7232	Qurama QFY	1	t	160
 7233	Quyun MFY(jamoat asosida)	1	t	160
 7234	Serkaqirildi MFY(jamoat asosida)	1	t	160
 7235	Sanam MFY	1	t	160
 7236	Sarijayloq MFY(jamoat asosida)	1	t	160
-7237	Sartamg'ali MFY(jamoat asosida)	1	t	160
+7237	Sartamg`ali MFY(jamoat asosida)	1	t	160
 7238	Shodlik MFY	1	t	160
 7239	Shodmalik MFY(jamoat asosida)	1	t	160
 7240	Shoshtepa MFY(jamoat asosida)	1	t	160
-7241	Shovg'oz MFY(jamoat asosida)	1	t	160
+7241	Shovg`oz MFY(jamoat asosida)	1	t	160
 7242	Susam MFY(jamoat asosida)	1	t	160
 7243	Susam QFY	1	t	160
 7244	Talov MFY(jamoat asosida)	1	t	160
@@ -11027,20 +11027,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7255	Xonobod MFY	1	t	160
 7256	Yalpoqtepa MFY(jamoat asosida)	1	t	160
 7257	Yangi-Hayot MFY	1	t	160
-7258	Yangibo'ston MFY(jamoat asosida)	1	t	160
+7258	Yangibo`ston MFY(jamoat asosida)	1	t	160
 7259	Yangilik MFY	1	t	160
 7260	Yangiobod MFY	1	t	160
 7261	Yangiobod MFY(jamoat asosida)	1	t	160
-7262	Yangiqishlog'iloq MFY(jamoat asosida)	1	t	160
+7262	Yangiqishlog`iloq MFY(jamoat asosida)	1	t	160
 7263	Yonariq MFY	1	t	160
 7264	Yoshlik MFY	1	t	160
 7265	Beshkappa MFY	1	t	161
 7266	Bodomtepa MFY	1	t	161
-7267	Bog'bon MFY	1	t	161
+7267	Bog`bon MFY	1	t	161
 7268	Boshqizilsoy QFY	1	t	161
 7269	Boyqozon MFY	1	t	161
-7270	Bo'ston MFY	1	t	161
-7271	Bo'ston QFY	1	t	161
+7270	Bo`ston MFY	1	t	161
+7271	Bo`ston QFY	1	t	161
 7272	Bulokboshi MFY	1	t	161
 7273	Bursilik MFY	1	t	161
 7274	Changi QFY	1	t	161
@@ -11048,7 +11048,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7276	Chinorli MFY	1	t	161
 7277	Chukkayma MFY	1	t	161
 7278	Gulbog MFY	1	t	161
-7279	Gulbog' MFY	1	t	161
+7279	Gulbog` MFY	1	t	161
 7280	Guliston MFY	1	t	161
 7281	Istikbol MFY	1	t	161
 7282	Kulichi MFY	1	t	161
@@ -11067,25 +11067,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7295	Oktepa MFY	1	t	161
 7296	Olmazor MFY	1	t	161
 7297	Oybek MFY	1	t	161
-7298	O'rta MFY	1	t	161
+7298	O`rta MFY	1	t	161
 7299	Parkent QFY	1	t	161
-7300	Qirg'izovul MFY	1	t	161
+7300	Qirg`izovul MFY	1	t	161
 7301	Qoraqalpoq QFY	1	t	161
-7302	Qo'rg'on MFY	1	t	161
-7303	Qo'rg'ontepa MFY	1	t	161
+7302	Qo`rg`on MFY	1	t	161
+7303	Qo`rg`ontepa MFY	1	t	161
 7304	Samarobod MFY	1	t	161
 7305	Samsarak-Navbaxor MFY	1	t	161
 7306	Shampan-Sanganak MFY	1	t	161
 7307	Shaxak MFY	1	t	161
 7308	Soy MFY	1	t	161
 7309	Soy MFY	1	t	161
-7310	So'qoq QFY	1	t	161
+7310	So`qoq QFY	1	t	161
 7311	Surxi MFY	1	t	161
 7312	Teman MFY	1	t	161
 7313	Teman MFY	1	t	161
 7314	Tojiboy Rizaev MFY	1	t	161
 7315	Uchok MFY	1	t	161
-7316	Ulug'bek MFY	1	t	161
+7316	Ulug`bek MFY	1	t	161
 7317	Xisarak QFY	1	t	161
 7318	Xuja MFY	1	t	161
 7319	Yangi MFY	1	t	161
@@ -11097,10 +11097,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7325	Bekobod MFY	1	t	162
 7326	Birlik MFY	1	t	162
 7327	Chimkurgon MFY	1	t	162
-7328	Cho'loqqo'rg'on MFY	1	t	162
-7329	Do'ngqo'rg'on QFY	1	t	162
-7330	Do'stlik MFY	1	t	162
-7331	g'ayrat MFY	1	t	162
+7328	Cho`loqqo`rg`on MFY	1	t	162
+7329	Do`ngqo`rg`on QFY	1	t	162
+7330	Do`stlik MFY	1	t	162
+7331	g`ayrat MFY	1	t	162
 7332	Guliston MFY	1	t	162
 7333	Kelovchi QFY	1	t	162
 7334	Koriz QFY	1	t	162
@@ -11110,7 +11110,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7338	Maylobod MFY	1	t	162
 7339	Mingtepa MFY	1	t	162
 7340	Mitan MFY	1	t	162
-7341	Mo'minobod MFY	1	t	162
+7341	Mo`minobod MFY	1	t	162
 7342	Murotali QFY	1	t	162
 7343	Mustakillik MFY	1	t	162
 7344	Namuna MFY	1	t	162
@@ -11145,9 +11145,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7373	Chukurovul MFY	1	t	163
 7374	Dexkonobod MFY	1	t	163
 7375	Darxan MFY	1	t	163
-7376	Do'stlik k.FY	1	t	163
-7377	Do'stlik MFY	1	t	163
-7378	Do'stlik MFY	1	t	163
+7376	Do`stlik k.FY	1	t	163
+7377	Do`stlik MFY	1	t	163
+7378	Do`stlik MFY	1	t	163
 7379	Evalak MFY	1	t	163
 7380	Galabotir 1 MFY	1	t	163
 7381	Guliston MFY	1	t	163
@@ -11170,7 +11170,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7398	Kundizak MFY	1	t	163
 7399	Kuramaovul MFY	1	t	163
 7400	Kutib yulduzi MFY	1	t	163
-7401	Mash'al MFY	1	t	163
+7401	Mash`al MFY	1	t	163
 7402	Mayramkul MFY	1	t	163
 7403	Mikrarayon MFY	1	t	163
 7404	Mingtepa MFY	1	t	163
@@ -11185,7 +11185,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7413	Navruz MFY	1	t	163
 7414	Navruz MFY	1	t	163
 7415	Nomdanak MFY	1	t	163
-7416	o' Sharafutdinov MFY	1	t	163
+7416	o` Sharafutdinov MFY	1	t	163
 7417	Ok ota k.FY	1	t	163
 7418	Olti ugil MFY	1	t	163
 7419	Oppok MFY	1	t	163
@@ -11235,15 +11235,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7463	Besh-kapa MFY	1	t	164
 7464	Besh-kapa MFY	1	t	164
 7465	Birlik MFY(jamoatchi)	1	t	164
-7466	Bog'bon MFY(jamoatchi)	1	t	164
+7466	Bog`bon MFY(jamoatchi)	1	t	164
 7467	Chinmasjid MFY(jamoatchi)	1	t	164
 7468	Chinoz QFY	1	t	164
 7469	Dexkonobod MFY(jamoatchi)	1	t	164
-7470	Do'stlik MFY(jamoatchi)	1	t	164
-7471	Do'stlik MFY	1	t	164
-7472	Do'stlik MFY	1	t	164
-7473	Do'stlik MFY(jamoatchi)	1	t	164
-7474	Do'stlik MFY(jamoatchi)	1	t	164
+7470	Do`stlik MFY(jamoatchi)	1	t	164
+7471	Do`stlik MFY	1	t	164
+7472	Do`stlik MFY	1	t	164
+7473	Do`stlik MFY(jamoatchi)	1	t	164
+7474	Do`stlik MFY(jamoatchi)	1	t	164
 7475	Erkin MFY(jamoatchi)	1	t	164
 7476	Eshonobod QFY	1	t	164
 7477	Eski Toshkent QFY	1	t	164
@@ -11265,7 +11265,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7493	Kayragoch MFY(jamoatchi)	1	t	164
 7494	Kora k-uyli MFY(jamoatchi)	1	t	164
 7495	Kozi MFY	1	t	164
-7496	Ko'tarma QFY	1	t	164
+7496	Ko`tarma QFY	1	t	164
 7497	Kurik MFY(jamoatchi)	1	t	164
 7498	Kutarma MFY	1	t	164
 7499	M.Pulatov MFY(jamoatchi)	1	t	164
@@ -11286,13 +11286,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7514	Oxunboboev MFY	1	t	164
 7515	Oxunboboev MFY(jamoatchi)	1	t	164
 7516	Oydin MFY(jamoatchi)	1	t	164
-7517	O'zbekiston QFY	1	t	164
+7517	O`zbekiston QFY	1	t	164
 7518	Paxtaobod MFY	1	t	164
 7519	Qir MFY(jamoatchi)	1	t	164
 7520	Ramadon MFY(jamoatchi)	1	t	164
 7521	Rasulobod MFY	1	t	164
-7522	S'ayniy MFY(jamoatchi)	1	t	164
-7523	S'ayniy MFY(jamoatchi)	1	t	164
+7522	S`ayniy MFY(jamoatchi)	1	t	164
+7523	S`ayniy MFY(jamoatchi)	1	t	164
 7524	S.Raximov MFY	1	t	164
 7525	S.Segizboev MFY(jamoatchi)	1	t	164
 7526	Safar ota MFY(jamoatchi)	1	t	164
@@ -11339,8 +11339,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7567	Birlik MFY	1	t	165
 7568	Bobur MFY	1	t	165
 7569	Chinor MFY	1	t	165
-7570	Do'stlik MFY	1	t	165
-7571	G'alaba MFY	1	t	165
+7570	Do`stlik MFY	1	t	165
+7571	G`alaba MFY	1	t	165
 7572	Guliston MFY	1	t	165
 7573	Gulzor MFY	1	t	165
 7574	Iftixor MFY	1	t	165
@@ -11352,13 +11352,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7580	Kamolot MFY	1	t	165
 7581	Kimyogar MFY	1	t	165
 7582	Kuyosh MFY	1	t	165
-7583	Ma'rifat MFY	1	t	165
+7583	Ma`rifat MFY	1	t	165
 7584	Madaniyat MFY	1	t	165
 7585	Mir Alisher MFY	1	t	165
 7586	Mirgolib MFY	1	t	165
 7587	Muruvvat MFY	1	t	165
 7588	Navbaxor MFY	1	t	165
-7589	Navro'z MFY	1	t	165
+7589	Navro`z MFY	1	t	165
 7590	Nur MFY	1	t	165
 7591	Semurg MFY	1	t	165
 7592	Sharq MFY	1	t	165
@@ -11386,10 +11386,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7614	Chumchuqjar MFY	1	t	166
 7615	Darxan MFY	1	t	166
 7616	Daulboy MFY	1	t	166
-7617	Do'stlik MFY	1	t	166
-7618	Do'stlik MFY	1	t	166
-7619	Do'stlik MFY	1	t	166
-7620	Gulbog' MFY	1	t	166
+7617	Do`stlik MFY	1	t	166
+7618	Do`stlik MFY	1	t	166
+7619	Do`stlik MFY	1	t	166
+7620	Gulbog` MFY	1	t	166
 7621	Guliston MFY	1	t	166
 7622	Istiqlol QFY	1	t	166
 7623	Ittifoq MFY	1	t	166
@@ -11406,14 +11406,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7634	Miyam- Kangli MFY	1	t	166
 7635	Navoiy MFY	1	t	166
 7636	Navoiy MFY	1	t	166
-7637	Navro'z MFY	1	t	166
-7638	Navro'z MFY	1	t	166
-7639	Navro'z MFY	1	t	166
-7640	Navro'z QFY	1	t	166
+7637	Navro`z MFY	1	t	166
+7638	Navro`z MFY	1	t	166
+7639	Navro`z MFY	1	t	166
+7640	Navro`z QFY	1	t	166
 7641	Obodon MFY	1	t	166
 7642	Oq- ovul QFY	1	t	166
 7643	Oq-ovul MFY	1	t	166
-7644	O'zbekiston MFY	1	t	166
+7644	O`zbekiston MFY	1	t	166
 7645	Qaytmas MFY	1	t	166
 7646	Qizil soy MFY	1	t	166
 7647	Qora su MFY	1	t	166
@@ -11424,8 +11424,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7652	Saksonota QFY	1	t	166
 7653	Surank?ent QFY	1	t	166
 7654	Tinchlik QFY	1	t	166
-7655	Toshtug'izaq MFY	1	t	166
-7656	To'qimboy MFY	1	t	166
+7655	Toshtug`izaq MFY	1	t	166
+7656	To`qimboy MFY	1	t	166
 7657	Usmonobod MFY	1	t	166
 7658	Xitoy-tepa MFY	1	t	166
 7659	Yangibozor QFY	1	t	166
@@ -11445,8 +11445,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7673	Dexkonobod MFY	1	t	167
 7674	Dangir MFY	1	t	167
 7675	Darxon MFY	1	t	167
-7676	Do'stlik MFY	1	t	167
-7677	Do'stlik MFY	1	t	167
+7676	Do`stlik MFY	1	t	167
+7677	Do`stlik MFY	1	t	167
 7678	E.Kovunchi QFY	1	t	167
 7679	Epkendi MFY	1	t	167
 7680	Farxod MFY	1	t	167
@@ -11485,7 +11485,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7713	Namuna MFY	1	t	167
 7714	Navbaxor MFY	1	t	167
 7715	Navbaxor QFY	1	t	167
-7716	Navro'z MFY	1	t	167
+7716	Navro`z MFY	1	t	167
 7717	Navruz MFY	1	t	167
 7718	Navruz MFY	1	t	167
 7719	Niyozbosh QFY	1	t	167
@@ -11513,9 +11513,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7741	Xalkobod MFY	1	t	167
 7742	Xalqobod QFY	1	t	167
 7743	Xonkurogon MFY	1	t	167
-7744	Xo'jaobod MFY	1	t	167
+7744	Xo`jaobod MFY	1	t	167
 7745	Yangiobod MFY(jamoatchi)	1	t	167
-7746	Yangiyo'l MFY	1	t	167
+7746	Yangiyo`l MFY	1	t	167
 7747	Yoshlik MFY	1	t	167
 7748	Z.M. Bobur MFY	1	t	167
 7749	Abdurazzoq ota MFY	1	t	168
@@ -11575,7 +11575,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7803	Uzun MFY	1	t	168
 7804	Vatan QFY	1	t	168
 7805	Vorux-Dasht MFY	1	t	168
-7806	Xalqlar Do'stligi MFY	1	t	168
+7806	Xalqlar Do`stligi MFY	1	t	168
 7807	Ya.Kashkar MFY	1	t	168
 7808	Yakkatut QFY	1	t	168
 7809	Yangi MFY	1	t	168
@@ -11587,25 +11587,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7815	Amirobod QFY	1	t	169
 7816	Bedarak MFY	1	t	169
 7817	Bekobod MFY	1	t	169
-7818	Bag'dod SHFY	1	t	169
-7819	Bag'dod-2 MFY	1	t	169
-7820	Bog'ishamol MFY	1	t	169
+7818	Bag`dod SHFY	1	t	169
+7819	Bag`dod-2 MFY	1	t	169
+7820	Bog`ishamol MFY	1	t	169
 7821	Bordon MFY	1	t	169
 7822	Chekmirzaobod MFY	1	t	169
 7823	Cheksaroy MFY	1	t	169
-7824	Cho'l-Yunus MFY	1	t	169
-7825	Cho'rindi MFY	1	t	169
+7824	Cho`l-Yunus MFY	1	t	169
+7825	Cho`rindi MFY	1	t	169
 7826	Chuvalanchi MFY	1	t	169
 7827	Chuvalanchi QFY	1	t	169
 7828	Dasht MFY	1	t	169
-7829	Do'rmancha MFY	1	t	169
-7830	Do'rmancha QFY	1	t	169
-7831	Do'stlik MFY	1	t	169
-7832	Irg'oli MFY	1	t	169
+7829	Do`rmancha MFY	1	t	169
+7830	Do`rmancha QFY	1	t	169
+7831	Do`stlik MFY	1	t	169
+7832	Irg`oli MFY	1	t	169
 7833	Ittifoq MFY	1	t	169
 7834	Karimbobo MFY	1	t	169
 7835	Konizar MFY	1	t	169
-7836	Ko'g'oli MFY	1	t	169
+7836	Ko`g`oli MFY	1	t	169
 7837	Mexnatobod MFY	1	t	169
 7838	Matqulobod MFY	1	t	169
 7839	Matqulobod QFY	1	t	169
@@ -11615,28 +11615,28 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7843	Muruvvat MFY	1	t	169
 7844	Olchin MFY	1	t	169
 7845	Oydinbuloq MFY	1	t	169
-7846	O'zbekiston MFY	1	t	169
+7846	O`zbekiston MFY	1	t	169
 7847	Paxtaobod QFY	1	t	169
 7848	Qaroqchitol MFY	1	t	169
 7849	Qashqari MFY	1	t	169
 7850	Qaxat MFY	1	t	169
 7851	Qirqboldi MFY	1	t	169
-7852	Qorako'l MFY	1	t	169
+7852	Qorako`l MFY	1	t	169
 7853	Qoroqchitol QFY	1	t	169
 7854	Qorovultepa MFY	1	t	169
-7855	Qo'shchinor MFY	1	t	169
-7856	Qo'shtegirmon 1 MFY	1	t	169
-7857	Qo'shtegirmon 2 MFY	1	t	169
+7855	Qo`shchinor MFY	1	t	169
+7856	Qo`shtegirmon 1 MFY	1	t	169
+7857	Qo`shtegirmon 2 MFY	1	t	169
 7858	Samandarak MFY	1	t	169
 7859	Samarqand MFY	1	t	169
 7860	Samarqand QFY	1	t	169
-7861	Sho'roqir MFY	1	t	169
+7861	Sho`roqir MFY	1	t	169
 7862	Tinchlik QFY	1	t	169
 7863	Tuvadoq MFY	1	t	169
 7864	Ultarma MFY	1	t	169
 7865	Ultarma QFY	1	t	169
 7866	Xitoy MFY	1	t	169
-7867	Xo'jakishlok MFY	1	t	169
+7867	Xo`jakishlok MFY	1	t	169
 7868	Yuqori Mirzaobod MFY	1	t	169
 7869	Zafarobod QFY	1	t	169
 7870	Alkor QFY	1	t	170
@@ -11682,7 +11682,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7910	Urganji MFY	1	t	170
 7911	Urta Kungirot MFY	1	t	170
 7912	Uzumzor QFY	1	t	170
-7913	Xakimto'ra MFY	1	t	170
+7913	Xakimto`ra MFY	1	t	170
 7914	Xasankurgoncha MFY	1	t	170
 7915	Xonobod MFY	1	t	170
 7916	Xujauldi MFY	1	t	170
@@ -11695,14 +11695,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7923	Abdusamad MFY	1	t	171
 7924	Aravon MFY	1	t	171
 7925	Arziqtepa MFY	1	t	171
-7926	Bog'ish MFY	1	t	171
+7926	Bog`ish MFY	1	t	171
 7927	Boy-bucha MFY	1	t	171
 7928	Boy-buta MFY	1	t	171
 7929	Burikum MFY	1	t	171
 7930	Chinobod QFY	1	t	171
-7931	Dang'ara SHFY	1	t	171
+7931	Dang`ara SHFY	1	t	171
 7932	Doimobod MFY	1	t	171
-7933	G'alaba QFY	1	t	171
+7933	G`alaba QFY	1	t	171
 7934	Gumoyli MFY	1	t	171
 7935	Kapasaroy MFY	1	t	171
 7936	Katta Gajiravon MFY	1	t	171
@@ -11720,14 +11720,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7948	Pishkaron MFY	1	t	171
 7949	Qashqar MFY	1	t	171
 7950	Qiyali QFY	1	t	171
-7951	Qiyali-qo'rg'oncha MFY	1	t	171
+7951	Qiyali-qo`rg`oncha MFY	1	t	171
 7952	Qizilmusht MFY	1	t	171
 7953	Qora-kurpa MFY	1	t	171
 7954	Qoramulla MFY	1	t	171
 7955	Qumkiyali MFY	1	t	171
 7956	Raxmatillo MFY	1	t	171
 7957	Sanam QFY	1	t	171
-7958	Shopo'lat MFY	1	t	171
+7958	Shopo`lat MFY	1	t	171
 7959	Soy-shildir MFY	1	t	171
 7960	Teliming MFY	1	t	171
 7961	Tangriqul MFY	1	t	171
@@ -11735,7 +11735,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7963	Targova MFY	1	t	171
 7964	Taypoq MFY	1	t	171
 7965	Taypoq QFY	1	t	171
-7966	To'laboy MFY	1	t	171
+7966	To`laboy MFY	1	t	171
 7967	Tumor MFY	1	t	171
 7968	Urganji MFY	1	t	171
 7969	Uvaysiy MFY	1	t	171
@@ -11745,8 +11745,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7973	Guzarboshi MFY\r\n	1	t	172
 7974	Beruniy MFY	1	t	172
 7975	Boxor MFY	1	t	172
-7976	Bo'tqachi MFY	1	t	172
-7977	Cho'liguliston MFY	1	t	172
+7976	Bo`tqachi MFY	1	t	172
+7977	Cho`liguliston MFY	1	t	172
 7978	Yoshlik MFY\r\n	1	t	172
 7979	Gaston MFY	1	t	172
 7980	Guliston QFY	1	t	172
@@ -11754,7 +11754,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 7982	Ishtirxon MFY\r\n	1	t	172
 7983	Ittifoq MFY	1	t	172
 7984	Porloq MFY\r\n	1	t	172
-7985	Navro'z MFY	1	t	172
+7985	Navro`z MFY	1	t	172
 7986	Qorasaqol MFY\r\n	1	t	172
 7987	Qorasoy MFY	1	t	172
 7988	Qoratepa MFY\r\n	1	t	172
@@ -11784,9 +11784,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8012	Dexqonobod MFY	1	t	173
 8013	Dexqonobod QFY	1	t	173
 8014	Damariq MFY	1	t	173
-8015	Do'stlik MFY	1	t	173
-8016	G'alaba MFY	1	t	173
-8017	Go'zal MFY	1	t	173
+8015	Do`stlik MFY	1	t	173
+8016	G`alaba MFY	1	t	173
+8017	Go`zal MFY	1	t	173
 8018	Guliston MFY	1	t	173
 8019	Gulobod MFY	1	t	173
 8020	Iftixor QFY	1	t	173
@@ -11801,27 +11801,27 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8029	Nayman MFY	1	t	173
 8030	Novk?nt MFY	1	t	173
 8031	Oltiariq MFY	1	t	173
-8032	Oqqo'rg'on MFY	1	t	173
-8033	O'raboshi MFY	1	t	173
-8034	O'zbekiston MFY	1	t	173
+8032	Oqqo`rg`on MFY	1	t	173
+8033	O`raboshi MFY	1	t	173
+8034	O`zbekiston MFY	1	t	173
 8035	Pandigon MFY	1	t	173
-8036	Pastki Xo'ja-Xasan MFY	1	t	173
+8036	Pastki Xo`ja-Xasan MFY	1	t	173
 8037	Paxtakor MFY	1	t	173
-8038	Qalinpo'stin MFY	1	t	173
+8038	Qalinpo`stin MFY	1	t	173
 8039	Qaqir MFY	1	t	173
 8040	Qashqar-1 MFY	1	t	173
 8041	Qashqar-2 MFY	1	t	173
 8042	Qayirma MFY	1	t	173
 8043	Qoraqum MFY	1	t	173
 8044	Qorashox MFY	1	t	173
-8045	Qo'rg'oncha MFY	1	t	173
+8045	Qo`rg`oncha MFY	1	t	173
 8046	Quva MFY	1	t	173
 8047	Rasta MFY	1	t	173
 8048	Sanoatchilar SHFY	1	t	173
 8049	Soykeldi MFY	1	t	173
-8050	So'fi MFY	1	t	173
+8050	So`fi MFY	1	t	173
 8051	Sultonobod MFY	1	t	173
-8052	Taxtako'prik MFY	1	t	173
+8052	Taxtako`prik MFY	1	t	173
 8053	Tinchlik MFY	1	t	173
 8054	Tojik MFY	1	t	173
 8055	Tolmozor MFY	1	t	173
@@ -11840,16 +11840,16 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8068	A.Novoiy MFY	1	t	174
 8069	A.Temur MFY	1	t	174
 8070	Arsif QFY	1	t	174
-8071	Bog'bon MFY	1	t	174
-8072	Bo'ston MFY	1	t	174
-8073	Cho'lpon MFY	1	t	174
-8074	Do'stlik SHFY	1	t	174
+8071	Bog`bon MFY	1	t	174
+8072	Bo`ston MFY	1	t	174
+8073	Cho`lpon MFY	1	t	174
+8074	Do`stlik SHFY	1	t	174
 8075	Guliston MFY	1	t	174
 8076	Isfayramsoy QFY	1	t	174
 8077	Kalacha MFY	1	t	174
 8078	Kokilon MFY	1	t	174
 8079	Lashkar MFY	1	t	174
-8080	M.Ulug'bek MFY	1	t	174
+8080	M.Ulug`bek MFY	1	t	174
 8081	Muyan MFY	1	t	174
 8082	Namuna MFY	1	t	174
 8083	Nayman SHFY	1	t	174
@@ -11857,7 +11857,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8085	Polmon MFY	1	t	174
 8086	Quchqorchi QFY	1	t	174
 8087	S.Raximov MFY	1	t	174
-8088	Soy-bo'yi MFY	1	t	174
+8088	Soy-bo`yi MFY	1	t	174
 8089	Sufon QFY	1	t	174
 8090	Valik QFY	1	t	174
 8091	X.Olimjon MFY	1	t	174
@@ -11868,24 +11868,24 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8096	Zebuniso MFY	1	t	174
 8097	Ziynat MFY	1	t	174
 8098	A Navoiy MFY	1	t	175
-8099	Achchiqko'l MFY	1	t	175
-8100	Afg'onbog' MFY	1	t	175
-8101	Artizon bo'yi MFY	1	t	175
+8099	Achchiqko`l MFY	1	t	175
+8100	Afg`onbog` MFY	1	t	175
+8101	Artizon bo`yi MFY	1	t	175
 8102	Arzik tepa MFY	1	t	175
 8103	Ashurali zoxiriy MFY	1	t	175
 8104	At-Termiziy MFY	1	t	175
 8105	Birlik MFY	1	t	175
-8106	Bo'ston MFY	1	t	175
+8106	Bo`ston MFY	1	t	175
 8107	Buloqboshi MFY	1	t	175
 8108	Bunyodkor MFY	1	t	175
-8109	Charxini ko'prigi MFY	1	t	175
+8109	Charxini ko`prigi MFY	1	t	175
 8110	D?grezlik MFY	1	t	175
 8111	Davronbek MFY	1	t	175
-8112	Do'stlik MFY	1	t	175
-8113	g'alchasoy MFY	1	t	175
-8114	g'ishtko'prik MFY	1	t	175
-8115	g'ishtli masjid MFY	1	t	175
-8116	g'oziyog'lik MFY	1	t	175
+8112	Do`stlik MFY	1	t	175
+8113	g`alchasoy MFY	1	t	175
+8114	g`ishtko`prik MFY	1	t	175
+8115	g`ishtli masjid MFY	1	t	175
+8116	g`oziyog`lik MFY	1	t	175
 8117	Gala baqollik MFY	1	t	175
 8118	Isfara guzar MFY	1	t	175
 8119	Islomobod MFY	1	t	175
@@ -11893,23 +11893,23 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8121	Ittifoq MFY	1	t	175
 8122	Jumxuriyat MFY	1	t	175
 8123	Kalvak MFY	1	t	175
-8124	Marg'ilon darvozasi MFY	1	t	175
+8124	Marg`ilon darvozasi MFY	1	t	175
 8125	Misgarlik MFY	1	t	175
 8126	Muqimiy MFY	1	t	175
 8127	Mustaqillik MFY	1	t	175
 8128	Navbaxor MFY	1	t	175
 8129	Navruz MFY	1	t	175
-8130	Noib ko'prigi MFY	1	t	175
+8130	Noib ko`prigi MFY	1	t	175
 8131	Nonvoylikguzar MFY	1	t	175
 8132	Nurafshon MFY	1	t	175
 8133	Oq oltin MFY	1	t	175
 8134	Ozodlik MFY	1	t	175
-8135	O'rmon bog' MFY	1	t	175
+8135	O`rmon bog` MFY	1	t	175
 8136	Parpashabof MFY	1	t	175
 8137	Qalandarxona MFY	1	t	175
 8138	Qaymoqli guzar MFY	1	t	175
 8139	Qipchoq ariq MFY	1	t	175
-8140	Qo'sh chinor MFY	1	t	175
+8140	Qo`sh chinor MFY	1	t	175
 8141	Quduqlik MFY	1	t	175
 8142	Rayxon MFY	1	t	175
 8143	Saodat MFY	1	t	175
@@ -11919,19 +11919,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8147	Shirin MFY	1	t	175
 8148	Sobir Abdulla MFY	1	t	175
 8149	Sunbula MFY	1	t	175
-8150	Temir yo'lchi MFY	1	t	175
+8150	Temir yo`lchi MFY	1	t	175
 8151	Tolzor MFY	1	t	175
-8152	Tug'onboshi MFY	1	t	175
+8152	Tug`onboshi MFY	1	t	175
 8153	Tuxlimergan MFY	1	t	175
-8154	Urganjibog' MFY	1	t	175
+8154	Urganjibog` MFY	1	t	175
 8155	Usta bozor MFY	1	t	175
 8156	Vaqf chorsu MFY	1	t	175
-8157	Xo'jand Daxasi MFY	1	t	175
+8157	Xo`jand Daxasi MFY	1	t	175
 8158	Xurlik MFY	1	t	175
-8159	Yalong'och ota MFY	1	t	175
+8159	Yalong`och ota MFY	1	t	175
 8160	Yangi chorsu MFY	1	t	175
 8161	Yangi obod MFY	1	t	175
-8162	Yog' bozori MFY	1	t	175
+8162	Yog` bozori MFY	1	t	175
 8163	Baland - Masjid MFY	1	t	176
 8164	Barot MFY	1	t	176
 8165	Boltakul SHFY	1	t	176
@@ -11962,7 +11962,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8190	Loyson QFY	1	t	176
 8191	Oyimcha MFY	1	t	176
 8192	Paxtakor QFY	1	t	176
-8193	Qo'yi oktepa SHFY	1	t	176
+8193	Qo`yi oktepa SHFY	1	t	176
 8194	Sarmazor QFY	1	t	176
 8195	Sarmazor SHFY	1	t	176
 8196	Shakar MFY	1	t	176
@@ -11983,20 +11983,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8211	Evkochar MFY	1	t	177
 8212	A.Navoiy MFY	1	t	177
 8213	A.Yassaviy MFY	1	t	177
-8214	Ariq bo'yi MFY	1	t	177
+8214	Ariq bo`yi MFY	1	t	177
 8215	B.Margiloniy MFY	1	t	177
 8216	Baxrin MFY	1	t	177
 8217	Baynalminal MFY	1	t	177
 8218	Bobur MFY	1	t	177
-8219	Charog'on MFY	1	t	177
+8219	Charog`on MFY	1	t	177
 8220	Chilonzor MFY	1	t	177
 8221	Chorchinor MFY	1	t	177
-8222	Do'stlik MFY	1	t	177
+8222	Do`stlik MFY	1	t	177
 8223	Galatoy MFY	1	t	177
-8224	Go'ravvol MFY	1	t	177
+8224	Go`ravvol MFY	1	t	177
 8225	Guliston MFY	1	t	177
 8226	Ikbol MFY	1	t	177
-8227	Ipak yo'li MFY	1	t	177
+8227	Ipak yo`li MFY	1	t	177
 8228	Ipakchi MFY	1	t	177
 8229	Istiqlol MFY	1	t	177
 8230	Kashkar MFY	1	t	177
@@ -12009,15 +12009,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8237	Nadirmat MFY	1	t	177
 8238	Navbaxor MFY	1	t	177
 8239	Navruz MFY	1	t	177
-8240	Orol bo'yi MFY	1	t	177
+8240	Orol bo`yi MFY	1	t	177
 8241	Oxunboboev MFY	1	t	177
-8242	O'rda tagi MFY	1	t	177
+8242	O`rda tagi MFY	1	t	177
 8243	Pichokchi MFY	1	t	177
 8244	Roxat MFY	1	t	177
 8245	Saxovat MFY	1	t	177
 8246	Sholdirama MFY	1	t	177
 8247	Terak tagi MFY	1	t	177
-8248	Tog'lik MFY	1	t	177
+8248	Tog`lik MFY	1	t	177
 8249	Toshkesar MFY	1	t	177
 8250	Toshloq tepa MFY	1	t	177
 8251	Turon MFY	1	t	177
@@ -12028,11 +12028,11 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8256	Uzun xovuz MFY	1	t	177
 8257	Vatan MFY	1	t	177
 8258	Yagi obod MFY	1	t	177
-8259	Yangi bog' MFY	1	t	177
-8260	Yangi Marg'ilon MFY	1	t	177
+8259	Yangi bog` MFY	1	t	177
+8260	Yangi Marg`ilon MFY	1	t	177
 8261	Yangi xat MFY	1	t	177
 8262	Yayilma MFY	1	t	177
-8263	Yo'rmado'z MFY	1	t	177
+8263	Yo`rmado`z MFY	1	t	177
 8264	Zuxro MFY	1	t	177
 8265	Azimobod SHFY	1	t	178
 8266	Beglar MFY	1	t	178
@@ -12047,7 +12047,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8275	Butabekov MFY	1	t	178
 8276	Chinor SHFY	1	t	178
 8277	Chinortagi MFY	1	t	178
-8278	Do'stlik MFY	1	t	178
+8278	Do`stlik MFY	1	t	178
 8279	Eskiarab SHFY	1	t	178
 8280	Farovon MFY	1	t	178
 8281	Fayziobod QFY	1	t	178
@@ -12152,7 +12152,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8380	Mustofokul - ota	1	t	179
 8381	Navbaxor	1	t	179
 8382	Nosgar MFY	1	t	179
-8383	o'Sobirov MFY	1	t	179
+8383	o`Sobirov MFY	1	t	179
 8384	Ok-er	1	t	179
 8385	Ok-er SHFY	1	t	179
 8386	Ok-oltin QFY	1	t	179
@@ -12163,7 +12163,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8391	Rishton QFY	1	t	179
 8392	Shokir-ota MFY	1	t	179
 8393	Suxobod	1	t	179
-8394	T'axmedov	1	t	179
+8394	T`axmedov	1	t	179
 8395	Toshogolik MFY	1	t	179
 8396	Tuda QFY	1	t	179
 8397	Turaobod	1	t	179
@@ -12190,8 +12190,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8418	Guliston MFY	1	t	180
 8419	Istiqlol MFY	1	t	180
 8420	Kakir MFY	1	t	180
-8421	Kal'a MFY	1	t	180
-8422	Kal'acha MFY	1	t	180
+8421	Kal`a MFY	1	t	180
+8422	Kal`acha MFY	1	t	180
 8423	Kizilkiyok MFY	1	t	180
 8424	Lenbur MFY	1	t	180
 8425	Mulgon MFY	1	t	180
@@ -12211,42 +12211,42 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8439	Aylanmajar MFY	1	t	181
 8440	Besarang MFY	1	t	181
 8441	Birlik QFY	1	t	181
-8442	Bo'ston MFY	1	t	181
+8442	Bo`ston MFY	1	t	181
 8443	Chek MFY	1	t	181
 8444	Chuqurkishloq MFY	1	t	181
-8445	Do'stlik MFY	1	t	181
-8446	Farg'ona MFY	1	t	181
+8445	Do`stlik MFY	1	t	181
+8446	Farg`ona MFY	1	t	181
 8447	Furqat MFY	1	t	181
 8448	Guzarboshi MFY	1	t	181
 8449	Jarqishloq MFY	1	t	181
-8450	Kattako'cha MFY	1	t	181
+8450	Kattako`cha MFY	1	t	181
 8451	Konizar MFY	1	t	181
-8452	Ko'larik MFY	1	t	181
-8453	Ko'rg'oncha QFY	1	t	181
-8454	Ko'saqishloq MFY	1	t	181
+8452	Ko`larik MFY	1	t	181
+8453	Ko`rg`oncha QFY	1	t	181
+8454	Ko`saqishloq MFY	1	t	181
 8455	Mexnatobod MFY	1	t	181
 8456	Nayman QFY	1	t	181
-8457	Naymanbo'ston QFY	1	t	181
+8457	Naymanbo`ston QFY	1	t	181
 8458	Obisiyo MFY	1	t	181
 8459	Oxunboboev MFY	1	t	181
-8460	O'zbekiston MFY	1	t	181
+8460	O`zbekiston MFY	1	t	181
 8461	Piyozchilik MFY	1	t	181
 8462	Qamchipurush MFY	1	t	181
-8463	Qanjirg'a MFY	1	t	181
+8463	Qanjirg`a MFY	1	t	181
 8464	Qipchoqariq MFY	1	t	181
 8465	Qumariq QFY	1	t	181
 8466	Qumqishloq MFY	1	t	181
 8467	Sadda QFY	1	t	181
 8468	Shilva MFY	1	t	181
-8469	Soybo'yi MFY	1	t	181
-8470	So'filar MFY	1	t	181
-8471	So'kchilik MFY	1	t	181
+8469	Soybo`yi MFY	1	t	181
+8470	So`filar MFY	1	t	181
+8471	So`kchilik MFY	1	t	181
 8472	Suvboshi MFY	1	t	181
 8473	Tegirmonboshi MFY	1	t	181
 8474	Teraktagi MFY	1	t	181
-8475	Tog'lik MFY	1	t	181
+8475	Tog`lik MFY	1	t	181
 8476	Toshloq SHFY	1	t	181
-8477	To'xtaboev QFY	1	t	181
+8477	To`xtaboev QFY	1	t	181
 8478	Turvat MFY	1	t	181
 8479	Ucholish MFY	1	t	181
 8480	Varzak QFY	1	t	181
@@ -12254,9 +12254,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8482	Xonaqa MFY	1	t	181
 8483	Xonariq MFY	1	t	181
 8484	Xotinqumi MFY	1	t	181
-8485	Xo'jariq MFY	1	t	181
+8485	Xo`jariq MFY	1	t	181
 8486	Yakkavut MFY	1	t	181
-8487	Yangiyo'l MFY	1	t	181
+8487	Yangiyo`l MFY	1	t	181
 8488	Yuqoriqishloq MFY	1	t	181
 8489	Zarkent MFY	1	t	181
 8490	Kata-Kushtepa MFY	1	t	182
@@ -12267,9 +12267,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8495	Boboshb?k MFY	1	t	182
 8496	Buyrak MFY	1	t	182
 8497	Chang MFY	1	t	182
-8498	Chorbog' QFY	1	t	182
-8499	G'ijdon SHFY	1	t	182
-8500	G'ozig'ijdon QFY	1	t	182
+8498	Chorbog` QFY	1	t	182
+8499	G`ijdon SHFY	1	t	182
+8500	G`ozig`ijdon QFY	1	t	182
 8501	Kenagas QFY	1	t	182
 8502	Kata-Kashkar MFY	1	t	182
 8503	Kata-Korakul MFY	1	t	182
@@ -12287,7 +12287,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8515	Paloxon QFY	1	t	182
 8516	Paloxon SHFY	1	t	182
 8517	Puchugoy MFY	1	t	182
-8518	Qo'qonboy SHFY	1	t	182
+8518	Qo`qonboy SHFY	1	t	182
 8519	Sarikurgon QFY	1	t	182
 8520	Sarikurgon MFY	1	t	182
 8521	Sobirjon SHFY	1	t	182
@@ -12321,7 +12321,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8549	Dungsaroy MFY	1	t	183
 8550	Elchi MFY	1	t	183
 8551	Eski Yaypan MFY	1	t	183
-8552	g'anobod QFY	1	t	183
+8552	g`anobod QFY	1	t	183
 8553	Gusht MFY	1	t	183
 8554	Islom MFY	1	t	183
 8555	Karimdevona MFY	1	t	183
@@ -12353,7 +12353,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8581	Oxunboboev QFY	1	t	183
 8582	Oxunboboev MFY	1	t	183
 8583	Oyimchakakir MFY	1	t	183
-8584	O'qchi-dasht MFY	1	t	183
+8584	O`qchi-dasht MFY	1	t	183
 8585	Pastkurik MFY	1	t	183
 8586	Rajabgardi MFY	1	t	183
 8587	Rajabgardi QFY	1	t	183
@@ -12394,10 +12394,10 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8622	Kurik MFY	1	t	184
 8623	Kurilish MFY	1	t	184
 8624	Langar MFY	1	t	184
-8625	Log'on QFY	1	t	184
+8625	Log`on QFY	1	t	184
 8626	Mexnatobod MFY	1	t	184
 8627	Margilon MFY	1	t	184
-8628	Mash'al MFY	1	t	184
+8628	Mash`al MFY	1	t	184
 8629	Maydon MFY	1	t	184
 8630	Mindon QFY	1	t	184
 8631	Mindonobod MFY	1	t	184
@@ -12418,7 +12418,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8646	Shifokor MFY	1	t	184
 8647	Shoximardon QFY	1	t	184
 8648	Shoximardonobod MFY	1	t	184
-8649	Soybo'yi QFY	1	t	184
+8649	Soybo`yi QFY	1	t	184
 8650	Tinchlik MFY	1	t	184
 8651	U.Shaxobov MFY	1	t	184
 8652	Ulugbek MFY	1	t	184
@@ -12446,29 +12446,29 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8674	A.Navoiy MFY	1	t	185
 8675	A.Qodiriy MFY	1	t	185
 8676	A.Xorazmiy MFY	1	t	185
-8677	Al-Farg'oniy MFY	1	t	185
+8677	Al-Farg`oniy MFY	1	t	185
 8678	Beglar MFY	1	t	185
 8679	Beruniy MFY	1	t	185
 8680	Besh-bola MFY	1	t	185
 8681	Barkamol MFY	1	t	185
 8682	Baxor MFY	1	t	185
 8683	Bobur MFY	1	t	185
-8684	Bo'ston MFY	1	t	185
-8685	Do'stlik MFY	1	t	185
-8686	Farg'ona MFY	1	t	185
+8684	Bo`ston MFY	1	t	185
+8685	Do`stlik MFY	1	t	185
+8686	Farg`ona MFY	1	t	185
 8687	Guliston MFY	1	t	185
 8688	Gulzor MFY	1	t	185
 8689	Ibn-Sino MFY	1	t	185
 8690	Ibrat MFY	1	t	185
 8691	Iftixor MFY	1	t	185
-8692	Ipak yo'li MFY	1	t	185
+8692	Ipak yo`li MFY	1	t	185
 8693	Istiqbol MFY	1	t	185
 8694	Istiqlol MFY	1	t	185
-8695	Jo'ydam MFY	1	t	185
+8695	Jo`ydam MFY	1	t	185
 8696	Kimyogar MFY	1	t	185
 8697	Kirguli MFY	1	t	185
 8698	Lolazor MFY	1	t	185
-8699	M.Ulug'b?k MFY	1	t	185
+8699	M.Ulug`b?k MFY	1	t	185
 8700	Mexribonlik MFY	1	t	185
 8701	Maarifat MFY	1	t	185
 8702	Madadkor MFY	1	t	185
@@ -12478,14 +12478,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8706	Mustaqillik MFY	1	t	185
 8707	Nafosat MFY	1	t	185
 8708	Navbaxor MFY	1	t	185
-8709	Navro'z MFY	1	t	185
+8709	Navro`z MFY	1	t	185
 8710	Nodirabegim MFY	1	t	185
 8711	Oqariq MFY	1	t	185
 8712	Oqariqobod MFY	1	t	185
 8713	Oybek MFY	1	t	185
 8714	Ozodlik MFY	1	t	185
-8715	O'rmonchilar MFY	1	t	185
-8716	O'zbekiston MFY	1	t	185
+8715	O`rmonchilar MFY	1	t	185
+8716	O`zbekiston MFY	1	t	185
 8717	Parvoz MFY	1	t	185
 8718	S.Raximov MFY	1	t	185
 8719	S.Temur MFY	1	t	185
@@ -12497,49 +12497,49 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8725	Simtepa MFY	1	t	185
 8726	Sovurbuloq MFY	1	t	185
 8727	Soxibkor MFY	1	t	185
-8728	Soy-bo'yi MFY	1	t	185
+8728	Soy-bo`yi MFY	1	t	185
 8729	Surxtepa MFY	1	t	185
 8730	Tabassum MFY	1	t	185
 8731	Tinchlik MFY	1	t	185
-8732	To'qimachilar MFY	1	t	185
+8732	To`qimachilar MFY	1	t	185
 8733	Xamkorlik MFY	1	t	185
-8734	Xujamag'iz MFY	1	t	185
+8734	Xujamag`iz MFY	1	t	185
 8735	Xuvaydo MFY	1	t	185
 8736	Yangi soy MFY	1	t	185
-8737	Yangi yo'l MFY	1	t	185
+8737	Yangi yo`l MFY	1	t	185
 8738	Yormozor MFY	1	t	185
 8739	Yoshlar MFY	1	t	185
 8740	Yulduz MFY	1	t	185
 8741	Zarbdor MFY	1	t	185
 8742	Ardaxshon MFY	1	t	186
 8743	Bekobod MFY	1	t	186
-8744	Besh-og'a MFY	1	t	186
-8745	Boltako'l MFY	1	t	186
+8744	Besh-og`a MFY	1	t	186
+8745	Boltako`l MFY	1	t	186
 8746	Chek-chuvaldoq MFY	1	t	186
 8747	Chilgi-jiyda MFY	1	t	186
 8748	Chirkay MFY	1	t	186
 8749	Eshon MFY	1	t	186
 8750	Eski MFY	1	t	186
-8751	g'allakor QFY	1	t	186
-8752	g'uncha QFY	1	t	186
+8751	g`allakor QFY	1	t	186
+8752	g`uncha QFY	1	t	186
 8753	Ingichka MFY	1	t	186
 8754	Jang-ketmon MFY	1	t	186
 8755	Kaldushon MFY	1	t	186
 8756	Karmak MFY	1	t	186
 8757	Katta-yangi MFY	1	t	186
 8758	Kichik-yangi MFY	1	t	186
-8759	Ko'k-do'ppi MFY	1	t	186
+8759	Ko`k-do`ppi MFY	1	t	186
 8760	Mustaqillik MFY	1	t	186
 8761	Navbaxor MFY	1	t	186
 8762	Navbaxor QFY	1	t	186
-8763	O'rta-qo'rg'on MFY	1	t	186
+8763	O`rta-qo`rg`on MFY	1	t	186
 8764	Polvontosh MFY	1	t	186
 8765	Qizil-qiyaq MFY	1	t	186
-8766	Qo'qon QFY	1	t	186
-8767	Qo'qonboy MFY	1	t	186
+8766	Qo`qon QFY	1	t	186
+8767	Qo`qonboy MFY	1	t	186
 8768	Qushchi MFY	1	t	186
 8769	Shoyimbek MFY	1	t	186
-8770	Sho'r MFY	1	t	186
+8770	Sho`r MFY	1	t	186
 8771	Shunqor MFY	1	t	186
 8772	Shunqor QFY	1	t	186
 8773	Tomosha MFY	1	t	186
@@ -12550,20 +12550,20 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8778	Bejganik MFY	1	t	187
 8779	Besharik MFY	1	t	187
 8780	Beshariq QFY	1	t	187
-8781	Bog'ot SHFY	1	t	187
+8781	Bog`ot SHFY	1	t	187
 8782	Boyqozoq MFY	1	t	187
-8783	Bo'ka MFY	1	t	187
-8784	Bo'kaylar MFY	1	t	187
-8785	Bo'saloq MFY	1	t	187
+8783	Bo`ka MFY	1	t	187
+8784	Bo`kaylar MFY	1	t	187
+8785	Bo`saloq MFY	1	t	187
 8786	Dexkonbozor QFY	1	t	187
 8787	Dexkonobod MFY	1	t	187
 8788	Esamat MFY	1	t	187
 8789	Eshonlar MFY	1	t	187
-8790	G'alaba MFY	1	t	187
+8790	G`alaba MFY	1	t	187
 8791	Guduklar MFY	1	t	187
 8792	Hurriyat MFY	1	t	187
-8793	Katta qo'madoq MFY	1	t	187
-8794	Ko'na birlashuv MFY	1	t	187
+8793	Katta qo`madoq MFY	1	t	187
+8794	Ko`na birlashuv MFY	1	t	187
 8795	Mehnat gul MFY	1	t	187
 8796	Mesit buyi MFY	1	t	187
 8797	Mesit MFY	1	t	187
@@ -12572,7 +12572,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8800	Mayda millat MFY	1	t	187
 8801	Miroblar MFY	1	t	187
 8802	Nafas bobo MFY	1	t	187
-8803	Nayman bo'yi MFY	1	t	187
+8803	Nayman bo`yi MFY	1	t	187
 8804	Nayman QFY	1	t	187
 8805	Nukus MFY	1	t	187
 8806	Nurafshon MFY	1	t	187
@@ -12582,19 +12582,19 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8810	Oq oltin MFY	1	t	187
 8811	Oq tepa MFY	1	t	187
 8812	Osyop MFY	1	t	187
-8813	O'g'uzrabot QFY	1	t	187
-8814	O'rta badoq MFY	1	t	187
-8815	O'zbekiston MFY	1	t	187
-8816	O'zgarish MFY	1	t	187
+8813	O`g`uzrabot QFY	1	t	187
+8814	O`rta badoq MFY	1	t	187
+8815	O`zbekiston MFY	1	t	187
+8816	O`zgarish MFY	1	t	187
 8817	Qashqalar MFY	1	t	187
 8818	Qipchoq MFY	1	t	187
 8819	Qipchoq QFY	1	t	187
 8820	Qipchoqlar MFY	1	t	187
 8821	Qirmalar MFY	1	t	187
-8822	Qorabog' MFY	1	t	187
+8822	Qorabog` MFY	1	t	187
 8823	Qorayontok QFY	1	t	187
-8824	Qo'ldov MFY	1	t	187
-8825	Qo'ngirot MFY	1	t	187
+8824	Qo`ldov MFY	1	t	187
+8825	Qo`ngirot MFY	1	t	187
 8826	Qulonkorabog QFY	1	t	187
 8827	Qushlilar MFY	1	t	187
 8828	Saydalijon MFY	1	t	187
@@ -12606,22 +12606,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8834	Xujalik QFY	1	t	187
 8835	Yangi kadam MFY	1	t	187
 8836	Yosh usmir MFY	1	t	187
-8837	Yumaloq to'qay MFY	1	t	187
+8837	Yumaloq to`qay MFY	1	t	187
 8838	Zarbdor MFY	1	t	187
 8839	"Besh uy" MFY	1	t	188
 8840	"Baldokli" MFY	1	t	188
 8841	"Birlashgan "maxalla	1	t	188
-8842	"Buzkal'a" MFY	1	t	188
+8842	"Buzkal`a" MFY	1	t	188
 8843	"Chakkalar" MFY	1	t	188
 8844	"Chinobod" MFY	1	t	188
 8845	"Dehqon" MFY	1	t	188
 8846	"Dehqonobod"MFY	1	t	188
-8847	"Dusimbiy" qishlog'i	1	t	188
+8847	"Dusimbiy" qishlog`i	1	t	188
 8848	"Dusimbiy"MFY	1	t	188
-8849	"Do'stlik " MFY	1	t	188
-8850	"Do'stlik" MFY	1	t	188
-8851	"Do'stlik" bogi MFY	1	t	188
-8852	"Do'stlik" MFY	1	t	188
+8849	"Do`stlik " MFY	1	t	188
+8850	"Do`stlik" MFY	1	t	188
+8851	"Do`stlik" bogi MFY	1	t	188
+8852	"Do`stlik" MFY	1	t	188
 8853	"Esabiy" MFY	1	t	188
 8854	"Eshimjiron" MFY	1	t	188
 8855	"Jaloir" MFY	1	t	188
@@ -12659,15 +12659,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8887	7-maxalla	1	t	188
 8888	8- maxalla	1	t	188
 8889	9- maxalla	1	t	188
-8890	Birlashgan qishlog'i	1	t	188
-8891	Eshimjiron qishlog'i	1	t	188
-8892	Guliston qishlog'i	1	t	188
+8890	Birlashgan qishlog`i	1	t	188
+8891	Eshimjiron qishlog`i	1	t	188
+8892	Guliston qishlog`i	1	t	188
 8893	Gurlan shaxarchasi fy	1	t	188
-8894	Olga qishlog'i	1	t	188
-8895	Saxtiyon qishlog'i	1	t	188
-8896	Sholikor qishlog'i	1	t	188
-8897	Vazir qishlog'i	1	t	188
-8898	Xizir-eli qishlog'i	1	t	188
+8894	Olga qishlog`i	1	t	188
+8895	Saxtiyon qishlog`i	1	t	188
+8896	Sholikor qishlog`i	1	t	188
+8897	Vazir qishlog`i	1	t	188
+8898	Xizir-eli qishlog`i	1	t	188
 8899	1-mahalla FY	1	t	189
 8900	1-mahalla FY	1	t	189
 8901	1-mahalla FY	1	t	189
@@ -12689,36 +12689,36 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8917	6-mahalla FY	1	t	189
 8918	Amirqum MFY	1	t	189
 8919	Arablar MFY	1	t	189
-8920	Ayronko'l MFY	1	t	189
+8920	Ayronko`l MFY	1	t	189
 8921	Baratlar MFY	1	t	189
-8922	Bo'rloq MFY	1	t	189
+8922	Bo`rloq MFY	1	t	189
 8923	Changli 1 MFY	1	t	189
 8924	Changli 2 MFY	1	t	189
 8925	Chiqirchi MFY	1	t	189
 8926	Dovud MFY	1	t	189
 8927	Elobod MFY	1	t	189
-8928	G'ozovot QFY	1	t	189
+8928	G`ozovot QFY	1	t	189
 8929	Ilgaldi MFY	1	t	189
 8930	Ittifoq MFY	1	t	189
 8931	Kenagas MFY	1	t	189
 8932	Kenagas QFY	1	t	189
-8933	Ko'nazay MFY	1	t	189
+8933	Ko`nazay MFY	1	t	189
 8934	Mehnatobod MFY	1	t	189
 8935	Mast MFY	1	t	189
 8936	Nezaxos MFY	1	t	189
 8937	Oqdarband QFY	1	t	189
 8938	Oshoq qa.la MFY	1	t	189
-8939	O'rta QFY	1	t	189
-8940	O'rtayop QFY	1	t	189
-8941	O'zbekiston MFY	1	t	189
-8942	O'zbekyop QFY	1	t	189
+8939	O`rta QFY	1	t	189
+8940	O`rtayop QFY	1	t	189
+8941	O`zbekiston MFY	1	t	189
+8942	O`zbekyop QFY	1	t	189
 8943	Polvon MFY	1	t	189
 8944	Qaravulqkala MFY	1	t	189
 8945	Qoramon MFY	1	t	189
-8946	Qoromon qal'a MFY	1	t	189
+8946	Qoromon qal`a MFY	1	t	189
 8947	Qorovul MFY	1	t	189
-8948	Qotog'on QFY	1	t	189
-8949	Qo'shko'pir SHFY	1	t	189
+8948	Qotog`on QFY	1	t	189
+8949	Qo`shko`pir SHFY	1	t	189
 8950	Sherobod MFY	1	t	189
 8951	Shix QFY	1	t	189
 8952	Shixmashhad MFY	1	t	189
@@ -12736,9 +12736,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8964	Yangilik MFY,	1	t	189
 8965	Yangilik MFY	1	t	189
 8966	Yangilik QFY	1	t	189
-8967	Yovg'ir MFY	1	t	189
+8967	Yovg`ir MFY	1	t	189
 8968	Zarbdor MFY	1	t	189
-8969	A'azizova MFY	1	t	190
+8969	A`azizova MFY	1	t	190
 8970	Ak-Ariklar MFY	1	t	190
 8971	Altinsarin MFY	1	t	190
 8972	Amangaldi MFY	1	t	190
@@ -12762,13 +12762,13 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 8990	Chulobod MFY	1	t	190
 8991	Dargalar MFY	1	t	190
 8992	Dumbaylar MFY	1	t	190
-8993	Do'stlik MFY	1	t	190
-8994	Do'stlik MFY	1	t	190
-8995	Do'stlik MFY	1	t	190
+8993	Do`stlik MFY	1	t	190
+8994	Do`stlik MFY	1	t	190
+8995	Do`stlik MFY	1	t	190
 8996	E.Raxim MFY	1	t	190
-8997	G'alaba QFY	1	t	190
-8998	G'alaba MFY	1	t	190
-8999	G'aybu QFY	1	t	190
+8997	G`alaba QFY	1	t	190
+8998	G`alaba MFY	1	t	190
+8999	G`aybu QFY	1	t	190
 9000	Gardonlar MFY	1	t	190
 9001	Jambul MFY	1	t	190
 9002	K.Otaniyazov MFY	1	t	190
@@ -12804,7 +12804,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9032	Ola uylik MFY	1	t	190
 9033	Oltinkul MFY	1	t	190
 9034	Oyok bog MFY	1	t	190
-9035	Qo'shbog' MFY	1	t	190
+9035	Qo`shbog` MFY	1	t	190
 9036	Rovot MFY	1	t	190
 9037	Sevanlar MFY	1	t	190
 9038	Sarichilar MFY	1	t	190
@@ -12834,15 +12834,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9062	Yukoriovul MFY	1	t	190
 9063	Zargarlar MFY	1	t	190
 9064	33-maxalla MFY	1	t	191
-9065	A.Do'schanov MFY	1	t	191
+9065	A.Do`schanov MFY	1	t	191
 9066	Al-Xorazmiy MFY	1	t	191
 9067	Ashxobod MFY	1	t	191
 9068	Besh-mergan MFY	1	t	191
 9069	Baynalmichi MFY	1	t	191
 9070	Binokor MFY	1	t	191
 9071	Bobur MFY	1	t	191
-9072	Bo'ston MFY	1	t	191
-9073	Do'stlik MFY	1	t	191
+9072	Bo`ston MFY	1	t	191
+9073	Do`stlik MFY	1	t	191
 9074	E.Raxim MFY	1	t	191
 9075	Feruz MFY	1	t	191
 9076	Gulchilar MFY	1	t	191
@@ -12852,22 +12852,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9080	Jambul MFY	1	t	191
 9081	Jingovuz MFY	1	t	191
 9082	K. Ataniyozov MFY	1	t	191
-9083	Ko'hna-qal'a MFY	1	t	191
+9083	Ko`hna-qal`a MFY	1	t	191
 9084	Ma.rifat MFY	1	t	191
-9085	Mash'al MFY	1	t	191
+9085	Mash`al MFY	1	t	191
 9086	Mustaqillik MFY	1	t	191
 9087	Navbahor MFY	1	t	191
-9088	Navro'z MFY	1	t	191
+9088	Navro`z MFY	1	t	191
 9089	Obi-hayot MFY	1	t	191
 9090	Olimpiya MFY	1	t	191
 9091	Sahovat MFY	1	t	191
 9092	Shodlik MFY	1	t	191
-9093	Temir-yo'lchi MFY	1	t	191
-9094	Toza-Bog' MFY	1	t	191
+9093	Temir-yo`lchi MFY	1	t	191
+9094	Toza-Bog` MFY	1	t	191
 9095	Umid MFY	1	t	191
 9096	Yangi-hayot MFY	1	t	191
 9097	Yangi-obod MFY	1	t	191
-9098	Yuqori-bog' MFY	1	t	191
+9098	Yuqori-bog` MFY	1	t	191
 9099	Al Xorazmiy MFY	1	t	192
 9100	Angarik MFY	1	t	192
 9101	Arvik MFY	1	t	192
@@ -12879,7 +12879,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9107	Chinobod MFY	1	t	192
 9108	Doshyok QFY	1	t	192
 9109	Doshyok MFY	1	t	192
-9110	Do'stlik MFY	1	t	192
+9110	Do`stlik MFY	1	t	192
 9111	Eski kiyat QFY	1	t	192
 9112	Gandimyon QFY	1	t	192
 9113	Gandimyon MFY	1	t	192
@@ -12940,7 +12940,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9168	Mustakillik	1	t	193
 9169	Muxabbat MFY	1	t	193
 9170	Navbaxor MFY	1	t	193
-9171	Navro'z MFY	1	t	193
+9171	Navro`z MFY	1	t	193
 9172	Obod MFY	1	t	193
 9173	Otalik MFY	1	t	193
 9174	Oxunboboev MFY	1	t	193
@@ -12959,31 +12959,31 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9187	Yoshlik MFY	1	t	193
 9188	12-Narvon MFY	1	t	193
 9189	Al .Xorazmiy MFY	1	t	193
-9190	Alokali ko'l	1	t	193
+9190	Alokali ko`l	1	t	193
 9191	Amudaryo MFY	1	t	193
 9192	B.Matirzaev MFY	1	t	193
-9193	Beshta qishlog'i	1	t	193
-9194	Bo'ston kishlog'i	1	t	193
+9193	Beshta qishlog`i	1	t	193
+9194	Bo`ston kishlog`i	1	t	193
 9195	Buston MFY	1	t	193
 9196	Karvak MFY	1	t	193
-9197	Karvak qishlog'i	1	t	193
+9197	Karvak qishlog`i	1	t	193
 9198	Muxomon MFY	1	t	193
-9199	Muxomon qishlog'i	1	t	193
-9200	Ovshar kishlog'i	1	t	193
+9199	Muxomon qishlog`i	1	t	193
+9200	Ovshar kishlog`i	1	t	193
 9201	Ovshar MFY	1	t	193
 9202	Pichokchi MFY	1	t	193
-9203	Pichoqchi qishlog'i	1	t	193
+9203	Pichoqchi qishlog`i	1	t	193
 9204	Pitnak QFY	1	t	193
 9205	Sanoat MFY	1	t	193
-9206	Sanoat qishlog'i MFY	1	t	193
+9206	Sanoat qishlog`i MFY	1	t	193
 9207	Sarimoy QFY	1	t	193
 9208	Shexyopi Mutpiri	1	t	193
-9209	Tuproqqal'a QFY	1	t	193
+9209	Tuproqqal`a QFY	1	t	193
 9210	Uzukka qosh	1	t	193
 9211	Xazorasp ShchaFY	1	t	193
 9212	Yangi xayot MFY	1	t	193
 9213	Yangibozor MFY	1	t	193
-9214	Yangibozor qishlog'i	1	t	193
+9214	Yangibozor qishlog`i	1	t	193
 9215	1-MFY	1	t	194
 9216	2-MFY	1	t	194
 9217	3-MFY	1	t	194
@@ -13000,22 +13000,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9228	14-MFY	1	t	194
 9229	15-MFY	1	t	194
 9230	Amudaryo QFY	1	t	194
-9231	Do'stlik MFY	1	t	194
+9231	Do`stlik MFY	1	t	194
 9232	Durgadik MFY	1	t	194
 9233	Durmon MFY	1	t	194
-9234	G'ayrat MFY	1	t	194
+9234	G`ayrat MFY	1	t	194
 9235	Guliston MFY	1	t	194
-9236	Ilg'or MFY	1	t	194
+9236	Ilg`or MFY	1	t	194
 9237	Istiqlol MFY	1	t	194
 9238	Katta jirmiz QFY	1	t	194
 9239	Katta kuch MFY	1	t	194
-9240	Ko'pchilik MFY	1	t	194
+9240	Ko`pchilik MFY	1	t	194
 9241	Mada er MFY	1	t	194
 9242	Madaniyat MFY	1	t	194
 9243	Madir QFY	1	t	194
 9244	Mustaqillik MFY	1	t	194
 9245	Namuna QFY	1	t	194
-9246	Navro'z MFY	1	t	194
+9246	Navro`z MFY	1	t	194
 9247	Navxos QFY	1	t	194
 9248	Nuravshon MFY	1	t	194
 9249	Nurobod MFY	1	t	194
@@ -13044,65 +13044,65 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9272	Beshmargan MFY	1	t	195
 9273	Beshmargan QFY	1	t	195
 9274	Botirlar MFY	1	t	195
-9275	Bo'ston MFY	1	t	195
-9276	Bo'yrachi QFY	1	t	195
-9277	Bo'yrachi MFY	1	t	195
-9278	Bo'zqal'a MFY	1	t	195
-9279	Bo'zqal'a MFY	1	t	195
-9280	Chig'atoy MFY	1	t	195
-9281	Chig'atoyqal'a MFY	1	t	195
-9282	Chig'atoyqal'a QFY	1	t	195
-9283	Cho'qli QFY	1	t	195
-9284	Do'stlik MFY	1	t	195
-9285	Do'stlik MFY	1	t	195
-9286	Eshonqal'a MFY	1	t	195
+9275	Bo`ston MFY	1	t	195
+9276	Bo`yrachi QFY	1	t	195
+9277	Bo`yrachi MFY	1	t	195
+9278	Bo`zqal`a MFY	1	t	195
+9279	Bo`zqal`a MFY	1	t	195
+9280	Chig`atoy MFY	1	t	195
+9281	Chig`atoyqal`a MFY	1	t	195
+9282	Chig`atoyqal`a QFY	1	t	195
+9283	Cho`qli QFY	1	t	195
+9284	Do`stlik MFY	1	t	195
+9285	Do`stlik MFY	1	t	195
+9286	Eshonqal`a MFY	1	t	195
 9287	Guliston MFY	1	t	195
 9288	Guliston MFY	1	t	195
-9289	Idaliqal'a MFY	1	t	195
+9289	Idaliqal`a MFY	1	t	195
 9290	Ijtimoiyat MFY	1	t	195
 9291	Ijtimoiyat QFY	1	t	195
 9292	Ipakchi MFY	1	t	195
 9293	K.Raximov MFY	1	t	195
 9294	Kangli QFY	1	t	195
 9295	Kangli MFY	1	t	195
-9296	Katqal'a MFY	1	t	195
+9296	Katqal`a MFY	1	t	195
 9297	Komiljon ota MFY	1	t	195
 9298	Madaniyat MFY	1	t	195
 9299	Madaniyat MFY	1	t	195
 9300	Monoq MFY	1	t	195
-9301	Navro'z MFY	1	t	195
-9302	Navro'z MFY	1	t	195
-9303	Navro'z MFY	1	t	195
+9301	Navro`z MFY	1	t	195
+9302	Navro`z MFY	1	t	195
+9303	Navro`z MFY	1	t	195
 9304	Ogahiy MFY	1	t	195
-9305	Oltinqal'a MFY	1	t	195
-9306	Oq ko'l MFY	1	t	195
-9307	Oq ko'l MFY	1	t	195
+9305	Oltinqal`a MFY	1	t	195
+9306	Oq ko`l MFY	1	t	195
+9307	Oq ko`l MFY	1	t	195
 9308	Oq oltin MFY	1	t	195
 9309	Ostona MFY	1	t	195
 9310	Oxunboboev MFY	1	t	195
 9311	Oydin MFY	1	t	195
-9312	O'zbekiston QFY	1	t	195
+9312	O`zbekiston QFY	1	t	195
 9313	Paxtakor MFY	1	t	195
-9314	Po'lat MFY	1	t	195
+9314	Po`lat MFY	1	t	195
 9315	Qiyot QFY	1	t	195
 9316	Qiyot MFY	1	t	195
-9317	Qozoqqal'a MFY	1	t	195
-9318	Qo'shko'pir MFY	1	t	195
+9317	Qozoqqal`a MFY	1	t	195
+9318	Qo`shko`pir MFY	1	t	195
 9319	Qum yop MFY	1	t	195
 9320	Qunduz MFY	1	t	195
 9321	Royat MFY	1	t	195
 9322	Shovot MFY	1	t	195
 9323	Shovot ShchaFY	1	t	195
-9324	Shovotqal'a QFY	1	t	195
-9325	To'qmang'it MFY	1	t	195
-9326	To'qmang'it MFY	1	t	195
+9324	Shovotqal`a QFY	1	t	195
+9325	To`qmang`it MFY	1	t	195
+9326	To`qmang`it MFY	1	t	195
 9327	Turkiston MFY	1	t	195
-9328	Uzunko'l MFY	1	t	195
+9328	Uzunko`l MFY	1	t	195
 9329	Xitoy QFY	1	t	195
 9330	Xitoy MFY	1	t	195
 9331	Xunarmand MFY	1	t	195
 9332	Yangi turmush MFY	1	t	195
-9333	Yangi yo'l MFY	1	t	195
+9333	Yangi yo`l MFY	1	t	195
 9334	Yangiobod MFY	1	t	195
 9335	Achchiqquyi MFY	1	t	196
 9336	Angiariq MFY	1	t	196
@@ -13111,68 +13111,68 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9339	Boliqchi MFY	1	t	196
 9340	Boromiq MFY	1	t	196
 9341	Boyot MFY	1	t	196
-9342	Bo'ston MFY	1	t	196
+9342	Bo`ston MFY	1	t	196
 9343	Chakir MFY	1	t	196
 9344	Chiqirchi MFY	1	t	196
 9345	Chiqirchi QFY	1	t	196
-9346	Do'stlik MFY	1	t	196
+9346	Do`stlik MFY	1	t	196
 9347	Egrisolma MFY	1	t	196
-9348	G'altak MFY	1	t	196
+9348	G`altak MFY	1	t	196
 9349	Gulabod QFY	1	t	196
-9350	Gullanbog' MFY	1	t	196
-9351	Gullanbog' QFY	1	t	196
+9350	Gullanbog` MFY	1	t	196
+9351	Gullanbog` QFY	1	t	196
 9352	Istiqlol MFY	1	t	196
 9353	Jaloil MFY	1	t	196
-9354	Kattabog' MFY	1	t	196
-9355	Kattabog' QFY	1	t	196
+9354	Kattabog` MFY	1	t	196
+9355	Kattabog` QFY	1	t	196
 9356	Killovit MFY	1	t	196
 9357	Kushanda MFY	1	t	196
 9358	Ogoxiy MFY	1	t	196
 9359	Oq-machit MFY	1	t	196
 9360	Ostona MFY	1	t	196
 9361	Ostona QFY	1	t	196
-9362	O'zbekiston MFY	1	t	196
-9363	Po'rsang MFY	1	t	196
+9362	O`zbekiston MFY	1	t	196
+9363	Po`rsang MFY	1	t	196
 9364	Qarmish MFY	1	t	196
 9365	Qarmish QFY	1	t	196
-9366	Qorako'z MFY	1	t	196
+9366	Qorako`z MFY	1	t	196
 9367	Qozoqli MFY	1	t	196
-9368	Qo'ng'irot MFY	1	t	196
-9369	Qo'riqtom MFY	1	t	196
-9370	Qo'riqtom QFY	1	t	196
-9371	Qo'shloq MFY	1	t	196
+9368	Qo`ng`irot MFY	1	t	196
+9369	Qo`riqtom MFY	1	t	196
+9370	Qo`riqtom QFY	1	t	196
+9371	Qo`shloq MFY	1	t	196
 9372	Sevgan MFY	1	t	196
 9373	Sardorlar MFY	1	t	196
 9374	Sherobod MFY	1	t	196
 9375	Shirsholi MFY	1	t	196
-9376	Shixbog'i MFY	1	t	196
+9376	Shixbog`i MFY	1	t	196
 9377	Soburzon MFY	1	t	196
 9378	Tagan MFY	1	t	196
 9379	Tagan QFY	1	t	196
 9380	Tuzloq MFY	1	t	196
-9381	Ulug'bek MFY	1	t	196
+9381	Ulug`bek MFY	1	t	196
 9382	Urganch MFY	1	t	196
-9383	Uyg'ur MFY	1	t	196
+9383	Uyg`ur MFY	1	t	196
 9384	Vakillar MFY	1	t	196
-9385	Xo'jalar MFY	1	t	196
+9385	Xo`jalar MFY	1	t	196
 9386	Yangier MFY	1	t	196
 9387	Yangiariq MFY	1	t	196
 9388	Yangiariq SHFY	1	t	196
 9389	Yangiobod MFY	1	t	196
 9390	Bogolon MFY	1	t	197
-9391	Bo'ston MFY	1	t	197
-9392	Bo'zkal'a 1 MFY	1	t	197
-9393	Bo'zkal'a 2 MFY	1	t	197
-9394	Bo'zkal'a 3 MFY	1	t	197
+9391	Bo`ston MFY	1	t	197
+9392	Bo`zkal`a 1 MFY	1	t	197
+9393	Bo`zkal`a 2 MFY	1	t	197
+9394	Bo`zkal`a 3 MFY	1	t	197
 9395	Chubolonchi MFY	1	t	197
-9396	Do'stlik MFY	1	t	197
+9396	Do`stlik MFY	1	t	197
 9397	Guliston MFY	1	t	197
 9398	Jayxun MFY	1	t	197
 9399	Katli MFY	1	t	197
 9400	Qiyot MFY	1	t	197
 9401	Qora tepa MFY	1	t	197
 9402	Mangitlar MFY	1	t	197
-9403	Ming Bog'olon MFY	1	t	197
+9403	Ming Bog`olon MFY	1	t	197
 9404	Navr yor MFY	1	t	197
 9405	Navruz MFY	1	t	197
 9406	Ocha kala MFY	1	t	197
@@ -13186,15 +13186,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9414	Xayvat MFY	1	t	197
 9415	Yangi yor MFY	1	t	197
 9416	Yukori Boshkir MFY	1	t	197
-9417	Bog'olon QFY	1	t	197
+9417	Bog`olon QFY	1	t	197
 9418	Boshkirshix QFY	1	t	197
-9419	Buzkal'a QFY	1	t	197
+9419	Buzkal`a QFY	1	t	197
 9420	Chubolonchi QFY	1	t	197
 9421	Kalandardurman QFY	1	t	197
 9422	Kargalar MFY	1	t	197
 9423	Oyokdurman QFY	1	t	197
 9424	Shirinkungirot QFY	1	t	197
-9425	Uyg'ur QFY	1	t	197
+9425	Uyg`ur QFY	1	t	197
 9426	Yangibozor SHFY	1	t	197
 9427	Abay MFY	1	t	198
 9428	Bektemir MFY	1	t	198
@@ -13204,7 +13204,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9432	Maxjnuntol MFY	1	t	198
 9433	Mirishkor MFY	1	t	198
 9434	Nurafshon MFY	1	t	198
-9435	o'Ashurov MFY	1	t	198
+9435	o`Ashurov MFY	1	t	198
 9436	Roxat MFY	1	t	198
 9437	X.Bayqaro MFY	1	t	198
 9438	Zilola MFY	1	t	198
@@ -13219,15 +13219,15 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9447	Beshkapa MFY	1	t	199
 9448	Baxor MFY	1	t	199
 9449	Bobur MFY	1	t	199
-9450	Bo'z-2 MFY	1	t	199
+9450	Bo`z-2 MFY	1	t	199
 9451	Darxon MFY	1	t	199
 9452	Feruza MFY	1	t	199
-9453	Fayzulla Xo'jaev MFY	1	t	199
+9453	Fayzulla Xo`jaev MFY	1	t	199
 9454	Guliston MFY	1	t	199
 9455	Gulzor MFY	1	t	199
 9456	Katta Oltintepa MFY	1	t	199
 9457	Katta Qorasuv MFY	1	t	199
-9458	Katta Yalang'ochota MFY	1	t	199
+9458	Katta Yalang`ochota MFY	1	t	199
 9459	Lashkarbegi MFY	1	t	199
 9460	M.Ismoiliy MFY	1	t	199
 9461	Munavvarqori MFY	1	t	199
@@ -13238,29 +13238,29 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9466	Olmachi MFY	1	t	199
 9467	Oltintepa-10 MFY	1	t	199
 9468	Oqibat MFY	1	t	199
-9469	Oqqo'rg'on MFY	1	t	199
+9469	Oqqo`rg`on MFY	1	t	199
 9470	Salar MFY	1	t	199
 9471	Sayram MFY	1	t	199
 9472	Shalola MFY	1	t	199
 9473	Shaxriobod MFY	1	t	199
 9474	Shaxrisabz MFY	1	t	199
-9475	Sho'rtepa MFY	1	t	199
+9475	Sho`rtepa MFY	1	t	199
 9476	Shukur Burxonov MFY	1	t	199
 9477	Traktorsozlar MFY	1	t	199
 9478	Turon MFY	1	t	199
-9479	Ulug'bek MFY	1	t	199
+9479	Ulug`bek MFY	1	t	199
 9480	Umid MFY	1	t	199
-9481	Uyg'onish MFY	1	t	199
-9482	X'abdullaev MFY	1	t	199
+9481	Uyg`onish MFY	1	t	199
+9482	X`abdullaev MFY	1	t	199
 9483	Xamid Olimjon MFY	1	t	199
 9484	Xorazm MFY	1	t	199
 9485	Xumoyun MFY	1	t	199
-9486	Yalong'och MFY	1	t	199
-9487	Yalong'och-ota MFY	1	t	199
+9486	Yalong`och MFY	1	t	199
+9487	Yalong`och-ota MFY	1	t	199
 9488	Yangi Avayxon MFY	1	t	199
 9489	Yangi xayot MFY	1	t	199
 9490	Yuzrabod MFY	1	t	199
-9491	A'avloniy MFY	1	t	200
+9491	A`avloniy MFY	1	t	200
 9492	A.Fitrat MFY	1	t	200
 9493	Afrosiyob MFY	1	t	200
 9494	At-Termiziy MFY	1	t	200
@@ -13271,7 +13271,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9499	Birodarlik MFY	1	t	200
 9500	Bogishamol MFY	1	t	200
 9501	Chinor MFY	1	t	200
-9502	Do'stlik MFY	1	t	200
+9502	Do`stlik MFY	1	t	200
 9503	Fayziobod	1	t	200
 9504	Furkat MFY	1	t	200
 9505	Istiqlol MFY	1	t	200
@@ -13306,18 +13306,18 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9534	Axmad Yassaviy MFY	1	t	201
 9535	Beruniy Maydoni MFY	1	t	201
 9536	Beruniy MFY	1	t	201
-9537	Beshqo'rg'on MFY	1	t	201
-9538	Bo'ston MFY	1	t	201
-9539	Chig'atoy Darboza MFY	1	t	201
-9540	Chig'atoy Oqtepa MFY	1	t	201
-9541	Chilto'g'on MFY	1	t	201
+9537	Beshqo`rg`on MFY	1	t	201
+9538	Bo`ston MFY	1	t	201
+9539	Chig`atoy Darboza MFY	1	t	201
+9540	Chig`atoy Oqtepa MFY	1	t	201
+9541	Chilto`g`on MFY	1	t	201
 9542	Chimboy MFY	1	t	201
 9543	Chuqursoy MFY	1	t	201
 9544	Chustiy MFY	1	t	201
-9545	Do'stlik MFY	1	t	201
+9545	Do`stlik MFY	1	t	201
 9546	Eski shahar MFY	1	t	201
-9547	G'alaba MFY	1	t	201
-9548	G'ani A.zamov MFY	1	t	201
+9547	G`alaba MFY	1	t	201
+9548	G`ani A.zamov MFY	1	t	201
 9549	Gulzor MFY	1	t	201
 9550	Guruchariq MFY	1	t	201
 9551	Guzarboshi MFY	1	t	201
@@ -13327,8 +13327,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9555	Istiqbol MFY	1	t	201
 9556	Istiqlol MFY	1	t	201
 9557	Jiydali MFY	1	t	201
-9558	K.G'ofurov MFY	1	t	201
-9559	Mirza G'olib MFY	1	t	201
+9558	K.G`ofurov MFY	1	t	201
+9559	Mirza G`olib MFY	1	t	201
 9560	Miskin MFY	1	t	201
 9561	Moyarik MFY	1	t	201
 9562	Mustaqillik MFY	1	t	201
@@ -13353,33 +13353,33 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9581	Xastimom MFY	1	t	201
 9582	Xislat MFY	1	t	201
 9583	Xofiz Kuxakiy MFY	1	t	201
-9584	Xonchorbog' MFY	1	t	201
+9584	Xonchorbog` MFY	1	t	201
 9585	Yangi Sebzor MFY	1	t	201
 9586	Yoshlik MFY	1	t	201
 9587	Ziyo MFY	1	t	201
 9588	A.Jomiy MFY	1	t	202
 9589	A.Navoiy MFY	1	t	202
 9590	A.Temur MFY	1	t	202
-9591	Al-Farg'oniy MFY	1	t	202
+9591	Al-Farg`oniy MFY	1	t	202
 9592	Bahor MFY	1	t	202
 9593	Bobur MFY	1	t	202
 9594	Chosh-tepa MFY	1	t	202
-9595	Do'stlik MFY	1	t	202
+9595	Do`stlik MFY	1	t	202
 9596	Guliston MFY	1	t	202
 9597	Ittifoq MFY	1	t	202
 9598	Kum-arik MFY	1	t	202
 9599	Kush-kurgon MFY	1	t	202
 9600	Madaniyat MFY	1	t	202
 9601	Mustaqillik MFY	1	t	202
-9602	Navro'z MFY	1	t	202
+9602	Navro`z MFY	1	t	202
 9603	Nilufar MFY	1	t	202
-9604	Nog'ay-qo'rg'on MFY	1	t	202
+9604	Nog`ay-qo`rg`on MFY	1	t	202
 9605	Obod MFY	1	t	202
 9606	Oltin vodiy MFY	1	t	202
 9607	Oqibat MFY	1	t	202
 9608	Qipchoq MFY	1	t	202
 9609	Sh.Burxonov MFY	1	t	202
-9610	Temir yo'lchi MFY	1	t	202
+9610	Temir yo`lchi MFY	1	t	202
 9611	Tinchlik MFY	1	t	202
 9612	Uchuvchilar MFY	1	t	202
 9613	Uzgarish MFY	1	t	202
@@ -13389,14 +13389,14 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9617	Yangi hayot MFY	1	t	202
 9618	Yangi Sergeli MFY	1	t	202
 9619	Yorkin hayot MFY	1	t	202
-9620	Yo'ldosh MFY	1	t	202
+9620	Yo`ldosh MFY	1	t	202
 9621	A. Kodiriy MFY	1	t	203
 9622	A. Soguniy MFY	1	t	203
 9623	Al-Xorazmiy MFY	1	t	203
 9624	Bekobod MFY	1	t	203
 9625	Beshkayrogoch MFY	1	t	203
 9626	Birlik MFY	1	t	203
-9627	Bog'ichinor MFY	1	t	203
+9627	Bog`ichinor MFY	1	t	203
 9628	Bogiston MFY	1	t	203
 9629	Bogobod MFY	1	t	203
 9630	Chamanzor MFY	1	t	203
@@ -13412,17 +13412,17 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9640	Katta Ka.ni MFY	1	t	203
 9641	Kori Yogdi MFY	1	t	203
 9642	Koziguzar MFY	1	t	203
-9643	Ko'kchaOqtepa MFY	1	t	203
-9644	Ko'ksaroy MFY	1	t	203
-9645	Ko'rkamobod MFY	1	t	203
-9646	Ko'xnaCho'ponota MFY	1	t	203
+9643	Ko`kchaOqtepa MFY	1	t	203
+9644	Ko`ksaroy MFY	1	t	203
+9645	Ko`rkamobod MFY	1	t	203
+9646	Ko`xnaCho`ponota MFY	1	t	203
 9647	Latifguzar MFY	1	t	203
 9648	Nayman MFY	1	t	203
 9649	Nishabariq MFY	1	t	203
 9650	Nurobod MFY	1	t	203
 9651	Okmachit MFY	1	t	203
 9652	Paxtakor MFY	1	t	203
-9653	Qo'rg'ontepa MFY	1	t	203
+9653	Qo`rg`ontepa MFY	1	t	203
 9654	QuyiDarxon MFY	1	t	203
 9655	Shark Guli MFY	1	t	203
 9656	Shark Yulduzi MFY	1	t	203
@@ -13455,41 +13455,41 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9683	Binokor MFY	1	t	204
 9684	Birlashgan MFY	1	t	204
 9685	Bobur MFY	1	t	204
-9686	Boyqo'rg'on MFY	1	t	204
+9686	Boyqo`rg`on MFY	1	t	204
 9687	Boysun MFY	1	t	204
 9688	Bunyodkor MFY	1	t	204
-9689	Cho'lpon MFY	1	t	204
+9689	Cho`lpon MFY	1	t	204
 9690	Donishmand MFY	1	t	204
-9691	Do'stlik MFY	1	t	204
-9692	Go'zal MFY	1	t	204
+9691	Do`stlik MFY	1	t	204
+9692	Go`zal MFY	1	t	204
 9693	Guliston MFY	1	t	204
 9694	Hamza MFY	1	t	204
 9695	Iltifot MFY	1	t	204
 9696	Iqbol MFY	1	t	204
 9697	Istiqlol MFY	1	t	204
-9698	Jarqo'rg'on MFY	1	t	204
-9699	Jo'rabek MFY	1	t	204
+9698	Jarqo`rg`on MFY	1	t	204
+9699	Jo`rabek MFY	1	t	204
 9700	Katta Yangiobod MFY	1	t	204
-9701	Ma'rifat MFY	1	t	204
+9701	Ma`rifat MFY	1	t	204
 9702	Mashinasozlar MFY	1	t	204
 9703	Maxmur MFY	1	t	204
-9704	Mirzo Ulug'bek MFY	1	t	204
+9704	Mirzo Ulug`bek MFY	1	t	204
 9705	Moxinur MFY	1	t	204
 9706	Muqimiy MFY	1	t	204
 9707	Mustakillik 10 yil MFY	1	t	204
 9708	Mustaqillik MFY	1	t	204
 9709	Muxtor Ashrafiy MFY	1	t	204
-9710	Navro'z MFY	1	t	204
+9710	Navro`z MFY	1	t	204
 9711	Nodira MFY	1	t	204
 9712	Olmos MFY	1	t	204
-9713	Oydinko'l MFY	1	t	204
-9714	O'rta Masjid MFY	1	t	204
+9713	Oydinko`l MFY	1	t	204
+9714	O`rta Masjid MFY	1	t	204
 9715	Parvoz MFY	1	t	204
-9716	Qatta qo'yliq MFY	1	t	204
-9717	Qo'ylik ota MFY	1	t	204
+9716	Qatta qo`yliq MFY	1	t	204
+9717	Qo`ylik ota MFY	1	t	204
 9718	Taraqqiyot MFY	1	t	204
 9719	Tarnov boshi MFY	1	t	204
-9720	To'y tepa MFY	1	t	204
+9720	To`y tepa MFY	1	t	204
 9721	Tuzel MFY	1	t	204
 9722	Umid MFY	1	t	204
 9723	Usmon Nosir MFY	1	t	204
@@ -13497,25 +13497,25 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9725	Yangi Davr MFY	1	t	204
 9726	Yanginur MFY	1	t	204
 9727	Yangiobod MFY	1	t	204
-9728	Yangiqo'rg'on MFY	1	t	204
+9728	Yangiqo`rg`on MFY	1	t	204
 9729	1-Charx Kamolon MFY	1	t	205
 9730	1-Qatortol MFY	1	t	205
 9731	2-Charx Kamolon MFY	1	t	205
 9732	2-Qatortol MFY	1	t	205
 9733	3-Charx Kamolon MFY	1	t	205
 9734	Al-Xorazmiy MFY	1	t	205
-9735	Bekto'pi MFY	1	t	205
-9736	Beshqo'rg'on MFY	1	t	205
-9737	Beshyog'och MFY	1	t	205
+9735	Bekto`pi MFY	1	t	205
+9736	Beshqo`rg`on MFY	1	t	205
+9737	Beshyog`och MFY	1	t	205
 9738	Bahoriston MFY	1	t	205
-9739	Bog'iston MFY	1	t	205
+9739	Bog`iston MFY	1	t	205
 9740	Botirma MFY	1	t	205
-9741	Bo'ri jar MFY	1	t	205
+9741	Bo`ri jar MFY	1	t	205
 9742	Chilonzor MFY	1	t	205
-9743	Cho'pon-ota MFY	1	t	205
-9744	Do'mbirobod MFY	1	t	205
-9745	Do'stlik MFY	1	t	205
-9746	G'ofur G'ulom MFY	1	t	205
+9743	Cho`pon-ota MFY	1	t	205
+9744	Do`mbirobod MFY	1	t	205
+9745	Do`stlik MFY	1	t	205
+9746	G`ofur G`ulom MFY	1	t	205
 9747	Guliston MFY	1	t	205
 9748	Hamza MFY	1	t	205
 9749	Hayrobod MFY	1	t	205
@@ -13526,7 +13526,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9754	Katta Qozirobod MFY	1	t	205
 9755	Katta Xirmon tepa MFY	1	t	205
 9756	Kichik Xirmontepa MFY	1	t	205
-9757	Ko'tarma MFY	1	t	205
+9757	Ko`tarma MFY	1	t	205
 9758	Lutfiy MFY	1	t	205
 9759	Mehrjon MFY	1	t	205
 9760	Mevazor MFY	1	t	205
@@ -13534,7 +13534,7 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9762	Naqqoshlik MFY	1	t	205
 9763	Navbahor MFY	1	t	205
 9764	Novza MFY	1	t	205
-9765	No'g'oy-Qo'rg'on MFY	1	t	205
+9765	No`g`oy-Qo`rg`on MFY	1	t	205
 9766	Olmazor MFY	1	t	205
 9767	Oq-tepa MFY	1	t	205
 9768	Qatortol MFY	1	t	205
@@ -13543,42 +13543,42 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9771	Sharq Tongi MFY	1	t	205
 9772	Tinchlik MFY	1	t	205
 9773	Tirsakobod MFY	1	t	205
-9774	Xalqlar Do'stligi MFY	1	t	205
+9774	Xalqlar Do`stligi MFY	1	t	205
 9775	Xirmon tepa MFY	1	t	205
-9776	Yakkabog'MFY	1	t	205
+9776	Yakkabog`MFY	1	t	205
 9777	Yakkatut MFY	1	t	205
 9778	Beltepa MFY	1	t	206
-9779	Bog' ko'cha MFY	1	t	206
-9780	Bo'ston MFY	1	t	206
+9779	Bog` ko`cha MFY	1	t	206
+9780	Bo`ston MFY	1	t	206
 9781	Chaqar MFY	1	t	206
 9782	Chorsu MFY	1	t	206
-9783	Cho'ponota MFY	1	t	206
+9783	Cho`ponota MFY	1	t	206
 9784	Eshonguzar MFY	1	t	206
 9785	EskiJararik MFY	1	t	206
 9786	Gulbozor MFY	1	t	206
 9787	Gulobod MFY	1	t	206
 9788	Ibn Sino MFY	1	t	206
-9789	Ilg'or MFY	1	t	206
+9789	Ilg`or MFY	1	t	206
 9790	Ipakchi MFY	1	t	206
 9791	Islomobod MFY	1	t	206
 9792	Janggox MFY	1	t	206
 9793	Jarariq MFY	1	t	206
 9794	Kamolon MFY	1	t	206
-9795	Kattabog' MFY	1	t	206
+9795	Kattabog` MFY	1	t	206
 9796	Kattaxovuz MFY	1	t	206
 9797	Koxota MFY	1	t	206
-9798	Ko'kcha MFY	1	t	206
+9798	Ko`kcha MFY	1	t	206
 9799	Labzak MFY	1	t	206
-9800	M.Uyg'ur MFY	1	t	206
+9800	M.Uyg`ur MFY	1	t	206
 9801	Novza MFY	1	t	206
-9802	o'Xo'jaev MFY	1	t	206
+9802	o`Xo`jaev MFY	1	t	206
 9803	Obinazir MFY	1	t	206
 9804	Olmazor MFY	1	t	206
 9805	Oqilon MFY	1	t	206
 9806	Oqtepa MFY	1	t	206
-9807	O'qchi MFY	1	t	206
-9808	O'rda MFY	1	t	206
-9809	O'zbekiston MFY	1	t	206
+9807	O`qchi MFY	1	t	206
+9808	O`rda MFY	1	t	206
+9809	O`zbekiston MFY	1	t	206
 9810	Qoratosh MFY	1	t	206
 9811	S.Darvoza MFY	1	t	206
 9812	Sarxumdon MFY	1	t	206
@@ -13606,9 +13606,9 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9834	Bogishamol MFY	1	t	207
 9835	Chinor MFY	1	t	207
 9836	Chosh-tepa MFY	1	t	207
-9837	Do'stlik MFY	1	t	207
+9837	Do`stlik MFY	1	t	207
 9838	Firdavsiy MFY	1	t	207
-9839	G'. Abdullaev MFY	1	t	207
+9839	G`. Abdullaev MFY	1	t	207
 9840	Gayratiy MFY	1	t	207
 9841	Guliston MFY	1	t	207
 9842	Islomobod MFY	1	t	207
@@ -13658,8 +13658,8 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 9886	 Rakat MFY	1	t	208
 9887	 A.Avloniy MFY	1	t	208
 9888	 Muqimiy MFY	1	t	208
-9889	 O'rikzor MFY	1	t	208
-9890	 To'qimachi MFY	1	t	208
+9889	 O`rikzor MFY	1	t	208
+9890	 To`qimachi MFY	1	t	208
 9891	 Bobur MFY	1	t	208
 9892	 Qushbegi MFY	1	t	208
 9893	 Boshliq MFY	1	t	208
@@ -13798,22 +13798,22 @@ COPY public.user_quarter (id, title, sort, is_active, district_id) FROM stdin;
 10026	Do'stlik MFY	1	t	18
 10027	Madaniyat MFY	1	t	18
 10028	Qonliko'l SHFY	1	t	18
-10029	Taxtako'pir PFY	1	t	24
+10029	Taxtako`pir PFY	1	t	24
 10030	Aydin jol MFY	1	t	24
 10031	Dawir MFY	1	t	24
-10032	G'arezsizlik MFY	1	t	24
-10033	Taxtako'pir OFY	1	t	24
-10034	Atako'l OFY	1	t	24
-10035	O'zbekiston OFY	1	t	24
+10032	G`arezsizlik MFY	1	t	24
+10033	Taxtako`pir OFY	1	t	24
+10034	Atako`l OFY	1	t	24
+10035	O`zbekiston OFY	1	t	24
 10036	Qaraoy MFY	1	t	24
-10037	Qarateren' OFY	1	t	24
-10038	Da'wqara MFY	1	t	24
+10037	Qarateren` OFY	1	t	24
+10038	Da`wqara MFY	1	t	24
 10039	Mulik OFY	1	t	24
 10040	Dawitsay MFY	1	t	24
-10041	Marjanko'l OFY	1	t	24
-10042	Jan'adarya OFY	1	t	24
+10041	Marjanko`l OFY	1	t	24
+10042	Jan`adarya OFY	1	t	24
 10043	Beltaw OFY	1	t	24
-10044	Qon'iratko'l OFY	1	t	24
+10044	Qon`iratko`l OFY	1	t	24
 10045	Qostruba KMFY	1	t	24
 10046	Iftixor MFY	1	t	185
 10047	O'rmonchilar MFY	1	t	185
