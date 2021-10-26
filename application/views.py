@@ -33,7 +33,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
     def get_queryset(self):
         role = self.request.user.role
-        qs = super().get_queryset()
+        qs = super().get_queryset().filter(is_active=True)
 
         if role == CHECKER:
             section = get_object_or_404(Section, id=self.request.user.section.id)
@@ -107,8 +107,6 @@ class ApplicationPdf(AllowedRolesMixin, View):
         application = get_object_or_404(Application, id=self.kwargs[self.pk_url_kwarg])
         pdf = render_to_pdf(self.template_name, self.get_context_data())
         p = canvas.Canvas(pdf)
-        print(type(p))
-        print(p.showPage())
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Ariza #%s.pdf" % (application.id)
@@ -166,7 +164,9 @@ def get_information(request):
 @login_required
 def create_application_doc(request, filename):
     application = Application.objects.get(file_name=filename)
-
+    if application.process == DRAFT:
+        messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani to\'liq to\'ldiring!')
+        return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
     section = Section.objects.get(id=application.section.id)
 
     if section.pay_for_service and request.user.role == USER:
@@ -642,10 +642,9 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
-            application.is_active = True
+            application.process = CREATED
             # percent = StateDutyPercent.objects.filter(car_is_new=True, person_type=application.person_type, service=application.service)
             # state_duty = PaidStateDuty.objects.create(percent=percent)
-
             application.save()
             return HttpResponse(status=200)
         return HttpResponse(status=400)
@@ -696,6 +695,7 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                     ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
                                                               application=application, paid_state_duty=paid_state_duty,
                                                               moderator=moderator)
+                    #bu yerga agar hamma to'lovlar o'tgan bo'lsa application is_paymentni True qilish kerak
                     return HttpResponse(status=200)
         else:
             return HttpResponse(status=404)

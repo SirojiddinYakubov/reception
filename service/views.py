@@ -96,7 +96,6 @@ class AccountStatement(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
                 if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
                     seriya = request.POST.get('seriya')
                     contract_date = datetime.datetime.strptime(request.POST.get('contract_date'), '%Y-%m-%d')
@@ -211,7 +210,6 @@ class ContractOfSale(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
 
                 if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
                     seriya = request.POST.get('seriya')
@@ -322,7 +320,6 @@ class GiftAgreement(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
 
                 if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
                     seriya = request.POST.get('seriya')
@@ -431,7 +428,6 @@ class InheritanceAgreement(ServiceCustomMixin):
             application.password = password
             application.service = service
             application.car = car
-            application.is_active = False
 
             if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
                 seriya = request.POST.get('seriya')
@@ -541,7 +537,6 @@ class ReEquipment(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
 
                 # if request.POST.get('seriya', None) and request.POST.get('contract_date', None):
                 #     seriya = request.POST.get('seriya')
@@ -641,7 +636,6 @@ class ReplaceTp(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
                 application.save()
                 return HttpResponse(application.id, content_type='json', status=200)
         except Exception as e:
@@ -740,7 +734,6 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
                 application.password = password
                 application.service = service
                 application.car = car
-                application.is_active = False
                 application.save()
                 return HttpResponse(application.id, content_type='json', status=200)
         except Exception as e:

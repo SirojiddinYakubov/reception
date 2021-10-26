@@ -1,9 +1,13 @@
 <table class="table table-bordered table-striped">
     <tbody>
-    <tr>
-        <th scope="row">Status:</th>
-        <td><button class="btn btn-success">Arizani {{ application.section.title }}ga jo'natish</button></td>
-    </tr>
+    {% if not application.process == 7 %}
+        <tr>
+            <th scope="row">Status:</th>
+            <td>
+                <button class="btn btn-success">Arizani {{ application.section.title }}ga jo'natish</button>
+            </td>
+        </tr>
+    {% endif %}
     <tr>
         <th scope="row">Ariza raqami:</th>
         <td>{{ application.id }}</td>

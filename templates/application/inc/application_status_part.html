@@ -66,6 +66,10 @@
                 inspektorlari tomonidan ko'rib
                 chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
             </th>
+        {% elif application.process == 7 %}
+            <th style="color: #e53e3e"> Arizangizdagi ma'lumotlari to'liq bo'lmaganligi sababli YHXB bo'limiga jo'natish uchun talabga javob bermaydi!
+
+            </th>
         {% endif %}
 
 
@@ -82,7 +86,8 @@
 
 
                 <button style="margin-left: 2%" type="button"
-                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov qilish
+                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov
+                    qilish
                     &nbsp&nbsp&nbsp<i
                             class="fas fa-long-arrow-alt-right"></i>
                 </button>

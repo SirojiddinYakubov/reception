@@ -18,15 +18,17 @@ WAITING_FOR_PAYMENT = 3  # To'lovni kutmoqda
 WAITING_FOR_ORIGINAL_DOCUMENTS = 4  # Hujjatlarning asl nusxasini kutmoqda
 SUCCESS = 5  # Muvaffaqiyatli yakunlandi
 REJECTED = 6  # Rad etildi
+DRAFT = 7
 
 PROCESS_CHOICES = (
-    (CREATED, "Ariza yaratildi"),
-    (SHIPPED, "Jo'natildi"),
-    (ACCEPTED_FOR_CONSIDERATION, "Ko'rib chiqish uchun qabul qilindi"),
-    (WAITING_FOR_PAYMENT, "To'lovni kutmoqda"),
-    (WAITING_FOR_ORIGINAL_DOCUMENTS, "Hujjatlarni asl nusxasini kutmoqda"),
-    (SUCCESS, "Muvaffaqiyatli yakunlandi"),
-    (REJECTED, "Rad etildi"),
+    (DRAFT, "DRAFT -> Ariza yaratilish jarayonida"),
+    (CREATED, "CREATED -> Ariza yaratildi"),
+    (SHIPPED, "SHIPPED -> Jo'natildi"),
+    (ACCEPTED_FOR_CONSIDERATION, "ACCEPTED_FOR_CONSIDERATION -> Ko'rib chiqish uchun qabul qilindi"),
+    (WAITING_FOR_PAYMENT, "WAITING_FOR_PAYMENT -> To'lovni kutmoqda"),
+    (WAITING_FOR_ORIGINAL_DOCUMENTS, "WAITING_FOR_ORIGINAL_DOCUMENTS -> Hujjatlarni asl nusxasini kutmoqda"),
+    (SUCCESS, "SUCCESS -> Muvaffaqiyatli yakunlandi"),
+    (REJECTED, "REJECTED -> Rad etildi"),
 
 )
 
@@ -51,7 +53,7 @@ class Application(models.Model):
     person_type = models.IntegerField(_('Ariza topshiruvchi shaxsi'), choices=PERSON_CHOICES, default=PHYSICAL_PERSON)
     organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.CASCADE, null=True,
                                      blank=True)
-    process = models.IntegerField(choices=PROCESS_CHOICES, verbose_name="Holat", default=CREATED)
+    process = models.IntegerField(choices=PROCESS_CHOICES, verbose_name="Holat", default=DRAFT)
 
     is_payment = models.BooleanField(_("To\'lov qilingan"), default=False)
     service = models.ForeignKey(Service, verbose_name='Xizmat turi', on_delete=models.CASCADE, blank=True, null=True,
