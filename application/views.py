@@ -643,6 +643,7 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
             application.is_active = True
+            application.is_block = False
             # percent = StateDutyPercent.objects.filter(car_is_new=True, person_type=application.person_type, service=application.service)
             # state_duty = PaidStateDuty.objects.create(percent=percent)
 
