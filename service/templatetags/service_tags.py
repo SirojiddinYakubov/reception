@@ -83,5 +83,5 @@ def get_calculated_payments(context, state_duty_id):
 
 @register.simple_tag
 def get_services_list():
-    services_list = Service.objects.order_by('sort')
+    services_list = Service.objects.filter(is_active=True).order_by('sort')
     return services_list
