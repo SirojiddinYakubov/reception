@@ -172,14 +172,14 @@ def get_payment_payment(state_duty_percent, application):
         return state_duty_percent.percent
 
 
-# @register.simple_tag
-# def check_payment_paid(state_duty_percent):
-#     if getattr(state_duty_percent, 'paidstateduty_set'):
-#         print(state_duty_percent.paidstateduty_set.last())
-#         return True
-#     print(state_duty_percent)
-#     return False
+@register.simple_tag
+def check_payment_paid(application, percent):
+    return percent.paidstateduty_set.filter(application=application).exists()
 
-@register.filter
-def check_payment_paid(percent):
-    return percent.paidstateduty_set.all().exists()
+# @register.filter
+# def check_payment_paid(percent):
+#     print(185, percent.application)
+#     print(185, percent)
+#     return percent.paidstateduty_set.all().exists()
+
+

@@ -3,27 +3,29 @@
 <div id="render_div">
 
 
-<table class="table table-bordered table-striped" >
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Davlat boji nomi</th>
-        <th scope="col">Sababi</th>
-        <th scope="col">Hisob raqam</th>
-        <th scope="col">To'lov miqdori</th>
-        <th scope="col" style="width: 7%">Holati</th>
-    </tr>
-    </thead>
-    <tbody>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Davlat boji nomi</th>
+            <th scope="col">Sababi</th>
+            <th scope="col">Hisob raqam</th>
+            <th scope="col">To'lov miqdori</th>
+            <th scope="col" style="width: 7%">Holati</th>
+        </tr>
+        </thead>
+        <tbody>
 
-    {% for percent in percents %}
-        {% if percent.payment != 0 %}
-{#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
+        {% for percent in percents %}
+            {% if percent.payment != 0 %}
+                {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <th scope="row">{{ percent.get_state_duty_display }}</th>
                     <th scope="row">{{ percent.title }}</th>
-                    <td><b>    {% get_payment_score application.section application.created_user percent as score %} {{ score }}</b></td>
+                    <td>
+                        <b>    {% get_payment_score application.section application.created_user percent as score %} {{ score }}</b>
+                    </td>
                     <td><b class="state_payment">
                         {% get_payment_payment percent application as pay %}{{ pay|intcomma }}</b> so'm
                     </td>
@@ -33,38 +35,41 @@
                                    data-payment="{{ percent.id }}"
                                    class="payment_checkbox" type="checkbox"/>
                         {% else %}
-                            {% if percent|check_payment_paid %}
+                            {% check_payment_paid application percent as paid %}
+                            {% if paid %}
                                 <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                <div class="application-state-duty-payment"  data-payment="{{ percent.id }}"><i style="color: red" class="far fa-times-circle"></i></div>{% endif %}
+                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i
+                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}
                         {% endif %}
                     </td>
                 </tr>
-{#            {% endif %}#}
-        {% endif %}
+                {#            {% endif %}#}
+            {% endif %}
 
-    {% endfor %}
-    </tbody>
-    <tfoot style="background: lightgray">
-    <tr>
-        <th></th>
-        <th>Jami</th>
-        <th></th>
-        <th></th>
-        <th><b id="total_state_payments"></b> so'm</th>
-        <th></th>
-    </tr>
-    </tfoot>
-</table>
-<div style="margin: 20px; font-size: medium">
-    <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
-        bosh boshqarmasi XKKM</b></p>
-    <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
-    <p>MFO: <b style="color: blue">00014</b></p>
-    <p>INN: <b style="color: blue">201122919</b></p>
-</div>
+        {% endfor %}
+        </tbody>
+        <tfoot style="background: lightgray">
+        <tr>
+            <th></th>
+            <th>Jami</th>
+            <th></th>
+            <th></th>
+            <th><b id="total_state_payments"></b> so'm</th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+    <div style="margin: 20px; font-size: medium">
+        <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
+            bosh boshqarmasi XKKM</b></p>
+        <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
+        <p>MFO: <b style="color: blue">00014</b></p>
+        <p>INN: <b style="color: blue">201122919</b></p>
+    </div>
 </div>
 <hr>
-<p>Ushbu summa to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam yoki ko'p o'tgan to'lov uchun E-RIB ma'muriyati javobgar emas.</p>
+<p>Ushbu summa to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam yoki ko'p o'tgan to'lov uchun E-RIB
+    ma'muriyati javobgar emas.</p>
 <div class="justify-content-end row" data-html2canvas-ignore="true">
     <div class="col-12">
         {% if not application.is_payment %}
@@ -75,11 +80,11 @@
             {#            </button>#}
             {#        {% endif %}#}
 
-{#            <button type="button"#}
-{#                    class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov#}
-{#                qilish &nbsp&nbsp&nbsp<i#}
-{#                        class="fas fa-long-arrow-alt-right"></i>#}
-{#            </button>#}
+            {#            <button type="button"#}
+            {#                    class="btn btn-info waves-effect waves-light float-start application-state-duty-payment">Naqd to'lov#}
+            {#                qilish &nbsp&nbsp&nbsp<i#}
+            {#                        class="fas fa-long-arrow-alt-right"></i>#}
+            {#            </button>#}
         {% endif %}
         <button type="button" id="payment_render_pdf"
                 class="btn btn-info waves-effect waves-light float-end">To'lovlarni pdf holatda chiqarish
