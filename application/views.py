@@ -37,7 +37,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
         if role == CHECKER:
             section = get_object_or_404(Section, id=self.request.user.section.id)
-            qs = qs.filter(section=section).filter(
+            qs = qs.filter(section=section, is_block=False).filter(
                 process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
                              SUCCESS, REJECTED])
         else:

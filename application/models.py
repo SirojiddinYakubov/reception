@@ -46,10 +46,10 @@ PERSON_CHOICES = (
 
 
 class Application(models.Model):
-    created_user = models.ForeignKey(User, verbose_name=_('Yaratgan shaxs'), on_delete=models.SET_NULL, null=True,
+    created_user = models.ForeignKey(User, verbose_name=_('Yaratgan shaxs'), on_delete=models.CASCADE, null=True,
                                      related_name='user_application')
     person_type = models.IntegerField(_('Ariza topshiruvchi shaxsi'), choices=PERSON_CHOICES, default=PHYSICAL_PERSON)
-    organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.SET_NULL, null=True,
+    organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.CASCADE, null=True,
                                      blank=True)
     process = models.IntegerField(choices=PROCESS_CHOICES, verbose_name="Holat", default=CREATED)
 
@@ -131,6 +131,6 @@ APPLICATION_CASH_BY_MODERATOR_STATUS = (
 
 class ApplicationCashByModerator(BaseModel):
     status = models.PositiveIntegerField(choices=APPLICATION_CASH_BY_MODERATOR_STATUS)
-    application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True)
-    moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.SET_NULL, null=True)
-    paid_state_duty = models.ForeignKey('service.PaidStateDuty', on_delete=models.SET_NULL, null=True)
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True)
+    moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.CASCADE, null=True)
+    paid_state_duty = models.ForeignKey('service.PaidStateDuty', on_delete=models.CASCADE, null=True)
