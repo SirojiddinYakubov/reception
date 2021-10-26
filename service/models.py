@@ -105,6 +105,7 @@ class StateDutyPercent(models.Model):
     car_type = models.ManyToManyField(CarType, verbose_name='Avtomobil turi', blank=True)
     car_is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
     is_old_number = models.BooleanField(verbose_name='Avtomobildagi DRB eski', default=False)
+    is_save_old_number = models.BooleanField(verbose_name='Avtomobildagi DRBni saqlab qolish', default=False)
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
     is_auction = models.BooleanField(default=False, verbose_name="Auktsiondan oligan")
