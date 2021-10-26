@@ -125,6 +125,8 @@ def reg_new_car_v2(application):
         elif car.lost_technical_passport:
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
             qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=True)
+    else:
+        qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=True)
 
     """Qayta ro'yhatlash"""
     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
