@@ -116,7 +116,8 @@ def reg_new_car_v2(application):
         if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
                 days=1):
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
-            fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=False)
+            fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+                                                    lost_technical_passport=False)
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
             fine2 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
                                                     lost_technical_passport=car.lost_technical_passport)
@@ -124,9 +125,12 @@ def reg_new_car_v2(application):
             qs = (fine1 | fine2).distinct()
         elif car.lost_technical_passport:
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=True)
+            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+                                                 lost_technical_passport=True)
     else:
-        qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE, lost_technical_passport=True)
+        if car.lost_technical_passport:
+            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+                                             lost_technical_passport=True)
 
     """Qayta ro'yhatlash"""
     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
