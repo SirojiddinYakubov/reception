@@ -300,8 +300,8 @@ class Car(models.Model):
                                   null=True)
     fuel_type = models.ManyToManyField('FuelType', verbose_name='Yoqilg\'i turi', blank=True,
                                        related_name='car_fuel_type')
-    re_fuel_type = models.ManyToManyField('FuelType', verbose_name='Qo\'shimcha o\'rnatilgan yoqilg\'i turi',
-                                          blank=True, related_name='car_re_fuel_type')
+    re_fuel_type = models.ForeignKey('FuelType', on_delete=models.CASCADE, verbose_name='Qo\'shimcha o\'rnatilgan yoqilg\'i turi',
+                                          blank=True, related_name='car_re_fuel_type', null=True)
     full_weight = models.CharField(verbose_name='To\'la vazni', max_length=10, null=True, blank=True, default=0)
     empty_weight = models.CharField(verbose_name='Yuksiz vazni', max_length=10, null=True, blank=True, default=0)
     type = models.ForeignKey('CarType', on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True, null=True)

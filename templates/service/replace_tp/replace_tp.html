@@ -288,6 +288,40 @@
                                        autocomplete="off">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="re_fuel_type">{% trans "Yoqilg'i turini o'zgartiryapsizmi?" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <div class="row justify-content-start mt-1">
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                        <input type="radio" id="is_re_fuel_type_yes"
+                                               name="is_re_fuel_type" value="true"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_re_fuel_type_yes">Ha</label>
+                                    </div>
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                        <input type="radio" id="is_re_fuel_type_no"
+                                               name="is_re_fuel_type" value="false" checked
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_re_fuel_type_no">Yoq</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 re_fuel_type_div" style="display: none">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="re_fuel_type">{% trans "Yangi yoqilg'i turi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <select id="re_fuel_type" required class="form-control select2"
+                                        data-width="100%">
+                                    {% for fuel_type in fuel_types %}
+                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                         <div class="justify-content-end row">
                             <div class="col-12">
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
@@ -335,7 +369,7 @@
 
 
             {#$('#fieldset1').hide()#}
-            {#$('#fieldset3').show()#}
+            {#$('#fieldset2').show()#}
 
         })
 
@@ -433,7 +467,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addCarModel(url = '{% url 'user:save_new_car_model' %}')
-
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -447,6 +481,7 @@
                     var el = $(this);
                     if (el.val() === "new") {
                         var newval = addColor(url = '{% url 'user:save_new_color' %}')
+                        console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }
@@ -507,6 +542,27 @@
                 })
 
 
+                if ($('#is_re_fuel_type_yes').is(':checked')) {
+
+                    $('.re_fuel_type_div').show()
+
+                    $('#re_fuel_type').attr('name', 're_fuel_type')
+                } else {
+                    $('.re_fuel_type_div').hide()
+                    $('#re_fuel_type').removeAttr('name')
+                }
+
+                $('input[name=is_re_fuel_type]').on('change', function () {
+
+                    if ($('#is_re_fuel_type_yes').prop('checked')) {
+                        $('.re_fuel_type_div').show()
+                        $('#re_fuel_type').attr('name', 're_fuel_type')
+                    } else {
+                        $('.re_fuel_type_div').hide()
+                        $('#re_fuel_type').removeAttr('name')
+                    }
+                })
+
                 function changeOrganizationValues() {
                     $.ajax({
                         type: 'POST',
@@ -514,6 +570,7 @@
                         data: {'organization': $('#organization option:selected').val()},
                         statusCode: {
                             200: function (response) {
+                                console.log(response)
                                 $('#director').attr('value', response.organization.fields.director)
                                 $('#identification_number').attr('value', response.organization.fields.identification_number)
                                 $('#legal_address_region').attr('value', response.legal_address_region)
@@ -521,7 +578,8 @@
 
                                 $('input[name ="organization"]').val($('#organization option:selected').val())
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                             },
                         },
@@ -543,6 +601,7 @@
                             },
                             statusCode: {
                                 200: function (response) {
+                                    console.log(response)
                                     if (response === "True") {
                                         //agar yuk avtomobil bo'lsa
                                         $('.chassis_number_div').show()
@@ -554,9 +613,11 @@
                                         $('.chassis_number_div').hide()
                                         $('#chassis_number').removeAttr('name')
                                     }
-                                }, 400: function () {
+                                }, 400: function (err) {
+                                    console.log(err)
                                     error_toast()
-                                }, 500: function () {
+                                }, 500: function (err) {
+                                    console.log(err)
                                     error_toast()
                                 }
                             },
@@ -761,6 +822,7 @@
                                 data: $(form).serialize(),
                                 statusCode: {
                                     200: function (response) {
+                                        console.log(response)
                                         $('#fieldset2').hide()
                                         $('#fieldset3').show()
 
@@ -795,7 +857,8 @@
 
 
                                     },
-                                    400: function () {
+                                    400: function (err) {
+                                        console.log(err)
                                         errorFunction()
                                         $('#next2').attr('type', 'submit')
                                         $('#next2').attr('disabled', false)
@@ -839,6 +902,7 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: 'top-end',
@@ -860,11 +924,13 @@
                                     title: 'Arizangiz muvaffaqiyatli topshirildi!'
                                 })
                             },
-                            400: function () {
+                            400: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             },
-                            404: function () {
+                            404: function (err) {
+                                console.log(err)
                                 error_toast()
                                 $('#load').css('visibility', 'hidden')
                             }
@@ -885,6 +951,7 @@
                         },
                         statusCode: {
                             200: function (res) {
+                                console.log(res)
                                 var li = ''
 
 
@@ -907,14 +974,12 @@
 
                                 $('#sections_list').html(li)
                             },
-                            404: function () {
-
+                            404: function (err) {
+                                console.log(err)
                             }
                         },
                     });
                 }
-
-
             }
         )
     </script>
