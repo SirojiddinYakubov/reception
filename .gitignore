@@ -25,3 +25,8 @@ click/migrations/
 paycom/migrations/
 venv39/
 deploy/.env
+.bash_history
+.cache
+.local
+.viminfo
+deploy/pgdata
