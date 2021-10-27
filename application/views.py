@@ -42,6 +42,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
                              SUCCESS, REJECTED])
         else:
             qs = qs.filter(created_user=self.request.user)
+            print(qs.last().created_date)
         return qs
 
     def get(self, request, *args, **kwargs):
@@ -181,55 +182,12 @@ def create_application_doc(request, filename):
         doc = DocxTemplate(f"static{os.sep}online{os.sep}{service.key}{os.sep}{service.key}_legal.docx")
     else:
         doc = DocxTemplate(f"static{os.sep}online{os.sep}{service.key}{os.sep}{service.key}_person.docx")
-    # if service.key == 'account_statement':
-    #     if application.organization:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}account_statement{os.sep}account_statement_person.docx")
-    # elif service.key == 'gift_agreement':
-    #     if application.organization:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}gift_agreement{os.sep}gift_agreement_person.docx")
-    # elif service.key == 'contract_of_sale':
-    #     if application.organization:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}contract_of_sale{os.sep}contract_of_sale_person.docx")
-    # elif service.key == 'replace_tp':
-    #     if application.organization:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}replace_tp{os.sep}replace_tp_person.docx")
-    # elif service.key == 'replace_number_and_tp':
-    #     if application.organization:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}replace_number_and_tp{os.sep}replace_number_and_tp_person.docx")
-    # elif service.key == 're_equipment':
-    #     if application.organization:
-    #         doc = DocxTemplate(f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}re_equipment{os.sep}re_equipment_person.docx")
-    # elif service.key == 'inheritance_agreement':
-    #     if application.organization:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_legal.docx")
-    #     else:
-    #         doc = DocxTemplate(
-    #             f"static{os.sep}online{os.sep}inheritance_agreement{os.sep}inheritance_agreement_person.docx")
 
     car = get_object_or_404(Car, id=application.car.id)
 
     devices_string = ', '.join([str(i).replace('"', "'") for i in car.device.all()])
     fuel_types_string = ', '.join([str(i).replace('"', "'") for i in car.fuel_type.all()])
-    re_fuel_types_string = car.re_fuel_type.title if car.re_fuel_type else ''
+    re_fuel_type_string = car.re_fuel_type.title if car.re_fuel_type else ''
 
     application_document = ApplicationDocument.objects.filter(example_document__key=service.key,
                                                               application=application).last()
@@ -253,7 +211,7 @@ def create_application_doc(request, filename):
                    given_number=car.given_number,
                    old_number=car.old_number,
                    old_technical_passport=car.old_technical_passport,
-                   re_fuel_types=re_fuel_types_string,
+                   re_fuel_type=re_fuel_type_string,
                    section=section)
 
     car_model = CarModel.objects.get(id=car.model.id)
