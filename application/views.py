@@ -42,7 +42,6 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
                              SUCCESS, REJECTED])
         else:
             qs = qs.filter(created_user=self.request.user)
-            print(qs.last().created_date)
         return qs
 
     def get(self, request, *args, **kwargs):

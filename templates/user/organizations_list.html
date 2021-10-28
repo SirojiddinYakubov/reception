@@ -11,92 +11,96 @@
         <div class="col-12 text-center p-0">
             <div class="card px-0 pb-0">
                 <div class="card-body">
-                    <div class="col-12">
 
-                        <select class="form-select" name="organization" id="organization">
-                            {% for organization in organizations %}
-                                <option value="{{ organization.id }}">{{ organization.title }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-12 mt-3">
-                        <table id="table" class="table table-striped table-bordered text-start">
-                            <tr>
-                                <th scope="row">Tashkilot nomi:</th>
-                                <td id="Viewtitle">{% if organization.title %}{{ organization.title }}{% endif %}</td>
+                        <div class="col-12">
 
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Rahbari:</th>
-                                <td id="Viewdirector">
-                                    {% if organization.director %}{{ organization.director }}{% endif %}</td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">STIR raqami:</th>
-                                <td id="Viewidentification_number">{% if organization.identification_number %}
-                                    {{ organization.identification_number }}{% endif %}</td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Yuridik manzili(Viloyat):</th>
-                                <td id="Viewlegal_address_region">
-                                    {% if organization.legal_address_region %}
-                                        {{ organization.legal_address_region.title }}{% endif %}</td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Yuridik manzili(Tuman):</th>
-                                <td id="Viewlegal_address_district">
-                                    {% if organization.legal_address_district %}
-                                        {{ organization.legal_address_district.title }}{% endif %}</td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">Garaj manzili:</th>
-                                <td id="Viewaddress_of_garage">{% if organization.address_of_garage %}
-                                    {{ organization.address_of_garage }}{% endif %}</td>
-                            </tr>
-                            {% if organization.certificate_photo %}
+                            <select class="form-select" name="organization" id="organization">
+                                {% for organization in organizations %}
+                                    <option value="{{ organization.id }}">{{ organization.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <table id="table" class="table table-striped table-bordered text-start">
                                 <tr>
-                                    <th scope="row">Guvohnoma surati:</th>
-                                    <td id="Viewcertificate_photo"><a target="_blank" download="on"
-                                                                      href="{{ organization.certificate_photo.url }}">Yuklab
-                                        olish</a></td>
+                                    <th scope="row">Tashkilot nomi:</th>
+                                    <td id="Viewtitle">
+                                        {% if organization.title %}{{ organization.title }}{% endif %}</td>
+
                                 </tr>
-                            {% endif %}
-                            {% if organization.license_photo %}
+
                                 <tr>
-                                    <th scope="row">Litsenziya surati:</th>
-                                    <td id="Viewlicense_photo"><a target="_blank" download="on"
-                                                                  href="{{ organization.license_photo.url }}">Yuklab
-                                        olish</a>
-                                    </td>
+                                    <th scope="row">Rahbari:</th>
+                                    <td id="Viewdirector">
+                                        {% if organization.director %}{{ organization.director }}{% endif %}</td>
                                 </tr>
-                            {% endif %}
-                            <tr>
-                                <th scope="row">Yaratildi:</th>
-                                <td id="Viewcreated_date">{% if organization.created_date %}
-                                    {{ organization.created_date|date:"d.m.Y" }}{% endif %}</td>
-                            </tr>
 
-                        </table>
+                                <tr>
+                                    <th scope="row">STIR raqami:</th>
+                                    <td id="Viewidentification_number">{% if organization.identification_number %}
+                                        {{ organization.identification_number }}{% endif %}</td>
+                                </tr>
 
-                        <hr>
-                        {% if organizations %}
+                                <tr>
+                                    <th scope="row">Yuridik manzili(Viloyat):</th>
+                                    <td id="Viewlegal_address_region">
+                                        {% if organization.legal_address_region %}
+                                            {{ organization.legal_address_region.title }}{% endif %}</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Yuridik manzili(Tuman):</th>
+                                    <td id="Viewlegal_address_district">
+                                        {% if organization.legal_address_district %}
+                                            {{ organization.legal_address_district.title }}{% endif %}</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Garaj manzili:</th>
+                                    <td id="Viewaddress_of_garage">{% if organization.address_of_garage %}
+                                        {{ organization.address_of_garage }}{% endif %}</td>
+                                </tr>
+                                {% if organization.certificate_photo %}
+                                    <tr>
+                                        <th scope="row">Guvohnoma surati:</th>
+                                        <td id="Viewcertificate_photo"><a target="_blank" download="on"
+                                                                          href="{{ organization.certificate_photo.url }}">Yuklab
+                                            olish</a></td>
+                                    </tr>
+                                {% endif %}
+                                {% if organization.license_photo %}
+                                    <tr>
+                                        <th scope="row">Litsenziya surati:</th>
+                                        <td id="Viewlicense_photo"><a target="_blank" download="on"
+                                                                      href="{{ organization.license_photo.url }}">Yuklab
+                                            olish</a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <th scope="row">Yaratildi:</th>
+                                    <td id="Viewcreated_date">{% if organization.created_date %}
+                                        {{ organization.created_date|date:"d.m.Y" }}{% endif %}</td>
+                                </tr>
+
+                            </table>
+
+                            <hr>
+
+
                             <div class="row">
-                                <a href="{% url 'user:edit_organization' organization.id %}" style="margin: 3%"
-                                   class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-secondary">Tashkilotni
-                                    tahrirlash
-                                </a>
+                                {% if organizations %}
+                                    <a href="{% url 'user:edit_organization' organization.id %}" style="margin: 3%"
+                                       class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-secondary">Tashkilotni
+                                        tahrirlash
+                                    </a>
+                                {% endif %}
                                 <a href="{% url 'user:add_organization' %}" style="margin: 3%"
                                    class="col-11 col-lg-5 col-md-5 col-xl-5 col-sm-5 btn btn-primary">Tashkilot qo'shish
                                 </a>
 
                             </div>
-                        {% endif %}
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
