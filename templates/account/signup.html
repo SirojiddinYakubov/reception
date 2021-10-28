@@ -37,6 +37,11 @@
         .action-button-previous:hover {
             color: #fff;
         }
+
+        input::placeholder {
+            opacity: 0.7%
+
+        }
     </style>
 
 </head>
@@ -99,13 +104,13 @@
 
                                         <button style="float: right; height: 50%; color:white" id="get_code"
                                                 type="button"
-                                                class="btn btn-info">Parolni olish
+                                                class="btn btn-info">Tasdiqlash kodini olish
                                         </button>
                                         <label id="label_confirm" style="width: 100%; display: none" class="not_copy"
-                                               for="input_confirm">Parol:</label>
+                                               for="input_confirm">Tasdiqlash kodi:</label>
                                         <input id="input_confirm" style="display: none; margin-bottom: 0 !important;"
                                                type="text" name="input_confirm" class="form-control"
-                                               placeholder="Parolni kiriting..."/>
+                                               placeholder="Tasdiqlash kodini kiriting..."/>
                                         <div style="display: none" class="valid-feedback">Muvaffaqiyatli to'ldirildi
                                         </div>
                                         <div style="display: none" class='invalid-feedback'>Parol noto'g'ri
@@ -119,7 +124,7 @@
                             <a href="{% url 'user:login_view' %}" class="previous action-button-previous"
                                style="text-decoration: none"
                             >Tizimga kirish</a>
-                            <button type="button" id="next1" name="next" class="action-button" disabled>
+                            <button type="button" id="next1" name="next" class="action-button">
                                 Tasdiqlash
                             </button>
                         </fieldset>
@@ -234,6 +239,7 @@
                                     <form action="#" id="save_passport_form" method="post">
                                         <div class="form-card">
                                             <h2 class="fs-title">Passport ma'lumotlari</h2>
+                                            {% csrf_token %}
                                             <div class="row">
                                                 <div class="col-12 col-lg-5 col-md-12 col-xl-4 col-sm-12"><label
                                                         class="pay label_required not_copy" for="passport_seriya">Passport
@@ -259,28 +265,28 @@
                                                            id="issue_by_whom" class="form-control" name="issue_by_whom"
                                                            autocomplete="off" placeholder="Masalan: BUXORO SHAHAR IIB"/>
                                                 </div>
-                                                <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12">
-                                                    <label
-                                                            class="label_required not_copy">JShShIR</label>
-                                                    <input type="text" style="margin-bottom: 0" name="person_id"
-                                                           class="form-control"
-                                                           id="person_id"
-                                                           placeholder=""/>
-                                                    <p style="font-size: small; margin-bottom: 0">Jismoniy shaxsning
-                                                        shaxsiy
-                                                        identifikatsiya
-                                                        raqamini
-                                                        kiriting</p>
-                                                </div>
+                                                {#                                                <div class="col-12 col-lg-12 col-md-12 col-xl-6 col-sm-12">#}
+                                                {#                                                    <label#}
+                                                {#                                                            class="label_required not_copy">JShShIR</label>#}
+                                                {#                                                    <input type="text" style="margin-bottom: 0" name="person_id"#}
+                                                {#                                                           class="form-control"#}
+                                                {#                                                           id="person_id"#}
+                                                {#                                                           placeholder=""/>#}
+                                                {#                                                    <p style="font-size: small; margin-bottom: 0">Jismoniy shaxsning#}
+                                                {#                                                        shaxsiy#}
+                                                {#                                                        identifikatsiya#}
+                                                {#                                                        raqamini#}
+                                                {#                                                        kiriting</p>#}
+                                                {#                                                </div>#}
                                             </div>
-                                            <div class="row mt-2">
-                                                <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5">
-                                                    <img class="img-responsive mb-2"
-                                                         style="width: 200px; margin: 0 auto" height="auto"
-                                                         src="{% static 'img/passport.jpg' %}"
-                                                         alt="JShShIR">
-                                                </div>
-                                            </div>
+                                            {#                                            <div class="row mt-2">#}
+                                            {#                                                <div class="col-12 col-lg-5 col-md-5 col-xl-5 col-sm-5">#}
+                                            {#                                                    <img class="img-responsive mb-2"#}
+                                            {#                                                         style="width: 200px; margin: 0 auto" height="auto"#}
+                                            {#                                                         src="{% static 'img/passport.jpg' %}"#}
+                                            {#                                                         alt="JShShIR">#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
                                         </div>
 
                                         <input type="button" name="Previous" class="action-button-previous"
@@ -331,6 +337,26 @@
         })
     })
     $(document).ready(function () {
+
+        var csrftoken = getCookie('csrftoken')
+        {#token = getCookie('token')#}
+
+
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                {#xhr.setRequestHeader('Authorization', `Token ${token}`)#}
+            },
+            error: function (response) {
+                if (response.status === 401) {
+                    tokenInvalid()
+                }
+            }
+        })
+
+        {#$('#fieldset1').hide()#}
+        {#$('#fieldset3').show()#}
+
         var phone_mask = false
 
         $('#phone').inputmask('+\\9\\98 (99) 999-99-99', {
@@ -345,7 +371,7 @@
 
             },
         });
-        $('#input_confirm').inputmask('99999');
+        $('#input_confirm').inputmask('999999');
         $('#person_id').inputmask('99999999999999');
 
         $('#passport_seriya').inputmask({casing: 'upper'});
@@ -360,9 +386,6 @@
                 $('#agree').css('color', 'red')
             }
         })
-
-        {#$('#fieldset1').hide()#}
-        {#$('#fieldset3').show()#}
 
 
         $('#agree').on('click', function () {
@@ -406,16 +429,12 @@
                 }
             });
         })
-
-         var password
+        var password
         $('#get_code').on('click', function () {
             if (phone_mask) {
-
                 if ($('#accept').prop('checked')) {
-
-
                     $.ajax({
-                        type: "GET",
+                        type: "POST",
                         url: "{% url 'user:get_code' %}",
                         data: {
                             'phone': encodeURIComponent($('#phone').val()), // from form
@@ -423,6 +442,13 @@
                         statusCode: {
                             200: function (res) {
 
+                                $("#fieldset1").keyup(function (event) {
+                                    if (event.keyCode === 13) {
+                                        $("#next1").click();
+                                    }
+                                });
+
+                                console.log(res)
                                 $.notifyDefaults({
                                     type: 'warning',
                                     allow_dismiss: false,
@@ -435,7 +461,7 @@
                                     icon: 'glyphicon glyphicon-envelope',
                                     message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
                         '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
-                        '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga parol yuborildi !`
+                        '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga tasdqilash kodi yuborildi!`
                                 });
 
                                 $("#get_code").attr("disabled", true);
@@ -476,9 +502,11 @@
 
                             },
                             409: function (err) {
+                                console.log(err)
                                 alert('Bu raqam allaqachon ro\'yhatdan o\'tkazilgan!')
                             },
                             400: function (err) {
+                                console.log(err)
                                 alert('Xatolik yuz berdi! Sahifani ayngilab qayta urinib ko\'ring!')
                             }
                         },
@@ -497,28 +525,52 @@
         })
 
 
-        $('#input_confirm').keyup(function () {
-            var test = $('#input_confirm').val()
+        $('#next1').on('click', function () {
+            var code = $('#input_confirm').val()
 
             /*    pattern = /^\d{5}$/
-            if (test.match(pattern)) {*/
-            if (test === `${password}`) {
-                {#$('.invalid-feedback').css('display', 'none')#}
-                {#$('.valid-feedback').css('display', 'block')#}
-                $('#next1').prop('disabled', false)
+            if (test.match(pattern)) {  */
+            {#if (test === `${password}`) {#}
+            {#$('.invalid-feedback').css('display', 'none')#}
+            {#$('.valid-feedback').css('display', 'block')#}
+            {#$('#next1').prop('disabled', false)#}
 
-                $("#fieldset1").keyup(function (event) {
-                    if (event.keyCode === 13) {
-                        $("#next1").click();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'user:verify_code' %}",
+                data: {
+                    'secret': getCookie('token'),
+                    'code': code
+                },
+                statusCode: {
+                    200: function (res) {
+                        console.log(res)
+                        $('#fieldset1').hide()
+                        $('#fieldset2').css('opacity', '1').show()
+                        $('#input_confirm').prop('disabled', true)
+                        $('#phone').prop('disabled', true)
+                        $('#accept').prop('disabled', true)
+                        $('#personal').addClass('active')
+                        $('#next2').parent('.row').css('opacity', '1').show()
+                    },
+                    409: function (err) {
+                        console.log(err)
+                        alert('Bu raqam allaqachon ro\'yhatdan o\'tkazilgan!')
+                    },
+                    400: function (err) {
+                        console.log(err)
+                        alert(err.responseText)
+                        {#alert('Xatolik yuz berdi! Sahifani ayngilab qayta urinib ko\'ring!')#}
                     }
-                });
+                },
+            });
 
 
-            } else {
-                {#$('.invalid-feedback').css('display', 'block')#}
-                {#$('.valid-feedback').css('display', 'none')#}
-                $('#next1').prop('disabled', true)
-            }
+            //{#} else {#}
+            {#$('.invalid-feedback').css('display', 'block')#}
+            {#$('.valid-feedback').css('display', 'none')#}
+            {#$('#next1').prop('disabled', true)#}
+            //}
 
             /*} else {
                 $('#next1').prop('disabled', true)
@@ -527,24 +579,24 @@
             }*/
         });
 
-        $('#next1').on('click', function () {
-
-
-            $('#fieldset1').hide()
-            $('#fieldset2').css('opacity', '1').show()
-            $('#input_confirm').prop('disabled', true)
-            $('#accept').prop('disabled', true)
-            $('#personal').addClass('active')
-            $('#next2').parent('.row').css('opacity', '1').show()
-
-        })
-
+        {#$('#next1').on('click', function () {#}
+        {##}
+        {##}
+        {#    $('#fieldset1').hide()#}
+        {#    $('#fieldset2').css('opacity', '1').show()#}
+        {#    $('#input_confirm').prop('disabled', true)#}
+        {#    $('#accept').prop('disabled', true)#}
+        {#    $('#personal').addClass('active')#}
+        {#    $('#next2').parent('.row').css('opacity', '1').show()#}
+        {##}
+        //{#})#}
+        {##}
         $('#refresh_next2').on('click', function () {
             $('#fieldset2').hide()
             $('#fieldset3').css('opacity', '1').show()
             $('#save_passport_form').css('opacity', '1').show()
-            {#$('#input_confirm').prop('disabled', true)#}
-            {#$('#personal').addClass('active')#}
+            $('#input_confirm').prop('disabled', true)
+            $('#personal').addClass('active')
             $('#next3').parent('.row').css('opacity', '1').show()
 
         })
@@ -584,7 +636,7 @@
             }
         })
 
-
+        var userId;
         jQuery.validator.addMethod("noSpace", function (value, element) {
             return value == '' || value.trim().length != 0;
         }, "Iltimos, bo'sh joy qoldirmang!");
@@ -676,23 +728,14 @@
                 },
 
                 submitHandler: function (form) {
-                    var token = getCookie('token'),
-                        csrftoken = getCookie('csrftoken')
-
-                    $.ajaxSetup({
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                            xhr.setRequestHeader('Authorization', `Token ${token}`)
-                        },
-                    })
-
                     $.ajax({
                         type: "POST",
                         url: "{% url 'user:save_user_information' %}",
                         data: $(form).serialize(),
-
                         statusCode: {
-                            200: function () {
+                            201: function (res) {
+                                console.log(res)
+                                userId = res.id
                                 $('#next2').remove()
                                 $('#refresh_next2').css('display', 'block')
                                 $('#fieldset2').hide()
@@ -713,11 +756,9 @@
                                     }
                                 });
                             },
-                            400: function () {
-                                console.log(400)
-                            },
-                            401: function () {
-                                tokenInvalid()
+                            error: function (err) {
+                                alert(err.responseText)
+                                console.log(err)
                             }
                         },
 
@@ -752,10 +793,10 @@
                         required: true,
                         noSpace: true,
                     },
-                    person_id: {
-                        required: true,
-                        personIdMaxLength: true
-                    },
+                    /* person_id: {
+                         required: true,
+                         personIdMaxLength: true
+                     },*/
 
 
                 },
@@ -770,9 +811,9 @@
                     issue_by_whom: {
                         required: 'Passport kim tomonidan berilganligi kiritilmagan!',
                     },
-                    person_id: {
-                        required: 'JShShIR raqami kiritilmagan!',
-                    },
+                    /*   person_id: {
+                           required: 'JShShIR raqami kiritilmagan!',
+                       },*/
                 },
                 errorPlacement: function (error, element) {
                     if (element.is("#person_id")) {
@@ -783,7 +824,9 @@
 
                 },
 
-                submitHandler: function (form) {
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    console.log(form)
                     $('#next3').attr('disabled', true)
                     $('#next3').html('Tizimga kirish&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
@@ -793,42 +836,25 @@
                         }
                     });
 
-                    var token = getCookie('token'),
-                        csrftoken = getCookie('csrftoken')
-
-                    $.ajaxSetup({
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                            xhr.setRequestHeader('Authorization', `Token ${token}`)
-                        },
-                    })
-
                     $.ajax({
-                        type: "POST",
-                        url: "{% url 'user:save_passport_data' %}",
+                        type: "PATCH",
+                        url: "{% url 'user:save_user_passport' pk=12345 %}".replace(/12345/, userId.toString()),
                         data: $(form).serialize(),
-                        statusCode: {
-                            200: function () {
-                                setTimeout(function () {
-                                    window.location.href = '{% url "service:services_list" %}'
-                                }, 700)
-                            },
-                            400: function () {
-                                error_toast()
-                                $('#next3').attr('disabled', false)
-                                $('#next3').html('Tizimga kirish')
-                            },
-                            401: function () {
-                                tokenInvalid()
-                            },
-                            500: function () {
-                                error_toast()
-                                $('#next3').attr('disabled', false)
-                                $('#next3').html('Tizimga kirish')
-                            }
+                        success: function (res) {
+                            console.log(res)
+                            setTimeout(function () {
+                                window.location.href = '{% url "service:services_list" %}'
+                            }, 500)
+                        },
+                        error: function (err) {
+                            error_toast()
+                            alert(err.responseText)
+                            console.log(err)
+                            $('#next3').attr('disabled', false)
+                            $('#next3').html('Tizimga kirish')
                         },
                     });
-                    return false; // required to block normal submit since you used ajax
+                    return false;
                 }
             });
         }

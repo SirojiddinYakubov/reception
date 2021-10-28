@@ -1,24 +1,30 @@
 import json
 import random
 
+import pyotp
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.permissions import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+import user.admin
 from application.mixins import *
 from application.models import Application
 from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
+from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
+from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer
+from user.utils import send_otp
 
 
 @login_required
@@ -417,33 +423,40 @@ class EditPersonalData(AllowedRolesMixin, View):
             return HttpResponse(status=400)
 
 
-def get_code(request):
-    if request.is_ajax():
-        phone = request.GET.get('phone')
+class GetCode(APIView):
+    def post(self, request, *args, **kwargs):
+        phone_number = request.POST.get('phone')
+        phone = re.sub('[^0-9]', '', phone_number)
+
         try:
             user = User.objects.get(phone=phone)
             if user is not None:
-                return HttpResponse(status=409)
+                return Response({'detail': 'Phone Number already exists'},
+                                status=409)
         except ObjectDoesNotExist:
-            password = random.randint(10000, 99999)
-            user = User.objects.create(username=phone, phone=phone, password=password, turbo=password)
-            user.set_password(str(password))
-            user.save()
+            otp_response = send_otp(phone_number)
+            print(otp_response)
+            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
+            r = SendSmsWithApi(message=msg, phone=phone).get()
+            if r == SUCCESS:
+                response = Response({'secret': otp_response['secret']}, status=200)
+                response.set_cookie('token', otp_response['secret'], max_age=300)
+                return response
+            else:
+                return Response({"error": "Sms service not working"}, status=400)
 
-            print(password)
-            msg = f"E-RIB dasturidan ro'yhatdan o'tishni yakunlash va tizimga kirish ma'lumotlari  \nLogin: {user.username} \nParol: {user.turbo}"
-            SendSmsWithApi(message=msg, phone=phone).get()
-            token, created = Token.objects.get_or_create(user=user)
 
-            context = {
-                'password': password
-            }
-            data = json.dumps(context)
-            response = HttpResponse(data, status=200, content_type='json')
-            response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
-            return response
-    else:
-        return HttpResponse(status=400)
+class VerifyCode(APIView):
+    def post(self, request, *args, **kwargs):
+        secret = request.POST.get('secret')
+        sms_code: str = request.data.get("code")
+        sms_code = sms_code.zfill(6)
+        if sms_code and secret:
+            totp = pyotp.TOTP(secret, interval=315360000)
+            if totp.verify(sms_code):
+                return Response(status=200)
+            else:
+                return Response({'error': 'Tasdiqlash kodi noto\'g\'ri!'}, status=400)
 
 
 def get_user_pass(request):
@@ -563,58 +576,15 @@ def is_register(request):
 #     else:
 #         return HttpResponse(False)
 
-@permission_classes([IsAuthenticated])
-class Save_User_Information(APIView):
-    def post(self, request):
-        if request.is_ajax():
-            last_name = request.POST.get('last_name')
-            first_name = request.POST.get('first_name')
-            middle_name = request.POST.get('middle_name')
-            birthday = datetime.datetime.strptime(request.POST.get('birthday'), '%Y-%m-%d')
-            region = request.POST.get('region')
-            district = request.POST.get('district')
-            quarter = request.POST.get('quarter')
-            address = request.POST.get('address')
-            phone = request.POST.get('phone')
-            user = User.objects.get(phone=phone)
-            if user is not None:
-                user.last_name = last_name
-                user.first_name = first_name
-                user.middle_name = middle_name
-                user.birthday = birthday
-                user.region_id = region
-                user.district_id = district
-                user.quarter_id = quarter
-                user.address = address
-                user.save()
 
-                return HttpResponse(status=200)
-            else:
-                return HttpResponse(status=400)
-        else:
-            return HttpResponse(status=400)
+class SaveUserInformation(CreateAPIView):
+    serializer_class = UserCreateSerializer
+    queryset = User.objects.all()
 
 
-@permission_classes([IsAuthenticated])
-class save_passport_data(APIView):
-    def post(self, request):
-        if request.is_ajax():
-            user = get_object_or_404(User, id=request.user.id)
-            user = authenticate(request, username=user.phone, password=user.turbo)
-            if user is not None:
-                user.passport_seriya = request.POST.get('passport_seriya')
-                user.passport_number = request.POST.get('passport_number')
-                user.issue_by_whom = request.POST.get('issue_by_whom')
-                user.person_id = request.POST.get('person_id')
-                user.save()
-
-                login(request, user)
-                return HttpResponse(status=200)
-            else:
-                return HttpResponse(status=400)
-        else:
-            return HttpResponse(status=400)
-
+class SaveUserPassport(UpdateAPIView):
+    serializer_class = SaveUserPassportSerializer
+    queryset = User.objects.all()
 
 class HelloView(View):
     permission_classes = [IsAuthenticatedOrReadOnly, ]
