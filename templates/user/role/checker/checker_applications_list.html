@@ -108,7 +108,7 @@
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
-                                    <th>{% trans "Ariza raqami" %}</th>
+                                    <th>{% trans "#" %}</th>
                                     <th>{% trans "Xizmat nomi" %}</th>
                                     <th>{% trans "Avtomobil" %}</th>
                                     <th>{% trans "Topshirdi" %}</th>
@@ -231,7 +231,7 @@
                             old_request: window.location.search
                         }
                     }).then(function (res) {
-
+                        console.log(res)
                         callback({
                             recordsTotal: res.length,
                             recordsFiltered: res.length,

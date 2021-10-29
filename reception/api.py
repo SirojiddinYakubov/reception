@@ -1,4 +1,5 @@
 import json
+import os
 import time
 from types import FunctionType
 import requests
@@ -41,18 +42,23 @@ class SendSmsWithApi:
         return SUCCESS
 
     def authorization(self):
-        data = {
-            'email': 'bcloudintelekt@gmail.com',
-            'password': 'ddMFQPXTfQRuhj8nmNSyfLv6mniuSpBHxGj3ZEY5',
-        }
+        try:
+            data = {
+                'email': os.getenv('SMS_BROKER_EMAIL'),
+                'password': os.getenv('SMS_BROKER_PASSWORD'),
+            }
 
-        AUTHORIZATION_URL = 'http://notify.eskiz.uz/api/auth/login'
+            AUTHORIZATION_URL = 'http://notify.eskiz.uz/api/auth/login'
 
-        r = requests.request('POST', AUTHORIZATION_URL, data=data)
-        if r.json()['data']['token']:
-            return r.json()['data']['token']
-        else:
+            r = requests.request('POST', AUTHORIZATION_URL, data=data)
+            if r.json()['data']['token']:
+                return r.json()['data']['token']
+            else:
+                return FAILED
+        except Exception as e:
+            print('SMS_BROKER_EMAIL and SMS_BROKER_PASSWORD not found')
             return FAILED
+
 
     def send_message(self, message):
         token = self.authorization()
@@ -77,7 +83,7 @@ class SendSmsWithApi:
         }
         # print(f'message: {self.message}')
         r = requests.request("POST", SEND_SMS_URL, headers=HEADERS, data=PAYLOAD, files=FILES)
-        print(r.json())
+
         try:
             from user.models import Sms
             Sms.objects.create(sms_id=r.json()['id'], sms_count=self.spend, text=self.message,

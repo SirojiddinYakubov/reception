@@ -19,6 +19,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import path, include
 from django.views.generic import TemplateView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from reception import settings
 from user.views import HelloView, CustomAuthToken
@@ -29,24 +30,17 @@ def trigger_error(request):
     division_by_zero = 1 / 0
 
 
-def test(request):
-    print(request)
-    return HttpResponse(request)
-
-
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('yoz/', admin.site.urls),
     path('sentry-debug/', trigger_error),
-    path('hello/', HelloView.as_view(), name='hello'),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
-    path('auth/', include('djoser.urls.jwt')),
+
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
     path('payme/', include('paycom.urls')),
     path('click/', include('click.urls')),
     path('payments/', include('payments.urls')),
-    path('test/', test),
 
 ]
 

@@ -13,6 +13,7 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.permissions import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 import user.admin
 from application.mixins import *
@@ -578,13 +579,36 @@ def is_register(request):
 
 
 class SaveUserInformation(CreateAPIView):
-    serializer_class = UserCreateSerializer
     queryset = User.objects.all()
+    serializer_class = UserCreateSerializer
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserCreateSerializer(data=request.data, context={'request': self.request})
+        if serializer.is_valid():
+            user = serializer.save()
+            response = Response(serializer.data, status=201)
+            url = request.build_absolute_uri(reverse('token_obtain_pair'))
+            payload = {
+                'username': user.username,
+                'password': user.turbo,
+            }
+            r = requests.post(url, data=payload)
+            try:
+                token = r.json()['access']
+                response.set_cookie(token, max_age=TOKEN_MAX_AGE)
+            except:
+                send_message_to_developer(
+                    f'Cookie set token error! Login: {user.username} Parol: {user.turbo}')
+            return response
+        else:
+            return Response(serializer.errors)
 
 
 class SaveUserPassport(UpdateAPIView):
     serializer_class = SaveUserPassportSerializer
     queryset = User.objects.all()
+
 
 class HelloView(View):
     permission_classes = [IsAuthenticatedOrReadOnly, ]

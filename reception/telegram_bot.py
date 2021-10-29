@@ -8,7 +8,7 @@ def send_message_to_developer(message):
     """
     only send message to backend developer
     """
-    message = 'From Onless: ' + message
+    message = 'E-RIB.UZ: ' + message
     bot = telegram.Bot(token=BOT_TOKEN)
     try:
         bot.sendMessage('183551052', text=message)
