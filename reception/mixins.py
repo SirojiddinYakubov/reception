@@ -19,11 +19,8 @@ class AllowedRolesMixin(LoginRequiredMixin, View):
     def dispatch(self, *args, **kwargs):
         if not self.request.user.role in self.allowed_roles:
             raise Http404
-
-        try:
-            token = self.request.COOKIES.get('token')
-            Token.objects.get(key=token)
-        except ObjectDoesNotExist:
+        token = self.request.COOKIES.get('token')
+        if not token:
             logout(self.request)
             next = self.request.get_full_path()
             rev = reverse_lazy('user:login_view')
@@ -31,5 +28,4 @@ class AllowedRolesMixin(LoginRequiredMixin, View):
                 url = '{}?next={}'.format(rev, next)
                 return HttpResponseRedirect(url)
             return redirect(rev)
-
         return super().dispatch(*args, **kwargs)

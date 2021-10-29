@@ -91,6 +91,16 @@ class UserCreateSerializer(serializers.ModelSerializer):
             'quarter',
             'address',
         ]
+        extra_kwargs = {
+            'last_name': {'required': True},
+            'first_name': {'required': True},
+            'middle_name': {'required': True},
+            'birthday': {'required': True},
+            'region': {'required': True},
+            'district': {'required': True},
+            'quarter': {'required': True},
+            'address': {'required': True},
+        }
 
     def create(self, validated_data):
         password = str(random.randint(10000, 99999))
@@ -100,10 +110,15 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user.turbo = password
         user.save()
 
+        user = authenticate(self.context['request'], username=user.username, password=user.turbo)
+        if user is not None:
+            login(self.context['request'], user)
+        else:
+            raise ValidationError({'error': 'User not found'})
+
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-        print(msg)
         r = SendSmsWithApi(message=msg, phone=user.phone).get()
-        print(r)
+
         if r != SUCCESS:
             send_message_to_developer(
                 f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')
@@ -156,9 +171,4 @@ class SaveUserPassportSerializer(serializers.ModelSerializer):
             setattr(instance, k, v)
             instance.save()
 
-        user = authenticate(self.context['request'], username=instance.username, password=instance.turbo)
-        if user is not None:
-            login(self.context['request'], user)
-            return user
-        else:
-            raise ValidationError({'error': 'User not found'})
+        return instance

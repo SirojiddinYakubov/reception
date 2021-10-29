@@ -16,7 +16,7 @@ SHIPPED = 1  # Jo'natildi
 ACCEPTED_FOR_CONSIDERATION = 2  # Ko'rib chiqish uchun qabul qilindi
 WAITING_FOR_PAYMENT = 3  # To'lovni kutmoqda
 WAITING_FOR_ORIGINAL_DOCUMENTS = 4  # Hujjatlarning asl nusxasini kutmoqda
-SUCCESS = 5  # Muvaffaqiyatli yakunlandi
+ACCEPTED = 5  # Muvaffaqiyatli yakunlandi
 REJECTED = 6  # Rad etildi
 DRAFT = 7
 
@@ -27,7 +27,7 @@ PROCESS_CHOICES = (
     (ACCEPTED_FOR_CONSIDERATION, "ACCEPTED_FOR_CONSIDERATION -> Ko'rib chiqish uchun qabul qilindi"),
     (WAITING_FOR_PAYMENT, "WAITING_FOR_PAYMENT -> To'lovni kutmoqda"),
     (WAITING_FOR_ORIGINAL_DOCUMENTS, "WAITING_FOR_ORIGINAL_DOCUMENTS -> Hujjatlarni asl nusxasini kutmoqda"),
-    (SUCCESS, "SUCCESS -> Muvaffaqiyatli yakunlandi"),
+    (ACCEPTED, "ACCEPTED -> Muvaffaqiyatli yakunlandi"),
     (REJECTED, "REJECTED -> Rad etildi"),
 
 )

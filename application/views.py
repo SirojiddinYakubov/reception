@@ -15,6 +15,7 @@ from application.utils import reg_new_car, reg_new_car_v2
 from reception.api import SendSmsWithApi
 from reception.mixins import *
 from reception.settings import *
+from reception.telegram_bot import send_message_to_developer
 from service.models import *
 from user.models import *
 from user.utils import render_to_pdf
@@ -39,7 +40,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             section = get_object_or_404(Section, id=self.request.user.section.id)
             qs = qs.filter(section=section, is_block=False).filter(
                 process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
-                             SUCCESS, REJECTED])
+                             ACCEPTED, REJECTED])
         else:
             qs = qs.filter(created_user=self.request.user)
         return qs
@@ -323,26 +324,25 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         car.given_technical_passport = request.POST.get('technical_passport')
                         car.save()
 
-                        application.process = SUCCESS
+                        application.process = ACCEPTED
                         application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
                                                                             "%Y-%m-%d").date()
                         application.given_time = request.POST.get('given_time')
                         application.inspector = request.user
+                        application.confirmed_date = timezone.now()
                         application.save()
 
                         text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
 
                         # create notification
-                        Notification.objects.create(application=application, sender=request.user,
-                                                    receiver=application.created_user, text=text)
+                        notification = Notification.objects.create(application=application, sender=request.user,
+                                                                   receiver=application.created_user, text=text)
 
                         # send sms with eskiz
-                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
 
-                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi!%0a{car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.title} ga kelib olib ketishingizni so'raymiz."
-                        # msg = msg.replace(" ", "+")
-                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                        # response = requests.get(url)
+                        if r != SUCCESS:
+                            send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)
                     elif request.POST.get('process') == 'cancel':
                         application.process = REJECTED
@@ -353,16 +353,13 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {request.user.section.region.title} {request.user.section.title}"
 
                         # create notification
-                        Notification.objects.create(application=application, sender=request.user,
-                                                    receiver=application.created_user, text=text)
+                        notification = Notification.objects.create(application=application, sender=request.user,
+                                                                   receiver=application.created_user, text=text)
 
                         # send sms with eskiz
-                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
-
-                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} bekor qilindi! {request.user.section.title}"
-                        # msg = msg.replace(" ", "+")
-                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                        # response = requests.get(url)
+                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        if r != SUCCESS:
+                            send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)
                     elif request.POST.get('process') == 'process':
 
@@ -373,16 +370,13 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport voistasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz!"
 
                         # create notification
-                        Notification.objects.create(application=application, sender=request.user,
-                                                    receiver=application.created_user, text=text)
+                        notification = Notification.objects.create(application=application, sender=request.user,
+                                                                   receiver=application.created_user, text=text)
 
                         # send sms with eskiz
-                        SendSmsWithApi(phone=application.created_user.phone, message=text).get()
-
-                        # msg = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.POST.get('process_sms')} jarayonda turibti! {request.user.section.title}"
-                        # msg = msg.replace(" ", "+")
-                        # url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{application.created_user.phone}&msg={msg}"
-                        # response = requests.get(url)
+                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        if r != SUCCESS:
+                            send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)
                     else:
                         HttpResponse(status=404)
@@ -652,7 +646,7 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                     ApplicationCashByModerator.objects.create(status=APPLICATION_STATE_DUTY_PAYMENT,
                                                               application=application, paid_state_duty=paid_state_duty,
                                                               moderator=moderator)
-                    #bu yerga agar hamma to'lovlar o'tgan bo'lsa application is_paymentni True qilish kerak
+                    # bu yerga agar hamma to'lovlar o'tgan bo'lsa application is_paymentni True qilish kerak
                     return HttpResponse(status=200)
         else:
             return HttpResponse(status=404)
