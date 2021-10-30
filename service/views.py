@@ -743,11 +743,7 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
 
 @login_required
 def gift_agreement_index(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
@@ -875,11 +871,7 @@ class Save_Gift_Agreement(APIView):
 
 @login_required
 def contract_of_sale_index(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     # get previous years
     # year = datetime.datetime.today().year
@@ -1015,11 +1007,7 @@ class Save_Contract_Of_Sale(APIView):
 
 @login_required
 def replace_tp_index(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
@@ -1131,11 +1119,7 @@ class Save_Replace_Tp(APIView):
 
 @login_required
 def replace_number_and_tp_index(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)
@@ -1264,11 +1248,7 @@ class Save_Replace_Number_And_Tp(APIView):
 
 @login_required
 def re_equipment_index(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     cars = CarModel.objects.filter(is_active=True)
     fuel_types = FuelType.objects.filter(is_active=True)

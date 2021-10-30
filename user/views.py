@@ -208,12 +208,6 @@ def add_organization(request):
         'districts': districts,
     }
 
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
     if request.is_ajax():
         if request.method == 'POST':
             organization = Organization.objects.create(title=request.POST.get('title', None))
@@ -670,11 +664,6 @@ class Get_Car_Type(APIView):
 
 @login_required
 def add_worker(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
 
     context = {}
     if request.user.role == '7':
@@ -781,11 +770,7 @@ def add_worker(request):
 
 @login_required
 def workers_list(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
     if request.user.role == '7':
         workers = User.objects.filter(Q(role=6) & Q(is_active=True))
     else:
@@ -1069,11 +1054,7 @@ class EditCarData(AllowedRolesMixin, View):
 @login_required
 def view_organization_data(request, id):
     organization = get_object_or_404(Organization, id=id)
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     context = {
         'organization': organization
@@ -1084,11 +1065,7 @@ def view_organization_data(request, id):
 @login_required
 def view_personal_data(request, id):
     user = get_object_or_404(User, id=id)
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     context = {
         'user': user
@@ -1098,11 +1075,7 @@ def view_personal_data(request, id):
 
 @login_required
 def confirm_car_data(request, car_id):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
+
 
     if request.user.role == '4' or request.user.role == '5':
         car = get_object_or_404(Car, id=car_id)

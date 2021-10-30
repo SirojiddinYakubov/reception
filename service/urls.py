@@ -7,6 +7,7 @@ app_name = 'service'
 urlpatterns = [
 
     path('account-statement/', AccountStatement.as_view(), name='account_statement'),
+    # path('account-statement-save/', AccountStatementSave.as_view(), name='account_statement'),
     path('contract-of-sale/', ContractOfSale.as_view(), name='contract_of_sale'),
     path('gift-agreement/', GiftAgreement.as_view(), name='gift_agreement'),
     path('inheritance-agreement/', InheritanceAgreement.as_view(), name='inheritance_agreement'),

@@ -237,12 +237,6 @@ def create_application_doc(request, filename):
 
 @login_required
 def view_service_data(request, service_id):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
     service = get_object_or_404(Service, id=service_id)
     application = get_object_or_404(Application, id=service.application_service.all().first().id)
     if request.user.role == '1' and application.created_user != request.user:
@@ -256,12 +250,6 @@ def view_service_data(request, service_id):
 
 @login_required
 def change_get_request(request, key, value):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
     try:
         url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
         if value == 'all':
@@ -427,12 +415,6 @@ class RemoveApplication(APIView):
 
 @login_required
 def payment_detail(request, service_id):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('user:custom_logout'))
-
     service = get_object_or_404(Service, id=service_id)
     application = get_object_or_404(Application, id=service.application_service.all().first().id)
     payments = PaidStateDuty.objects.filter(service=service, is_active=True)
