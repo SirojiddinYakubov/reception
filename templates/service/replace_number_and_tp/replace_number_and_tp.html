@@ -524,7 +524,7 @@
                 }).on('select2:close', function () {
                     var el = $(this);
                     if (el.val() === "new") {
-                        var newval = addColor(url = '{% url 'user:save_new_color' %}')
+                        var newval = addColor(url = '{% url 'user:save_new_color' %}', select_id = 'color')
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);
                         }

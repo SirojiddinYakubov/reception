@@ -25,20 +25,30 @@ from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
 from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer
-from user.utils import send_otp
+from user.utils import send_otp, get_tokens_for_user
+
+
+class Home(TemplateResponseMixin, AllowedRolesMixin):
+    template_name = 'application/applications_list.html'
+    allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+
+    def get_template_names(self):
+        if self.request.user.role == USER:
+            return ['user/personal_data.html']
+        elif self.request.user.role == CHECKER:
+            return [self.template_name]
+
+    def get(self, request, *args, **kwargs):
+        return TemplateResponse(request, self.get_template_names())
 
 
 @login_required
 def personal_data(request):
-    try:
-        token = request.COOKIES.get('token')
-        Token.objects.get(key=token)
-    except ObjectDoesNotExist:
-        return redirect(reverse_lazy('landing:home_page'))
     # generate pdf
 
     # html holatda ekranga chiqarish
-    if request.user.person_id == None:
+    if request.user.passport_seriya == None or request.user.passport_seriya == None:
         return redirect(reverse_lazy('user:edit_personal_data'))
     # template = get_template('user/personal_data.html')
     passport = '{} {}'.format(request.user.passport_seriya, request.user.passport_number)
@@ -95,7 +105,9 @@ class Logout(APIView):
     def get(self, request, *args, **kwargs):
         # using Django logout
         logout(request)
-        return redirect(reverse_lazy('user:login_view'))
+        response = redirect(reverse_lazy('user:home'))
+        response.delete_cookie('token')
+        return response
 
 
 def login_view(request):
@@ -108,15 +120,12 @@ def login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    token, created = Token.objects.get_or_create(user=user)
+                    token = get_tokens_for_user(user)
                     if next:
                         response = HttpResponseRedirect(next)
                     else:
-                        if user.role == USER:
-                            response = redirect('service:services_list')
-                        elif user.role == CHECKER:
-                            response = redirect('application:applications_list')
-                    response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
+                        response = redirect('user:home')
+                    response.set_cookie('token', token['access'], max_age=TOKEN_MAX_AGE)
                     return response
                 else:
                     messages.warning(request, "Sizning profilingiz faol holatda emas!")
@@ -588,15 +597,10 @@ class SaveUserInformation(CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             response = Response(serializer.data, status=201)
-            url = request.build_absolute_uri(reverse('token_obtain_pair'))
-            payload = {
-                'username': user.username,
-                'password': user.turbo,
-            }
-            r = requests.post(url, data=payload)
+            token = get_tokens_for_user(user)
             try:
-                token = r.json()['access']
-                response.set_cookie(token, max_age=TOKEN_MAX_AGE)
+                token = token['access']
+                response.set_cookie(token['access'], max_age=TOKEN_MAX_AGE)
             except:
                 send_message_to_developer(
                     f'Cookie set token error! Login: {user.username} Parol: {user.turbo}')

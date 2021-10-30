@@ -16,6 +16,8 @@ urlpatterns = [
     
 
     # other requests
+
+    path('home/', Home.as_view(), name='home'),
     path('', personal_data, name='personal_data'),
     path('view-personal-data/<int:id>/', view_personal_data, name='view_personal_data'),
     path('edit-personal-data/', EditPersonalData.as_view(), name='edit_personal_data'),

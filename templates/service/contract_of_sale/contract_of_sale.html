@@ -434,7 +434,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
                                         id="prev3">Oldingi
                                 </button>
-                                <button type="button" id="fake" class="btn btn-danger">Fake</button>
+{#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
                                 <button type="submit" id="next3"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
@@ -587,7 +587,7 @@
                 }).on('select2:close', function () {
                     var el = $(this);
                     if (el.val() === "new") {
-                        var newval = addColor(url = '{% url 'user:save_new_color' %}')
+                        var newval = addColor(url = '{% url 'user:save_new_color' %}', select_id = 'color')
                         console.log(newval)
                         if (newval !== null && newval !== undefined) {
                             el.append('<option>' + newval + '</option>').val(newval);

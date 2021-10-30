@@ -9,7 +9,7 @@
 
 <p>{% trans 'Tizimdan chiqishni hohlaysizmi?' %}</p>
 
-<form class="form-group" method="post" action="{% url 'account_logout' %}">
+<form class="form-group" method="get" action="{% url 'user:custom_logout' %}">
   {% csrf_token %}
   {% if redirect_field_value %}
   <input class="form-control" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>

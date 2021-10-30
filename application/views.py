@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.views.generic import DetailView
 from docxtpl import DocxTemplate
 from reportlab.pdfgen import canvas
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 
 from application.generators import *
@@ -45,6 +46,7 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             qs = qs.filter(created_user=self.request.user)
         return qs
 
+    @permission_classes([AllowAny])
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             return super().get_json_data()
