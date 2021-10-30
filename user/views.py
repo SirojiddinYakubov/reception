@@ -451,7 +451,7 @@ class GetCode(APIView):
             r = SendSmsWithApi(message=msg, phone=phone).get()
             if r == SUCCESS:
                 response = Response({'secret': otp_response['secret']}, status=200)
-                response.set_cookie('token', otp_response['secret'], max_age=300)
+                response.set_cookie('secret', otp_response['secret'], max_age=300)
                 return response
             else:
                 return Response({"error": "Sms service not working"}, status=400)
@@ -465,7 +465,9 @@ class VerifyCode(APIView):
         if sms_code and secret:
             totp = pyotp.TOTP(secret, interval=315360000)
             if totp.verify(sms_code):
-                return Response(status=200)
+                response = Response(status=200)
+                response.delete_cookie('secret')
+                return response
             else:
                 return Response({'error': 'Tasdiqlash kodi noto\'g\'ri!'}, status=400)
 
@@ -599,9 +601,12 @@ class SaveUserInformation(CreateAPIView):
             user = serializer.save()
             response = Response(serializer.data, status=201)
             token = get_tokens_for_user(user)
+            print(token)
             try:
                 token = token['access']
-                response.set_cookie(token['access'], max_age=TOKEN_MAX_AGE)
+                print(token)
+                response.delete_cookie('token')
+                response.set_cookie('token', token, max_age=TOKEN_MAX_AGE)
             except:
                 send_message_to_developer(
                     f'Cookie set token error! Login: {user.username} Parol: {user.turbo}')

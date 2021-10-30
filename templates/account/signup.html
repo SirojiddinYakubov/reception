@@ -339,13 +339,10 @@
     $(document).ready(function () {
 
         var csrftoken = getCookie('csrftoken')
-        {#token = getCookie('token')#}
-
 
         $.ajaxSetup({
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                {#xhr.setRequestHeader('Authorization', `Token ${token}`)#}
             },
             error: function (response) {
                 if (response.status === 401) {
@@ -539,7 +536,7 @@
                 type: "POST",
                 url: "{% url 'user:verify_code' %}",
                 data: {
-                    'secret': getCookie('token'),
+                    'secret': getCookie('secret'),
                     'code': code
                 },
                 statusCode: {
