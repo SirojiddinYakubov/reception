@@ -45,7 +45,7 @@ class StateDutyPercentAdmin(admin.ModelAdmin):
     def services(self, obj):
         return ", ".join([i.short_title for i in obj.service.all()])
 
-    list_display = ['id', 'title', 'state_duty', 'services', 'get_car_types', 'person_type', 'percent','is_auction', 'car_is_new',
+    list_display = ['id', 'title', 'state_duty', 'services', 'get_car_types', 'person_type', 'percent', 'is_save_old_number','is_auction', 'car_is_new',
                     'is_old_number',
                     'lost_number', 'lost_technical_passport', 'start', 'stop']
     list_display_links = ['id', 'state_duty']
