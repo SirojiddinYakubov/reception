@@ -338,14 +338,14 @@
     })
     $(document).ready(function () {
 
-        var csrftoken = getCookie('csrftoken'),
-        token = getCookie('token')
+        var csrftoken = getCookie('csrftoken')
+        {#token = getCookie('token')#}
 
 
         $.ajaxSetup({
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+                {#xhr.setRequestHeader('Authorization', `Token ${token}`)#}
             },
             error: function (response) {
                 if (response.status === 401) {
