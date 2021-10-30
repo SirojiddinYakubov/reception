@@ -573,7 +573,7 @@
                 $.ajaxSetup({
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                        xhr.setRequestHeader('Authorization', `Token ${token}`)
+                        xhr.setRequestHeader('Authorization', `Bearer ${token}`)
                     },
                     error: function (response) {
                         if (response.status === 401) {
