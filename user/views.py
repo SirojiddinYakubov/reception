@@ -5,6 +5,7 @@ import pyotp
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
