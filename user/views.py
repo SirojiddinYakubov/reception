@@ -121,6 +121,10 @@ def login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+
+                    if request.POST.get('remember_me') == 'on':
+                        request.session.set_expiry(TOKEN_MAX_AGE)
+
                     token = get_tokens_for_user(user)
                     if next:
                         response = HttpResponseRedirect(next)
@@ -479,19 +483,19 @@ def get_user_pass(request):
 
 def forgot_pass(request):
     if request.is_ajax():
-        phone = int(request.GET['phone'])
+        phone = int(request.POST.get('phone'))
         try:
-            user_pass = User.objects.get(phone=phone)
             user = User.objects.get(phone=phone)
-            msg = f"E-RIB dasturi login va parolingiz:%0aLogin: {user.username} %0aParol: {user.turbo}"
-            msg = msg.replace(" ", "+")
-            url = f"https://developer.apix.uz/index.php?app=ws&u={SMS_LOGIN}&h={SMS_TOKEN}&op=pv&to=998{phone}&msg={msg}"
-            response = requests.get(url)
-            print(msg)
-            return HttpResponse(True)
+            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
+            r = SendSmsWithApi(message=msg, phone=user.phone).get()
+            if r != SUCCESS:
+                send_message_to_developer(
+                    f'Reset password send sms error! Login: {user.username} Parol: {user.turbo}')
+            return HttpResponse(status=200)
 
-        except:
-            return HttpResponse(False)
+        except Exception as e:
+            print(e)
+            return HttpResponse(status=404)
 
 
 def get_phone(request):
@@ -664,7 +668,6 @@ class Get_Car_Type(APIView):
 
 @login_required
 def add_worker(request):
-
     context = {}
     if request.user.role == '7':
         sections = Section.objects.filter(parent__isnull=True, is_active=True)
@@ -770,7 +773,6 @@ def add_worker(request):
 
 @login_required
 def workers_list(request):
-
     if request.user.role == '7':
         workers = User.objects.filter(Q(role=6) & Q(is_active=True))
     else:
@@ -1055,7 +1057,6 @@ class EditCarData(AllowedRolesMixin, View):
 def view_organization_data(request, id):
     organization = get_object_or_404(Organization, id=id)
 
-
     context = {
         'organization': organization
     }
@@ -1066,7 +1067,6 @@ def view_organization_data(request, id):
 def view_personal_data(request, id):
     user = get_object_or_404(User, id=id)
 
-
     context = {
         'user': user
     }
@@ -1075,8 +1075,6 @@ def view_personal_data(request, id):
 
 @login_required
 def confirm_car_data(request, car_id):
-
-
     if request.user.role == '4' or request.user.role == '5':
         car = get_object_or_404(Car, id=car_id)
         application = get_object_or_404(Application, id=car.service_car.last().application_service.last().id)
