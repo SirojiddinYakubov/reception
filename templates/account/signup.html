@@ -835,6 +835,7 @@
 
                     $.ajax({
                         type: "PATCH",
+                        headers: {"Authorization": "Bearer " + getCookie('token')},
                         url: "{% url 'user:save_user_passport' pk=12345 %}".replace(/12345/, userId.toString()),
                         data: $(form).serialize(),
                         success: function (res) {

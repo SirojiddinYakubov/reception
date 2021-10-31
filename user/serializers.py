@@ -144,7 +144,6 @@ class UserCreatePassportSerializer(serializers.ModelSerializer):
             'address',
         ]
 
-
     def create(self, validated_data):
         password = str(random.randint(10000, 99999))
         validated_data['username'] = validated_data['phone']
@@ -168,10 +167,10 @@ class SaveUserPassportSerializer(serializers.ModelSerializer):
             'passport_number': {'required': True},
             'issue_by_whom': {'required': True},
         }
+
     def update(self, instance, validated_data):
         if not instance:
             raise ValidationError({'error': 'User not found'})
-
         for k, v in validated_data.items():
             setattr(instance, k, v)
             instance.save()

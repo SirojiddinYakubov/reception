@@ -616,6 +616,7 @@ class SaveUserInformation(CreateAPIView):
 class SaveUserPassport(UpdateAPIView):
     serializer_class = SaveUserPassportSerializer
     queryset = User.objects.all()
+    permission_classes = [IsAuthenticated, ]
 
 
 class HelloView(View):

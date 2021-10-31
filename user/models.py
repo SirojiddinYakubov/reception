@@ -166,15 +166,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
-    passport_number = models.BigIntegerField(null=True, blank=True)
-    person_id = models.BigIntegerField('JShShIR', blank=True, null=True)
+    passport_number = models.CharField(max_length=15,null=True, blank=True)
+    person_id = models.CharField('JShShIR', max_length=14, blank=True, null=True)
     issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     last_login = models.DateTimeField(null=True, auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    gender = models.IntegerField(verbose_name='Jinsi', choices=GENDER_CHOICES, default=MAN)
+    gender = models.CharField(verbose_name='Jinsi', max_length=3, choices=GENDER_CHOICES, default=MAN)
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(5)])
     secret_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
