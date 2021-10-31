@@ -75,7 +75,7 @@
                             <td>
                                 {% if user.turbo %}
                                     <span id="password" data-show="false"
-                                                         data-password="{{ user.turbo }}">******</span>
+                                                         data-password="{{ user.turbo }}">******fgf</span>
                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                     <span style="cursor: pointer" id="show_password"><i class="far fa-eye"></i></span>
                                 {% endif %}
@@ -100,9 +100,10 @@
 
 
             var result = ''
-            for (var i = 0; i < $('#password').data('password').length; i++) {
+            for (var i = 0; i < $('#password').data('password').toString().length; i++) {
                 result += '*'
             }
+
             $('#password').text(result)
 
 
