@@ -30,18 +30,20 @@ from user.utils import send_otp, get_tokens_for_user
 
 
 class Home(TemplateResponseMixin, AllowedRolesMixin):
-    template_name = 'application/applications_list.html'
+
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-    def get_template_names(self):
-        if self.request.user.role == USER:
-            return ['user/personal_data.html']
-        elif self.request.user.role == CHECKER:
-            return [self.template_name]
+    # def get_template_names(self):
+    #     if self.request.user.role == USER:
+    #         return ['user/personal_data.html']
+    #     elif self.request.user.role == CHECKER:
+    #         return [self.template_name]
 
     def get(self, request, *args, **kwargs):
-        return TemplateResponse(request, self.get_template_names())
+
+        return redirect(reverse_lazy('application:applications_list'))
+
 
 
 @login_required
