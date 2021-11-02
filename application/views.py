@@ -29,6 +29,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
     def get_template_names(self):
         role = self.request.user.role
+        print(role)
+        print(CHECKER)
         if role == CHECKER:
             return ['user/role/checker/checker_applications_list.html']
         return [self.template_name]
@@ -46,8 +48,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             qs = qs.filter(created_user=self.request.user)
         return qs
 
-    @permission_classes([AllowAny])
     def get(self, request, *args, **kwargs):
+        print(request.is_ajax())
         if request.is_ajax():
             return super().get_json_data()
         else:
