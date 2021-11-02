@@ -63,6 +63,9 @@ class MerchantAPIView(APIView):
         assert self.VALIDATE_CLASS != None
         validate_class: Paycom = self.VALIDATE_CLASS()
         result: int = validate_class.check_order(**validated_data['params'])
+        print(validated_data)
+        print(validated_data['params'])
+        print(result)
         assert result != None
         self.REPLY_RESPONSE[result](validated_data)
 
@@ -71,7 +74,7 @@ class MerchantAPIView(APIView):
         """
         >>> self.create_transaction(validated_data)
         """
-        order_key = validated_data['params']['account']['order']
+        order_key = validated_data['params']['account'][self.ORDER_KEY]
         if not order_key:
             raise serializers.ValidationError(f"{self.ORDER_KEY} required field")
 
@@ -85,8 +88,12 @@ class MerchantAPIView(APIView):
 
         _id = validated_data['params']['id']
         check_transaction = PaycomTransaction.objects.filter(order_key=order_key).order_by('-id')
+        print(check_transaction)
         if check_transaction.exists():
             transaction = check_transaction.first()
+            print(transaction.status)
+            print(_id)
+            print(transaction._id)
             if transaction.status != PaycomTransaction.CANCELED and transaction._id == _id:
                 self.reply = dict(result=dict(
                     create_time=int(transaction.created_datetime),
@@ -106,7 +113,7 @@ class MerchantAPIView(APIView):
                 request_id=validated_data['id'],
                 _id=validated_data['params']['id'],
                 amount=validated_data['params']['amount'] / 100,
-                order_key=validated_data['params']['account']['order'],
+                order_key=validated_data['params']['account'][self.ORDER_KEY],
                 state=CREATE_TRANSACTION,
                 created_datetime=current_time_to_string
             )

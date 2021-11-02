@@ -15,7 +15,7 @@ from reception.telegram_bot import send_message_to_developer
 class CheckOrder(Paycom):
     def check_order(self, amount, account):
         send_message_to_developer(f'amount {amount}')
-        order_id = account['order']
+        order_id = account['order_id']
         amount = amount / 100
         try:
             order = Order.objects.get(id=int(order_id))
