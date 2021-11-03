@@ -387,7 +387,7 @@ def edit_personal_data(request):
 
 
 class EditPersonalData(AllowedRolesMixin, View):
-    allowed_roles = [USER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
     template_name = 'user/edit_personal_data.html'
 
@@ -398,8 +398,17 @@ class EditPersonalData(AllowedRolesMixin, View):
 
         context = {
             'form': form,
-            'regions': regions
+            'regions': regions,
         }
+        if request.user.region:
+            context.update(region=request.user.region)
+
+        if request.user.district:
+            context.update(district=request.user.district)
+
+        if request.user.quarter:
+            context.update(quarter=request.user.quarter)
+
         return render(request, self.template_name, context)
 
     def post(self, request):

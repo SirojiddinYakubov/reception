@@ -20,10 +20,11 @@
     </thead>
     <tbody>
     <tr>
-        <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
+
 
         <!--Yaratildi-->
         {% if application.process == 0 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi. Arizangizni jo'natish uchun BHM'ning
                 3% miqdorida ya'ni 8 100 to'lov qilishingiz talab etiladi. Shundan so'ng onlayn arizangiz
                 {{ application.section.region.title }} {{ application.section.title }}ga jo'natiladi.
@@ -31,30 +32,35 @@
 
             <!--Jo'natildi-->
         {% elif application.process == 1 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> To'lov muvaffaqiyatli amalga oshirildi.
                 Arizangiz {{ application.section.region.title }} {{ application.section.title }}ga jo'natildi. Javobini
                 SMS xabarnoma tarzida qabul qilasiz.
             </th>
             <!--Ko'rib chiqish uchun qabul qilindi-->
         {% elif application.process == 2 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
                 inspektorlari tomonidan ko'rib
                 chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
             </th>
             <!--To'lovni kutmoqda-->
         {% elif application.process == 3 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
                 inspektorlari tomonidan ko'rib
                 chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
             </th>
             <!--Hujjatlarning asl nusxasini kutmoqda-->
         {% elif application.process == 4 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl
                 nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib kelishingizni
                 so'raymiz.
             </th>
             <!--Muvaffaqiyatli yakunlandi-->
         {% elif application.process == 5 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> Sizning {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi.
                 Sizdan {{ application.given_date }} {{ application.given_time }}
                 da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi.
@@ -62,11 +68,12 @@
             </th>
             <!--Rad etildi-->
         {% elif application.process == 6 %}
+             <th scope="row" style="color: #0f6674">{{ application.get_process_display }}</th>
             <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan ko'rib
-                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+                inspektorlari tomonidan rad etildi!
             </th>
         {% elif application.process == 7 %}
+             <th scope="row" style="color: #0f6674">Ariza yaratilish jarayonida</th>
             <th style="color: #e53e3e"> Arizangizdagi ma'lumotlari to'liq bo'lmaganligi sababli YHXB bo'limiga jo'natish uchun talabga javob bermaydi!
 
             </th>
