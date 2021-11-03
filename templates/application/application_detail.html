@@ -165,6 +165,7 @@
             var activation_pay = '{{ activation_pay }}'
             var user = '{{ request.user }}'
             var application_owner = '{{ application.created_user }}'
+            var applicationId = '{{ application.id }}'
 
             if (user === application_owner) {
 
@@ -184,7 +185,7 @@
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
                     }).then(function (confirm) {
                         if (confirm.isConfirmed) {
-                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}`
+                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
                         }
                     })
                 } else if (proccess === '7') {
