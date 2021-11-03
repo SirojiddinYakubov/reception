@@ -7,7 +7,7 @@ assert settings.PAYCOM_SETTINGS.get('KASSA_ID') != None
 assert settings.PAYCOM_SETTINGS.get('ACCOUNTS') != None
 assert settings.PAYCOM_SETTINGS['ACCOUNTS'].get('KEY') != None
 
-TOKEN = settings.PAYCOM_SETTINGS['TOKEN']
+KASSA_ID = settings.PAYCOM_SETTINGS['KASSA_ID']
 KEY = settings.PAYCOM_SETTINGS['ACCOUNTS']['KEY']
 
 
@@ -20,7 +20,7 @@ class PayComResponse(object):
         """
         amount = amount * 100
         LINK = 'https://checkout.paycom.uz'
-        params = f"m={TOKEN};ac.{KEY}={order_id};a={amount};c={return_url}"
+        params = f"m={KASSA_ID};ac.{KEY}={order_id};a={amount};c={return_url}"
         encode_params = base64.b64encode(params.encode("utf-8"))
         encode_params = str(encode_params, 'utf-8')
         url = f"{LINK}/{encode_params}"

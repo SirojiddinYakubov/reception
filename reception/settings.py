@@ -316,9 +316,9 @@ CRONJOBS = [
 
 PAYCOM_SETTINGS = {
     "KASSA_ID": "6180cfc7b977919a7f654016",  # token
-    "TOKEN": "602a69da2f3eb10fc98597ee",  # token
-    # "SECRET_KEY": "eszJcF0D4tq80SQE2NSMS?o6HZXV0oN9vkuK",  # key
-    "SECRET_KEY": "t%JPKT7BarzWuv#1Y4zNUwIVJF?Am@uaA7U%",  # test key
+    "TOKEN": "617bcbd3b977919a7f64c68c",  # token
+    "SECRET_KEY": "MgbKhtNNoS@rOD5eqPOVJN9oJbwJN#UupyVb",  # key
+    # "SECRET_KEY": "t%JPKT7BarzWuv#1Y4zNUwIVJF?Am@uaA7U%",  # test key
     "ACCOUNTS": {
         "KEY": "order_id"
     }

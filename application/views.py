@@ -85,8 +85,10 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
         context = {
             'application': application,
             'percents': percents,
-
         }
+        if AmountBaseCalculation.objects.filter(is_active=True):
+            activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+            context.update(activation_pay=activation_pay)
         return context
 
 

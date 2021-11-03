@@ -164,7 +164,7 @@ class NotificationAdmin(admin.ModelAdmin):
 
 @admin.register(Sms)
 class SmsAdmin(admin.ModelAdmin):
-    list_display = ['id', 'phone', 'text', 'sms_count', 'status', 'sms_id']
+    list_display = ['id', 'phone', 'text', 'sms_count', 'status', 'sms_id', 'created_at']
     list_display_links = ['phone', 'text', ]
     search_fields = ['text']
     list_filter = ['status', ]

@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 
-from click.models import Order
+from click.models import Order, PAYCOM
+from reception import settings
 from user.models import User
 
 from .views import MerchantAPIView
@@ -10,12 +11,12 @@ from paycom import Paycom
 from paycom import status
 
 from reception.telegram_bot import send_message_to_developer
-
+KEY = settings.PAYCOM_SETTINGS['ACCOUNTS']['KEY']
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account):
         send_message_to_developer(f'amount {amount}')
-        order_id = account['order_id']
+        order_id = account[KEY]
         amount = amount / 100
         try:
             order = Order.objects.get(id=int(order_id))
@@ -48,17 +49,18 @@ def create_paycom_url_via_order(request):
         if request.GET:
             amount = int(request.GET.get('amount'))
 
-            return_url = request.GET.get('return_url')
+            return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
             user = get_object_or_404(User, id=request.user.id)
-            order = Order.objects.create(amount=amount, user=user, service='2')
+            order = Order.objects.create(amount=amount, user=user, type=PAYCOM)
             payme = Paycom()
             url = payme.create_initialization(order_id=order.id, amount=order.amount,
                                               return_url=return_url)
+            send_message_to_developer(return_url)
             send_message_to_developer(f"{user}: {request.GET.get('amount')}")
             return redirect(url)
         else:
-            return redirect(reverse_lazy('user:sms_settings'))
+            return redirect(reverse_lazy('application:applications_list'))
     except Order.DoesNotExist:
-        send_message_to_developer(f' order id #{order.id} \n error wrong order id from payme ')
+        send_message_to_developer(f'error order not found payme service')
         messages.error(request, 'Xatolik yuz berdi! Sahifani yangilab qayta urinib ko\'ring!')
         return redirect(reverse_lazy('user:personal_data'))

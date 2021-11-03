@@ -151,7 +151,7 @@ class PaidStateDuty(models.Model):
     created_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.application} so'm"
+        return f"{self.application} {self.percent}%"
 
     class Meta:
         verbose_name = "To'langan bojlar"
