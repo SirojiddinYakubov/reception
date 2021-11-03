@@ -217,7 +217,7 @@
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
                     }).then(function (confirm) {
                         if (confirm.isConfirmed) {
-                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}`
+                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
                         }
                     })
                 }
