@@ -214,6 +214,10 @@
                         title: 'Ariza aktivlashtirilmagan!',
                         text: `Arizani aktivlashitirish uchun ${activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+                    }).then(function (confirm) {
+                        if (confirm.isConfirmed) {
+                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}`
+                        }
                     })
                 }
             }
