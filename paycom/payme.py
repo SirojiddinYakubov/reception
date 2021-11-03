@@ -39,6 +39,8 @@ class CheckOrder(Paycom):
                 if application:
                     application.is_block = False
                     application.save()
+                else:
+                    send_message_to_developer(f'order application not found. Order id: {order.id}')
             else:
                 send_message_to_developer(f'order application not found. Order id: {order.id}')
 
@@ -58,11 +60,11 @@ def create_paycom_url_via_order(request):
     try:
         if request.GET:
             amount = int(request.GET.get('amount'))
-            application = int(request.GET.get('application'))
+            application_id = int(request.GET.get('application'))
 
             return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
             user = get_object_or_404(User, id=request.user.id)
-            order = Order.objects.create(amount=amount, user=user, type=PAYCOM, application=application)
+            order = Order.objects.create(amount=amount, user=user, type=PAYCOM, application_id=application_id)
             payme = Paycom()
             url = payme.create_initialization(order_id=order.id, amount=order.amount,
                                               return_url=return_url)
