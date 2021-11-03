@@ -29,20 +29,18 @@ from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassp
 from user.utils import send_otp, get_tokens_for_user
 
 
-class Home(TemplateResponseMixin, AllowedRolesMixin):
+class Home(AllowedRolesMixin, RedirectView):
 
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
-    # def get_template_names(self):
-    #     if self.request.user.role == USER:
-    #         return ['user/personal_data.html']
-    #     elif self.request.user.role == CHECKER:
-    #         return [self.template_name]
-
     def get(self, request, *args, **kwargs):
-
-        return redirect(reverse_lazy('application:applications_list'))
+        if request.user.role == USER:
+            return redirect(reverse_lazy('user:personal_data'))
+        elif request.user.role == CHECKER:
+            return redirect(reverse_lazy('application:applications_list'))
+        else:
+            return redirect(reverse_lazy('application:applications_list'))
 
 
 
@@ -449,6 +447,7 @@ class GetCode(APIView):
             print(otp_response)
             msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
             r = SendSmsWithApi(message=msg, phone=phone).get()
+            print(r)
             if r == SUCCESS:
                 response = Response({'secret': otp_response['secret']}, status=200)
                 response.set_cookie('secret', otp_response['secret'], max_age=300)
