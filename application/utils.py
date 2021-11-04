@@ -113,8 +113,11 @@ def reg_new_car_v2(application):
     """Jarima"""
     if application_document:
         last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
-        if datetime.datetime.now().date() > last_day_without_fine if last_day_without_fine.weekday() != 6 else last_day_without_fine + datetime.timedelta(
-                days=1):
+
+        if last_day_without_fine.weekday() == 6:
+            last_day_without_fine = last_day_without_fine + datetime.timedelta(days=1)
+
+        if datetime.datetime.now().date() > last_day_without_fine:
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
             fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
                                                     lost_technical_passport=False)
@@ -131,7 +134,6 @@ def reg_new_car_v2(application):
         if car.lost_technical_passport:
             qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
                                              lost_technical_passport=True)
-
     """Qayta ro'yhatlash"""
     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
     qs = qs.union(re_registration)
