@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 
-from application.models import Application
+from application.models import Application, SHIPPED
 from click.models import Order, PAYCOM
 from reception import settings
 from user.models import User
@@ -12,7 +12,9 @@ from paycom import Paycom
 from paycom import status
 
 from reception.telegram_bot import send_message_to_developer
+
 KEY = settings.PAYCOM_SETTINGS['ACCOUNTS']['KEY']
+
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account):
@@ -38,6 +40,8 @@ class CheckOrder(Paycom):
                 application = Application.objects.filter(id=order.application.id).last()
                 if application:
                     application.is_block = False
+                    if application.section is not None:
+                        application.process = SHIPPED
                     application.save()
                 else:
                     send_message_to_developer(f'order application not found. Order id: {order.id}')
@@ -46,10 +50,10 @@ class CheckOrder(Paycom):
 
             send_message_to_developer('successfully add payment from payme : ' + order.amount)
         except Order.DoesNotExist:
-            send_message_to_developer('successfully add payment from payme, no order object not found: ' + order_id)
+            send_message_to_developer(f'successfully add payment from payme, no order object not found: {order_id}')
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
-        pass
+        send_message_to_developer(f'cancel pay from payme : {int(account)}')
 
 
 class PayMeView(MerchantAPIView):
@@ -64,7 +68,14 @@ def create_paycom_url_via_order(request):
 
             return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
             user = get_object_or_404(User, id=request.user.id)
-            order = Order.objects.create(amount=amount, user=user, type=PAYCOM, application_id=application_id)
+
+            order = Order.objects.filter(amount=amount, type=PAYCOM, application_id=application_id).last()
+            if not order:
+                order = Order.objects.create(amount=amount, user=user, type=PAYCOM, application_id=application_id)
+
+            if not order.application.is_block:
+                messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
+                return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
             payme = Paycom()
             url = payme.create_initialization(order_id=order.id, amount=order.amount,
                                               return_url=return_url)
