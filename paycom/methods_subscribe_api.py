@@ -18,7 +18,7 @@ class PayComResponse(object):
         documentation : https://help.paycom.uz/ru/initsializatsiya-platezhey/otpravka-cheka-po-metodu-get
         >>> self.create_initialization(amount=Decimal(5000.00), order_id='1', return_url='https://example.com/success/')
         """
-        amount = amount * 100
+        amount = int(amount) * 100
         LINK = 'https://checkout.paycom.uz'
         params = f"m={KASSA_ID};ac.{KEY}={order_id};a={amount};c={return_url}"
         encode_params = base64.b64encode(params.encode("utf-8"))
