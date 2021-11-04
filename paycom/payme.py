@@ -72,7 +72,8 @@ def create_paycom_url_via_order(request):
             order = Order.objects.filter(amount=amount, type=PAYCOM, application_id=application_id).last()
             if not order:
                 order = Order.objects.create(amount=amount, user=user, type=PAYCOM, application_id=application_id)
-
+            print(order)
+            print(order.amount)
             if not order.application.is_block:
                 messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
                 return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
