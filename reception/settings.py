@@ -325,10 +325,10 @@ PAYCOM_SETTINGS = {
 }
 
 CLICK_SETTINGS = {
-    'service_id': 17367,
-    'merchant_id': 12584,
-    'secret_key': 'tVhBORlLRo8AN',
-    'merchant_user_id': 18969,
+    'service_id': 19604,
+    'merchant_id': 14103,
+    'secret_key': '7T8fbCgyiVDu8I',
+    'merchant_user_id': 22381,
 }
 
 PAYMENT_HOST = '81.177.139.231:443'
