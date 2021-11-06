@@ -654,7 +654,7 @@ class ReplaceNumberAndTp(ServiceCustomMixin):
         try:
             with transaction.atomic():
                 request = self.request
-                service = Service.object.get(key='replace_number_and_tp')
+                service = Service.objects.get(key='replace_number_and_tp')
 
                 person_type = request.POST.get('person_type')
                 engine_number = request.POST.get('engine_number')

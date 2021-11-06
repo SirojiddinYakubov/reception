@@ -103,7 +103,7 @@
 
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="fuel_types">{% trans "Yoqilg'i turini tanlang" %}<span
+                                   for="fuel_types">{% trans "Avtomobildagi yoqilg'i turini tanlang" %}<span
                                     class="text-danger">*</span></label>
                             <div class="col-8 col-xl-9 fuel_types">
 
@@ -115,21 +115,41 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="devices">{% trans "Alohida belgilar" %}<span
+                                   for="re_fuel_type">{% trans "Yoqilg'i turini o'zgartiryapsizmi?" %}<span
                                     class="text-danger">*</span></label>
                             <div class="col-8 col-xl-9">
-
-                                <select id="devices" name="devices" class="form-control"
-                                        multiple="multiple">
-                                    {% for device in devices %}
-                                        <option value="{{ device.id }}">{{ device.title }}</option>
+                                <div class="row justify-content-start mt-1">
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                        <input type="radio" id="is_re_fuel_type_yes"
+                                               name="is_re_fuel_type" value="true"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_re_fuel_type_yes">Ha</label>
+                                    </div>
+                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                        <input type="radio" id="is_re_fuel_type_no"
+                                               name="is_re_fuel_type" value="false" checked
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_re_fuel_type_no">Yoq</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 re_fuel_type_div" style="display: none">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="re_fuel_type">{% trans "Qo'shimcha yoqilg'i turi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <select id="re_fuel_type" required class="form-control select2"
+                                        data-width="100%">
+                                    {% for fuel_type in fuel_types %}
+                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
+
 
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
@@ -290,34 +310,14 @@
                         </div>
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="re_fuel_type">{% trans "Yoqilg'i turini o'zgartiryapsizmi?" %}<span
+                                   for="devices">{% trans "Alohida belgilar" %}<span
                                     class="text-danger">*</span></label>
                             <div class="col-8 col-xl-9">
-                                <div class="row justify-content-start mt-1">
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_re_fuel_type_yes"
-                                               name="is_re_fuel_type" value="true"
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="is_re_fuel_type_yes">Ha</label>
-                                    </div>
-                                    <div class="col-3 col-md-2 col-lg-2 col-xl-2">
-                                        <input type="radio" id="is_re_fuel_type_no"
-                                               name="is_re_fuel_type" value="false" checked
-                                               class="form-check-input">
-                                        <label class="form-check-label" for="is_re_fuel_type_no">Yoq</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3 re_fuel_type_div" style="display: none">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="re_fuel_type">{% trans "Qo'shimcha yoqilg'i turi" %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9">
-                                <select id="re_fuel_type" required class="form-control select2"
-                                        data-width="100%">
-                                    {% for fuel_type in fuel_types %}
-                                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
+
+                                <select id="devices" name="devices" class="form-control"
+                                        multiple="multiple">
+                                    {% for device in devices %}
+                                        <option value="{{ device.id }}">{{ device.title }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -327,7 +327,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
                                         id="prev2">Oldingi
                                 </button>
-{#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
+                                {#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
                                 <button type="submit" id="next2"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
