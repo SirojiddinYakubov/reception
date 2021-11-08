@@ -45,7 +45,7 @@ class OrderCheckAndPayment(ClickUz):
                     send_message_to_developer('ORDER_FOUND')
                 else:
                     print(46)
-                    send_message_to_developer('INVALID_AMOUNT' + amount + ' ' + order.amount)
+                    send_message_to_developer('INVALID_AMOUNT: ' + amount + ' : ' + order.amount)
                     return self.INVALID_AMOUNT
             except:
                 print(50)

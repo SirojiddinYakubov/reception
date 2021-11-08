@@ -174,7 +174,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True, blank=True)
     last_login = models.DateTimeField(null=True, auto_now=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    gender = models.CharField(verbose_name='Jinsi', max_length=3, choices=GENDER_CHOICES, default=MAN)
+    gender = models.IntegerField(verbose_name='Jinsi', choices=GENDER_CHOICES, default=MAN)
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(5)])
     secret_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
