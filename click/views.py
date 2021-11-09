@@ -8,7 +8,8 @@ from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
 from django.urls import reverse_lazy
 
-from click.models import Order
+from application.models import Application, SHIPPED
+from click.models import Order, CLICK
 from reception.telegram_bot import send_message_to_developer
 from user.models import User
 
@@ -16,39 +17,42 @@ from user.models import User
 @login_required
 def create_order_url(request):
     try:
-        if request.GET:
-            amount = request.GET.get('amount')
-            user = get_object_or_404(User, id=request.user.id)
-            order = Order.objects.create(amount=amount,user=user)
-            url = ClickUz.generate_url(order_id=order.id, amount=amount,return_url='http://onless.uz/')
+        amount = int(request.GET.get('amount'))
+        application_id = int(request.GET.get('application'))
 
+        return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
+        user = get_object_or_404(User, id=request.user.id)
+
+        order = Order.objects.filter(amount=amount, type=CLICK, application_id=application_id).last()
+        if not order:
+            order = Order.objects.create(amount=amount, user=user, type=CLICK, application_id=application_id)
+
+        if not order.application.is_block:
+            messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
+            return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
+
+        url = ClickUz.generate_url(order_id=order.id, amount=str(1000), return_url=return_url)
+        send_message_to_developer(return_url)
+        send_message_to_developer(f"{user}: {request.GET.get('amount')}")
         return redirect(url)
     except:
         messages.error(request, 'Xatolik yuz berdi! Sahifani yangilab qayta urinib ko\'ring!')
         return redirect(reverse_lazy('user:personal_data'))
+
 
 class OrderCheckAndPayment(ClickUz):
     def check_order(self, order_id: str, amount: str):
         send_message_to_developer('check   order_id ' + order_id + ' ' + 'amount ' + amount)
 
         if order_id:
-            print(order_id, 34)
             try:
                 order = get_object_or_404(Order, id=order_id)
-                print(amount, 37)
-                print(str(order.amount), 38)
-
-                # send_message_to_developer('type ' + type(amount) + ' order-amount ' + type(order.amount))
                 if amount == str(order.amount):
-                    print(42)
                     return self.ORDER_FOUND
-                    send_message_to_developer('ORDER_FOUND')
                 else:
-                    print(46)
                     send_message_to_developer('INVALID_AMOUNT: ' + amount + ' : ' + order.amount)
                     return self.INVALID_AMOUNT
             except:
-                print(50)
                 send_message_to_developer('ORDER_NOT_FOUND')
                 return self.ORDER_NOT_FOUND
 
@@ -57,9 +61,23 @@ class OrderCheckAndPayment(ClickUz):
             order = get_object_or_404(Order, id=order_id)
             order.is_paid = True
             order.save()
-            send_message_to_developer('successfully add payment from click: ' + order.amount)
+
+            if order.application:
+                application = Application.objects.filter(id=order.application.id).last()
+                if application:
+                    application.is_block = False
+                    if application.section is not None:
+                        application.process = SHIPPED
+                    application.save()
+                else:
+                    send_message_to_developer(f'order application not found. Order id: {order.id}')
+            else:
+                send_message_to_developer(f'order application not found. Order id: {order.id}')
+
+            send_message_to_developer('successfully add payment from click : ' + order.amount)
         except Order.DoesNotExist:
-            send_message_to_developer('successfully add payment from click, no order object not found: ' + order_id)
+            send_message_to_developer(f'successfully add payment from click, no order object not found: {order_id}')
+
 
 class TestView(ClickUzMerchantAPIView):
     VALIDATE_CLASS = OrderCheckAndPayment
@@ -67,5 +85,3 @@ class TestView(ClickUzMerchantAPIView):
 
 def success_order(request):
     send_message_to_developer('success_order')
-
-

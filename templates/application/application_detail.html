@@ -185,7 +185,8 @@
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
                     }).then(function (confirm) {
                         if (confirm.isConfirmed) {
-                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
+                            select_payment()
+                            {#window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
                         }
                     })
                 } else if (proccess === '7') {
@@ -217,10 +218,34 @@
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
                     }).then(function (confirm) {
                         if (confirm.isConfirmed) {
-                            window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
+                            select_payment()
+
                         }
                     })
                 }
+            }
+
+            function select_payment() {
+                Swal.fire({
+                    allowOutsideClick: false,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    showLoaderOnConfirm: true,
+                    title: 'To\'lov turini tanlang!',
+                    html: "<div class='row'>" +
+                        "<div class='col-6'><a href='?payment=click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +
+                        "<div class='col-6'><a href='?payment=payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +
+                        "</div>",
+                })
+            }
+
+            var payment = '{{ request.GET.payment }}'
+            console.log(payment)
+            if (payment === 'click') {
+                window.location.href = '{% url 'click:create_order_url' %}' + `?amount=${activation_pay}&application=${applicationId}`
+            } else if (payment === 'payme') {
+                window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
             }
 
             $('.application_render_pdf').on('click', function () {
