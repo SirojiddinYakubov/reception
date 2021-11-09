@@ -29,8 +29,6 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
     def get_template_names(self):
         role = self.request.user.role
-        print(role)
-        print(CHECKER)
         if role == CHECKER:
             return ['user/role/checker/checker_applications_list.html']
         return [self.template_name]
@@ -38,7 +36,6 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     def get_queryset(self):
         role = self.request.user.role
         qs = super().get_queryset().filter(is_active=True)
-
         if role == CHECKER:
             section = get_object_or_404(Section, id=self.request.user.section.id)
             qs = qs.filter(section=section, is_block=False).filter(
@@ -49,7 +46,6 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
         return qs
 
     def get(self, request, *args, **kwargs):
-        print(request.is_ajax())
         if request.is_ajax():
             return super().get_json_data()
         else:
@@ -271,7 +267,6 @@ def change_get_request(request, key, value):
                     return HttpResponseRedirect(url)
                 return HttpResponseRedirect(url + '?' + query)
             except ValueError:
-                print(url, 484)
                 return HttpResponseRedirect(url)
         else:
             get_params = str(request.META['HTTP_REFERER']).split('?', 1)[1]
@@ -284,18 +279,15 @@ def change_get_request(request, key, value):
                     query_dict[k] = v
                 query = '&'.join([f'{key}={value}', *['{}={}'.format(k, v) for k, v in query_dict.items()]])
                 if query == '':
-                    print(url, 497)
                     return HttpResponseRedirect(url)
                 return HttpResponseRedirect(url + '?' + query)
             except ValueError:
-                print(url, 499)
                 return HttpResponseRedirect(url)
 
     except IndexError:
         # mavjud emas
         url = str(request.META['HTTP_REFERER']).split('?', 1)[0]
         if value == 'all':
-            print(url, 508)
             return HttpResponseRedirect(url)
         print('key' + key + ' ,value: ' + value)
         return HttpResponseRedirect(url + f"?{key}={value}")
