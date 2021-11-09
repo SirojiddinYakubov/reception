@@ -241,7 +241,7 @@
             }
 
             var payment = '{{ request.GET.payment }}'
-            console.log(payment)
+
             if (payment === 'click') {
                 alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')
                 {#window.location.href = '{% url 'click:create_order_url' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
