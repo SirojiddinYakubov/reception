@@ -243,7 +243,8 @@
             var payment = '{{ request.GET.payment }}'
             console.log(payment)
             if (payment === 'click') {
-                window.location.href = '{% url 'click:create_order_url' %}' + `?amount=${activation_pay}&application=${applicationId}`
+                alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')
+                {#window.location.href = '{% url 'click:create_order_url' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
             } else if (payment === 'payme') {
                 window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
             }
