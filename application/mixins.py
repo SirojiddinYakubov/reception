@@ -109,7 +109,6 @@ class ApplicationCustomMixin(ListView):
                         qs = qs.filter(person_type=value)
                     if key == 'process':
                         qs = qs.filter(process=value)
-
                     if key == 'payment':
                         qs = qs.filter(is_payment=value)
 
