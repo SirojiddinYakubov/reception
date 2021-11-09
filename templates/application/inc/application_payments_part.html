@@ -24,7 +24,7 @@
                     <th scope="row">{{ percent.get_state_duty_display }}</th>
                     <th scope="row">{{ percent.title }}</th>
                     <td>
-                        <b>    {% get_payment_score application.section application.created_user percent as score %} {{ score }}</b>
+                        <b>    {% get_payment_score application percent as score %} {{ score }}</b>
                     </td>
                     <td><b class="state_payment">
                         {% get_payment_payment percent application as pay %}{{ pay|intcomma }}</b> so'm

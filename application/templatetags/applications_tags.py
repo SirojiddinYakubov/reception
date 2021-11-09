@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 
-from application.models import Application
+from application.models import Application, LEGAL_PERSON
 from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER
 from user.models import *
 
@@ -133,15 +133,24 @@ def calculate_applications_count(section_id):
 #     # print(url)
 #     return None
 @register.simple_tag
-def get_payment_score(section, user, percent):
+def get_payment_score(application, percent):
     from service.models import FINE, REGISTRATION, RE_REGISTRATION
+    section = Section.objects.get(id=application.section.id)
+    created_user = User.objects.get(id=application.created_user.id)
+    percent = StateDutyPercent.objects.get(id=percent.id)
+    section = Section.objects.get(id=section.id)
+
+    if application.person_type == LEGAL_PERSON:
+        district = application.organization.legal_address_district
+    else:
+        district = created_user.district
+
     try:
-        percent = StateDutyPercent.objects.get(id=percent.id)
         if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
-            section = Section.objects.get(id=section.id)
-            if user.district in section.district.all():
+
+            if district in section.district.all():
                 print("Buxoro obl gai tarkibida, tuman raqami")
-                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=user.district).last()
+                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
             else:
                 print("boshqa shaharda, Boxoro shahar raqami")
                 state_duty = StateDutyScore.objects.filter(region=section.region, state_duty=percent.state_duty).last()
