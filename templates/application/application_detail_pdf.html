@@ -78,13 +78,13 @@
     </table>
     <br>
 
-    <div class="row">
-        <div class="col-xs-12">
-
-            <img width="200px" height="200px"
-                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} alt="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" 27 %}" />
-        </div>
-    </div>
+{#    <div class="row">#}
+{#        <div class="col-xs-12">#}
+{##}
+{#            <img width="200px" height="200px"#}
+{#                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} alt="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" 27 %}" />#}
+{#        </div>#}
+{#    </div>#}
 
     <br>
     <div style="margin-top: 10px; color: red">Eslatma!</div>
