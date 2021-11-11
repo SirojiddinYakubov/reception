@@ -13,10 +13,9 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
-    
+
 
     # other requests
-
     path('home/', Home.as_view(), name='home'),
     path('', personal_data, name='personal_data'),
     path('view-personal-data/<int:id>/', view_personal_data, name='view_personal_data'),
@@ -65,6 +64,8 @@ urlpatterns = [
     path('regions-list/', regions_list, name='regions_list'),
     path('sections-list/<int:section_id>/', sections_list, name='sections_list'),
     path('sections-list-by-region/', SectionsListByRegion.as_view(), name='sections_list_by_region'),
+    path('get-regions-list/', GetRegionsList.as_view(), name='get_regions_list'),
+    path('get-sections-list/<int:region_id>/', GetSectionsList.as_view(), name='get_sections_list'),
 
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
 

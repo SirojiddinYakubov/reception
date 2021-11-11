@@ -134,34 +134,37 @@ def calculate_applications_count(section_id):
 #     return None
 @register.simple_tag
 def get_payment_score(application, percent):
-    from service.models import FINE, REGISTRATION, RE_REGISTRATION
-    section = Section.objects.get(id=application.section.id)
-    created_user = User.objects.get(id=application.created_user.id)
-    percent = StateDutyPercent.objects.get(id=percent.id)
-    section = Section.objects.get(id=section.id)
-
-    if application.person_type == LEGAL_PERSON:
-        district = application.organization.legal_address_district
-    else:
-        district = created_user.district
-
     try:
-        if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
+        from service.models import FINE, REGISTRATION, RE_REGISTRATION
+        section = Section.objects.filter(id=application.section.id).last()
+        created_user = User.objects.get(id=application.created_user.id)
+        percent = StateDutyPercent.objects.get(id=percent.id)
 
-            if district in section.district.all():
-                print("Buxoro obl gai tarkibida, tuman raqami")
-                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
-            else:
-                print("boshqa shaharda, Boxoro shahar raqami")
-                state_duty = StateDutyScore.objects.filter(region=section.region, state_duty=percent.state_duty).last()
+        if application.person_type == LEGAL_PERSON:
+            district = application.organization.legal_address_district
         else:
-            print('else')
+            district = created_user.district
+
+        try:
+            if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
+
+                if district in section.district.all():
+                    print("Buxoro obl gai tarkibida, tuman raqami")
+                    state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
+                else:
+                    print("boshqa shaharda, Boxoro shahar raqami")
+                    state_duty = StateDutyScore.objects.filter(region=section.region,
+                                                               state_duty=percent.state_duty).last()
+            else:
+                print('else')
+                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
+            return state_duty.score
+        except Exception as e:
+            print(e)
             state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
-        return state_duty.score
-    except Exception as e:
-        print(e)
-        state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
-        return state_duty.score
+            return state_duty.score
+    except AttributeError:
+        return '<p style="color: red">Ariza YHXB RIB bo\'limi jo\'natilmaganligi sababli hisob raqamlar aniqlanmagan!<p>'
 
 
 @register.simple_tag
@@ -190,5 +193,3 @@ def check_payment_paid(application, percent):
 #     print(185, percent.application)
 #     print(185, percent)
 #     return percent.paidstateduty_set.all().exists()
-
-

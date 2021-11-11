@@ -5,9 +5,10 @@ from django.contrib import messages
 from django.views.generic import DetailView
 from docxtpl import DocxTemplate
 from reportlab.pdfgen import canvas
+from requests import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-
+from rest_framework.response import Response
 from application.generators import *
 from application.mixins import *
 from application.models import *
@@ -569,19 +570,36 @@ class SaveApplicationSection(AllowedRolesMixin, View):
                      SUPER_ADMINISTRATOR]
 
     def post(self, request, *args, **kwargs):
+
         if request.POST.get('section', None) and request.POST.get('application', None):
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
-            application.process = CREATED
-            # percent = StateDutyPercent.objects.filter(car_is_new=True, person_type=application.person_type, service=application.service)
-            # state_duty = PaidStateDuty.objects.create(percent=percent)
+            if application.is_block:
+                application.process = CREATED
+            else:
+                application.process = SHIPPED
             application.save()
             return HttpResponse(status=200)
         return HttpResponse(status=400)
 
 
+class DraftToShipped(APIView):
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            application_id = kwargs.get('application_id')
+            application = Application.objects.get(application_id=application_id)
+            print(application)
+            return Response({'status': 'OK'}, status=200)
+        except Exception as e:
+            return Response({'error': e}, status=400)
+
+
 class ApplicationCashByModeratorView(AllowedRolesMixin, View):
+    permission_classes(IsAuthenticated, )
     allowed_roles = [USER, MODERATOR, CHECKER]
 
     def post(self, request, *args, **kwargs):

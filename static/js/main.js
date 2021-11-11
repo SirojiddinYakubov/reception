@@ -1225,3 +1225,48 @@ function generate_fake_data() {
 //
 //     })
 // }
+
+
+function get_regions(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var regions = {}
+
+                for (const x of res) {
+                    regions[x.id] = x.title
+                }
+                resolve(regions)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(err)
+            }
+        })
+    })
+}
+
+function get_sections(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var sections = {}
+
+                for (const x of res) {
+                    sections[x.id] = x.title
+                }
+                resolve(sections)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(error)
+            }
+        })
+    })
+}

@@ -4,7 +4,7 @@
         <tr>
             <th scope="row">Status:</th>
             <td>
-                <button class="btn btn-success">Arizani {{ application.section.title }}ga jo'natish</button>
+                <button id="draft_to_shipped" class="btn btn-success">Arizani {{ application.section.title }}ga jo'natish &nbsp&nbsp&nbsp<i class="fas fa-arrow-up"></i></button>
             </td>
         </tr>
     {% endif %}
@@ -29,7 +29,11 @@
     <tr>
         <th scope="row">Ariza jo'natilgan YXHB RIB bo'limi:</th>
         <td>
-            <p>{{ application.section.region.title }}: {{ application.section.title }}</p>
+            {% if application.section %}
+            <p id="add_section" style="cursor: pointer; color: blue; font-weight: bold">{{ application.section.region.title }}: {{ application.section.title }}</p>
+            {% else %}
+               <b id="add_section" style="color: red; margin-right: 10px; cursor: pointer">YHXB RIB bo'limi tanlanmagan!</b>
+            {% endif %}
         </td>
     </tr>
     {% if application.seriya %}
@@ -54,8 +58,7 @@
     <tr>
         <th scope="row">Ariza nusxasi</th>
         <td>
-            <a href="{% url 'application:create_application_doc' application.file_name %}">Yuklab
-                olish</a>
+            <a href="{% url 'application:create_application_doc' application.file_name %}"><button class="btn btn-outline-primary"><i class="fas fa-file-word"></i>&nbsp&nbsp&nbsp&nbspYuklab olish</button></a>
         </td>
     </tr>
 
@@ -63,7 +66,7 @@
         <th scope="row">Ariza haqida ma'lumot</th>
         <td><a style="cursor: pointer; color: #007bff"
                class="application_render_pdf"
-               data-application="{{ application.id }}">Yuklab olish</a>
+               data-application="{{ application.id }}"><button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish</button></a>
         </td>
     </tr>
 

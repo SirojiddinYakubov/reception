@@ -38,7 +38,6 @@
 {% endblock page_title %}
 
 {% block content %}
-
     <div class="row">
         {% include '_parts/messages.html' %}
         <div class="col-12 info_area">
@@ -159,7 +158,6 @@
 
         $(document).ready(function () {
 
-
             var isBlock = '{{ application.is_block }}'
             var proccess = '{{ application.process }}'
             var activation_pay = '{{ activation_pay }}'
@@ -196,12 +194,17 @@
                         showCancelButton: false,
                         showConfirmButton: true,
                         showLoaderOnConfirm: true,
-                        confirmButtonText: "Arizani tahrirlash",
+                        confirmButtonText: "Kiritish",
                         {#cancelButtonText: 'Bekor qilish',#}
                         icon: 'error',
-                        title: 'Ariza aktivlashtirilmagan!',
-                        text: `Arizani aktivlashitirish uchun ariza jo'natiladigan YHXB RIB bo'limini kitishingiz talab etiladi!`,
+                        title: 'Ariza to\'liq to\'ldirilmagan!',
+                        text: `Arizani to'liq to'ldirish uchun ariza jo'natiladigan YHXB RIB bo'limini kiriting!`,
                         {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+                    }).then(function (confirm) {
+                        if (confirm.isConfirmed) {
+                            add_section()
+                        }
+
                     })
                 } else if (isBlock === 'True') {
                     Swal.fire({
@@ -224,6 +227,40 @@
                     })
                 }
             }
+
+            $('#draft_to_shipped').on('click', function (e) {
+
+             /*   Swal.fire({
+                    title: 'Arizani jo\'natish',
+                    text: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ha, albatta',
+                    cancelButtonText: 'Bilmadim',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),
+                            success: function (res) {
+                                console.log(res)
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            }
+                        })
+
+                        Swal.fire(
+                            'Jo\'natildi!',
+                            `Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi`,
+                            'success'
+                        )
+                    }
+                })   */
+            })
 
             function select_payment() {
                 Swal.fire({
@@ -319,6 +356,61 @@
                 })
             })
 
+                        function add_section() {
+                Swal.fire({
+                    title: 'Viloyatni tanlang',
+                    confirmButtonText: 'Tanlash',
+                    input: 'select',
+                    inputOptions: get_regions(url = '{% url 'user:get_regions_list' %}'),
+                    /* inputValidator: function (value) {
+                         return new Promise(function (resolve, reject) {
+                             if (value !== '') {
+                                 resolve();
+                             } else {
+                                 resolve('You need to select a Tier');
+                             }
+                         });
+                     } */
+                }).then(function (confirm) {
+                    console.log(confirm)
+                    if (confirm.isConfirmed) {
+
+                        Swal.fire({
+                            title: 'YHXB RIB bo\'limini tanlang',
+                            confirmButtonText: 'Tanlash',
+                            input: 'select',
+                            inputOptions: get_sections(url = "{% url 'user:get_sections_list' region_id=12345 %}".replace(/12345/, confirm.value.toString())),
+                        }).then(function (confirm) {
+                            if (confirm.isConfirmed) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'application:save_application_section' %}",
+                                    data: {
+                                        'application': applicationId,
+                                        'section': confirm.value,
+                                    },
+                                    success: function (res) {
+                                        console.log(res)
+                                        location.reload()
+                                    },
+                                    error: function (err) {
+                                        console.log(err)
+                                    },
+                                    failure: function (err) {
+                                        console.log(err)
+                                    }
+
+                                })
+                            }
+
+                        })
+                    }
+                })
+            }
+
+            $('#add_section').on('click', function (e) {
+                add_section()
+            })
 
             $('.application-state-duty-payment').on('click', function () {
                 var paymentId = $(this).data('payment')
