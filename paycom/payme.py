@@ -40,8 +40,6 @@ class CheckOrder(Paycom):
                 application = Application.objects.filter(id=order.application.id).last()
                 if application:
                     application.is_block = False
-                    if application.section is not None:
-                        application.process = SHIPPED
                     application.save()
                 else:
                     send_message_to_developer(f'order application not found. Order id: {order.id}')

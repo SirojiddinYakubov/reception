@@ -2,6 +2,7 @@ from datetime import timezone, datetime
 from itertools import chain
 
 from django.contrib import messages
+from django.contrib.humanize.templatetags.humanize import naturalday
 from django.views.generic import DetailView
 from docxtpl import DocxTemplate
 from reportlab.pdfgen import canvas
@@ -575,10 +576,7 @@ class SaveApplicationSection(AllowedRolesMixin, View):
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
-            if application.is_block:
-                application.process = CREATED
-            else:
-                application.process = SHIPPED
+            application.process = CREATED
             application.save()
             return HttpResponse(status=200)
         return HttpResponse(status=400)
@@ -591,11 +589,24 @@ class DraftToShipped(APIView):
     def post(self, request, *args, **kwargs):
         try:
             application_id = kwargs.get('application_id')
-            application = Application.objects.get(application_id=application_id)
+            application = Application.objects.get(id=application_id)
             print(application)
-            return Response({'status': 'OK'}, status=200)
+            base_amount = AmountBaseCalculation.objects.filter(is_active=True).last()
+            if not base_amount:
+                return Response({'error': f"Eng kam oylik ish haqi topilmadi!"}, status=400)
+
+            if application.process == DRAFT:
+                return Response({'error': f"Ariza to'liq to'ldirilmagan!"}, status=400)
+
+            if application.is_block:
+                return Response({
+                    'error': f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak"},
+                    status=400)
+            application.process = SHIPPED
+            application.save()
+            return Response({'success': 'OK'}, status=200)
         except Exception as e:
-            return Response({'error': e}, status=400)
+            return Response({'error': str(e)}, status=400)
 
 
 class ApplicationCashByModeratorView(AllowedRolesMixin, View):
@@ -608,7 +619,6 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
                 application = get_object_or_404(Application, id=request.POST.get('application'))
                 moderator = get_object_or_404(User, secret_key=request.POST.get('secret_key'),
                                               role__in=self.allowed_roles)
-                print(application, moderator)
                 if not (application.is_block and application.process == CREATED):
                     print('Application status already active')
                     return HttpResponse(status=409)

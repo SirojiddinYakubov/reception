@@ -225,14 +225,32 @@
 
                         }
                     })
+                } else if (isBlock === 'False' && proccess === '0') {
+                    Swal.fire({
+                        allowOutsideClick: true,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        showLoaderOnConfirm: true,
+                        confirmButtonText: "Jo'natish",
+                        {#cancelButtonText: 'Bekor qilish',#}
+                        icon: 'error',
+                        title: `Ariza ${'{{ application.section.title }}'}ga jo'natilmagan!`,
+                        text: `Ariza to'liq to'ldirilgan lekin ${'{{ application.section.title }}'}ga jo'natilmagan!`,
+                        {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+                    }).then(function (confirm) {
+                        if (confirm.isConfirmed) {
+                            send_application()
+                        }
+
+                    })
                 }
             }
 
-            $('#draft_to_shipped').on('click', function (e) {
-
-             /*   Swal.fire({
-                    title: 'Arizani jo\'natish',
-                    text: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",
+            function send_application() {
+                Swal.fire({
+                    text: `Jo'natiladigan YHXB RIB bo'limi: "${'{{ application.section.title }}'}"`,
+                    title: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -247,19 +265,31 @@
                             url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),
                             success: function (res) {
                                 console.log(res)
+                                Swal.fire({
+                                    title: 'Jo\'natildi!',
+                                    text: `Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun hujjatlarning asl nusxasini ${'{{ application.section.title }}'} ga olib borib topshirishingiz talab etiladi! Hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!`,
+                                    icon: 'success',
+                                    confirmButtonText: 'Tushunarli',
+                                })
                             },
                             error: function (err) {
                                 console.log(err)
+                                Swal.fire(
+                                    'Xatolik!',
+                                    `${err.responseJSON['error']}`,
+                                    'error',
+                                )
                             }
                         })
 
-                        Swal.fire(
-                            'Jo\'natildi!',
-                            `Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi`,
-                            'success'
-                        )
+
                     }
-                })   */
+                })
+            }
+
+            $('#draft_to_shipped').on('click', function (e) {
+                send_application()
+
             })
 
             function select_payment() {
@@ -356,7 +386,7 @@
                 })
             })
 
-                        function add_section() {
+            function add_section() {
                 Swal.fire({
                     title: 'Viloyatni tanlang',
                     confirmButtonText: 'Tanlash',
