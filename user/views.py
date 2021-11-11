@@ -25,12 +25,12 @@ from reception.settings import *
 from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
-from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer
+from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer, SectionSerializer, \
+    RegionSerializer
 from user.utils import send_otp, get_tokens_for_user
 
 
 class Home(AllowedRolesMixin, RedirectView):
-
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
 
@@ -41,7 +41,6 @@ class Home(AllowedRolesMixin, RedirectView):
             return redirect(reverse_lazy('application:applications_list'))
         else:
             return redirect(reverse_lazy('application:applications_list'))
-
 
 
 @login_required
@@ -1270,3 +1269,22 @@ class SectionsListByRegion(AllowedRolesMixin, View):
                                                                                                                  'street'))
             return HttpResponse(json.dumps(qs), status=200, content_type='application/json')
         return HttpResponse(status=404)
+
+
+class GetRegionsList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        regions = Region.objects.all()
+        serializer = RegionSerializer(regions, many=True)
+        return Response(serializer.data, status=200)
+
+
+class GetSectionsList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        region_id = kwargs.get('region_id')
+        sections = Section.objects.filter(region_id=region_id, parent__isnull=False)
+        serializer = SectionSerializer(sections, many=True)
+        return Response(serializer.data, status=200)

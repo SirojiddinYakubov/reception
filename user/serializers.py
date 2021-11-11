@@ -8,7 +8,7 @@ from rest_framework.validators import UniqueValidator
 from reception.api import SendSmsWithApi, SUCCESS
 from reception.telegram_bot import send_message_to_developer
 from user.models import (
-    Region
+    Region, Section
 )
 
 User = get_user_model()
@@ -176,3 +176,16 @@ class SaveUserPassportSerializer(serializers.ModelSerializer):
             instance.save()
 
         return instance
+
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
+
+
+class RegionSerializer(serializers.ModelSerializer):
+    # sections = SectionSerializer(many=True, source='section_set')
+    class Meta:
+        model = Region
+        fields = ['id', 'title', ]

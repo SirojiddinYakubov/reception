@@ -36,6 +36,7 @@ urlpatterns = [
          name='SectionApplicationsList'),
 
     path('save-application-section/', SaveApplicationSection.as_view(), name='save_application_section'),
+    path('draft-to-shipped/<int:application_id>/', DraftToShipped.as_view(), name='draft_to_shipped'),
 
     path('application-cash-by-moderator/', ApplicationCashByModeratorView.as_view(), name='application_cash_by_moderator'),
 ]
