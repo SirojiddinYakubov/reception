@@ -1,30 +1,26 @@
 <table class="table table-bordered table-striped">
     <tbody>
-    {% if not application.process == 7 %}
-        <tr>
-            <th scope="row">Status:</th>
-            <td>
+
+    <tr>
+        <th scope="row">Status:</th>
+        <td>
+            {% if application.process == 7 or application.process == 0 %}
                 <button id="draft_to_shipped" class="btn btn-success">Arizani {{ application.section.title }}ga
                     jo'natish &nbsp&nbsp&nbsp<i class="fas fa-arrow-up"></i></button>
-            </td>
-        </tr>
-    {% endif %}
+            {% else %}
+                <b>Ariza {{ application.section.title }}ga jo'natilgan!</b>
+            {% endif %}
+        </td>
+    </tr>
+
     <tr>
         <th scope="row">Ariza raqami:</th>
         <td>{{ application.id }}</td>
     </tr>
     <tr>
-        <th scope="row">Tekshirish uchun parol:</th>
-        <td class="text-danger">{{ application.password }}</td>
-    </tr>
-    <tr>
         <th scope="row">Xizmat nomi:</th>
         <td>
-            {% if request.user.is_authenticated %}
-                <p>{{ application.service.long_title }}</p>
-            {% else %}
-                <p>{{ application.service.long_title }}</p>
-            {% endif %}
+            <p>{{ application.service.long_title }}</p>
         </td>
     </tr>
     <tr>
@@ -79,10 +75,17 @@
         </a>
         </td>
     </tr>
-
     <tr>
-        <th scope="row">Berilgan sana:</th>
+        <th scope="row">Tekshirish uchun parol:</th>
+        <td class="text-danger">{{ application.password }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Yaratilgan vaqt:</th>
         <td>{{ application.created_date|date:'SHORT_DATETIME_FORMAT' }}</td>
+    </tr>
+      <tr>
+        <th scope="row">Tahrirlangan vaqt:</th>
+        <td>{{ application.updated_date|date:'SHORT_DATETIME_FORMAT' }}</td>
     </tr>
     </tbody>
 </table>
