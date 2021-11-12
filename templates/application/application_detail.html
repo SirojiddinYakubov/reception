@@ -31,6 +31,8 @@
 
     <!-- Sweet Alert-->
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+
 {% endblock css %}
 
 {% block page_title %}
@@ -264,10 +266,22 @@
                             type: "POST",
                             url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),
                             success: function (res) {
-                                console.log(res)
+                                var textHeader = `<p style="margin-bottom: 0px; text-align: left">Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun quyidagi hujjatlarni ${'{{ application.section.region.title }}'}, ${'{{ application.section.located_district.title }}'}, ${'{{ application.section.quarter.title }}'}, ${'{{ application.section.street }}'}ga olib borib topshirishingiz talab etiladi!</p>`
+                                var text = '<ol>';
+                                for (const x of res) {
+                                    text = text + `<br><li style="text-align: left">${x.title}</li>`;
+                                }
+                                text = text + '</ol>';
+                                text = textHeader + text
+                                var textFooter = "<p style='text-align: left'>Ushbu hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!</p>"
+                                text = text + textFooter
+
+                                const wrapper = document.createElement('div');
+                                wrapper.innerHTML = text;
+
                                 Swal.fire({
                                     title: 'Jo\'natildi!',
-                                    text: `Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun hujjatlarning asl nusxasini ${'{{ application.section.title }}'} ga olib borib topshirishingiz talab etiladi! Hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!`,
+                                    html: wrapper,
                                     icon: 'success',
                                     confirmButtonText: 'Tushunarli',
                                 })
@@ -278,7 +292,9 @@
                                     'Xatolik!',
                                     `${err.responseJSON['error']}`,
                                     'error',
-                                )
+                                ).then(function () {
+                                    location.reload()
+                                })
                             }
                         })
 

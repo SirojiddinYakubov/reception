@@ -1,3 +1,4 @@
+{% load humanize %}
 <table class="table table-bordered">
     <thead class="thead-light">
     <tr>
@@ -25,9 +26,7 @@
         <!--Yaratildi-->
         {% if application.process == 0 %}
              <th scope="row" style="color: #0f6674">Ariza yaratildi</th>
-            <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi. Arizangizni jo'natish uchun BHM'ning
-                3% miqdorida ya'ni 13 500 to'lov qilishingiz talab etiladi. Shundan so'ng onlayn arizangiz
-                {{ application.section.region.title }} {{ application.section.title }}ga jo'natiladi.
+            <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi. Arizangizni {{ application.section.title }}ga jo'natishingiz mumkin.
             </th>
 
             <!--Jo'natildi-->
@@ -86,14 +85,11 @@
         {% if application.canceled_date %}
             <th style="color: #0f6674">{{ application.canceled_date }}</th>
         {% endif %}
-
+        {{ application.process }}
         {% if application.process == 0 %}
             <th>
-
-
                 <button style="margin-left: 2%" type="button"
-                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov
-                    qilish
+                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov qilish
                     &nbsp&nbsp&nbsp<i
                             class="fas fa-long-arrow-alt-right"></i>
                 </button>

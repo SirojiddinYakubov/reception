@@ -14,6 +14,7 @@ from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
+from application.serializers import DocumentForPoliceSerializer
 from application.utils import reg_new_car, reg_new_car_v2
 from reception.api import SendSmsWithApi
 from reception.mixins import *
@@ -84,6 +85,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
             'application': application,
             'percents': percents,
         }
+
         if AmountBaseCalculation.objects.filter(is_active=True):
             activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
             context.update(activation_pay=activation_pay)
@@ -590,7 +592,6 @@ class DraftToShipped(APIView):
         try:
             application_id = kwargs.get('application_id')
             application = Application.objects.get(id=application_id)
-            print(application)
             base_amount = AmountBaseCalculation.objects.filter(is_active=True).last()
             if not base_amount:
                 return Response({'error': f"Eng kam oylik ish haqi topilmadi!"}, status=400)
@@ -600,11 +601,15 @@ class DraftToShipped(APIView):
 
             if application.is_block:
                 return Response({
-                    'error': f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak"},
+                    'error': f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak",
+                },
                     status=400)
             application.process = SHIPPED
             application.save()
-            return Response({'success': 'OK'}, status=200)
+
+            document_polices = DocumentForPolice.objects.filter(is_active=True, service=application.service)
+            serializer = DocumentForPoliceSerializer(document_polices, many=True)
+            return Response(serializer.data, status=200)
         except Exception as e:
             return Response({'error': str(e)}, status=400)
 
