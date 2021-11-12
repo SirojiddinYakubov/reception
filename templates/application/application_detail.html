@@ -317,20 +317,20 @@
                     showLoaderOnConfirm: true,
                     title: 'To\'lov turini tanlang!',
                     html: "<div class='row'>" +
-                        "<div class='col-6'><a href='?payment=click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +
-                        "<div class='col-6'><a href='?payment=payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +
+                        "<div style='border: 1px solid #fff' class='col-6'><a href='#' id='click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +
+                        "<div class='col-6'><a href='#' id='payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +
                         "</div>",
                 })
             }
 
-            var payment = '{{ request.GET.payment }}'
-
-            if (payment === 'click') {
-                alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')
-                {#window.location.href = '{% url 'click:create_order_url' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
-            } else if (payment === 'payme') {
-                window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
-            }
+            $('body').on('click', '#click, #payme', function (e) {
+                if ($(e.currentTarget).attr('id') === 'click') {
+                    alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')
+                    {#window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
+                } else if ($(e.currentTarget).attr('id') === 'payme') {
+                    window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
+                }
+            })
 
             $('.application_render_pdf').on('click', function () {
                 var applicationId = $(this).data('application')

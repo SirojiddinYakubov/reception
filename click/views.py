@@ -7,37 +7,49 @@ from django.shortcuts import redirect, get_object_or_404
 from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
 from django.urls import reverse_lazy
+from django.views import View
 
 from application.models import Application, SHIPPED
 from click.models import Order, CLICK
 from reception.telegram_bot import send_message_to_developer
+from service.models import AmountBaseCalculation
 from user.models import User
 
 
-@login_required
-def create_order_url(request):
-    try:
-        amount = int(request.GET.get('amount'))
-        application_id = int(request.GET.get('application'))
+class CreateClickOrder(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            amount = int(request.GET.get('amount'))
+            if not request.GET.get('application'):
+                return HttpResponse("To'lov amalga oshiriladigan ariza topilmadi!")
 
-        return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
-        user = get_object_or_404(User, id=request.user.id)
+            application_id = int(request.GET.get('application'))
 
-        order = Order.objects.filter(amount=amount, type=CLICK, application_id=application_id).last()
-        if not order:
-            order = Order.objects.create(amount=amount, user=user, type=CLICK, application_id=application_id)
+            if AmountBaseCalculation.objects.filter(is_active=True):
+                activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+                if amount != activation_pay:
+                    messages.error(request,
+                                   f"Click orqali to'lov qilishda xatolik! To'lov summasi {activation_pay} so'mga teng bo'lishi kerak!")
+                    return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
 
-        if not order.application.is_block:
-            messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
-            return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
+            return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
+            user = get_object_or_404(User, id=request.user.id)
 
-        url = ClickUz.generate_url(order_id=order.id, amount=str(1000), return_url=return_url)
-        send_message_to_developer(return_url)
-        send_message_to_developer(f"{user}: {request.GET.get('amount')}")
-        return redirect(url)
-    except:
-        messages.error(request, 'Xatolik yuz berdi! Sahifani yangilab qayta urinib ko\'ring!')
-        return redirect(reverse_lazy('user:personal_data'))
+            order = Order.objects.filter(amount=amount, type=CLICK, application_id=application_id).last()
+            if not order:
+                order = Order.objects.create(amount=amount, user=user, type=CLICK, application_id=application_id)
+
+            if not order.application.is_block:
+                messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
+                return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
+
+            url = ClickUz.generate_url(order_id=order.id, amount=str(1000), return_url=return_url)
+            send_message_to_developer(return_url)
+            send_message_to_developer(f"{user}: {request.GET.get('amount')}")
+            return redirect(url)
+        except:
+            messages.error(request, 'Xatolik yuz berdi! Sahifani yangilab qayta urinib ko\'ring!')
+            return redirect(reverse_lazy('user:personal_data'))
 
 
 class OrderCheckAndPayment(ClickUz):

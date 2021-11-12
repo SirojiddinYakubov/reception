@@ -174,7 +174,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 
-DATETIME_FORMAT = '%d.%m.%Y %H:%M:%S'
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+DATETIME_FORMAT = 'd.m.Y H:i'
 DATE_FORMAT = '%d.%m.%Y'
 TIME_ZONE = 'Asia/Tashkent'
 LOCAL_TIMEZONE = pytz.timezone(TIME_ZONE)
@@ -197,8 +198,6 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # SESSION_COOKIE_AGE = 1*60
-
-DATE_INPUT_FORMATS = ['%d.%m.%Y']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -354,8 +353,8 @@ PAYMENT_MODEL = 'user.Payment'
 # )
 LANGUAGE_CODE = 'uz'
 USE_I18N = True
-USE_L10N = True
-USE_TZ = False
+USE_L10N = False
+USE_TZ = True
 gettext = lambda s: s
 LANGUAGES = (
     ('uz', gettext('Uzbek')),
