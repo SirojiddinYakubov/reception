@@ -23,6 +23,7 @@ gift_agreement/migrations/
 service/migrations/
 click/migrations/
 paycom/migrations/
+partners/migrations/
 venv39/
 deploy/.env
 .bash_history

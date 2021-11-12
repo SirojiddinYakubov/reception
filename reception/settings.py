@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'payments',
     'modeltranslation',
     'reception',
-
+    'partners',
 ]
 
 MIDDLEWARE = [

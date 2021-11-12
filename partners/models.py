@@ -17,8 +17,8 @@ class NotaryDepartment(models.Model):
         return self.title
 
     class Meta:
-        verbase_name = "Notarius"
-        verbase_name_plural = "Notariuslar"
+        verbose_name = "Notarius"
+        verbose_name_plural = "Notariuslar"
 
     # Notariusning bo'sh vaqtlari
 class NotaryFreeTime(models.Model):
@@ -26,11 +26,11 @@ class NotaryFreeTime(models.Model):
     free_time = models.DateTimeField(verbose_name="Bo'sh vaqti")
     
     def __str__(self) -> str:
-        return self.notary_department
+        return str(self.notary_department.title)
 
     class Meta:
-        verbase_name = "Notarius bo'sh vaqti"
-        verbase_name_plural = "Notarius bo'sh vaqtlari"
+        verbose_name = "Notarius bo'sh vaqti"
+        verbose_name_plural = "Notarius bo'sh vaqtlari"
 
 
     # Notariusning bo'sh vaqtlariga yozilish
@@ -56,8 +56,8 @@ class DiagnosticDepartment(models.Model):
         return self.title
 
     class Meta:
-        verbase_name = "Diagnostika"
-        verbase_name = "Diagnostikalar"
+        verbose_name = "Diagnostika"
+        verbose_name_plural = "Diagnostikalar"
 
 
 """ Avtosalonlar bo'limi  """
@@ -74,5 +74,5 @@ class AutoSalon(models.Model):
         return self.title
 
     class Meta:
-        verbase_name = "Avtosalon"
-        verbase_name = "Avtosalonlar"
+        verbose_name = "Avtosalon"
+        verbose_name_plural = "Avtosalonlar"
