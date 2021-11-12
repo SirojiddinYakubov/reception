@@ -136,3 +136,8 @@ class ApplicationCashByModerator(BaseModel):
     application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True)
     moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.CASCADE, null=True)
     paid_state_duty = models.ForeignKey('service.PaidStateDuty', on_delete=models.CASCADE, null=True)
+
+
+class DocumentForPolice(BaseModel):
+    title = models.CharField(max_length=50)
+    service = models.ManyToManyField(Service)

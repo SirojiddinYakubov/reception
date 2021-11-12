@@ -37,4 +37,17 @@ class ApplicationCashByModeratorAdmin(admin.ModelAdmin):
                    'moderator__role', 'moderator__region']
     save_on_top = True
 
+
 admin.site.register(ApplicationDocument)
+
+
+@admin.register(DocumentForPolice)
+class DocumentForPoliceAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'get_services', 'is_active']
+    list_display_links = ['title', 'get_services', ]
+    save_on_top = True
+    list_filter = ['title', 'created_at',  'is_active']
+
+
+    def get_services(self, obj):
+        return ",\n".join([p.short_title for p in obj.service.all()])

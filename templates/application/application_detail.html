@@ -31,6 +31,8 @@
 
     <!-- Sweet Alert-->
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+
 {% endblock css %}
 
 {% block page_title %}
@@ -264,10 +266,36 @@
                             type: "POST",
                             url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),
                             success: function (res) {
-                                console.log(res)
+                                {#var ol = document.createElement("ol");#}
+
+                               /* for (const x of res) {
+                                    var li = document.createElement("li");
+                                    li.innerHTML = '\n' + x.title
+                                    ol.append(li)
+                                }*/
+
+                                var text = '<ol>';
+                                for (const x of res) {
+
+                                    text = text + `<br><li>${x.title}</li>`;
+
+                                }
+                                text = text + '</ol>';
+                                {#console.log(ol)#}
+                                {#var html = `<p>Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun hujjatlarning asl nusxasini ${'{{ application.section.title }}'} ga olib borib topshirishingiz talab etiladi!</p> <br>` + $(ol).content#}
+                                {##}
+                                var div = document.createElement("div");
+                                {##}
+                                div.innerHTML = text;
+                                var text2 = div.textContent || div.innerText || "";
+                                {##}
+                                {#console.log(div)#}
+
+
                                 Swal.fire({
                                     title: 'Jo\'natildi!',
-                                    text: `Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun hujjatlarning asl nusxasini ${'{{ application.section.title }}'} ga olib borib topshirishingiz talab etiladi! Hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!`,
+                                    text: text2,
+                                    {#text: ` \n Kerakli hujjatlar:\n <ol><li>fdgfgh</li></ol>Hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!`,#}
                                     icon: 'success',
                                     confirmButtonText: 'Tushunarli',
                                 })
@@ -278,7 +306,9 @@
                                     'Xatolik!',
                                     `${err.responseJSON['error']}`,
                                     'error',
-                                )
+                                ).then(function () {
+                                    location.reload()
+                                })
                             }
                         })
 
