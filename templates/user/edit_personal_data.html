@@ -44,7 +44,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="last_name" name="last_name"
                                        class="form-control" required
-                                       {% if form.instance.last_name %}value="{{ form.instance.last_name }}"{% endif %}
+                                       {% if user.last_name %}value="{{ user.last_name }}"{% endif %}
                                        placeholder="{% trans 'Masalan: Yoqubov' %}"
                                        autocomplete="off">
                             </div>
@@ -56,7 +56,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="first_name" name="first_name"
                                        class="form-control" required
-                                       {% if form.instance.first_name %}value="{{ form.instance.first_name }}"{% endif %}
+                                       {% if user.first_name %}value="{{ user.first_name }}"{% endif %}
                                        placeholder="{% trans 'Masalan: Sirojiddin' %}"
                                        autocomplete="off">
                             </div>
@@ -68,7 +68,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="middle_name" name="middle_name"
                                        class="form-control" required
-                                       {% if form.instance.middle_name %}value="{{ form.instance.middle_name }}"{% endif %}
+                                       {% if user.middle_name %}value="{{ user.middle_name }}"{% endif %}
                                        placeholder="{% trans 'Masalan: Tojiddinovich' %}"
                                        autocomplete="off">
                             </div>
@@ -80,7 +80,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="date" id="birthday" name="birthday"
                                        class="form-control" required
-                                       {% if form.instance.birthday %}value="{{ form.instance.birthday|date:"Y-m-d" }}"{% endif %}>
+                                       {% if user.birthday %}value="{{ user.birthday|date:"Y-m-d" }}"{% endif %}>
                             </div>
                         </div>
 
@@ -121,10 +121,10 @@
                             <div class="col-8 col-xl-9 quarter">
                                 <select name="quarter" class="form-select select2" id="quarter"
                                         required>
-                                       {% if quarter %}
+                                    {% if quarter %}
                                         <option value="{{ quarter.id }}">{{ quarter.title }}</option>
                                     {% else %}
-                                            <option value="">{% trans '--Mahallani tanlang--' %}</option>
+                                        <option value="">{% trans '--Mahallani tanlang--' %}</option>
                                     {% endif %}
 
                                 </select>
@@ -137,7 +137,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="address" name="address"
                                        class="form-control" required
-                                       {% if form.instance.address %}value="{{ form.instance.address }}"{% endif %}
+                                       {% if user.address %}value="{{ user.address }}"{% endif %}
                                        placeholder="{% blocktrans %}Masalan: M.Iqbol ko'chasi 76-uy{% endblocktrans %}"
                                        autocomplete="off">
                             </div>
@@ -149,7 +149,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="passport_seriya" name="passport_seriya"
                                        class="form-control" required
-                                       {% if form.instance.passport_seriya %}value="{{ form.instance.passport_seriya }}"{% endif %}
+                                       {% if user.passport_seriya %}value="{{ user.passport_seriya }}"{% endif %}
                                        placeholder="{% blocktrans %}Masalan: AA{% endblocktrans %}"
                                        autocomplete="off">
                             </div>
@@ -162,7 +162,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="number" id="passport_number" name="passport_number"
                                        class="form-control" required
-                                       {% if form.instance.passport_number %}value="{{ form.instance.passport_number }}"{% endif %}
+                                       {% if user.passport_number %}value="{{ user.passport_number }}"{% endif %}
                                        placeholder="{% blocktrans %}Masalan: 3870293{% endblocktrans %}"
                                        autocomplete="off">
                             </div>
@@ -175,7 +175,7 @@
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="person_id" name="person_id"
                                            class="form-control" required
-                                           {% if form.instance.person_id %}value="{{ form.instance.person_id }}"{% endif %}
+                                           {% if user.person_id %}value="{{ user.person_id }}"{% endif %}
                                            autocomplete="off">
                                     <div class="input-group-text" id="person_id_help">
                                         <i class="far fa-question-circle"></i>
@@ -195,7 +195,7 @@
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="issue_by_whom" name="issue_by_whom"
                                        class="form-control" required
-                                       {% if form.instance.issue_by_whom %}value="{{ form.instance.issue_by_whom }}"{% endif %}
+                                       {% if user.issue_by_whom %}value="{{ user.issue_by_whom }}"{% endif %}
                                        placeholder="{% blocktrans %}Masalan: BUXORO SHAHAR IIB{% endblocktrans %}"
                                        autocomplete="off">
                             </div>
@@ -211,7 +211,7 @@
                                     </div>
                                     <input type="text" id="phone" name="phone"
                                            class="form-control" required
-                                           {% if form.instance.phone %}value="{{ form.instance.phone }}"{% endif %}
+                                           {% if user.phone %}value="{{ user.phone }}"{% endif %}
                                            autocomplete="off">
 
 
@@ -227,7 +227,7 @@
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" name="password"
                                            class="form-control" required
-                                           {% if form.instance.turbo %}value="{{ form.instance.turbo }}"{% endif %}
+                                           {% if user.turbo %}value="{{ user.turbo }}"{% endif %}
                                            autocomplete="off"
                                            placeholder="{% blocktrans %}Masalan: qwerty12345{% endblocktrans %}">
                                     <div class="input-group-text show_password" data-pwd="password">
@@ -245,7 +245,7 @@
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="confirm_password" name="confirm_password"
                                            class="form-control" required
-                                           {% if form.instance.turbo %}value="{{ form.instance.turbo }}"{% endif %}
+                                           {% if user.turbo %}value="{{ user.turbo }}"{% endif %}
                                            autocomplete="off"
                                            placeholder="{% blocktrans %}Masalan: qwerty12345{% endblocktrans %}">
                                     <div class="input-group-text show_password" data-pwd="confirm_password">
@@ -301,12 +301,14 @@
             $('#phone').inputmask('99 999-99-99');
             $('#person_id').inputmask('99999999999999');
 
-            var csrftoken = getCookie('csrftoken')
+            var csrftoken = getCookie('csrftoken'),
+                token = getCookie('token')
 
 
             $.ajaxSetup({
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader('X-CSRFToken', csrftoken)
+                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
                 },
                 statusCode: {
                     401: function () {
@@ -404,7 +406,7 @@
             }, "JShShIR 14 raqamdan iborat bo'lishi kerak!");
             jQuery.validator.addMethod("phoneMaxLength", function (value, element) {
                 return this.optional(element) || /^\d{2}\s\d{3}-\d{2}-\d{2}$/.test(value);
-            }, "Login noto'g'ri kiritilgan!");
+            }, "Telefon raqam noto'g'ri kiritilgan!");
             jQuery.validator.addMethod("passwordCheck",
                 function (value, element, param) {
                     if (this.optional(element)) {
@@ -568,16 +570,18 @@
                     },
 
                     submitHandler: function (form, e) {
+                        $('#saveBtn').attr('disabled', true)
                         $('#saveBtn').html('Saqlash&nbsp<i class="fas fa-spinner fa-spin"></i>')
 
+
                         $.ajax({
-                            type: "POST",
-                            url: "{% url 'user:edit_personal_data' %}",
+                            type: "PATCH",
+                            url: "{% url 'user:save_personal_data' %}",
                             data: $(form).serialize(),
                             statusCode: {
                                 200: function () {
                                     $('#saveBtn').html('Saqlash')
-
+                                    $('#saveBtn').attr('disabled', false)
                                     $("fieldset").keyup(function (event) {
                                         if (event.keyCode === 13) {
                                             $("#saveBtn").click();
@@ -601,8 +605,25 @@
                                             '</svg> Muvaffaqiyatli tahrirlandi!`
                                     });
                                 },
-                                400: function () {
-                                    errorFunction()
+                                400: function (err) {
+                                    var errorText
+                                    var keys = Object.keys(err.responseJSON);
+                                    var first_iteration = true;
+                                    keys.forEach(function (key) {
+                                        if (first_iteration) {
+                                            first_iteration = false;
+                                            errorText = err.responseJSON[key];
+                                        }
+                                    });
+                                    Swal.fire(
+                                        'Xatolik!',
+                                        `${errorText}`,
+                                        `warning`,
+                                    ).then(function (confirm) {
+                                        $('#saveBtn').attr('disabled', false)
+                                        $('#saveBtn').html('Saqlash')
+                                    })
+                                    {#errorFunction()#}
                                 },
                                 401: function () {
                                     tokenInvalid()
