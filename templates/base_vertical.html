@@ -150,7 +150,13 @@
 <script src="{% static 'assets/js/app.min.js' %}"></script>
 
 <script>
-
+    $('#load').show();
+    $(window).on('load', function () {
+        setTimeout(function () {
+            console.log('load')
+            $('#load').hide();
+        }, 500);
+    });
 </script>
 {% block js %}
 {% endblock js %}
