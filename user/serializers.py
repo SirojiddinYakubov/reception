@@ -1,10 +1,12 @@
 import random
 
 from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth.password_validation import validate_password
+from django.core.validators import RegexValidator
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.validators import UniqueValidator
-
+from django.utils.translation import gettext as _
 from reception.api import SendSmsWithApi, SUCCESS
 from reception.telegram_bot import send_message_to_developer
 from user.models import (
@@ -123,6 +125,67 @@ class UserCreateSerializer(serializers.ModelSerializer):
             send_message_to_developer(
                 f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')
         return user
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        read_only_fields = ('id',)
+        fields = [
+            'id',
+            'phone',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'birthday',
+            'region',
+            'district',
+            'quarter',
+            'address',
+            'passport_seriya',
+            'passport_number',
+            'issue_by_whom',
+            'person_id',
+            'password',
+        ]
+        extra_kwargs = {
+            'last_name': {'required': True},
+            'first_name': {'required': True},
+            'middle_name': {'required': True},
+            'birthday': {'required': True},
+            'region': {'required': True},
+            'district': {'required': True},
+            'quarter': {'required': True},
+            'address': {'required': True},
+            'passport_seriya': {'required': True},
+            'passport_number': {'required': True},
+            'issue_by_whom': {'required': True},
+            'password': {'required': True},
+            'person_id': {'required': True},
+
+        }
+
+    # def validate_password(self, password):
+    #     if password:
+    #         validate_password(password)
+    #     return super().validate(password)
+
+    def validate_phone(self, value):
+        current_user_id = self.context['request'].user.id
+        user = User.objects.exclude(id=current_user_id).filter(username=value)
+        if user:
+            raise serializers.ValidationError("Tel raqam oldin ro'yhatdan o'tkazilgan!")
+        return value
+
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('phone')
+        if password := validated_data.pop('password', None):
+            instance.turbo = password
+            instance.set_password(password)
+        return super().update(instance, validated_data)
 
 
 class UserCreatePassportSerializer(serializers.ModelSerializer):

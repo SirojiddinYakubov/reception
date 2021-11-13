@@ -153,14 +153,14 @@
 <script type="text/javascript" charset="UTF-8">
     document.onreadystatechange = function () {
         var state = document.readyState
-        {#console.log(state)#}
+        console.log(state)
         if (state === 'interactive') {
-            {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
+            document.getElementsByClassName('wrapper').style.visibility = "hidden";
         } else if (state === 'complete') {
             setTimeout(function () {
                 document.getElementById('interactive');
                 document.getElementById('load').style.visibility = "hidden";
-                {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
+                document.getElementsByClassName('wrapper').style.visibility = "visible";
             }, 100);
         }
     }
