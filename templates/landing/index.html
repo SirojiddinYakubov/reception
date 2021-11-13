@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
-
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
 
     <title>{% trans 'E-RIB.UZ' %}</title>
     <link rel="stylesheet" href="{% static 'src/css/plugins.css' %}">
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{% static 'src/css/font/thicccboi.css' %}">
 </head>
 <body>
+<div id="load"></div>
 <div class="content-wrapper">
     <header class="wrapper bg-soft-primary">
         <nav class="navbar center-nav transparent navbar-expand-lg navbar-light">
@@ -479,5 +480,15 @@
         crossorigin="anonymous"></script>
 <script src="{% static 'src/js/plugins.js' %}"></script>
 <script src="{% static 'src/js/scripts.js' %}"></script>
+<script>
+
+    $('#load').show();
+    $(window).on('load', function () {
+        setTimeout(function () {
+            $('#load').hide();
+        }, 500);
+    });
+</script>
+
 </body>
 </html>

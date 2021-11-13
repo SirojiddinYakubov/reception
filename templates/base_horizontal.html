@@ -482,22 +482,12 @@
 <script src="{% static 'assets/js/app.min.js' %}"></script>
 <script>
 
-    $(document).ready(function () {
-
-        document.onreadystatechange = function () {
-            var state = document.readyState
-            {#console.log(state)#}
-            if (state === 'interactive') {
-                {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
-            } else if (state === 'complete') {
-                setTimeout(function () {
-                    {#document.getElementById('interactive');#}
-                    document.getElementById('load').style.visibility = "hidden";
-                    {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
-                }, 100);
-            }
-        }
-    })
+    $('#load').show();
+    $(window).on('load', function () {
+        setTimeout(function () {
+            $('#load').hide();
+        }, 500);
+    });
 </script>
 
 {% block js %}

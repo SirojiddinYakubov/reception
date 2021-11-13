@@ -324,10 +324,12 @@
             }
 
             $('body').on('click', '#click, #payme', function (e) {
+
                 if ($(e.currentTarget).attr('id') === 'click') {
                     alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')
                     {#window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
                 } else if ($(e.currentTarget).attr('id') === 'payme') {
+                    $('#load').show()
                     window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
                 }
             })

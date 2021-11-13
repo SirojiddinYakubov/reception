@@ -283,14 +283,14 @@ input[type='checkbox'] {
     color: red;
 }
 
-/*#load {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    position: fixed;*/
-/*    z-index: 9999;*/
-/*    background: url("/static/online/loading.gif") no-repeat center center rgba(0, 0, 0, 0.25);*/
-/*    background-size: 60px 60px;*/
-/*}*/
+#load {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 9999;
+    background: url("/static/online/loading.gif") no-repeat center center rgba(0, 0, 0, 0.25);
+    background-size: 60px 60px;
+}
 
 /*.custom_line {*/
 /*    background-color: blue;*/
