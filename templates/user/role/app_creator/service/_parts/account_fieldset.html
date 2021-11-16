@@ -5,158 +5,18 @@
     <form action="#" id="account_form" method="POST">
         {% csrf_token %}
         <div id="account_div">
-
             <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="phone">{% trans "Tel raqam/Login" %}<span
+                <label class="col-form-label not_copy text-start">Ariza topshiruvchi shaxsini tanlang<span
                         class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9 phone_div">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">+998</div>
-                        </div>
-                        <input type="text" id="phone" name="phone"
-                               class="form-control" required
-                               autocomplete="off">
-
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="last_name">{% trans "Familiya" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="last_name" name="last_name"
-                           class="form-control" required
-
-                           placeholder="{% trans 'Masalan: Yoqubov' %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="first_name">{% trans "Ism" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="first_name" name="first_name"
-                           class="form-control" required
-
-                           placeholder="{% trans 'Masalan: Sirojiddin' %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="middle_name">{% trans "Otasining ismi" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="middle_name" name="middle_name"
-                           class="form-control" required
-                           placeholder="{% trans 'Masalan: Tojiddinovich' %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="birthday">{% trans "Tug'ilgan vaqt" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="date" id="birthday" name="birthday"
-                           class="form-control" required>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="region">{% trans "Viloyat" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9 region">
-                    <select name="region" class="form-control" id="region"
+                <div class="col-12">
+                    <select class="form-select" style="width: 100%;" id="person_type" name="person_type"
                             required>
-                        <option value="">--Viloyatni tanlang--</option>
-                        {% for reg in regions %}
-                            <option {% if reg == region %}selected{% endif %}
-                                    value="{{ reg.id }}">{{ reg.title }}</option>
-                        {% endfor %}
+                        <option value="0">Jismoniy shaxs</option>
+                        <option value="1">Yuridik shaxs</option>
                     </select>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="district">{% trans "Tuman/Shahar" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9 district">
-                    <select name="district" class="form-select select2" id="district"
-                            required>
 
-                        <option value="">{% trans '--Tumanni tanlang--' %}</option>
-
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="quarter">{% trans "Mahalla" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9 quarter">
-                    <select name="quarter" class="form-select select2" id="quarter"
-                            required>
-
-                        <option value="">{% trans '--Mahallani tanlang--' %}</option>
-
-
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="address">{% trans "Ko'cha/Qishloq" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="address" name="address"
-                           class="form-control" required
-                           placeholder="{% blocktrans %}Masalan: M.Iqbol ko'chasi 76-uy{% endblocktrans %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="passport_seriya">{% trans "Passport seriya" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="passport_seriya" name="passport_seriya"
-                           class="form-control text-uppercase" required
-                           placeholder="{% blocktrans %}Masalan: AA{% endblocktrans %}"
-                           autocomplete="off">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="passport_number">{% trans "Passport raqam" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="number" id="passport_number" name="passport_number"
-                           class="form-control" required
-                           placeholder="{% blocktrans %}Masalan: 3870293{% endblocktrans %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                       for="issue_by_whom">{% trans "Kim tomonidan berilgan" %}<span
-                        class="text-danger">*</span></label>
-                <div class="col-8 col-xl-9">
-                    <input type="text" id="issue_by_whom" name="issue_by_whom"
-                           class="form-control text-uppercase" required
-                           placeholder="{% blocktrans %}Masalan: BUXORO SHAHAR IIB{% endblocktrans %}"
-                           autocomplete="off">
-                </div>
-            </div>
-            <input type="hidden" value="{{ request.user.id }}" name="created_by">
             <div class="justify-content-end row">
                 <div class="col-3">
                     <button type="submit"
@@ -167,7 +27,7 @@
 
         </div>
     </form>
-</fieldset st>
+</fieldset>
 
 {% block modals %}
     <!-- Modal -->

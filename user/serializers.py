@@ -311,8 +311,8 @@ class CreateUserAccountViewSerializer(serializers.ModelSerializer):
         user.save()
 
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-        # r = SendSmsWithApi(message=msg, phone=user.phone).get()
-        r = 200
+        r = SendSmsWithApi(message=msg, phone=user.phone).get()
+
         if r != SUCCESS:
             send_message_to_developer(
                 f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')

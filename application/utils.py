@@ -120,7 +120,7 @@ def reg_new_car_v2(application):
         if datetime.datetime.now().date() > last_day_without_fine:
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
             fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
-                                                    lost_technical_passport=False)
+                                                    lost_technical_passport=False, )
             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
             fine2 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
                                                     lost_technical_passport=car.lost_technical_passport)
@@ -145,7 +145,8 @@ def reg_new_car_v2(application):
                                                            lost_number=False, is_old_number=car.is_old_number,
                                                            is_auction=False,
                                                            car_is_new=False, is_save_old_number=car.save_old_number,
-                                                           state_duty=REGISTRATION)
+                                                           state_duty=REGISTRATION, )
+
         else:
             registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
                                                            lost_number=car.lost_number, is_old_number=car.is_old_number,
@@ -180,7 +181,7 @@ def reg_new_car_v2(application):
 
     if car.is_new and car.model.is_local:
         """Yangi va mahalliy avtomobil"""
-        if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+        if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y').date():
             state_percent = StateDutyPercent.objects.filter(service=application.service, state_duty=ROAD_FUND)
         else:
             state_percent = StateDutyPercent.objects.none()
