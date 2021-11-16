@@ -1,6 +1,7 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        {% if request.user.role == '1' %}
+
+        {% if request.user.role == 1 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/application_page.html' %}
 
@@ -10,28 +11,30 @@
             {% include '_parts/inc/replace_number_and_tp_page.html' %}
             {% include '_parts/inc/replace_tp_page.html' %}
             {% include '_parts/inc/re_equipment_page.html' %}
-        {% elif request.user.role == '6' %}
+        {% elif request.user.role == 6 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/application_page.html' %}
             {% include '_parts/inc/workers_page.html' %}
-             {% include '_parts/inc/payments_page.html' %}
-        {% elif request.user.role == '3' %}
+            {% include '_parts/inc/payments_page.html' %}
+        {% elif request.user.role == 3 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/application_page.html' %}
-             {% include '_parts/inc/payments_page.html' %}
-        {% elif request.user.role == '4' %}
+            {% include '_parts/inc/payments_page.html' %}
+        {% elif request.user.role == 4 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/application_page.html' %}
 
-        {% elif request.user.role == '5' %}
+        {% elif request.user.role == 5 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/application_page.html' %}
-          {% elif request.user.role == '7' %}
+        {% elif request.user.role == 7 %}
             {% include '_parts/inc/personal_data_page.html' %}
             {% include '_parts/inc/regions_page.html' %}
             {% include '_parts/inc/application_page.html' %}
             {% include '_parts/inc/workers_page.html' %}
             {% include '_parts/inc/payments_page.html' %}
+{#        {% elif request.user.role == 11 %}#}
+{#            OK#}
         {% endif %}
 
         {#        <li class="nav-item has-treeview">#}

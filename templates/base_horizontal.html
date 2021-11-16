@@ -4,7 +4,8 @@
 <head>
 
     <meta charset="utf-8"/>
-    <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi {% endblock title %}</title>
+    <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn
+        platformasi {% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi " name="description"/>
     <meta content='"OPENSOFT" MCHJ' name="author"/>
@@ -466,7 +467,9 @@
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
+{% block modals %}
 
+{% endblock %}
 <!-- Vendor js -->
 <script src="{% static 'assets/js/vendor.min.js' %}"></script>
 
@@ -491,7 +494,8 @@
 </script>
 
 {% block js %}
-
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 {% endblock js %}
 </body>
 </html>

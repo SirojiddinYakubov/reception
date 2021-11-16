@@ -173,9 +173,22 @@ def reg_new_car_v2(application):
     some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
     some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
 
+    # get_car = get_object_or_404(CarModel, id=request.POST.get('car'))
+    # if get_car.is_local:
+    #     if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+    #         car.is_road_fund = True
+    #     else:
+    #         car.is_road_fund = False
+    # else:
+    #     car.is_road_fund = True
+
     if car.is_new and car.model.is_local:
         """Yangi va mahalliy avtomobil"""
-        state_percent = StateDutyPercent.objects.none()
+        if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y'):
+            state_percent = StateDutyPercent.objects.filter(service=application.service,
+                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type)
+        else:
+            state_percent = StateDutyPercent.objects.none()
     elif car.is_new and not car.model.is_local:
         """Yangi lekin mahalliy bo'lmagan avtomobil"""
         state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND, service=application.service)
