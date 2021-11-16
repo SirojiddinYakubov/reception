@@ -176,7 +176,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y']
 DATETIME_FORMAT = 'd.m.Y H:i'
-DATE_FORMAT = '%d.%m.%Y'
+DATE_FORMAT = 'd.m.Y'
 TIME_ZONE = 'Asia/Tashkent'
 LOCAL_TIMEZONE = pytz.timezone(TIME_ZONE)
 
@@ -219,12 +219,11 @@ EMAIL_HOST_PASSWORD = 'yakubov9791999'
 EMAIL_PORT = 587
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600000),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
-
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
@@ -300,7 +299,6 @@ TOKEN_MAX_AGE = 3600  # foydalanuvchiga berilgan tokenning umri
 PHONE_MAX_AGE = 1800  # ro'yhatdan o'tish qismidagi cookiedagi raqamning umri
 MINIMUM_BASE_WAGE = 270000  # eng kam bazaviy hisoblash ish xaqi 01.02.2021 holati bo'yicha
 
-
 PAY_FOR_SERVICE = int(MINIMUM_BASE_WAGE / 100 * 5)  # eng kam bazaviy hisoblash ish xaqining 5% miqdori
 # PAY_FOR_SERVICE = 0
 PAY_FOR_SERVICE_PERCENT = int(PAY_FOR_SERVICE / 100 * 4)  # PAY_FOR_SERVICEning 4% miqdori, to'lov tizimlari foizi
@@ -367,7 +365,6 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
-
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration

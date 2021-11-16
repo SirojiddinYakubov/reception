@@ -1,14 +1,18 @@
-{% load i18n %}
+{% load i18n static %}
+
+
 <legend>Ariza topshirish hududi</legend>
 <form action="#" method="post" id="save_section_form">
     {% csrf_token %}
     <input type="hidden" name="application">
     <div class="row mb-3">
-    <div class="alert alert-info">
-        <p style="font-size: 1.4rem; font-weight: bold">ARIZA TOPSHIRISH HUDUDI</p>
-        <p style="font-size: 1.2rem; font-weight: bold">Albatta o'qib chiqing</p>
-        <p>Ariza topshirmoqchi bo'lgan viloyatingiz va unga tegishli RIB yoki TRIB'larni tanlashingiz mumkin. Buning uchun viloyatni tanlang va ostki qismda chiqadigan RIB yoki TRIB'lar ro'yhatidan o'zingizga yaqin va qulay bo'lganini tanlashingiz mumkin</p>
-    </div>
+        <div class="alert alert-info">
+            <p style="font-size: 1.4rem; font-weight: bold">ARIZA TOPSHIRISH HUDUDI</p>
+            <p style="font-size: 1.2rem; font-weight: bold">Albatta o'qib chiqing</p>
+            <p>Ariza topshirmoqchi bo'lgan viloyatingiz va unga tegishli RIB yoki TRIB'larni tanlashingiz mumkin. Buning
+                uchun viloyatni tanlang va ostki qismda chiqadigan RIB yoki TRIB'lar ro'yhatidan o'zingizga yaqin va
+                qulay bo'lganini tanlashingiz mumkin</p>
+        </div>
         <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                for="region">{% trans 'Ariza topshiradigan viloyatni tanlang' %}<span
                 class="text-danger">*</span></label>

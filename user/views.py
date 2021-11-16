@@ -26,13 +26,13 @@ from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
 from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer, SectionSerializer, \
-    RegionSerializer, UserUpdateSerializer
+    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer
 from user.utils import send_otp, get_tokens_for_user
 
 
 class Home(AllowedRolesMixin, RedirectView):
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get(self, request, *args, **kwargs):
         if request.user.role == USER:
@@ -465,24 +465,23 @@ class GetCode(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.POST.get('phone')
         phone = re.sub('[^0-9]', '', phone_number)
+        user = User.objects.filter(username=phone)
+        if user:
+            return Response({'error': 'Phone Number already exists'},
+                            status=409)
 
-        try:
-            user = User.objects.get(phone=phone)
-            if user is not None:
-                return Response({'detail': 'Phone Number already exists'},
-                                status=409)
-        except ObjectDoesNotExist:
-            otp_response = send_otp(phone_number)
-            print(otp_response)
-            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
-            r = SendSmsWithApi(message=msg, phone=phone).get()
-            print(r)
-            if r == SUCCESS:
-                response = Response({'secret': otp_response['secret']}, status=200)
-                response.set_cookie('secret', otp_response['secret'], max_age=300)
-                return response
-            else:
-                return Response({"error": "Sms service not working"}, status=400)
+        otp_response = send_otp(phone_number)
+        print(otp_response)
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
+        r = SendSmsWithApi(message=msg, phone=phone).get()
+        # r = 200
+        print(r)
+        if r == SUCCESS:
+            response = Response({'secret': otp_response['secret']}, status=200)
+            response.set_cookie('secret', otp_response['secret'], max_age=300)
+            return response
+        else:
+            return Response({"error": "Sms service not working"}, status=400)
 
 
 class VerifyCode(APIView):
@@ -1307,3 +1306,10 @@ class GetSectionsList(APIView):
         sections = Section.objects.filter(region_id=region_id, parent__isnull=False)
         serializer = SectionSerializer(sections, many=True)
         return Response(serializer.data, status=200)
+
+
+
+class CreateUserAccountView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CreateUserAccountViewSerializer
+    permission_classes = [IsAuthenticated]

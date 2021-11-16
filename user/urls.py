@@ -14,7 +14,6 @@ urlpatterns = [
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
 
-
     # other requests
     path('home/', Home.as_view(), name='home'),
     path('', personal_data, name='personal_data'),
@@ -69,5 +68,8 @@ urlpatterns = [
     path('get-sections-list/<int:region_id>/', GetSectionsList.as_view(), name='get_sections_list'),
 
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
+
+    # app creatoe role
+    path('create_user_account_view/', CreateUserAccountView.as_view(), name='create_user_account_view'),
 
 ]

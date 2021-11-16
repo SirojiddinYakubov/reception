@@ -241,14 +241,79 @@ class SaveUserPassportSerializer(serializers.ModelSerializer):
         return instance
 
 
-class SectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Section
-        fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
-
-
 class RegionSerializer(serializers.ModelSerializer):
     # sections = SectionSerializer(many=True, source='section_set')
     class Meta:
         model = Region
         fields = ['id', 'title', ]
+
+
+class SectionSerializer(serializers.ModelSerializer):
+    region = RegionSerializer()
+    located_district = DistrictDetailSerializer()
+    quarter = QuarterDetailSerializer()
+
+    class Meta:
+        model = Section
+        fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
+
+
+class CreateUserAccountViewSerializer(serializers.ModelSerializer):
+    phone = serializers.CharField()
+
+    class Meta:
+        model = User
+        read_only_fields = ('id',)
+        fields = [
+            'id',
+            'phone',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'birthday',
+            'region',
+            'district',
+            'quarter',
+            'address',
+            'passport_seriya',
+            'passport_number',
+            'issue_by_whom',
+            'created_by'
+        ]
+        extra_kwargs = {
+            'last_name': {'required': True},
+            'first_name': {'required': True},
+            'middle_name': {'required': True},
+            'birthday': {'required': True},
+            'region': {'required': True},
+            'district': {'required': True},
+            'quarter': {'required': True},
+            'address': {'required': True},
+            'passport_seriya': {'required': True},
+            'passport_number': {'required': True},
+            'issue_by_whom': {'required': True},
+            'created_by': {'required': True},
+        }
+
+    def validate_phone(self, value):
+        phone = int(''.join(filter(str.isdigit, value)))
+        user = User.objects.filter(username=phone)
+        if user:
+            raise serializers.ValidationError("Tel raqam oldin ro'yhatdan o'tkazilgan!")
+        return phone
+
+    def create(self, validated_data):
+        password = str(random.randint(10000, 99999))
+        validated_data['username'] = validated_data['phone']
+        user = User(**validated_data)
+        user.set_password(password)
+        user.turbo = password
+        user.save()
+
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
+        r = SendSmsWithApi(message=msg, phone=user.phone).get()
+
+        if r != SUCCESS:
+            send_message_to_developer(
+                f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')
+        return user

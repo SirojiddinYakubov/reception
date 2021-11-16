@@ -7,6 +7,7 @@ from django.views.generic import DetailView
 from docxtpl import DocxTemplate
 from reportlab.pdfgen import canvas
 from requests import Response
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,7 +15,7 @@ from application.generators import *
 from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
-from application.serializers import DocumentForPoliceSerializer
+from application.serializers import DocumentForPoliceSerializer, SaveDraftApplicationSerializer
 from application.utils import reg_new_car, reg_new_car_v2
 from reception.api import SendSmsWithApi
 from reception.mixins import *
@@ -28,7 +29,7 @@ from user.utils import render_to_pdf
 class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
     template_name = 'application/applications_list.html'
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get_template_names(self):
         role = self.request.user.role
@@ -44,8 +45,10 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             qs = qs.filter(section=section, is_block=False).filter(
                 process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
                              ACCEPTED, REJECTED])
-        else:
+        elif role == APP_CREATOR:
             qs = qs.filter(created_user=self.request.user)
+        elif role == USER:
+            qs = qs.filter(Q(created_user=self.request.user) | Q(applicant=self.request.user)).distinct()
         return qs
 
     def get(self, request, *args, **kwargs):
@@ -65,7 +68,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
     template_name = 'application/application_detail.html'
     pk_url_kwarg = 'id'
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get(self, request, *args, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
@@ -76,6 +79,11 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
             return redirect(reverse_lazy('error_403'))
         elif request.user.role == CHECKER:
             return super().get(request, *args, **kwargs)
+        elif request.user.role == APP_CREATOR:
+            if request.user == application.created_user:
+                return super().get(request, *args, **kwargs)
+            return redirect(reverse_lazy('error_403'))
+
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
@@ -570,11 +578,12 @@ class SectionApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
 class SaveApplicationSection(AllowedRolesMixin, View):
     allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
-                     SUPER_ADMINISTRATOR]
+                     SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def post(self, request, *args, **kwargs):
-
+        print(request.POST)
         if request.POST.get('section', None) and request.POST.get('application', None):
+
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section
@@ -664,3 +673,13 @@ class ApplicationCashByModeratorView(AllowedRolesMixin, View):
         else:
             return HttpResponse(status=404)
         return HttpResponse(status=404)
+
+
+class SaveDraftApplication(UpdateAPIView):
+    model = Application
+    serializer_class = SaveDraftApplicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        print(request)
+        return super(SaveDraftApplication, self).patch(*args, **kwargs)
