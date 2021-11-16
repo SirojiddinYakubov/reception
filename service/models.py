@@ -109,9 +109,11 @@ class StateDutyPercent(models.Model):
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
     is_auction = models.BooleanField(default=False, verbose_name="Auktsiondan oligan")
+    is_tranzit = models.BooleanField(default=False)
     start = models.IntegerField(default=0)
     stop = models.IntegerField(default=0)
     percent = models.FloatField(default=0)
+
     # created_date = models.DateTimeField(default=timezone.now)
     # updated_date = models.DateTimeField(default=timezone.now)
 
