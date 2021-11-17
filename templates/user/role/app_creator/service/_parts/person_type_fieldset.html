@@ -1,12 +1,12 @@
 {% load static i18n %}
 
 <fieldset id="person_type_fieldset" style="display: none">
-    <legend>Account</legend>
+    <legend>Shaxs turi</legend>
     <form action="#" id="account_form" method="POST">
         {% csrf_token %}
         <div id="account_div">
             <div class="row mb-3">
-                <label class="col-form-label not_copy text-start">Ariza topshiruvchi shaxsini tanlang<span
+                <label class="col-form-label not_copy text-start">Arizachi shaxsini tanlang<span
                         class="text-danger">*</span></label>
                 <div class="col-12">
                     <select class="form-select" style="width: 100%;" id="person_type" name="person_type"
