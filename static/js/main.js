@@ -1303,7 +1303,7 @@ function Counter(options) {
             return;
         }
         seconds--;
-    };
+    }
 
     function startCounter() {
         onCounterStart();
@@ -1311,12 +1311,12 @@ function Counter(options) {
         timer = 0;
         decrementCounter();
         timer = setInterval(decrementCounter, 1000);
-    };
+    }
 
 
     function stopCounter() {
         clearInterval(timer);
-    };
+    }
 
     return {
         start: function () {
@@ -1329,4 +1329,35 @@ function Counter(options) {
             seconds = sec
         },
     }
-};
+}
+
+
+function getAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+function postAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+// function addUser() {
+//     getAjaxData('/en/user/get-regions-list/').then(function (res) {
+//         console.log(res)
+//     })
+// }

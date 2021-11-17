@@ -1,0 +1,104 @@
+{% load static i18n %}
+
+<fieldset id="applicant_fieldset" style="display: none">
+    <legend>Account</legend>
+    <form action="#" id="account_form" method="POST">
+        {% csrf_token %}
+        <div id="account_div">
+            <div class="row mb-3">
+                <label class="col-form-label not_copy text-start">Ariza topshiruvchi shaxsini tanlang<span
+                        class="text-danger">*</span></label>
+                <div class="col-12">
+                    <select class="form-select" style="width: 100%;" id="person_type" name="person_type"
+                            required>
+                        <option value="0">Jismoniy shaxs</option>
+                        <option value="1">Yuridik shaxs</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="justify-content-end row">
+                <div class="col-3">
+                    <button type="submit"
+                            class="btn btn-info waves-effect waves-light float-end next">Keyingi
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</fieldset>
+
+{% block modals %}
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $(document).on('change', '#region, #legal_address_region', function (e) {
+                var SelectedRegion = $(this).children("option:selected").val()
+
+                var selectedId = $(this).attr('id')
+
+                if (parseInt(SelectedRegion)) {
+                    $(this).valid()
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_district' %}",
+                    data: {
+                        'region': SelectedRegion, // from form
+                    },
+                    success: function (message) {
+                        if (selectedId === 'region') {
+                            $('#district').empty().append(message)
+                        } else if (selectedId === 'legal_address_region') {
+                            $('#legal_address_district').empty().append(message)
+                        }
+                    }
+                });
+            })
+
+            $(document).on('change', '#district, #legal_address_district', function () {
+                var SelectedDistrict = $(this).children("option:selected").val()
+
+
+                if (parseInt(SelectedDistrict)) {
+                    $(this).valid()
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'user:get_quarters' %}",
+                    data: {
+                        'district': SelectedDistrict, // from form
+                    },
+                    success: function (message) {
+                        $('#quarter').empty().append(message)
+                        $('#quarter').css('border', '1px solid blue')
+                        setTimeout(function () {
+                            $('#quarter').css('border', '1px solid #ced4da')
+                        }, 1000)
+
+                    }
+                });
+            })
+
+            $(document).on('change', '#quarter', function () {
+                var selectedQuarter = $(this).children("option:selected").val();
+                if (parseInt(selectedQuarter)) {
+                    $(this).valid()
+
+                }
+            })
+
+
+        })
+    </script>
+
+{% endblock js %}
