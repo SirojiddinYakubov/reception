@@ -477,7 +477,7 @@ class GetCode(APIView):
         # r = 200
         print(r)
         if r == SUCCESS:
-            response = Response({'secret': otp_response['secret']}, status=200)
+            response = Response({'secret': otp_response['secret'], 'code': otp_response['otp']}, status=200)
             response.set_cookie('secret', otp_response['secret'], max_age=300)
             return response
         else:
