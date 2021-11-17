@@ -311,9 +311,36 @@ class CreateUserAccountViewSerializer(serializers.ModelSerializer):
         user.save()
 
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-        r = SendSmsWithApi(message=msg, phone=user.phone).get()
-
+        # r = SendSmsWithApi(message=msg, phone=user.phone).get()
+        r = 200
         if r != SUCCESS:
             send_message_to_developer(
                 f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')
         return user
+
+
+class AppCreatorCreatedUserListSerializer(serializers.ModelSerializer):
+    region = RegionSerializer()
+    district = DistrictDetailSerializer()
+    quarter = QuarterDetailSerializer()
+    created_by = UserSerializer()
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'phone',
+            'last_name',
+            'first_name',
+            'middle_name',
+            'birthday',
+            'region',
+            'district',
+            'quarter',
+            'address',
+            'passport_seriya',
+            'passport_number',
+            'issue_by_whom',
+            'created_by',
+            'person_id',
+        ]

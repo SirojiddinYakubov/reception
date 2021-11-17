@@ -10,7 +10,7 @@ from django.db import IntegrityError, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.permissions import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,7 +26,7 @@ from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
 from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer, SectionSerializer, \
-    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer
+    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer, AppCreatorCreatedUserListSerializer
 from user.utils import send_otp, get_tokens_for_user
 
 
@@ -473,8 +473,8 @@ class GetCode(APIView):
         otp_response = send_otp(phone_number)
         print(otp_response)
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
-        r = SendSmsWithApi(message=msg, phone=phone).get()
-        # r = 200
+        # r = SendSmsWithApi(message=msg, phone=phone).get()
+        r = 200
         print(r)
         if r == SUCCESS:
             response = Response({'secret': otp_response['secret']}, status=200)
@@ -1308,8 +1308,19 @@ class GetSectionsList(APIView):
         return Response(serializer.data, status=200)
 
 
-
 class CreateUserAccountView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = CreateUserAccountViewSerializer
     permission_classes = [IsAuthenticated]
+
+
+class AppCreatorCreatedUserList(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = AppCreatorCreatedUserListSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(created_by=self.request.user)
+        return qs
+
+
