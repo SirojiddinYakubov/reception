@@ -43,7 +43,7 @@ class CreateClickOrder(View):
                 messages.error(request, 'Ushbu ariza allaqachon aktivlashtirilgan!')
                 return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
 
-            url = ClickUz.generate_url(order_id=order.id, amount=str(1000), return_url=return_url)
+            url = ClickUz.generate_url(order_id=order.id, amount=str(order.amount), return_url=return_url)
             send_message_to_developer(return_url)
             send_message_to_developer(f"{user}: {request.GET.get('amount')}")
             return redirect(url)
