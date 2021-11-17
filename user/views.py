@@ -473,8 +473,8 @@ class GetCode(APIView):
         otp_response = send_otp(phone_number)
         print(otp_response)
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
-        # r = SendSmsWithApi(message=msg, phone=phone).get()
-        r = 200
+        r = SendSmsWithApi(message=msg, phone=phone).get()
+        # r = 200
         print(r)
         if r == SUCCESS:
             response = Response({'secret': otp_response['secret']}, status=200)

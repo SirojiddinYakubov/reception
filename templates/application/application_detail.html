@@ -326,6 +326,7 @@
             $('body').on('click', '#click, #payme', function (e) {
 
                 if ($(e.currentTarget).attr('id') === 'click') {
+                    $('#load').show()
                     {#alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')#}
                     window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${activation_pay}&application=${applicationId}`
                 } else if ($(e.currentTarget).attr('id') === 'payme') {
