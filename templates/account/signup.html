@@ -445,7 +445,11 @@
                                     }
                                 });
 
-                                console.log(res)
+                                swal.fire(
+                                    'Tasdiqlash kodi',
+                                    `${res['code']}`,
+                                    'success'
+                                )
                                 $.notifyDefaults({
                                     type: 'warning',
                                     allow_dismiss: false,
