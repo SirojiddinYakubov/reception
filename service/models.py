@@ -1,6 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
 
-
 from user.base import BaseModel
 from user.models import *
 from django.utils.translation import ugettext_lazy as _
@@ -77,8 +76,6 @@ STATE_DUTY_TITLE = (
 )
 
 
-
-
 # Eng kam bazaviy hisoblash miqdori
 class AmountBaseCalculation(models.Model):
     amount = models.IntegerField(verbose_name="Miqdori")
@@ -109,9 +106,11 @@ class StateDutyPercent(models.Model):
     lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
     lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
     is_auction = models.BooleanField(default=False, verbose_name="Auktsiondan oligan")
+    is_tranzit = models.BooleanField(default=False)
     start = models.IntegerField(default=0)
     stop = models.IntegerField(default=0)
     percent = models.FloatField(default=0)
+
     # created_date = models.DateTimeField(default=timezone.now)
     # updated_date = models.DateTimeField(default=timezone.now)
 
@@ -144,8 +143,9 @@ class StateDutyScore(models.Model):
 
 
 class PaidStateDuty(models.Model):
-    application = models.ForeignKey("application.Application", on_delete=models.CASCADE, verbose_name="Ariza", related_name="state_duty_application")
-    score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE,  verbose_name="Hisob raqam")
+    application = models.ForeignKey("application.Application", on_delete=models.CASCADE, verbose_name="Ariza",
+                                    related_name="state_duty_application")
+    score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE, verbose_name="Hisob raqam")
     percent = models.ForeignKey(StateDutyPercent, on_delete=models.CASCADE, verbose_name="Hisob raqam foizlari")
     is_return = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True)
@@ -156,4 +156,3 @@ class PaidStateDuty(models.Model):
     class Meta:
         verbose_name = "To'langan bojlar"
         verbose_name_plural = "To'langan bojlar"
-

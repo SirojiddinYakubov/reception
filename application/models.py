@@ -78,6 +78,8 @@ class Application(models.Model):
     confirmed_date = models.DateTimeField(verbose_name=_('Tasdiqlangan vaqti'), null=True, blank=True)
     inspector = models.ForeignKey(User, verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True, blank=True,
                                   related_name='inspector_application')
+    applicant = models.ForeignKey(User, verbose_name=_('Applikant'), on_delete=models.CASCADE, null=True, blank=True,
+                                  related_name='user_applicant')
 
     class Meta:
         verbose_name = 'Ariza'
@@ -130,6 +132,7 @@ APPLICATION_CASH_BY_MODERATOR_STATUS = (
     (APPLICATION_ACTIVATION, 'Ariza holatini aktivlashtirish'),
     (APPLICATION_STATE_DUTY_PAYMENT, 'Arizaning davlat bojlarini qabul qilish'),
 )
+
 
 class ApplicationCashByModerator(BaseModel):
     status = models.PositiveIntegerField(choices=APPLICATION_CASH_BY_MODERATOR_STATUS)

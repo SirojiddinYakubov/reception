@@ -445,7 +445,11 @@
                                     }
                                 });
 
-                                console.log(res)
+                                swal.fire(
+                                    'Tasdiqlash kodi',
+                                    `${res['code']}`,
+                                    'success'
+                                )
                                 $.notifyDefaults({
                                     type: 'warning',
                                     allow_dismiss: false,
@@ -458,7 +462,7 @@
                                     icon: 'glyphicon glyphicon-envelope',
                                     message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
                         '  <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>\n' +
-                        '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga tasdqilash kodi yuborildi!`
+                        '</svg>  +998${encodeURIComponent($('#phone').val())} raqamga tasdiqlash kodi yuborildi!`
                                 });
 
                                 $("#get_code").attr("disabled", true);
@@ -867,5 +871,21 @@
         $.fn.checknet();
     });
 </script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(86507697, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/86507697" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>

@@ -4,7 +4,8 @@
 <head>
 
     <meta charset="utf-8"/>
-    <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi {% endblock title %}</title>
+    <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn
+        platformasi {% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi " name="description"/>
     <meta content='"OPENSOFT" MCHJ' name="author"/>
@@ -466,7 +467,9 @@
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
+{% block modals %}
 
+{% endblock %}
 <!-- Vendor js -->
 <script src="{% static 'assets/js/vendor.min.js' %}"></script>
 
@@ -482,26 +485,34 @@
 <script src="{% static 'assets/js/app.min.js' %}"></script>
 <script>
 
-    $(document).ready(function () {
-
-        document.onreadystatechange = function () {
-            var state = document.readyState
-            {#console.log(state)#}
-            if (state === 'interactive') {
-                {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
-            } else if (state === 'complete') {
-                setTimeout(function () {
-                    {#document.getElementById('interactive');#}
-                    document.getElementById('load').style.visibility = "hidden";
-                    {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
-                }, 100);
-            }
-        }
-    })
+    $('#load').show();
+    $(window).on('load', function () {
+        setTimeout(function () {
+            $('#load').hide();
+        }, 500);
+    });
 </script>
 
 {% block js %}
-
+    <!-- jQuery -->
+    <script type="text/javascript" src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 {% endblock js %}
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(86507697, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/86507697" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </body>
 </html>

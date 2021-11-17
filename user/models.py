@@ -113,6 +113,7 @@ STATE_CONTROLLER = 7
 MODERATOR = 8
 ADMINISTRATOR = 9
 SUPER_ADMINISTRATOR = 10
+APP_CREATOR = 11
 
 ROLE = (
     (USER, 'Oddiy foydalauvchi'),
@@ -124,7 +125,8 @@ ROLE = (
     (STATE_CONTROLLER, 'Davlat nazoratchisi'),
     (MODERATOR, 'Moderator'),
     (ADMINISTRATOR, 'Administrator'),
-    (SUPER_ADMINISTRATOR, 'Super administrator')
+    (SUPER_ADMINISTRATOR, 'Super administrator'),
+    (APP_CREATOR, 'Ariza yaratuvchi'),
 )
 
 MAN = 0
@@ -168,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
     passport_number = models.CharField(max_length=15,null=True, blank=True)
     person_id = models.CharField('JShShIR', max_length=14, blank=True, null=True)
-    issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
+    issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=255, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
@@ -177,6 +179,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.IntegerField(verbose_name='Jinsi', choices=GENDER_CHOICES, default=MAN)
     turbo = models.CharField(max_length=200, blank=True, null=True, validators=[MinLengthValidator(5)])
     secret_key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created_by = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
 
     USERNAME_FIELD = 'username'
 

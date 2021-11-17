@@ -14,12 +14,12 @@ urlpatterns = [
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
 
-
     # other requests
     path('home/', Home.as_view(), name='home'),
     path('', personal_data, name='personal_data'),
     path('view-personal-data/<int:id>/', view_personal_data, name='view_personal_data'),
     path('edit-personal-data/', EditPersonalData.as_view(), name='edit_personal_data'),
+    path('save-personal-data/', SavePersonalData.as_view(), name='save_personal_data'),
     path('add-organization/', add_organization, name='add_organization'),
 
     path('organizations-list/', OrganizationList.as_view(), name='organizations_list'),
@@ -68,5 +68,9 @@ urlpatterns = [
     path('get-sections-list/<int:region_id>/', GetSectionsList.as_view(), name='get_sections_list'),
 
     # path('section-districts-list/<int:section_id>/', section_districts_list, name='section_districts_list'),
+
+    # app creatoe role
+    path('create_user_account_view/', CreateUserAccountView.as_view(), name='create_user_account_view'),
+    path('app-creator-created-user-list/<int:id>/', AppCreatorCreatedUserList.as_view(), name='app_creator_created_user_list'),
 
 ]

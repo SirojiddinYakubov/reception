@@ -23,7 +23,8 @@
 </div>
 
 <div class="row mb-3" id="div_organization" style="display: none">
-    <label class="not_copy col-4 col-xl-3 col-form-label text-start">{% trans 'Korxonani tanlang:' %}<span class="text-danger">*</span></label>
+    <label class="not_copy col-4 col-xl-3 col-form-label text-start">{% trans 'Korxonani tanlang:' %}<span
+            class="text-danger">*</span></label>
     <div class="col-8 col-xl-9">
         <select id="organization"
                 class="form-select"
@@ -101,3 +102,17 @@
         </div>
     </div>
 </div>
+
+
+{% block js %}
+
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type='text/javascript'>
+
+        $('body').on('change', '#person_type', function () {
+
+        })
+
+    </script>
+
+{% endblock js %}

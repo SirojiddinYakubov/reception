@@ -434,7 +434,7 @@
                                 <button type="button" class="btn btn-secondary waves-effect waves-light float-start"
                                         id="prev3">Oldingi
                                 </button>
-{#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
+                                {#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
                                 <button type="submit" id="next3"
                                         class="btn btn-info waves-effect waves-light float-end">Keyingi
                                 </button>
@@ -501,6 +501,19 @@
                     lastName = htmlDecode('{{ request.user.last_name }}'),
                     middleName = htmlDecode('{{ request.user.middle_name }}')
 
+                if (!passport || !firstName || !lastName || !middleName) {
+                    Swal.fire({
+                        title: "Xatolik",
+                        text: "Sizning shaxsiy ma'lumotlaringiz to'liq bo'lmaganligi sababli ariza jo'nata olmaysiz!",
+                        icon: 'warning',
+                        allowOutsideClick: false,
+                        confirmButtonText: 'Tahrirlash',
+                    }).then(function (result) {
+                        if (result) {
+                            window.location.href = "{% url 'user:edit_personal_data' %}"
+                        }
+                    })
+                }
 
                 $('#first_name').attr('value', firstName)
                 $('#last_name').attr('value', lastName)

@@ -12,12 +12,12 @@ class ApplicationAdmin(admin.ModelAdmin):
     list_filter = ['process', 'person_type', 'created_date', 'is_active']
 
 
-# @admin.register(ApplicationDocument)
-# class ApplicationDocumentAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'application', 'example_document', 'seriya', 'contract_date', 'created_at', 'updated_at']
-#     list_display_links = ['application', 'example_document']
-#     list_filter = ['application__service__short_title', ]
-#     save_on_top = True
+@admin.register(ApplicationDocument)
+class ApplicationDocumentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'application', 'example_document', 'seriya', 'contract_date', 'created_at', 'updated_at']
+    list_display_links = ['application', 'example_document']
+    list_filter = ['application__service__short_title', ]
+    save_on_top = True
 
 
 @admin.register(ApplicationDocumentAttachment)
@@ -36,10 +36,6 @@ class ApplicationCashByModeratorAdmin(admin.ModelAdmin):
     list_filter = ['status', 'created_at', 'application__service__short_title', 'application__process',
                    'moderator__role', 'moderator__region']
     save_on_top = True
-
-
-admin.site.register(ApplicationDocument)
-
 
 @admin.register(DocumentForPolice)
 class DocumentForPoliceAdmin(admin.ModelAdmin):

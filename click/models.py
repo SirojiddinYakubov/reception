@@ -13,9 +13,8 @@ PAYMENT_SERVICES_CHOICES = (
 )
 
 
-class Order(models.Model):
+class Order(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_order')
-    created_date = models.DateTimeField(blank=True, null=True, default=timezone.now)
     is_paid = models.BooleanField(verbose_name='To\'langanligi', default=False)
     type = models.CharField(max_length=10, choices=PAYMENT_SERVICES_CHOICES, default=1)
     application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True, blank=True)

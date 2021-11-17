@@ -21,6 +21,13 @@ from user.models import *
 class AccountStatement(ServiceCustomMixin):
     template_name = 'service/account_statement/account_statement.html'
 
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/account_statement.html']
+        else:
+            return [self.template_name]
+
     def get(self, request, *args, **kwargs):
         return super().get(self, request, *args, **kwargs)
 
@@ -31,6 +38,7 @@ class AccountStatement(ServiceCustomMixin):
         try:
             with transaction.atomic():
                 request = self.request
+                print(request.POST)
                 service = Service.objects.get(key='account_statement')
                 person_type = request.POST.get('person_type')
                 engine_number = request.POST.get('engine_number')
@@ -88,7 +96,9 @@ class AccountStatement(ServiceCustomMixin):
                 application = Application.objects.create(created_user=user, created_date=timezone.now())
 
                 if int(person_type) == LEGAL_PERSON:
+
                     organization = Organization.objects.get(id=request.POST.get('organization'))
+
                     application.person_type = person_type
                     application.organization = organization
 

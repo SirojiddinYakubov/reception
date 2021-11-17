@@ -10,7 +10,7 @@ from django.db import IntegrityError, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, ListAPIView
 from rest_framework.permissions import *
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,13 +26,13 @@ from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
 from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer, SectionSerializer, \
-    RegionSerializer
+    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer, AppCreatorCreatedUserListSerializer
 from user.utils import send_otp, get_tokens_for_user
 
 
 class Home(AllowedRolesMixin, RedirectView):
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get(self, request, *args, **kwargs):
         if request.user.role == USER:
@@ -368,21 +368,21 @@ class Get_Organization(AllowedRolesMixin, View):
         return HttpResponse(status=404)
 
 
-@login_required
-def edit_personal_data(request):
-    print('GET')
-
-    form = EditForm(instance=request.user)
-    regions = Region.objects.all()
-
-    context = {
-        'form': form,
-        'regions': regions
-    }
-    if request.method == 'POST':
-        print(request.POST.get('phone'))
-
-    return render(request, 'user/edit_personal_data.html', context)
+# @login_required
+# def edit_personal_data(request):
+#     print('GET')
+#
+#     form = EditForm(instance=request.user)
+#     regions = Region.objects.all()
+#
+#     context = {
+#         'form': form,
+#         'regions': regions
+#     }
+#     if request.method == 'POST':
+#         print(request.POST.get('phone'))
+#
+#     return render(request, 'user/edit_personal_data.html', context)
 
 
 class EditPersonalData(AllowedRolesMixin, View):
@@ -391,12 +391,10 @@ class EditPersonalData(AllowedRolesMixin, View):
     template_name = 'user/edit_personal_data.html'
 
     def get(self, request):
-
-        form = EditForm(instance=request.user)
         regions = Region.objects.all()
 
         context = {
-            'form': form,
+            'user': request.user,
             'regions': regions,
         }
         if request.user.region:
@@ -410,58 +408,80 @@ class EditPersonalData(AllowedRolesMixin, View):
 
         return render(request, self.template_name, context)
 
-    def post(self, request):
 
-        form = EditForm(request.POST, instance=request.user)
-        if form.is_valid():
+class SavePersonalData(UpdateAPIView):
+    model = User
+    serializer_class = UserUpdateSerializer
+    permission_classes = [IsAuthenticated]
 
-            form = form.save(commit=False)
-            phone = request.POST.get('phone').replace('-', '').replace(' ', '')
-            form.phone = phone
-            form.username = phone
-            form.turbo = request.POST.get('password')
-            form.save()
+    def patch(self, request, *args, **kwargs):
+        try:
+            phone = request.data.get('phone')
+            request.POST._mutable = True
+            request.POST['phone'] = int(''.join(filter(str.isdigit, phone)))
+            request.POST._mutable = False
 
-            user = get_object_or_404(User, id=request.user.id)
+            serializer = UserUpdateSerializer(request.user, data=request.data, context={'request': self.request})
+            if serializer.is_valid():
+                serializer.save()
 
-            if user:
-                user.username = phone
-                user.turbo = request.POST.get('password')
-                user.set_password(request.POST.get('password'))
-                user.save()
-
-                user = authenticate(request, username=user.username, password=user.turbo)
+                user = authenticate(request, username=serializer.instance.username, password=serializer.instance.turbo)
                 if user is not None:
                     login(request, user)
-                    return HttpResponse(status=200)
-                return HttpResponse(status=400)
-            return HttpResponse(status=400)
-        else:
-            return HttpResponse(status=400)
+                else:
+                    raise ValidationError('User topilmadi!')
+
+                msg = f"E-RIB dasturi. Shaxsiy ma'lumotlaringiz tahrirlandi! Login: {user.username} Parol: {user.turbo}"
+                r = SendSmsWithApi(message=msg, phone=user.phone).get()
+
+                if r != SUCCESS:
+                    send_message_to_developer(
+                        f'Sms jo\'natishda xatolik! Phone: {user.phone} Login: {user.username}\nParol: {user.turbo}')
+
+                return Response(serializer.data, status=200)
+            else:
+                return Response(serializer.errors, status=400)
+        except Exception as e:
+            print(e)
+            return Response({'error': e}, status=400)
+
+        #     if user:
+        #         user.username = phone
+        #         user.turbo = request.POST.get('password')
+        #         user.set_password(request.POST.get('password'))
+        #         user.save()
+        #
+        #         user = authenticate(request, username=user.username, password=user.turbo)
+        #         if user is not None:
+        #             login(request, user)
+        #             return HttpResponse(status=200)
+        #         return HttpResponse(status=400)
+        #     return HttpResponse(status=400)
+        # else:
+        #     return HttpResponse(status=400)
 
 
 class GetCode(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.POST.get('phone')
         phone = re.sub('[^0-9]', '', phone_number)
+        user = User.objects.filter(username=phone)
+        if user:
+            return Response({'error': 'Phone Number already exists'},
+                            status=409)
 
-        try:
-            user = User.objects.get(phone=phone)
-            if user is not None:
-                return Response({'detail': 'Phone Number already exists'},
-                                status=409)
-        except ObjectDoesNotExist:
-            otp_response = send_otp(phone_number)
-            print(otp_response)
-            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
-            r = SendSmsWithApi(message=msg, phone=phone).get()
-            print(r)
-            if r == SUCCESS:
-                response = Response({'secret': otp_response['secret']}, status=200)
-                response.set_cookie('secret', otp_response['secret'], max_age=300)
-                return response
-            else:
-                return Response({"error": "Sms service not working"}, status=400)
+        otp_response = send_otp(phone_number)
+        print(otp_response)
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
+        r = SendSmsWithApi(message=msg, phone=phone).get()
+        # r = 200
+        print(r)
+        if r == SUCCESS:
+            response = Response({'secret': otp_response['secret'], 'code': otp_response['otp']}, status=200)
+            response.set_cookie('secret', otp_response['secret'], max_age=300)
+            return response
+        else:
+            return Response({"error": "Sms service not working"}, status=400)
 
 
 class VerifyCode(APIView):
@@ -608,10 +628,8 @@ class SaveUserInformation(CreateAPIView):
             user = serializer.save()
             response = Response(serializer.data, status=201)
             token = get_tokens_for_user(user)
-            print(token)
             try:
                 token = token['access']
-                print(token)
                 response.delete_cookie('token')
                 response.set_cookie('token', token, max_age=TOKEN_MAX_AGE)
             except:
@@ -619,7 +637,7 @@ class SaveUserInformation(CreateAPIView):
                     f'Cookie set token error! Login: {user.username} Parol: {user.turbo}')
             return response
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=400)
 
 
 class SaveUserPassport(UpdateAPIView):
@@ -1288,3 +1306,21 @@ class GetSectionsList(APIView):
         sections = Section.objects.filter(region_id=region_id, parent__isnull=False)
         serializer = SectionSerializer(sections, many=True)
         return Response(serializer.data, status=200)
+
+
+class CreateUserAccountView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CreateUserAccountViewSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class AppCreatorCreatedUserList(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = AppCreatorCreatedUserListSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(created_by=self.request.user)
+        return qs
+
+
