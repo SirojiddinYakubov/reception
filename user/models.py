@@ -170,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
     passport_number = models.CharField(max_length=15,null=True, blank=True)
     person_id = models.CharField('JShShIR', max_length=14, blank=True, null=True)
-    issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=30, blank=True, null=True)
+    issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=255, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
