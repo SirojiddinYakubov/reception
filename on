@@ -1,0 +1,76 @@
+[1mdiff --git a/static/online/contract_of_sale/contract_of_sale_person.docx b/static/online/contract_of_sale/contract_of_sale_person.docx[m
+[1mindex 7168b72..b505c02 100644[m
+[1m--- a/static/online/contract_of_sale/contract_of_sale_person.docx[m
+[1m+++ b/static/online/contract_of_sale/contract_of_sale_person.docx[m
+[36m@@ -77,3 +77,100 @@[m [mQayd etish guvohnoma seriyasi                                   __________ №__[m
+ DYHXX xodimi ______________________________       << _____ " ______________ 20 _____ yil.[m
+                                                  (imzo)[m
+                                        [m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[41m	[m
+[32m+[m
+[32m+[m[41m                                                                                        [m			[32mDavlat belgisi[m[41m  [m
+[32m+[m[32m             SHAXSIY AVTOTRANSPORT VOSITASINI QAYD ETISH VARAQASI[m
+[32m+[m[32m                  TRANSPORT VOSITASI EGASI HAQIDA MA'LUMOT[m
+[32m+[m[32mTexnologik operatsiya:[m
+[32m+[m[32m                                                                             1:[m
+[32m+[m
+[32m+[m[32mFamiliyasi:[m
+[32m+[m[32m                                                                            12:[m
+[32m+[m[32m{{user.last_name}}[m
+[32m+[m[32mQayd etilish vaqti:[m
+[32m+[m[32m                                                                             2:[m
+[32m+[m[32m{{now}}[m
+[32m+[m[32mIsmi[m
+[32m+[m[32m                                                                            13:[m
+[32m+[m[32m{{user.first_name}}[m
+[32m+[m[32mDavlat raqam belgisi:[m
+[32m+[m[32m                                                                            3:[m[41m [m
+[32m+[m[32m{{old_number}}[m
+[32m+[m[32mOtasining ismi:[m[41m [m
+[32m+[m[32m                                                                            14:[m
+[32m+[m[32m{{user.middle_name}}[m
+[32m+[m[32mAvvalgi davlat raqam belgisi:[m
+[32m+[m[32m                                                                             4:[m
+[32m+[m[32m{{old_number}}[m
+[32m+[m[32mTug'ilgan yili:[m
+[32m+[m[32m                                                                            15:[m
+[32m+[m[32m{{birthday}}[m
+[32m+[m[32mRusumi, modifikatsiyasi:[m
+[32m+[m[32m                                                                             5:[m
+[32m+[m[32m{{car.model}}   {% if re_fuel_type %} {{re_fuel_type}} {%else%}{%if fuel_types%} {{fuel_types}}{%endif%}{%endif%}[m
+[32m+[m[32mShaxsiy passport:[m
+[32m+[m[32m                                                                            16:[m
+[32m+[m[32m{{user.passport_seriya}} {{user.passport_number}}[m
+[32m+[m[32mA/M turi:[m
+[32m+[m[32m                                                                           5a:[m[41m [m
+[32m+[m[32m{{car.type.title}} ({{car.body_type}})[m
+[32m+[m[32m                                  Manzilgohi[m
+[32m+[m[32mIshlab chiqarilgan joyi:[m
+[32m+[m[32m                                                                            5b:[m
+[32m+[m[32m{{local}}[m
+[32m+[m[32mTuman:[m
+[32m+[m[32m                                                                            17:[m
+[32m+[m[32m{{user.district}}[m
+[32m+[m[32mIshlab chiqarilgan yili:[m
+[32m+[m[32m                                                                             6:[m
+[32m+[m[32m{{made_year}}[m
+[32m+[m[32mKo'cha:[m
+[32m+[m[32m                                                                            18:[m
+[32m+[m[32m{{user.quarter}} {{user.address}}[m
+[32m+[m[32mDvigatel №:[m
+[32m+[m[32m                                                                             7:[m
+[32m+[m[32m{{car.engine_number}}[m
+[32m+[m[32mUy:[m
+[32m+[m[32m                                                                            19:[m
+[32m+[m
+[32m+[m[32mShassi №:[m
+[32m+[m[32m    
