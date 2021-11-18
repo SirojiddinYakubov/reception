@@ -877,7 +877,7 @@ function edit_toast() {
     })
 }
 
-function error_toast() {
+function error_toast(text = null) {
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -890,10 +890,18 @@ function error_toast() {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    Toast.fire({
-        icon: 'error',
-        title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
-    })
+    if (text === null) {
+        Toast.fire({
+            icon: 'error',
+            title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
+        })
+    } else {
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
+
 }
 
 function addColor(url = null, select_id = null) {
@@ -996,7 +1004,7 @@ function addCarModel(url = null) {
         title: 'T/v modeli qo\'shish',
         html:
             '<label style="float: left; margin-bottom: 0" class="label_required" for="title">Nomi</label>' +
-            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra"><br>' +
+            '<input style="margin-top: 4px" id="car_title" class="form-control" placeholder="Masalan: Gentra"><br>' +
             '<label style="margin-bottom: 0; width: 100%; text-align: left; display: block !important;" class="label_required"  for="is_local">Ishlab chiqaruvchi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_local" id="is_local1" value="true" checked>' +
@@ -1006,26 +1014,27 @@ function addCarModel(url = null) {
             '<input class="form-check-input" type="radio" name="is_local" id="is_local2" value="false" >' +
             '<label class="form-check-label" for="is_local2">Chet el</label>' +
             '</div>' +
-            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi yuk</label>' +
+            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck1" value="true" checked>' +
-            '<label class="form-check-label" for="is_truck1">Ha</label>' +
+            '<label class="form-check-label" for="is_truck1">Yuk</label>' +
             '</div>' +
             '<div class="form-check" style="float: left; margin-left: 10px">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck2" value="false" >' +
-            '<label class="form-check-label" for="is_truck2">Yoq</label>' +
+            '<label class="form-check-label" for="is_truck2">Yengil</label>' +
             '</div>',
 
         focusConfirm: false,
         preConfirm: () => {
             return [
-                document.getElementById('title').value,
+                document.getElementById('car_title').value,
                 $('input[name=is_local]:checked').val(),
                 $('input[name=is_truck]:checked').val(),
             ]
         },
 
     }).then(function (confirm) {
+
         if (confirm.isConfirmed) {
             var title = confirm.value[0],
                 is_local = confirm.value[1],
@@ -1116,13 +1125,16 @@ function formatMoney(str) {
 }
 
 function generate_fake_data() {
-    var $fuel_types_selectize = $('#fuel_types').selectize();
-    $fuel_types_selectize[0].selectize.setValue("1");
+    var $fuel_type_selectize = $('#fuel_type').selectize();
+    $fuel_type_selectize[0].selectize.setValue("1");
     $('#car').select2("val", $("#car option:last").val());
     $('#made_year').val('2021-07-26')
 
     $('#color').val($("#color option:last").val())
     $('#color').trigger('change')
+
+    $('#person').val($("#person option:last").val())
+    $('#person').trigger('change')
 
     function makeStr(length) {
         var result = '';
@@ -1361,3 +1373,73 @@ function postAjaxData(ajaxurl) {
 //         console.log(res)
 //     })
 // }
+
+
+jQuery(function ($) {
+    var _oldShow = $.fn.show;
+    $.fn.show = function (speed, oldCallback) {
+        return $(this).each(function () {
+            var obj = $(this),
+                newCallback = function () {
+                    if ($.isFunction(oldCallback)) {
+                        oldCallback.apply(obj);
+                    }
+                    obj.trigger('afterShow');
+                };
+
+            // you can trigger a before show if you want
+            obj.trigger('beforeShow');
+
+            // now use the old function to show the element passing the new callback
+            _oldShow.apply(obj, [speed, newCallback]);
+        });
+    }
+});
+jQuery(function ($) {
+    var _oldhide = $.fn.hide;
+    $.fn.hide = function (speed, callback) {
+        $(this).trigger('beforeHide');
+        return _oldhide.apply(this, arguments);
+    }
+})
+
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    return $(
+        '<div style="' + $(state.element).data('style') + '"> ' + state.text + '</div>'
+    );
+}
+
+
+function swal_error(err = null) {
+    if (err && typeof err === 'object') {
+        var errorKey
+        var errorText
+        var keys = Object.keys(err.responseJSON);
+
+        keys.forEach(function (key) {
+            errorText = err.responseJSON[key];
+            errorKey = key;
+        });
+        Swal.fire(
+            'Xatolik!',
+            `${errorKey} ${errorText}`,
+            `error`,
+        )
+    } else if (err) {
+        Swal.fire(
+            'Xatolik!',
+            `${err}`,
+            `error`,
+        )
+    }else {
+         Swal.fire(
+            'Xatolik!',
+            'Sahifani yangilab qayta urinib ko\'ring',
+            `error`,
+        )
+    }
+
+}

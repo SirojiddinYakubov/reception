@@ -100,7 +100,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
             'birthday': {'required': True},
             'region': {'required': True},
             'district': {'required': True},
-            'quarter': {'required': True},
             'address': {'required': True},
         }
 

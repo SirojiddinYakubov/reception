@@ -69,7 +69,9 @@ class Section(models.Model):
     title = models.CharField(max_length=300, verbose_name="Bo'lim nomi", blank=True, null=True)
     region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.CASCADE, null=True, blank=True)
     district = models.ManyToManyField(District, verbose_name='Hizmat ko\'rsatish tuman/shaharlari', blank=True)
-    located_district = models.ForeignKey(District, verbose_name='Tashkilot joylashgan tuman/shahar', on_delete=models.CASCADE, null=True, blank=True, related_name='located_district_section')
+    located_district = models.ForeignKey(District, verbose_name='Tashkilot joylashgan tuman/shahar',
+                                         on_delete=models.CASCADE, null=True, blank=True,
+                                         related_name='located_district_section')
     quarter = models.ForeignKey(Quarter, on_delete=models.CASCADE, verbose_name='Mahalla', null=True, blank=True)
     street = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
@@ -168,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.IntegerField('Tel raqam', null=True, blank=True, unique=True,
                                 validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     passport_seriya = models.CharField(max_length=10, null=True, blank=True)
-    passport_number = models.CharField(max_length=15,null=True, blank=True)
+    passport_number = models.CharField(max_length=15, null=True, blank=True)
     person_id = models.CharField('JShShIR', max_length=14, blank=True, null=True)
     issue_by_whom = models.CharField('Kim tomonidan berilgan', max_length=255, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
@@ -258,11 +260,13 @@ class Organization(models.Model):
                                                verbose_name="Yuridik manzil(Tuman)", null=True)
     address_of_garage = models.CharField("Garaj manzili", max_length=255)
     director = models.CharField(max_length=50, verbose_name='Rahbari', null=True)
-    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.CASCADE, null=True)
+    created_user = models.ForeignKey(User, verbose_name='Yaratgan shaxs', on_delete=models.CASCADE, null=True,
+                                     related_name='created_user')
     created_date = models.DateTimeField(editable=False, verbose_name='Yaratgan vaqti', null=True)
     updated_date = models.DateTimeField(verbose_name='Tahrirlangan vaqti', null=True)
     removed_date = models.DateTimeField(editable=False, verbose_name='O\'chirilgan vaqti', null=True)
-    is_active = models.BooleanField(verbose_name='Holati', default=True)
+    is_active = models.BooleanField(default=True)
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='applicant')
 
     class Meta:
         verbose_name = "Tashkilot"
@@ -297,49 +301,50 @@ class CarModel(models.Model):
 
 
 class Car(models.Model):
-    model = models.ForeignKey(CarModel, verbose_name="Model", on_delete=models.SET_NULL, null=True,
+    model = models.ForeignKey(CarModel, on_delete=models.SET_NULL, null=True,
                               related_name='car_model')
-    body_type = models.ForeignKey('BodyType', verbose_name='Kuzov turi', on_delete=models.SET_NULL, blank=True,
+    body_type = models.ForeignKey('BodyType', on_delete=models.SET_NULL, blank=True,
                                   null=True)
-    fuel_type = models.ManyToManyField('FuelType', verbose_name='Yoqilg\'i turi', blank=True,
+    fuel_type = models.ManyToManyField('FuelType', blank=True,
                                        related_name='car_fuel_type')
-    re_fuel_type = models.ForeignKey('FuelType', on_delete=models.CASCADE, verbose_name='Qo\'shimcha o\'rnatilgan yoqilg\'i turi',
-                                          blank=True, related_name='car_re_fuel_type', null=True)
-    full_weight = models.CharField(verbose_name='To\'la vazni', max_length=10, null=True, blank=True, default=0)
-    empty_weight = models.CharField(verbose_name='Yuksiz vazni', max_length=10, null=True, blank=True, default=0)
-    type = models.ForeignKey('CarType', on_delete=models.SET_NULL, verbose_name='Avtomobil turi', blank=True, null=True)
-    device = models.ManyToManyField('Device', verbose_name='Alohida belgilar', blank=True)
-    body_number = models.CharField(verbose_name='Kuzov raqami', max_length=50, blank=True)
-    chassis_number = models.CharField(verbose_name="Shassi raqami", max_length=255, blank=True, null=True)
-    engine_number = models.CharField(verbose_name='Dvigitel raqami', max_length=50, blank=True)
-    made_year = models.DateField(verbose_name="Ishlab chiqarilgan yili", null=True, blank=True)
-    color = models.ForeignKey('Color', verbose_name='Rangi', on_delete=models.SET_NULL, null=True, blank=True,
+    re_fuel_type = models.ForeignKey('FuelType', on_delete=models.CASCADE, blank=True, related_name='car_re_fuel_type',
+                                     null=True)
+    full_weight = models.CharField(max_length=10, null=True, blank=True, default=0)
+    empty_weight = models.CharField(max_length=10, null=True, blank=True, default=0)
+    type = models.ForeignKey('CarType', on_delete=models.SET_NULL, blank=True, null=True)
+    device = models.ManyToManyField('Device', blank=True)
+    body_number = models.CharField(max_length=50, blank=True)
+    chassis_number = models.CharField(max_length=255, blank=True, null=True)
+    engine_number = models.CharField(max_length=50, blank=True)
+    made_year = models.DateField(null=True, blank=True)
+    color = models.ForeignKey('Color', on_delete=models.SET_NULL, null=True, blank=True,
                               related_name='car_color')
-    re_color = models.ForeignKey('Color', verbose_name='Qayta ranglangan', on_delete=models.SET_NULL, null=True,
+    re_color = models.ForeignKey('Color', on_delete=models.SET_NULL, null=True,
                                  blank=True, related_name='car_re_color')
-    engine_power = models.IntegerField(verbose_name='Dvigatel quvvati', null=True, blank=True, default=0)
-    old_number = models.CharField(verbose_name='Eski DRB', null=True, blank=True, max_length=15)
-    old_technical_passport = models.CharField(verbose_name='Eski texpassport seriyasi va raqami', max_length=30,
+    engine_power = models.IntegerField(null=True, blank=True, default=0)
+    old_number = models.CharField(null=True, blank=True, max_length=15)
+    old_technical_passport = models.CharField(max_length=30,
                                               blank=True)
-    is_old_number = models.BooleanField(verbose_name='Avtompobildagi DRB eski', default=False)
-    given_technical_passport = models.CharField(verbose_name='Berilgan texpassport seriyasi va raqami', max_length=30,
+    is_old_number = models.BooleanField(default=False)
+    given_technical_passport = models.CharField(max_length=30,
                                                 blank=True)
-    created_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name='Yaratilgan vaqti')
-    lost_technical_passport = models.BooleanField(verbose_name='Texnik passport yo\'qolgan', default=False)
-    lost_number = models.BooleanField(verbose_name='DRB yo\'qolgan', default=False)
-    is_confirm = models.BooleanField(verbose_name='Ma\'lumotlar mosligi', default=False)
+    created_date = models.DateTimeField(default=timezone.now, editable=False)
+    lost_technical_passport = models.BooleanField(default=False)
+    lost_number = models.BooleanField(default=False)
+    is_confirm = models.BooleanField(default=False)
     confirm_date = models.DateTimeField(null=True, blank=True)
-    is_technical_confirm = models.BooleanField(verbose_name='Texnik ko\'rik', default=False)
+    is_technical_confirm = models.BooleanField(default=False)
     technical_confirm_date = models.DateTimeField(null=True, blank=True)
-    is_new = models.BooleanField(verbose_name='Avtomobil yangi', default=False)
-    price = models.BigIntegerField(verbose_name='Avtomobil narxi', default=0, blank=True)
-    history = models.ForeignKey('Car', verbose_name='Avtomobil tarixi', on_delete=models.SET_NULL, blank=True,
+    is_new = models.BooleanField(default=False)
+    price = models.BigIntegerField(default=0, blank=True)
+    history = models.ForeignKey('Car', on_delete=models.SET_NULL, blank=True,
                                 null=True)
-    is_auction = models.BooleanField(default=False, verbose_name='Raqam auksiondan olingan')
-    given_number = models.CharField(verbose_name='Yangi DRB', max_length=15, blank=True, null=True)
+    is_auction = models.BooleanField(default=False)
+    given_number = models.CharField(max_length=15, blank=True, null=True)
 
-    is_replace_number = models.BooleanField(verbose_name='Yangi raqam olish', default=False)
-    save_old_number = models.BooleanField("Eski raqamni saqlab qolish", default=False)
+    is_replace_number = models.BooleanField(default=False)
+    save_old_number = models.BooleanField(default=False)
+    is_saved_number = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'
@@ -463,8 +468,8 @@ class Sms(BaseModel):
     phone = models.IntegerField(default=0)
 
     class Meta:
-        verbose_name = 'Jo\'natilgan sms'
-        verbose_name_plural = 'Jo\'natilgan smslar'
+        verbose_name = 'sms'
+        verbose_name_plural = 'smslar'
         ordering = ['-id']
 
 
