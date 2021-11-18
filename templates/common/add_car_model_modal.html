@@ -1,0 +1,129 @@
+{% load static i18n %}
+
+<!-- Modal -->
+<div class="modal fade" style="display: none" id="add_car_model_modal" data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="addOrganizationLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#" method="POST" id="add_car_model_form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Transport vositasi modeli qo'shish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                               for="model_title">{% trans "Yangi model nomi" %}<span
+                                class="text-danger">*</span></label>
+                        <div class="col-8 col-xl-9">
+                            <input type="text" id="model_title" name="model_title"
+                                   class="form-control" required
+                                   placeholder='Masalan: Gentra'
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="not_copy col-5 col-form-label text-start"
+                               for="is_truck">{% trans 'Transport vositasi turi' %}<span
+                                class="text-danger">*</span></label>
+                        <div class="col-7">
+                            <div class="row justify-content-start mt-1">
+                                <div class="col-6">
+                                    <input type="radio" id="is_truck_yes" name="is_truck" value="True"
+                                           class="form-check-input">
+                                    <label class="form-check-label" for="is_truck_yes">Yuk</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="radio" id="is_truck_no" name="is_truck" value="False"
+                                           class="form-check-input" checked>
+                                    <label class="form-check-label" for="is_truck_no">Yengil</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="not_copy col-5 col-form-label text-start"
+                               for="is_local">{% trans 'Ishlab chiqaruvchi korxona' %}<span
+                                class="text-danger">*</span></label>
+                        <div class="col-7">
+                            <div class="row justify-content-start mt-1">
+                                <div class="col-6">
+                                    <input type="radio" id="is_local_yes" name="is_local" value="True"
+                                           class="form-check-input" checked>
+                                    <label class="form-check-label" for="is_local_yes">Mahalliy</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="radio" id="is_local_no" name="is_local" value="False"
+                                           class="form-check-input">
+                                    <label class="form-check-label" for="is_local_no">Chet el</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="cancel_car_model_modal" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Bekor qilish
+                    </button>
+                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#add_car_model_form').on('submit', function (e) {
+                e.preventDefault()
+                $('#model_title').attr('name', 'title')
+                var form = $(this).serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: '{% url 'api_user:create_car_model' %}',
+                    data: form
+                }).then(function (res) {
+                    console.log(res)
+                    $("#car").select2({
+                        data: [{
+                            id: res.id,
+                            text: `${res.title}`
+                        }],
+                        templateResult: formatState,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        },
+                        language: {
+                            noResults: function () {
+                                return "Ma'lumot topilmadi! <a href='#' id='add_new_car_model'>Yangi model qo'shish</a>";
+                            }
+                        },
+                    })
+                    $('#car').val(res.id)
+                    $('#car').trigger('change')
+                    $('#add_car_model_modal').modal('hide')
+                }, function (err) {
+                    console.log(err)
+                    swal.fire(
+                        'Xatolik!',
+                        "Sahifani yangilab qayta urinib ko'ring!",
+                        'error'
+                    )
+                })
+            })
+
+            $(document).on('click', '#add_new_car_model', function () {
+                $('#add_car_model_modal').modal('show')
+                $('#car').select2('close')
+            })
+        })
+    </script>
+{% endblock js %}

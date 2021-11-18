@@ -1,5 +1,6 @@
 import hashlib
 import os
+import random
 import time
 from uuid import uuid4
 
@@ -99,6 +100,9 @@ class Application(models.Model):
         if self.file_name is None:
             b = bytes(f"{self.password}{time.time() * 1000}{self.created_date.time()}", encoding='utf-8')
             self.file_name = hashlib.md5(b).hexdigest()[0:15]
+
+        if self.password is None:
+            self.password = random.randint(1000, 9999)
         return super().save(*args, **kwargs)
 
 

@@ -25,7 +25,7 @@ class CheckerPermission(BasePermission):
         return request.user.is_active
 
 
-class AppCreatorePermission(BasePermission):
+class AppCreatorPermission(BasePermission):
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False

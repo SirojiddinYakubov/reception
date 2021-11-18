@@ -198,8 +198,30 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <br>
+                                            <div class="row mb-3">
+                                                <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                                       for="is_quarter">{% trans 'Mahallani kiritasizmi?' %}</label>
+                                                <div class="col-8 col-xl-9">
+                                                    <div class="row justify-content-start mt-1">
+                                                        <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                                            <input type="radio" id="is_quarter_yes" name="is_quarter"
+                                                                   class="form-check-input" checked>
+                                                            <label class="form-check-label"
+                                                                   for="is_quarter_yes">Ha</label>
+                                                        </div>
+                                                        <div class="col-3 col-md-2 col-lg-2 col-xl-2">
+                                                            <input type="radio" id="is_quarter_no" name="is_quarter"
+                                                                   class="form-check-input">
+                                                            <label class="form-check-label"
+                                                                   for="is_quarter_no">Yoq</label>
+                                                        </div>
+
+                                                    </div>
 
 
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-12 col-xl-6 quarter">
                                                     <label class="label_required not_copy" for="quarter">Mahalla</label>
@@ -352,7 +374,7 @@
         })
 
         {#$('#fieldset1').hide()#}
-        {#$('#fieldset3').show()#}
+        {#$('#fieldset2').show()#}
 
         var phone_mask = false
 
@@ -374,7 +396,15 @@
         $('#passport_seriya').inputmask({casing: 'upper'});
         $('#issue_by_whom').inputmask({casing: 'upper'});
 
-
+        $('input[name="is_quarter"]').on('change', function () {
+            if ($('#is_quarter_yes').prop('checked')) {
+                $('.quarter').show()
+                $('#quarter').attr('name', 'quarter')
+            } else {
+                $('.quarter').hide()
+                $('#quarter').removeAttr('name')
+            }
+        })
         $('#accept').on('change', function () {
             if ($(this).prop('checked')) {
                 $('#agree').css('color', 'blue')
@@ -873,19 +903,26 @@
 </script>
 
 <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+<script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () {
+            (m[i].a = m[i].a || []).push(arguments)
+        };
+        m[i].l = 1 * new Date();
+        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(86507697, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
+    ym(86507697, "init", {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true
+    });
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/86507697" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/86507697" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
 <!-- /Yandex.Metrika counter -->
 </body>
 </html>
