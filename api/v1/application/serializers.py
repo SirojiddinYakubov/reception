@@ -9,7 +9,7 @@ from api.v1.user.serializers import (
     CarDetailSerializer
 )
 from application.models import (
-    Application
+    Application, ApplicationDocument
 )
 
 
@@ -49,3 +49,18 @@ class CreateApplicationSerializer(serializers.ModelSerializer):
         if context.get('organization'):
             context['organization'] = OrganizationDetailSerializer(instance.organization).data
         return context
+
+
+class CreateApplicationDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApplicationDocument
+        fields = [
+            'id',
+            'application',
+            'example_document',
+            'seriya',
+            'contract_date'
+        ]
+
+    def create(self, validated_data):
+        return super().create(validated_data)

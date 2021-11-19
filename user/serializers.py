@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.validators import UniqueValidator
 from django.utils.translation import gettext as _
-from reception.api import SendSmsWithApi, SUCCESS
+from reception.api import SendSmsWithApi, SUCCESS, SendSmsWithPlayMobile
 from reception.telegram_bot import send_message_to_developer
 from user.models import (
     Region, Section
@@ -118,7 +118,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
             raise ValidationError({'error': 'User not found'})
 
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-        r = SendSmsWithApi(message=msg, phone=user.phone).get()
+        r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
+        print(msg)
+        if not r == SUCCESS:
+            # send sms with eskiz
+            r = SendSmsWithApi(message=msg, phone=user.phone).get()
 
         if r != SUCCESS:
             send_message_to_developer(
@@ -310,7 +314,10 @@ class CreateUserAccountViewSerializer(serializers.ModelSerializer):
         user.save()
 
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-        r = SendSmsWithApi(message=msg, phone=user.phone).get()
+        r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
+        print(msg)
+        if not r == SUCCESS:
+            r = SendSmsWithApi(message=msg, phone=user.phone).get()
         # r = 200
         if r != SUCCESS:
             send_message_to_developer(
@@ -318,28 +325,4 @@ class CreateUserAccountViewSerializer(serializers.ModelSerializer):
         return user
 
 
-class AppCreatorCreatedUserListSerializer(serializers.ModelSerializer):
-    region = RegionSerializer()
-    district = DistrictDetailSerializer()
-    quarter = QuarterDetailSerializer()
-    created_by = UserSerializer()
 
-    class Meta:
-        model = User
-        fields = [
-            'id',
-            'phone',
-            'last_name',
-            'first_name',
-            'middle_name',
-            'birthday',
-            'region',
-            'district',
-            'quarter',
-            'address',
-            'passport_seriya',
-            'passport_number',
-            'issue_by_whom',
-            'created_by',
-            'person_id',
-        ]

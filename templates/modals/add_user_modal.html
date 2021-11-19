@@ -177,3 +177,149 @@
         </div>
     </div>
 </div>
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#phone').inputmask('99 999-99-99');
+
+            sendAuthorizationToken()
+
+            $(document).on('hide.bs.modal', '#confirm_code_modal', function () {
+                $('#add_user_modal').css({'z-index': '9999'})
+            });
+
+            $(document).on('show.bs.modal', '#confirm_code_modal', function () {
+                $('#add_user_modal').css({'z-index': '1000'})
+            });
+
+            personForm = $('#add_user_form')
+            var personButton
+
+            if (personForm.length) {
+                personButton = $(personForm).children().find('button:submit')
+                personForm.validate({
+                    ignore: ":hidden",
+                    rules: {
+                        last_name: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        first_name: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        middle_name: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        region: {
+                            required: true
+                        },
+                        district: {
+                            required: true
+                        },
+                        quarter: {
+                            required: true
+                        },
+                        birthday: {
+                            required: true
+                        },
+                        address: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        passport_seriya: {
+                            required: true,
+                            //alphanumeric is the custom method, we defined in the above
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        passport_number: {
+                            required: true,
+                            alphanumeric: true,
+                            noSpace: true,
+                        },
+                        issue_by_whom: {
+                            required: true,
+                            noSpace: true,
+                        },
+                        phone: {
+                            required: true,
+                            phoneMaxLength: true,
+                        },
+                    },
+                    messages: {
+                        last_name: {
+                            required: 'Familiya kiritilmagan!',
+                        },
+                        first_name: {
+                            required: 'Ism kiritilmagan!',
+                        },
+                        middle_name: {
+                            required: 'Otasining ismi kiritilmagan!',
+                        },
+                        region: {
+                            required: 'Viloyat tanlanmagan!',
+                        },
+                        district: {
+                            required: 'Tuman tanlanmagan!',
+                        },
+                        quarter: {
+                            required: 'Mahalla tanlanmagan!',
+                        },
+                        birthday: {
+                            required: 'Tug\'ilgan vaqti kiritilmagan!',
+                        },
+                        address: {
+                            required: 'Manzil kiritilmagan!',
+                        },
+                        passport_seriya: {
+                            required: 'Passport seriya kiritilmagan!',
+                        },
+                        passport_number: {
+                            required: 'Passpor raqami kiritilmagan!',
+                        },
+                        issue_by_whom: {
+                            required: 'Passport kim tomonidan berilganligi kiritilmagan!',
+                        },
+                        phone: {
+                            required: 'Tel raqam kiritilmagan!',
+                        },
+                    },
+
+                    errorPlacement: function (error, element) {
+                        if (element.is("#region")) {
+                            error.appendTo(element.parents('.region'));
+                        } else if (element.is("#district")) {
+                            error.appendTo(element.parents('.district'));
+                        } else if (element.is("#quarter")) {
+                            error.appendTo(element.parents('.quarter'));
+                        } else if (element.is("#phone")) {
+                            error.appendTo(element.parents('.phone_div'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form, e) {
+                        e.preventDefault()
+                        personForm = form
+                        $('#last_name_x').val($('#last_name').val())
+                        $('#first_name_x').val($('#first_name').val())
+                        $('#middle_name_x').val($('#middle_name').val())
+                        $('#region_x').val($('#region option:selected').text())
+                        $('#district_x').val($('#district option:selected').text())
+                        $('#quarter_x').val($('#quarter option:selected').text())
+                        $('#modal_phone').text($('#phone').val())
+
+                        countdown.start();
+                        return false; // required to block normal submit since you used ajax
+                    }
+                });
+            }
+
+
+        })
+    </script>
+{% endblock js %}

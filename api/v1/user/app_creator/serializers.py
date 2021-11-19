@@ -2,10 +2,10 @@ from rest_framework import serializers
 
 from api.v1.user.serializers import (
     RegionDetailSerializer,
-    DistrictDetailSerializer
+    DistrictDetailSerializer, UserShortDetailSerializer, QuarterDetailSerializer
 )
 from user.models import (
-    Organization
+    Organization, User
 )
 
 
@@ -27,4 +27,14 @@ class UserOrganizationsListSerializer(serializers.ModelSerializer):
             'created_date',
             'updated_date',
             'is_active'
+        ]
+
+class SelfCreatedUsersListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'last_name',
+            'first_name',
+            'middle_name',
         ]

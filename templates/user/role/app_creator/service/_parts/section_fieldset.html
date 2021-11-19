@@ -46,9 +46,7 @@
     </form>
 </fieldset>
 {% block js %}
-    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
     <script>
         $(function () {
             $('#section_region').select2({
@@ -56,20 +54,7 @@
             })
         })
         $(document).ready(function () {
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken')
-
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
+           sendAuthorizationToken()
 
             get_sections_list()
             $(document).on('change', '#section_region', function () {
@@ -98,16 +83,12 @@
                                                     </button>
                                                 </div>
                                             </li>`
-
-
                             });
-
 
                             $('#sections_list').html(li)
                         },
                         404: function (err) {
-                            console.log(err)
-                            console.log(err.responseText)
+                            swal_error(err)
                         },
                     },
                 });

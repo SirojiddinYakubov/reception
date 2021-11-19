@@ -19,14 +19,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 import user.admin
 from application.mixins import *
 from application.models import Application
-from reception.api import SendSmsWithApi
+from reception.api import SendSmsWithApi, SendSmsWithPlayMobile
 from reception.mixins import *
 from reception.settings import *
 from reception.telegram_bot import send_message_to_developer
 from user.decorators import *
 from user.forms import *
 from user.serializers import UserSerializer, UserCreateSerializer, SaveUserPassportSerializer, SectionSerializer, \
-    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer, AppCreatorCreatedUserListSerializer
+    RegionSerializer, UserUpdateSerializer, CreateUserAccountViewSerializer
 from user.utils import send_otp, get_tokens_for_user
 
 
@@ -387,7 +387,7 @@ class Get_Organization(AllowedRolesMixin, View):
 
 class EditPersonalData(AllowedRolesMixin, View):
     allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
-                     SUPER_ADMINISTRATOR]
+                     SUPER_ADMINISTRATOR, APP_CREATOR]
     template_name = 'user/edit_personal_data.html'
 
     def get(self, request):
@@ -432,7 +432,11 @@ class SavePersonalData(UpdateAPIView):
                     raise ValidationError('User topilmadi!')
 
                 msg = f"E-RIB dasturi. Shaxsiy ma'lumotlaringiz tahrirlandi! Login: {user.username} Parol: {user.turbo}"
-                r = SendSmsWithApi(message=msg, phone=user.phone).get()
+                r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
+                print(msg)
+                if not r == SUCCESS:
+                    # send sms with eskiz
+                    r = SendSmsWithApi(message=msg, phone=user.phone).get()
 
                 if r != SUCCESS:
                     send_message_to_developer(
@@ -472,12 +476,15 @@ class GetCode(APIView):
 
         otp_response = send_otp(phone_number)
         print(otp_response)
+        send_message_to_developer(str(otp_response))
         msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
-        r = SendSmsWithApi(message=msg, phone=phone).get()
+        print(msg)
+        r = SendSmsWithPlayMobile(phone=phone, message=msg).get()
+        if not r == SUCCESS:
+            r = SendSmsWithApi(message=msg, phone=phone).get()
         # r = 200
-        print(r)
         if r == SUCCESS:
-            response = Response({'secret': otp_response['secret'], 'code': otp_response['otp']}, status=200)
+            response = Response({'secret': otp_response['secret']}, status=200)
             response.set_cookie('secret', otp_response['secret'], max_age=300)
             return response
         else:
@@ -516,7 +523,12 @@ def forgot_pass(request):
         try:
             user = User.objects.get(phone=phone)
             msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
-            r = SendSmsWithApi(message=msg, phone=user.phone).get()
+            r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
+            print(msg)
+            if not r == SUCCESS:
+                # send sms with eskiz
+                r = SendSmsWithApi(message=msg, phone=user.phone).get()
+
             if r != SUCCESS:
                 send_message_to_developer(
                     f'Reset password send sms error! Login: {user.username} Parol: {user.turbo}')
@@ -1314,13 +1326,6 @@ class CreateUserAccountView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class AppCreatorCreatedUserList(ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = AppCreatorCreatedUserListSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        qs = super().get_queryset().filter(created_by=self.request.user)
-        return qs
 
 

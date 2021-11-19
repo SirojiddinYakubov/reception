@@ -145,6 +145,9 @@ def get_payment_score(application, percent):
         else:
             district = created_user.district
 
+        if percent.state_duty == FINE:
+            return '<p style="color: red">Yashash hududingizda joylashgan YHXB ma\'muriy amaliyot bo\'linmasi tomonidan protokol olib, shu protokol asosida Click yoki Payme ilovalari orqali to\'lashingiz mumkin.!<p>'
+
         try:
             if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
 

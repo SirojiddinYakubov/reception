@@ -28,14 +28,11 @@
 
         <div class="row mb-3">
             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                   for="car_type">{% trans 'Transport vositasi turini tanlang' %}<span
+                   for="type">{% trans 'Transport vositasi turini tanlang' %}<span
                     class="text-danger">*</span></label>
             <div class="col-8 col-xl-9">
-                <select id="car_type" name="car_type" required data-width="100%"
-                        class="form-control select2">
-                    {% for car_type in car_types %}
-                        <option value="{{ car_type.id }}">{{ car_type.title }}</option>
-                    {% endfor %}
+                <select id="type" name="type" required data-width="100%"
+                        class="form-select">
                 </select>
             </div>
         </div>
@@ -46,11 +43,7 @@
                     class="text-danger">*</span></label>
             <div class="col-8 col-xl-9 fuel_type">
 
-                <select id="fuel_type" name="fuel_type" class="form-control"
-                        multiple="multiple">
-                    {% for fuel_type in fuel_types %}
-                        <option value="{{ fuel_type.id }}">{{ fuel_type.title }}</option>
-                    {% endfor %}
+                <select id="fuel_type" name="fuel_type" class="form-select">
                 </select>
             </div>
         </div>
@@ -74,11 +67,8 @@
                    for="body_type">{% trans 'Kuzov turi' %}<span
                     class="text-danger">*</span></label>
             <div class="col-8 col-xl-9">
-                <select id="body_type" name="body_type" class="form-control select2" required
+                <select id="body_type" name="body_type" class="form-select" required
                         data-width="100%">
-                    {% for bodyType in bodyTypes %}
-                        <option value="{{ bodyType.id }}">{{ bodyType.title }}</option>
-                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -104,13 +94,12 @@
                        autocomplete="off">
             </div>
         </div>
-        <div class="row mb-3 chassis_number_div" style="display: none">
+        <div class="row mb-3">
             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                   for="chassis_number">{% trans 'Shassi raqami' %}<span
-                    class="text-danger">*</span></label>
+                   for="chassis_number">{% trans 'Shassi raqami' %}</label>
             <div class="col-8 col-xl-9 chassis_number">
                 <input type="text" id="chassis_number"
-                       class="form-control text-uppercase" required
+                       class="form-control text-uppercase" name="chassis_number"
                        placeholder="{% trans 'Masalan: ZXW5642519873' %}"
                        autocomplete="off">
             </div>
@@ -250,7 +239,7 @@
 
             </div>
         </div>
-        <div class="row mb-3" id="auction_number_div">
+        <div class="row mb-3" id="auction_number_div" style="display: none">
             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                    for="auction_number">{% trans "Auksion raqami" %}<span
                     class="text-danger">*</span></label>
@@ -276,36 +265,109 @@
 </fieldset>
 
 {% block modals %}
-    {% include 'common/add_car_model_modal.html' %}
-    {% include 'common/add_car_color_modal.html' %}
+    {% include 'modals/add_car_model_modal.html' %}
+    {% include 'modals/add_car_color_modal.html' %}
 {% endblock modals %}
 
 {% block js %}
     <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
-            $('.select2').select2({
-                width: '100%'
+        $(document).ready(function () {
+
+            getAjaxData('{% url "api_user:car_models_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#car").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- modelni tanlang --',
+                        templateResult: formatState,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        },
+                        language: {
+                            noResults: function () {
+                                return "Ma'lumot topilmadi! <a href='#' id='add_new_car_model'>Yangi model qo'shish</a>";
+                            }
+                        },
+                    }).on('select2:close', function () {
+                            var el = $(this);
+                            if (el.val() === "new") {
+                                $('#add_car_model_modal').modal('show')
+                                $('#car').select2('close')
+                            }
+                        }
+                    )
+                );
             })
 
-            $('#auction_number_div').hide()
+            getAjaxData('{% url "api_user:car_colors_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#color").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- rangni tanlang --',
+                        templateResult: formatState,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        },
+                        language: {
+                            noResults: function () {
+                                return "Ma'lumot topilmadi! <a href='#' id='add_new_color'>Yangi rang qo'shish</a>";
+                            }
+                        },
+                    }).on('select2:close', function () {
+                        var el = $(this);
+                        if (el.val() === "new") {
+                            $('#add_car_color_modal').modal('show')
+                        }
+                    })
+                );
+            })
 
-        })
-        $(document).ready(function () {
+            getAjaxData('{% url "api_user:car_body_types_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#body_type").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- kuzov turini tanlang --',
+                        templateResult: formatState,
+                    })
+                );
+            })
+
+            getAjaxData('{% url "api_user:car_types_list" %}').then(function (res) {
+                console.log(res)
+                res.forEach((x, i) =>
+                    $('#type').append($('<option>').val(x.id).text(x.title))
+                )
+            }, function (err) {
+                swal_error(err)
+            })
+
+            getAjaxData('{% url "api_user:car_fuel_types_list" %}').then(function (res) {
+                console.log(res)
+                res.forEach((x, i) =>
+                    $('#fuel_type').append($('<option>').val(x.id).text(x.title))
+                )
+            }, function (err) {
+                swal_error(err)
+            })
+
             $('#fake').on('click', function () {
                 generate_fake_data()
             })
 
-            $('#fuel_type').selectize({
-                inputClass: 'form-control selectize-input',
-                placeholder: "Masalan: BENZIN",
-                sortField: "text",
-            });
-
             $('#device').selectize({
                 inputClass: 'form-control selectize-input',
                 dropdownParent: "body",
-                placeholder: "Masalan: MAXSUS",
+                placeholder: "Masalan: QO'SHIMCHA PEDAL",
+                onChange: function (value, isOnInitialize) {
+                    swal.fire(
+                        'Ogohlantirish',
+                        'Agarda sizni transport vositangizda qo\'shimcha qayta jihoz mavjud bo\'lsa (gazdan tashqari) unda ushbu ro\'yhatdan uni tanlang. Agar qo\'shimcha jihoz ro\'yhatda bo\'lmasa, unda 919791999 raqamiga murojaat eting.',
+                        'warning',
+                    )
+                }
             });
 
             $('input[name=is_auction]').on('change', function () {
@@ -319,7 +381,6 @@
                 }
             })
 
-
             $('input[name=is_saved_number]').on('change', function () {
                 if ($('#is_saved_number_yes').prop('checked')) {
                     $('#saved_number_div').show()
@@ -331,66 +392,9 @@
                 }
             })
 
-
-            function ChangeCarType() {
-                var selectedCar = $('select#car').children("option:selected").val();
-
-                if (!selectedCar === 'new') {
-                    $.ajax({
-                        type: "POST",
-                        url: "{% url 'user:get_car_type' %}",
-                        data: {
-                            'car': selectedCar, // from form
-                        },
-                        statusCode: {
-                            200: function (response) {
-                                console.log(response)
-                                if (response === "True") {
-                                    //agar yuk avtomobil bo'lsa
-                                    $('.chassis_number_div').show()
-                                    $('#chassis_number').attr('name', 'chassis_number')
-
-                                } else {
-                                    //agar yengil avtomobil bo'lsa
-
-                                    $('.chassis_number_div').hide()
-                                    $('#chassis_number').removeAttr('name')
-                                }
-                            }, 400: function (err) {
-                                console.log(err)
-                                console.log(err.responseText)
-                                error_toast()
-                            }, 500: function (err) {
-                                console.log(err)
-                                console.log(err.responseText)
-                                error_toast()
-                            }
-                        },
-                    });
-                }
-            }
-
-            $("select#car").change(function () {
-                ChangeCarType()
-            });
-
-            $('#fuel_type').on('change', function () {
-                var selectedFuelType = $(this).children("option:selected").val();
-                if (parseInt(selectedFuelType)) {
-                    $(this).valid()
-                }
-            })
-
-            $('#car').on('change', function () {
-                var selectedCarModel = $(this).children("option:selected").val();
-                if (parseInt(selectedCarModel)) {
-                    $(this).valid()
-                }
-            })
-
-            $('#color').on('change', function () {
-                var selectedColor = $(this).children("option:selected").val();
-                if (parseInt(selectedColor)) {
+            $(document).on('change', '#car, #color, #fuel_type', function () {
+                var selectedVal = $(this).children("option:selected").val();
+                if (parseInt(selectedVal)) {
                     $(this).valid()
                 }
             })
@@ -400,7 +404,6 @@
                 var carButton = $carForm.children().find('button:submit')
                 $carForm.validate({
                     ignore: ":hidden:not('#fuel_type')",
-
                     rules: {
                         //username is the name of the textbox
                         engine_number: {
@@ -410,11 +413,6 @@
                             noSpace: true,
                         },
                         body_number: {
-                            required: true,
-                            alphanumeric: true,
-                            noSpace: true,
-                        },
-                        chassis_number: {
                             required: true,
                             alphanumeric: true,
                             noSpace: true,
@@ -470,9 +468,6 @@
                         body_number: {
                             required: 'Kuzov raqami kiritilmagan!'
                         },
-                        chassis_number: {
-                            required: 'Shassi raqami kiritilmagan!'
-                        },
                         fuel_type: {
                             required: "Yoqilg'i turi tanlanmagan!",
                         },
@@ -525,8 +520,6 @@
                         }
 
                     },
-
-
                     submitHandler: function (form, e) {
                         e.preventDefault()
 
@@ -541,23 +534,30 @@
                             }
                         })
 
-                        $('input[name ="device"]').val(device)
+                        $('input[name ="device"]').empty().val(device)
                         $('#car').attr('name', 'model')
-                        $('#car_type').attr('name', 'type')
+
 
                         if ($('#is_saved_number_yes').prop('checked') === true) {
-                            $("<input />").attr("type", "hidden")
-                                .attr("name", "given_number")
-                                .attr("value", $('#saved_number').val()).appendTo(form);
+                            if (!$(form).find('input[name="given_number"]').length) {
+                                $("<input />").attr("type", "hidden")
+                                    .attr("name", "given_number")
+                                    .attr("value", $('#saved_number').val()).appendTo(form);
+                            }
                         } else {
-                            $("<input />").attr("type", "hidden")
-                                .attr("name", "given_number")
-                                .attr("value", $('#auction_number').val()).appendTo(form);
+                            if (!$(form).find('input[name="given_number"]').length) {
+                                $("<input />").attr("type", "hidden")
+                                    .attr("name", "given_number")
+                                    .attr("value", $('#auction_number').val()).appendTo(form);
+                            }
                         }
 
-                        $("<input />").attr("type", "hidden")
-                            .attr("name", "applicant")
-                            .attr("value", $('#person').val()).appendTo(form);
+                        if (!$(form).find('input[name="applicant"]').length) {
+                            $("<input />").attr("type", "hidden")
+                                .attr("name", "applicant")
+                                .attr("value", $('#person').val()).appendTo(form);
+                        }
+
 
                         $.ajax({
                             type: "POST",
@@ -573,49 +573,17 @@
                                     carButton.attr('disabled', false);
                                     carButton.html(carButtonValue)
 
-
                                     $('input[name ="application"]').val(response.id)
 
                                     $('#section_step').addClass('active')
                                     $('#car_step').removeClass('active')
 
-                                    $('#car').attr('disabled', 'disabled')
-                                    $('#engine_number').attr("disabled", "disabled")
-                                    $('#body_number').attr("disabled", "disabled")
-                                    $('#chassis_number').attr("disabled", "disabled")
-                                    $('#body_type').attr("disabled", "disabled")
-                                    $('#color').attr("disabled", "disabled")
-                                    $('#made_year').attr("disabled", "disabled")
-                                    $('.device').attr("disabled", "disabled")
-                                    $('#seriya').attr("disabled", "disabled")
-                                    $('#contract_date').attr("disabled", "disabled")
-                                    $('#fuel_type').attr("disabled", "disabled")
-                                    $('#car_type').attr("disabled", "disabled")
-                                    $('#empty_weight').attr("disabled", "disabled")
-                                    $('#full_weight').attr("disabled", "disabled")
-                                    $('#engine_power').attr("disabled", "disabled")
-                                    $('#auction_number').attr("disabled", "disabled")
-                                    $('#is_auction_yes').attr("disabled", "disabled")
-                                    $('#is_auction_no').attr("disabled", "disabled")
-                                    $('#saved_number').attr("disabled", "disabled")
-                                    $('input[name=is_saved_number]').attr("disabled", "disabled")
-                                    $('#price').attr("disabled", "disabled")
+                                    $carForm.find(":input:not('.next'):not('.prev')").each(function () {
+                                        $(this).attr('disabled', true)
+                                    });
                                 },
                                 400: function (err) {
-                                    console.log(err)
-                                    var errorKey
-                                    var errorText
-                                    var keys = Object.keys(err.responseJSON);
-
-                                    keys.forEach(function (key) {
-                                        errorText = err.responseJSON[key];
-                                        errorKey = key;
-                                    });
-                                    Swal.fire(
-                                        'Xatolik!',
-                                        `${errorKey} ${errorText}`,
-                                        `error`,
-                                    )
+                                    swal_error(err)
 
                                     carButton.attr('type', 'submit')
                                     carButton.attr('disabled', false)
@@ -627,7 +595,6 @@
                     }
                 });
             }
-
         })
     </script>
 {% endblock js %}

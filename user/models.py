@@ -466,6 +466,7 @@ class Sms(BaseModel):
     sms_id = models.BigIntegerField(default=0)
     status = models.IntegerField(choices=status, default=PROCESSING)
     phone = models.IntegerField(default=0)
+    is_playmobile = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'sms'
