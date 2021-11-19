@@ -71,6 +71,6 @@ urlpatterns = [
 
     # app creatoe role
     path('create_user_account_view/', CreateUserAccountView.as_view(), name='create_user_account_view'),
-    path('app-creator-created-user-list/<int:id>/', AppCreatorCreatedUserList.as_view(), name='app_creator_created_user_list'),
+
 
 ]

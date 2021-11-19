@@ -17,7 +17,7 @@ from application.models import *
 from application.permissions import allowed_users
 from application.serializers import DocumentForPoliceSerializer, SaveDraftApplicationSerializer
 from application.utils import reg_new_car, reg_new_car_v2
-from reception.api import SendSmsWithApi
+from reception.api import SendSmsWithApi, SendSmsWithPlayMobile
 from reception.mixins import *
 from reception.settings import *
 from reception.telegram_bot import send_message_to_developer
@@ -179,15 +179,15 @@ def get_information(request):
 @login_required
 def create_application_doc(request, filename):
     application = Application.objects.get(file_name=filename)
+    print(application.applicationdocument_set.all())
     if application.process == DRAFT:
         messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani to\'liq to\'ldiring!')
         return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
     section = Section.objects.get(id=application.section.id)
 
-    if section.pay_for_service and request.user.role == USER:
-        if application.is_block:
-            messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani faollashtirishingiz talab etiladi!')
-            return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
+    if application.is_block:
+        messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani faollashtirishingiz talab etiladi!')
+        return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))
 
     service = Service.objects.get(id=application.service.id)
 
@@ -336,8 +336,11 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         notification = Notification.objects.create(application=application, sender=request.user,
                                                                    receiver=application.created_user, text=text)
 
-                        # send sms with eskiz
-                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
+                        print(text)
+                        if not r == SUCCESS:
+                            # send sms with eskiz
+                            r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
 
                         if r != SUCCESS:
                             send_message_to_developer(f'Sms service not working! Notification: {notification}')
@@ -354,8 +357,12 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         notification = Notification.objects.create(application=application, sender=request.user,
                                                                    receiver=application.created_user, text=text)
 
-                        # send sms with eskiz
-                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
+                        print(text)
+                        if not r == SUCCESS:
+                            # send sms with eskiz
+                            r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+
                         if r != SUCCESS:
                             send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)
@@ -371,8 +378,14 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         notification = Notification.objects.create(application=application, sender=request.user,
                                                                    receiver=application.created_user, text=text)
 
-                        # send sms with eskiz
-                        r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+                        r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
+                        print(text)
+                        if not r == SUCCESS:
+                            # send sms with eskiz
+                            r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
+
+                        if r != SUCCESS:
+                            send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         if r != SUCCESS:
                             send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)

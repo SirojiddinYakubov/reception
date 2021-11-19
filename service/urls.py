@@ -1,5 +1,8 @@
 from django.contrib import admin
+
 from django.urls import path, include
+from django.views.generic import TemplateView
+
 from .views import *
 
 app_name = 'service'
@@ -7,6 +10,11 @@ app_name = 'service'
 urlpatterns = [
 
     path('account-statement/', AccountStatement.as_view(), name='account_statement'),
+
+    path('app-creator-account-statement/',
+         TemplateView.as_view(template_name='user/role/app_creator/service/account_statement.html'),
+         name='app_creator_account_statement'),
+
     # path('account-statement-save/', AccountStatementSave.as_view(), name='account_statement'),
     path('contract-of-sale/', ContractOfSale.as_view(), name='contract_of_sale'),
     path('gift-agreement/', GiftAgreement.as_view(), name='gift_agreement'),
@@ -14,8 +22,6 @@ urlpatterns = [
     path('re-equipment/', ReEquipment.as_view(), name='re_equipment'),
     path('replace-tp/', ReplaceTp.as_view(), name='replace_tp'),
     path('replace-number-and-tp/', ReplaceNumberAndTp.as_view(), name='replace_number_and_tp'),
-
-
 
     # path('gift-agreement-index/', gift_agreement_index, name='gift_agreement_index'),
     path('save-gift-agreement/', Save_Gift_Agreement.as_view(), name='save_gift_agreement'),

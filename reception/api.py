@@ -1,10 +1,12 @@
 import json
 import os
+import random
 import time
 from types import FunctionType
 import requests
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse, JsonResponse
+from requests.auth import HTTPBasicAuth
 
 from reception.telegram_bot import send_message_to_developer
 
@@ -15,6 +17,7 @@ INVALID_NUMBER = 160
 MESSAGE_IS_EMPTY = 170
 SMS_NOT_FOUND = 404
 SMS_SERVICE_NOT_TURNED = 600
+
 
 class SendSmsWithApi:
     def __init__(self, phone, message=None):
@@ -58,7 +61,6 @@ class SendSmsWithApi:
         except Exception as e:
             print('SMS_BROKER_EMAIL and SMS_BROKER_PASSWORD not found')
             return FAILED
-
 
     def send_message(self, message):
         token = self.authorization()
@@ -199,3 +201,121 @@ def sms_api_result(request):
 #                 return FAILED
 #             else:
 #                 return PROCESSING
+
+
+class SendSmsWithPlayMobile:
+    def __init__(self, phone, message=None):
+        self.phone = phone
+        self.message = message
+        self.spend = None
+        self.message_id = random.randint(100000000, 999999999)
+        self.username = os.getenv('PLAY_MOBILE_USERNAME')
+        self.password = os.getenv('PLAY_MOBILE_PASSWORD')
+
+    def get(self):
+        step1 = self.custom_validation()
+        if step1 == SUCCESS:
+            message = self.clean_message(self.message)
+            step3 = self.calculation_send_sms(message)
+            if step3 == SUCCESS:
+                return self.send_message(message)
+
+    def custom_validation(self):
+        if not len(str(self.phone)) == 9:
+            return INVALID_NUMBER
+        if self.message == '' or self.message == None:
+            return MESSAGE_IS_EMPTY
+        return SUCCESS
+
+    def send_message(self, message):
+        URL = os.getenv('PLAY_MOBILE_URL')
+        headers = {'Content-type': 'application/json'}
+        payload = {
+            "messages": [
+                {
+                    "recipient": "998" + str(self.phone),
+                    "message-id": "1234564566",
+                    "sms": {
+                        "originator": "3700",
+                        "content": {
+                            "text": str(message),
+                        }
+                    }
+                }
+            ]
+        }
+
+        r = requests.post(URL, json=payload, headers=headers,
+                          auth=(self.username, self.password))
+        if not r.status_code == SUCCESS:
+            send_message_to_developer('Send sms error with play mobile')
+
+        try:
+            from user.models import Sms
+            Sms.objects.create(sms_id=self.message_id, sms_count=self.spend, text=str(message),
+                               phone=self.phone, is_playmobile=True)
+        except:
+            send_message_to_developer("sms object create error: api.py line:256")
+
+        return SUCCESS
+
+    def clean_message(self, message):
+        message = message.replace('ц', 'ts').replace('ч', 'ch').replace('ю',
+                                                                        'yu').replace(
+            'а', 'a').replace('б', 'b').replace('қ', "q").replace('ў', "o'").replace('ғ', "g'").replace('ҳ',
+                                                                                                        "h").replace(
+            'х',
+            "x").replace(
+            'в', 'v').replace('г', 'g').replace('д', 'd').replace('е',
+                                                                  'e').replace(
+            'ё', 'yo').replace('ж', 'j').replace('з', 'z').replace('и', 'i').replace('й', 'y').replace('к',
+                                                                                                       'k').replace(
+            'л', 'l').replace('м', 'm').replace('н', 'n').replace('о', 'o').replace('п', 'p').replace('р',
+                                                                                                      'r').replace(
+            'с', 's').replace('т', 't').replace('у', 'u').replace('ш', 'sh').replace('щ', 'sh').replace('ф',
+                                                                                                        'f').replace(
+            'э', 'e').replace('ы', 'i').replace('я', 'ya').replace('ў', "o'").replace('ь', "'").replace('ъ',
+                                                                                                        "'").replace(
+            '’', "'").replace('“', '"').replace('”', '"').replace(',', ',').replace('.', '.').replace(':', ':')
+        # filter upper
+        message = message.replace('Ц', 'Ts').replace('Ч', 'Ch').replace('Ю', 'Yu').replace(
+            'А', 'A').replace('Б', 'B').replace('Қ', "Q").replace('Ғ', "G'").replace('Ҳ', "H").replace('Х',
+                                                                                                       "X").replace(
+            'В', 'V').replace('Г', 'G').replace('Д', 'D').replace('Е',
+                                                                  'E').replace(
+            'Ё', 'Yo').replace('Ж', 'J').replace('З', 'Z').replace('И', 'I').replace('Й', 'Y').replace('К',
+                                                                                                       'K').replace(
+            'Л', 'L').replace('М', 'M').replace('Н', 'N').replace('О', 'O').replace('П', 'P').replace('Р',
+                                                                                                      'R').replace(
+            'С', 'S').replace('Т', 'T').replace('У', 'U').replace('Ш', 'Sh').replace('Щ', 'Sh').replace('Ф',
+                                                                                                        'F').replace(
+            'Э', 'E').replace('Я', 'Ya')
+        return message
+
+    def calculation_send_sms(self, message):
+        try:
+            length = len(message)
+            if length:
+                if length >= 0 and length <= 160:
+                    self.spend = 1
+                elif length > 160 and length <= 306:
+                    self.spend = 2
+                elif length > 306 and length <= 459:
+                    self.spend = 3
+                elif length > 459 and length <= 612:
+                    self.spend = 4
+                elif length > 612 and length <= 765:
+                    self.spend = 5
+                elif length > 765 and length <= 918:
+                    self.spend = 6
+                elif length > 918 and length <= 1071:
+                    self.spend = 7
+                elif length > 1071 and length <= 1224:
+                    self.spend = 8
+                else:
+                    self.spend = 30
+                return SUCCESS
+            else:
+                return MESSAGE_IS_EMPTY
+        except:
+            return FAILED

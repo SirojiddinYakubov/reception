@@ -423,7 +423,7 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        window.location.href = '/custom-logout/'
+        window.location.href = 'user/custom-logout/'
     }, 3000);
 }
 
@@ -1125,8 +1125,8 @@ function formatMoney(str) {
 }
 
 function generate_fake_data() {
-    var $fuel_type_selectize = $('#fuel_type').selectize();
-    $fuel_type_selectize[0].selectize.setValue("1");
+    // var $fuel_type_selectize = $('#fuel_type').selectize();
+    // $fuel_type_selectize[0].selectize.setValue("1");
     $('#car').select2("val", $("#car option:last").val());
     $('#made_year').val('2021-07-26')
 
@@ -1414,6 +1414,8 @@ function formatState(state) {
 
 
 function swal_error(err = null) {
+    console.log(err)
+
     if (err && typeof err === 'object') {
         var errorKey
         var errorText
@@ -1434,12 +1436,30 @@ function swal_error(err = null) {
             `${err}`,
             `error`,
         )
-    }else {
-         Swal.fire(
+    } else {
+        Swal.fire(
             'Xatolik!',
             'Sahifani yangilab qayta urinib ko\'ring',
             `error`,
         )
     }
 
+}
+
+
+function sendAuthorizationToken() {
+    var token = getCookie('token'),
+        csrftoken = getCookie('csrftoken')
+
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+        },
+        error: function (response) {
+            if (response.status === 401) {
+                tokenInvalid()
+            }
+        }
+    })
 }

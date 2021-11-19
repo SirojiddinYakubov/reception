@@ -4,7 +4,7 @@ from user.models import (
     User,
     Region,
     District,
-    Quarter, Organization, Car, Color, CarModel
+    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType
 )
 
 
@@ -104,6 +104,56 @@ class UserOrganizationsListSerializer(serializers.ModelSerializer):
             'is_active'
         ]
 
+
+class CarModelsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarModel
+        fields = [
+            'id',
+            'title',
+            'creator',
+            'is_local',
+            'is_truck',
+            'created_user',
+            'created_date'
+        ]
+
+class CarColorsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Color
+        fields = [
+            'id',
+            'title',
+            'created_date',
+            'created_user',
+        ]
+
+class CarTypesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarType
+        fields = [
+            'id',
+            'title',
+            'created_date',
+        ]
+
+class CarFuelTypesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FuelType
+        fields = [
+            'id',
+            'title',
+            'created_date',
+        ]
+
+class CarBodyTypesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BodyType
+        fields = [
+            'id',
+            'title',
+            'created_date',
+        ]
 
 class CreateCarModelSerializer(serializers.ModelSerializer):
     class Meta:
