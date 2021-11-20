@@ -183,54 +183,55 @@
 
             {% if request.user.is_authenticated %}
 
-            {% get_user_notifications as notifications_data %}
-            <li class="dropdown notification-list topbar-dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
-                   role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="fe-bell noti-icon"></i>
-                    {% if notifications_data.not_read_count > 0 %}<span class="badge bg-danger rounded-circle noti-icon-badge">{{ notifications_data.not_read_count }}</span>{% endif %}
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+                {% get_user_notifications as notifications_data %}
+                <li class="dropdown notification-list topbar-dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#"
+                       role="button" aria-haspopup="false" aria-expanded="false">
+                        <i class="fe-bell noti-icon"></i>
+                        {% if notifications_data.not_read_count > 0 %}
+                            <span class="badge bg-danger rounded-circle noti-icon-badge">{{ notifications_data.not_read_count }}</span>{% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-lg">
 
-                    <!-- item-->
-                    <div class="dropdown-item noti-title">
-                        <h5 class="m-0">
+                        <!-- item-->
+                        <div class="dropdown-item noti-title">
+                            <h5 class="m-0">
                                         <span class="float-end">
                                             <a href="" class="text-dark">
                                                 <small>Hammasini tozalash</small>
                                             </a>
                                         </span>Xabarlar
-                        </h5>
+                            </h5>
+                        </div>
+
+                        <div class="noti-scroll" data-simplebar>
+                            {% for notification in notifications_data.notifications %}
+                                <!-- item-->
+                                <a href="#" class="dropdown-item notify-item">
+                                    {#                                <div class="notify-icon">#}
+                                    {#                                    <img src="{% static 'assets/images/users/user-1.jpg' %}"#}
+                                    {#                                         class="img-fluid rounded-circle" alt=""/>#}
+                                    {#                                </div>#}
+                                    <p class="header-title"><b>{{ notification.sender }}</b></p>
+                                    <p style="margin-bottom: 0">
+                                        {{ notification.text|truncatechars:45 }}
+                                    </p>
+                                    <p style="margin-bottom: 0">
+                                        <small>{{ notification.created_at|naturaltime }}</small>
+                                    </p>
+                                </a>
+                            {% endfor %}
+                        </div>
+
+                        <!-- All-->
+                        <a href="javascript:void(0);"
+                           class="dropdown-item text-center text-primary notify-item notify-all">
+                            Hammasini ko'rish
+                            <i class="fe-arrow-right"></i>
+                        </a>
+
                     </div>
-
-                    <div class="noti-scroll" data-simplebar>
-                        {% for notification in notifications_data.notifications %}
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                {#                                <div class="notify-icon">#}
-                                {#                                    <img src="{% static 'assets/images/users/user-1.jpg' %}"#}
-                                {#                                         class="img-fluid rounded-circle" alt=""/>#}
-                                {#                                </div>#}
-                                <p class="header-title"><b>{{ notification.sender }}</b></p>
-                                <p style="margin-bottom: 0">
-                                    {{ notification.text|truncatechars:45 }}
-                                </p>
-                                <p style="margin-bottom: 0">
-                                    <small>{{ notification.created_at|naturaltime }}</small>
-                                </p>
-                            </a>
-                        {% endfor %}
-                    </div>
-
-                    <!-- All-->
-                    <a href="javascript:void(0);"
-                       class="dropdown-item text-center text-primary notify-item notify-all">
-                        Hammasini ko'rish
-                        <i class="fe-arrow-right"></i>
-                    </a>
-
-                </div>
-            </li>
+                </li>
 
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
@@ -477,4 +478,6 @@
         </ul>
         <div class="clearfix"></div>
     </div>
+
+
 </div>
