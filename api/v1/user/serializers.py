@@ -4,8 +4,10 @@ from user.models import (
     User,
     Region,
     District,
-    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType
+    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType, Section
 )
+
+
 
 
 class RegionDetailSerializer(serializers.ModelSerializer):
@@ -46,6 +48,15 @@ class QuarterDetailSerializer(serializers.ModelSerializer):
             'is_active'
         ]
 
+
+class RegionSectionsListSerializer(serializers.ModelSerializer):
+    region = RegionDetailSerializer()
+    located_district = DistrictDetailSerializer()
+    quarter = QuarterDetailSerializer()
+
+    class Meta:
+        model = Section
+        fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
 
 class UserDetailSerializer(serializers.ModelSerializer):
     region = RegionDetailSerializer()

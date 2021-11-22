@@ -2,8 +2,7 @@
 
 <fieldset id="section_fieldset" style="display: none">
     <legend>Ariza topshirish hududi</legend>
-    <form action="#" method="post" id="save_section_form">
-        {% csrf_token %}
+    <form action="#" id="save_section_form">
         <input type="hidden" name="application">
         <div class="row mb-3">
             <div class="alert alert-info">
@@ -19,9 +18,6 @@
                     class="text-danger">*</span></label>
             <div class="col-8 col-xl-9 car">
                 <select id="section_region" name="section_region" required class="form-control select2">
-                    {% for region in regions %}
-                        <option value="{{ region.id }}">{{ region.title }}</option>
-                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -48,51 +44,49 @@
 {% block js %}
     <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
     <script>
-        $(function () {
-            $('#section_region').select2({
-                width: '100%'
-            })
-        })
         $(document).ready(function () {
-           sendAuthorizationToken()
+            sendAuthorizationToken()
 
-            get_sections_list()
-            $(document).on('change', '#section_region', function () {
-                get_sections_list()
+            getAjaxData('{% url "api_user:regions_list" %}').then(function (res) {
+                console.log(51, res)
+                res.forEach((x, i) =>
+                    $("#section_region").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- viloyatni tanlang --',
+                    })
+                );
             })
 
-            function get_sections_list() {
+
+            $(document).on('change', '#section_region', function () {
                 var SelectedRegion = $('#section_region').children("option:selected").val()
 
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'user:get_sections_list' region_id=12345 %}".replace(/12345/, SelectedRegion.toString()),
-                    statusCode: {
-                        200: function (res) {
-                            console.log(res)
-                            var li = ''
-                            $.each(res, function (index, value) {
-                                console.log(value)
-                                li += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                getAjaxData('{% url "api_user:region_sections_list" pk=12345 %}'.replace(/12345/, SelectedRegion.toString())).then(function (res) {
+                    var li = ''
+                    $.each(res, function (i, x) {
+                        try {
+                            li += `<li class="list-group-item d-flex justify-content-between align-items-start">
                                                 <div class="ms-2 me-auto col-7 col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-9 text-start">
-                                                    <div class="fw-bold text-start text-start">${value['title']}</div>
-                                                    ${value['region']['title']}, ${value['located_district']['title']}, ${value['quarter']['title']}
+                                                    <div class="fw-bold text-start text-start">${x.title}</div>
+                                                    ${x.region.title}, ${x.located_district.title}, ${x.quarter.title}
                                                 </div>
                                                 <div class="col-5 col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                                                    <button type="button" data-id="${value['id']}" class="btn btn-info waves-effect waves-light send_application"  >Ariza topshirish
+                                                    <button type="button" data-id="${x.id}" class="btn btn-info waves-effect waves-light send_application"  >Ariza topshirish
                                                     </button>
                                                 </div>
                                             </li>`
-                            });
-
-                            $('#sections_list').html(li)
-                        },
-                        404: function (err) {
-                            swal_error(err)
-                        },
-                    },
-                });
-            }
+                        } catch (err) {
+                            console.log(err)
+                            swal_error("YHXB bo'limi joylashgan manzil topilmadi!")
+                        }
+                    })
+                    $('#sections_list').html(li)
+                }, function (err) {
+                    console.log(err)
+                    swal_error(err)
+                })
+            })
 
             $(document).on('click', '.send_application', function () {
                 var applicationId = $('input[name ="application"]').val()

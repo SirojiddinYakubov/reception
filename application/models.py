@@ -85,7 +85,7 @@ class Application(models.Model):
     class Meta:
         verbose_name = 'Ariza'
         verbose_name_plural = 'Arizalar'
-        ordering = ['-id']
+        ordering = ['-id', ]
 
     def __str__(self):
         if self.service.key:

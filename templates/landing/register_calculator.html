@@ -1,0 +1,582 @@
+{% extends "base_horizontal.html" %}
+{% load static i18n %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
+    <link href="{% static 'assets/libs/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        /* Hide prev/next buttons and month name*/
+        .datepicker-days > table > thead > tr > th.prev,
+        .datepicker-days > table > thead > tr > th.datepicker-switch,
+        .datepicker-days > table > thead > tr > th.next {
+            display: none;
+        }
+
+        /* Hide days of previous month */
+        td.old.day {
+            visibility: hidden;
+        }
+
+        /* Hide days of next month */
+        td.new.day {
+            display: none;
+        }
+
+        .icon {
+            cursor: pointer;
+        }
+    </style>
+{% endblock css %}
+
+{% block page_title %}
+    {% trans "Ro'yhatdan o'tkazish kalkulyatori" %}
+{% endblock page_title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row bg-auto" style="background:#fff; padding:20px;">
+            <form action="#" id="calculation_form" method="post">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="service">{% trans 'Xizmat turi' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <select id="service" name="service" required data-width="100%"
+                                class="form-select">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="type">{% trans 'Transport vositasi turini tanlang' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <select id="type" name="type" required data-width="100%"
+                                class="form-select">
+                        </select>
+                    </div>
+                </div>
+                 <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="is_local">{% trans 'Transport vositasini ishlab chiqaruvchi korxona' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <select class="form-select" style="width: 100%;" id="is_local" name="is_local" required>
+                            <option value="true">Mahalliy</option>
+                            <option value="false">Chet el</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="person_type">{% trans 'Shaxs turini tanlang' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <select class="form-select" style="width: 100%;" id="person_type" name="person_type" required>
+                            <option value="0">Jismoniy shaxs</option>
+                            <option value="1">Yuridik shaxs</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="engine_power">{% trans 'Dvigatel quvvati' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 engine_power">
+                        <input type="number" id="engine_power" name="engine_power"
+                               class="form-control"
+                               placeholder="{% trans 'Masalan: 120' %}"
+                               autocomplete="off" required>
+                        <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                            qiymatni kilogrammda
+                            kiriting!</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           style="margin: auto"
+                           for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <label for="password" class="form-label">Kun</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="day" class="form-control" placeholder="Kunni tanlang">
+                                    <div class="input-group-text icon">
+                                        <i class="fas fa-calendar-day"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <label for="password" class="form-label">Oy</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="month" class="form-control" placeholder="Oyni tanlang">
+                                    <div class="input-group-text icon">
+                                        <i class="fas fa-calendar-day"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <label for="password" class="form-label">Yil<span style="color: red">*</span></label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="year" name="year" class="form-control" required
+                                           placeholder="Yil tanlang">
+                                    <div class="input-group-text icon">
+                                        <i class="fas fa-calendar-day"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row mb-3" id="price_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="price">{% trans 'Transport vositasi narxi' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 price">
+                        <input type="number" id="price" name="price"
+                               class="form-control" required
+                               placeholder="{% trans 'Masalan: 47000000' %}"
+                               autocomplete="off">
+                        <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                            qiymatni so'mda
+                            kiriting!</p>
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="is_auction_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="is_auction">{% trans 'Raqam auksiondan olinganmi?' %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_auction_yes" data-name="is_auction" name="is_auction"
+                                       value="true"
+                                       class="form-check-input">
+                                <label class="form-check-label" for="is_auction_yes">Auksiondan olingan</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_auction_no" data-name="is_auction" name="is_auction"
+                                       value="false"
+                                       class="form-check-input" checked>
+                                <label class="form-check-label" for="is_auction_no">Auksiondan olinmagan</label>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="save_old_number_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="save_old_number">{% trans "Avtomobildagi DRBni saqlab qolasizmi?" %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="save_old_number_yes"
+                                       name="save_old_number" value="true" data-name="save_old_number"
+                                       class="form-check-input">
+                                <label class="form-check-label" for="save_old_number_yes">Saqlab qolaman</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="save_old_number_no" data-name="save_old_number"
+                                       name="save_old_number" value="false" checked
+                                       class="form-check-input">
+                                <label class="form-check-label" for="save_old_number_no">Saqlab
+                                    qolmayman</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="is_saved_number_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="is_saved_number">{% trans 'Yangi olinadigan davlat raqam belgisi YXHB zahirasida saqlanmoqdami?' %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_saved_number_yes" name="is_saved_number"
+                                       class="form-check-input" value="true" data-name="is_saved_number">
+                                <label class="form-check-label" for="is_saved_number_yes">Saqlanyapti</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_saved_number_no" name="is_saved_number"
+                                       class="form-check-input" checked value="false" data-name="is_saved_number">
+                                <label class="form-check-label" for="is_saved_number_no">Saqlanmayapti</label>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="lost_number_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="lost_number">{% trans "Davlat raqam belgisi yo'qolganmi?" %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="lost_number_yes"
+                                       name="lost_number" value="true"
+                                       class="form-check-input" data-name="lost_number">
+                                <label class="form-check-label" for="lost_number_yes">Yo'qolgan</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="lost_number_no" data-name="lost_number"
+                                       name="lost_number" value="false" checked
+                                       class="form-check-input">
+                                <label class="form-check-label" for="lost_number_no">Yo'qolmagan</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="is_old_number_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="is_old_number">{% trans 'Davlat raqam belgisi eski namunadami? Masalan: 01 A 5555' %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_old_number_yes"
+                                       name="is_old_number" value="true" data-name="is_old_number"
+                                       class="form-check-input">
+                                <label class="form-check-label" for="is_old_number_yes">Ha, eski</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_old_number_no" name="is_old_number" data-name="is_old_number"
+                                       class="form-check-input" value="false" checked>
+                                <label class="form-check-label" for="is_old_number_no">Yoq, eski emas</label>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row mb-3 check" id="lost_technical_passport_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="lost_technical_passport">{% trans "Qayd etish guvohnomasi(Tax passport) yo'qolganmi?" %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="lost_technical_passport_yes"
+                                       name="lost_technical_passport" value="true" data-name="lost_technical_passport"
+                                       class="form-check-input">
+                                <label class="form-check-label" for="lost_technical_passport_yes">Yo'qolgan</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="lost_technical_passport_no" data-name="lost_technical_passport"
+                                       name="lost_technical_passport" value="false" checked
+                                       class="form-check-input">
+                                <label class="form-check-label" for="lost_technical_passport_no">Yo'qolmagan</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-end row">
+                    <div class="col-12">
+                        {#                                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
+                        <button type="submit" id="calculate_button"
+                                class="btn btn-info waves-effect waves-light float-end">Hisoblash
+                        </button>
+                    </div>
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+        })
+        $(document).ready(function () {
+            getAjaxData('{% url "api_service:services_list" %}').then(function (res) {
+                res.forEach((x, i) => {
+                    $('#service').append($(`<option data-key="${x.key}">`).val(x.id).text(x.short_title))
+                    console.log(x.key)
+                })
+                const key = $('#service option:selected').data('key')
+                hide_and_show_div(key)
+            }, function (err) {
+                swal_error(err)
+            })
+
+            var key
+            $(document).on('change', '#service', function () {
+                key = $(this).children('option:selected').data('key')
+                hide_and_show_div(key)
+
+                $calculationForm.find(":input:not('#service'):not('#type')").each(function () {
+                    $('input[type=text]').val('')
+                    $('input[type=number]').val('')
+                    $('input:radio').filter('[value=false]').prop('checked', true)
+                });
+
+            })
+
+            $(document).on('change', 'input', function () {
+                key = $('#service').children('option:selected').data('key')
+                if (typeof $('#is_saved_number_yes').attr('name') !== 'undefined') {
+                    if ($('#is_saved_number_yes').prop('checked') === true) {
+                        $('#is_auction_div').hide()
+                        $('#save_old_number_div').hide()
+                    } else {
+                        if (key === 'account_statement') {
+                            $('#is_auction_div').show()
+                        }
+                    }
+                }
+
+                if (typeof $('#save_old_number_yes').attr('name') !== 'undefined') {
+                    if ($('#save_old_number_yes').prop('checked') === true) {
+                        $('#is_auction_div').hide()
+                        $('#is_saved_number_div').hide()
+                    } else {
+                        $('#is_auction_div').show()
+                        $('#is_saved_number_div').show()
+                    }
+                }
+
+                if (typeof $('#is_auction_yes').attr('name') !== 'undefined') {
+                    if ($('#is_auction_yes').prop('checked') === true) {
+                        $('#is_saved_number_div').hide()
+                        $('#save_old_number_div').hide()
+                    } else {
+                        if (key === 'account_statement') {
+                            $('#is_saved_number_div').show()
+                        }
+
+                    }
+                }
+            })
+
+
+            $('div.check').bind('beforeShow', function () {
+                var block = $(this).find('input')
+                var attr_name = block.data('name')
+                block.attr('name', attr_name)
+            });
+
+            $('div.check').bind('beforeHide', function () {
+                $(this).find('input').removeAttr('name')
+            });
+
+            $('#price_div').bind('beforeShow', function () {
+                $(this).find('input').attr('name', 'price')
+            })
+            $('#price_div').bind('beforeHide', function () {
+                $(this).find('input').removeAttr('name')
+            })
+
+            function hide_and_show_div(key) {
+                if (key === 'account_statement') {
+                    $('#save_old_number_div').hide()
+                    $('#lost_number_div').hide()
+                    $('#is_old_number_div').hide()
+                    $('#lost_technical_passport_div').hide()
+                    $('#is_auction_div').show()
+                    $('#is_saved_number_div').show()
+                    $('#price_div').show()
+                } else if (key === 'contract_of_sale') {
+                    $('#save_old_number_div').show()
+                    $('#lost_number_div').show()
+                    $('#is_old_number_div').show()
+                    $('#lost_technical_passport_div').show()
+                    $('#price_div').hide()
+                } else if (key === 'gift_agreement') {
+                    $('#save_old_number_div').show()
+                    $('#lost_number_div').show()
+                    $('#is_old_number_div').show()
+                    $('#lost_technical_passport_div').show()
+                    $('#price_div').hide()
+                } else if (key === 'replace_tp') {
+                    $('#is_old_number_div').hide()
+                    $('#lost_technical_passport_div').show()
+                    $('#is_auction_div').hide()
+                    $('#is_saved_number_div').hide()
+                    $('#save_old_number_div').hide()
+                    $('#lost_number_div').hide()
+                    $('#price_div').hide()
+                } else if (key === 'replace_number_and_tp') {
+                    $('#save_old_number_div').show()
+                    $('#lost_number_div').show()
+                    $('#is_old_number_div').show()
+                    $('#lost_technical_passport_div').show()
+                    $('#price_div').hide()
+                }
+            }
+
+            getAjaxData('{% url "api_user:car_types_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $('#type').append($('<option>').val(x.id).text(x.title))
+                )
+            }, function (err) {
+                swal_error(err)
+            })
+
+
+            var dateOpt = {
+                format: 'dd',
+                maxViewMode: 0,
+                autoclose: true,
+                language: 'ru',
+            };
+
+            $("#year").datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                autoclose: true,
+                language: 'ru',
+                startDate: '-80y',
+                endDate: '+0y',
+
+            }).on('changeDate', function (e) {
+                var month = $('#month').datepicker('getDate');
+                if (!month) {
+                    month = new Date();
+                }
+                dateOpt.defaultViewDate = {
+                    year: e.date.getFullYear(),
+                    month: month.getMonth(),
+                    day: 1
+                };
+                // Reset date datepicker
+                $('#day').datepicker('destroy');
+                // Re-init with defaultViewDate option
+                $('#day').datepicker(dateOpt);
+                $(this).valid()
+            })
+
+            $("#month").datepicker({
+                format: "MM",
+                viewMode: "months",
+                language: 'ru',
+                minViewMode: "months",
+                maxViewMode: 0,
+                autoclose: true
+            }).on('changeDate', function (e) {
+                var year = $('#year').datepicker('getDate');
+                if (!year) {
+                    year = new Date();
+                }
+                dateOpt.defaultViewDate = {
+                    year: year.getFullYear(),
+                    month: e.date.getMonth(),
+                    day: 1
+                };
+                $('#day').datepicker('destroy');
+                $('#day').datepicker(dateOpt);
+            });
+
+            $("#day").datepicker(dateOpt)
+
+            $(document).on('click', '.icon', function () {
+                $(this).siblings('input').trigger('focus')
+            })
+
+            var $calculationForm = $('#calculation_form');
+            if ($calculationForm.length) {
+                var calculationButton = $($calculationForm).children().find('button:submit')
+                $calculationForm.validate({
+                    rules: {
+                        engine_power: {
+                            required: true,
+                        },
+                        year: {
+                            required: true,
+                        },
+                        price: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        engine_power: {
+                            required: "Dvigatel quvvati kiritilmagan!"
+                        },
+                        year: {
+                            required: "Ishlab chiqarilgan yil kiritilmagan!"
+                        },
+                        price: {
+                            required: "Transport vositasi narxi kiritilmagan!"
+                        },
+                    },
+
+                    errorPlacement: function (error, element) {
+                        if (element.is("#engine_power")) {
+                            error.appendTo(element.parent('div'));
+                        } else if (element.is("#year")) {
+                            error.appendTo(element.parent('div'));
+                        } else if (element.is("#price")) {
+                            error.appendTo(element.parents('.price'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form, e) {
+                        e.preventDefault()
+                        var day = 1
+                        if ($('#day').val()) {
+                            day = $('#day').val()
+                        }
+
+                        var month = 1
+                        if ($('#month').val()) {
+                            month = $('#month').val()
+                        }
+
+                        var year = $('#year').val()
+                        var date = moment(`${day}-${month}-${year}`, "DD-MMMM-YYYY").format('YYYY-MM-DD')
+
+                        if (!$(form).find('input[name="made_year"]').length) {
+                            $("<input />").attr("type", "hidden")
+                                .attr("name", "made_year")
+                                .attr("value", date).appendTo(form);
+                        } else {
+                            $('input[name="made_year"]').val(date)
+                        }
+                        calculationButton.attr('disabled', true)
+                        var calculationButtonValue = calculationButton.text()
+                        calculationButton.html(`${calculationButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'api_service:calculate' %}",
+                            data: $(form).serialize(),
+                            statusCode: {
+                                200: function (res) {
+                                    console.log(res)
+                                    calculationButton.attr('disabled', false)
+                                    calculationButton.html(calculationButtonValue)
+                                },
+                                400: function (err) {
+                                    calculationButton.attr('disabled', false)
+                                    calculationButton.html(calculationButtonValue)
+                                    swal_error(err)
+
+                                }
+                            }
+                        })
+                        return false;
+                    }
+                });
+            }
+
+        })
+    </script>
+{% endblock js %}

@@ -4,6 +4,16 @@ from service.models import (
 )
 
 
+class ServiceListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
+        fields = [
+            'id',
+            'short_title',
+            'long_title',
+            'key',
+        ]
+
 class ServiceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service

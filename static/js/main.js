@@ -423,7 +423,8 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        window.location.href = 'user/custom-logout/'
+
+        window.location.href = '/user/custom-logout/'
     }, 3000);
 }
 

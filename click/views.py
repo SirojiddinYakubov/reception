@@ -32,7 +32,7 @@ class CreateClickOrder(View):
                                    f"Click orqali to'lov qilishda xatolik! To'lov summasi {activation_pay} so'mga teng bo'lishi kerak!")
                     return redirect(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
 
-            return_url = request.build_absolute_uri(reverse_lazy('application:applications_list'))
+            return_url = request.build_absolute_uri(reverse_lazy('application:application_detail', kwargs={'id': application_id}))
             user = get_object_or_404(User, id=request.user.id)
 
             order = Order.objects.filter(amount=amount, type=CLICK, application_id=application_id).last()

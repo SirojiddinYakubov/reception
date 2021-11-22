@@ -103,13 +103,54 @@
     <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+                getAjaxData('{% url "api_user:regions_list" %}').then(function (res) {
+                    console.log(res)
+                    res.forEach((x, i) =>
+                        $("#legal_address_region").select2({
+                            data: [{id: x.id, text: `${x.title}`}],
+                            width: '100%',
+                            placeholder: '-- viloyatni tanlang --',
+                            dropdownParent: $('#add_organization_modal'),
+                        })
+                    );
+                })
 
+                $('#legal_address_district').select2({
+                    dropdownParent: $('#add_organization_modal'),
+                    width: '100%'
+                })
+
+                $(document).on('change', '#legal_address_region', function (e) {
+                    var SelectedRegion = $(this).children("option:selected").val()
+
+                    if (parseInt(SelectedRegion)) {
+                        $(this).valid()
+                    }
+
+                    getAjaxData('{% url "api_user:region_districts_list" pk=12345 %}'.replace(/12345/, SelectedRegion.toString())).then(function (res) {
+                            console.log(res)
+                            res.forEach((x, i) =>
+                                $('#legal_address_district').append($('<option>').val(x.id).text(x.title))
+                            )
+                        }, function (err) {
+                            swal_error(err)
+                        }
+                    )
+
+                })
+
+                $(document).on('change', '#legal_address_district', function () {
+                    var SelectedDistrict = $(this).children("option:selected").val();
+                    if (parseInt(SelectedDistrict)) {
+                        $(this).valid()
+
+                    }
+                })
 
                 $(document).on('click', '#add_new_organization', function () {
                     $('#add_organization_modal').modal('show')
                     $('#organization').select2('close')
                 })
-
 
                 var $organizationForm = $('#add_organization_form');
                 if ($organizationForm.length) {

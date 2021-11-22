@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-10 col-xs-12">
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
@@ -42,7 +42,7 @@
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Holati" %}</th>
                                     <th>{% trans "Ariza nusxasi" %}</th>
-                                    <th>{% trans "To'lov" %}</th>
+{#                                    <th>{% trans "To'lov" %}</th>#}
                                     <th>{% trans "Ma'lumotlar mosligi" %}</th>
                                     <th>{% trans "Texnik ko'rik" %}</th>
                                 </tr>
@@ -55,7 +55,7 @@
                             </table>
                         </div>
 
-                        <div class="col-2" id="right_filter_div">
+                        <div class="col-md-2" id="right_filter_div">
                             {% include 'application/right_filter_applications.html' %}
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                         }
                     },
 
-                    {
+                 /*   {
                         "data": "is_payment",
                         render: function (data, type, row) {
                             if (row.is_payment) {
@@ -227,7 +227,7 @@
                                 return '<center><i class="fas fa-times-circle text-danger"></i></center>'
                             }
                         }
-                    },
+                    },  */
                     {
                         "data": "car__is_confirm",
                         render: function (data, type, row) {
