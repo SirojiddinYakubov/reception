@@ -117,7 +117,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         else:
             raise ValidationError({'error': 'User not found'})
 
-        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}. Qo\'shimcha ma\'lumot uchun tel:972800809"
         r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
         print(msg)
         if not r == SUCCESS:
@@ -313,7 +313,7 @@ class CreateUserAccountViewSerializer(serializers.ModelSerializer):
         user.turbo = password
         user.save()
 
-        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}. Qo\'shimcha ma\'lumot uchun tel:972800809"
         r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
         print(msg)
         if not r == SUCCESS:

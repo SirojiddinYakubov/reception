@@ -27,7 +27,7 @@ def application_crontab():
                 days=3) > application.created_date:
             application.cron = '2'
             application.save()
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi eslatib o\'tamiz! Arizani faollashtirish uchun kerakli to\'lovni amalga oshirish talab etiladi!'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi eslatib o\'tamiz! Arizani faollashtirish uchun kerakli to\'lovni amalga oshirish talab etiladi! Qo\'shimcha ma\'lumot uchun tel:972800809'
 
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
@@ -45,7 +45,7 @@ def application_crontab():
             application.cron = '3'
             application.save()
 
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi eslatib o\'tamiz! Agarda 3 kun davomida arizani faollashtirmasangiz arizangiz o\'chirib yuboriladi'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi eslatib o\'tamiz! Agarda 3 kun davomida arizani faollashtirmasangiz arizangiz o\'chirib yuboriladi! Qo\'shimcha ma\'lumot uchun tel:972800809'
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
             if not r == SUCCESS:
@@ -59,7 +59,7 @@ def application_crontab():
         if application.process == CREATED and application.cron == '3' and application.is_block and timezone.now() - timedelta(
                 days=10) > application.created_date:
             application.delete()
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi sababli e-rib tzimidan o\'chirildi!'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz faollashtirilmaganligi sababli e-rib tzimidan o\'chirildi! Qo\'shimcha ma\'lumot uchun tel:972800809'
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
             if not r == SUCCESS:
@@ -76,7 +76,7 @@ def application_crontab():
                 days=3) > application.created_date:
             application.cron = '2'
             application.save()
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz bilan hech qanday amaliyot amalga oshirilmagan!'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz bilan hech qanday amaliyot amalga oshirilmagan! Qo\'shimcha ma\'lumot uchun tel:972800809'
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
             if not r == SUCCESS:
@@ -91,7 +91,7 @@ def application_crontab():
                 days=7) > application.created_date:
             application.cron = '3'
             application.save()
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz bilan hech qanday amaliyot amalga oshirmaganligingiz sababli ogohlantirish beramiz! Agarda 3 kun davomida ariza bilan hech qanday amaliyot amalga oshirmasangiz arizangiz o\'chirib yuboriladi'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz bilan hech qanday amaliyot amalga oshirmaganligingiz sababli ogohlantirish beramiz! Agarda 3 kun davomida ariza bilan hech qanday amaliyot amalga oshirmasangiz arizangiz o\'chirib yuboriladi! Qo\'shimcha ma\'lumot uchun tel:972800809'
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
             if not r == SUCCESS:
@@ -106,7 +106,7 @@ def application_crontab():
                 days=10) > application.created_date:
             application.delete()
 
-            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz hech qanday amaliyot amalga oshirmaganligingiz sababli e-rib tizimidan o\'chirildi!'
+            text = f'Hurmatli foydalanuvchi {application.id}-raqamli arizangiz hech qanday amaliyot amalga oshirmaganligingiz sababli e-rib tizimidan o\'chirildi! Qo\'shimcha ma\'lumot uchun tel:972800809'
             r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
             print(text)
             if not r == SUCCESS:
