@@ -423,7 +423,8 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        window.location.href = '/custom-logout/'
+
+        window.location.href = '/user/custom-logout/'
     }, 3000);
 }
 
@@ -877,7 +878,7 @@ function edit_toast() {
     })
 }
 
-function error_toast() {
+function error_toast(text = null) {
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -890,10 +891,18 @@ function error_toast() {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    Toast.fire({
-        icon: 'error',
-        title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
-    })
+    if (text === null) {
+        Toast.fire({
+            icon: 'error',
+            title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
+        })
+    } else {
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
+
 }
 
 function addColor(url = null, select_id = null) {
@@ -996,7 +1005,7 @@ function addCarModel(url = null) {
         title: 'T/v modeli qo\'shish',
         html:
             '<label style="float: left; margin-bottom: 0" class="label_required" for="title">Nomi</label>' +
-            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra"><br>' +
+            '<input style="margin-top: 4px" id="car_title" class="form-control" placeholder="Masalan: Gentra"><br>' +
             '<label style="margin-bottom: 0; width: 100%; text-align: left; display: block !important;" class="label_required"  for="is_local">Ishlab chiqaruvchi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_local" id="is_local1" value="true" checked>' +
@@ -1006,26 +1015,27 @@ function addCarModel(url = null) {
             '<input class="form-check-input" type="radio" name="is_local" id="is_local2" value="false" >' +
             '<label class="form-check-label" for="is_local2">Chet el</label>' +
             '</div>' +
-            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi yuk</label>' +
+            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck1" value="true" checked>' +
-            '<label class="form-check-label" for="is_truck1">Ha</label>' +
+            '<label class="form-check-label" for="is_truck1">Yuk</label>' +
             '</div>' +
             '<div class="form-check" style="float: left; margin-left: 10px">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck2" value="false" >' +
-            '<label class="form-check-label" for="is_truck2">Yoq</label>' +
+            '<label class="form-check-label" for="is_truck2">Yengil</label>' +
             '</div>',
 
         focusConfirm: false,
         preConfirm: () => {
             return [
-                document.getElementById('title').value,
+                document.getElementById('car_title').value,
                 $('input[name=is_local]:checked').val(),
                 $('input[name=is_truck]:checked').val(),
             ]
         },
 
     }).then(function (confirm) {
+
         if (confirm.isConfirmed) {
             var title = confirm.value[0],
                 is_local = confirm.value[1],
@@ -1116,13 +1126,16 @@ function formatMoney(str) {
 }
 
 function generate_fake_data() {
-    var $fuel_types_selectize = $('#fuel_types').selectize();
-    $fuel_types_selectize[0].selectize.setValue("1");
+    // var $fuel_type_selectize = $('#fuel_type').selectize();
+    // $fuel_type_selectize[0].selectize.setValue("1");
     $('#car').select2("val", $("#car option:last").val());
     $('#made_year').val('2021-07-26')
 
     $('#color').val($("#color option:last").val())
     $('#color').trigger('change')
+
+    $('#person').val($("#person option:last").val())
+    $('#person').trigger('change')
 
     function makeStr(length) {
         var result = '';
@@ -1154,4 +1167,300 @@ function generate_fake_data() {
     $('#engine_power').val(makeNum(3))
     $('#old_technical_passport').val(makeStr(8))
     $('#old_number').val(makeStr(8))
+}
+
+// function add_payment(create_url, success_url, e) {
+//
+//     e.preventDefault()
+//     const {value: formValues} = Swal.fire({
+//         allowOutsideClick: false,
+//         showCancelButton: true,
+//         showLoaderOnConfirm: true,
+//         showClass: {
+//             popup: 'animate__animated animate__fadeInDown'
+//         },
+//         hideClass: {
+//             popup: 'animate__animated animate__fadeOutUp'
+//         },
+//         confirmButtonText: 'Keyingi',
+//         cancelButtonText: 'Bekor qilish',
+//         reverseButtons: true,
+//         title: 'To\'lov summasini kiriting!',
+//         html:
+//             '<label style="float: left; margin-bottom: 0" class="label_required" for="amount">Summa</label>' +
+//             '<input style="margin-top: 4px" id="amount" class="form-control" type="number" placeholder="Masalan: 100000">',
+//
+//         focusConfirm: false,
+//         preConfirm: (value) => {
+//             if (value) {
+//                 if ($('#amount').val() == '') {
+//                     Swal.showValidationMessage(
+//                         'Summa kiritilmagan!'
+//                     )
+//                 } else if ($('#amount').val() < 5000) {
+//                     Swal.showValidationMessage(
+//                         'Summa kamida 5000 so\'m bo\'lishi kerak!'
+//                     )
+//                 } else {
+//                     swal.resetValidationMessage();
+//                     return [
+//                         $('#amount').val()
+//                     ]
+//                 }
+//             }
+//
+//             $('#amount').on('keyup', function () {
+//                 if ($('#amount').val() == '') {
+//                     Swal.showValidationMessage(
+//                         'Summa kiritilmagan!'
+//                     )
+//                 } else if ($('#amount').val() < 5000) {
+//                     Swal.showValidationMessage(
+//                         'Summa kamida 5000 so\'m bo\'lishi kerak!'
+//                     )
+//                 } else {
+//                     swal.resetValidationMessage();
+//
+//                 }
+//             })
+//         },
+//
+//     }).then(function (confirm) {
+//
+//         if (confirm.isConfirmed) {
+//             var amount = confirm.value[0]
+//
+//             window.location.href = create_url + "?amount=12345".replace(/12345/, amount.toString());
+//
+//         } else {
+//             window.location.href = success_url
+//         }
+//
+//     })
+// }
+
+
+function get_regions(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var regions = {}
+
+                for (const x of res) {
+                    regions[x.id] = x.title
+                }
+                resolve(regions)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(err)
+            }
+        })
+    })
+}
+
+function get_sections(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var sections = {}
+
+                for (const x of res) {
+                    sections[x.id] = x.title
+                }
+                resolve(sections)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(error)
+            }
+        })
+    })
+}
+
+function htmlConvertToPlain(html) {
+
+    // Create a new div element
+    var tempDivElement = document.createElement("div");
+
+    // Set the HTML content with the given value
+    tempDivElement.innerHTML = html;
+
+    // Retrieve the text property of the element
+    return tempDivElement.textContent || tempDivElement.innerText || "";
+}
+
+
+function Counter(options) {
+    var timer;
+    var instance = this;
+    var seconds = options.seconds || 10;
+    var onUpdateStatus = options.onUpdateStatus || function () {
+    };
+    var onCounterEnd = options.onCounterEnd || function () {
+    };
+    var onCounterStart = options.onCounterStart || function () {
+    };
+
+    function decrementCounter() {
+        onUpdateStatus(seconds);
+        if (seconds === 0) {
+            stopCounter();
+            onCounterEnd();
+            return;
+        }
+        seconds--;
+    }
+
+    function startCounter() {
+        onCounterStart();
+        clearInterval(timer);
+        timer = 0;
+        decrementCounter();
+        timer = setInterval(decrementCounter, 1000);
+    }
+
+
+    function stopCounter() {
+        clearInterval(timer);
+    }
+
+    return {
+        start: function () {
+            startCounter();
+        },
+        stop: function () {
+            stopCounter();
+        },
+        reset: function (sec) {
+            seconds = sec
+        },
+    }
+}
+
+
+function getAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+function postAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+// function addUser() {
+//     getAjaxData('/en/user/get-regions-list/').then(function (res) {
+//         console.log(res)
+//     })
+// }
+
+
+jQuery(function ($) {
+    var _oldShow = $.fn.show;
+    $.fn.show = function (speed, oldCallback) {
+        return $(this).each(function () {
+            var obj = $(this),
+                newCallback = function () {
+                    if ($.isFunction(oldCallback)) {
+                        oldCallback.apply(obj);
+                    }
+                    obj.trigger('afterShow');
+                };
+
+            // you can trigger a before show if you want
+            obj.trigger('beforeShow');
+
+            // now use the old function to show the element passing the new callback
+            _oldShow.apply(obj, [speed, newCallback]);
+        });
+    }
+});
+jQuery(function ($) {
+    var _oldhide = $.fn.hide;
+    $.fn.hide = function (speed, callback) {
+        $(this).trigger('beforeHide');
+        return _oldhide.apply(this, arguments);
+    }
+})
+
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    return $(
+        '<div style="' + $(state.element).data('style') + '"> ' + state.text + '</div>'
+    );
+}
+
+
+function swal_error(err = null) {
+    console.log(err)
+
+    if (err && typeof err === 'object') {
+        var errorKey
+        var errorText
+        var keys = Object.keys(err.responseJSON);
+
+        keys.forEach(function (key) {
+            errorText = err.responseJSON[key];
+            errorKey = key;
+        });
+        Swal.fire(
+            'Xatolik!',
+            `${errorKey} ${errorText}`,
+            `error`,
+        )
+    } else if (err) {
+        Swal.fire(
+            'Xatolik!',
+            `${err}`,
+            `error`,
+        )
+    } else {
+        Swal.fire(
+            'Xatolik!',
+            'Sahifani yangilab qayta urinib ko\'ring',
+            `error`,
+        )
+    }
+
+}
+
+
+function sendAuthorizationToken() {
+    var token = getCookie('token'),
+        csrftoken = getCookie('csrftoken')
+
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+        },
+        error: function (response) {
+            if (response.status === 401) {
+                tokenInvalid()
+            }
+        }
+    })
 }
