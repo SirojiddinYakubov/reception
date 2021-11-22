@@ -20,8 +20,8 @@ services:
     restart: always
     image: web:latest
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: deploy/Dockerfile
 #    command: sh ./deploy/run.sh
     volumes:
       - ..:/code

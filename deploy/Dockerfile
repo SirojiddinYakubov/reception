@@ -18,9 +18,9 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 #COPY --chown=yakubov:yakubov / /
-COPY .. /code
-COPY entrypoint.sh /code
-RUN chmod +x /code/entrypoint.sh
+COPY . /code
+COPY deploy/entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["sh", "/entrypoint.sh"]
 
 #RUN mkdir /code
