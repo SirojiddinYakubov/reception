@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,7 +8,7 @@ from api.v1.user import serializers
 from reception.telegram_bot import send_message_to_developer
 from user.models import (
     User,
-    Organization, CarModel, Color, CarType, FuelType, BodyType, Sms
+    Organization, CarModel, Color, CarType, FuelType, BodyType, Sms, Region, District, Quarter, Section
 )
 
 
@@ -54,10 +55,52 @@ class CarColorsList(generics.ListAPIView):
 class CarTypesList(generics.ListAPIView):
     queryset = CarType.objects.filter(is_active=True)
     serializer_class = serializers.CarTypesListSerializer
+    permission_classes = [AllowAny]
+
+
+class RegionsList(generics.ListAPIView):
+    queryset = Region.objects.filter(is_active=True)
+    serializer_class = serializers.RegionDetailSerializer
     permission_classes = [
         permissions.UserPermission |
         permissions.AppCreatorPermission
     ]
+
+
+class RegionDistrictsList(generics.ListAPIView):
+    queryset = District.objects.filter(is_active=True)
+    serializer_class = serializers.DistrictDetailSerializer
+    permission_classes = [
+        permissions.UserPermission |
+        permissions.AppCreatorPermission
+    ]
+
+    def get_queryset(self):
+        return self.queryset.filter(region_id=self.kwargs.get('pk'))
+
+
+class RegionSectionsList(generics.ListAPIView):
+    queryset = Section.objects.filter(is_active=True)
+    serializer_class = serializers.RegionSectionsListSerializer
+    permission_classes = [
+        permissions.UserPermission |
+        permissions.AppCreatorPermission
+    ]
+
+    def get_queryset(self):
+        return self.queryset.filter(region_id=self.kwargs.get('pk'))
+
+
+class DistrictQuartersList(generics.ListAPIView):
+    queryset = Quarter.objects.filter(is_active=True)
+    serializer_class = serializers.QuarterDetailSerializer
+    permission_classes = [
+        permissions.UserPermission |
+        permissions.AppCreatorPermission
+    ]
+
+    def get_queryset(self):
+        return self.queryset.filter(district_id=self.kwargs.get('pk'))
 
 
 class CarFuelTypesList(generics.ListAPIView):

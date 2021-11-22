@@ -66,62 +66,6 @@
                 personForm
             sendAuthorizationToken()
 
-            $(document).on('change', '#region, #legal_address_region', function (e) {
-                var SelectedRegion = $(this).children("option:selected").val()
-
-                var selectedId = $(this).attr('id')
-
-                if (parseInt(SelectedRegion)) {
-                    $(this).valid()
-                }
-
-                $.ajax({
-                    type: "GET",
-                    url: "{% url 'user:get_district' %}",
-                    data: {
-                        'region': SelectedRegion, // from form
-                    },
-                    success: function (message) {
-                        if (selectedId === 'region') {
-                            $('#district').empty().append(message)
-                        } else if (selectedId === 'legal_address_region') {
-                            $('#legal_address_district').empty().append(message)
-                        }
-                    }
-                });
-            })
-
-            $(document).on('change', '#district, #legal_address_district', function () {
-                var SelectedDistrict = $(this).children("option:selected").val()
-                if (parseInt(SelectedDistrict)) {
-                    $(this).valid()
-                }
-
-                $.ajax({
-                    type: "GET",
-                    url: "{% url 'user:get_quarters' %}",
-                    data: {
-                        'district': SelectedDistrict, // from form
-                    },
-                    success: function (message) {
-                        $('#quarter').empty().append(message)
-                        $('#quarter').css('border', '1px solid blue')
-                        setTimeout(function () {
-                            $('#quarter').css('border', '1px solid #ced4da')
-                        }, 1000)
-
-                    }
-                });
-            })
-
-            $(document).on('change', '#quarter', function () {
-                var selectedQuarter = $(this).children("option:selected").val();
-                if (parseInt(selectedQuarter)) {
-                    $(this).valid()
-
-                }
-            })
-
             $('#person_type_fieldset').bind('beforeShow', function () {
                 $('#applicant_x').val($('#person option:selected').text())
             })

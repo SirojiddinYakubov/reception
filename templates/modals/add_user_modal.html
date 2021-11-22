@@ -84,11 +84,7 @@
                         <div class="col-8 col-xl-9 region">
                             <select name="region" class="form-control" id="region"
                                     required>
-                                <option value="">--Viloyatni tanlang--</option>
-                                {% for reg in regions %}
-                                    <option {% if reg == region %}selected{% endif %}
-                                            value="{{ reg.id }}">{{ reg.title }}</option>
-                                {% endfor %}
+                                <option value="">{% trans '--Viloyatni tanlang--' %}</option>
                             </select>
                         </div>
                     </div>
@@ -193,6 +189,73 @@
             $(document).on('show.bs.modal', '#confirm_code_modal', function () {
                 $('#add_user_modal').css({'z-index': '1000'})
             });
+
+            getAjaxData('{% url "api_user:regions_list" %}').then(function (res) {
+                console.log(res)
+                res.forEach((x, i) =>
+                    $("#region").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- viloyatni tanlang --',
+                        dropdownParent: $('#add_user_modal'),
+                    })
+                );
+            })
+
+            $('#district').select2({
+                dropdownParent: $('#add_user_modal'),
+                width: '100%'
+            })
+
+            $(document).on('change', '#region', function (e) {
+                var SelectedRegion = $(this).children("option:selected").val()
+
+                if (parseInt(SelectedRegion)) {
+                    $(this).valid()
+                }
+
+                getAjaxData('{% url "api_user:region_districts_list" pk=12345 %}'.replace(/12345/, SelectedRegion.toString())).then(function (res) {
+                        console.log(res)
+                        res.forEach((x, i) =>
+                            $('#district').append($('<option>').val(x.id).text(x.title))
+                        )
+                    }, function (err) {
+                        swal_error(err)
+                    }
+                )
+
+            })
+
+            $('#quarter').select2({
+                dropdownParent: $('#add_user_modal'),
+                width: '100%'
+            })
+
+            $(document).on('change', '#district', function (e) {
+                var SelectedDistrict = $(this).children("option:selected").val()
+
+                if (parseInt(SelectedDistrict)) {
+                    $(this).valid()
+                }
+
+                getAjaxData('{% url "api_user:district_quarters_list" pk=12345 %}'.replace(/12345/, SelectedDistrict.toString())).then(function (res) {
+                        console.log(res)
+                        res.forEach((x, i) =>
+                            $('#quarter').append($('<option>').val(x.id).text(x.title))
+                        )
+                    }, function (err) {
+                        swal_error(err)
+                    }
+                )
+            })
+
+            $(document).on('change', '#quarter', function () {
+                var selectedQuarter = $(this).children("option:selected").val();
+                if (parseInt(selectedQuarter)) {
+                    $(this).valid()
+
+                }
+            })
 
             personForm = $('#add_user_form')
             var personButton

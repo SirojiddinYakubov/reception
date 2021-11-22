@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 # Create your views here.
+from django.urls import reverse_lazy
 from django.utils import translation
 
 

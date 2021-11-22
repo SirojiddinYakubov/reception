@@ -88,26 +88,7 @@
     <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-               sendAuthorizationToken()
-
-                $(document).on('change', '#person', function (e) {
-                    getAjaxData("{% url 'api_user:user_detail' pk=12345 %}".replace(/12345/, $(this).val().toString())).then(function (res) {
-                        $('#last_name_x').val(res.last_name)
-                        $('#first_name_x').val(res.first_name)
-                        $('#middle_name_x').val(res.middle_name)
-                        $('#region_x').val(res.region.title)
-                        $('#district_x').val(res.district.title)
-                        $('#quarter_x').val(res.quarter.title)
-                    }, function (err) {
-                        swal_error(err)
-                        $('#last_name_x').val('')
-                        $('#first_name_x').val('')
-                        $('#middle_name_x').val('')
-                        $('#region_x').val('')
-                        $('#district_x').val('')
-                        $('#quarter_x').val('')
-                    })
-                })
+                sendAuthorizationToken()
 
                 var userId = '{{ request.user.id }}'
                 getAjaxData('{% url "api_app_creator:self_created_users_list" id=12345 %}'.replace(/12345/, userId.toString())).then(function (res) {
@@ -133,6 +114,30 @@
                             }
                         })
                     );
+                })
+
+                $(document).on('change', '#person', function (e) {
+
+                    var SelectedPerson = $(this).children("option:selected").val()
+
+                    if (parseInt(SelectedPerson)) {
+                        getAjaxData("{% url 'api_user:user_detail' pk=12345 %}".replace(/12345/, $(this).val().toString())).then(function (res) {
+                            $('#last_name_x').val(res.last_name)
+                            $('#first_name_x').val(res.first_name)
+                            $('#middle_name_x').val(res.middle_name)
+                            $('#region_x').val(res.region.title)
+                            $('#district_x').val(res.district.title)
+                            $('#quarter_x').val(res.quarter.title)
+                        }, function (err) {
+                            swal_error(err)
+                            $('#last_name_x').val('')
+                            $('#first_name_x').val('')
+                            $('#middle_name_x').val('')
+                            $('#region_x').val('')
+                            $('#district_x').val('')
+                            $('#quarter_x').val('')
+                        })
+                    }
                 })
 
                 $(document).on('click', '#add_new_user', function () {

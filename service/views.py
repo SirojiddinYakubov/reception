@@ -24,7 +24,9 @@ class AccountStatement(ServiceCustomMixin):
 
     def get_template_names(self):
         role = self.request.user.role
+        print(role)
         if role == APP_CREATOR:
+            print('ok')
             return ['user/role/app_creator/service/account_statement.html']
         else:
             return [self.template_name]

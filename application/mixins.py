@@ -26,7 +26,9 @@ class ApplicationCustomMixin(ListView):
     model = Application
     request = None
     render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
-                                 'created_date', 'process', 'file_name', 'is_payment', 'car__is_confirm',
+                                 'created_date', 'process', 'file_name',
+                                 # 'is_payment',
+                                 'car__is_confirm',
                                  'car__is_technical_confirm', 'car__is_replace_number']
 
     # def __init__(self, *args, **kwargs):
