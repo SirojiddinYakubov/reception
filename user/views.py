@@ -431,7 +431,7 @@ class SavePersonalData(UpdateAPIView):
                 else:
                     raise ValidationError('User topilmadi!')
 
-                msg = f"E-RIB dasturi. Shaxsiy ma'lumotlaringiz tahrirlandi! Login: {user.username} Parol: {user.turbo}"
+                msg = f"E-RIB dasturi. Shaxsiy ma'lumotlaringiz tahrirlandi! Login: {user.username} Parol: {user.turbo}. Qo\'shimcha ma\'lumot uchun tel:972800809"
                 r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
                 print(msg)
                 if not r == SUCCESS:
@@ -477,7 +477,7 @@ class GetCode(APIView):
         otp_response = send_otp(phone_number)
         print(otp_response)
         send_message_to_developer(str(otp_response))
-        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}"
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}. Qo\'shimcha ma\'lumot uchun tel:972800809"
         print(msg)
         r = SendSmsWithPlayMobile(phone=phone, message=msg).get()
         if not r == SUCCESS:
@@ -522,7 +522,7 @@ def forgot_pass(request):
         phone = int(request.POST.get('phone'))
         try:
             user = User.objects.get(phone=phone)
-            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}"
+            msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun login va parolingiz: Login: {user.username} Parol: {user.turbo}. Qo\'shimcha ma\'lumot uchun tel:972800809"
             r = SendSmsWithPlayMobile(phone=user.phone, message=msg).get()
             print(msg)
             if not r == SUCCESS:
