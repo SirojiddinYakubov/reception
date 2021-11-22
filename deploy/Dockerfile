@@ -11,7 +11,7 @@ RUN apt update && apt install -y netcat vim
 WORKDIR /code
 
 #COPY --chown=yakubov:yakubov requirements.txt requirements.txt
-COPY requirements.txt requirements.txt
+COPY deploy/requirements.txt requirements.txt
 
 #ENV PATH="/home/yakubov/.local/bin:/usr/local/bin:${PATH}"
 
