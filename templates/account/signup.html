@@ -70,12 +70,12 @@
         </div>
     </div>
 </section>
- <div class="alert alert-info text-center"><h3>Tizim bo'yicha savollar
-            bo'lganda
-            <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
-                    class="fab fa-telegram"></i>
-                Telegram guruh</a>ga yozing yoki <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qiling</h3>
-        </div>
+<div class="alert alert-info text-center"><h3>Tizim bo'yicha savollar
+    bo'lganda
+    <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
+            class="fab fa-telegram"></i>
+        Telegram guruh</a>ga yozing yoki <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qiling</h3>
+</div>
 <div class="row ml-2 mr-2">
     <div class="col-12 text-center p-0 mt-3 mb-2">
         <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
@@ -401,6 +401,15 @@
 
         $('#passport_seriya').inputmask({casing: 'upper'});
         $('#issue_by_whom').inputmask({casing: 'upper'});
+
+        $('#fieldset2').bind('beforeShow', function () {
+
+            swal.fire(
+                'Ogohlantirish',
+                "Agar avtotransport vositasi boshqa kishini nomida bo'lsa va siz uni ishonchnoma asosida boshqarayotgan bo'lsangiz, unda ishonchnomadan avtotransport vositasini haqiqiy egasi ma'lumotlarini kiriting va to'lov kvitansiyalarini ham o'sha shaxs nomidan to'lang",
+                'warning',
+            )
+        })
 
         $('input[name="is_quarter"]').on('change', function () {
             if ($('#is_quarter_yes').prop('checked')) {

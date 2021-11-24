@@ -1,8 +1,9 @@
 import itertools
 from datetime import datetime as dt
 import datetime
+from typing import Dict
 
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.utils import timezone
 
 from application.models import ApplicationDocument
@@ -15,7 +16,7 @@ from service.models import (
     INSPECTION,
     ROAD_FUND,
     ROAD_FUND_HORSE_POWER,
-    StateDutyPercent
+    StateDutyPercent, Service
 )
 
 
@@ -178,7 +179,6 @@ def reg_new_car_v2(application):
     some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
     some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
 
-
     if car.is_new and car.model.is_local:
         """Yangi va mahalliy avtomobil"""
         if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y').date():
@@ -214,3 +214,35 @@ def reg_new_car_v2(application):
             state_percent = StateDutyPercent.objects.none()
     qs = qs.union(state_percent)
     return qs
+
+
+def calculate_state_duty_percent(dict: dict) -> QuerySet[StateDutyPercent]:
+    print(dict)
+    service_id = dict.get('service')
+    service = Service.objects.get(id=service_id)
+    if service.key == 'account_statement':
+        is_new = True
+    else:
+        is_new = False
+
+    type = dict.get('type')
+    is_local = dict.get('is_local')
+    person_type = dict.get('person_type')
+    engine_power = dict.get('engine_power')
+    price = dict.get('price')
+    made_year = dict.get('made_year')
+    if made_year:
+        made_year = datetime.datetime.strptime(made_year, '%Y-%m-%d').date()
+    contract_date = dict.get('contract_date')
+    if contract_date:
+        contract_date = datetime.datetime.strptime(contract_date, '%Y-%m-%d').date()
+    is_auction = dict.get('is_auction')
+    save_old_number = dict.get('save_old_number')
+    is_saved_number = dict.get('is_saved_number')
+    lost_number = dict.get('lost_number')
+    is_old_number = dict.get('is_old_number')
+    lost_technical_passport = dict.get('lost_technical_passport')
+
+
+
+    return StateDutyPercent.objects.all()

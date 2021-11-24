@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 from datetime import timedelta
-
 import requests
-
+from loguru import logger
 import os
+import sys
 import pytz
 from dotenv import load_dotenv
 
@@ -21,6 +21,14 @@ env_path = "./deploy/.env"
 load_dotenv(dotenv_path=env_path)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True if os.getenv("DEBUG") == 'True' else False
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -51,6 +59,7 @@ INSTALLED_APPS = [
     'modeltranslation',
     'reception',
     'partners',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     # 'solid_i18n-1.4.2.dist-info.',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,29 +98,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'reception.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import sys
-
-from loguru import logger
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") == 'True' else False
-
-ALLOWED_HOSTS = ['*']
 
 if os.getenv("PRODUCTION") == 'True':
     DATABASES = {
@@ -201,7 +188,6 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
         # 'rest_framework.authentication.SessionAuthentication',
