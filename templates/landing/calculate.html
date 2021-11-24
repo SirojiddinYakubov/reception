@@ -46,7 +46,29 @@
                         </select>
                     </div>
                 </div>
+                <div class="row mb-3 check" id="is_relative_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="is_relative">{% trans 'Xadya shartnomasi yaqin qarindosh (ota, ona, er, xotin, aka, uka, opa, singil) lar orasidami?' %}</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                        <div class="row justify-content-start mt-1">
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_relative_yes" data-name="is_relative" name="is_relative"
+                                       value="true"
+                                       class="form-check-input">
+                                <label class="form-check-label" for="is_relative_yes">Yaqin qarindosh</label>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <input type="radio" id="is_relative_no" data-name="is_relative" name="is_relative"
+                                       value="false"
+                                       class="form-check-input" checked>
+                                <label class="form-check-label" for="is_relative_no">Yaqin qarindosh emas</label>
+                            </div>
 
+                        </div>
+
+
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
                            for="type">{% trans 'Transport vositasi turini tanlang' %}<span
@@ -57,14 +79,14 @@
                         </select>
                     </div>
                 </div>
-                 <div class="row mb-3">
+                <div class="row mb-3" id="is_local_div">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
-                           for="is_local">{% trans 'Transport vositasini ishlab chiqaruvchi korxona' %}<span
+                           for="is_local">{% trans 'Transport vositasi qayerda ishlab chiqarilgan?' %}<span
                             class="text-danger">*</span></label>
                     <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                         <select class="form-select" style="width: 100%;" id="is_local" name="is_local" required>
-                            <option value="true">Mahalliy</option>
-                            <option value="false">Chet el</option>
+                            <option value="true">O'zbekistonda</option>
+                            <option value="false">Chet elda</option>
                         </select>
                     </div>
                 </div>
@@ -79,7 +101,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3" id="engine_power_div">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
                            for="engine_power">{% trans 'Dvigatel quvvati' %}<span
                             class="text-danger">*</span></label>
@@ -93,7 +115,7 @@
                             kiriting!</p>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3" id="made_year_div">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
                            style="margin: auto"
                            for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}<span
@@ -118,7 +140,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 year">
                                 <label for="password" class="form-label">Yil<span style="color: red">*</span></label>
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="year" name="year" class="form-control" required
@@ -146,6 +168,16 @@
                             kiriting!</p>
                     </div>
                 </div>
+                <div class="row mb-3" id="contract_date_div">
+                    <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                           for="contract_date">{% trans 'Hisob ma\'lumotnomasi berilgan sana' %}<span
+                            class="text-danger">*</span></label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 price">
+                        <input type="date" id="contract_date" name="contract_date"
+                               class="form-control" required>
+                    </div>
+                </div>
+
                 <div class="row mb-3 check" id="is_auction_div">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
                            for="is_auction">{% trans 'Raqam auksiondan olinganmi?' %}</label>
@@ -247,7 +279,7 @@
                             <div class="col-6 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                 <input type="radio" id="is_old_number_no" name="is_old_number" data-name="is_old_number"
                                        class="form-check-input" value="false" checked>
-                                <label class="form-check-label" for="is_old_number_no">Yoq, eski emas</label>
+                                <label class="form-check-label" for="is_old_number_no">Yo'q, eski emas</label>
                             </div>
 
                         </div>
@@ -286,10 +318,67 @@
                 </div>
                 <br>
             </form>
+
         </div>
+        <br>
     </div>
 
 {% endblock content %}
+
+{% block modals %}
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" style="display: none" id="calculate_result_modal"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="calculate_result_modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="calculate_result_modalLabel">Davlat bojlari va summasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body" id="render_div">
+
+                    <table class="table table-bordered table-striped" id="state_duty_table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Davlat boji nomi</th>
+                            <th scope="col">Sababi</th>
+                            <th scope="col">To'lov miqdori</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        <tfoot style="background: lightgray">
+                        <tr>
+                            <th></th>
+                            <th>Jami</th>
+                            <th></th>
+                            <th><b id="total_state_payments"></b> so'm</th>
+
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <hr style="margin-top: 2% !important;margin-bottom: 2% !important;">
+                    <p style="color: red">Ushbu summalar to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam
+                        yoki ko'p o'tgan to'lov
+                        uchun E-RIB ma'muriyati javobgar emas.</p>
+                    <hr style="margin-top: 2% !important;margin-bottom: 2% !important;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-html2canvas-ignore="true" id="payment_render_pdf"
+                            class="btn btn-primary">PDF holatda chiqarish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock modals %}
 
 {% block js %}
     <script src="{% static 'js/main.js' %}"></script>
@@ -298,6 +387,7 @@
     <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
     <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
     <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -323,100 +413,175 @@
                 $calculationForm.find(":input:not('#service'):not('#type')").each(function () {
                     $('input[type=text]').val('')
                     $('input[type=number]').val('')
+                    $('input[type=date]').val('')
                     $('input:radio').filter('[value=false]').prop('checked', true)
                 });
-
             })
+
 
             $(document).on('change', 'input', function () {
                 key = $('#service').children('option:selected').data('key')
-                if (typeof $('#is_saved_number_yes').attr('name') !== 'undefined') {
+
+                if ($('#is_saved_number_yes').is(':visible')) {
                     if ($('#is_saved_number_yes').prop('checked') === true) {
                         $('#is_auction_div').hide()
                         $('#save_old_number_div').hide()
                     } else {
                         if (key === 'account_statement') {
                             $('#is_auction_div').show()
+                        } else if (key === 'contract_of_sale') {
+                            $('#is_auction_div').show()
+                        } else if (key === 'gift_agreement') {
+                            $('#is_auction_div').show()
+                        } else if (key === 'inheritance_agreement') {
+                            $('#is_auction_div').show()
+                        } else if (key === 'replace_number_and_tp') {
+                            $('#is_auction_div').show()
                         }
                     }
                 }
 
-                if (typeof $('#save_old_number_yes').attr('name') !== 'undefined') {
+                if ($('#save_old_number_yes').is(':visible')) {
                     if ($('#save_old_number_yes').prop('checked') === true) {
                         $('#is_auction_div').hide()
                         $('#is_saved_number_div').hide()
+                        $('#lost_number_div').hide()
                     } else {
                         $('#is_auction_div').show()
                         $('#is_saved_number_div').show()
+                        $('#lost_number_div').show()
                     }
                 }
 
-                if (typeof $('#is_auction_yes').attr('name') !== 'undefined') {
+                if ($('#is_relative_yes').is(':visible')) {
+                    if ($('#is_relative_yes').prop('checked') === true) {
+                        $('#is_local_div').hide()
+                        $('#engine_power_div').hide()
+                        $('#made_year_div').hide()
+                    } else {
+                        $('#is_local_div').show()
+                        $('#engine_power_div').show()
+                        $('#made_year_div').show()
+                    }
+                }
+
+                if ($('#is_auction_yes').is(':visible')) {
                     if ($('#is_auction_yes').prop('checked') === true) {
                         $('#is_saved_number_div').hide()
                         $('#save_old_number_div').hide()
                     } else {
                         if (key === 'account_statement') {
                             $('#is_saved_number_div').show()
+                        } else if (key === 'contract_of_sale') {
+                            $('#is_saved_number_div').show()
+                            $('#save_old_number_div').show()
+                        } else if (key === 'gift_agreement') {
+                            $('#is_saved_number_div').show()
+                            $('#save_old_number_div').show()
+                        } else if (key === 'inheritance_agreement') {
+                            $('#is_saved_number_div').show()
+                            $('#save_old_number_div').show()
+                        } else if (key === 'replace_number_and_tp') {
+                            $('#is_saved_number_div').show()
+                            $('#save_old_number_div').show()
                         }
 
                     }
                 }
             })
 
-
-            $('div.check').bind('beforeShow', function () {
-                var block = $(this).find('input')
-                var attr_name = block.data('name')
-                block.attr('name', attr_name)
-            });
-
-            $('div.check').bind('beforeHide', function () {
-                $(this).find('input').removeAttr('name')
-            });
-
-            $('#price_div').bind('beforeShow', function () {
-                $(this).find('input').attr('name', 'price')
+            $('#contract_date_div').bind('beforeShow', function (e) {
+                if (key === 'account_statement') {
+                    $(this).children('label').text(`{% trans 'Hisob ma\'lumotnomasi berilgan sana' %}`)
+                } else if (key === 'contract_of_sale') {
+                    $(this).children('label').text(`{% trans 'Oldi sotdi shartnomasi berilgan sana' %}`)
+                } else if (key === 'gift_agreement') {
+                    $(this).children('label').text(`{% trans 'Hadya shartnomasi berilgan sana' %}`)
+                } else if (key === 'inheritance_agreement') {
+                    $(this).children('label').text(`{% trans "Me'ros shartnomasi berilgan sana" %}`)
+                }
             })
-            $('#price_div').bind('beforeHide', function () {
-                $(this).find('input').removeAttr('name')
-            })
+
 
             function hide_and_show_div(key) {
                 if (key === 'account_statement') {
+                    $('#is_relative_div').hide()
                     $('#save_old_number_div').hide()
                     $('#lost_number_div').hide()
                     $('#is_old_number_div').hide()
+                    $('#engine_power_div').hide()
                     $('#lost_technical_passport_div').hide()
                     $('#is_auction_div').show()
                     $('#is_saved_number_div').show()
                     $('#price_div').show()
+                    $('#contract_date_div').show()
+                    $('#is_local_div').show()
+                    $('#made_year_div').show()
                 } else if (key === 'contract_of_sale') {
+                    $('#is_relative_div').hide()
+                    $('#is_auction_div').show()
                     $('#save_old_number_div').show()
+                    $('#is_saved_number_div').show()
                     $('#lost_number_div').show()
                     $('#is_old_number_div').show()
+                    $('#engine_power_div').show()
                     $('#lost_technical_passport_div').show()
                     $('#price_div').hide()
+                    $('#contract_date_div').show()
+                    $('#is_local_div').show()
+                    $('#made_year_div').show()
                 } else if (key === 'gift_agreement') {
+                    $('#is_relative_div').show()
+                    $('#is_auction_div').show()
                     $('#save_old_number_div').show()
                     $('#lost_number_div').show()
                     $('#is_old_number_div').show()
+                    $('#engine_power_div').show()
+                    $('#is_saved_number_div').show()
                     $('#lost_technical_passport_div').show()
                     $('#price_div').hide()
+                    $('#contract_date_div').show()
+                    $('#is_local_div').show()
+                    $('#made_year_div').show()
+                } else if (key === 'inheritance_agreement') {
+                    $('#is_relative_div').hide()
+                    $('#is_auction_div').show()
+                    $('#save_old_number_div').show()
+                    $('#lost_number_div').show()
+                    $('#is_old_number_div').show()
+                    $('#engine_power_div').show()
+                    $('#is_saved_number_div').show()
+                    $('#lost_technical_passport_div').show()
+                    $('#price_div').hide()
+                    $('#contract_date_div').show()
+                    $('#is_local_div').show()
+                    $('#made_year_div').show()
                 } else if (key === 'replace_tp') {
+                    $('#is_relative_div').hide()
                     $('#is_old_number_div').hide()
                     $('#lost_technical_passport_div').show()
                     $('#is_auction_div').hide()
                     $('#is_saved_number_div').hide()
                     $('#save_old_number_div').hide()
                     $('#lost_number_div').hide()
+                    $('#engine_power_div').hide()
                     $('#price_div').hide()
+                    $('#contract_date_div').hide()
+                    $('#is_local_div').hide()
+                    $('#made_year_div').hide()
                 } else if (key === 'replace_number_and_tp') {
+                    $('#is_relative_div').hide()
+                    $('#is_auction_div').show()
                     $('#save_old_number_div').show()
+                    $('#is_saved_number_div').show()
                     $('#lost_number_div').show()
+                    $('#engine_power_div').hide()
                     $('#is_old_number_div').show()
                     $('#lost_technical_passport_div').show()
                     $('#price_div').hide()
+                    $('#contract_date_div').hide()
+                    $('#is_local_div').hide()
+                    $('#made_year_div').hide()
                 }
             }
 
@@ -489,6 +654,28 @@
                 $(this).siblings('input').trigger('focus')
             })
 
+            $('#payment_render_pdf').on('click', function () {
+                var element = document.getElementById('render_div'),
+                    filename = `To'lov`
+
+                html_to_pdf(element, filename)
+            })
+
+
+            function calc_total() {
+                if (!String.prototype.trim) {
+                    String.prototype.trim = function () {
+                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                    };
+                }
+
+                var sum = 0;
+                $(".state_duty_payment").each(function () {
+                    sum += parseFloat($(this).text().replace(/[\s+,.]/g, ''));
+                });
+                $('#total_state_payments').text(formatMoney(sum))
+            }
+
             var $calculationForm = $('#calculation_form');
             if ($calculationForm.length) {
                 var calculationButton = $($calculationForm).children().find('button:submit')
@@ -503,6 +690,9 @@
                         price: {
                             required: true,
                         },
+                        contract_date: {
+                            required: true,
+                        },
                     },
                     messages: {
                         engine_power: {
@@ -513,6 +703,9 @@
                         },
                         price: {
                             required: "Transport vositasi narxi kiritilmagan!"
+                        },
+                        contract_date: {
+                            required: "Sana kiritilmagan!"
                         },
                     },
 
@@ -556,19 +749,36 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "{% url 'api_service:calculate' %}",
+                            url: "{% url 'api_landing:calculate' %}",
                             data: $(form).serialize(),
                             statusCode: {
                                 200: function (res) {
-                                    console.log(res)
+
                                     calculationButton.attr('disabled', false)
                                     calculationButton.html(calculationButtonValue)
+
+                                    $('#calculate_result_modal').modal('show')
+
+                                    $('#state_duty_table tbody').empty()
+                                    $.each(res, function (i, x) {
+                                        i += 1
+                                        $('#state_duty_table tbody').append(`
+                                         <tr>
+                                            <td>${i}</td>
+                                            <th scope="row">${x.state_duty}</th>
+                                            <th scope="row">${x.title}</th>
+                                            <td><b class="state_duty_payment">${formatMoney(x.amount)}</b> so'm
+                                            </td>
+                                        </tr>
+                                         `)
+                                    })
+
+                                    calc_total()
                                 },
                                 400: function (err) {
                                     calculationButton.attr('disabled', false)
                                     calculationButton.html(calculationButtonValue)
                                     swal_error(err)
-
                                 }
                             }
                         })

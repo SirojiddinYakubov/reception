@@ -13,7 +13,7 @@ urlpatterns = [
 
     # other requests
     path('', home_page, name='home_page'),
-    path('calculator/', TemplateView.as_view(template_name='landing/register_calculator.html'), name='calculator'),
+    path('calculate/', TemplateView.as_view(template_name='landing/calculate.html'), name='calculate'),
 
 
 ]
