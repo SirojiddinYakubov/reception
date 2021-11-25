@@ -247,6 +247,7 @@ class GiftAgreement(ServiceCustomMixin):
     template_name = 'service/gift_agreement/gift_agreement.html'
 
     def post(self, request, *args, **kwargs):
+        print(request.POST)
         return self.get_json_data()
 
     def get_json_data(self):
@@ -300,6 +301,11 @@ class GiftAgreement(ServiceCustomMixin):
                     car.is_old_number = True
                 else:
                     car.is_old_number = False
+
+                if request.POST.get('is_relative') == 'true':
+                    car.is_relative = True
+                else:
+                    car.is_relative = False
 
                 if request.POST.get('is_auction') == 'true':
                     car.is_auction = True

@@ -465,6 +465,7 @@
                     }
                 }
 
+
                 if ($('#is_auction_yes').is(':visible')) {
                     if ($('#is_auction_yes').prop('checked') === true) {
                         $('#is_saved_number_div').hide()
@@ -485,6 +486,18 @@
                             $('#is_saved_number_div').show()
                             $('#save_old_number_div').show()
                         }
+
+                    }
+                }
+
+                if ($('#lost_number_div').is(':visible')) {
+
+                    if ($('#lost_number_yes').prop('checked') === true) {
+                        console.log('ok')
+                        $('#save_old_number_div').hide()
+
+                    } else {
+                        $('#save_old_number_div').show()
 
                     }
                 }

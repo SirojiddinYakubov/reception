@@ -402,15 +402,6 @@
         $('#passport_seriya').inputmask({casing: 'upper'});
         $('#issue_by_whom').inputmask({casing: 'upper'});
 
-        $('#fieldset2').bind('beforeShow', function () {
-
-            swal.fire(
-                'Ogohlantirish',
-                "Agar avtotransport vositasi boshqa kishini nomida bo'lsa va siz uni ishonchnoma asosida boshqarayotgan bo'lsangiz, unda ishonchnomadan avtotransport vositasini haqiqiy egasi ma'lumotlarini kiriting va to'lov kvitansiyalarini ham o'sha shaxs nomidan to'lang",
-                'warning',
-            )
-        })
-
         $('input[name="is_quarter"]').on('change', function () {
             if ($('#is_quarter_yes').prop('checked')) {
                 $('.quarter').show()
