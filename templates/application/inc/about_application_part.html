@@ -57,6 +57,16 @@
     </tr>
 
     <tr>
+        <th scope="row">To'lovlar</th>
+        <td>
+            <a href="#" class="payment_render_pdf">
+                <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
+                </button>
+            </a>
+        </td>
+    </tr>
+
+    <tr>
         <th scope="row">Ariza nusxasi</th>
         <td>
             <a href="{% url 'application:create_application_doc' application.file_name %}">
@@ -76,10 +86,10 @@
         </a>
         </td>
     </tr>
-    <tr>
-        <th scope="row">Tekshirish uchun parol:</th>
-        <td class="text-danger">{{ application.password }}</td>
-    </tr>
+{#    <tr>#}
+{#        <th scope="row">Tekshirish uchun parol:</th>#}
+{#        <td class="text-danger">{{ application.password }}</td>#}
+{#    </tr>#}
     <tr>
         <th scope="row">Yaratilgan vaqt:</th>
         <td>{{ application.created_date }}</td>

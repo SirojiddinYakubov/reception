@@ -71,7 +71,8 @@ class StateDutyPercentDetailSerializer(serializers.ModelSerializer):
             if instance.state_duty == ROAD_FUND:
                 payment = round(round(instance.percent, 2) / 100 * round(int(price), 2), 2)
             elif instance.state_duty == ROAD_FUND_HORSE_POWER:
-                payment = round(amount_base_calculation.amount / 100 * round(instance.percent, 2) * int(engine_power), 2)
+                payment = round(amount_base_calculation.amount / 100 * round(instance.percent, 2) * int(engine_power),
+                                2)
             else:
                 payment = amount_base_calculation.amount / 100 * round(instance.percent, 2)
             context['amount'] = round(payment, 2)

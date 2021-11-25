@@ -146,7 +146,8 @@ def get_payment_score(application, percent):
             district = created_user.district
 
         if percent.state_duty == FINE:
-            return '<p style="color: red">Yashash hududingizda joylashgan YHXB ma\'muriy amaliyot bo\'linmasi tomonidan protokol olib, shu protokol asosida Click yoki Payme ilovalari orqali to\'lashingiz mumkin.!<p>'
+            if percent.contract_fine:
+                return '<p style="color: red">Yashash hududingizda joylashgan YHXB ma\'muriy amaliyot bo\'linmasi tomonidan protokol olib, shu protokol asosida Click yoki Payme ilovalari orqali to\'lashingiz mumkin!<p>'
 
         try:
             if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
@@ -159,7 +160,6 @@ def get_payment_score(application, percent):
                     state_duty = StateDutyScore.objects.filter(region=section.region,
                                                                state_duty=percent.state_duty).last()
             else:
-                print('else')
                 state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
             return state_duty.score
         except Exception as e:
@@ -167,7 +167,7 @@ def get_payment_score(application, percent):
             state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
             return state_duty.score
     except AttributeError:
-        return '<p style="color: red">Ariza YHXB RIB bo\'limi jo\'natilmaganligi sababli hisob raqamlar aniqlanmagan!<p>'
+        return '<p style="color: red">Ariza YHXB RIB bo\'limiga jo\'natilmaganligi sababli hisob raqamlar aniqlanmagan!<p>'
 
 
 @register.simple_tag
