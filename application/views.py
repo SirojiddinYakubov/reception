@@ -16,7 +16,7 @@ from application.mixins import *
 from application.models import *
 from application.permissions import allowed_users
 from application.serializers import DocumentForPoliceSerializer, SaveDraftApplicationSerializer
-from application.utils import reg_new_car, reg_new_car_v2
+from application.utils import filter_state_duty_percents
 from reception.api import SendSmsWithApi, SendSmsWithPlayMobile
 from reception.mixins import *
 from reception.settings import *
@@ -87,7 +87,7 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
-        percents = reg_new_car_v2(application)
+        percents = filter_state_duty_percents(application)
 
         context = {
             'application': application,

@@ -338,7 +338,7 @@
                 window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());
             })
 
-            $('#payment_render_pdf').on('click', function () {
+            $('.payment_render_pdf').on('click', function () {
                 var element = document.getElementById('render_div'),
                     filename = `To'lov`
 

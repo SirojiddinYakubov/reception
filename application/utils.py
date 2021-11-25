@@ -6,7 +6,8 @@ from typing import Dict
 from django.db.models import Q, QuerySet
 from django.utils import timezone
 
-from application.models import ApplicationDocument
+from api.v1.landing.serializers import CalculateSerializer
+from application.models import ApplicationDocument, Application
 from reception.settings import LOCAL_TIMEZONE
 from service.models import (
     FINE,
@@ -58,12 +59,6 @@ def application_right_filters(qs, request_get):
         some_day_last_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
         some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0, tzinfo=LOCAL_TIMEZONE)
 
-        print(qs.first().created_date)
-        print(today_min)
-        print(today_max)
-        print(some_day_last_week)
-        print(some_day_last_month)
-        print(some_day_last_year)
         if request_get.get('date') == 'today':
             qs = qs.filter(created_date__range=(today_min, today_max))
 
@@ -79,88 +74,261 @@ def application_right_filters(qs, request_get):
     return qs
 
 
-def reg_new_car(application, ten_day):
-    # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
-    if application.car.is_auction:
-        # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
-        if datetime.datetime.now().date() >= ten_day:
-            query1 = StateDutyPercent.objects.filter(
-                Q(service=application.service, person_type=application.person_type, state_duty=REGISTRATION,
-                  is_auction=True) | Q(service=application.service, person_type=application.person_type,
-                                       state_duty=TECHNICAL_PASSPORT) | Q(
-                    lost_technical_passport=False, state_duty=FINE))
+# def reg_new_car(application, ten_day):
+#     # Agarda avtomobil davlat raqam belgisi auksionda olingan bo'lsa
+#     if application.car.is_auction:
+#         # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+#         if datetime.datetime.now().date() >= ten_day:
+#             query1 = StateDutyPercent.objects.filter(
+#                 Q(service=application.service, person_type=application.person_type, state_duty=REGISTRATION,
+#                   is_auction=True) | Q(service=application.service, person_type=application.person_type,
+#                                        state_duty=TECHNICAL_PASSPORT) | Q(
+#                     lost_technical_passport=False, state_duty=FINE))
+#         else:
+#             query1 = StateDutyPercent.objects.filter(
+#                 Q(service=application.service, person_type=application.person_type, car_is_new=True))
+#     else:
+#         # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
+#         if datetime.datetime.now().date() >= ten_day:
+#             query1 = StateDutyPercent.objects.filter(
+#                 Q(service=application.service, person_type=application.person_type, car_is_new=True) | Q(
+#                     lost_technical_passport=False, state_duty=FINE))
+#         else:
+#             query1 = StateDutyPercent.objects.filter(
+#                 Q(service=application.service, person_type=application.person_type, car_is_new=True))
+#     return query1
+
+
+# def reg_new_car_v2(application):
+#     car = application.car
+#     qs = StateDutyPercent.objects.none()
+#
+#     application_document = ApplicationDocument.objects.filter(application=application,
+#                                                               example_document__key=application.service.key).last()
+#
+#     """Jarima"""
+#     if application_document:
+#         last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
+#
+#         if last_day_without_fine.weekday() == 6:
+#             last_day_without_fine = last_day_without_fine + datetime.timedelta(days=1)
+#
+#         if datetime.datetime.now().date() > last_day_without_fine:
+#             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
+#             fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+#                                                     lost_technical_passport=False, )
+#             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+#             fine2 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+#                                                     lost_technical_passport=car.lost_technical_passport)
+#             """Ikkala jarimani birlashtirish"""
+#             qs = (fine1 | fine2).distinct()
+#         elif car.lost_technical_passport:
+#             """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+#             qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+#                                                  lost_technical_passport=True)
+#     else:
+#         if car.lost_technical_passport:
+#             qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
+#                                                  lost_technical_passport=True)
+#     """Qayta ro'yhatlash"""
+#     re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
+#     qs = qs.union(re_registration)
+#
+#     """Ro'yhatlash ya'ni DRB uchun to'lov"""
+#     if not car.is_auction:
+#         if car.save_old_number:
+#             registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
+#                                                            lost_number=False, is_old_number=car.is_old_number,
+#                                                            is_auction=False,
+#                                                            car_is_new=False, is_save_old_number=car.save_old_number,
+#                                                            state_duty=REGISTRATION, )
+#
+#         else:
+#             registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
+#                                                            lost_number=car.lost_number, is_old_number=car.is_old_number,
+#                                                            is_auction=False,
+#                                                            car_is_new=car.is_new,
+#                                                            is_save_old_number=car.save_old_number,
+#                                                            state_duty=REGISTRATION)
+#     else:
+#         registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
+#                                                        person_type=application.person_type, lost_number=car.lost_number,
+#                                                        is_old_number=car.is_old_number,
+#                                                        car_is_new=car.is_new, is_auction=car.is_auction,
+#                                                        is_save_old_number=car.save_old_number,
+#                                                        state_duty=REGISTRATION)
+#     qs = qs.union(registration)
+#
+#     """Yangi qayd etish guvohnomasi"""
+#     technical_passport = StateDutyPercent.objects.filter(state_duty=TECHNICAL_PASSPORT)
+#     qs = qs.union(technical_passport)
+#
+#     """Texnik ko'rik"""
+#     if not car.is_new:
+#         inspection = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
+#                                                      car_type=car.type,
+#                                                      state_duty=INSPECTION)
+#         qs = qs.union(inspection)
+#
+#     """Yo'l fondi"""
+#     some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
+#     some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
+#
+#     if car.is_new and car.model.is_local:
+#         """Yangi va mahalliy avtomobil"""
+#         if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y').date():
+#             state_percent = StateDutyPercent.objects.filter(service=application.service, state_duty=ROAD_FUND)
+#         else:
+#             state_percent = StateDutyPercent.objects.none()
+#     elif car.is_new and not car.model.is_local:
+#         """Yangi lekin mahalliy bo'lmagan avtomobil"""
+#         state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND, service=application.service)
+#     else:
+#         # ishlab chiqarilganiga 3 yil to'lmagan
+#         if some_day_3years_ago <= car.made_year:
+#             # print('3 yil bo\'lmagan')
+#             state_percent = StateDutyPercent.objects.filter(service=application.service,
+#                                                             state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+#                                                             start=0,
+#                                                             stop=3)
+#         # 3 yil to'lgan lekin 7 yil to'lmagan
+#         elif some_day_3years_ago >= car.made_year and some_day_7years_ago <= car.made_year:
+#             # print('3 yil bo\'lgan 7 yil bo\'lmagan')
+#             state_percent = StateDutyPercent.objects.filter(service=application.service,
+#                                                             state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+#                                                             start=3,
+#                                                             stop=7)
+#         # 7 yildan ortiq
+#         elif some_day_7years_ago >= car.made_year:
+#             # print(' 7 yildan o\'tgan')
+#             state_percent = StateDutyPercent.objects.filter(service=application.service,
+#                                                             state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+#                                                             start=7,
+#                                                             stop=0)
+#         else:
+#             state_percent = StateDutyPercent.objects.none()
+#     qs = qs.union(state_percent)
+#     return qs
+
+
+def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
+    if isinstance(data, dict):
+        """Get variables from dict"""
+        service_id = data.get('service')
+        service = Service.objects.get(id=service_id)
+        if service.key == 'account_statement':
+            is_new = True
         else:
-            query1 = StateDutyPercent.objects.filter(
-                Q(service=application.service, person_type=application.person_type, car_is_new=True))
+            is_new = False
+
+        car_type = data.get('type')
+        is_local = data.get('is_local')
+        person_type = data.get('person_type')
+        engine_power = data.get('engine_power')
+        price = data.get('price')
+        made_year = data.get('made_year')
+        if made_year:
+            made_year = datetime.datetime.strptime(made_year, '%Y-%m-%d').date()
+        contract_date = data.get('contract_date')
+        if contract_date:
+            contract_date = datetime.datetime.strptime(contract_date, '%Y-%m-%d').date()
+
+        is_auction = data.get('is_auction')
+        save_old_number = data.get('save_old_number')
+        is_saved_number = data.get('is_saved_number')
+        lost_number = data.get('lost_number')
+        is_old_number = data.get('is_old_number')
+        is_relative = data.get('is_relative')
+        lost_technical_passport = data.get('lost_technical_passport')
     else:
-        # Agarda 10 kundan oshgan bo'lsa jarima hisob raqamlari va boshqa hisob raqamlar
-        if datetime.datetime.now().date() >= ten_day:
-            query1 = StateDutyPercent.objects.filter(
-                Q(service=application.service, person_type=application.person_type, car_is_new=True) | Q(
-                    lost_technical_passport=False, state_duty=FINE))
+        """Get variables from application"""
+        service = data.service
+        is_new = data.car.is_new
+        car_type = data.car.type
+        is_local = data.car.model.is_local
+        person_type = data.person_type
+        engine_power = data.car.engine_power
+        price = data.car.price
+        made_year = data.car.made_year
+        application_document = ApplicationDocument.objects.filter(application=data,
+                                                                  example_document__key=data.service.key).last()
+        if application_document:
+            contract_date = application_document.contract_date
         else:
-            query1 = StateDutyPercent.objects.filter(
-                Q(service=application.service, person_type=application.person_type, car_is_new=True))
-    return query1
+            contract_date = None
+        is_auction = data.car.is_auction
+        save_old_number = data.car.save_old_number
+        is_saved_number = data.car.is_saved_number
+        lost_number = data.car.lost_number
+        is_old_number = data.car.is_old_number
+        is_relative = data.car.is_relative
+        lost_technical_passport = data.car.lost_technical_passport
 
 
-def reg_new_car_v2(application):
-    car = application.car
-    qs = StateDutyPercent.objects.none()
-
-    application_document = ApplicationDocument.objects.filter(application=application,
-                                                              example_document__key=application.service.key).last()
-
+    """Start filter state duty percents"""
+    print(lost_technical_passport)
     """Jarima"""
-    if application_document:
-        last_day_without_fine = application_document.contract_date + datetime.timedelta(days=10)
+    if contract_date:
+        last_day_without_fine = contract_date + datetime.timedelta(days=10)
 
         if last_day_without_fine.weekday() == 6:
             last_day_without_fine = last_day_without_fine + datetime.timedelta(days=1)
 
         if datetime.datetime.now().date() > last_day_without_fine:
             """Shartnoma tuzilgan sana 10 kundan kechikganligi uchun jarima"""
-            fine1 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
-                                                    lost_technical_passport=False, )
-            """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            fine2 = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
-                                                    lost_technical_passport=car.lost_technical_passport)
-            """Ikkala jarimani birlashtirish"""
-            qs = (fine1 | fine2).distinct()
-        elif car.lost_technical_passport:
-            """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
-            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
-                                                 lost_technical_passport=True)
+            fine1 = StateDutyPercent.objects.filter(service=service, state_duty=FINE,
+                                                    contract_fine=True)
+        else:
+            fine1 = StateDutyPercent.objects.none()
     else:
-        if car.lost_technical_passport:
-            qs = StateDutyPercent.objects.filter(service=application.service, state_duty=FINE,
-                                                 lost_technical_passport=True)
+        fine1 = StateDutyPercent.objects.none()
+
+    """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
+    fine2 = StateDutyPercent.objects.filter(service=service, state_duty=FINE,
+                                            lost_technical_passport=lost_technical_passport,
+                                            lost_number=False, contract_fine=False)
+    """Raqam yo'qolganligi uchun jarima"""
+    fine3 = StateDutyPercent.objects.filter(service=service, state_duty=FINE,
+                                            lost_number=lost_number, lost_technical_passport=False,
+                                            contract_fine=False)
+
+    """Uchala jarimani birlashtirish"""
+    qs = (fine1 | fine2 | fine3).distinct()
+
     """Qayta ro'yhatlash"""
-    re_registration = StateDutyPercent.objects.filter(service=application.service, state_duty=RE_REGISTRATION)
+    re_registration = StateDutyPercent.objects.filter(service=service, state_duty=RE_REGISTRATION)
     qs = qs.union(re_registration)
 
     """Ro'yhatlash ya'ni DRB uchun to'lov"""
-    if not car.is_auction:
-        if car.save_old_number:
-            registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
-                                                           lost_number=False, is_old_number=car.is_old_number,
+    if not is_auction:
+        if save_old_number:
+            registration = StateDutyPercent.objects.filter(service=service, car_type=car_type,
+                                                           lost_number=False, is_old_number=is_old_number,
                                                            is_auction=False,
-                                                           car_is_new=False, is_save_old_number=car.save_old_number,
+                                                           car_is_new=False,
+                                                           is_relative=is_relative,
+                                                           is_save_old_number=save_old_number,
+                                                           is_saved_number=is_saved_number,
                                                            state_duty=REGISTRATION, )
 
         else:
-            registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
-                                                           lost_number=car.lost_number, is_old_number=car.is_old_number,
+            registration = StateDutyPercent.objects.filter(service=service, car_type=car_type,
+                                                           lost_number=lost_number,
+                                                           is_old_number=is_old_number,
                                                            is_auction=False,
-                                                           car_is_new=car.is_new,
-                                                           is_save_old_number=car.save_old_number,
+                                                           car_is_new=is_new,
+                                                           is_relative=is_relative,
+                                                           is_save_old_number=save_old_number,
+                                                           is_saved_number=is_saved_number,
                                                            state_duty=REGISTRATION)
     else:
-        registration = StateDutyPercent.objects.filter(service=application.service, car_type=car.type,
-                                                       person_type=application.person_type, lost_number=car.lost_number,
-                                                       is_old_number=car.is_old_number,
-                                                       car_is_new=car.is_new, is_auction=car.is_auction,
-                                                       is_save_old_number=car.save_old_number,
+        registration = StateDutyPercent.objects.filter(service=service, car_type=car_type,
+                                                       lost_number=lost_number,
+                                                       is_old_number=is_old_number,
+                                                       car_is_new=is_new, is_auction=is_auction,
+                                                       is_save_old_number=save_old_number,
+                                                       is_saved_number=is_saved_number,
+                                                       is_relative=is_relative,
                                                        state_duty=REGISTRATION)
     qs = qs.union(registration)
 
@@ -169,9 +337,10 @@ def reg_new_car_v2(application):
     qs = qs.union(technical_passport)
 
     """Texnik ko'rik"""
-    if not car.is_new:
-        inspection = StateDutyPercent.objects.filter(service=application.service, person_type=application.person_type,
-                                                     car_type=car.type,
+    if not is_new:
+        inspection = StateDutyPercent.objects.filter(service=service,
+                                                     person_type=person_type,
+                                                     car_type=car_type,
                                                      state_duty=INSPECTION)
         qs = qs.union(inspection)
 
@@ -179,70 +348,44 @@ def reg_new_car_v2(application):
     some_day_3years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 3)
     some_day_7years_ago = datetime.datetime.now().date().replace(year=datetime.datetime.now().year - 7)
 
-    if car.is_new and car.model.is_local:
+    if is_new and is_local:
         """Yangi va mahalliy avtomobil"""
-        if car.made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y').date():
-            state_percent = StateDutyPercent.objects.filter(service=application.service, state_duty=ROAD_FUND)
+        if made_year < datetime.datetime.strptime('25.12.2020', '%d.%m.%Y').date():
+            state_percent = StateDutyPercent.objects.filter(service=service, state_duty=ROAD_FUND)
         else:
             state_percent = StateDutyPercent.objects.none()
-    elif car.is_new and not car.model.is_local:
+    elif is_new and not is_local:
         """Yangi lekin mahalliy bo'lmagan avtomobil"""
-        state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND, service=application.service)
+        state_percent = StateDutyPercent.objects.filter(state_duty=ROAD_FUND, service=service)
     else:
         # ishlab chiqarilganiga 3 yil to'lmagan
-        if some_day_3years_ago <= car.made_year:
+        if some_day_3years_ago <= made_year:
             # print('3 yil bo\'lmagan')
-            state_percent = StateDutyPercent.objects.filter(service=application.service,
-                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+            state_percent = StateDutyPercent.objects.filter(service=service,
+                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car_type,
                                                             start=0,
                                                             stop=3)
         # 3 yil to'lgan lekin 7 yil to'lmagan
-        elif some_day_3years_ago >= car.made_year and some_day_7years_ago <= car.made_year:
+        elif some_day_3years_ago >= made_year and some_day_7years_ago <= made_year:
             # print('3 yil bo\'lgan 7 yil bo\'lmagan')
-            state_percent = StateDutyPercent.objects.filter(service=application.service,
-                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+            state_percent = StateDutyPercent.objects.filter(service=service,
+                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car_type,
                                                             start=3,
                                                             stop=7)
         # 7 yildan ortiq
-        elif some_day_7years_ago >= car.made_year:
+        elif some_day_7years_ago >= made_year:
             # print(' 7 yildan o\'tgan')
-            state_percent = StateDutyPercent.objects.filter(service=application.service,
-                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car.type,
+            state_percent = StateDutyPercent.objects.filter(service=service,
+                                                            state_duty=ROAD_FUND_HORSE_POWER, car_type=car_type,
                                                             start=7,
                                                             stop=0)
         else:
             state_percent = StateDutyPercent.objects.none()
+
+        if is_relative:
+            state_percent = StateDutyPercent.objects.none()
+
     qs = qs.union(state_percent)
+    print(qs)
     return qs
 
-
-def calculate_state_duty_percent(dict: dict) -> QuerySet[StateDutyPercent]:
-    print(dict)
-    service_id = dict.get('service')
-    service = Service.objects.get(id=service_id)
-    if service.key == 'account_statement':
-        is_new = True
-    else:
-        is_new = False
-
-    type = dict.get('type')
-    is_local = dict.get('is_local')
-    person_type = dict.get('person_type')
-    engine_power = dict.get('engine_power')
-    price = dict.get('price')
-    made_year = dict.get('made_year')
-    if made_year:
-        made_year = datetime.datetime.strptime(made_year, '%Y-%m-%d').date()
-    contract_date = dict.get('contract_date')
-    if contract_date:
-        contract_date = datetime.datetime.strptime(contract_date, '%Y-%m-%d').date()
-    is_auction = dict.get('is_auction')
-    save_old_number = dict.get('save_old_number')
-    is_saved_number = dict.get('is_saved_number')
-    lost_number = dict.get('lost_number')
-    is_old_number = dict.get('is_old_number')
-    lost_technical_passport = dict.get('lost_technical_passport')
-
-
-
-    return StateDutyPercent.objects.all()
