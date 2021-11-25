@@ -32,7 +32,7 @@ def trigger_error(request):
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
-    path('yoz/', admin.site.urls),
+    path('qish/', admin.site.urls),
     path('sentry-debug/', trigger_error),
 
     path('api/v1/', include('api.v1.urls')),
