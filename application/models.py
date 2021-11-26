@@ -20,6 +20,7 @@ WAITING_FOR_ORIGINAL_DOCUMENTS = 4  # Hujjatlarning asl nusxasini kutmoqda
 ACCEPTED = 5  # Muvaffaqiyatli yakunlandi
 REJECTED = 6  # Rad etildi
 DRAFT = 7
+RESTORED = 8  # qayta tiklangan
 
 PROCESS_CHOICES = (
     (DRAFT, "DRAFT -> Ariza yaratilish jarayonida"),
@@ -30,7 +31,7 @@ PROCESS_CHOICES = (
     (WAITING_FOR_ORIGINAL_DOCUMENTS, "WAITING_FOR_ORIGINAL_DOCUMENTS -> Hujjatlarni asl nusxasini kutmoqda"),
     (ACCEPTED, "ACCEPTED -> Muvaffaqiyatli yakunlandi"),
     (REJECTED, "REJECTED -> Rad etildi"),
-
+    (RESTORED, "RESTORED -> Qayta tiklangan"),
 )
 
 CRON_COICES = (
@@ -85,7 +86,7 @@ class Application(models.Model):
     class Meta:
         verbose_name = 'Ariza'
         verbose_name_plural = 'Arizalar'
-        ordering = ['-id', ]
+        ordering = ['-updated_date','-id' ]
 
     def __str__(self):
         if self.service.key:

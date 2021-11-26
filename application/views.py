@@ -84,7 +84,6 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
                 return super().get(request, *args, **kwargs)
             return redirect(reverse_lazy('error_403'))
 
-
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
         percents = filter_state_duty_percents(application)
@@ -318,30 +317,30 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                 if request.method == 'POST':
 
                     if request.POST.get('process') == 'confirm':
-                        car.given_number = request.POST.get('given_number')
-                        car.given_technical_passport = request.POST.get('technical_passport')
-                        car.save()
+                        # car.given_number = request.POST.get('given_number')
+                        # car.given_technical_passport = request.POST.get('technical_passport')
+                        # car.save()
 
                         application.process = ACCEPTED
-                        application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
-                                                                            "%Y-%m-%d").date()
-                        application.given_time = request.POST.get('given_time')
+                        # application.given_date = datetime.datetime.strptime(request.POST.get('given_date'),
+                        #                                                     "%Y-%m-%d").date()
+                        # application.given_time = request.POST.get('given_time')
                         application.inspector = request.user
                         application.confirmed_date = timezone.now()
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
+                        # text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
+                        # text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {request.user.section.region.title} {request.user.section.title} ga kelib qayd etish guvohnomasini olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
 
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,
                                                                    receiver=application.created_user, text=text)
-
                         r = SendSmsWithPlayMobile(phone=application.created_user.phone, message=text).get()
                         print(text)
                         if not r == SUCCESS:
                             # send sms with eskiz
                             r = SendSmsWithApi(phone=application.created_user.phone, message=text).get()
-
                         if r != SUCCESS:
                             send_message_to_developer(f'Sms service not working! Notification: {notification}')
                         return HttpResponse(status=200)
@@ -372,7 +371,7 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         application.inspector = request.user
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport voistasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz! Qo'shimcha ma'lumot uchun tel:972800809"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport vositasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz! Qo'shimcha ma'lumot uchun tel:972800809"
 
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,
@@ -395,7 +394,8 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                     HttpResponse(status=404)
             else:
                 HttpResponse(status=404)
-        except:
+        except Exception as e:
+            print(e)
             return HttpResponse(status=404)
 
 
@@ -596,7 +596,6 @@ class SaveApplicationSection(AllowedRolesMixin, View):
     def post(self, request, *args, **kwargs):
         print(request.POST)
         if request.POST.get('section', None) and request.POST.get('application', None):
-
             section = get_object_or_404(Section, id=request.POST.get('section'))
             application = get_object_or_404(Application, id=request.POST.get('application'))
             application.section = section

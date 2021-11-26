@@ -228,37 +228,44 @@ class SendSmsWithPlayMobile:
         return SUCCESS
 
     def send_message(self, message):
-        URL = os.getenv('PLAY_MOBILE_URL')
-        headers = {'Content-type': 'application/json'}
-        payload = {
-            "messages": [
-                {
-                    "recipient": "998" + str(self.phone),
-                    "message-id": "1234564566",
-                    "sms": {
-                        "originator": "3700",
-                        "content": {
-                            "text": str(message),
+        try:
+            URL = os.getenv('PLAY_MOBILE_URL')
+            headers = {'Content-type': 'application/json'}
+            payload = {
+                "messages": [
+                    {
+                        "recipient": "998" + str(self.phone),
+                        "message-id": "1234564566",
+                        "sms": {
+                            "originator": "3700",
+                            "content": {
+                                "text": str(message),
+                            }
                         }
                     }
-                }
-            ]
-        }
+                ]
+            }
 
-        r = requests.post(URL, json=payload, headers=headers,
-                          auth=(self.username, self.password))
-        if not r.status_code == SUCCESS:
-            send_message_to_developer('Send sms error with play mobile')
 
-        try:
-            from user.models import Sms
-            Sms.objects.create(sms_id=self.message_id, sms_count=self.spend, text=str(message),
-                               phone=self.phone, is_playmobile=True)
-        except:
-            send_message_to_developer("sms object create error: api.py line:256")
+            r = requests.post(URL, json=payload, headers=headers,
+                              auth=(self.username, self.password))
 
-        return SUCCESS
 
+            if not r.status_code == SUCCESS:
+                send_message_to_developer('Send sms error with play mobile')
+
+            try:
+                from user.models import Sms
+                Sms.objects.create(sms_id=self.message_id, sms_count=self.spend, text=str(message),
+                                   phone=self.phone, is_playmobile=True)
+            except:
+                send_message_to_developer("sms object create error: api.py line:256")
+
+            return SUCCESS
+        except Exception as e:
+            print(e)
+            send_message_to_developer(f"sms object create error: {e}")
+            return FAILED
     def clean_message(self, message):
         message = message.replace('ц', 'ts').replace('ч', 'ch').replace('ю',
                                                                         'yu').replace(

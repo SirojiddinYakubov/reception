@@ -471,5 +471,16 @@ fieldset form {
 
 .selectize-input, .selectize-dropdown-content {
     text-align: start !important;
+}
 
+.tr-warning {
+    background-color: #faf9eb;
+}
+
+.tr-success {
+    background-color: #eefaeb;
+}
+
+.tr-danger {
+    background-color: #faebeb;
 }
