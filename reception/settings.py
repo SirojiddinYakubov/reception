@@ -165,6 +165,9 @@ DATE_INPUT_FORMATS = ['%d.%m.%Y']
 DATETIME_FORMAT = 'd.m.Y H:i'
 DATE_FORMAT = 'd.m.Y'
 TIME_ZONE = 'Asia/Tashkent'
+USE_I18N = True
+USE_L10N = False
+USE_TZ = True
 LOCAL_TIMEZONE = pytz.timezone(TIME_ZONE)
 
 AUTH_USER_MODEL = 'user.User'
@@ -336,9 +339,6 @@ PAYMENT_MODEL = 'user.Payment'
 #     send_default_pii=True
 # )
 LANGUAGE_CODE = 'uz'
-USE_I18N = True
-USE_L10N = False
-USE_TZ = True
 gettext = lambda s: s
 LANGUAGES = (
     ('uz', gettext('Uzbek')),

@@ -104,7 +104,24 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-10 col-xs-12">
+                        <div class="col-12 col-xs-12 col-md-10 col-lg-10 col-xl-10">
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <a href="{% url "application:change_get_request" 'process' 'all' %}"
+                                       class="btn btn-light">Hammasi</a>
+                                    <a href="{% url "application:change_get_request" 'process' '1' %}"
+                                       class="btn btn-info">Yangilar</a>
+                                    <a href="{% url "application:change_get_request" 'process' '5' %}"
+                                       class="btn btn-success">Qabul qilingan</a>
+                                    <a href="{% url "application:change_get_request" 'process' '2' %}"
+                                       class="btn btn-warning">Jarayon</a>
+                                    <a href="{% url "application:change_get_request" 'process' '8' %}"
+                                       class="btn btn-secondary">Qayta tiklangan</a>
+                                    <a href="{% url "application:change_get_request" 'process' '6' %}"
+                                       class="btn btn-danger">Rad etilgan</a>
+                                </div>
+                            </div>
+
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
@@ -115,9 +132,9 @@
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Holati" %}</th>
                                     <th>{% trans "Ariza nusxasi" %}</th>
-{#                                    <th>{% trans "To'lov" %}</th>#}
-                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>
-                                    <th>{% trans "Texnik ko'rik" %}</th>
+                                    {#                                    <th>{% trans "To'lov" %}</th>#}
+                                    {#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
+                                    {#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
                                 </tr>
                                 </thead>
 
@@ -128,7 +145,7 @@
                             </table>
                         </div>
 
-                        <div class="col-2" id="right_filter_div">
+                        <div class="col-md-2 col-lg-2 col-xl-2" id="right_filter_div">
                             {% include 'application/right_filter_applications.html' %}
                         </div>
                     </div>
@@ -261,7 +278,6 @@
                     {
                         "data": "process",
                         render: function (data, type, row) {
-
                             /*if ((row.process === 6)) return "#dc3545"*/
                             var border_color = ((row.process === 2) || (row.process === 3) || (row.process === 4)) ? "#ecec01" : (row.process === 5) ? "#36f406" : (row.process === 6) ? "#dc3545" : '#ffffff';
 
@@ -285,46 +301,63 @@
                         render: function (data, type, row) {
                             var url = "{% url 'application:create_application_doc' filename=12345 %}".replace(/12345/, row.file_name.toString());
 
-                            return `<center><a href="${url}" ><i style="font-size: large" class="fas fa-file-download"></i></a></center>`
+                            return `<center><a href="${url}" ><i style="font-size: large" class="fas fa-file-word"></i></a></center>`
                         }
                     },
 
-                 /*   {
-                        "data": "is_payment",
-                        render: function (data, type, row) {
-                            if (row.is_payment) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },  */
-                    {
-                        "data": "car__is_confirm",
-                        render: function (data, type, row) {
-                            if (row.car__is_confirm) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },
-                    {
-                        "data": "car__is_technical_confirm",
-                        render: function (data, type, row) {
-                            if (row.car__is_technical_confirm) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },
+                    /*   {
+                           "data": "is_payment",
+                           render: function (data, type, row) {
+                               if (row.is_payment) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },
+                       {
+                           "data": "car__is_confirm",
+                           render: function (data, type, row) {
+                               if (row.car__is_confirm) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },
+                       {
+                           "data": "car__is_technical_confirm",
+                           render: function (data, type, row) {
+                               if (row.car__is_technical_confirm) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },  */
                     {% if request.user.role == '1' %}
                         {
                             defaultContent: '<button  class="btn btn-danger deleteApp"><i class="fas fa-trash"></i></button>'
                         }
                     {% endif %}
-                ]
+
+                ],
+
+                createdRow: function (row, data, index) {
+                    if ((data.process === 2) || (data.process === 3) || (data.process === 4)) {
+                        $(row).addClass('tr-warning')
+                    } else if (data.process === 5) {
+                        $(row).addClass('tr-success')
+                    } else if (data.process === 6) {
+                        $(row).addClass('tr-danger')
+                    }
+                    // if the second column cell is blank apply special formatting
+                    //
+                    {#if (data[1] == "") {#}
+                    {#    console.dir(row);#}
+                    {#    $(row).addClass('label-warning');#}
+                    //{#}#}
+                }
             })
 
 
@@ -355,19 +388,54 @@
                                 200: function (response) {
                                     console.log(response)
                                     if (SelectedProcess === 'confirm') {
-                                        if (is_replace_number) {
+                                        /*    if (is_replace_number) {
                                             console.log('replace number')
                                             process_confirm_replace_number(success_url, cancel_url, applicationId, response)
                                         } else {
-                                            console.log('not replace number')
-                                            process_confirm_not_replace_number(success_url, cancel_url, applicationId)
-                                        }
+                                        */
+                                        console.log('not replace number')
+                                        {#process_confirm_not_replace_number(success_url, cancel_url, applicationId)#}
+                                        {#process_confirm(success_url, cancel_url, applicationId)#}
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "{% url 'application:confirm_application_data' %}",
+                                            data: {
+                                                'application': applicationId,
+                                                'process': 'confirm',
+                                            },
+                                            statusCode: {
+                                                200: function (res) {
+
+                                                    $.notifyDefaults({
+                                                        type: 'success',
+                                                        allow_dismiss: false,
+                                                        animate: {
+                                                            enter: 'animated fadeInRight',
+                                                            exit: 'animated fadeOutRight',
+                                                        },
+                                                        z_index: '9999'
+                                                    });
+                                                    $.notify({
+                                                        icon: 'glyphicon glyphicon-star',
+                                                        message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
+                                                    });
+
+                                                    refresh_with_time(400)
+
+                                                },
+                                                404: function (err) {
+                                                    errorFunction()
+                                                }
+                                            },
+                                        })
+
 
                                     } else if (SelectedProcess === 'cancel') {
-
                                         process_cancel(success_url, cancel_url, applicationId)
                                     } else if (SelectedProcess === 'process') {
-
                                         process(success_url, cancel_url, applicationId)
                                     }
                                 },

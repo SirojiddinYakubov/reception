@@ -28,8 +28,10 @@ class ApplicationCustomMixin(ListView):
     render_application_values = ['id', 'service', 'car', 'car__old_number', 'created_user',
                                  'created_date', 'process', 'file_name',
                                  # 'is_payment',
-                                 'car__is_confirm',
-                                 'car__is_technical_confirm', 'car__is_replace_number']
+                                 # 'car__is_confirm',
+                                 # 'car__is_technical_confirm',
+                                 'car__is_replace_number'
+                                 ]
 
     # def __init__(self, *args, **kwargs):
     #     super(ApplicationsList, self).__init__(*args, **kwargs)
@@ -64,7 +66,9 @@ class ApplicationCustomMixin(ListView):
 
     def myconverter(self, obj):
         if isinstance(obj, (datetime.datetime)):
-            return obj.strftime("%d.%m.%Y %H:%M").__str__()
+            tz = timezone.get_default_timezone()
+            value = timezone.localtime(obj, timezone=tz)
+            return value.strftime("%d.%m.%Y %H:%M").__str__()
         elif isinstance(obj, (datetime.date)):
             return obj.strftime("%d.%m.%Y").__str__()
 
@@ -132,16 +136,16 @@ class ApplicationCustomMixin(ListView):
                         some_day_last_year = timezone.now().replace(day=1, month=1, hour=0, minute=0, second=0,
                                                                     tzinfo=LOCAL_TIMEZONE)
                         if value == 'today':
-                            qs = qs.filter(created_date__range=(today_min, today_max))
+                            qs = qs.filter(updated_date__range=(today_min, today_max))
 
                         if value == 'last-7-days':
-                            qs = qs.filter(created_date__range=(some_day_last_week, today_max))
+                            qs = qs.filter(updated_date__range=(some_day_last_week, today_max))
 
                         if value == 'month':
-                            qs = qs.filter(created_date__range=(some_day_last_month, today_max))
+                            qs = qs.filter(updated_date__range=(some_day_last_month, today_max))
 
                         if value == 'year':
-                            qs = qs.filter(created_date__range=(some_day_last_year, today_max))
+                            qs = qs.filter(updated_date__range=(some_day_last_year, today_max))
 
             else:
                 print('not match')
@@ -162,13 +166,16 @@ class ApplicationCustomMixin(ListView):
             Q(organization__title__icontains=q) |
             Q(process__in=self.get_choices_value(q, PROCESS_CHOICES)) |
             # filter by date_pattern
-            Q(Q(created_date__date=dt.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern, q) else Q()) |
+            Q(Q(created_date__date=dt.strptime(q[0:10], '%d.%m.%Y').date()) | Q(
+                updated_date__date=dt.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern, q) else Q()) |
             # filter by day_pattern
-            Q(Q(created_date__day=q[0:2]) if re.match(day_pattern, q) else Q()) |
+            Q(Q(created_date__day=q[0:2]) | Q(updated_date__day=q[0:2]) if re.match(day_pattern, q) else Q()) |
             # filter by day_and_month_pattern
-            Q(Q(Q(created_date__day=q[0:2]) & Q(created_date__month=q[3:5])) if re.match(day_and_month_pattern,
+            Q(Q(Q(created_date__day=q[0:2]) & Q(created_date__month=q[3:5])) | Q(
+                Q(updated_date__day=q[0:2]) & Q(updated_date__month=q[3:5])) if re.match(day_and_month_pattern,
                                                                                          q) else Q())
-        ).order_by(f"-{order_by}")
+        )
+        # .order_by(f"-{order_by}")
 
         return qs
 

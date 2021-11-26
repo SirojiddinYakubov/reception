@@ -43,8 +43,8 @@
                                     <th>{% trans "Holati" %}</th>
                                     <th>{% trans "Ariza nusxasi" %}</th>
 {#                                    <th>{% trans "To'lov" %}</th>#}
-                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>
-                                    <th>{% trans "Texnik ko'rik" %}</th>
+{#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
+{#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
                                 </tr>
                                 </thead>
 
@@ -227,7 +227,7 @@
                                 return '<center><i class="fas fa-times-circle text-danger"></i></center>'
                             }
                         }
-                    },  */
+                    },
                     {
                         "data": "car__is_confirm",
                         render: function (data, type, row) {
@@ -247,7 +247,7 @@
                                 return '<center><i class="fas fa-times-circle text-danger"></i></center>'
                             }
                         }
-                    },
+                    },  */
                     {% if request.user.role == '1' %}
                         {
                             defaultContent: '<button  class="btn btn-danger deleteApp"><i class="fas fa-trash"></i></button>'

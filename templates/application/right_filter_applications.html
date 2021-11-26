@@ -32,6 +32,10 @@
         <a {% if request.GET.process == '1' %}class="active"{% endif %}
            href="{% url "application:change_get_request" 'process' '1' %}" class="text-reset d-block"><i
                 class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Yangi</span></a>
+        <a {% if request.GET.process == '2' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'process' '2' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
             <span class="mb-0 mt-1">Jarayon</span></a>
         <a {% if request.GET.process == '5' %}class="active"{% endif %}
            href="{% url "application:change_get_request" 'process' '5' %}" class="text-reset d-block"><i
@@ -41,6 +45,10 @@
            href="{% url "application:change_get_request" 'process' '6' %}" class="text-reset d-block"><i
                 class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
             <span class="mb-0 mt-1">Rad etilgan</span></a>
+         <a {% if request.GET.process == '8' %}class="active"{% endif %}
+           href="{% url "application:change_get_request" 'process' '8' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Qayta tiklangan</span></a>
     </div>
     <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Shaxs turi
         bo'yicha</h6>
