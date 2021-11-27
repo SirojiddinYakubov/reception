@@ -14,7 +14,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'sections_list_url' %}">База знаний</a>
+                                <a href="{% url 'sections_list_url' %}">Qo'llanma</a>
                             </li>
                             <li class="active">{{ section.title }}</li>
                         </ol>
@@ -22,7 +22,7 @@
                     <!-- END BREADCRUMBS -->
                     <!-- ARTICLES -->
                     <div class="fb-heading">
-                        <i class="fa fa-folder"></i> {{ section.title }} (Найдено {{ section.articles.count }} статей):
+                        <i class="fa fa-folder"></i> {{ section.title }} (Topildi {{ section.articles.count }} ta maqola):
                         <span class="cat-count"></span>
                     </div>
                     <hr class="style-three">
