@@ -42,7 +42,7 @@ urlpatterns = [
     path('payme/', include('paycom.urls')),
     path('click/', include('click.urls')),
     path('payments/', include('payments.urls')),
-
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 urlpatterns += i18n_patterns(
