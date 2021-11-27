@@ -423,7 +423,8 @@ function tokenInvalid() {
     })
     setTimeout(function () {
 
-        window.location.href = '/custom-logout/'
+
+        window.location.href = '/user/custom-logout/'
     }, 3000);
 }
 
@@ -698,6 +699,92 @@ function process_confirm_not_replace_number(success_url, cancel_url, application
 
 }
 
+function process_confirm(success_url, cancel_url, applicationId) {
+
+    swal({
+        title: "Qayd etish guvohnomasini topshirish sanasini kiriting!",
+        closeOnClickOutside: false,
+        className: "",
+        buttons: [
+            'Bekor qilish',
+            'Saqlash'
+        ],
+        dangerMode: false,
+        content: {
+            element: "input",
+            attributes: {
+                // placeholder: "Masalan: AAC112345785",
+                type: "date",
+            },
+        },
+    }).then(function (given_date) {
+        if (given_date) {
+            swal({
+                title: "Qayd etish guvohnomasini topshirish vaqtini kiriting!",
+                // text: "Siz haqiqatdan ham guruhini o'chirmoqchimisiz ?",
+                // icon: "warning",
+                closeOnClickOutside: false,
+                className: "",
+                buttons: [
+                    'Bekor qilish',
+                    'Saqlash'
+                ],
+                dangerMode: false,
+                content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "Masalan: 15:30",
+                        type: "text",
+                    },
+                },
+            }).then(function (given_time) {
+                if (given_time) {
+                    $.ajax({
+                        type: "POST",
+                        url: success_url,
+                        data: {
+                            'application': applicationId,
+                            'process': 'confirm',
+                            'given_date': given_date,
+                            'given_time': given_time
+                        },
+                        statusCode: {
+                            200: function (res) {
+                                console.log('res', res)
+                                $.notifyDefaults({
+                                    type: 'success',
+                                    allow_dismiss: false,
+                                    animate: {
+                                        enter: 'animated fadeInRight',
+                                        exit: 'animated fadeOutRight',
+                                    },
+                                    z_index: '9999'
+                                });
+                                $.notify({
+                                    icon: 'glyphicon glyphicon-star',
+                                    message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+                                                                '<path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                                                                '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
+                                                                '</svg> &nbsp${applicationId}-raqamli ariza muvaffaqiyatli tasdiqlandi!`
+                                });
+                            },
+                            404: function (err) {
+                                errorFunction()
+                            }
+                        },
+                    })
+                } else {
+                    window.location.href = cancel_url
+                }
+            })
+        } else {
+            window.location.href = cancel_url
+        }
+    })
+
+
+}
+
 function process_cancel(success_url, cancel_url, applicationId) {
 
     swal({
@@ -747,9 +834,13 @@ function process_cancel(success_url, cancel_url, applicationId) {
                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                 '</svg> &nbsp${applicationId}-raqamli ariza rad etildi!`
                         });
+
+                        refresh_with_time(400)
                     },
                     404: function (err) {
                         errorFunction()
+
+
                     }
                 },
             })
@@ -808,9 +899,12 @@ function process(success_url, cancel_url, applicationId) {
                                 '<path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>\n' +
                                 '</svg> &nbsp${applicationId}-raqamli ariza jarayon holatida!`
                 });
+
+                refresh_with_time(400)
             },
             404: function (err) {
                 errorFunction()
+
             }
         },
     })
@@ -877,7 +971,7 @@ function edit_toast() {
     })
 }
 
-function error_toast() {
+function error_toast(text = null) {
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -890,10 +984,18 @@ function error_toast() {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    Toast.fire({
-        icon: 'error',
-        title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
-    })
+    if (text === null) {
+        Toast.fire({
+            icon: 'error',
+            title: 'Xatolik! Sahifani yangilab qayta urinib ko\'ring!'
+        })
+    } else {
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
+
 }
 
 function addColor(url = null, select_id = null) {
@@ -996,7 +1098,7 @@ function addCarModel(url = null) {
         title: 'T/v modeli qo\'shish',
         html:
             '<label style="float: left; margin-bottom: 0" class="label_required" for="title">Nomi</label>' +
-            '<input style="margin-top: 4px" id="title" class="form-control" placeholder="Masalan: Gentra"><br>' +
+            '<input style="margin-top: 4px" id="car_title" class="form-control" placeholder="Masalan: Gentra"><br>' +
             '<label style="margin-bottom: 0; width: 100%; text-align: left; display: block !important;" class="label_required"  for="is_local">Ishlab chiqaruvchi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_local" id="is_local1" value="true" checked>' +
@@ -1006,26 +1108,27 @@ function addCarModel(url = null) {
             '<input class="form-check-input" type="radio" name="is_local" id="is_local2" value="false" >' +
             '<label class="form-check-label" for="is_local2">Chet el</label>' +
             '</div>' +
-            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi yuk</label>' +
+            '<label style="margin-bottom: 0; width: 100%; text-align: left; float: left" class="label_required"  for="is_truck">T/v turi</label>' +
             '<div class="form-check" style="float: left">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck1" value="true" checked>' +
-            '<label class="form-check-label" for="is_truck1">Ha</label>' +
+            '<label class="form-check-label" for="is_truck1">Yuk</label>' +
             '</div>' +
             '<div class="form-check" style="float: left; margin-left: 10px">' +
             '<input class="form-check-input" type="radio" name="is_truck" id="is_truck2" value="false" >' +
-            '<label class="form-check-label" for="is_truck2">Yoq</label>' +
+            '<label class="form-check-label" for="is_truck2">Yengil</label>' +
             '</div>',
 
         focusConfirm: false,
         preConfirm: () => {
             return [
-                document.getElementById('title').value,
+                document.getElementById('car_title').value,
                 $('input[name=is_local]:checked').val(),
                 $('input[name=is_truck]:checked').val(),
             ]
         },
 
     }).then(function (confirm) {
+
         if (confirm.isConfirmed) {
             var title = confirm.value[0],
                 is_local = confirm.value[1],
@@ -1116,13 +1219,16 @@ function formatMoney(str) {
 }
 
 function generate_fake_data() {
-    var $fuel_types_selectize = $('#fuel_types').selectize();
-    $fuel_types_selectize[0].selectize.setValue("1");
+    // var $fuel_type_selectize = $('#fuel_type').selectize();
+    // $fuel_type_selectize[0].selectize.setValue("1");
     $('#car').select2("val", $("#car option:last").val());
     $('#made_year').val('2021-07-26')
 
     $('#color').val($("#color option:last").val())
     $('#color').trigger('change')
+
+    $('#person').val($("#person option:last").val())
+    $('#person').trigger('change')
 
     function makeStr(length) {
         var result = '';
@@ -1155,3 +1261,335 @@ function generate_fake_data() {
     $('#old_technical_passport').val(makeStr(8))
     $('#old_number').val(makeStr(8))
 }
+
+// function add_payment(create_url, success_url, e) {
+//
+//     e.preventDefault()
+//     const {value: formValues} = Swal.fire({
+//         allowOutsideClick: false,
+//         showCancelButton: true,
+//         showLoaderOnConfirm: true,
+//         showClass: {
+//             popup: 'animate__animated animate__fadeInDown'
+//         },
+//         hideClass: {
+//             popup: 'animate__animated animate__fadeOutUp'
+//         },
+//         confirmButtonText: 'Keyingi',
+//         cancelButtonText: 'Bekor qilish',
+//         reverseButtons: true,
+//         title: 'To\'lov summasini kiriting!',
+//         html:
+//             '<label style="float: left; margin-bottom: 0" class="label_required" for="amount">Summa</label>' +
+//             '<input style="margin-top: 4px" id="amount" class="form-control" type="number" placeholder="Masalan: 100000">',
+//
+//         focusConfirm: false,
+//         preConfirm: (value) => {
+//             if (value) {
+//                 if ($('#amount').val() == '') {
+//                     Swal.showValidationMessage(
+//                         'Summa kiritilmagan!'
+//                     )
+//                 } else if ($('#amount').val() < 5000) {
+//                     Swal.showValidationMessage(
+//                         'Summa kamida 5000 so\'m bo\'lishi kerak!'
+//                     )
+//                 } else {
+//                     swal.resetValidationMessage();
+//                     return [
+//                         $('#amount').val()
+//                     ]
+//                 }
+//             }
+//
+//             $('#amount').on('keyup', function () {
+//                 if ($('#amount').val() == '') {
+//                     Swal.showValidationMessage(
+//                         'Summa kiritilmagan!'
+//                     )
+//                 } else if ($('#amount').val() < 5000) {
+//                     Swal.showValidationMessage(
+//                         'Summa kamida 5000 so\'m bo\'lishi kerak!'
+//                     )
+//                 } else {
+//                     swal.resetValidationMessage();
+//
+//                 }
+//             })
+//         },
+//
+//     }).then(function (confirm) {
+//
+//         if (confirm.isConfirmed) {
+//             var amount = confirm.value[0]
+//
+//             window.location.href = create_url + "?amount=12345".replace(/12345/, amount.toString());
+//
+//         } else {
+//             window.location.href = success_url
+//         }
+//
+//     })
+// }
+
+
+function get_regions(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var regions = {}
+
+                for (const x of res) {
+                    regions[x.id] = x.title
+                }
+                resolve(regions)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(err)
+            }
+        })
+    })
+}
+
+function get_sections(url) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (res) {
+                console.log(res)
+                var sections = {}
+
+                for (const x of res) {
+                    sections[x.id] = x.title
+                }
+                resolve(sections)
+            },
+            error: function (err) {
+                console.log(err)
+                reject(error)
+            }
+        })
+    })
+}
+
+function htmlConvertToPlain(html) {
+
+    // Create a new div element
+    var tempDivElement = document.createElement("div");
+
+    // Set the HTML content with the given value
+    tempDivElement.innerHTML = html;
+
+    // Retrieve the text property of the element
+    return tempDivElement.textContent || tempDivElement.innerText || "";
+}
+
+
+function Counter(options) {
+    var timer;
+    var instance = this;
+    var seconds = options.seconds || 10;
+    var onUpdateStatus = options.onUpdateStatus || function () {
+    };
+    var onCounterEnd = options.onCounterEnd || function () {
+    };
+    var onCounterStart = options.onCounterStart || function () {
+    };
+
+    function decrementCounter() {
+        onUpdateStatus(seconds);
+        if (seconds === 0) {
+            stopCounter();
+            onCounterEnd();
+            return;
+        }
+        seconds--;
+    }
+
+    function startCounter() {
+        onCounterStart();
+        clearInterval(timer);
+        timer = 0;
+        decrementCounter();
+        timer = setInterval(decrementCounter, 1000);
+    }
+
+
+    function stopCounter() {
+        clearInterval(timer);
+    }
+
+    return {
+        start: function () {
+            startCounter();
+        },
+        stop: function () {
+            stopCounter();
+        },
+        reset: function (sec) {
+            seconds = sec
+        },
+    }
+}
+
+
+function getAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+function postAjaxData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        statusCode: {
+            401: function () {
+                tokenInvalid()
+            }
+        }
+    });
+}
+
+// function addUser() {
+//     getAjaxData('/en/user/get-regions-list/').then(function (res) {
+//         console.log(res)
+//     })
+// }
+
+
+jQuery(function ($) {
+    var _oldShow = $.fn.show;
+    $.fn.show = function (speed, oldCallback) {
+        return $(this).each(function () {
+            var obj = $(this),
+                newCallback = function () {
+                    if ($.isFunction(oldCallback)) {
+                        oldCallback.apply(obj);
+                    }
+                    obj.trigger('afterShow');
+                };
+
+            // you can trigger a before show if you want
+            obj.trigger('beforeShow');
+
+            // now use the old function to show the element passing the new callback
+            _oldShow.apply(obj, [speed, newCallback]);
+        });
+    }
+});
+jQuery(function ($) {
+    var _oldhide = $.fn.hide;
+    $.fn.hide = function (speed, callback) {
+        $(this).trigger('beforeHide');
+        return _oldhide.apply(this, arguments);
+    }
+})
+
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    return $(
+        '<div style="' + $(state.element).data('style') + '"> ' + state.text + '</div>'
+    );
+}
+
+
+function swal_error(err = null) {
+    console.log(err)
+
+    if (err && typeof err === 'object') {
+        var errorKey
+        var errorText
+        var keys = Object.keys(err.responseJSON);
+
+        keys.forEach(function (key) {
+            errorText = err.responseJSON[key];
+            errorKey = key;
+        });
+        Swal.fire(
+            'Xatolik!',
+            `${errorKey} ${errorText}`,
+            `error`,
+        )
+    } else if (err) {
+        Swal.fire(
+            'Xatolik!',
+            `${err}`,
+            `error`,
+        )
+    } else {
+        Swal.fire(
+            'Xatolik!',
+            'Sahifani yangilab qayta urinib ko\'ring',
+            `error`,
+        )
+    }
+
+}
+
+
+function sendAuthorizationToken() {
+    var token = getCookie('token'),
+        csrftoken = getCookie('csrftoken')
+
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+        },
+        error: function (response) {
+            if (response.status === 401) {
+                tokenInvalid()
+            }
+        }
+    })
+}
+
+
+function refresh_with_time(delay) {
+    setTimeout(function () {
+        location.reload()
+    }, delay)
+}
+
+// $("#mySelect2").select2({
+//       placeholder: "My Select 2",
+//       multiple: false,
+//       minimumInputLength: 1,
+//       ajax: {
+//           url: "/elements/all",
+//           dataType: 'json',
+//           quietMillis: 250,
+//           data: function(term, page) {
+//               return {
+//                   q: term,
+//               };
+//           },
+//           results: function(data, page) {
+//               return {results: data};
+//           },
+//           cache: true
+//       },
+//       formatResult: function(element){
+//           return element.text + ' (' + element.id + ')';
+//       },
+//       formatSelection: function(element){
+//           return element.text + ' (' + element.id + ')';
+//       },
+//       escapeMarkup: function(m) {
+//           return m;
+//       }
+// });

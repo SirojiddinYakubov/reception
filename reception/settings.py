@@ -60,7 +60,9 @@ INSTALLED_APPS = [
     'reception',
     'partners',
     'corsheaders',
-    'help'
+    'help',
+    'ckeditor',
+    'ckeditor_uploader'
 ]
 
 MIDDLEWARE = [
@@ -375,3 +377,5 @@ sentry_sdk.init(
     # something more human-readable.
     # release="myapp@1.0.0",
 )
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
