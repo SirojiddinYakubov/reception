@@ -3,13 +3,15 @@
 <html lang="en">
 
 <head>
+    {% block meta %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>База знаний E-RIB.UZ</title>
+    <title>Qo'llanma E-RIB.UZ</title>
     <!-- LOADING STYLESHEETS -->
     <meta name="description" content="Станьте профессионалом в системе E-RIB.UZ">
-    <meta name="keywords" content="E-RIB.UZ, База знаний,  помощь, проблема, E-RIB.UZ muammo, qanday qilib">
+    <meta name="keywords" content="E-RIB.UZ, База знаний, Qo'llanma, помощь, проблема, E-RIB.UZ muammo, qanday qilib">
+    {% endblock meta %}
     <link href="{% static 'help/css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'help/css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'help/css/style.css' %}" rel="stylesheet">

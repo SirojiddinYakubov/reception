@@ -379,3 +379,12 @@ sentry_sdk.init(
 )
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 300,
+        'width': '100%',
+        'toolbar': 'full',
+    }
+}

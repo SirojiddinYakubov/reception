@@ -1,5 +1,14 @@
 {% extends 'help/base.html' %}
 
+{% block meta %}
+    <title>{{ helparticle.title }}</title>
+    <meta name="title"
+          content="{{ helparticle.title }}">
+    <meta name="description"
+          content="{{ helparticle.meta_desc }}">
+    <meta name="keywords"
+          content="{{ helparticle.meta_key }}">
+{% endblock meta %}
 
 {% block content %}
 
@@ -16,7 +25,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/"> База знаний</a>
+                        <a href="/help/"> Qo'llanma</a>
                     </li>
                     <li>
                         <a href="{% url 'section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
@@ -28,9 +37,8 @@
             <!-- ARTICLE  -->
             <div class="panel panel-default">
 
-                <div class="article-heading margin-bottom-5">
-
-                    {{ helparticle.title }}
+                <div class="margin-bottom-5">
+                    <h1 class="article-heading">{{ helparticle.title }}</h1>
                 </div>
                 <div class="article-info">
 
@@ -56,10 +64,11 @@
                 <hr class="style-three">
                 <div class="article-feedback">
                     <h2>
-                        <small>Эта статья была полезной?</small>
+                        <small>Ushbu maqola foydali bo'ldimi?</small>
                     </h2>
 
-                    <form action="{% url 'set_helpful' %}" class="col" style="float: left" method="post">
+                    <form action="{% url 'set_helpful' %}" class="col" style="float: left; margin-right: 10px"
+                          method="post">
                         {% csrf_token %}
                         <input type="hidden" name="help_article" value="{{ helparticle.id }}">
                         <input type="hidden" name="status" value="True">
@@ -67,8 +76,9 @@
                         <input type="hidden" name="next" value="{{ request.path }}">
 
 
-                        <button type="submit" {% if helpful  %} disabled {% endif %}class="btn btn-success btn-o btn-wide">
-                            <i class="fa fa-thumbs-o-up"></i> Да ({{ yes.count }})
+                        <button type="submit" {% if helpful %}
+                                disabled {% endif %}class="btn-success btn-o btn-wide">
+                            <i class="fa fa-thumbs-o-up"></i> Ha ({{ yes.count }})
                         </button>
                     </form>
 
@@ -78,7 +88,8 @@
                         <input type="hidden" name="status" value="False">
                         <input type="hidden" name="next" value="{{ request.path }}">
                         <input type="hidden" name="ip" value="127.0.0.1">
-                        <button type="submit"  {% if helpful  %} disabled {% endif %}class="btn btn-danger btn-o btn-wide"> Нет ({{ no.count }})
+                        <button type="submit"  {% if helpful %}
+                                disabled {% endif %}class="btn-danger btn-o btn-wide"> Yo'q ({{ no.count }})
                             <i class="fa fa-thumbs-o-down"></i>
                         </button>
                     </form>

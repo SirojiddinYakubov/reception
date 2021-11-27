@@ -7,17 +7,17 @@
             <div class="breadcrumb-container">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="/">
+                        <a href="/help/">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
-                    <li class="active">Поиск</li>
+                    <li class="active">Qidiruv</li>
                 </ol>
             </div>
             <!-- END BREADCRUMBS -->
             <!-- ARTICLES CATEGORIES SECTION -->
             <div class="fb-heading">
-                База знаний
+                Qo'llanma
             </div>
             <hr class="style-three">
             <div class="row">
@@ -25,9 +25,8 @@
                     <div class="col-md-12 margin-bottom-20">
                         <div class="fat-heading-abb">
 
-                            <i class="fa fa-search"></i> Поисковый слово "{{ request.GET.q|escape }}" привел к
-                            следующему
-                            <span class="cat-count">({{ results.count }})</span>
+                            <i class="fa fa-search"></i> "{{ request.GET.q|escape }}" qidiruv so'zi orqali
+                            <span class="cat-count">({{ results.count }})</span> ta natija topildi
 
                         </div>
                         <div class="fat-content-small padding-left-30">
@@ -47,7 +46,7 @@
                     <div class="col-md-12 margin-bottom-20">
                         <div class="fat-heading-abb">
 
-                            <i class="fa fa-search"></i> В результате искомого вами слова  "{{ request.GET.q|escape }}"  ничего не найдено
+                            <i class="fa fa-search"></i> "{{ request.GET.q|escape }}"  qidiruv so'zi orqali hech nima topilmadi!
 
 
                         </div>
