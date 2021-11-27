@@ -1,0 +1,159 @@
+{% extends "base_horizontal.html" %}
+{% load static i18n %}
+{% block css %}
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock css %}
+
+{% block page_title %}
+    {% trans "Diaknostikalar ro'yhati" %}
+{% endblock page_title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row bg-auto" style="background:#fff; padding:20px;">
+
+            <div class="row mb-3">
+                <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                       for="region">{% trans 'Viloyat' %}<span
+                        class="text-danger">*</span></label>
+                <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <select id="region" name="region" required data-width="100%"
+                            class="form-select">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
+                       for="district">{% trans 'Tuman' %}<span
+                        class="text-danger">*</span></label>
+                <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+                    <select id="district" name="district" required data-width="100%"
+                            class="form-select">
+                    </select>
+                </div>
+            </div>
+
+            <br>
+
+        </div>
+        <br>
+    </div>
+
+{% endblock content %}
+
+{% block modals %}
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" style="display: none" id="calculate_result_modal"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="calculate_result_modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="calculate_result_modalLabel">Davlat bojlari va summasi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body" id="render_div">
+
+                    <table class="table table-bordered table-striped" id="state_duty_table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Davlat boji nomi</th>
+                            <th scope="col">Sababi</th>
+                            <th scope="col">To'lov miqdori</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                        <tfoot style="background: lightgray">
+                        <tr>
+                            <th></th>
+                            <th>Jami</th>
+                            <th></th>
+                            <th><b id="total_state_payments"></b> so'm</th>
+
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <hr style="margin-top: 2% !important;margin-bottom: 2% !important;">
+                    <p style="color: red">Ushbu summalar to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam
+                        yoki ko'p o'tgan to'lov
+                        uchun E-RIB ma'muriyati javobgar emas.</p>
+                    <hr style="margin-top: 2% !important;margin-bottom: 2% !important;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-html2canvas-ignore="true" id="payment_render_pdf"
+                            class="btn btn-primary">PDF holatda chiqarish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock modals %}
+
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+
+        })
+        $(document).ready(function () {
+            getAjaxData('{% url "api_user:regions_list" %}').then(function (res) {
+                res.forEach((x, i) => {
+                    $("#region").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                    })
+                })
+                get_region_districts_list($('#region option:selected').val())
+            })
+
+            function get_region_districts_list(region) {
+                getAjaxData('{% url "api_user:region_districts_list" pk=12345 %}'.replace(/12345/, region.toString())).then(function (res) {
+                        $('#district').empty()
+                        res.forEach((x, i) => {
+                            $("#district").select2({
+                                data: [{id: x.id, text: `${x.title}`}],
+                                width: '100%',
+                            })
+                        })
+                    }, function (err) {
+                        swal_error(err)
+                    }
+                )
+            }
+
+            function get_district_diagnostics_list(district) {
+                getAjaxData('{% url "api_partners:district_diagnostics_list" pk=12345 %}'.replace(/12345/, district.toString())).then(function (res) {
+                        $('#diagnostic').empty()
+                        res.forEach((x, i) => {
+                            $("#diagnostic").select2({
+                                data: [{id: x.id, text: `${x.title}`}],
+                                width: '100%',
+                            })
+                        })
+                    }, function (err) {
+                        swal_error(err)
+                    }
+                )
+            }
+
+            $(document).on('change', '#region', function (e) {
+                get_region_districts_list($('#region option:selected').val())
+            })
+        })
+    </script>
+{% endblock js %}

@@ -1,0 +1,93 @@
+{% extends 'help/base.html' %}
+
+
+{% block content %}
+
+    <div class="col-md-8 padding-20">
+        <div class="row">
+            <!-- BREADCRUMBS -->
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+
+                    <li>
+                        <a href="{% url 'sections_list_url' %}">
+                            <i class="fa fa-home"></i>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/"> База знаний</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
+                    </li>
+                    <li class="active">{{ helparticle.title }}</li>
+                </ol>
+            </div>
+            <!-- END BREADCRUMBS -->
+            <!-- ARTICLE  -->
+            <div class="panel panel-default">
+
+                <div class="article-heading margin-bottom-5">
+
+                    {{ helparticle.title }}
+                </div>
+                <div class="article-info">
+
+                    <div class="art-date">
+
+                        <i class="fa fa-calendar-o"></i> {{ helparticle.pub_date|date }}
+                    </div>
+                    <div class="art-category">
+                        <a href="{% url 'section_detail_url' helparticle.section.slug %}">
+                            <i class="fa fa-folder"></i> {{ helparticle.section.title }} </a>
+                    </div>
+
+                    <div class="art-category">
+                        <a href="#">
+                            <i class="fa fa-eye"></i> {{ helparticle.view }} </a>
+                    </div>
+
+                </div>
+                <div class="article-content">
+                    {{ helparticle.text|safe }}
+                </div>
+
+                <hr class="style-three">
+                <div class="article-feedback">
+                    <h2>
+                        <small>Эта статья была полезной?</small>
+                    </h2>
+
+                    <form action="{% url 'set_helpful' %}" class="col" style="float: left" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="help_article" value="{{ helparticle.id }}">
+                        <input type="hidden" name="status" value="True">
+                        <input type="hidden" name="ip" value="127.0.0.1">
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+
+                        <button type="submit" {% if helpful  %} disabled {% endif %}class="btn btn-success btn-o btn-wide">
+                            <i class="fa fa-thumbs-o-up"></i> Да ({{ yes.count }})
+                        </button>
+                    </form>
+
+                    <form action="{% url 'set_helpful' %}" class="col" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="help_article" value="{{ helparticle.id }}">
+                        <input type="hidden" name="status" value="False">
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type="hidden" name="ip" value="127.0.0.1">
+                        <button type="submit"  {% if helpful  %} disabled {% endif %}class="btn btn-danger btn-o btn-wide"> Нет ({{ no.count }})
+                            <i class="fa fa-thumbs-o-down"></i>
+                        </button>
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock content %}

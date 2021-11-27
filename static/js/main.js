@@ -1564,3 +1564,32 @@ function refresh_with_time(delay) {
         location.reload()
     }, delay)
 }
+
+// $("#mySelect2").select2({
+//       placeholder: "My Select 2",
+//       multiple: false,
+//       minimumInputLength: 1,
+//       ajax: {
+//           url: "/elements/all",
+//           dataType: 'json',
+//           quietMillis: 250,
+//           data: function(term, page) {
+//               return {
+//                   q: term,
+//               };
+//           },
+//           results: function(data, page) {
+//               return {results: data};
+//           },
+//           cache: true
+//       },
+//       formatResult: function(element){
+//           return element.text + ' (' + element.id + ')';
+//       },
+//       formatSelection: function(element){
+//           return element.text + ' (' + element.id + ')';
+//       },
+//       escapeMarkup: function(m) {
+//           return m;
+//       }
+// });

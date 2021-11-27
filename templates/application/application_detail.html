@@ -149,7 +149,7 @@
 
 {% endblock content %}
 {% block js %}
-   <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
+    <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
@@ -341,10 +341,19 @@
             })
 
             $('.payment_render_pdf').on('click', function () {
-                var element = document.getElementById('render_div'),
-                    filename = `To'lov`
-
-                html_to_pdf(element, filename)
+                Swal.fire({
+                    title: `Ogohlantirish`,
+                    text: "To'lov kvitansiyalari hozir yuklab olinadi. Ushbu kvitansiyalarni istalgan bank orqali to'lashingiz mumkin. Faqatgina muhr(pechat) urdirishni unutmang. Aks holda YHXB bo'limi qabul qilmaydi!",
+                    icon: 'warning',
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Tushunarli',
+                }).then((result) => {
+                    var element = document.getElementById('render_div'),
+                        filename = `To'lov`
+                    html_to_pdf(element, filename)
+                })
             })
             calc_total()
 

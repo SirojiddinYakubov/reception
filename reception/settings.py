@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'modeltranslation',
     'reception',
     'partners',
-    'corsheaders'
+    'corsheaders',
+    'help'
 ]
 
 MIDDLEWARE = [
