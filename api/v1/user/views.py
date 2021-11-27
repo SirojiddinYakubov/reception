@@ -61,19 +61,13 @@ class CarTypesList(generics.ListAPIView):
 class RegionsList(generics.ListAPIView):
     queryset = Region.objects.filter(is_active=True)
     serializer_class = serializers.RegionDetailSerializer
-    permission_classes = [
-        permissions.UserPermission |
-        permissions.AppCreatorPermission
-    ]
+    permission_classes = [AllowAny]
 
 
 class RegionDistrictsList(generics.ListAPIView):
     queryset = District.objects.filter(is_active=True)
     serializer_class = serializers.DistrictDetailSerializer
-    permission_classes = [
-        permissions.UserPermission |
-        permissions.AppCreatorPermission
-    ]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         return self.queryset.filter(region_id=self.kwargs.get('pk'))

@@ -55,7 +55,15 @@
         <th scope="row">Yaratdi:</th>
         <td>{{ application.created_user }}</td>
     </tr>
-
+    <tr>
+        <th scope="row">Ariza nusxasi</th>
+        <td>
+            <a href="{% url 'application:create_application_doc' application.file_name %}">
+                <button class="btn btn-outline-primary"><i class="fas fa-file-word"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
+                </button>
+            </a>
+        </td>
+    </tr>
     <tr>
         <th scope="row">To'lovlar</th>
         <td>
@@ -66,26 +74,18 @@
         </td>
     </tr>
 
-    <tr>
-        <th scope="row">Ariza nusxasi</th>
-        <td>
-            <a href="{% url 'application:create_application_doc' application.file_name %}">
-                <button class="btn btn-outline-primary"><i class="fas fa-file-word"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
-                </button>
-            </a>
-        </td>
-    </tr>
 
-    <tr>
-        <th scope="row">Ariza haqida ma'lumot</th>
-        <td><a style="cursor: pointer; color: #007bff"
-               class="application_render_pdf"
-               data-application="{{ application.id }}">
-            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
-            </button>
-        </a>
-        </td>
-    </tr>
+
+{#    <tr>#}
+{#        <th scope="row">Ariza haqida ma'lumot</th>#}
+{#        <td><a style="cursor: pointer; color: #007bff"#}
+{#               class="application_render_pdf"#}
+{#               data-application="{{ application.id }}">#}
+{#            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish#}
+{#            </button>#}
+{#        </a>#}
+{#        </td>#}
+{#    </tr>#}
 {#    <tr>#}
 {#        <th scope="row">Tekshirish uchun parol:</th>#}
 {#        <td class="text-danger">{{ application.password }}</td>#}
