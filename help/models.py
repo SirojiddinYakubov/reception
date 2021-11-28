@@ -29,7 +29,7 @@ class HelpArticle(models.Model):
     title = models.CharField(max_length=255, db_index=True)
     meta_desc = models.CharField(max_length=255, db_index=True, blank=True)
     meta_key = models.CharField(max_length=255, db_index=True, blank=True)
-    text = RichTextUploadingField(max_length=50000, db_index=True)
+    text = RichTextUploadingField(max_length=1000000, db_index=True)
     updated_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
