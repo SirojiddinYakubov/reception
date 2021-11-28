@@ -19,7 +19,7 @@
             <div class="breadcrumb-container">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="{% url 'sections_list_url' %}">
+                        <a href="{% url 'help:sections_list_url' %}">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
@@ -39,7 +39,7 @@
                     <div class="col-md-6 margin-bottom-20">
                         <div class="fat-heading-abb">
 
-                            <a href="{% url 'section_detail_url' section.slug %}">
+                            <a href="{% url 'help:section_detail_url' section.slug %}">
                                 <i class="fa fa-folder"></i> {{ section.title }}
                                 <span class="cat-count">({{ section.articles.count }})</span>
                             </a>
@@ -48,7 +48,7 @@
                             <div class="fat-content-small padding-left-30">
                                 <ul>
                                     <li>
-                                        <a href="{% url 'article_detail_url' article.slug %}">
+                                        <a href="{% url 'help:article_detail_url' article.slug %}">
                                             <i class="fa fa-file-text-o"></i> {{ article.title }} </a>
                                     </li>
                                 </ul>

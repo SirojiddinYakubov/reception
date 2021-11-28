@@ -24,7 +24,7 @@
                 <ol class="breadcrumb">
 
                     <li>
-                        <a href="{% url 'sections_list_url' %}">
+                        <a href="{% url 'help:sections_list_url' %}">
                             <i class="fa fa-home"></i>
 
                         </a>
@@ -33,7 +33,7 @@
                         <a href="/help/"> Qo'llanma</a>
                     </li>
                     <li>
-                        <a  href="{% url 'section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
+                        <a  href="{% url 'help:section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
                     </li>
                     <li class="active">{{ helparticle.title }}</li>
                 </ol>
@@ -52,7 +52,7 @@
                         <i class="fa fa-calendar-o"></i> {{ helparticle.pub_date|date }}
                     </div>
                     <div class="art-category">
-                        <a href="{% url 'section_detail_url' helparticle.section.slug %}">
+                        <a href="{% url 'help:section_detail_url' helparticle.section.slug %}">
                             <i class="fa fa-folder"></i> {{ helparticle.section.title }} </a>
                     </div>
 
@@ -72,7 +72,7 @@
                         <small>Ushbu maqola foydali bo'ldimi?</small>
                     </h2>
 
-                    <form action="{% url 'set_helpful' %}" class="col" style="float: left; margin-right: 10px"
+                    <form action="{% url 'help:set_helpful' %}" class="col" style="float: left; margin-right: 10px"
                           method="post">
                         {% csrf_token %}
                         <input type="hidden" name="help_article" value="{{ helparticle.id }}">
@@ -87,7 +87,7 @@
                         </button>
                     </form>
 
-                    <form action="{% url 'set_helpful' %}" class="col" method="post">
+                    <form action="{% url 'help:set_helpful' %}" class="col" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="help_article" value="{{ helparticle.id }}">
                         <input type="hidden" name="status" value="False">

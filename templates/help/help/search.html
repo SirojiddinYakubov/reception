@@ -33,7 +33,7 @@
                             <ul>
                                 {% for result in results %}
                                     <li>
-                                        <a href="{% url 'article_detail_url' result.slug %}">
+                                        <a href="{% url 'help:article_detail_url' result.slug %}">
                                             <i class="fa fa-file-text-o"></i>{{ result.title }}
                                         </a>
                                     </li>

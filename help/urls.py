@@ -2,6 +2,8 @@ from django.urls import path
 
 from . import views
 
+app_name = 'help'
+
 urlpatterns = [
     path('', views.SectionsList.as_view(), name='sections_list_url'),
     path('section/<slug:slug>', views.SectionDetail.as_view(), name='section_detail_url'),
