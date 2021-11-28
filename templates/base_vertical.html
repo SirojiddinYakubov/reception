@@ -82,11 +82,11 @@
     <!-- ============================================================== -->
 
     <div class="content-page">
-     <div class="alert alert-info text-center"><h3>Tizim bo'yicha savollar
-            bo'lganda
+        <div class="alert alert-info text-center"><h4>Tizim bo'yicha savollar
+            bo'lganda, <a href="{% url 'help:sections_list_url' %}">tizimdan foydalanish bo'yicha qo'llanma</a>dan foydalaning yoki
             <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
                     class="fab fa-telegram"></i>
-                Telegram guruh</a>ga yozing yoki <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qiling</h3>
+                Telegram guruh</a>ga yozing. Qo'shimcha ma'lumot uchun <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qilishingiz mumkin!</h4>
         </div>
         <div class="content">
 
@@ -156,7 +156,7 @@
 
 <!-- App js -->
 <script src="{% static 'assets/js/app.min.js' %}"></script>
-
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
     $('#load').show();
     $(window).on('load', function () {
@@ -164,6 +164,18 @@
             $('#load').hide();
         }, 500);
     });
+
+    var visited = localStorage.getItem('visited');
+    if (!visited) {
+        Swal.fire({
+            title: 'Diqqat! Ogohlantirish',
+            html: 'Hurmatli fuqaro! Tizimdan foydalanishdan avval, <a href="/help/">foydalanish bo\'yicha qo\'llanma</a> bilan tanishib chiqing!',
+            icon: 'warning',
+            confirmButtonText: 'Tushunarli',
+        })
+        localStorage.setItem('visited', true);
+    }
+
 </script>
 {% block js %}
     <!-- jQuery -->

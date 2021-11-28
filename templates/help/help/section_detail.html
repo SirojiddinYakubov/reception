@@ -9,12 +9,12 @@
                     <div class="breadcrumb-container">
                         <ol class="breadcrumb">
                             <li>
-                                <a href="{% url 'sections_list_url' %}">
+                                <a href="{% url 'help:sections_list_url' %}">
                                     <i class="fa fa-home"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'sections_list_url' %}">Qo'llanma</a>
+                                <a href="{% url 'help:sections_list_url' %}">Qo'llanma</a>
                             </li>
                             <li class="active">{{ section.title }}</li>
                         </ol>
@@ -30,7 +30,7 @@
                     {% for article in section.articles.all %}
                     <div class="panel panel-default">
                         <div class="article-heading-abb">
-                            <a href="{% url 'article_detail_url' article.slug %}">
+                            <a href="{% url 'help:article_detail_url' article.slug %}">
                                 {{ article.title }}
                                 </a>
                         </div>
