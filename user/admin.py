@@ -7,7 +7,7 @@ from user.models import *
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'role', 'last_name', 'first_name', 'middle_name', 'phone', 'fullpassport', 'turbo',
-                    'birthday', 'is_active',
+                    'section', 'is_active',
                     'is_superuser', 'is_staff', 'date_joined', 'last_login', 'secret_key']
     list_display_links = ['role', 'last_name', 'first_name', 'middle_name', ]
     list_filter = ['role', 'is_active', ]

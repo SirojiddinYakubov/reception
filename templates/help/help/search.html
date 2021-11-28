@@ -1,0 +1,62 @@
+{% extends 'help/base.html' %}
+{% block content %}
+
+    <div class="col-md-8 padding-20">
+        <div class="row">
+            <!-- BREADCRUMBS -->
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/help/">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li class="active">Qidiruv</li>
+                </ol>
+            </div>
+            <!-- END BREADCRUMBS -->
+            <!-- ARTICLES CATEGORIES SECTION -->
+            <div class="fb-heading">
+                Qo'llanma
+            </div>
+            <hr class="style-three">
+            <div class="row">
+                {% if results.count > 0 %}
+                    <div class="col-md-12 margin-bottom-20">
+                        <div class="fat-heading-abb">
+
+                            <i class="fa fa-search"></i> "{{ request.GET.q|escape }}" qidiruv so'zi orqali
+                            <span class="cat-count">({{ results.count }})</span> ta natija topildi
+
+                        </div>
+                        <div class="fat-content-small padding-left-30">
+                            <ul>
+                                {% for result in results %}
+                                    <li>
+                                        <a href="{% url 'article_detail_url' result.slug %}">
+                                            <i class="fa fa-file-text-o"></i>{{ result.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-12 margin-bottom-20">
+                        <div class="fat-heading-abb">
+
+                            <i class="fa fa-search"></i> "{{ request.GET.q|escape }}"  qidiruv so'zi orqali hech nima topilmadi!
+
+
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+            <!-- END ARTICLES CATEOGIRES SECTION -->
+        </div>
+    </div>
+
+
+{% endblock %}

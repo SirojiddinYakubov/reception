@@ -1,0 +1,50 @@
+{% extends 'help/base.html' %}
+
+{% block content %}
+
+            <!-- ARTICLE OVERVIEW SECTION -->
+            <div class="col-md-8 padding-20">
+                <div class="row">
+                    <!-- BREADCRUMBS -->
+                    <div class="breadcrumb-container">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="{% url 'sections_list_url' %}">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'sections_list_url' %}">Qo'llanma</a>
+                            </li>
+                            <li class="active">{{ section.title }}</li>
+                        </ol>
+                    </div>
+                    <!-- END BREADCRUMBS -->
+                    <!-- ARTICLES -->
+                    <div class="fb-heading">
+                        <i class="fa fa-folder"></i> {{ section.title }} (Topildi {{ section.articles.count }} ta maqola):
+                        <span class="cat-count"></span>
+                    </div>
+                    <hr class="style-three">
+
+                    {% for article in section.articles.all %}
+                    <div class="panel panel-default">
+                        <div class="article-heading-abb">
+                            <a href="{% url 'article_detail_url' article.slug %}">
+                                {{ article.title }}
+                                </a>
+                        </div>
+
+
+
+                    </div>
+                     {% endfor %}
+
+                </div>
+            </div>
+            <!-- END ARTICLES OVERVIEW SECTION-->
+
+
+
+
+{% endblock content %}

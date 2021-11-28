@@ -2,14 +2,15 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-
-    <meta charset="utf-8"/>
-    <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn
-        platformasi {% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi " name="description"/>
-    <meta content='"OPENSOFT" MCHJ' name="author"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    {% block meta %}
+        <meta charset="utf-8"/>
+        <title>{% block title %}E-RIB.UZ - Avtotransport vositalarini ro'yhatdan o'tkazish onlayn
+            platformasi {% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Avtotransport vositalarini ro'yhatdan o'tkazish onlayn platformasi " name="description"/>
+        <meta content='"OPENSOFT" MCHJ' name="author"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    {% endblock meta %}
     <!-- App favicon -->
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
 

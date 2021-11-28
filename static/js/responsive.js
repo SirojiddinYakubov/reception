@@ -1,5 +1,5 @@
 $(function () {
-    $('.img-responsive').click(function (event) {
+    $(document).on('click', '.img-responsive', function (event) {
         var i_path = $(this).attr('src');
         $('body').append('<div id="overlay"></div><div id="magnify"><img src="' + i_path + '"><div id="close-popup"><i></i></div></div>');
         $('#magnify').css({

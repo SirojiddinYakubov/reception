@@ -1,0 +1,65 @@
+{% extends 'help/base.html' %}
+{% load get_five_articles %}
+{% load static %}
+{% block meta %}
+    <title>Qo'llanma E-RIB.UZ</title>
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+    <!-- LOADING STYLESHEETS -->
+    <meta name="description" content="E-RIB.UZ tizimida professionalga aylaning">
+    <meta name="keywords"
+          content="E-RIB.UZ, База знаний, Qo'llanma, помощь, проблема, E-RIB.UZ muammo, qanday qilib">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+{% endblock meta %}
+
+{% block content %}
+
+    <div class="col-md-8 padding-20">
+        <div class="row">
+            <!-- BREADCRUMBS -->
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{% url 'sections_list_url' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li class="active">Qo'llanma</li>
+                </ol>
+            </div>
+            <!-- END BREADCRUMBS -->
+            <!-- ARTICLES CATEGORIES SECTION -->
+            <div class="fb-heading">
+                Qo'llanma
+            </div>
+
+
+            <hr class="style-three">
+            <div class="row">
+                {% for section in sections %}
+                    <div class="col-md-6 margin-bottom-20">
+                        <div class="fat-heading-abb">
+
+                            <a href="{% url 'section_detail_url' section.slug %}">
+                                <i class="fa fa-folder"></i> {{ section.title }}
+                                <span class="cat-count">({{ section.articles.count }})</span>
+                            </a>
+                        </div>
+                        {% for article in section.articles.all|get_five_articles:'sort' %}
+                            <div class="fat-content-small padding-left-30">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'article_detail_url' article.slug %}">
+                                            <i class="fa fa-file-text-o"></i> {{ article.title }} </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+            </div>
+            <!-- END ARTICLES CATEOGIRES SECTION -->
+        </div>
+    </div>
+
+{% endblock content %}

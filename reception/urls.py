@@ -42,14 +42,16 @@ urlpatterns = [
     path('payme/', include('paycom.urls')),
     path('click/', include('click.urls')),
     path('payments/', include('payments.urls')),
-
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 urlpatterns += i18n_patterns(
     path('service/', include('service.urls')),
+    path('help/', include('help.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('landing.urls')),
     path('user/', include('user.urls')),
+    path('partners/', include('partners.urls')),
     path('application/', include('application.urls')),
     path('error-403/', TemplateView.as_view(template_name='_parts/403.html', ),
          name='error_403'),

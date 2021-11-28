@@ -1,0 +1,20 @@
+{% load static %}
+<!-- SEARCH FIELD AREA -->
+<div class="searchfield bg-hed-six">
+    <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
+        <div class="row text-center margin-bottom-20">
+            <h1 class="white">E-RIB.UZ tizimidan foydalanish bo'yicha qo'llanma</h1>
+            <span class="nested"><b>E-RIB.UZ</b>  tizimida professionalga aylaning</span>
+        </div>
+        <br>
+        <div class="row search-row">
+            <form action="{% url 'search' %}" method="get">
+                {% csrf_token %}
+                <input type="text" class="search" placeholder="E-RIB.UZ bilan qanday muammo bor?" name="q"
+                       value="{{ request.GET.q }}" oninvalid="this.setCustomValidity('Iltimos, kamida 3 harfdan iborat qidiruv soʻzini kiriting')" required>
+                <button class="buttonsearch btn btn-info btn-lg">Qidiruv</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END SEARCH FIELD AREA -->

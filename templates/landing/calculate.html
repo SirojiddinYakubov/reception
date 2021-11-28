@@ -1,5 +1,16 @@
 {% extends "base_horizontal.html" %}
 {% load static i18n %}
+
+{% block meta %}
+    <title>{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish kalkulyatori | E-RIB.UZ' %}</title>
+    <meta name="title"
+          content="{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish kalkulyatori | E-RIB.UZ' %}">
+    <meta name="description"
+          content="Avtotransport vositasini ro’yhatga olish va qayta ro’yhatga olish xarajatlarini o’zingiz hisoblang">
+    <meta name="keywords"
+          content="texpasport, tex-pasport, avtomobilni ro'yhatga olish narxi, avtotransport, avtomobil, davlat boji, ro'yhatga olish, avtomobilni ro'yhatga olish, yhxb, buxoro obl gai, fayzobod gai, tex pasport narxi, auksion nomer narxi, ">
+{% endblock meta %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
     <link href="{% static 'assets/libs/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css"/>

@@ -59,7 +59,10 @@ INSTALLED_APPS = [
     'modeltranslation',
     'reception',
     'partners',
-    'corsheaders'
+    'corsheaders',
+    'help',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -233,7 +236,7 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=600000),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=10),
 }
 
@@ -373,4 +376,19 @@ sentry_sdk.init(
     # SHA as release, however you may want to set
     # something more human-readable.
     # release="myapp@1.0.0",
+)
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 300,
+        'width': '100%',
+        'toolbar': 'full',
+    }
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
 )

@@ -5,6 +5,9 @@ from . import views
 app_name = 'api_user'
 
 urlpatterns = [
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+
     path('detail/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
     path('organizations/list/', views.UserOrganizationsList.as_view(), name='user_organizations_list'),
     path('car-models/list/', views.CarModelsList.as_view(), name='car_models_list'),
