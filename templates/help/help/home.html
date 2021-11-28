@@ -1,5 +1,16 @@
 {% extends 'help/base.html' %}
 {% load get_five_articles %}
+{% load static %}
+{% block meta %}
+    <title>Qo'llanma E-RIB.UZ</title>
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+    <!-- LOADING STYLESHEETS -->
+    <meta name="description" content="E-RIB.UZ tizimida professionalga aylaning">
+    <meta name="keywords"
+          content="E-RIB.UZ, База знаний, Qo'llanma, помощь, проблема, E-RIB.UZ muammo, qanday qilib">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+{% endblock meta %}
+
 {% block content %}
 
     <div class="col-md-8 padding-20">
@@ -33,16 +44,16 @@
                                 <span class="cat-count">({{ section.articles.count }})</span>
                             </a>
                         </div>
-                            {% for article in section.articles.all|get_five_articles:'sort' %}
-                                <div class="fat-content-small padding-left-30">
-                                    <ul>
-                                        <li>
-                                            <a href="{% url 'article_detail_url' article.slug %}">
-                                                <i class="fa fa-file-text-o"></i> {{ article.title }} </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            {% endfor %}
+                        {% for article in section.articles.all|get_five_articles:'sort' %}
+                            <div class="fat-content-small padding-left-30">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'article_detail_url' article.slug %}">
+                                            <i class="fa fa-file-text-o"></i> {{ article.title }} </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
                     </div>
                 {% endfor %}
 

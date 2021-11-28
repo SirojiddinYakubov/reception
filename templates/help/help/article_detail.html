@@ -1,5 +1,5 @@
 {% extends 'help/base.html' %}
-
+{% load static %}
 {% block meta %}
     <title>{{ helparticle.title }}</title>
     <meta name="title"
@@ -8,7 +8,12 @@
           content="{{ helparticle.meta_desc }}">
     <meta name="keywords"
           content="{{ helparticle.meta_key }}">
+      <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
 {% endblock meta %}
+
+{% block css %}
+
+{% endblock css %}
 
 {% block content %}
 
@@ -28,7 +33,7 @@
                         <a href="/help/"> Qo'llanma</a>
                     </li>
                     <li>
-                        <a href="{% url 'section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
+                        <a  href="{% url 'section_detail_url' helparticle.section.slug %}">{{ helparticle.section.title }}</a>
                     </li>
                     <li class="active">{{ helparticle.title }}</li>
                 </ol>
@@ -102,3 +107,14 @@
 
     </div>
 {% endblock content %}
+
+
+{% block js %}
+    <script src="{% static 'js/responsive.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.article-content').find('img').addClass('img-responsive')
+
+        })
+    </script>
+{% endblock js %}
