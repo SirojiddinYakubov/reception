@@ -628,6 +628,17 @@ class DraftToShipped(APIView):
             application.process = SHIPPED
             application.save()
 
+            text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda!"
+            inspectors = User.objects.filter(section=application.section, role=CHECKER)
+
+            if inspectors:
+                for inspector in inspectors:
+                    r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
+                    if not r == SUCCESS:
+                        r = SendSmsWithApi(message=text, phone=inspector.phone).get()
+                        if not r == SUCCESS:
+                            send_message_to_developer('Sms service not working!')
+
             document_polices = DocumentForPolice.objects.filter(is_active=True, service=application.service)
             serializer = DocumentForPoliceSerializer(document_polices, many=True)
             return Response(serializer.data, status=200)
