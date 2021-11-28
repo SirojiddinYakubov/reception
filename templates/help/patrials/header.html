@@ -8,7 +8,7 @@
         </div>
         <br>
         <div class="row search-row">
-            <form action="{% url 'search' %}" method="get">
+            <form action="{% url 'help:search' %}" method="get">
                 {% csrf_token %}
                 <input type="text" class="search" placeholder="E-RIB.UZ bilan qanday muammo bor?" name="q"
                        value="{{ request.GET.q }}" oninvalid="this.setCustomValidity('Iltimos, kamida 3 harfdan iborat qidiruv soʻzini kiriting')" required>

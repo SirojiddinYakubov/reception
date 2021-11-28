@@ -87,12 +87,12 @@
         <!-- /.offcanvas-info -->
     </header>
     <!-- /header -->
-    <div class="alert alert-info text-center"><h3>Tizim bo'yicha savollar
-        bo'lganda
-        <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
-                class="fab fa-telegram"></i>
-            Telegram guruh</a>ga yozing yoki <a style="color: blue" href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qiling</h3>
-    </div>
+  <div class="alert alert-info text-center"><h4>Tizim bo'yicha savollar
+            bo'lganda, <a href="{% url 'help:sections_list_url' %}" style="color: #005eec; text-decoration: none">tizimdan foydalanish bo'yicha qo'llanma</a>dan foydalaning yoki
+            <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
+                    class="fab fa-telegram"></i>
+                Telegram guruh</a>ga yozing. Qo'shimcha ma'lumot uchun <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qilishingiz mumkin!</h4>
+        </div>
     <section class="wrapper bg-gradient-primary">
         <div class="container pt-10 pt-md-14 pb-8 text-center">
             <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
@@ -105,8 +105,14 @@
                     <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">E-RIB.UZ - YHXB RIB tomon tezkor yo'l. </h1>
                     <p class="lead fs-lg mb-7">E-RIB.UZ platformasi orqali YHXB RIB'ga arizalar jo'natish judayam qulay.
                         Eng muhimi vaqtingizni ortiqcha sarflashga hojat yo'q.</p>
-                    <span><a href="{% url 'service:services_list' %}"
-                             class="btn btn-primary rounded-pill me-2">Boshlash</a></span>
+                    <span>
+                        <a href="{% url 'help:sections_list_url' %}"
+                             class="btn btn-primary rounded-pill me-2">Qo'llanma</a>
+                    </span>
+                      <span>
+                        <a href="{% url 'service:services_list' %}"
+                             class="btn btn-primary rounded-pill me-2">Ariza topshirish</a>
+                    </span>
                 </div>
                 <!-- /column -->
             </div>
