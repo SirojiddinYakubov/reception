@@ -253,22 +253,10 @@
 {% block bottom %}{% endblock bottom %}
 
 <script type="text/javascript" charset="UTF-8">
-    document.onreadystatechange = function () {
-        var state = document.readyState
-        {#console.log(state)#}
-        if (state === 'interactive') {
-            {#document.getElementsByClassName('wrapper').style.visibility = "hidden";#}
-        } else if (state === 'complete') {
-            setTimeout(function () {
-                document.getElementById('interactive');
-                document.getElementById('load').style.visibility = "hidden";
-                {#document.getElementsByClassName('wrapper').style.visibility = "visible";#}
-            }, 100);
-        }
-    }
     $(document).ready(function () {
-        $('#collapseOne').collapse('show');
+        sendAuthorizationToken()
 
+        $('#collapseOne').collapse('show');
         $('.application_render_pdf').on('click', function () {
             var applicationId = $(this).data('application')
             window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());
@@ -295,21 +283,6 @@
             });
             $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
         }
-
-        var token = getCookie('token'),
-            csrftoken = getCookie('csrftoken')
-
-        $.ajaxSetup({
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-            },
-            error: function (response) {
-                if (response.status === 401) {
-                    tokenInvalid()
-                }
-            }
-        })
 
         $('.payment_checkbox').on('change', function () {
             let modify

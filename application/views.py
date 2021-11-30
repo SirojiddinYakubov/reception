@@ -178,7 +178,7 @@ def get_information(request):
 @login_required
 def create_application_doc(request, filename):
     application = Application.objects.get(file_name=filename)
-    print(application.applicationdocument_set.all())
+
     if application.process == DRAFT:
         messages.error(request, 'Ariza nusxasini yuklab olish uchun arizani to\'liq to\'ldiring!')
         return redirect(reverse_lazy('application:application_detail', kwargs={'id': application.id}))

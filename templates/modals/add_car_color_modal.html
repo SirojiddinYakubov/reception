@@ -46,49 +46,57 @@
 
         })
         $(document).ready(function () {
+            $(document).on('show.bs.modal', '#add_car_color_modal', function () {
+                var colorButton = $('#add_car_color_modal').children().find('button:submit')
+                $('#add_car_color_form').on('submit', function (e) {
 
-            $('#add_car_color_form').on('submit', function (e) {
-                e.preventDefault()
-                $('#color_title').attr('name', 'title')
-                var form = $(this).serialize();
 
-                $.ajax({
-                    type: "POST",
-                    url: '{% url 'api_user:create_color' %}',
-                    data: form
-                }).then(function (res) {
-                    console.log(res)
-                    $("#color").select2({
-                        data: [{
-                            id: res.id,
-                            text: `${res.title}`
-                        }],
-                        templateResult: formatState,
-                        escapeMarkup: function (markup) {
-                            return markup;
-                        },
-                        language: {
-                            noResults: function () {
-                                return "Ma'lumot topilmadi! <a href='#' id='add_new_color'>Yangi rang qo'shish</a>";
-                            }
-                        },
+                    colorButton.attr('disabled', true)
+
+                    $('#color_title').attr('name', 'title')
+                    var form = $(this).serialize();
+
+                     e.preventDefault()
+                    $.ajax({
+                        type: "POST",
+                        url: '{% url 'api_user:create_color' %}',
+                        data: form
+                    }).then(function (res) {
+                        console.log(res)
+                        $("#color").select2({
+                            data: [{
+                                id: res.id,
+                                text: `${res.title}`
+                            }],
+                            templateResult: formatState,
+                            escapeMarkup: function (markup) {
+                                return markup;
+                            },
+                            language: {
+                                noResults: function () {
+                                    return "Ma'lumot topilmadi! <a href='#' id='add_new_color'>Yangi rang qo'shish</a>";
+                                }
+                            },
+                        })
+                        $('#color').val(res.id)
+                        $('#color').trigger('change')
+                        $('#add_car_color_modal').modal('hide')
+                        colorButton.attr('disabled', false)
+                    }, function (err) {
+                        colorButton.attr('disabled', false)
+                        console.log(err)
+                        swal.fire(
+                            'Xatolik!',
+                            "Sahifani yangilab qayta urinib ko'ring!",
+                            'error'
+                        )
                     })
-                    $('#color').val(res.id)
-                    $('#color').trigger('change')
-                    $('#add_car_color_modal').modal('hide')
-                }, function (err) {
-                    console.log(err)
-                    swal.fire(
-                        'Xatolik!',
-                        "Sahifani yangilab qayta urinib ko'ring!",
-                        'error'
-                    )
                 })
-            })
 
-            $(document).on('click', '#add_new_color', function () {
-                $('#add_car_color_modal').modal('show')
-                $('#color').select2('close')
+                $(document).on('click', '#add_new_color', function () {
+                    $('#add_car_color_modal').modal('show')
+                    $('#color').select2('close')
+                })
             })
         })
     </script>

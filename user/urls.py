@@ -9,7 +9,8 @@ app_name = 'user'
 urlpatterns = [
     # signup, login, logout requests
     path('signup/', user_signup, name='signup'),
-    path('login/', login_view, name='login_view'),
+    path('login/', TemplateView.as_view(template_name='account/login.html'),
+         name='login_view'),
     path('logout/', user_logout, name='logout'),
     path('custom-logout/', Logout.as_view(), name='custom_logout'),
     path('handler404/', handler404, name='handler404'),
@@ -71,6 +72,5 @@ urlpatterns = [
 
     # app creatoe role
     path('create_user_account_view/', CreateUserAccountView.as_view(), name='create_user_account_view'),
-
 
 ]
