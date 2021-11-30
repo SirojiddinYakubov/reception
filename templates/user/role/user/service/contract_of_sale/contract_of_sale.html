@@ -26,8 +26,8 @@
 {% block content %}
     <div class="row ml-2 mr-2">
         <div class="col-12 text-center p-0">
-            <div class="card px-0 pt-4 pb-0 mb-3">
-                <ul class="step d-flex flex-nowrap">
+            <div class="card px-0 pb-0 mb-3">
+                <ul class="step d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-nowrap pt-4">
                     <li id="applicant_step" class="step-item active">
                         <span>Arizachi</span>
                     </li>
@@ -104,8 +104,7 @@
                     function (value, element, param) {
                         if (this.optional(element)) {
                             return true;
-                        }
-                        else if (!/[a-z]/.test(value)) {
+                        } else if (!/[a-z]/.test(value)) {
                             return false;
                         } else if (!/[0-9]/.test(value)) {
                             return false;
