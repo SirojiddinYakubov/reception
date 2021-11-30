@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{% static 'css/login/style.css' %}">
+
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
@@ -113,10 +116,12 @@
                     <h3 class="mb-4 text-center">Tizimga kirish</h3>
 
                     {% include '_parts/messages.html' %}
-                    <form action="{% url 'user:login_view' %}" class="signin-form" method="POST">
+                    <form id="login_form" class="signin-form">
                         {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Telefon raqam" required>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="Telefon raqam"
+                                   required>
                         </div>
                         <div class="form-group">
                             <input id="password-field" type="password" name="password" autocomplete="off"
@@ -153,7 +158,8 @@
                                         unutdingizmi?</a>
                                     <a class="left_link" href="{% url 'user:signup' %}" style="color: #fff">Ro'yhatdan
                                         o'tish</a>
-                                    <a style="color: #fff" class="right_link" href="https://t.me/onlayn_gai" >Yordam kerakmi?</a>
+                                    <a style="color: #fff" class="right_link" href="https://t.me/onlayn_gai">Yordam
+                                        kerakmi?</a>
                                 </div>
 
 
@@ -177,6 +183,9 @@
 <script src="{% static 'js/main.js' %}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
+<script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
+<script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -188,6 +197,8 @@
                 xhr.setRequestHeader('X-CSRFToken', csrftoken)
             },
         })
+
+        $('#username').inputmask('+\\9\\98 (99) 999-99-99')
 
         var forgot_pass = $('#forgot_pass')
         forgot_pass.on('click', function () {
@@ -280,6 +291,75 @@
 
             }
         })
+
+        var $loginForm = $('#login_form');
+        if ($loginForm.length) {
+            $loginForm.validate({
+                rules: {
+                    username: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    username: {
+                        required: "Telefon raqam to'ldirilmagan!"
+                    },
+                    password: {
+                        required: "Maxfiy kod to'ldirilmagan!"
+                    },
+                },
+
+
+                submitHandler: function (form, e) {
+                    e.preventDefault()
+
+                    const formData = {
+                        username: $('#username').val().split('(')[1].replace(/[^0-9]/g, ''),
+                        password: $('#password-field').val()
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'api_user:login_view' %}",
+                        data: formData,
+                        success: function (res) {
+                            $.ajax({
+                                type: "POST",
+                                url: '/api/v1/user/auth/jwt/create/',
+                                data: formData,
+                                success: function (response) {
+
+                                    localStorage.setItem('access', response.access)
+                                    localStorage.setItem('refresh', response.refresh)
+
+                                    sendAuthorizationToken()
+
+                                    if ($.urlParam('next')) {
+                                        window.location.href = $.urlParam('next')
+                                    } else {
+                                        window.location.href = "{% url 'user:home' %}"
+                                    }
+
+                                },
+                                error: function (error) {
+                                    console.log(error)
+                                    error_toast()
+                                }
+                            })
+
+
+                        },
+                        error: function (err) {
+                            error_toast(err.responseText)
+                        }
+                    })
+
+                    return false;
+                }
+            });
+        }
 
     })
 

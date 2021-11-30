@@ -373,7 +373,7 @@
                                        autocomplete="off">
                             </div>
                         </div>
-                          <div class="row mb-3">
+                        <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                                    for="history">{% trans 'Transport vositasi tarixi' %}<span
                                     class="text-danger">*</span></label>
@@ -422,6 +422,7 @@
             $('.select2').select2()
         })
         $(document).ready(function () {
+            sendAuthorizationToken()
 
             function formatState(state) {
                 if (!state.id) {
@@ -465,22 +466,6 @@
             $('#devices').selectize({
                 placeholder: "Masalan: MAXSUS O'QUV",
             });
-
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken')
-
-
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
 
             if ($('#lost_technical_passport_yes').is(':checked')) {
                 $('#old_technical_passport_div').hide()

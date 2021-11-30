@@ -4,10 +4,13 @@ from user.models import (
     User,
     Region,
     District,
-    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType, Section
+    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType, Section, Device
 )
 
 
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
 
 
 class RegionDetailSerializer(serializers.ModelSerializer):
@@ -142,6 +145,15 @@ class CarColorsListSerializer(serializers.ModelSerializer):
 class CarTypesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarType
+        fields = [
+            'id',
+            'title',
+            'created_date',
+        ]
+
+class DevicesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
         fields = [
             'id',
             'title',

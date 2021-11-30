@@ -422,9 +422,9 @@ function tokenInvalid() {
             '</svg> Xatolik yuz berdi! Token yaroqsiz!'
     })
     setTimeout(function () {
+        console.log('logout')
 
-
-        window.location.href = '/user/custom-logout/'
+        // window.location.href = '/user/custom-logout/'
     }, 3000);
 }
 
@@ -1552,7 +1552,8 @@ function sendAuthorizationToken() {
         },
         error: function (response) {
             if (response.status === 401) {
-                tokenInvalid()
+                console.log(401)
+                // tokenInvalid()
             }
         }
     })

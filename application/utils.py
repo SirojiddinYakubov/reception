@@ -266,7 +266,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
 
 
     """Start filter state duty percents"""
-    print(lost_technical_passport)
     """Jarima"""
     if contract_date:
         last_day_without_fine = contract_date + datetime.timedelta(days=10)

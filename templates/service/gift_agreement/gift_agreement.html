@@ -486,21 +486,7 @@
         })
 
         $(document).ready(function () {
-                var token = getCookie('token'),
-                    csrftoken = getCookie('csrftoken')
-
-
-                $.ajaxSetup({
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                        xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                    },
-                    error: function (response) {
-                        if (response.status === 401) {
-                            tokenInvalid()
-                        }
-                    }
-                })
+                sendAuthorizationToken()
 
                 var passport = htmlDecode('{% if request.user.passport_seriya %}{{ request.user.passport_seriya }}{% endif %}{% if request.user.passport_number %}{{ request.user.passport_number }}{% endif %}'),
                     firstName = htmlDecode('{{ request.user.first_name }}'),

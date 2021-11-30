@@ -37,8 +37,8 @@
                     E-RIB.UZ</h1></a></div>
                 <div class="navbar-collapse offcanvas-nav">
                     <div class="offcanvas-header d-lg-none d-xl-none">
-                        <a href="#"><img src="{% static 'src/img/logo-light.png' %}"
-                                         srcset="src/img/logo-light@2x.png 2x" alt=""/></a>
+                        <a href="#"><img src="{% static 'assets/images/logo-dark.png' %}"
+                                         srcset="{% static 'assets/images/logo-dark.png' %}" alt=""/></a>
                         <button type="button" class="btn-close btn-close-white offcanvas-close offcanvas-nav-close"
                                 aria-label="Close"></button>
                     </div>
@@ -46,7 +46,7 @@
                     <br>
                     <br>
 
-                                            {% include 'landing/inc/top_menu.html' %}
+                    {% include 'landing/inc/top_menu.html' %}
                     <!-- /.navbar-nav -->
                 </div>
                 <!-- /.navbar-collapse -->
@@ -74,7 +74,12 @@
                                 {% endif %}
                             </ul>
                         </li>
-
+                        <li class="nav-item d-lg-none">
+                            <div class="navbar-hamburger">
+                                <button class="hamburger animate plain" data-toggle="offcanvas-nav"><span></span>
+                                </button>
+                            </div>
+                        </li>
                     </ul>
                     <!-- /.navbar-nav -->
                 </div>
@@ -87,12 +92,14 @@
         <!-- /.offcanvas-info -->
     </header>
     <!-- /header -->
-  <div class="alert alert-info text-center"><h4>Tizim bo'yicha savollar
-            bo'lganda, <a href="{% url 'help:sections_list_url' %}" style="color: #005eec; text-decoration: none">tizimdan foydalanish bo'yicha qo'llanma</a>dan foydalaning yoki
-            <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
-                    class="fab fa-telegram"></i>
-                Telegram guruh</a>ga yozing. Qo'shimcha ma'lumot uchun <a href="tel:972800809">972800809</a> raqamiga qo'ng'iroq qilishingiz mumkin!</h4>
-        </div>
+    <div class="alert alert-info text-center"><h4>Tizim bo'yicha savollar
+        bo'lganda, <a href="{% url 'help:sections_list_url' %}" style="color: #005eec; text-decoration: none">tizimdan
+            foydalanish bo'yicha qo'llanma</a>dan foydalaning yoki
+        <a href="https://t.me/onlayn_gai" style="color: #005eec; text-decoration: none"><i
+                class="fab fa-telegram"></i>
+            Telegram guruh</a>ga yozing. Qo'shimcha ma'lumot uchun <a href="tel:972800809">972800809</a> raqamiga
+        qo'ng'iroq qilishingiz mumkin!</h4>
+    </div>
     <section class="wrapper bg-gradient-primary">
         <div class="container pt-10 pt-md-14 pb-8 text-center">
             <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
@@ -107,11 +114,11 @@
                         Eng muhimi vaqtingizni ortiqcha sarflashga hojat yo'q.</p>
                     <span>
                         <a href="{% url 'help:sections_list_url' %}"
-                             class="btn btn-primary rounded-pill me-2">Qo'llanma</a>
+                           class="btn btn-primary rounded-pill me-2">Qo'llanma</a>
                     </span>
-                      <span>
+                    <span>
                         <a href="{% url 'service:services_list' %}"
-                             class="btn btn-primary rounded-pill me-2">Ariza topshirish</a>
+                           class="btn btn-primary rounded-pill me-2">Ariza topshirish</a>
                     </span>
                 </div>
                 <!-- /column -->

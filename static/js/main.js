@@ -404,28 +404,24 @@ var dateReg = /^(0?[1-9]|[12][0-9]|3[01])[./-](0?[1-9]|1[012])[./-]\d{4}$/
 //     })
 
 function tokenInvalid() {
-
-    $.notifyDefaults({
-        type: 'danger',
-        allow_dismiss: false,
-        animate: {
-            enter: 'animated fadeInRight',
-            exit: 'animated fadeOutRight'
+    $.ajax({
+        type: "POST",
+        url: "/api/v1/user/auth/jwt/refresh/",
+        data: {
+            'refresh': localStorage.getItem('refresh')
         },
-        z_index: '9999'
-    })
-    $.notify({
-        icon: 'glyphicon glyphicon-star',
-        message: '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-            '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-            '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-            '</svg> Xatolik yuz berdi! Token yaroqsiz!'
-    })
-    setTimeout(function () {
+        success: function (res) {
+            localStorage.setItem('access', res.access)
+            location.reload()
+        },
+        error: function (err) {
+            error_toast('Xatolik! Token yaroqsiz!')
 
-
-        window.location.href = '/user/custom-logout/'
-    }, 3000);
+            setTimeout(function () {
+                window.location.href = '/user/custom-logout/'
+            }, 3000)
+        }
+    })
 }
 
 function errorFunction() {
@@ -1542,13 +1538,13 @@ function swal_error(err = null) {
 
 
 function sendAuthorizationToken() {
-    var token = getCookie('token'),
+    var access = localStorage.getItem('access'),
         csrftoken = getCookie('csrftoken')
 
     $.ajaxSetup({
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-CSRFToken', csrftoken)
-            xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+            xhr.setRequestHeader('Authorization', `Bearer ${access}`)
         },
         error: function (response) {
             if (response.status === 401) {
@@ -1593,3 +1589,11 @@ function refresh_with_time(delay) {
 //           return m;
 //       }
 // });
+
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return null;
+    }
+    return decodeURI(results[1]) || 0;
+}

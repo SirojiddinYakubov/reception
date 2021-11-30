@@ -167,27 +167,27 @@
                                        autocomplete="off">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="person_id">{% trans "JShShIR" %}<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-8 col-xl-9 person_id">
-                                <div class="input-group input-group-merge">
-                                    <input type="text" id="person_id" name="person_id"
-                                           class="form-control" required
-                                           {% if user.person_id %}value="{{ user.person_id }}"{% endif %}
-                                           autocomplete="off">
-                                    <div class="input-group-text" id="person_id_help">
-                                        <i class="far fa-question-circle"></i>
-                                    </div>
-                                </div>
-                                <p style="width:100%;font-size: small; margin-bottom: 0; float: left;text-align: start">{% trans 'Jismoniy shaxsning shaxsiy identifikatsiya raqamini kiriting' %}</p>
-                                <img class="img-responsive mb-2"
-                                     style="width: 200px; margin: 0 auto; display: none" height="auto"
-                                     src="{% static 'online/person_id.jpg' %}"
-                                     alt="JShShIR">
-                            </div>
-                        </div>
+                        {#                        <div class="row mb-3">#}
+                        {#                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"#}
+                        {#                                   for="person_id">{% trans "JShShIR" %}<span#}
+                        {#                                    class="text-danger">*</span></label>#}
+                        {#                            <div class="col-8 col-xl-9 person_id">#}
+                        {#                                <div class="input-group input-group-merge">#}
+                        {#                                    <input type="text" id="person_id" name="person_id"#}
+                        {#                                           class="form-control" required#}
+                        {#                                           {% if user.person_id %}value="{{ user.person_id }}"{% endif %}#}
+                        {#                                           autocomplete="off">#}
+                        {#                                    <div class="input-group-text" id="person_id_help">#}
+                        {#                                        <i class="far fa-question-circle"></i>#}
+                        {#                                    </div>#}
+                        {#                                </div>#}
+                        {#                                <p style="width:100%;font-size: small; margin-bottom: 0; float: left;text-align: start">{% trans 'Jismoniy shaxsning shaxsiy identifikatsiya raqamini kiriting' %}</p>#}
+                        {#                                <img class="img-responsive mb-2"#}
+                        {#                                     style="width: 200px; margin: 0 auto; display: none" height="auto"#}
+                        {#                                     src="{% static 'online/person_id.jpg' %}"#}
+                        {#                                     alt="JShShIR">#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                                    for="issue_by_whom">{% trans "Kim tomonidan berilgan" %}<span
@@ -301,25 +301,7 @@
             $('#phone').inputmask('99 999-99-99');
             $('#person_id').inputmask('99999999999999');
 
-            var csrftoken = getCookie('csrftoken'),
-                token = getCookie('token')
-
-
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                statusCode: {
-                    401: function () {
-                        tokenInvalid()
-                    },
-                    403: function () {
-                        tokenInvalid()
-                    }
-                },
-
-            })
+            sendAuthorizationToken()
 
 
             $('#person_id_help').on('click', function () {
@@ -414,10 +396,11 @@
                     }
                         // else if (!/[A-Z]/.test(value)) {
                         //   return false;
+                        //  }
+                        //else if (!/[a-z]/.test(value)) {
+                        //    return false;
                     //  }
-                    else if (!/[a-z]/.test(value)) {
-                        return false;
-                    } else if (!/[0-9]/.test(value)) {
+                    else if (!/[0-9]/.test(value)) {
                         return false;
                     }
 

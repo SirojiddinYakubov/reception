@@ -92,6 +92,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             'district',
             'quarter',
             'address',
+            'turbo'
         ]
         extra_kwargs = {
             'last_name': {'required': True},
@@ -167,7 +168,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'passport_number': {'required': True},
             'issue_by_whom': {'required': True},
             'password': {'required': True},
-            'person_id': {'required': True},
+            # 'person_id': {'required': True},
 
         }
 
