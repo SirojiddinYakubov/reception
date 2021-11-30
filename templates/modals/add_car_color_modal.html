@@ -56,7 +56,7 @@
                     $('#color_title').attr('name', 'title')
                     var form = $(this).serialize();
 
-                     e.preventDefault()
+                    e.preventDefault()
                     $.ajax({
                         type: "POST",
                         url: '{% url 'api_user:create_color' %}',
@@ -93,10 +93,12 @@
                     })
                 })
 
-                $(document).on('click', '#add_new_color', function () {
-                    $('#add_car_color_modal').modal('show')
-                    $('#color').select2('close')
-                })
+
+            })
+
+            $(document).on('click', '#add_new_color', function () {
+                $('#add_car_color_modal').modal('show')
+                $('#color').select2('close')
             })
         })
     </script>
