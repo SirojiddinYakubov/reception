@@ -123,21 +123,9 @@
         })
         $(document).ready(function () {
 
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken'),
-                next = '{{ request.GET.next }}'
+            var next = '{{ request.GET.next }}'
 
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
+           sendAuthorizationToken()
 
             $('#legal_address_region').change(function () {
                 var SelectedRegion = $(this).children("option:selected").val()

@@ -81,28 +81,12 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
     <!-- Datatables init -->
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
-
-
-
     <script type="text/javascript" class="init">
         $(document).ready(function () {
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken'),
-                url = null
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
+            var url = null
+           sendAuthorizationToken()
 
 
             var table = $("#example1").DataTable({

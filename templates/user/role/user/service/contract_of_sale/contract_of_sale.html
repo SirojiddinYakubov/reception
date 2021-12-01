@@ -17,6 +17,7 @@
     <link href="{% static 'assets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"
           type="text/css"/>
+    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
     <!-- Loading button css -->
     <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css"/>
@@ -26,8 +27,8 @@
 {% block content %}
     <div class="row ml-2 mr-2">
         <div class="col-12 text-center p-0">
-            <div class="card px-0 pt-4 pb-0 mb-3">
-                <ul class="step d-flex flex-nowrap">
+            <div class="card px-0 pb-0 mb-3">
+                <ul class="step d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-nowrap pt-4">
                     <li id="applicant_step" class="step-item active">
                         <span>Arizachi</span>
                     </li>
@@ -46,15 +47,15 @@
                 </ul>
                 <br>
                 <br>
-                {% include 'user/role/app_creator/service/_parts/applicant_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/applicant_fieldset.html' %}
 
-                {% include 'user/role/app_creator/service/_parts/person_type_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/person_type_fieldset.html' %}
 
-                {% include 'user/role/app_creator/service/_parts/document_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/document_fieldset.html' %}
 
-                {% include 'user/role/app_creator/service/_parts/car_fieldset.html' %}
+                {% include 'user/role/user/service/contract_of_sale/car_fieldset.html' %}
 
-                {% include 'user/role/app_creator/service/_parts/section_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/section_fieldset.html' %}
 
             </div>
 
@@ -76,6 +77,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
     <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
     <script type="text/javascript" charset="UTF-8">
         $(function () {
             {#$('#applicant_fieldset').hide()#}
@@ -104,8 +107,7 @@
                     function (value, element, param) {
                         if (this.optional(element)) {
                             return true;
-                        }
-                        else if (!/[a-z]/.test(value)) {
+                        } else if (!/[a-z]/.test(value)) {
                             return false;
                         } else if (!/[0-9]/.test(value)) {
                             return false;

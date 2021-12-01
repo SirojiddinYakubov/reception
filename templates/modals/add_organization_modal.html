@@ -103,6 +103,8 @@
     <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $(document).on('show.bs.modal', '#add_organization_modal', function () {
+
                 getAjaxData('{% url "api_user:regions_list" %}').then(function (res) {
                     console.log(res)
                     res.forEach((x, i) =>
@@ -258,7 +260,7 @@
 
 
                 }
-            }
-        )
+            })
+        })
     </script>
 {% endblock js %}

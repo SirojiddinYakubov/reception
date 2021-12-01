@@ -8,12 +8,17 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 
+
+    path('login/', views.LoginView.as_view(), name='login_view'),
+
     path('detail/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
     path('organizations/list/', views.UserOrganizationsList.as_view(), name='user_organizations_list'),
     path('car-models/list/', views.CarModelsList.as_view(), name='car_models_list'),
     path('car-colors/list/', views.CarColorsList.as_view(), name='car_colors_list'),
     path('car-types/list/', views.CarTypesList.as_view(), name='car_types_list'),
+    path('devices/list/', views.DevicesList.as_view(), name='devices_list'),
     path('regions/list/', views.RegionsList.as_view(), name='regions_list'),
+    path('section/exists/regions/list/', views.SectionExistsRegionsList.as_view(), name='section_exists_regions_list'),
     path('region/<int:pk>/districts/list/', views.RegionDistrictsList.as_view(), name='region_districts_list'),
     path('region/<int:pk>/sections/list/', views.RegionSectionsList.as_view(), name='region_sections_list'),
     path('district/<int:pk>/quarters/list/', views.DistrictQuartersList.as_view(), name='district_quarters_list'),

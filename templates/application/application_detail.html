@@ -157,7 +157,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-
+            sendAuthorizationToken()
             var isBlock = '{{ application.is_block }}'
             var proccess = '{{ application.process }}'
             var activation_pay = '{{ activation_pay }}'
@@ -371,20 +371,6 @@
                 $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
             }
 
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken')
-
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
 
             $('.payment_checkbox').on('change', function () {
                 let modify

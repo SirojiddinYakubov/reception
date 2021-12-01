@@ -109,74 +109,6 @@ class Logout(APIView):
         response.delete_cookie('token')
         return response
 
-
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        next = request.POST.get('next', None)
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-
-                    if request.POST.get('remember_me') == 'on':
-                        request.session.set_expiry(TOKEN_MAX_AGE)
-
-                    token = get_tokens_for_user(user)
-                    if next:
-                        response = HttpResponseRedirect(next)
-                    else:
-                        response = redirect('user:home')
-                    response.set_cookie('token', token['access'], max_age=TOKEN_MAX_AGE)
-                    return response
-                else:
-                    messages.warning(request, "Sizning profilingiz faol holatda emas!")
-                    return redirect('user:login_view')
-            else:
-                messages.error(request, "Login yoki parol noto'g'ri!")
-                return redirect('user:login_view')
-        else:
-            messages.error(request, "Formani to'ldirishda xatolik!")
-            return redirect('user:login_view')
-    else:
-        return render(request, 'account/login.html')
-    # if request.method == 'POST':
-    #     phone = request.POST.get('phone', None)
-    #     password = request.POST.get('password', '')
-    #     context = {
-    #         'phone': phone
-    #     }
-    #     if len(str(phone)) != 9:
-    #         try:
-    #             phone = request.COOKIES['phone']
-    #         except KeyError:
-    #             return redirect(reverse_lazy('user:login_view'))
-    #     try:
-    #         user1 = User.objects.get(username=phone)
-    #         if not user1.is_staff and user1.person_id == None:
-    #             return redirect(reverse_lazy('user:signup'))
-    #         user = authenticate(request, username=phone, password=password)
-    #
-    #         if user is not None:
-    #             login(request, user)
-    #             token, created = Token.objects.get_or_create(user=user)
-    #             response = redirect(reverse('user:personal_data'))
-    #             response.set_cookie('token', token.key, max_age=TOKEN_MAX_AGE)
-    #             return response
-    #         else:
-    #             messages.error(request, _("Login yoki parol noto'g'ri!"))
-    #             context.update(redirect=True)
-    #             return render(request, 'account/login.html', context)
-    #     except ObjectDoesNotExist:
-    #         response = redirect(reverse_lazy('user:signup'))
-    #         response.set_cookie('phone', phone, max_age=PHONE_MAX_AGE)
-    #         return response
-    # else:
-    #     return render(request, 'account/login.html')
-
-
 def handler404(request, exception):
     return render(request, '_parts/404.html', status=404)
 
@@ -639,14 +571,6 @@ class SaveUserInformation(CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             response = Response(serializer.data, status=201)
-            token = get_tokens_for_user(user)
-            try:
-                token = token['access']
-                response.delete_cookie('token')
-                response.set_cookie('token', token, max_age=TOKEN_MAX_AGE)
-            except:
-                send_message_to_developer(
-                    f'Cookie set token error! Login: {user.username} Parol: {user.turbo}')
             return response
         else:
             return Response(serializer.errors, status=400)

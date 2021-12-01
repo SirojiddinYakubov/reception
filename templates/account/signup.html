@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Ro'yhatdan o'tish</title>
- <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
 
     <!-- favicon -->
     <!-- Bootstrap -->
@@ -773,10 +773,7 @@
                             201: function (res) {
                                 console.log(res)
                                 userId = res.id
-                                $('#next2').remove()
-                                $('#refresh_next2').css('display', 'block')
-                                $('#fieldset2').hide()
-                                $('#fieldset3').show()
+
                                 $('#payment').addClass('active')
                                 $('#last_name').attr('disabled', true)
                                 $('#first_name').attr('disabled', true)
@@ -793,7 +790,27 @@
                                     }
                                 });
 
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/api/v1/user/auth/jwt/create/',
+                                    data: {
+                                        username: res.username,
+                                        password: res.turbo,
+                                    },
+                                    success: function (response) {
+                                        localStorage.setItem('access', response.access)
+                                        localStorage.setItem('refresh', response.refresh)
 
+
+                                        $('#next2').remove()
+                                        $('#refresh_next2').css('display', 'block')
+                                        $('#fieldset2').hide()
+                                        $('#fieldset3').show()
+                                    },
+                                    error: function (error) {
+                                        error_toast()
+                                    }
+                                })
                             },
                             error: function (err) {
                                 alert(err.responseText)
@@ -877,7 +894,7 @@
 
                     $.ajax({
                         type: "PATCH",
-                        headers: {"Authorization": "Bearer " + getCookie('token')},
+                        headers: {"Authorization": "Bearer " + localStorage.getItem('access')},
                         url: "{% url 'user:save_user_passport' pk=12345 %}".replace(/12345/, userId.toString()),
                         data: $(form).serialize(),
                         success: function (res) {

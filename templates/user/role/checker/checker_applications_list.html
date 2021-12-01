@@ -179,21 +179,8 @@
 
     <script type="text/javascript" class="init">
         $(document).ready(function () {
-            var token = getCookie('token'),
-                csrftoken = getCookie('csrftoken'),
-                url = null
-            $.ajaxSetup({
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRFToken', csrftoken)
-                    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-                },
-                error: function (response) {
-                    if (response.status === 401) {
-                        tokenInvalid()
-                    }
-                }
-            })
-
+            sendAuthorizationToken()
+            var url = null
 
             var table = $("#example1").DataTable({
                 "serverSide": true,

@@ -1,0 +1,719 @@
+{% load static i18n %}
+<fieldset id="car_fieldset" style="display: none">
+    <legend>Transport vositasi</legend>
+    <form action="#" id="save_car_form" method="post">
+        {% csrf_token %}
+        <input type='hidden' value="0" name="person_type">
+        <input type='hidden' value="" name="organization">
+        <input type='hidden' value="" name="seriya">
+        <input type='hidden' value="" name="contract_date">
+
+        <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
+            qatorlarni to'ldirish majburiy.</p>
+        </div>
+
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="car">{% trans 'Transport vositasi modelini tanlang' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 car">
+                <select id="car" name="car" required class="form-control">
+                    <option></option>
+                    <option data-style="color: blue;" value="new">Yangi model qo'shish</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="type">{% trans 'Transport vositasi turini tanlang' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <select id="type" name="type" required data-width="100%"
+                        class="form-select">
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="fuel_type">{% trans "Yoqilg'i turini tanlang" %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 fuel_type">
+
+                <select id="fuel_type" name="fuel_type" class="form-select">
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="body_type">{% trans 'Kuzov turi' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <select id="body_type" name="body_type" class="form-select" required
+                        data-width="100%">
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="engine_number">{% trans 'Dvigitel raqami' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <input type="text" id="engine_number" name="engine_number"
+                       class="form-control text-uppercase" required
+                       placeholder="{% trans 'Masalan: WZX5645645456' %}"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="body_number">{% trans 'Kuzov raqami' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <input type="text" id="body_number" name="body_number"
+                       class="form-control text-uppercase" required
+                       placeholder="{% trans 'Masalan: XWB6595645456' %}"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="chassis_number">{% trans 'Shassi raqami' %}</label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 chassis_number">
+                <input type="text" id="chassis_number"
+                       class="form-control text-uppercase" name="chassis_number"
+                       placeholder="{% trans 'Masalan: RAQAMSIZ' %}"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="full_weight">{% trans "To'la vazni" %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 full_weight">
+                <input type="number" id="full_weight" name="full_weight"
+                       class="form-control" required
+                       placeholder="{% trans 'Masalan: 20500' %}"
+                       autocomplete="off">
+                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                    qiymatni kilogrammda
+                    kiriting!</p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="empty_weight">{% trans 'Yuksiz vazni' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 empty_weight">
+                <input type="number" id="empty_weight" name="empty_weight"
+                       class="form-control" required
+                       placeholder="{% trans 'Masalan: 19500' %}"
+                       autocomplete="off">
+                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                    qiymatni kilogrammda
+                    kiriting!</p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="engine_power">{% trans 'Dvigatel quvvati' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 engine_power">
+                <input type="number" id="engine_power" name="engine_power"
+                       class="form-control"
+                       placeholder="{% trans 'Masalan: 120' %}"
+                       autocomplete="off" required>
+                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                    qiymatni kilogrammda
+                    kiriting!</p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="color">{% trans 'Rangi' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 color">
+                <select id="color" name="color" required class="form-control select2 color"
+                        data-width="100%">
+                    <option></option>
+                    <option data-style="color: blue;" value="new">Yangi rang qo'shish</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3" id="made_year_div">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-form-label text-start"
+                   style="margin: auto"
+                   for="made_year">{% trans 'Ishlab chiqarilgan vaqti' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8">
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <label for="password" class="form-label" style="float: left">Kun</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" id="day" class="form-control" placeholder="Kunni tanlang">
+                            <div class="input-group-text icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <label for="password" class="form-label" style="float: left">Oy</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" id="month" class="form-control" placeholder="Oyni tanlang">
+                            <div class="input-group-text icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 year">
+                        <label for="password" class="form-label" style="float: left">Yil<span
+                                style="color: red">*</span></label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" id="year" name="year" class="form-control" required
+                                   placeholder="Yil tanlang">
+                            <div class="input-group-text icon">
+                                <i class="fas fa-calendar-day"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="price">{% trans 'Transport vositasi narxi' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 price">
+                <input type="number" id="price" name="price"
+                       class="form-control" required
+                       placeholder="{% trans 'Masalan: 47000000' %}"
+                       autocomplete="off">
+                <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                    qiymatni so'mda
+                    kiriting!</p>
+            </div>
+        </div>
+        <div class="row mb-3" id="parent_is_saved_number">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="is_saved_number">{% trans 'Yangi olinadigan davlat raqam belgisi YXHB zahirasida saqlanmoqdami?' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <div class="row justify-content-start mt-1">
+                    <div class="col-6 col-lg-4 col-xl-4 text-start">
+                        <input type="radio" id="is_saved_number_yes" name="is_saved_number"
+                               class="form-check-input" value="True">
+                        <label class="form-check-label" for="is_saved_number_yes">Ha, saqlanyapti</label>
+                    </div>
+                    <div class="col-6 col-lg-4 col-xl-4 text-start">
+                        <input type="radio" id="is_saved_number_no" name="is_saved_number"
+                               class="form-check-input" checked value="False">
+                        <label class="form-check-label" for="is_saved_number_no">Yo'q, saqlanmayapti</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3" id="saved_number_div" style="display: none">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="saved_number">{% trans "Zahiradagi raqam" %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <input type="text" id="saved_number"
+                       class="form-control text-uppercase" required
+                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="row mb-3" id="parent_is_auction">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="is_auction">{% trans 'Raqam auksiondan olinganmi?' %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <div class="row justify-content-start mt-1">
+                    <div class="col-6 col-lg-4 col-xl-4 text-start">
+                        <input type="radio" id="is_auction_yes" name="is_auction"
+                               class="form-check-input" value="True">
+                        <label class="form-check-label" for="is_auction_yes">Ha, auksiondan olingan</label>
+                    </div>
+                    <div class="col-6 col-lg-4 col-xl-4 text-start">
+                        <input type="radio" id="is_auction_no" name="is_auction"
+                               class="form-check-input" checked value="False">
+                        <label class="form-check-label" for="is_auction_no">Yo'q, auksiondan olinmagan</label>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row mb-3" id="auction_number_div" style="display: none">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="auction_number">{% trans "Auksion raqami" %}<span
+                    class="text-danger">*</span></label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <input type="text" id="auction_number"
+                       class="form-control text-uppercase" required
+                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
+                   for="device">{% trans "Alohida belgilar" %}</label>
+            <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <select id="device" name="device" class="form-control" multiple="multiple">
+                </select>
+            </div>
+        </div>
+        <div class="justify-content-end row">
+            <div class="col-12">
+                <button type="button"
+                        class="btn btn-secondary waves-effect waves-light float-start prev">Oldingi
+                </button>
+                {#                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
+                <button type="submit"
+                        class="btn btn-info waves-effect waves-light float-end next">Keyingi
+                </button>
+            </div>
+        </div>
+    </form>
+</fieldset>
+
+{% block modals %}
+    {% include 'modals/add_car_model_modal.html' %}
+    {% include 'modals/add_car_color_modal.html' %}
+{% endblock modals %}
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            getAjaxData('{% url "api_user:car_models_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#car").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- modelni tanlang --',
+                        templateResult: formatState,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        },
+                        language: {
+                            noResults: function () {
+                                return "Ma'lumot topilmadi! <a href='#' id='add_new_car_model'>Yangi model qo'shish</a>";
+                            }
+                        },
+                    }).on('select2:close', function () {
+                            var el = $(this);
+                            if (el.val() === "new") {
+                                $('#add_car_model_modal').modal('show')
+                                $('#car').select2('close')
+                            }
+                        }
+                    )
+                );
+            })
+
+            getAjaxData('{% url "api_user:car_colors_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#color").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- rangni tanlang --',
+                        templateResult: formatState,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        },
+                        language: {
+                            noResults: function () {
+                                return "Ma'lumot topilmadi! <a href='#' id='add_new_color'>Yangi rang qo'shish</a>";
+                            }
+                        },
+                    }).on('select2:close', function () {
+                        var el = $(this);
+                        if (el.val() === "new") {
+                            $('#add_car_color_modal').modal('show')
+                        }
+                    })
+                );
+            })
+
+            getAjaxData('{% url "api_user:car_body_types_list" %}').then(function (res) {
+                res.forEach((x, i) =>
+                    $("#body_type").select2({
+                        data: [{id: x.id, text: `${x.title}`}],
+                        width: '100%',
+                        placeholder: '-- kuzov turini tanlang --',
+                        templateResult: formatState,
+                    })
+                );
+            })
+
+            getAjaxData('{% url "api_user:car_types_list" %}').then(function (res) {
+                console.log(res)
+                res.forEach((x, i) =>
+                    $('#type').append($('<option>').val(x.id).text(x.title))
+                )
+            }, function (err) {
+                swal_error(err)
+            })
+
+            getAjaxData('{% url "api_user:car_fuel_types_list" %}').then(function (res) {
+                console.log(res)
+                res.forEach((x, i) =>
+                    $('#fuel_type').append($('<option>').val(x.id).text(x.title))
+                )
+            }, function (err) {
+                swal_error(err)
+            })
+
+            getAjaxData("{% url 'api_user:devices_list' %}").then(res => {
+                $('#device').selectize({
+                    inputClass: 'form-control selectize-input',
+                    dropdownParent: "body",
+                    placeholder: "Masalan: QO'SHIMCHA PEDAL",
+                    options: res,
+                    valueField: 'id',
+                    labelField: 'title',
+                    searchField: 'title',
+                    onChange: function (value, isOnInitialize) {
+                        swal.fire(
+                            'Ogohlantirish',
+                            'Agarda sizni transport vositangizda qo\'shimcha qayta jihoz mavjud bo\'lsa (gazdan tashqari) unda ushbu ro\'yhatdan uni tanlang. Agar qo\'shimcha jihoz ro\'yhatda bo\'lmasa, unda 919791999 raqamiga murojaat eting.',
+                            'warning',
+                        )
+                    }
+                });
+            })
+        })
+        $(document).ready(function () {
+            $('#car_fieldset').bind('beforeShow', function () {
+
+
+                $('#fake').on('click', function () {
+                    generate_fake_data()
+                })
+
+
+                $('input[name=is_auction]').on('change', function () {
+                    if ($('#is_auction_yes').prop('checked')) {
+                        $('#auction_number_div').show()
+                        $('#saved_number_div').hide()
+                        $('#parent_is_saved_number').hide()
+                    } else {
+                        $('#auction_number_div').hide()
+                        $('#parent_is_saved_number').show()
+                    }
+                })
+
+                $('input[name=is_saved_number]').on('change', function () {
+                    if ($('#is_saved_number_yes').prop('checked')) {
+                        $('#saved_number_div').show()
+                        $('#auction_number_div').hide()
+                        $('#parent_is_auction').hide()
+                    } else {
+                        $('#saved_number_div').hide()
+                        $('#parent_is_auction').show()
+                    }
+                })
+
+
+                var dateOpt = {
+                    format: 'dd',
+                    maxViewMode: 0,
+                    autoclose: true,
+                    language: 'ru',
+                };
+
+                $("#year").datepicker({
+                    format: "yyyy",
+                    viewMode: "years",
+                    minViewMode: "years",
+                    autoclose: true,
+                    language: 'ru',
+                    startDate: '-80y',
+                    endDate: '+0y',
+
+                }).on('changeDate', function (e) {
+                    var month = $('#month').datepicker('getDate');
+                    if (!month) {
+                        month = new Date();
+                    }
+                    dateOpt.defaultViewDate = {
+                        year: e.date.getFullYear(),
+                        month: month.getMonth(),
+                        day: 1
+                    };
+                    // Reset date datepicker
+                    $('#day').datepicker('destroy');
+                    // Re-init with defaultViewDate option
+                    $('#day').datepicker(dateOpt);
+                    $(this).valid()
+                })
+
+                $("#month").datepicker({
+                    format: "MM",
+                    viewMode: "months",
+                    language: 'ru',
+                    minViewMode: "months",
+                    maxViewMode: 0,
+                    autoclose: true
+                }).on('changeDate', function (e) {
+                    var year = $('#year').datepicker('getDate');
+                    if (!year) {
+                        year = new Date();
+                    }
+                    dateOpt.defaultViewDate = {
+                        year: year.getFullYear(),
+                        month: e.date.getMonth(),
+                        day: 1
+                    };
+                    $('#day').datepicker('destroy');
+                    $('#day').datepicker(dateOpt);
+                });
+
+                $("#day").datepicker(dateOpt)
+
+                $(document).on('click', '.icon', function () {
+                    $(this).siblings('input').trigger('focus')
+                })
+
+                $(document).on('change', '#car, #color, #fuel_type', function () {
+                    var selectedVal = $(this).children("option:selected").val();
+                    if (parseInt(selectedVal)) {
+                        $(this).valid()
+                    }
+                })
+
+
+                var $carForm = $('#save_car_form');
+
+                {#$carForm.submit(function (e) {#}
+                {#e.preventDefault()#}
+
+                if ($carForm.length) {
+                    var carButton = $carForm.children().find('button:submit')
+                    $carForm.validate({
+                        ignore: ":hidden:not('#fuel_type')",
+                        rules: {
+                            //username is the name of the textbox
+                            engine_number: {
+                                required: true,
+                                //alphanumeric is the custom method, we defined in the above
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            body_number: {
+                                required: true,
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            fuel_type: {
+                                required: true,
+                            },
+                            car: {
+                                required: true,
+                                selectRequired: true,
+                            },
+                            color: {
+                                required: true,
+                                selectRequired: true,
+                            },
+                            full_weight: {
+                                required: true,
+                            },
+                            empty_weight: {
+                                required: true,
+                            },
+                            engine_power: {
+                                required: true,
+                            },
+                            price: {
+                                required: true,
+                            },
+                            year: {
+                                required: true,
+                            },
+                            seriya: {
+                                required: true,
+                                alphanumeric: true,
+                                noSpace: true,
+                            },
+                            auction_number: {
+                                required: true,
+
+                            },
+
+
+                        },
+                        messages: {
+                            car: {
+                                //error message for the required field
+                                required: 'Transport vositasi modeli tanlanmagan!'
+                            },
+                            engine_number: {
+                                //error message for the required field
+                                required: 'Dvigatel raqami kiritilmagan!'
+                            },
+                            body_number: {
+                                required: 'Kuzov raqami kiritilmagan!'
+                            },
+                            fuel_type: {
+                                required: "Yoqilg'i turi tanlanmagan!",
+                            },
+                            full_weight: {
+                                required: "To'la vazn kiritilmagan!",
+                            },
+                            empty_weight: {
+                                required: "Yuksiz vazn kiritilmagan!",
+                            },
+                            engine_power: {
+                                required: "Dvigatel quvvati kiritilmagan!",
+                            },
+                            year: {
+                                required: "Ishlab chiqarilgan yil kiritilmagan!",
+                            },
+                            color: {
+                                required: "Transport vositasi rangi tanlanmagan!",
+                            },
+                            price: {
+                                required: "Transport vositasi narxi kiritilmagan!",
+                            },
+                            seriya: {
+                                required: "Hisob ma'lumotnomasi seriyasi va raqami kiritilmagan!"
+                            },
+                            auction_number: {
+                                required: "Auksion raqami kiritilmagan!"
+                            },
+
+
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.is("#car")) {
+                                error.appendTo(element.parents('.car'));
+                            } else if (element.is("#fuel_type")) {
+                                error.appendTo(element.parents('.fuel_type'));
+                            } else if (element.is("#color")) {
+                                error.appendTo(element.parents('.color'));
+                            } else if (element.is(":checkbox")) {
+                                error.appendTo(element.parents('.device'));
+                            } else if (element.is("#full_weight")) {
+                                error.appendTo(element.parents('.full_weight'));
+                            } else if (element.is("#empty_weight")) {
+                                error.appendTo(element.parents('.empty_weight'));
+                            } else if (element.is("#engine_power")) {
+                                error.appendTo(element.parents('.engine_power'));
+                            } else if (element.is("#price")) {
+                                error.appendTo(element.parents('.price'));
+                            } else if (element.is("#year")) {
+                                error.appendTo(element.parent('div'));
+                            } else {
+                                error.insertAfter(element);
+                            }
+
+                        },
+                        submitHandler: function (form, e) {
+                            e.preventDefault()
+
+                            var day = 1
+                            if ($('#day').val()) {
+                                day = $('#day').val()
+                            }
+
+                            var month = 1
+                            if ($('#month').val()) {
+                                month = $('#month').val()
+                            }
+
+                            var year = $('#year').val()
+                            var date = moment(`${day}-${month}-${year}`, "DD-MMMM-YYYY").format('YYYY-MM-DD')
+
+                            if (!$(form).find('input[name="made_year"]').length) {
+                                $("<input />").attr("type", "hidden")
+                                    .attr("name", "made_year")
+                                    .attr("value", date).appendTo(form);
+                            } else {
+                                $('input[name="made_year"]').val(date)
+                            }
+
+                            carButton.attr('disabled', true)
+                            var carButtonValue = carButton.text()
+                            carButton.html(`${carButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
+
+                            var device = []
+                            $('.device').each(function () {
+                                if ($(this).prop('checked')) {
+                                    device.push($(this).data('device'))
+                                }
+                            })
+
+                            $('input[name ="device"]').empty().val(device)
+                            $('#car').attr('name', 'model')
+
+
+                            if ($('#is_saved_number_yes').prop('checked') === true) {
+                                if (!$(form).find('input[name="given_number"]').length) {
+                                    $("<input />").attr("type", "hidden")
+                                        .attr("name", "given_number")
+                                        .attr("value", $('#saved_number').val()).appendTo(form);
+                                }
+                            } else {
+                                if (!$(form).find('input[name="given_number"]').length) {
+                                    $("<input />").attr("type", "hidden")
+                                        .attr("name", "given_number")
+                                        .attr("value", $('#auction_number').val()).appendTo(form);
+                                }
+                            }
+
+                            if (!$(form).find('input[name="applicant"]').length) {
+                                $("<input />").attr("type", "hidden")
+                                    .attr("name", "applicant")
+                                    .attr("value", $('#person').val()).appendTo(form);
+                            }
+
+
+                            $.ajax({
+                                type: "POST",
+                                url: "{% url 'api_application:create_account_statement' %}",
+                                data: $(form).serialize(),
+                                statusCode: {
+                                    201: function (response) {
+                                        console.log(response)
+                                        carButton.parents('fieldset').hide()
+                                        carButton.parents('fieldset').nextAll('fieldset').first().show()
+
+                                        carButton.attr('type', 'button');
+                                        carButton.attr('disabled', false);
+                                        carButton.html(carButtonValue)
+
+                                        $('input[name ="application"]').val(response.id)
+
+                                        $('#section_step').addClass('active')
+                                        $('#car_step').removeClass('active')
+
+                                        $carForm.find(":input:not('.next'):not('.prev')").each(function () {
+                                            $(this).attr('disabled', true)
+                                        });
+                                    },
+                                    400: function (err) {
+                                        swal_error(err)
+
+                                        carButton.attr('type', 'submit')
+                                        carButton.attr('disabled', false)
+                                        carButton.html(carButtonValue)
+                                    }
+                                },
+                            });
+                            return false; // required to block normal submit since you used ajax
+                        }
+                    });
+                }
+
+
+            })
+        })
+    </script>
+{% endblock js %}

@@ -1,3 +1,4 @@
+from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -5,11 +6,34 @@ from rest_framework.views import APIView
 
 from api.v1 import permissions
 from api.v1.user import serializers
+from reception.settings import TOKEN_MAX_AGE
 from reception.telegram_bot import send_message_to_developer
 from user.models import (
     User,
-    Organization, CarModel, Color, CarType, FuelType, BodyType, Sms, Region, District, Quarter, Section
+    Organization, CarModel, Color, CarType, FuelType, BodyType, Sms, Region, District, Quarter, Section, Device
 )
+
+
+class LoginView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = serializers.LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = auth.authenticate(username=serializer.validated_data['username'],
+                                     password=serializer.validated_data['password'])
+            if user is not None:
+                if user.is_active:
+                    auth.login(request, user)
+                    # if request.POST.get('remember_me') == 'on':
+                    #     request.session.set_expiry(TOKEN_MAX_AGE)
+                    print(user.is_authenticated)
+                    serializer = serializers.UserShortDetailSerializer(user)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                else:
+                    return Response("Sizning profilingiz faol holatda emas!", status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response("Login yoki parol noto'g'ri!", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserDetailView(generics.RetrieveAPIView):
@@ -19,6 +43,11 @@ class UserDetailView(generics.RetrieveAPIView):
         permissions.UserPermission |
         permissions.AppCreatorPermission
     ]
+
+    def get_object(self):
+        user_id = self.kwargs.get('pk')
+        user = self.get_queryset().filter(id=user_id).last()
+        return user
 
 
 class UserOrganizationsList(generics.ListAPIView):
@@ -57,9 +86,20 @@ class CarTypesList(generics.ListAPIView):
     serializer_class = serializers.CarTypesListSerializer
     permission_classes = [AllowAny]
 
+class DevicesList(generics.ListAPIView):
+    queryset = Device.objects.filter(is_active=True)
+    serializer_class = serializers.DevicesListSerializer
+    permission_classes = [AllowAny]
+
 
 class RegionsList(generics.ListAPIView):
     queryset = Region.objects.filter(is_active=True)
+    serializer_class = serializers.RegionDetailSerializer
+    permission_classes = [AllowAny]
+
+
+class SectionExistsRegionsList(generics.ListAPIView):
+    queryset = Region.objects.filter(is_active=True, section__isnull=False, section__parent__isnull=False)
     serializer_class = serializers.RegionDetailSerializer
     permission_classes = [AllowAny]
 
@@ -74,7 +114,7 @@ class RegionDistrictsList(generics.ListAPIView):
 
 
 class RegionSectionsList(generics.ListAPIView):
-    queryset = Section.objects.filter(is_active=True)
+    queryset = Section.objects.filter(is_active=True, parent__isnull=False)
     serializer_class = serializers.RegionSectionsListSerializer
     permission_classes = [
         permissions.UserPermission |

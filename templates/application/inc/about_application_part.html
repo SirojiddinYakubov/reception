@@ -1,13 +1,14 @@
-
 <table class="table table-bordered table-striped">
     <tbody>
 
     <tr>
         <th scope="row">Status:</th>
         <td>
-            {% if application.process == 7 or application.process == 0 %}
+            {% if application.process == 0 %}
                 <button id="draft_to_shipped" class="btn btn-success">Arizani {{ application.section.title }}ga
                     jo'natish &nbsp&nbsp&nbsp<i class="fas fa-arrow-up"></i></button>
+            {% elif not application.section %}
+                <b style="color: red">Ariza to'liq to'ldirilmagan!</b>
             {% else %}
                 <b>Ariza {{ application.section.title }}ga jo'natilgan!</b>
             {% endif %}
@@ -75,26 +76,25 @@
     </tr>
 
 
-
-{#    <tr>#}
-{#        <th scope="row">Ariza haqida ma'lumot</th>#}
-{#        <td><a style="cursor: pointer; color: #007bff"#}
-{#               class="application_render_pdf"#}
-{#               data-application="{{ application.id }}">#}
-{#            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish#}
-{#            </button>#}
-{#        </a>#}
-{#        </td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <th scope="row">Tekshirish uchun parol:</th>#}
-{#        <td class="text-danger">{{ application.password }}</td>#}
-{#    </tr>#}
+    {#    <tr>#}
+    {#        <th scope="row">Ariza haqida ma'lumot</th>#}
+    {#        <td><a style="cursor: pointer; color: #007bff"#}
+    {#               class="application_render_pdf"#}
+    {#               data-application="{{ application.id }}">#}
+    {#            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish#}
+    {#            </button>#}
+    {#        </a>#}
+    {#        </td>#}
+    {#    </tr>#}
+    {#    <tr>#}
+    {#        <th scope="row">Tekshirish uchun parol:</th>#}
+    {#        <td class="text-danger">{{ application.password }}</td>#}
+    {#    </tr>#}
     <tr>
         <th scope="row">Yaratilgan vaqt:</th>
         <td>{{ application.created_date }}</td>
     </tr>
-      <tr>
+    <tr>
         <th scope="row">Tahrirlangan vaqt:</th>
         <td>{{ application.updated_date }}</td>
     </tr>
