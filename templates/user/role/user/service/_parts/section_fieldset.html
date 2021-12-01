@@ -11,7 +11,7 @@
                 <p>Ariza topshirmoqchi bo'lgan viloyatingiz va unga tegishli RIB yoki TRIB'larni tanlashingiz mumkin.
                     Buning
                     uchun viloyatni tanlang va ostki qismda chiqadigan RIB yoki TRIB'lar ro'yhatidan o'zingizga yaqin va
-                    qulay bo'lganini tanlashingiz mumkin</p>
+                    qulay bo'lganini tanlashingiz mumkin.</p>
             </div>
             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
                    for="region">{% trans 'Ariza topshiradigan viloyatni tanlang' %}<span
@@ -88,9 +88,10 @@
                             $('#sections_list').html(li)
                         }, function (err) {
                             console.log(err)
+
                             swal_error(err)
                         })
-                    }else {
+                    } else {
                         $('#sections_list').html('')
                     }
 
@@ -111,25 +112,14 @@
                         statusCode: {
                             200: function (res) {
                                 console.log(res)
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: 'top-end',
-                                    background: '#72fabd',
-                                    showConfirmButton: false,
-                                    timer: 2500,
-                                    timerProgressBar: false,
-                                    didOpen: (toast) => {
-                                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                    },
-                                    onClose: (toast) => {
-                                        url = "{% url "application:application_detail" 12345 %}".replace(/12345/, applicationId);
-                                        window.location.href = url
-                                    }
-                                })
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'Arizangiz muvaffaqiyatli topshirildi!'
+                                 $('#load').hide()
+                                swal.fire(
+                                    'Muvaffaqiyatli yaratildi!',
+                                    'Hurmatli arizachi sizni arizangiz muvaffaqiyatli yaratildi! Lekin YHXB RIB bo\'limiga hali jo\'natilmadi! Arizangizni to\'liq ko\'zdan kechirib, ariza uchun to\'lovni amalga oshirgandan keyin arizani YHXB RIB bo\'limiga jo\'natishingiz mumkin.',
+                                    'success',
+                                ).then(function () {
+                                    url = "{% url "application:application_detail" 12345 %}".replace(/12345/, applicationId);
+                                    window.location.href = url
                                 })
                             },
                             400: function (err) {

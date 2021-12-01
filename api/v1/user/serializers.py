@@ -215,7 +215,7 @@ class CreateColorSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class CreateCarSerializer(serializers.ModelSerializer):
+class CreateAccountStatementCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = [
@@ -260,6 +260,64 @@ class CreateCarSerializer(serializers.ModelSerializer):
         validated_data['is_replace_number'] = True
         return super().create(validated_data)
 
+
+class CreateContractOfSaleCarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = [
+            'id',
+            'model',
+            'body_type',
+            'fuel_type',
+            'full_weight',
+            'empty_weight',
+            'type',
+            'device',
+            'body_number',
+            'chassis_number',
+            'engine_number',
+            'made_year',
+            'color',
+            'engine_power',
+            'is_auction',
+            'is_saved_number',
+            'given_number',
+            'save_old_number',
+            'lost_number',
+            'old_number',
+            'is_old_number',
+            'lost_technical_passport',
+            'old_technical_passport',
+        ]
+        extra_kwargs = {
+            'model': {'required': True},
+            'body_type': {'required': True},
+            'fuel_type': {'required': True},
+            'full_weight': {'required': True},
+            'empty_weight': {'required': True},
+            'type': {'required': True},
+            'body_number': {'required': True},
+            'engine_number': {'required': True},
+            'made_year': {'required': True},
+            'color': {'required': True},
+            'engine_power': {'required': True},
+            'price': {'required': True},
+            'is_auction': {'required': True},
+            'is_saved_number': {'required': True},
+            'save_old_number': {'required': True},
+            'lost_number': {'required': True},
+            'is_old_number': {'required': True},
+            'lost_technical_passport': {'required': True},
+        }
+
+    def validate(self, attrs):
+        if not attrs.get('lost_technical_passport'):
+            if not attrs.get('old_technical_passport'):
+                raise serializers.ValidationError('old_technical_passport to\'ldirish majburiy!')
+        return attrs
+
+    def create(self, validated_data):
+        return super().create(validated_data)
 
 class OrganizationDetailSerializer(serializers.ModelSerializer):
     applicant = UserShortDetailSerializer()

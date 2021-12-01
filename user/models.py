@@ -379,6 +379,7 @@ class Car(models.Model):
 class CarType(models.Model):
     title = models.CharField('Nomi', max_length=100)
     is_active = models.BooleanField(default=True)
+    sort = models.IntegerField(default=1)
     created_date = models.DateTimeField(default=timezone.now, editable=False)
 
     class Meta:

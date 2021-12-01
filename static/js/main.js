@@ -412,7 +412,6 @@ function tokenInvalid() {
         },
         success: function (res) {
             localStorage.setItem('access', res.access)
-            location.reload()
         },
         error: function (err) {
             error_toast('Xatolik! Token yaroqsiz!')
@@ -1504,9 +1503,9 @@ function formatState(state) {
 
 
 function swal_error(err = null) {
-    console.log(err)
 
-    if (err && typeof err === 'object') {
+    try{
+          if (err && typeof err === 'object') {
         var errorKey
         var errorText
         var keys = Object.keys(err.responseJSON);
@@ -1531,8 +1530,20 @@ function swal_error(err = null) {
             'Xatolik!',
             'Sahifani yangilab qayta urinib ko\'ring',
             `error`,
-        )
+        ).then(function () {
+            location.reload()
+        })
     }
+    } catch {
+        Swal.fire(
+            'Xatolik!',
+            'Sahifani yangilab qayta urinib ko\'ring',
+            `error`,
+        ).then(function () {
+            location.reload()
+        })
+    }
+
 
 }
 
@@ -1542,6 +1553,8 @@ function sendAuthorizationToken() {
         csrftoken = getCookie('csrftoken')
 
     $.ajaxSetup({
+        // contentType: "application/json; charset=utf-8",
+        // dataType: "json",
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-CSRFToken', csrftoken)
             xhr.setRequestHeader('Authorization', `Bearer ${access}`)
