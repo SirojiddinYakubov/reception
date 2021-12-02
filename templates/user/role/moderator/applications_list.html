@@ -42,7 +42,7 @@
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Holati" %}</th>
-                                       <th>{% trans "Ariza raqami" %}</th>
+                                    <th>{% trans "Ariza raqami" %}</th>
                                     {#                                    <th>{% trans "To'lov" %}</th>#}
                                     {#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
                                     {#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
@@ -76,18 +76,18 @@
     <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
-    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
-    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
-  <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
-    <!-- Datatables init -->
-    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
     <script type="text/javascript" class="init">
         $(document).ready(function () {
             sendAuthorizationToken()
+
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                console.log(message);
+            };
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
@@ -147,7 +147,8 @@
                     {
                         "data": "service",
                         render: function (data, type, row) {
-                            return data.short_title
+                            var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, row.id.toString())
+                            return `<a href="${url}">${data.short_title}</a>`
                         }
                     },
                     {
@@ -159,13 +160,15 @@
                     {
                         "data": 'car',
                         render: function (data, type, row) {
-                            return `<b title='${data.model.title}'>${data.model.title.substring(0, 25)}</b><br>${data.old_number ? data.old_number : ''}`
+                            var car_url = "{% url 'user:view_car_data' 12345 %}".replace(/12345/, row.car.id.toString())
+                            return `<a href='${car_url}' title='${data.model.title}'>${data.model.title.substring(0, 25)}</a><br>${data.old_number ? data.old_number : ''}`
                         }
                     },
                     {
                         "data": "created_user",
                         render: function (data, type, row) {
-                            return `<b>${data.last_name} ${data.first_name} ${data.middle_name}</b><br>+998${data.phone}`
+                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
+                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
                         }
                     },
                     {
@@ -178,6 +181,7 @@
                     {
                         "data": "process",
                         render: function (data, type, row) {
+
                             if (row.process === 7) {
                                 return '<span class="badge label-table bg-warning">Ariza yaratilmoqda</span>'
                             } else if (row.process === 0) {
@@ -199,7 +203,7 @@
                         }
 
                     },
-                     {"data": "id"},
+                    {"data": "id"},
                 ]
             })
 
