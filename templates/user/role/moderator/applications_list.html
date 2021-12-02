@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="col-md-2" id="right_filter_div">
-                            {% include 'user/role/regional_controller/right_filter_applications.html' %}
+                            {% include 'user/role/moderator/right_filter_applications.html' %}
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                 "ajax": function (data, callback, settings) {
 
                     $.ajax({
-                        url: "{% url 'api_regional_controller:applications_list' %}?id=475",
+                        url: "{% url 'api_moderator:applications_list' %}",
                         type: 'GET',
                         dataType: "json",
                         cache: false,

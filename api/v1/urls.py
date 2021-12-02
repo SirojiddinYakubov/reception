@@ -10,4 +10,5 @@ urlpatterns = [
     #roles
     path('app_creator/', include('api.v1.user.app_creator.urls')),
     path('regional_controller/', include('api.v1.user.regional_controller.urls')),
+    path('moderator/', include('api.v1.user.moderator.urls')),
 ]
