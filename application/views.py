@@ -37,6 +37,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             return ['user/role/checker/checker_applications_list.html']
         elif role == REGIONAL_CONTROLLER:
             return ['user/role/regional_controller/applications_list.html']
+        elif role == MODERATOR:
+            return ['user/role/moderator/applications_list.html']
         return [self.template_name]
 
     def get_queryset(self):
@@ -55,6 +57,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
             qs = qs.filter(section__region=self.request.user.region, is_block=False).filter(
                 process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
                              ACCEPTED, REJECTED])
+        elif role == MODERATOR:
+            qs = qs
         return qs
 
     def get(self, request, *args, **kwargs):

@@ -99,7 +99,7 @@ class RegionsList(generics.ListAPIView):
 
 
 class SectionExistsRegionsList(generics.ListAPIView):
-    queryset = Region.objects.filter(is_active=True, section__isnull=False, section__parent__isnull=False)
+    queryset = Region.objects.filter(is_active=True, section__isnull=False, section__parent__isnull=False).distinct()
     serializer_class = serializers.RegionDetailSerializer
     permission_classes = [AllowAny]
 
@@ -118,11 +118,13 @@ class RegionSectionsList(generics.ListAPIView):
     serializer_class = serializers.RegionSectionsListSerializer
     permission_classes = [
         permissions.UserPermission |
-        permissions.AppCreatorPermission
+        permissions.AppCreatorPermission |
+        permissions.RegionalControllerPermission |
+        permissions.ModeratorPermission
     ]
 
     def get_queryset(self):
-        return self.queryset.filter(region_id=self.kwargs.get('pk'))
+        return self.queryset.filter(region_id=self.kwargs.get('pk')).distinct()
 
 
 class DistrictQuartersList(generics.ListAPIView):
