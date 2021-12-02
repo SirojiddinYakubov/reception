@@ -58,6 +58,8 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
                 process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
                              ACCEPTED, REJECTED])
         elif role == MODERATOR:
+            print(qs.count())
+            print(role)
             qs = qs
         return qs
 
@@ -93,6 +95,9 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
             if request.user == application.created_user:
                 return super().get(request, *args, **kwargs)
             return redirect(reverse_lazy('error_403'))
+        elif request.user.role == MODERATOR:
+            return super().get(request, *args, **kwargs)
+
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])

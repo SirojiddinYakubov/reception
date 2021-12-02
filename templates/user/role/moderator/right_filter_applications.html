@@ -151,6 +151,21 @@
     <script type="text/javascript">
         $(function () {
             sendAuthorizationToken()
+
+
+            getAjaxData("{% url 'api_user:section_exists_regions_list' %}").then(res => {
+                var a2 = ""
+                var region_get = "{{ request.GET.region }}"
+                res.forEach((x, i) => {
+                    var href = "{% url "application:change_get_request" 'region' 12345 %}".replace(/12345/, x.id.toString())
+                    a2 += `<a href=${href} class="${x.id.toString() === region_get ? 'active' : 'text-reset d-block'}">
+                            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+                            <span class="mb-0 mt-1">${x.title}</span>
+                            </a>`
+                })
+                $('#right_filter_region_div').html(a2)
+            })
+
             getAjaxData("{% url 'api_service:services_list' %}").then(res => {
                 var a1 = ""
                 var service_get = "{{ request.GET.service }}"
@@ -162,21 +177,6 @@
                             </a>`
                 })
                 $('#right_filter_service_div').html(a1)
-            })
-
-
-            getAjaxData("{% url 'api_user:section_exists_regions_list' %}").then(res => {
-                console.log(res)
-                var a2 = ""
-                var region_get = "{{ request.GET.region }}"
-                res.forEach((x, i) => {
-                    var href = "{% url "application:change_get_request" 'region' 12345 %}".replace(/12345/, x.id.toString())
-                    a2 += `<a href=${href} class="${x.id.toString() === region_get ? 'active' : 'text-reset d-block'}">
-                            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-                            <span class="mb-0 mt-1">${x.title}</span>
-                            </a>`
-                })
-                $('#right_filter_region_div').html(a2)
             })
         })
     </script>
