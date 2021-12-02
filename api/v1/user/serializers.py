@@ -61,6 +61,15 @@ class RegionSectionsListSerializer(serializers.ModelSerializer):
         model = Section
         fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
 
+class SectionDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = [
+            'id',
+            'parent',
+            'title'
+        ]
+
 class UserDetailSerializer(serializers.ModelSerializer):
     region = RegionDetailSerializer()
     district = DistrictDetailSerializer()
@@ -340,8 +349,23 @@ class OrganizationDetailSerializer(serializers.ModelSerializer):
             'applicant',
         ]
 
+class CarModelDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarModel
+        fields = [
+            'id',
+            'title',
+            'creator',
+            'is_local',
+            'is_truck',
+            'is_active',
+            'created_user',
+            'created_date'
+        ]
+
 
 class CarDetailSerializer(serializers.ModelSerializer):
+    model = CarModelDetailSerializer()
     class Meta:
         model = Car
         fields = [
@@ -361,7 +385,8 @@ class CarDetailSerializer(serializers.ModelSerializer):
             'engine_power',
             'price',
             'is_auction',
-            'given_number'
+            'given_number',
+            'old_number'
         ]
 
 
@@ -394,3 +419,4 @@ class CreateOrganizationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['created_user'] = self.context['request'].user
         return super().create(validated_data)
+
