@@ -42,9 +42,9 @@
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Holati" %}</th>
                                     <th>{% trans "Ariza nusxasi" %}</th>
-{#                                    <th>{% trans "To'lov" %}</th>#}
-{#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
-{#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
+                                    {#                                    <th>{% trans "To'lov" %}</th>#}
+                                    {#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
+                                    {#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
                                 </tr>
                                 </thead>
 
@@ -86,8 +86,11 @@
     <script type="text/javascript" class="init">
         $(document).ready(function () {
             var url = null
-           sendAuthorizationToken()
+            sendAuthorizationToken()
 
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                console.log(message);
+            };
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
@@ -202,36 +205,36 @@
                         }
                     },
 
-                 /*   {
-                        "data": "is_payment",
-                        render: function (data, type, row) {
-                            if (row.is_payment) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },
-                    {
-                        "data": "car__is_confirm",
-                        render: function (data, type, row) {
-                            if (row.car__is_confirm) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },
-                    {
-                        "data": "car__is_technical_confirm",
-                        render: function (data, type, row) {
-                            if (row.car__is_technical_confirm) {
-                                return '<center><i class="fas fa-check-circle text-success"></i></center>'
-                            } else {
-                                return '<center><i class="fas fa-times-circle text-danger"></i></center>'
-                            }
-                        }
-                    },  */
+                    /*   {
+                           "data": "is_payment",
+                           render: function (data, type, row) {
+                               if (row.is_payment) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },
+                       {
+                           "data": "car__is_confirm",
+                           render: function (data, type, row) {
+                               if (row.car__is_confirm) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },
+                       {
+                           "data": "car__is_technical_confirm",
+                           render: function (data, type, row) {
+                               if (row.car__is_technical_confirm) {
+                                   return '<center><i class="fas fa-check-circle text-success"></i></center>'
+                               } else {
+                                   return '<center><i class="fas fa-times-circle text-danger"></i></center>'
+                               }
+                           }
+                       },  */
                     {% if request.user.role == '1' %}
                         {
                             defaultContent: '<button  class="btn btn-danger deleteApp"><i class="fas fa-trash"></i></button>'

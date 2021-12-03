@@ -180,6 +180,11 @@
     <script type="text/javascript" class="init">
         $(document).ready(function () {
             sendAuthorizationToken()
+
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                console.log(message);
+            };
+
             var url = null
 
             var table = $("#example1").DataTable({

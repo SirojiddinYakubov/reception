@@ -865,6 +865,8 @@ class ViewCarData(AllowedRolesMixin, DetailView):
             if car.service_car.all().first().created_user == request.user:
                 return super().get(request, *args, **kwargs)
             return redirect(reverse_lazy('error_403'))
+        elif request.user.role == MODERATOR:
+            return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         car = get_object_or_404(Car, id=self.kwargs['car_id'])

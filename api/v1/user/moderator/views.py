@@ -21,8 +21,5 @@ class ApplicationsList(generics.ListAPIView):
     ]
 
     def get_queryset(self):
-        qs = super(ApplicationsList, self).get_queryset().filter(section__region=self.request.user.section.region,
-                                                                 is_block=False).filter(
-            process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
-                         ACCEPTED, REJECTED])
+        qs = super(ApplicationsList, self).get_queryset()
         return qs
