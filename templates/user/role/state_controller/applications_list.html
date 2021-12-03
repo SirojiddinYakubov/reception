@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="col-md-2" id="right_filter_div">
-                            {% include 'user/role/regional_controller/right_filter_applications.html' %}
+                            {% include 'user/role/state_controller/right_filter_applications.html' %}
                         </div>
                     </div>
 
@@ -76,8 +76,6 @@
     <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
-    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
-    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'assets/libs/sweetalert/sweetalert.min.js' %}"></script>
@@ -125,7 +123,7 @@
                 "ajax": function (data, callback, settings) {
 
                     $.ajax({
-                        url: "{% url 'api_regional_controller:applications_list' %}?id=475",
+                        url: "{% url 'api_state_controller:applications_list' %}",
                         type: 'GET',
                         dataType: "json",
                         cache: false,
@@ -149,7 +147,8 @@
                     {
                         "data": "service",
                         render: function (data, type, row) {
-                            return data.short_title
+                            var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, row.id.toString())
+                            return `<a href="${url}">${data.short_title}</a>`
                         }
                     },
                     {
@@ -161,13 +160,15 @@
                     {
                         "data": 'car',
                         render: function (data, type, row) {
-                            return `<b title='${data.model.title}'>${data.model.title.substring(0, 25)}</b><br>${data.old_number ? data.old_number : ''}`
+                            var car_url = "{% url 'user:view_car_data' 12345 %}".replace(/12345/, row.car.id.toString())
+                            return `<a href='${car_url}' title='${data.model.title}'>${data.model.title.substring(0, 25)}</a><br>${data.old_number ? data.old_number : ''}`
                         }
                     },
                     {
                         "data": "created_user",
                         render: function (data, type, row) {
-                            return `<b>${data.last_name} ${data.first_name} ${data.middle_name}</b><br>+998${data.phone}`
+                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
+                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
                         }
                     },
                     {
@@ -180,6 +181,7 @@
                     {
                         "data": "process",
                         render: function (data, type, row) {
+
                             if (row.process === 7) {
                                 return '<span class="badge label-table bg-warning">Ariza yaratilmoqda</span>'
                             } else if (row.process === 0) {
