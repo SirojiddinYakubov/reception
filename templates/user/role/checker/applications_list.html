@@ -32,20 +32,32 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-10 col-xs-12">
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <a href="{% url "application:change_get_request" 'process' 'all' %}"
+                                       class="btn btn-light">Hammasi</a>
+                                    <a href="{% url "application:change_get_request" 'process' '1' %}"
+                                       class="btn btn-info">Yangilar</a>
+                                    <a href="{% url "application:change_get_request" 'process' '5' %}"
+                                       class="btn btn-success">Qabul qilingan</a>
+                                    <a href="{% url "application:change_get_request" 'process' '2' %}"
+                                       class="btn btn-warning">Jarayon</a>
+                                    <a href="{% url "application:change_get_request" 'process' '8' %}"
+                                       class="btn btn-secondary">Qayta tiklangan</a>
+                                    <a href="{% url "application:change_get_request" 'process' '6' %}"
+                                       class="btn btn-danger">Rad etilgan</a>
+                                </div>
+                            </div>
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
-
                                     <th>{% trans "Xizmat nomi" %}</th>
-                                    <th>{% trans "YHXB RIB" %}</th>
                                     <th>{% trans "Avtomobil" %}</th>
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
-                                    <th>{% trans "Holati" %}</th>
-                                    <th>{% trans "Ariza raqami" %}</th>
-                                    {#                                    <th>{% trans "To'lov" %}</th>#}
-                                    {#                                    <th>{% trans "Ma'lumotlar mosligi" %}</th>#}
-                                    {#                                    <th>{% trans "Texnik ko'rik" %}</th>#}
+                                    <th style="width: 14% !important;">{% trans "Holati" %}</th>
+                                    <th style="width: 5% !important;">{% trans "Ariza raqami" %}</th>
+                                    <th>{% trans "#" %}</th>
                                 </tr>
                                 </thead>
 
@@ -57,7 +69,7 @@
                         </div>
 
                         <div class="col-md-2" id="right_filter_div">
-                            {% include 'user/role/moderator/right_filter_applications.html' %}
+                            {% include 'user/role/checker/right_filter_applications.html' %}
                         </div>
                     </div>
 
@@ -124,7 +136,7 @@
                 "ajax": function (data, callback, settings) {
 
                     $.ajax({
-                        url: "{% url 'api_moderator:applications_list' %}",
+                        url: "{% url 'api_checker:applications_list' %}",
                         type: 'GET',
                         dataType: "json",
                         cache: false,
@@ -153,12 +165,6 @@
                         }
                     },
                     {
-                        "data": "section",
-                        render: function (data, type, row) {
-                            return data.title
-                        }
-                    },
-                    {
                         "data": 'car',
                         render: function (data, type, row) {
                             var car_url = "{% url 'user:view_car_data' 12345 %}".replace(/12345/, row.car.id.toString())
@@ -182,7 +188,6 @@
                     {
                         "data": "process",
                         render: function (data, type, row) {
-                            /*if ((row.process === 6)) return "#dc3545"*/
                             var border_color = ((row.process === 2) || (row.process === 3) || (row.process === 4)) ? "#ecec01" : (row.process === 5) ? "#36f406" : (row.process === 6) ? "#dc3545" : '#c9c9c9';
 
                             return `
@@ -199,6 +204,15 @@
 
                     },
                     {"data": "id"},
+                    {
+                        "data": "file_name",
+                        render: function (data, type, row) {
+                            var url = "{% url 'application:create_application_doc' filename=12345 %}".replace(/12345/, row.file_name.toString());
+
+                            return `<center><a href="${url}" ><i style="font-size: large" class="fas fa-file-word"></i></a></center>`
+                        }
+                    },
+
                 ],
                 createdRow: function (row, data, index) {
                     console.log(205, row)
@@ -301,72 +315,6 @@
                     }
                 })
             })
-
-            $('#example1 tbody').on('click', '.deleteApp', function () {
-                var row = $(this).closest('tr');
-
-                var applicationId = table.row(row).data()["id"];
-
-                swal({
-                    title: "Arizani o'chirmoqchimisiz ?",
-                    text: applicationId + "-raqamli arizani o'chirmoqchimisiz ?",
-                    icon: "warning",
-                    closeOnClickOutside: false,
-                    buttons: [
-                        'Yoq, Bekor qilish!',
-                        'Ha, Roziman!'
-                    ],
-                    dangerMode: true,
-                }).then(function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            type: 'POST',
-                            url: '{% url "application:remove_application" %}',
-                            data: {
-                                'application': applicationId
-                            },
-                            success: function (response) {
-                                if (response === 'True') {
-                                    swal({
-                                        title: "Muvaffaqiyatli o'chirildi !",
-                                        text: applicationId + "-raqamli ariza muvaffaqiyatli o'chirildi !",
-                                        icon: 'success'
-                                    }).then(function () {
-                                        window.location.href = '{% url "application:applications_list" %}';
-                                    });
-                                } else if (response === 'disabled') {
-                                    $.notifyDefaults({
-                                        type: 'danger',
-                                        allow_dismiss: false,
-                                        animate: {
-                                            enter: 'animated fadeInRight',
-                                            exit: 'animated fadeOutRight'
-                                        },
-                                        z_index: '9999'
-                                    })
-                                    $.notify({
-                                        icon: 'glyphicon glyphicon-star',
-                                        message: `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-exclamation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-                                            '  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>\n' +
-                                            '  <path fill-rule="evenodd" d="M10.273 2.513l-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>\n' +
-                                            '</svg> ${applicationId}-raqamli arizani o'chirishga ruxsat berilmaydi!`
-                                    })
-                                } else {
-                                    errorFunction()
-                                }
-
-                            }
-                        });
-
-
-                    } else {
-                        swal("Bekor qilindi", applicationId + "-raqamli ariza ro'yhatda turibti !", "error");
-                    }
-                });
-
-            });
-
-
         })
     </script>
 {% endblock js %}

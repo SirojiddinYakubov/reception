@@ -33,8 +33,9 @@ class ApplicationsList(ApplicationCustomMixin, AllowedRolesMixin):
 
     def get_template_names(self):
         role = self.request.user.role
+
         if role == CHECKER:
-            return [f'user/role/checker/checker_applications_list.html']
+            return ['user/role/checker/applications_list.html']
         elif role == REGIONAL_CONTROLLER:
             return ['user/role/regional_controller/applications_list.html']
         elif role == MODERATOR:
