@@ -82,3 +82,20 @@ class AmountBaseCalculationAdmin(admin.ModelAdmin):
     list_display_links = ['amount']
     list_filter = ['start', 'stop']
     search_fields = ['amount', ]
+
+
+@admin.register(GetPayFromCard)
+class GetPayFromCardAdmin(admin.ModelAdmin):
+    list_display = ['id', 'transaction_id', 'application', 'card_number', 'amount']
+    list_display_links = ['transaction_id']
+    list_filter = ['created_at', ]
+    search_fields = ['transaction_id', 'application_id', 'card_number', ]
+
+
+@admin.register(PaymentForTreasury)
+class PaymentForTreasuryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'transaction_id', 'application',  'state_duty_score',
+                    'state_duty_percent']
+    list_display_links = ['application']
+    list_filter = ['created_at', ]
+    search_fields = ['transaction_id', 'application_id',]

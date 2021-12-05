@@ -483,6 +483,8 @@ class PaymentsList(AllowedRolesMixin, ListView):
         role = self.request.user.role
         if role == USER:
             return ['application/payments/user_payments_list.html']
+        elif role == MODERATOR:
+            return ['user/role/moderator/payments_list.html']
         return [self.template_name]
 
     def get_context_data(self, **kwargs):

@@ -1,8 +1,6 @@
-{% load humanize %}
+{% load humanize static %}
 {% load applications_tags %}
 <div id="render_div">
-
-
     <table class="table table-bordered table-striped">
         <thead class="thead-light">
         <tr>
@@ -24,22 +22,31 @@
                     <th scope="row">{{ percent.get_state_duty_display }}</th>
                     <th scope="row">{{ percent.title }}</th>
                     <td>
-                        <b>    {% get_payment_score application percent as score %} {{ score|safe }}</b>
+                        <b>{% get_payment_score application.id percent.id as state_duty_score %} {{ state_duty_score.score|safe }}</b>
                     </td>
                     <td><b class="state_payment">
-                        {% get_payment_payment percent application as pay %}{{ pay|intcomma }}</b> so'm
+                        {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
                     </td>
                     <td>
-                        {% if request.user.role == '2' or request.user.role == '3' %}
-                            <input name="payment" {% if percent.is_paid %}checked{% endif %}
-                                   data-payment="{{ percent.id }}"
-                                   class="payment_checkbox" type="checkbox"/>
+                        {#                        {% if request.user.role == '2' or request.user.role == '3' %}#}
+                        {#                            <input name="payment" {% if percent.is_paid %}checked{% endif %}#}
+                        {#                                   data-payment="{{ percent.id }}"#}
+                        {#                                   class="payment_checkbox" type="checkbox"/>#}
+                        {#                        {% else %}#}
+                        {#                            {% check_payment_paid application percent as paid %}#}
+                        {#                            {% if paid %}#}
+                        {#                                <i style="color: green" class="far fa-check-circle"></i>{% else %}#}
+                        {#                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i#}
+                        {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
+                        {#                        {% endif %}#}
+                        {% check_state_payment_paid application percent as check %}
+                        {% if not check %}
+                            <button class="btn btn-success create_pay" data-percent-id="{{ percent.id }}">To'lash
+                            </button>
                         {% else %}
-                            {% check_payment_paid application percent as paid %}
-                            {% if paid %}
-                                <i style="color: green" class="far fa-check-circle"></i>{% else %}
-                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i
-                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}
+                            <b class="text-primary">bankka jo'natilgan</b>
+                            {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
+                            {#                            </button>#}
                         {% endif %}
                     </td>
                 </tr>
@@ -87,7 +94,27 @@
             {#            </button>#}
         {% endif %}
         <button type="button"
-                class="btn btn-info waves-effect waves-light float-end payment_render_pdf">To'lovlarni pdf holatda chiqarish
+                class="btn btn-info waves-effect waves-light float-end payment_render_pdf">To'lovlarni pdf holatda
+            chiqarish
         </button>
     </div>
 </div>
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/libs/cryptoJS/cryptoJS.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            sendAuthorizationToken()
+            $('.create_pay').on('click', function () {
+                const percentId = $(this).data('percent-id'),
+                    applicationId = '{{ application.id }}'
+
+                var encrypted = CryptoJS.AES.encrypt(`percentId=${percentId}&applicationId=${applicationId}`, "password")
+                window.location.href = `{% url 'user:create_card_pay' %}?token=${encrypted}`
+            })
+        })
+    </script>
+{% endblock js %}

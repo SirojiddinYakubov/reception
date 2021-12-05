@@ -133,12 +133,13 @@ def calculate_applications_count(section_id):
 #     # print(url)
 #     return None
 @register.simple_tag
-def get_payment_score(application, percent):
+def get_payment_score(application_id, percent_id):
+    application = Application.objects.get(id=application_id)
     try:
         from service.models import FINE, REGISTRATION, RE_REGISTRATION
         section = Section.objects.filter(id=application.section.id).last()
         created_user = User.objects.get(id=application.created_user.id)
-        percent = StateDutyPercent.objects.get(id=percent.id)
+        percent = StateDutyPercent.objects.get(id=percent_id)
 
         if application.person_type == LEGAL_PERSON:
             district = application.organization.legal_address_district
@@ -154,42 +155,50 @@ def get_payment_score(application, percent):
 
                 if district in section.district.all():
                     print("Buxoro obl gai tarkibida, tuman raqami")
-                    state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
+                    state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
                 else:
                     print("boshqa shaharda, Boxoro shahar raqami")
-                    state_duty = StateDutyScore.objects.filter(region=section.region,
+                    state_duty_score = StateDutyScore.objects.filter(region=section.region,
                                                                state_duty=percent.state_duty).last()
             else:
-                state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
-            return state_duty.score
+                state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
+            return state_duty_score
         except Exception as e:
             print(e)
-            state_duty = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
-            return state_duty.score
+            state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
+            return state_duty_score
     except AttributeError:
         return '<p style="color: red">Ariza YHXB RIB bo\'limiga jo\'natilmaganligi sababli hisob raqamlar aniqlanmagan!<p>'
 
 
 @register.simple_tag
-def get_payment_payment(state_duty_percent, application):
+def get_state_duty_payment(percent_id, application_id):
+    percent = StateDutyPercent.objects.get(id=percent_id)
+    application = Application.objects.get(id=application_id)
     try:
         amount_base_calculation = AmountBaseCalculation.objects.get(is_active=True)
-        if state_duty_percent.state_duty == ROAD_FUND:
-            payment = int(int(state_duty_percent.percent) / 100 * int(application.car.price))
-        elif state_duty_percent.state_duty == ROAD_FUND_HORSE_POWER:
+        if percent.state_duty == ROAD_FUND:
+            payment = int(int(percent.percent) / 100 * int(application.car.price))
+        elif percent.state_duty == ROAD_FUND_HORSE_POWER:
 
             payment = int(
-                amount_base_calculation.amount / 100 * int(state_duty_percent.percent) * application.car.engine_power)
+                amount_base_calculation.amount / 100 * int(percent.percent) * application.car.engine_power)
         else:
-            payment = amount_base_calculation.amount / 100 * int(state_duty_percent.percent)
+            payment = amount_base_calculation.amount / 100 * int(percent.percent)
         return int(payment)
     except:
-        return state_duty_percent.percent
+        return 400
 
 
 @register.simple_tag
 def check_payment_paid(application, percent):
     return percent.paidstateduty_set.filter(application=application).exists()
+
+
+
+@register.simple_tag
+def check_state_payment_paid(application, percent):
+    return application.paymentfortreasury_set.filter(state_duty_percent=percent).exists()
 
 # @register.filter
 # def check_payment_paid(percent):

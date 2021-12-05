@@ -73,4 +73,5 @@ urlpatterns = [
     # app creatoe role
     path('create_user_account_view/', CreateUserAccountView.as_view(), name='create_user_account_view'),
 
+    path('create/card/pay/', TemplateView.as_view(template_name='payments/apelsin.html'), name="create_card_pay")
 ]

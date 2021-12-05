@@ -8,7 +8,6 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
 
-
     path('login/', views.LoginView.as_view(), name='login_view'),
 
     path('detail/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
@@ -29,5 +28,9 @@ urlpatterns = [
     path('create-color/', views.CreateColor.as_view(), name='create_color'),
 
     path('playmobile/sms/status/', views.PlayMobileSmsStatus.as_view()),
+
+    path('get/card/phone/number/', views.GetCardPhoneNumber.as_view(), name='get_card_phone_number'),
+
+    path('confirm/pay/', views.ConfirmPay.as_view(), name="confirm_pay"),
 
 ]

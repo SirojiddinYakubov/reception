@@ -41,9 +41,6 @@ class ApplicationRightFilter(filters.FilterSet):
                         qs = qs.filter(process=value)
                     if key == 'payment':
                         qs = qs.filter(is_payment=value)
-                    if key == 'region':
-                        qs = qs.filter(section__region__id=value)
-
                     if key == 'confirm':
                         qs = qs.filter(car__is_confirm=value)
 

@@ -246,10 +246,8 @@ class SendSmsWithPlayMobile:
                 ]
             }
 
-
             r = requests.post(URL, json=payload, headers=headers,
                               auth=(self.username, self.password))
-
 
             if not r.status_code == SUCCESS:
                 send_message_to_developer('Send sms error with play mobile')
@@ -266,6 +264,7 @@ class SendSmsWithPlayMobile:
             print(e)
             send_message_to_developer(f"sms object create error: {e}")
             return FAILED
+
     def clean_message(self, message):
         message = message.replace('ц', 'ts').replace('ч', 'ch').replace('ю',
                                                                         'yu').replace(
@@ -326,3 +325,244 @@ class SendSmsWithPlayMobile:
                 return MESSAGE_IS_EMPTY
         except:
             return FAILED
+
+
+class PaymentByRequisites:
+    """https://noon-warbler-f6e.notion.site/10f6bb76a73949fa990b44965a4d8851"""
+    def __init__(self, card_number, exp_date, amount):
+        self.card_number = card_number
+        self.exp_date = exp_date
+        self.amount = amount
+        self.username = os.getenv('APELSIN_USERNAME')
+        self.password = os.getenv('APELSIN_PASSWORD')
+        self.merchant_id = 998747
+        self.url = "https://topup.apelsin.uz/api/merchant/"
+        self.headers = {'Content-type': 'application/json'}
+        self.token = None
+        self.phone = None
+        self._id = None
+
+    def get(self):
+        get_phone = self.cards_get_phone(self.card_number, self.exp_date)
+        if get_phone == SUCCESS:
+            create_amount = self.create_amount(self.amount)
+            if create_amount == SUCCESS:
+                confirm_pay = self.confirm_pay(self._id, self.token)
+                return confirm_pay
+            else:
+                return create_amount
+        else:
+            return get_phone
+
+
+    def cards_get_phone(self, card_number, exp_date):
+        get_phone_payload = json.dumps({
+            "method": "cards.get_phone",
+            "params": {
+                "number": card_number,
+                "expire": exp_date
+            },
+            "id": 0
+        })
+        get_phone = requests.request("POST", url=self.url, data=get_phone_payload, headers=self.headers,
+                                     auth=(self.username, self.password))
+
+        """
+        success:
+        {
+            "error": null,
+            "result": {
+                "card": {
+                    "token": "N+qQnaWR9J9PGwr/4hIZz5aZeVlLgtODSk7OBlgva1k=",
+                    "phone": "998919791999"
+                }
+            },
+            "id": 0
+        }
+        error:
+        {
+            "error": "Cannot determine centre and prefix for card 986006******1059",
+            "result": null,
+            "id": 0
+        }
+        """
+
+        try:
+            print(get_phone.json())
+            if isinstance(get_phone.json()['result'], dict):
+                self.token = get_phone.json()['result']['card']['token']
+                self.phone = get_phone.json()['result']['card']['phone']
+                return SUCCESS
+            else:
+                return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+        except Exception as e:
+            print(372, e)
+            return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+
+    def create_amount(self, amount):
+        create_amount_payload = json.dumps({
+            "method": "receipt.create",
+            "params": {
+                "merchant_id": self.merchant_id,
+                "amount": amount,
+                "account": [
+                    {
+                        "field": "test",
+                        "value": "test"
+                    }
+                ],
+                "lang": "ru"
+            }, "id": 0
+        })
+
+        create_amount = requests.request("POST", url=self.url, data=create_amount_payload, headers=self.headers,
+                                         auth=(self.username, self.password))
+
+        """
+        success:
+        {
+            "error": null,
+            "result": {
+                "receipt": {
+                    "_id": "a110fa3afede4ffcbf8b075495eb39cd",
+                    "state": 0,
+                    "create_date": 1638680553820,
+                    "pay_date": 0,
+                    "error": null,
+                    "type": 1,
+                    "card": null,
+                    "merchant": {
+                        "_id": "998747",
+                        "name": "Open Soft",
+                        "organization": "Прямой договор",
+                        "logo": null
+                    },
+                    "description": "",
+                    "account": [
+                        {
+                            "name": "test",
+                            "value": "test"
+                        }
+                    ],
+                    "detail": null,
+                    "amount": 100000,
+                    "currency": 0,
+                    "commission": 0
+                }
+            },
+            "id": 0
+        }
+        error:
+        {
+            "error": "Merchant not found",
+            "result": null,
+            "id": 0
+        }
+        """
+
+        try:
+            print(create_amount.json())
+            if isinstance(create_amount.json()['result'], dict):
+                self._id = create_amount.json()['result']['receipt']['_id']
+                return SUCCESS
+            else:
+                send_message_to_developer(f"error: {create_amount.json()}")
+                return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+        except Exception as e:
+            print(e)
+            send_message_to_developer(f"error: {e}")
+            return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+
+    def confirm_pay(self, _id, token):
+        confirm_pay_payload = json.dumps({
+            "method": "receipt.pay_by_card",
+            "params": {
+                "id": _id,
+                "card": {
+                    "token": token
+                },
+                "lang": "uz"
+            }
+        })
+        confirm_amount = requests.request("POST", url=self.url, data=confirm_pay_payload, headers=self.headers,
+                                          auth=(self.username, self.password))
+
+        """
+        success:
+        {
+            "error": null,
+            "result": {
+                "receipt": {
+                    "_id": "8ac55f5eed7a4b2d908880be02afaf2d",
+                    "state": 4,
+                    "create_date": 1638697387049,
+                    "pay_date": 1638697474776,
+                    "error": null,
+                    "type": 1,
+                    "card": {
+                        "token": "vzdu2GZqvX3iSI4CxBV883UAE1kenoVephsLa1xxT1s="
+                    },
+                    "merchant": {
+                        "_id": "998747",
+                        "name": "Open Soft",
+                        "organization": "Прямой договор",
+                        "logo": null
+                    },
+                    "description": null,
+                    "account": null,
+                    "detail": null,
+                    "amount": 100000,
+                    "currency": 860,
+                    "commission": 0
+                }
+            },
+            "id": 0
+        }
+        error:
+        {
+            "error": "Receipt can not pay",
+            "result": null,
+            "id": 0
+        }
+        """
+
+        try:
+            print(confirm_amount.json())
+            if confirm_amount.json()['result']['receipt']['state'] == 4:
+                return {'_id': confirm_amount.json()['result']['receipt']['_id']}
+            elif confirm_amount.json()['result']['receipt']['error'] == 'Insufficient funds':
+                return "Xatolik! Kartangizda yetarli mablag' mavjud emas!"
+            else:
+                return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+        except Exception as e:
+            send_message_to_developer(f"error: {e}")
+            print(e)
+            return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+
+    def get_card_phone_number(self):
+        get_phone_payload = json.dumps({
+            "method": "cards.get_phone",
+            "params": {
+                "number": self.card_number,
+                "expire": self.exp_date
+            },
+            "id": 0
+        })
+        get_phone_number = requests.request("POST", url=self.url, data=get_phone_payload, headers=self.headers,
+                                            auth=(self.username, self.password))
+
+        try:
+            print(get_phone_number.json())
+            if isinstance(get_phone_number.json()['result'], dict):
+                phone = get_phone_number.json()['result']['card']['phone']
+                if len(phone) == 12:
+                    return phone[3:12]
+                else:
+                    return "Ushbu kartada sms xizmati yoqilmagan!"
+            else:
+                send_message_to_developer(f"error: {get_phone_number.json()}")
+                return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+        except Exception as e:
+            print(e)
+            send_message_to_developer(f"error: {e}")
+            return "Karta raqami yoki amal qilish muddati noto'g'ri!"

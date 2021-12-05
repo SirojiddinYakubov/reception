@@ -62,6 +62,7 @@ TECHNICAL_PASSPORT = 4
 REGISTRATION = 5
 RE_REGISTRATION = 6
 FINE = 7
+TEST = 8
 # POLICE_INSPECTION = 8
 
 STATE_DUTY_TITLE = (
@@ -72,7 +73,7 @@ STATE_DUTY_TITLE = (
     (REGISTRATION, 'Ro\'yhatlash'),
     (RE_REGISTRATION, 'Qayta ro\'yhatlash'),
     (FINE, 'Jarima'),
-
+    (TEST, "Test uchun"),
 )
 
 
@@ -159,3 +160,55 @@ class PaidStateDuty(models.Model):
     class Meta:
         verbose_name = "To'langan bojlar"
         verbose_name_plural = "To'langan bojlar"
+
+
+
+class GetPayFromCard(BaseModel):
+    from application.models import Application
+    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    card_number = models.CharField(max_length=16)
+    exp_date = models.CharField(max_length=4)
+    amount = models.IntegerField(default=0)
+    transaction_id = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.application.applicant} {self.amount}%"
+
+
+
+KAPITALBANK = 1
+ORIENT_FINANS_BANK = 2
+
+PAYMENT_SYSTEM = (
+    (KAPITALBANK, 'Kapitalbank'),
+    (ORIENT_FINANS_BANK, 'Orient Finans Bank'),
+)
+
+
+
+class PaymentForTreasury(BaseModel):
+    from application.models import Application
+    PROCESSING = 'processing'
+    SUCCESS = 'success'
+    FAILED = 'failed'
+    CANCELED = 'canceled'
+    STATUS = (
+        (PROCESSING, 'processing'),
+        (SUCCESS, 'success'),
+        (FAILED, 'failed'),
+        (CANCELED, 'canceled')
+    )
+
+    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
+    state_duty_score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE)
+    state_duty_percent = models.ForeignKey(StateDutyPercent, on_delete=models.CASCADE)
+    amount_base_calculation = models.ForeignKey(AmountBaseCalculation, on_delete=models.SET_NULL, null=True)
+    receipt = models.URLField(verbose_name="Kvitansiya manzili", blank=True, null=True)
+    payment_system = models.IntegerField(choices=PAYMENT_SYSTEM, null=True)
+    transaction_id = models.CharField(max_length=255,blank=True, null=True)
+    status = models.CharField(choices=STATUS, default=PROCESSING, max_length=55)
+    is_send = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.application.applicant} {self.amount}%"
