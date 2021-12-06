@@ -121,7 +121,7 @@ class ConfirmTheasuryPayment(APIView):
 
                     if not r == SUCCESS:
                         # send sms with eskiz
-                        r = SendSmsWithApi(message=text, phone=application.applicant.phone).get()
+                        r = SendSmsWithApi(message=text, phone=pay.application.applicant.phone).get()
 
                     if r != SUCCESS:
                         send_message_to_developer(f'Sms service not working!')
