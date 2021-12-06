@@ -17,7 +17,7 @@ from service.models import (
     INSPECTION,
     ROAD_FUND,
     ROAD_FUND_HORSE_POWER,
-    StateDutyPercent, Service
+    StateDutyPercent, Service, AmountBaseCalculation
 )
 
 
@@ -263,7 +263,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
         is_old_number = data.car.is_old_number
         is_relative = data.car.is_relative
         lost_technical_passport = data.car.lost_technical_passport
-
 
     """Start filter state duty percents"""
     """Jarima"""

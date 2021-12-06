@@ -1611,4 +1611,3 @@ $.urlParam = function (name) {
     }
     return decodeURI(results[1]) || 0;
 }
-

@@ -1,3 +1,8 @@
+import json
+import random
+import re
+
+import requests
 from django.contrib import auth
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
@@ -6,12 +11,17 @@ from rest_framework.views import APIView
 
 from api.v1 import permissions
 from api.v1.user import serializers
+from application.models import Application
+from application.templatetags.applications_tags import get_payment_score, get_state_duty_payment
+from reception.api import PaymentByRequisites, SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
 from reception.settings import TOKEN_MAX_AGE
 from reception.telegram_bot import send_message_to_developer
+from service.models import GetPayFromCard, PaymentForTreasury, AmountBaseCalculation, KAPITALBANK
 from user.models import (
     User,
     Organization, CarModel, Color, CarType, FuelType, BodyType, Sms, Region, District, Quarter, Section, Device
 )
+from user.utils import send_otp
 
 
 class LoginView(APIView):
@@ -85,6 +95,7 @@ class CarTypesList(generics.ListAPIView):
     queryset = CarType.objects.filter(is_active=True)
     serializer_class = serializers.CarTypesListSerializer
     permission_classes = [AllowAny]
+
 
 class DevicesList(generics.ListAPIView):
     queryset = Device.objects.filter(is_active=True)
@@ -199,3 +210,80 @@ class PlayMobileSmsStatus(APIView):
         # sms = Sms.objects.filter(sms_id=)
         send_message_to_developer(str(request.POST))
         return Response({'status': 'OK'}, status=status.HTTP_200_OK)
+
+
+class GetCardPhoneNumber(APIView):
+    def post(self, request, *args, **kwargs):
+        self.card_number = request.data.get('card_number')
+        self.exp_date = f"{request.data.get('exp_date')[2:4]}{request.data.get('exp_date')[0:2]}"
+
+        phone = PaymentByRequisites(self.card_number, self.exp_date, None).get_card_phone_number()
+        if len(phone) == 9:
+            otp_response = send_otp(phone)
+            print(otp_response)
+            send_message_to_developer(str(otp_response))
+            msg = f"Ushbu kodni begona shaxslarga taqdim etmang!: {otp_response['otp']}"
+            print(msg)
+            r = SendSmsWithPlayMobile(phone=phone, message=msg).get()
+            if not r == SUCCESS:
+                r = SendSmsWithApi(message=msg, phone=phone).get()
+            # r = 200
+            if r == SUCCESS:
+                return Response({'secret': otp_response['secret'], 'phone': phone}, status=status.HTTP_200_OK)
+            else:
+                return Response("Sms service not working", status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(phone, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ConfirmPay(APIView):
+    permission_classes = [permissions.UserPermission]
+
+    card_number = None
+    exp_date = None
+    application_id = None
+    percent_id = None
+    score = None
+
+    def post(self, request, *args, **kwargs):
+        self.card_number = request.data.get('card_number')
+        self.exp_date = f"{request.data.get('exp_date')[2:4]}{request.data.get('exp_date')[0:2]}"
+        self.percent_id = request.data.get('percent')
+        self.application_id = request.data.get('application')
+        self.score = get_payment_score(self.application_id, self.percent_id)
+        amount_base_calculation = AmountBaseCalculation.objects.filter(is_active=True).order_by('-id').last()
+        application = Application.objects.get(id=self.application_id)
+
+        amount = get_state_duty_payment(self.percent_id, self.application_id)
+        if not amount == 400:
+            commission_amount = amount / 100 * 2
+            all_amount = amount + commission_amount
+            transaction = PaymentByRequisites(self.card_number, self.exp_date, all_amount * 100).get()
+            if isinstance(transaction, dict):
+                GetPayFromCard.objects.create(application_id=self.application_id,
+                                              card_number=self.card_number, exp_date=self.exp_date, amount=all_amount,
+                                              transaction_id=transaction['_id'])
+                payment = PaymentForTreasury.objects.create(application_id=self.application_id,
+                                                  amount=amount, state_duty_score=self.score,
+                                                  state_duty_percent_id=self.percent_id,
+                                                  amount_base_calculation=amount_base_calculation,
+                                                  payment_system=KAPITALBANK,
+                                                  status=PaymentForTreasury.PROCESSING)
+
+                text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m o\'tkazish jarayoniga o\'tdi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
+                r = SendSmsWithPlayMobile(phone=application.applicant, message=text).get()
+                print(text)
+                if not r == SUCCESS:
+                    # send sms with eskiz
+                    r = SendSmsWithApi(message=text, phone=application.applicant.phone).get()
+
+                if r != SUCCESS:
+                    send_message_to_developer(f'Sms service not working!')
+
+                print(transaction)
+                return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+            else:
+                print(transaction)
+                return Response(transaction, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response("Xatolik! Iltimos keyinroq urinib ko'ring!", status=status.HTTP_400_BAD_REQUEST)
