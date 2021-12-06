@@ -38,6 +38,7 @@
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Xizmat turi" %}</th>
                                     <th>{% trans "Tuman" %}</th>
+                                    <th>{% trans "To'lov summasi" %}</th>
                                     <th>{% trans "r/s" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Tahrirlash" %}</th>
@@ -69,7 +70,7 @@
     <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'assets/libs/sweetalert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
     <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
     <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
     <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
@@ -80,6 +81,7 @@
             $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
                 console.log(message);
             };
+
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
@@ -157,6 +159,12 @@
                         }
                     },
                     {
+                        "data": "amount",
+                        render: function (data, type, row) {
+                            return formatMoney(data)
+                        }
+                    },
+                    {
                         "data": 'state_duty_score',
                         render: function (data, type, row) {
                             return data.score
@@ -169,15 +177,20 @@
                             return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
                         }
                     },
-                   /*{
-                        data: null,
-                        className: "center",
-                        defaultContent: `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
-                    },*/
+                    /*{
+                         data: null,
+                         className: "center",
+                         defaultContent: `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                     },*/
                     {
                         "mData": null,
                         "mRender": function (data, type, row) {
-                            return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                            if (data.status === 'success') {
+                                return `<p style="color: green">To'lov amalga oshirilgan</p>`
+                            } else {
+                                 return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                            }
+
                         }
                     }
 
@@ -206,9 +219,30 @@
                 },
                 success: function (res) {
                     console.log(res)
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        background: '#8ff8ac',
+                        timer: 5000,
+                        timerProgressBar: false,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        },
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'To\'lov muffaqiyatli amalga oshirildi!'
+                    })
+                    setTimeout(function () {
+                        location.reload()
+                    }, 5000)
+
                 },
                 error: function (err) {
-                    console.log(err)
+                    swal_error(err)
                 }
             })
         })

@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.utils import timezone
 
 from application.models import Application, LEGAL_PERSON
-from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER
+from service.models import StateDutyPercent, StateDutyScore, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER, \
+    PaymentForTreasury
 from user.models import *
 
 register = template.Library()
@@ -155,11 +156,12 @@ def get_payment_score(application_id, percent_id):
 
                 if district in section.district.all():
                     print("Buxoro obl gai tarkibida, tuman raqami")
-                    state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty, district=district).last()
+                    state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty,
+                                                                     district=district).last()
                 else:
                     print("boshqa shaharda, Boxoro shahar raqami")
                     state_duty_score = StateDutyScore.objects.filter(region=section.region,
-                                                               state_duty=percent.state_duty).last()
+                                                                     state_duty=percent.state_duty).last()
             else:
                 state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
             return state_duty_score
@@ -195,13 +197,18 @@ def check_payment_paid(application, percent):
     return percent.paidstateduty_set.filter(application=application).exists()
 
 
-
 @register.simple_tag
 def check_state_payment_paid(application, percent):
     return application.paymentfortreasury_set.filter(state_duty_percent=percent).exists()
+
 
 # @register.filter
 # def check_payment_paid(percent):
 #     print(185, percent.application)
 #     print(185, percent)
 #     return percent.paidstateduty_set.all().exists()
+
+@register.simple_tag
+def check_memorial(application, percent):
+    return  PaymentForTreasury.objects.filter(state_duty_percent=percent, application=application, memorial__isnull=False).last()
+

@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 import requests
 from rest_framework import generics, status
@@ -49,40 +50,76 @@ class ConfirmTheasuryPayment(APIView):
         permissions.ModeratorPermission
     ]
 
-
     def post(self, request, *args, **kwargs):
         pay = PaymentForTreasury.objects.get(id=request.POST.get('id'))
-        pay_past = PaymentForTreasury.objects.filter(is_send=True).order_by('-transaction_id').first()
-        # print(pay_past.transaction_id)
 
-        tranzaction_id = int(pay_past.transaction_id) + 1
         pay_treasury_payload = json.dumps({
             "method": "receipt.pay_requisite",
             "params": {
-                "account": "20208000305447577001",
-                "mfo": "00966",
+                "account": pay.state_duty_score.score,
+                "mfo": "00014",
                 "name": f"{pay.application.applicant.last_name} {pay.application.applicant.first_name} {pay.application.applicant.middle_name}",
-                "details": pay.state_duty_percent.title,
-                "amount": pay.amount,
-                "senderName": "OOO OPENSOFT",
-                "transactionId": tranzaction_id
+                "details": f" {pay.state_duty_percent.title.upper()} (E-RIB.UZ 308944250)",
+                "amount": pay.amount * 100,
+                "senderName": f"{pay.application.applicant.last_name.upper()} {pay.application.applicant.first_name.upper()} {pay.application.applicant.middle_name.upper()}",
+                "transactionId": pay.transaction_id
             }
         })
-        pay_treasury = requests.request("POST", url="https://topup.apelsin.uz/api/merchant/", data=pay_treasury_payload, headers={'Content-type': 'application/json'},
-                                            auth=(os.getenv('APELSIN_USERNAME'), os.getenv('APELSIN_PASSWORD')))
+        pay_treasury = requests.request("POST", url="https://topup.apelsin.uz/api/merchant/", data=pay_treasury_payload,
+                                        headers={'Content-type': 'application/json'},
+                                        auth=(os.getenv('APELSIN_USERNAME'), os.getenv('APELSIN_PASSWORD')))
 
-        print(os.getenv('APELSIN_PASSWORD'))
+        """
+        success:
+        {'receipt': 
+            {
+            '_id': '8be8b1cff59d4281888ba2825a0d3967', 
+            'state': 30, 
+            'create_date': 1638719484991, 
+            'pay_date': 1638719486245, 
+            'error': None, 'type': 7, 
+            'card': {'sender_id': '29896000705447577002'}, 
+            'merchant': None, 
+            'description': None, 
+            'account': None, 
+            'detail': 
+                {   
+                    "account": "20208000305447577001",
+                    "mfo":"00966",
+                    "name": "hjghj1 hjghjg1 ghjghj1",
+                    "details":"Qayta ro\'yhatlash uchun to\'lov (E-RIB.UZ 308944250)",
+                    "senderName":"OOO OPENSOFT",
+                    "memorial":"https://ek.apelsin.uz/memorial?id=RX%2Bq4L%2FXxo2kOc6%2FUgUQ5jXNmoNfGxXLpyLe%2BSE3Zc4PI0FpRjY33bdMH8BX%2FevW",
+                    "externalTransactionId":"1638719626"
+                }', 
+            'amount': 101000, 
+            'currency': 860, 
+            'commission': 1000
+            }
+        }
+        """
 
         try:
-
-            if pay_treasury.json()['error'] == 'External id exists':
-                return "Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!"
+            if 'error' in pay_treasury.json():
+                if pay_treasury.json()['error'] == 'External id exists':
+                    print('105')
+                    return Response("Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!",
+                                    status=status.HTTP_400_BAD_REQUEST)
             else:
-                pass
-            return Response({'OK': True}, status=status.HTTP_200_OK)
-
+                print('109')
+                if pay_treasury.json()['receipt']['state'] == 30:
+                    print('111')
+                    memorial = json.loads(pay_treasury.json()['receipt']['detail'])
+                    memorial = memorial['memorial']
+                    memorial = memorial.replace("memorial", 'pdf')
+                    pay.status = PaymentForTreasury.SUCCESS
+                    pay.memorial = memorial
+                    pay.save()
+                    return Response({'OK': True}, status=status.HTTP_200_OK)
+                else:
+                    print('117')
+                    return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print('except')
+            print('120')
             send_message_to_developer(f"error: {e}")
-            return Response({'Failed': True}, status=status.HTTP_200_OK)
-
+            return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)

@@ -41,10 +41,18 @@
                         {#                        {% endif %}#}
                         {% check_state_payment_paid application percent as check %}
                         {% if not check %}
-                            <button class="btn btn-success create_pay" data-percent-id="{{ percent.id }}">To'lash
+                            <button class="btn btn-outline-info create_pay" data-percent-id="{{ percent.id }}"> <i class="fa fa-money-bill-wave-alt"></i> To'lash
                             </button>
                         {% else %}
-                            <b class="text-primary">bankka jo'natilgan</b>
+                            {% check_memorial application percent as memorial %}
+                            {% if not memorial %}
+                                <b class="text-primary text-center">Bankka jo'natilgan</b>
+                            {% else %}
+                                <a href="{{ memorial.memorial }}" class="btn btn-outline-success text-bold"  download="download"> <i class="fa fa-file-download"></i> Kvitansiya</a>
+                            {% endif %}
+
+
+
                             {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
                             {#                            </button>#}
                         {% endif %}
@@ -115,6 +123,8 @@
                 var encrypted = CryptoJS.AES.encrypt(`percentId=${percentId}&applicationId=${applicationId}`, "password")
                 window.location.href = `{% url 'user:create_card_pay' %}?token=${encrypted}`
             })
+
+
         })
     </script>
 {% endblock js %}

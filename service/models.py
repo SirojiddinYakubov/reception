@@ -1,3 +1,6 @@
+import datetime
+import time
+
 from django.utils.translation import ugettext_lazy as _
 
 from user.base import BaseModel
@@ -169,7 +172,7 @@ class GetPayFromCard(BaseModel):
     card_number = models.CharField(max_length=16)
     exp_date = models.CharField(max_length=4)
     amount = models.IntegerField(default=0)
-    transaction_id = models.CharField(max_length=255)
+    transaction_id = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return f"{self.application.applicant} {self.amount}%"
@@ -204,7 +207,7 @@ class PaymentForTreasury(BaseModel):
     state_duty_score = models.ForeignKey(StateDutyScore, on_delete=models.CASCADE)
     state_duty_percent = models.ForeignKey(StateDutyPercent, on_delete=models.CASCADE)
     amount_base_calculation = models.ForeignKey(AmountBaseCalculation, on_delete=models.SET_NULL, null=True)
-    receipt = models.URLField(verbose_name="Kvitansiya manzili", blank=True, null=True)
+    memorial = models.URLField(verbose_name="Kvitansiya manzili", blank=True, null=True)
     payment_system = models.IntegerField(choices=PAYMENT_SYSTEM, null=True)
     transaction_id = models.CharField(max_length=255,blank=True, null=True)
     status = models.CharField(choices=STATUS, default=PROCESSING, max_length=55)
@@ -212,3 +215,9 @@ class PaymentForTreasury(BaseModel):
 
     def __str__(self):
         return f"{self.application.applicant} {self.amount}%"
+
+
+    def save(self, *args, **kwargs):
+        if self.transaction_id is None:
+            self.transaction_id = int(self.application.id + time.time())
+        return super(PaymentForTreasury, self).save(*args, **kwargs)

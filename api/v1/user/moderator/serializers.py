@@ -42,17 +42,15 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
             'state_duty_score',
             'state_duty_percent',
             'amount_base_calculation',
-            'receipt',
+            'memorial',
             'transaction_id',
             'status',
             'is_send',
-            'created_at',
-
+            'created_at'
         ]
 
     def to_representation(self, instance):
         context = super(PaymentForTreasuryListSerializer, self).to_representation(instance)
         context['applicant'] = UserShortDetailSerializer(instance.application.applicant).data
         context['district'] = DistrictDetailSerializer(instance.application.applicant.district).data
-        # context['district'] = PaymentForTreasuryListSerializer(instance.application.pay).data
         return context

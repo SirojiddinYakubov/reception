@@ -1,4 +1,5 @@
 import json
+import random
 import re
 
 import requests
@@ -261,8 +262,8 @@ class ConfirmPay(APIView):
             if isinstance(transaction, dict):
                 GetPayFromCard.objects.create(application_id=self.application_id,
                                               card_number=self.card_number, exp_date=self.exp_date, amount=all_amount,
-                                              tranzaction_id=transaction['_id'])
-                PaymentForTreasury.objects.create(application_id=self.application_id,
+                                              transaction_id=transaction['_id'])
+                payment = PaymentForTreasury.objects.create(application_id=self.application_id,
                                                   amount=amount, state_duty_score=self.score,
                                                   state_duty_percent_id=self.percent_id,
                                                   amount_base_calculation=amount_base_calculation,
@@ -270,7 +271,7 @@ class ConfirmPay(APIView):
                                                   status=PaymentForTreasury.PROCESSING)
 
                 text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m o\'tkazish jarayoniga o\'tdi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
-                r = SendSmsWithPlayMobile(phone=application.applicant.phone, message=text).get()
+                r = SendSmsWithPlayMobile(phone=application.applicant, message=text).get()
                 print(text)
                 if not r == SUCCESS:
                     # send sms with eskiz
