@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 
 from application.models import (Application, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT,
                                 WAITING_FOR_ORIGINAL_DOCUMENTS, REJECTED, ACCEPTED)
+from reception.api import SendSmsWithPlayMobile, SendSmsWithApi, SUCCESS
 from reception.telegram_bot import send_message_to_developer
 from service.models import PaymentForTreasury
 from . import serializers
@@ -115,6 +116,16 @@ class ConfirmTheasuryPayment(APIView):
                     pay.status = PaymentForTreasury.SUCCESS
                     pay.memorial = memorial
                     pay.save()
+                    text = f"{pay.application.id}-raqamli arizangizga muvofiq, {pay.amount} so'm muvaffaqiyatli o'tkazildi. Kvitansiyani http://e-rib.uz/en/application/application-detail/{pay.application.id} manzilidan yuklab olishingiz mumkin"
+                    r = SendSmsWithPlayMobile(phone=pay.application.applicant, message=text).get()
+
+                    if not r == SUCCESS:
+                        # send sms with eskiz
+                        r = SendSmsWithApi(message=text, phone=application.applicant.phone).get()
+
+                    if r != SUCCESS:
+                        send_message_to_developer(f'Sms service not working!')
+
                     return Response({'OK': True}, status=status.HTTP_200_OK)
                 else:
                     print('117')
