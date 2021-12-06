@@ -59,7 +59,7 @@ class ConfirmTheasuryPayment(APIView):
                 "account": pay.state_duty_score.score,
                 "mfo": "00014",
                 "name": f"{pay.application.applicant.last_name} {pay.application.applicant.first_name} {pay.application.applicant.middle_name}",
-                "details": f" {pay.state_duty_percent.title.upper()} (E-RIB.UZ 308944250)",
+                "details": f" {pay.application.id}-ARIZAGA ASOSAN {pay.state_duty_percent.title.upper()} (E-RIB.UZ 308944250)",
                 "amount": pay.amount * 100,
                 "senderName": f"{pay.application.applicant.last_name.upper()} {pay.application.applicant.first_name.upper()} {pay.application.applicant.middle_name.upper()}",
                 "transactionId": pay.transaction_id

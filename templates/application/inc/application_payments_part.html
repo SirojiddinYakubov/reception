@@ -40,22 +40,30 @@
                         {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
                         {#                        {% endif %}#}
                         {% check_state_payment_paid application percent as check %}
-                        {% if not check %}
-                            <button class="btn btn-outline-info create_pay" data-percent-id="{{ percent.id }}"> <i class="fa fa-money-bill-wave-alt"></i> To'lash
-                            </button>
-                        {% else %}
-                            {% check_memorial application percent as memorial %}
-                            {% if not memorial %}
-                                <b class="text-primary text-center">Bankka jo'natilgan</b>
+                        {% if state_duty_score.state_duty %}
+                            {% if not check %}
+                                <button class="btn btn-danger create_pay" data-percent-id="{{ percent.id }}"><i
+                                        class="fa fa-money-bill-wave-alt"></i> To'lash
+                                </button>
                             {% else %}
-                                <a href="{{ memorial.memorial }}" class="btn btn-outline-success text-bold"  download="download"> <i class="fa fa-file-download"></i> Kvitansiya</a>
+                                {% check_memorial application percent as memorial %}
+                                {% if not memorial %}
+                                    <b class="text-primary text-center">Bankka jo'natilgan</b>
+                                {% else %}
+                                    <a href="{{ memorial.memorial }}" class="btn btn-success text-bold"
+                                       download="download"> <i class="fa fa-file-download"></i> Kvitansiya yuklab olish</a>
+                                {% endif %}
+
                             {% endif %}
+                        {% else %}
+                            <b class="text-danger text-center">-</b>
 
-
-
-                            {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
-                            {#                            </button>#}
                         {% endif %}
+
+
+                        {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
+                        {#                            </button>#}
+
                     </td>
                 </tr>
                 {#            {% endif %}#}
