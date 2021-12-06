@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.contrib import messages
 from django.contrib.humanize.templatetags.humanize import naturalday
+from django.db.models import Sum
 from django.views.generic import DetailView
 from docxtpl import DocxTemplate
 from reportlab.pdfgen import canvas
@@ -101,7 +102,6 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
         elif request.user.role == MODERATOR:
             return super().get(request, *args, **kwargs)
 
-
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
         percents = filter_state_duty_percents(application)
@@ -152,9 +152,11 @@ class ApplicationPdf(AllowedRolesMixin, View):
         context = {
             'now_date': timezone.now(),
             'created_date': application.created_date,
+            'application': application,
             'app': application,
             'section': application.section,
             'request': self.request,
+
         }
         return context
 
@@ -173,6 +175,28 @@ class ApplicationPdf(AllowedRolesMixin, View):
 
             with open("print-enable-with-pass.pdf", "wb") as outputfile:
                 pdf_writer.write(outputfile)
+
+
+class ApplicationPayStatus(DetailView):
+    template_name = 'application/payments/view_with_qr_code_payment_status.html'
+    pk_url_kwarg = 'id'
+    model = Application
+    print(180)
+
+
+
+    def get_context_data(self, **kwargs):
+        print(187)
+        application = get_object_or_404(Application, id=self.kwargs['id'])
+        percents = filter_state_duty_percents(application)
+        pay_treasury = PaymentForTreasury.objects.filter(application=application).aggregate(Sum('amount'))
+        context = {
+            'application': application,
+            'percents': percents,
+            'pay_treasury': pay_treasury,
+        }
+
+        return context
 
 
 @login_required
