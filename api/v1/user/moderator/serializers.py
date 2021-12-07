@@ -51,6 +51,13 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         context = super(PaymentForTreasuryListSerializer, self).to_representation(instance)
-        context['applicant'] = UserShortDetailSerializer(instance.application.applicant).data
-        context['district'] = DistrictDetailSerializer(instance.application.applicant.district).data
+        if instance.application.applicant:
+            context['applicant'] = UserShortDetailSerializer(instance.application.applicant).data
+        else:
+            context['applicant'] = UserShortDetailSerializer(instance.application.created_user).data
+
+        if instance.application.applicant:
+            context['district'] = DistrictDetailSerializer(instance.application.applicant.district).data
+        else:
+            context['district'] = DistrictDetailSerializer(instance.application.created_user.district).data
         return context
