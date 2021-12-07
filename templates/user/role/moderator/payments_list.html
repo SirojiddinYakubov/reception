@@ -1,0 +1,250 @@
+{% extends 'base_vertical.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block show_left_bar %}  "size": "condensed"{% endblock show_left_bar %}
+
+{% block css %}
+
+    <!-- third party css -->
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <!-- third party css end -->
+
+{% endblock css %}
+
+{% block page_title %}
+    {% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
+        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-xs-12">
+                            <table id="example1" class="table dt-responsive nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Arizachi" %}</th>
+                                    <th>{% trans "Xizmat turi" %}</th>
+                                    <th>{% trans "Tuman" %}</th>
+                                    <th>{% trans "To'lov summasi" %}</th>
+                                    <th>{% trans "r/s" %}</th>
+                                    <th>{% trans "Yaratilgan vaqti" %}</th>
+                                    <th>{% trans "Tahrirlash" %}</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+
+    </div>
+
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            sendAuthorizationToken()
+
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                console.log(message);
+            };
+
+
+            var table = $("#example1").DataTable({
+                "serverSide": true,
+                "processing": true,
+                'autoWidth': false,
+                "orderCellsTop": true,
+                "order": [[1, "asc"]],
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "{% trans 'Qidiruv...' %}",
+                    "emptyTable": `{% trans "Ma'lumot topilmadi!" %}`,
+                    {#"info": "Ko'rsatilgan _END_ dan _START_. Jami: _TOTAL_ ta ma'lumot",#}
+                    "info": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
+                    "infoEmpty": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
+                    "infoFiltered": "(filtered from _MAX_ total entries)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "_MENU_",
+                    "loadingRecords": "{% trans 'Yuklanmoqda...' %}",
+                    "processing": '<div class="spinner-grow" role="status"> <span class="sr-only"></span> </div>',
+                    "zeroRecords": `{% trans "Ma'lumot topilmadi!" %}`,
+                    "paginate": {
+                        "first": "{% trans 'Birinchi' %}",
+                        "last": "{% trans 'Oxirgi' %}",
+                        "next": "{% trans 'Keyingi' %}",
+                        "previous": "{% trans 'Oldingi' %}"
+                    },
+                    "aria": {
+                        "sortAscending": `{% trans ": o'sish tartibi faollashtirildi" %}`,
+                        "sortDescending": `{% trans ": kamayish tartibi faollashtirildi" %}`,
+                    }
+                },
+                "ajax": function (data, callback, settings) {
+                    $.ajax({
+                        url: "{% url 'api_moderator:payments_list' %}",
+                        type: 'GET',
+                        dataType: "json",
+                        cache: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: {
+                            limit: data.length,
+                            offset: data.start,
+                            q: data.search.value,
+                            order_by: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                            old_request: window.location.search
+                        }
+                    }).then(function (res) {
+                        console.log(res)
+                        callback({
+                            recordsTotal: res.count,
+                            recordsFiltered: res.count,
+                            data: res.results
+                        });
+                    });
+                },
+                "columns": [
+                    {
+                        "data": "applicant",
+                        render: function (data, type, row) {
+                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
+                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+                        }
+                    },
+                    {
+                        "data": "application",
+                        render: function (data, type, row) {
+                            var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.id.toString())
+                            return `<a href="${url}">${data.service.short_title}</a>`
+                        }
+                    },
+                    {
+                        "data": "district",
+                        render: function (data, type, row) {
+                            return data.title
+                        }
+                    },
+                    {
+                        "data": "amount",
+                        render: function (data, type, row) {
+                            return formatMoney(data)
+                        }
+                    },
+                    {
+                        "data": 'state_duty_score',
+                        render: function (data, type, row) {
+                            return data.score
+                        }
+                    },
+                    {
+                        "data": "created_at",
+                        render: function (data, type, row) {
+                            moment.locale('ru');
+                            return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
+                        }
+                    },
+                    /*{
+                         data: null,
+                         className: "center",
+                         defaultContent: `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                     },*/
+                    {
+                        "mData": null,
+                        "mRender": function (data, type, row) {
+                            if (data.status === 'success') {
+                                return `<p style="color: green">To'lov amalga oshirilgan</p>`
+                            } else {
+                                 return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                            }
+
+                        }
+                    }
+
+                ],
+                /* createdRow: function (row, data, index) {
+                     console.log(205, row)
+                     if ((data.process === 2) || (data.process === 3) || (data.process === 4)) {
+                         $(row).addClass('tr-warning')
+                     } else if (data.process === 5) {
+                         $(row).addClass('tr-success')
+                     } else if (data.process === 6) {
+                         $(row).addClass('tr-danger')
+                     }
+                 } */
+            })
+        })
+
+
+        $(document).on('click', '.confirm_pay', function () {
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'api_moderator:confirm_theasury_payment' %}",
+                data: {
+                    id: $(this).data('id')
+                },
+                success: function (res) {
+                    console.log(res)
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        background: '#8ff8ac',
+                        timer: 5000,
+                        timerProgressBar: false,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        },
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'To\'lov muffaqiyatli amalga oshirildi!'
+                    })
+                    setTimeout(function () {
+                        location.reload()
+                    }, 5000)
+
+                },
+                error: function (err) {
+                    swal_error(err)
+                }
+            })
+        })
+    </script>
+{% endblock js %}

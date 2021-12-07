@@ -1,0 +1,501 @@
+{% extends 'base_vertical.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    To'lov
+{% endblock title %}
+
+{% block page_title %}
+    To'lov
+{% endblock page_title %}
+
+{% block css %}
+    <style>
+        .card {
+            border: none
+        }
+
+        .card-header {
+            padding: .5rem 1rem;
+            margin-bottom: 0;
+            background-color: rgba(0, 0, 0, .03);
+            border-bottom: none
+        }
+
+        .btn-light:focus {
+            color: #212529;
+            background-color: #e2e6ea;
+            border-color: #dae0e5;
+            box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, .5)
+        }
+
+        .form-control {
+            height: 50px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            font-size: 14px
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #039be5;
+            outline: 0;
+            box-shadow: none
+        }
+
+        .input {
+            position: relative
+        }
+
+        .input i {
+            position: absolute;
+            top: 16px;
+            left: 11px;
+            color: #989898
+        }
+
+        .input input {
+            text-indent: 25px
+        }
+
+        .card-text {
+            font-size: 13px;
+            margin-left: 6px
+        }
+
+        .certificate-text {
+            font-size: 12px
+        }
+
+        .billing {
+            font-size: 11px
+        }
+
+        .super-price {
+            top: 0px;
+            font-size: 22px
+        }
+
+        .super-month {
+            font-size: 11px
+        }
+
+        .line {
+            color: #bfbdbd
+        }
+
+        .free-button {
+            background: #1565c0;
+            height: 52px;
+            font-size: 15px;
+            border-radius: 8px
+        }
+
+        .payment-card-body {
+            flex: 1 1 auto;
+            padding: 24px 1rem !important
+        }
+
+        .btn-method-payment {
+            width: 100%;
+
+        }
+    </style>
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock css %}
+{% block content %}
+    <div class="container d-flex justify-content-center mt-5 mb-5">
+        <div class="row g-3">
+            <div class="col-md-6"><span>To'lov summasi</span>
+                <div class="card">
+                    <div class="d-flex justify-content-between p-2">
+                        <h3>To'lov qilish</h3>
+                        {#                        <div class="d-flex flex-column"><span>Pro(Billed Monthly) <i#}
+                        {#                                class="fa fa-caret-down"></i></span> <a href="#" class="billing">Save 20% with annual#}
+                        {#                            billing</a></div>#}
+                        {#                        <div class="mt-1"><sup class="super-price">$9.99</sup> <span class="super-month">/Month</span>#}
+                        {#                        </div>#}
+                    </div>
+                    <hr class="mt-0 line" style="margin: 0 !important;">
+
+                    <div class="p-2">
+                        <h4>To'lovchi: <span style="font-weight: normal" id="applicant"></span></h4>
+                        <br>
+                        <div class="d-flex justify-content-between mb-2"><b id="state_duty_title"></b>
+                            <span id="state_duty_amount"></span></div>
+                        <div class="d-flex justify-content-between">
+                            <b>Komissiya uchun to'lov:
+                                <i class="fa fa-clock-o"></i>
+                            </b>
+                            <span id="commission_amount"></span></div>
+                    </div>
+                    <hr class="mt-0 line">
+                    <div class="p-3 d-flex justify-content-between">
+                        <div class="d-flex flex-column"><b>Umumiy summa:</b> <small>(Sizning bank kartangizdan yechib
+                            <br>olinadigan summa)</small></div>
+                        <span id="all_amount"></span>
+                    </div>
+                    <div class="p-3">
+                        <span class="text-muted certificate-text"><i class="fa fa-lock"></i> SMS orqali sizga jo'natilgan maxfiy kodni, begona shaxsga taqdim etmang!</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6"><span>To'lov usullari</span>
+                <div class="card">
+                    <div class="accordion" id="accordionExample">
+
+                        <div class="card">
+                            <div class="card-header p-0">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-light btn-block text-left p-3 rounded-0 btn-method-payment"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne" disabled>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span>To'lov kartalari</span>
+                                            <div class="icons">
+                                                <img src="http://static.norma.uz/images/144352_2b4c8789226d85bced8b7a465a7e.jpg"
+                                                     width="63"> <img
+                                                    src="https://humocard.uz/bitrix/templates/main/img/card2.png"
+                                                    width="70"></div>
+                                        </div>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordionExample">
+                                <form id="confirm_card_date_form">
+
+                                    <div class="card-body payment-card-body"><span class="font-weight-normal card-text">Karta raqami<span
+                                            style="color: red">*</span></span>
+                                        <div class="input"><i class="fa fa-credit-card"></i>
+                                            <input type="text" class="form-control" name="card_number" id="card_number"
+                                                   placeholder="0000 0000 0000 0000">
+                                        </div>
+                                        <hr>
+                                        <div class="row mt-3 mb-3">
+                                            <div class="col-md-6"><span
+                                                    class="font-weight-normal card-text">Amal qilish muddati<span
+                                                    style="color: red">*</span></span>
+                                                <div class="input"><i
+                                                        class="fa fa-calendar"></i>
+                                                    <input type="text" class="form-control" name="exp_date"
+                                                           id="exp_date" placeholder="MM/YY">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6" style="display: none"><span
+                                                    class="font-weight-normal card-text">Tasdiqlash kodi</span>
+                                                <div class="input"><i class="fa fa-lock"></i> <input type="text"
+                                                                                                     class="form-control"
+                                                                                                     placeholder="000">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-1">
+                                            <button type="submit" class="btn btn-primary btn-block free-button">To'lov
+                                                qilish
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block modals %}
+    <!-- Modal -->
+    <div class="modal fade" style="display: none" id="confirm_code_modal" data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="staticBackdropLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" id="confirm_code_form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Telefon raqamni tasdiqlash</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5><strong>Tasdiqlash kodi +998<span id="modal_phone"></span> raqamiga sms tarzida
+                            jo'natildi!</strong>
+                        </h5>
+                        <label for="confirm_code" style="float: left">Tasdiqlash kodini kiriting<span
+                                style="color: red">*</span></label>
+                        <input type="text" name="confirm_code" id="confirm_code" class="form-control">
+                        <br>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" id="confirm_code_progress"
+                                 aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cancel_confirm" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Bekor qilish
+                        </button>
+                        <button type="submit" class="btn btn-primary">Tasdiqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock modals %}
+
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/libs/cryptoJS/cryptoJS.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            sendAuthorizationToken()
+            let secretToken,
+                countdownSeconds = 300,
+                card_number,
+                exp_date
+
+            const encrypted = $.urlParam('token')
+            let decrypted = CryptoJS.AES.decrypt(encrypted, "password")
+            decrypted = decrypted.toString(CryptoJS.enc.Utf8)
+            let queryDict = {}
+            decrypted.substr().split("&").forEach(function (item) {
+                queryDict[item.split("=")[0]] = item.split("=")[1]
+            })
+
+            getAjaxData(`{% url 'api_service:state_duty_percent_detail' 12345 %}?application=${queryDict.applicationId}`.replace(/12345/, queryDict.percentId.toString())).then(function (res) {
+                $('#state_duty_title').html(`${res.title}:`)
+                $('#state_duty_amount').html(`${res.amount} so'm`)
+                const commission_amount = res.amount / 100 * 2
+                $('#commission_amount').html(`${commission_amount} so'm`)
+                const all_amount = commission_amount + res.amount
+                $('#all_amount').html(`${all_amount} so'm`)
+                $('#applicant').html(`${res.applicant.last_name} ${res.applicant.first_name} ${res.applicant.middle_name}`)
+            })
+
+            $("#card_number").inputmask("9999 9999 9999 9999", {
+                "oncomplete": function () {
+                    $(this).attr('aria-invalid', true)
+                }
+            });
+
+            $("#exp_date").inputmask('99/99');
+
+            let ConfirmCardDataFormButton,
+                ConfirmCardDataFormButtonValue
+            jQuery.validator.addMethod("cardNumberMaxLength", function (value, element) {
+                const regExp = new RegExp(/^\d{16}$/)
+                return this.optional(element) || regExp.test(value.replace(/\D/g, ""));
+            }, "Karta raqami 16 ta raqamdan iborat bo'lishi kerak!");
+            const ConfirmCardDataForm = $('#confirm_card_date_form')
+            if (ConfirmCardDataForm.length) {
+                ConfirmCardDataFormButton = $(ConfirmCardDataForm).children().find('button:submit')
+                ConfirmCardDataForm.validate({
+                    rules: {
+                        card_number: {
+                            required: true,
+                            cardNumberMaxLength: true
+                        },
+                        exp_date: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        card_number: {
+                            required: "Karta raqami kiritilmagan!"
+                        },
+                        exp_date: {
+                            required: "Amal qilish muddati kiritilmagan!"
+                        },
+                    },
+
+                    errorPlacement: function (error, element) {
+                        if (element.is("#card_number")) {
+                            error.appendTo(element.parents('.input'));
+                        } else {
+                            error.insertAfter(element);
+                        }
+
+                    },
+                    submitHandler: function (form, e) {
+                        e.preventDefault()
+                        {#ConfirmCardDataFormButton.prop('disabled', true)#}
+                        ConfirmCardDataFormButtonValue = ConfirmCardDataFormButton.text()
+                        ConfirmCardDataFormButton.html(`${ConfirmCardDataFormButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
+
+                        $('#card_number').attr('disabled', true)
+                        $('#exp_date').attr('disabled', true)
+
+                        card_number = $('#card_number').val().replace(/\D/g, "")
+                        exp_date = $('#exp_date').val().replace('/', "")
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'api_user:get_card_phone_number' %}",
+                            data: {
+                                card_number: card_number,
+                                exp_date: exp_date,
+                            },
+                            success: function (res) {
+                                secretToken = res.secret
+                                console.log(res)
+                                $('#confirm_code_modal').modal('show')
+                                $('#modal_phone').html(res.phone)
+                                countdown.start()
+                            },
+                            error: function (err) {
+                                swal_error(err.responseJSON)
+                                $('#card_number').attr('disabled', false)
+                                $('#exp_date').attr('disabled', false)
+                                ConfirmCardDataFormButton.prop('disabled', false)
+                                ConfirmCardDataFormButton.html(ConfirmCardDataFormButtonValue)
+                            }
+                        })
+                        return false;
+                    }
+                });
+            }
+
+            $('#confirm_code').inputmask('999999');
+
+            countdown = new Counter({
+                // number of seconds to count down
+                seconds: countdownSeconds,
+
+                onCounterStart: function () {
+                    console.log('start')
+                },
+
+                // callback function for each second
+                onUpdateStatus: function (second) {
+                    var width = second * 100 / countdownSeconds
+                    $('#confirm_code_progress').css({'width': `${width}%`})
+
+                    if (width < 60 && width > 30) {
+                        $('#confirm_code_progress').addClass('bg-warning')
+                    } else if (width < 30) {
+                        $('#confirm_code_progress').addClass('bg-danger')
+                    }
+                },
+
+                // callback function for final action after countdown
+                onCounterEnd: function () {
+                    $('#confirm_code_modal').modal('hide');
+
+                    swal.fire(
+                        'Xatolik!',
+                        "Telefon raqam tasdiqlanmadi!",
+                        'error'
+                    )
+                }
+            });
+
+            $(document).on('click', '#cancel_confirm', function (e) {
+                countdownSeconds = 300
+                $('#confirm_code_modal').modal('hide')
+                $('#confirm_code').val('')
+                countdown.stop()
+                countdown.reset(countdownSeconds)
+
+            })
+
+            $(document).on('submit', '#confirm_code_form', function (e) {
+                e.preventDefault()
+                var code = $('#confirm_code').val()
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'user:verify_code' %}",
+                    data: {
+                        'secret': secretToken,
+                        'code': code
+                    },
+                    statusCode: {
+                        200: function (res) {
+                            $('#add_user_modal').modal('hide');
+                            $('#confirm_code_modal').modal('hide');
+                            countdown.stop()
+
+                            $('#confirm_code').val('')
+
+                            $.ajax({
+                                type: 'POST',
+                                url: "{% url 'api_user:confirm_pay' %}",
+                                data: {
+                                    card_number: card_number,
+                                    exp_date: exp_date,
+                                    percent: queryDict.percentId,
+                                    application: queryDict.applicationId,
+                                },
+                                success: function (res) {
+                                    console.log(res)
+
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        background: '#8ff8ac',
+                                        timer: 5000,
+                                        timerProgressBar: false,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        },
+                                    })
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'To\'lov muffaqiyatli amalga oshirildi!'
+                                    })
+                                    setTimeout(function () {
+                                        window.location.href = "{% url 'application:application_detail' 12345 %}".replace(/12345/, queryDict.applicationId.toString())
+                                    }, 5000)
+
+                                },
+                                error: function (err) {
+                                    if (err.status === 401) {
+                                        tokenInvalid()
+                                    }
+
+                                    console.log(err.responseJSON)
+                                    swal_error(err.responseJSON)
+                                    $('#card_number').attr('disabled', false)
+                                    $('#exp_date').attr('disabled', false)
+                                    ConfirmCardDataFormButton.prop('disabled', false)
+                                    ConfirmCardDataFormButton.html(ConfirmCardDataFormButtonValue)
+                                }
+                            })
+                        },
+                        400: function (err) {
+                            swal.fire(
+                                'Xatolik!',
+                                "Tasdiqlash kodi noto'g'ri!",
+                                'error'
+                            )
+                        }
+                    },
+
+
+                })
+
+            })
+        })
+    </script>
+{% endblock js %}
+
+
+
+
+
+

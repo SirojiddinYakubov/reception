@@ -20,3 +20,4 @@ class Order(BaseModel):
     application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True, blank=True)
     amount = models.CharField(max_length=20, verbose_name="Summasi")
 
+# class BankOrder(BaseModel):
