@@ -332,7 +332,7 @@
                     },
                     submitHandler: function (form, e) {
                         e.preventDefault()
-                        {#ConfirmCardDataFormButton.prop('disabled', true)#}
+                        ConfirmCardDataFormButton.prop('disabled', true)
                         ConfirmCardDataFormButtonValue = ConfirmCardDataFormButton.text()
                         ConfirmCardDataFormButton.html(`${ConfirmCardDataFormButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
 

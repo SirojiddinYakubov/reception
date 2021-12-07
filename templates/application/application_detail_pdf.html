@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-<center><img src="http://192.168.1.18:8000/static/assets/images/logo-dark.png" align="center" alt="" height="50px" class="margin: 0 auto"></center>
+<center><img src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/static/assets/images/logo-dark.png" align="center" alt="" height="50px" class="margin: 0 auto"></center>
 <div class="title_reference">
         <h1 style="font-size: 2.5em; padding-top: 5px; font-weight:bold; color: #083983" class="text-center" align="center"><b>REFERENS</b></h1>
 </div>

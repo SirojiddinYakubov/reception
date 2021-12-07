@@ -101,15 +101,14 @@ class ConfirmTheasuryPayment(APIView):
         """
 
         try:
+
             if 'error' in pay_treasury.json():
                 if pay_treasury.json()['error'] == 'External id exists':
-                    print('105')
                     return Response("Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!",
                                     status=status.HTTP_400_BAD_REQUEST)
             else:
-                print('109')
+                print(pay_treasury.json())
                 if pay_treasury.json()['receipt']['state'] == 30:
-                    print('111')
                     memorial = json.loads(pay_treasury.json()['receipt']['detail'])
                     memorial = memorial['memorial']
                     memorial = memorial.replace("memorial", 'pdf')
@@ -117,20 +116,24 @@ class ConfirmTheasuryPayment(APIView):
                     pay.memorial = memorial
                     pay.save()
                     text = f"{pay.application.id}-raqamli arizangizga muvofiq, {pay.amount} so'm muvaffaqiyatli o'tkazildi. Kvitansiyani http://e-rib.uz/en/application/application-detail/{pay.application.id} manzilidan yuklab olishingiz mumkin"
-                    r = SendSmsWithPlayMobile(phone=pay.application.applicant, message=text).get()
+
+                    if pay.application.applicant:
+                        phone = pay.application.applicant.phone
+                    else:
+                        phone = pay.application.created_user.phone
+
+                    r = SendSmsWithPlayMobile(phone=phone, message=text).get()
 
                     if not r == SUCCESS:
                         # send sms with eskiz
-                        r = SendSmsWithApi(message=text, phone=pay.application.applicant.phone).get()
+                        r = SendSmsWithApi(message=text, phone=phone).get()
 
                     if r != SUCCESS:
                         send_message_to_developer(f'Sms service not working!')
 
                     return Response({'OK': True}, status=status.HTTP_200_OK)
                 else:
-                    print('117')
                     return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print('120')
             send_message_to_developer(f"error: {e}")
             return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)
