@@ -271,11 +271,16 @@ class ConfirmPay(APIView):
                                                   status=PaymentForTreasury.PROCESSING)
 
                 text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m o\'tkazish jarayoniga o\'tdi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
-                r = SendSmsWithPlayMobile(phone=application.applicant, message=text).get()
+
+                if application.applicant:
+                    phone = application.applicant.phone
+                else:
+                    phone = application.created_user.phone
+                r = SendSmsWithPlayMobile(phone=phone, message=text).get()
                 print(text)
                 if not r == SUCCESS:
                     # send sms with eskiz
-                    r = SendSmsWithApi(message=text, phone=application.applicant.phone).get()
+                    r = SendSmsWithApi(message=text, phone=phone).get()
 
                 if r != SUCCESS:
                     send_message_to_developer(f'Sms service not working!')
