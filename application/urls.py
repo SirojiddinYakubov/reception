@@ -12,6 +12,7 @@ urlpatterns = [
     # path('application-detail/<int:id>/', application_detail, name='application_detail2'),
     path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),
     path('application-pdf/<int:id>/', ApplicationPdf.as_view(), name='application_pdf'),
+    path('application-pay-status/<int:id>/', ApplicationPayStatus.as_view(), name='application_pay_status'),
     path('get-information/', get_information, name='get_information'),
     path('create-application-doc/<str:filename>/', create_application_doc, name='create_application_doc'),
     path('view-service-data/<int:service_id>/', view_service_data, name='view_service_data'),

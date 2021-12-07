@@ -9,5 +9,5 @@ def create_qr_code(data, size=10, border=0):
 
 
 def create_link(request, application_id):
-    link = f"{request.scheme}://{request.META['HTTP_HOST']}/application/access-with-qrcode/{application_id}"
+    link = f"{request.scheme}://{request.META['HTTP_HOST']}/application/application-pay-status/{application_id}"
     return link

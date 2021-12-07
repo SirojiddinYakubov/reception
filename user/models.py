@@ -76,6 +76,7 @@ class Section(models.Model):
     street = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     pay_for_service = models.BooleanField(default=True)
+    pay_for_treasury = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Bo'lim"

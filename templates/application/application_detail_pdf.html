@@ -19,9 +19,13 @@
     </style>
 </head>
 <body>
+<center><img src="http://192.168.1.18:8000/static/assets/images/logo-dark.png" align="center" alt="" height="50px" class="margin: 0 auto"></center>
+<div class="title_reference">
+        <h1 style="font-size: 2.5em; padding-top: 5px; font-weight:bold; color: #083983" class="text-center" align="center"><b>REFERENS</b></h1>
+</div>
 <header class="clearfix">
     <div style="text-align: center">
-        <h3 style="font-size: 2em; padding-top: 5px;"><b>{{ section.title }}</b></h3>
+        <h3 style="font-size: 2em; padding-top: 2px;"><b>{{ section.title }}</b></h3>
         <h4 style="font-size: 1.3em; padding-top: 5px;" class="text-reset">{{ section.address }}</h4>
     </div>
     </div>
@@ -29,8 +33,8 @@
 <main style="font-size: 2em">
     <div style="text-align: left" class="clearfix">
         <div id="invoice">
-            <div class="date">Yaratildi: {{ created_date|date:"SHORT_DATETIME_FORMAT" }}</div>
-            <div class="date">Yuklandi: {{ now_date|date:"SHORT_DATETIME_FORMAT" }}</div>
+            <div class="date">Yaratildi: {{ created_date|date:"d.m.Y H:i" }}</div>
+            <div class="date">YHXB tomonidan qabul qilindi: {{ app.updated_date|date:"d.m.Y H:i" }}</div>
         </div>
     </div>
     <table class="table table-bordered" style="border: 1px solid dimgray; margin: 30%; padding: 30%">
@@ -40,58 +44,36 @@
             <td>{{ app.id }}</td>
         </tr>
         <tr>
-            <td><b>Tekshiruv paroli</b></td>
-            <td style="color: red">{{ app.password }}</td>
+            <td><b>Topshirish usuli</b></td>
+            <td>Onlayn</td>
         </tr>
         <tr>
             <td><b>Xizmat nomi</b></td>
             <td>{{ app.service.long_title }}</td>
         </tr>
         <tr>
-            <td><b>Holati</b></td>
-            <td style="color: #0f6674">{{ app.get_process_display }}</td>
-
-        </tr>
-        <tr>
-            <td><b>Sababi</b></td>
-            <td style="color: #0f6674">
-                {% if app.process_sms %}{{ app.process_sms }}{% endif %}</td>
-        </tr>
-        <tr>
-            <td><b>Yaratdi</b></td>
-            <td>{{ app.created_user }}</td>
-        </tr>
-        <tr>
-            <td><b>Ariza topshirdi</b></td>
+            <td><b>Ariza topshiruvchi</b></td>
             <td>{% if app.organization %}{{ app.organization }}{% else %}
-                {{ app.created_user }}{% endif %}</td>
+                {{ app.applicant }}{% endif %}</td>
         </tr>
-        <tr>
-            <td><b>To'lov</b></td>
-            {% if app.is_payment %}
-                <td style="color: green">To'langan</td>
-            {% else %}
-                <td style="color: red">To'lanmagan</td>
-            {% endif %}
-        </tr>
+
         </tbody>
     </table>
     <br>
 
-{#    <div class="row">#}
-{#        <div class="col-xs-12">#}
-{##}
-{#            <img width="200px" height="200px"#}
-{#                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} alt="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" 27 %}" />#}
-{#        </div>#}
-{#    </div>#}
+    <div class="row">
+        <div class="col-xs-12">
+
+            <img width="200px" height="200px"
+                 src={{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" app.id %} alt="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url "application:generate_qr_code_image" 27 %}" />
+        </div>
+    </div>
 
     <br>
     <div style="margin-top: 10px; color: red">Eslatma!</div>
     <div id="notices">
-        <div>Hurmatli foydalanuvchi! Transport vositasini ro'yhatdan o'tkazishni yakunlash uchun arizani to'liq
-            to'ldirib {{ section.title }} ga yetkazib berishingiz talab qilinadi!
-        </div>
+        <p class="text-justify">Hurmatli foydalanuvchi! Agarda siz to'lovlarni E-RIB.UZ tizimi orqali to'lagan bo'lsangiz, u holda ushbu ma'lumotnoma YHXB idorasiga taqdim etilishi shart. YHXB xodimlari ushbu ma'lumotnoma asosida sizni to'lovlaringiz tekshiriladi.
+        </p>
     </div>
 </main>
 </body>
