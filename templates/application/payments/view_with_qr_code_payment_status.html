@@ -1,0 +1,105 @@
+{% load humanize %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To'lovlarni tekshirish</title>
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://e-rib.uz/static/assets/css/config/creative/bootstrap.min.css">
+</head>
+<style>
+    body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+    }
+
+    h1 {
+        color: #88B04B;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-weight: 900;
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #404F5E;
+        font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left: -15px;
+    }
+
+    .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+    }
+    .app_id{
+        font-weight: bold;
+    }
+    .name{
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #0b3c85;
+    }
+
+</style>
+<body>
+<div class="card">
+    <p class="name">{{ application.applicant.last_name|upper }} {{ application.applicant.first_name|upper }} {{ application.applicant.middle_name|upper }}</p>
+    <p class="app_id">{{ application.id }}-ARIZA</p>
+    <p class="app_id">{{ application.service.short_title }}</p>
+    <p class="app_id">{{ application.car.model.title }}</p>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-responsive table-bordered  table-striped pay_list" width="100%">
+            <thead>
+            <tr>
+                <td><b>#1</b></td>
+                <td><b>Davlat boji</b></td>
+                <td><b>Summasi</b></td>
+                <td><b>To'langanligi</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for payment in application.paymentfortreasury_set.all %}
+                <tr>
+                    <td><b>{{ payment.id }}</b></td>
+                    <td><b>{{ payment.state_duty_percent.title }}</b></td>
+                    <td><b>{{ payment.amount|intcomma }} so'm</b></td>
+                    <td class="text-center">
+                        {% if payment.status == 'success' %}
+                            <p class="text-success">To'langan</p>
+                            <p ><a href="{{ payment.memorial }}" class="text-success text-decoration-underline">Kvitansiyani yuklash</a></p>
+                        {% else %}
+                            <p class="text-danger">To'lanmagan</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+                <td><b>Jami</b></td>
+                <td><b>{{ pay_treasury.amount__sum|intcomma }} so'm</b></td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+</body>
+</html>
