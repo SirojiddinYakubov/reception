@@ -54,7 +54,13 @@
         <tr>
             <td><b>Ariza topshiruvchi</b></td>
             <td>{% if app.organization %}{{ app.organization }}{% else %}
-                {{ app.applicant }}{% endif %}</td>
+                {% if app.applicant %}
+                {{ app.applicant }}
+                {% else %}
+                    {{ app.created_user }}
+                {% endif %}
+                {% endif %}
+            </td>
         </tr>
 
         </tbody>
