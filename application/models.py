@@ -9,7 +9,6 @@ from django.utils import timezone
 
 from service.models import Service, ExampleDocument
 from user.base import BaseModel
-from user.models import User, Section, Organization, Car, CHECKER
 from django.utils.translation import ugettext_lazy as _
 
 CREATED = 0  # Yaratildi
@@ -50,10 +49,10 @@ PERSON_CHOICES = (
 
 
 class Application(models.Model):
-    created_user = models.ForeignKey(User, verbose_name=_('Yaratgan shaxs'), on_delete=models.CASCADE, null=True,
+    created_user = models.ForeignKey('user.User', verbose_name=_('Yaratgan shaxs'), on_delete=models.CASCADE, null=True,
                                      related_name='user_application')
     person_type = models.IntegerField(_('Ariza topshiruvchi shaxsi'), choices=PERSON_CHOICES, default=PHYSICAL_PERSON)
-    organization = models.ForeignKey(Organization, verbose_name='Tashkilot', on_delete=models.CASCADE, null=True,
+    organization = models.ForeignKey('user.Organization', verbose_name='Tashkilot', on_delete=models.CASCADE, null=True,
                                      blank=True)
     process = models.IntegerField(choices=PROCESS_CHOICES, verbose_name="Holat", default=DRAFT)
 
@@ -68,25 +67,25 @@ class Application(models.Model):
     is_active = models.BooleanField(default=True)
     is_block = models.BooleanField(default=True)
     cron = models.CharField(choices=CRON_COICES, max_length=15, verbose_name=_("CRON holati"), default=1)
-    section = models.ForeignKey(Section, verbose_name=_("Ariza topshirilgan IIB YHXB bo'limi"),
+    section = models.ForeignKey("user.Section", verbose_name=_("Ariza topshirilgan IIB YHXB bo'limi"),
                                 on_delete=models.CASCADE, blank=True, null=True, related_name='application_section', )
 
-    car = models.ForeignKey(Car, verbose_name='Avtomobil', on_delete=models.CASCADE, null=True,
+    car = models.ForeignKey("user.Car", verbose_name='Avtomobil', on_delete=models.CASCADE, null=True,
                             related_name='service_car')
     created_date = models.DateTimeField(verbose_name=_('Yaratgan vaqti'), null=True, default=timezone.now)
     updated_date = models.DateTimeField(verbose_name=_('Tahrirlangan vaqti'), null=True, blank=True,
                                         default=timezone.now)
     canceled_date = models.DateTimeField(verbose_name=_('Rad etilgan vaqti'), null=True, blank=True)
     confirmed_date = models.DateTimeField(verbose_name=_('Tasdiqlangan vaqti'), null=True, blank=True)
-    inspector = models.ForeignKey(User, verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True, blank=True,
+    inspector = models.ForeignKey('user.User', verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True, blank=True,
                                   related_name='inspector_application')
-    applicant = models.ForeignKey(User, verbose_name=_('Applikant'), on_delete=models.CASCADE, null=True, blank=True,
+    applicant = models.ForeignKey('user.User', verbose_name=_('Applikant'), on_delete=models.CASCADE, null=True, blank=True,
                                   related_name='user_applicant')
 
     class Meta:
         verbose_name = 'Ariza'
         verbose_name_plural = 'Arizalar'
-        ordering = ['-updated_date','-id' ]
+        ordering = ['-updated_date', '-id']
 
     def __str__(self):
         if self.service.key:
@@ -142,7 +141,7 @@ APPLICATION_CASH_BY_MODERATOR_STATUS = (
 class ApplicationCashByModerator(BaseModel):
     status = models.PositiveIntegerField(choices=APPLICATION_CASH_BY_MODERATOR_STATUS)
     application = models.ForeignKey(Application, on_delete=models.CASCADE, null=True)
-    moderator = models.ForeignKey(User, verbose_name=_('Moderator'), on_delete=models.CASCADE, null=True)
+    moderator = models.ForeignKey('user.User', verbose_name=_('Moderator'), on_delete=models.CASCADE, null=True)
     paid_state_duty = models.ForeignKey('service.PaidStateDuty', on_delete=models.CASCADE, null=True)
 
 

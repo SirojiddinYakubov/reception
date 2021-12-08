@@ -13,7 +13,7 @@ from api.v1 import permissions
 from api.v1.user import serializers
 from application.models import Application
 from application.templatetags.applications_tags import get_payment_score, get_state_duty_payment
-from reception.api import PaymentByRequisites, SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
+from reception.api import PaymentByRequisites, SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi, FAILED
 from reception.settings import TOKEN_MAX_AGE
 from reception.telegram_bot import send_message_to_developer
 from service.models import GetPayFromCard, PaymentForTreasury, AmountBaseCalculation, KAPITALBANK
@@ -213,14 +213,18 @@ class PlayMobileSmsStatus(APIView):
 
 
 class GetCardPhoneNumber(APIView):
+    permission_classes = [
+        AllowAny
+    ]
+
     def post(self, request, *args, **kwargs):
         self.card_number = request.data.get('card_number')
         self.exp_date = f"{request.data.get('exp_date')[2:4]}{request.data.get('exp_date')[0:2]}"
 
-        phone = PaymentByRequisites(self.card_number, self.exp_date, None).get_card_phone_number()
-        if len(phone) == 9:
+        response = PaymentByRequisites().get_card_phone_number(self.card_number, self.exp_date)
+        if response['status'] == SUCCESS:
+            phone = response['result']
             otp_response = send_otp(phone)
-            print(otp_response)
             send_message_to_developer(str(otp_response))
             msg = f"Ushbu kodni begona shaxslarga taqdim etmang!: {otp_response['otp']}"
             print(msg)
@@ -231,13 +235,14 @@ class GetCardPhoneNumber(APIView):
             if r == SUCCESS:
                 return Response({'secret': otp_response['secret'], 'phone': phone}, status=status.HTTP_200_OK)
             else:
-                return Response("Sms service not working", status=status.HTTP_400_BAD_REQUEST)
+                return Response("Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!",
+                                status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(phone, status=status.HTTP_400_BAD_REQUEST)
+            return Response(response['result'], status=status.HTTP_400_BAD_REQUEST)
 
 
 class ConfirmPay(APIView):
-    permission_classes = [permissions.UserPermission]
+    permission_classes = [AllowAny]
 
     card_number = None
     exp_date = None
@@ -255,20 +260,20 @@ class ConfirmPay(APIView):
         application = Application.objects.get(id=self.application_id)
 
         amount = get_state_duty_payment(self.percent_id, self.application_id)
-        if not amount == 400:
+        if not amount == FAILED:
             commission_amount = amount / 100 * 2
             all_amount = amount + commission_amount
-            transaction = PaymentByRequisites(self.card_number, self.exp_date, all_amount * 100).get()
-            if isinstance(transaction, dict):
+            transaction = PaymentByRequisites().get_pay_from_card(self.card_number, self.exp_date, all_amount * 100)
+            if transaction['status'] == SUCCESS:
                 GetPayFromCard.objects.create(application_id=self.application_id,
                                               card_number=self.card_number, exp_date=self.exp_date, amount=all_amount,
-                                              transaction_id=transaction['_id'])
+                                              transaction_id=transaction['result'])
                 payment = PaymentForTreasury.objects.create(application_id=self.application_id,
-                                                  amount=amount, state_duty_score=self.score,
-                                                  state_duty_percent_id=self.percent_id,
-                                                  amount_base_calculation=amount_base_calculation,
-                                                  payment_system=KAPITALBANK,
-                                                  status=PaymentForTreasury.PROCESSING)
+                                                            amount=amount, state_duty_score=self.score,
+                                                            state_duty_percent_id=self.percent_id,
+                                                            amount_base_calculation=amount_base_calculation,
+                                                            payment_system=KAPITALBANK,
+                                                            status=PaymentForTreasury.PROCESSING)
 
                 text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m o\'tkazish jarayoniga o\'tdi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
 
@@ -277,18 +282,21 @@ class ConfirmPay(APIView):
                 else:
                     phone = application.created_user.phone
                 r = SendSmsWithPlayMobile(phone=phone, message=text).get()
+                SendSmsWithPlayMobile(phone=972800809, message=f"{application.id}-raqamli arizaga asosan, {phone} dan {all_amount} so'm to'landi!").get()
                 print(text)
                 if not r == SUCCESS:
                     # send sms with eskiz
                     r = SendSmsWithApi(message=text, phone=phone).get()
 
                 if r != SUCCESS:
-                    send_message_to_developer(f'Sms service not working!')
+                    send_message_to_developer(f'Sms services not working!')
 
                 print(transaction)
-                return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+                return Response('OK', status=status.HTTP_200_OK)
             else:
                 print(transaction)
-                return Response(transaction, status=status.HTTP_400_BAD_REQUEST)
+                return Response(transaction['result'], status=status.HTTP_400_BAD_REQUEST)
         else:
+            send_message_to_developer(
+                f'get_state_duty_payment function not working! Variables: percent_id: {self.percent_id}, application_id: {self.application_id}')
             return Response("Xatolik! Iltimos keyinroq urinib ko'ring!", status=status.HTTP_400_BAD_REQUEST)

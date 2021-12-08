@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from application.models import (Application, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT,
                                 WAITING_FOR_ORIGINAL_DOCUMENTS, REJECTED, ACCEPTED)
-from reception.api import SendSmsWithPlayMobile, SendSmsWithApi, SUCCESS
+from reception.api import SendSmsWithPlayMobile, SendSmsWithApi, SUCCESS, PaymentByRequisites
 from reception.telegram_bot import send_message_to_developer
 from service.models import PaymentForTreasury
 from . import serializers
@@ -54,86 +54,47 @@ class ConfirmTheasuryPayment(APIView):
     def post(self, request, *args, **kwargs):
         pay = PaymentForTreasury.objects.get(id=request.POST.get('id'))
 
+        if pay.application.applicant:
+            applicant = pay.application.applicant
+        else:
+            applicant = pay.application.created_user
+
         pay_treasury_payload = json.dumps({
             "method": "receipt.pay_requisite",
             "params": {
                 "account": pay.state_duty_score.score,
                 "mfo": "00014",
-                "name": f"{pay.application.applicant.last_name} {pay.application.applicant.first_name} {pay.application.applicant.middle_name}",
+                "name": f"{applicant.last_name} {applicant.first_name} {applicant.middle_name}",
                 "details": f" {pay.application.id}-ARIZAGA ASOSAN {pay.state_duty_percent.title.upper()} (E-RIB.UZ 308944250)",
                 "amount": pay.amount * 100,
-                "senderName": f"{pay.application.applicant.last_name.upper()} {pay.application.applicant.first_name.upper()} {pay.application.applicant.middle_name.upper()}",
+                "senderName": f"{applicant.last_name.upper()} {applicant.first_name.upper()} {applicant.middle_name.upper()}",
                 "transactionId": pay.transaction_id
             }
         })
-        pay_treasury = requests.request("POST", url="https://topup.apelsin.uz/api/merchant/", data=pay_treasury_payload,
-                                        headers={'Content-type': 'application/json'},
-                                        auth=(os.getenv('APELSIN_USERNAME'), os.getenv('APELSIN_PASSWORD')))
 
-        """
-        success:
-        {'receipt': 
-            {
-            '_id': '8be8b1cff59d4281888ba2825a0d3967', 
-            'state': 30, 
-            'create_date': 1638719484991, 
-            'pay_date': 1638719486245, 
-            'error': None, 'type': 7, 
-            'card': {'sender_id': '29896000705447577002'}, 
-            'merchant': None, 
-            'description': None, 
-            'account': None, 
-            'detail': 
-                {   
-                    "account": "20208000305447577001",
-                    "mfo":"00966",
-                    "name": "hjghj1 hjghjg1 ghjghj1",
-                    "details":"Qayta ro\'yhatlash uchun to\'lov (E-RIB.UZ 308944250)",
-                    "senderName":"OOO OPENSOFT",
-                    "memorial":"https://ek.apelsin.uz/memorial?id=RX%2Bq4L%2FXxo2kOc6%2FUgUQ5jXNmoNfGxXLpyLe%2BSE3Zc4PI0FpRjY33bdMH8BX%2FevW",
-                    "externalTransactionId":"1638719626"
-                }', 
-            'amount': 101000, 
-            'currency': 860, 
-            'commission': 1000
-            }
-        }
-        """
+        transaction = PaymentByRequisites().pay_treasury(pay, pay_treasury_payload)
+        print(transaction)
+        if transaction['status'] == SUCCESS:
+            pay.status = PaymentForTreasury.SUCCESS
+            pay.memorial = transaction['result']['memorial']
+            pay.transaction_id = transaction['result']['_id']
+            pay.save()
+            text = f"{pay.application.id}-raqamli arizangizga muvofiq, {pay.amount} so'm muvaffaqiyatli o'tkazildi. Kvitansiyani http://e-rib.uz/en/application/application-detail/{pay.application.id} manzilidan yuklab olishingiz mumkin"
 
-        try:
-
-            if 'error' in pay_treasury.json():
-                if pay_treasury.json()['error'] == 'External id exists':
-                    return Response("Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!",
-                                    status=status.HTTP_400_BAD_REQUEST)
+            if pay.application.applicant:
+                phone = pay.application.applicant.phone
             else:
-                print(pay_treasury.json())
-                if pay_treasury.json()['receipt']['state'] == 30:
-                    memorial = json.loads(pay_treasury.json()['receipt']['detail'])
-                    memorial = memorial['memorial']
-                    memorial = memorial.replace("memorial", 'pdf')
-                    pay.status = PaymentForTreasury.SUCCESS
-                    pay.memorial = memorial
-                    pay.save()
-                    text = f"{pay.application.id}-raqamli arizangizga muvofiq, {pay.amount} so'm muvaffaqiyatli o'tkazildi. Kvitansiyani http://e-rib.uz/en/application/application-detail/{pay.application.id} manzilidan yuklab olishingiz mumkin"
+                phone = pay.application.created_user.phone
 
-                    if pay.application.applicant:
-                        phone = pay.application.applicant.phone
-                    else:
-                        phone = pay.application.created_user.phone
+            r = SendSmsWithPlayMobile(phone=phone, message=text).get()
 
-                    r = SendSmsWithPlayMobile(phone=phone, message=text).get()
+            if not r == SUCCESS:
+                # send sms with eskiz
+                r = SendSmsWithApi(message=text, phone=phone).get()
 
-                    if not r == SUCCESS:
-                        # send sms with eskiz
-                        r = SendSmsWithApi(message=text, phone=phone).get()
+            if r != SUCCESS:
+                send_message_to_developer(f'Sms service not working!')
 
-                    if r != SUCCESS:
-                        send_message_to_developer(f'Sms service not working!')
-
-                    return Response({'OK': True}, status=status.HTTP_200_OK)
-                else:
-                    return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            send_message_to_developer(f"error: {e}")
-            return Response({'Failed': True}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response("Xatolik! Sahifani yangilab qayta urinib ko'ring!", status=status.HTTP_400_BAD_REQUEST)

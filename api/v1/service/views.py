@@ -19,7 +19,7 @@ class ServiceList(generics.ListAPIView):
 
 
 class StateDutyPercentDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.UserPermission]
+    permission_classes = [AllowAny]
     serializer_class = serializers.StateDutyPercentDetailSerializer
     queryset = StateDutyPercent.objects.all()
 

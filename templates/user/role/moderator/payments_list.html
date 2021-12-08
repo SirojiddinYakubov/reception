@@ -188,7 +188,7 @@
                             if (data.status === 'success') {
                                 return `<p style="color: green">To'lov amalga oshirilgan</p>`
                             } else {
-                                 return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
+                                return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
                             }
 
                         }
@@ -210,6 +210,11 @@
 
 
         $(document).on('click', '.confirm_pay', function () {
+            const Button = $(this)
+
+            Button.prop('disabled', true)
+            const ButtonValue = Button.text()
+            Button.html(`${ButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
 
             $.ajax({
                 type: "POST",
@@ -243,6 +248,9 @@
                 },
                 error: function (err) {
                     swal_error(err)
+
+                    Button.prop('disabled', false)
+                    Button.html(ButtonValue)
                 }
             })
         })

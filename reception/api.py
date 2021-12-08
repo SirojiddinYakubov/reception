@@ -9,6 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from requests.auth import HTTPBasicAuth
 
 from reception.telegram_bot import send_message_to_developer
+from service.models import PaymentForTreasury
 
 SUCCESS = 200
 PROCESSING = 102
@@ -329,10 +330,8 @@ class SendSmsWithPlayMobile:
 
 class PaymentByRequisites:
     """https://noon-warbler-f6e.notion.site/10f6bb76a73949fa990b44965a4d8851"""
-    def __init__(self, card_number, exp_date, amount):
-        self.card_number = card_number
-        self.exp_date = exp_date
-        self.amount = amount
+
+    def __init__(self):
         self.username = os.getenv('APELSIN_USERNAME')
         self.password = os.getenv('APELSIN_PASSWORD')
         self.merchant_id = 998747
@@ -342,18 +341,20 @@ class PaymentByRequisites:
         self.phone = None
         self._id = None
 
-    def get(self):
-        get_phone = self.cards_get_phone(self.card_number, self.exp_date)
-        if get_phone == SUCCESS:
-            create_amount = self.create_amount(self.amount)
-            if create_amount == SUCCESS:
+    def get_pay_from_card(self, card_number, exp_date, amount):
+        get_phone = self.cards_get_phone(card_number, exp_date)
+        if get_phone['status'] == SUCCESS:
+            create_amount = self.create_amount(amount)
+            if create_amount['status'] == SUCCESS:
                 confirm_pay = self.confirm_pay(self._id, self.token)
-                return confirm_pay
+                if confirm_pay['status'] == SUCCESS:
+                    return {'status': SUCCESS, 'result': confirm_pay['result']}
+                else:
+                    return {'status': FAILED, 'result': confirm_pay['result']}
             else:
-                return create_amount
+                return {'status': FAILED, 'result': create_amount['result']}
         else:
-            return get_phone
-
+            return {'status': FAILED, 'result': get_phone['result']}
 
     def cards_get_phone(self, card_number, exp_date):
         get_phone_payload = json.dumps({
@@ -392,12 +393,12 @@ class PaymentByRequisites:
             if isinstance(get_phone.json()['result'], dict):
                 self.token = get_phone.json()['result']['card']['token']
                 self.phone = get_phone.json()['result']['card']['phone']
-                return SUCCESS
+                return {'status': SUCCESS, 'result': None}
             else:
-                return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+                return {'status': FAILED, 'result': "Karta raqami yoki amal qilish muddati noto'g'ri!"}
         except Exception as e:
-            print(372, e)
-            return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+            print(e)
+            return {'status': FAILED, 'result': "Xatolik! Sahifani yangilab qayta urinib ko'ring!"}
 
     def create_amount(self, amount):
         create_amount_payload = json.dumps({
@@ -464,14 +465,16 @@ class PaymentByRequisites:
             print(create_amount.json())
             if isinstance(create_amount.json()['result'], dict):
                 self._id = create_amount.json()['result']['receipt']['_id']
-                return SUCCESS
+                return {'status': SUCCESS, 'result': None}
             else:
                 send_message_to_developer(f"error: {create_amount.json()}")
-                return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+                return {'status': FAILED,
+                        'result': "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"}
         except Exception as e:
             print(e)
             send_message_to_developer(f"error: {e}")
-            return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+            return {'status': FAILED,
+                    'result': "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"}
 
     def confirm_pay(self, _id, token):
         confirm_pay_payload = json.dumps({
@@ -529,22 +532,26 @@ class PaymentByRequisites:
         try:
             print(confirm_amount.json())
             if confirm_amount.json()['result']['receipt']['state'] == 4:
-                return {'_id': confirm_amount.json()['result']['receipt']['_id']}
+                return {'status': SUCCESS,
+                        'result': confirm_amount.json()['result']['receipt']['_id']}
             elif confirm_amount.json()['result']['receipt']['error'] == 'Insufficient funds':
-                return "Xatolik! Kartangizda yetarli mablag' mavjud emas!"
+                return {'status': FAILED,
+                        'result': "Xatolik! Kartangizda yetarli mablag' mavjud emas!"}
             else:
-                return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+                return {'status': FAILED,
+                        'result': "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"}
         except Exception as e:
             send_message_to_developer(f"error: {e}")
             print(e)
-            return "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"
+            return {'status': FAILED,
+                    'result': "Xatolik! Profilaktika ishlari olib borilmoqda! Iltimos keyinroq urinib ko'ring!"}
 
-    def get_card_phone_number(self):
+    def get_card_phone_number(self, card_number, exp_date):
         get_phone_payload = json.dumps({
             "method": "cards.get_phone",
             "params": {
-                "number": self.card_number,
-                "expire": self.exp_date
+                "number": card_number,
+                "expire": exp_date
             },
             "id": 0
         })
@@ -556,13 +563,66 @@ class PaymentByRequisites:
             if isinstance(get_phone_number.json()['result'], dict):
                 phone = get_phone_number.json()['result']['card']['phone']
                 if len(phone) == 12:
-                    return phone[3:12]
+                    return {'status': SUCCESS, 'result': phone[3:12]}
                 else:
-                    return "Ushbu kartada sms xizmati yoqilmagan!"
+                    return {'status': FAILED, 'result': "Ushbu kartada sms xizmati yoqilmagan!"}
             else:
-                send_message_to_developer(f"error: {get_phone_number.json()}")
-                return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+                send_message_to_developer(f"error: {json.dumps(get_phone_number.json())}")
+                return {'status': FAILED, 'result': "Karta raqami yoki amal qilish muddati noto'g'ri!"}
         except Exception as e:
             print(e)
+            send_message_to_developer(f"error: {str(e)}")
+            return {'status': FAILED, 'result': "Xatolik! Sahifani yangilab qayta urinib ko'ring!"}
+
+    def pay_treasury(self, pay, payload):
+        pay_treasury = requests.request("POST", url="https://topup.apelsin.uz/api/merchant/", data=payload,
+                                        headers={'Content-type': 'application/json'},
+                                        auth=(os.getenv('APELSIN_USERNAME'), os.getenv('APELSIN_PASSWORD')))
+
+        """
+        success:
+        {'receipt': 
+            {
+            '_id': '8be8b1cff59d4281888ba2825a0d3967', 
+            'state': 30, 
+            'create_date': 1638719484991, 
+            'pay_date': 1638719486245, 
+            'error': None, 'type': 7, 
+            'card': {'sender_id': '29896000705447577002'}, 
+            'merchant': None, 
+            'description': None, 
+            'account': None, 
+            'detail': 
+                {   
+                    "account": "20208000305447577001",
+                    "mfo":"00966",
+                    "name": "hjghj1 hjghjg1 ghjghj1",
+                    "details":"Qayta ro\'yhatlash uchun to\'lov (E-RIB.UZ 308944250)",
+                    "senderName":"OOO OPENSOFT",
+                    "memorial":"https://ek.apelsin.uz/memorial?id=RX%2Bq4L%2FXxo2kOc6%2FUgUQ5jXNmoNfGxXLpyLe%2BSE3Zc4PI0FpRjY33bdMH8BX%2FevW",
+                    "externalTransactionId":"1638719626"
+                }', 
+            'amount': 101000, 
+            'currency': 860, 
+            'commission': 1000
+            }
+        }
+        """
+
+        try:
+            if 'error' in pay_treasury.json():
+                if pay_treasury.json()['error'] == 'External id exists':
+                    return {'status': FAILED, 'result': "Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!"}
+            else:
+                print(pay_treasury.json())
+                if pay_treasury.json()['receipt']['state'] == 30:
+                    memorial = json.loads(pay_treasury.json()['receipt']['detail'])
+                    memorial = memorial['memorial']
+                    memorial = memorial.replace("memorial", 'pdf')
+
+                    return {'status': SUCCESS,
+                            'result': {'memorial': memorial, '_id': pay_treasury.json()['receipt']['_id']}}
+
+        except Exception as e:
             send_message_to_developer(f"error: {e}")
-            return "Karta raqami yoki amal qilish muddati noto'g'ri!"
+            return {'status': FAILED, 'result': "Xatolik!"}

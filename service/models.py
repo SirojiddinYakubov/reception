@@ -1,13 +1,11 @@
-import datetime
 import time
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 from user.base import BaseModel
-from user.models import *
 from django.utils.translation import ugettext_lazy as _
 
-from user.models import *
+from django.db import models
 
 
 # SERVICE_CHOICES = (
@@ -103,7 +101,7 @@ class StateDutyPercent(models.Model):
     state_duty = models.IntegerField(choices=STATE_DUTY_TITLE, null=True)
     person_type = models.IntegerField(choices=PERSON_CHOICES, default=PHYSICAL_PERSON, blank=True,
                                       null=True)
-    car_type = models.ManyToManyField(CarType, blank=True)
+    car_type = models.ManyToManyField('user.CarType', blank=True)
     car_is_new = models.BooleanField(default=False)
     is_old_number = models.BooleanField(default=False)
     is_save_old_number = models.BooleanField(default=False)
@@ -131,8 +129,8 @@ class StateDutyPercent(models.Model):
 
 class StateDutyScore(models.Model):
     state_duty = models.IntegerField(choices=STATE_DUTY_TITLE)
-    region = models.ForeignKey(Region, verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
-    district = models.ForeignKey(District, verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
+    region = models.ForeignKey('user.Region', verbose_name='Viloyat', on_delete=models.SET_NULL, null=True, blank=True)
+    district = models.ForeignKey('user.District', verbose_name='Tuman/Shahar', on_delete=models.SET_NULL, null=True,
                                  blank=True)
     score = models.CharField(verbose_name='Hisob raqami', max_length=30, default=0)
     created_date = models.DateTimeField(default=timezone.now, editable=False)

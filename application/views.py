@@ -181,7 +181,6 @@ class ApplicationPayStatus(DetailView):
     template_name = 'application/payments/view_with_qr_code_payment_status.html'
     pk_url_kwarg = 'id'
     model = Application
-    print(180)
 
 
 

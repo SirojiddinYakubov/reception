@@ -224,8 +224,8 @@
             <div class="modal-content">
                 <form action="#" id="confirm_code_form">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Telefon raqamni tasdiqlash</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        <h5 class="modal-title" id="staticBackdropLabel">Karta ma'lumotlarini tasdiqlash</h5>
+                        <button id="close_modal_icon" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         ></button>
                     </div>
                     <div class="modal-body">
@@ -283,7 +283,9 @@
                 $('#commission_amount').html(`${commission_amount} so'm`)
                 const all_amount = commission_amount + res.amount
                 $('#all_amount').html(`${all_amount} so'm`)
+
                 $('#applicant').html(`${res.applicant.last_name} ${res.applicant.first_name} ${res.applicant.middle_name}`)
+
             })
 
             $("#card_number").inputmask("9999 9999 9999 9999", {
@@ -357,7 +359,10 @@
                                 countdown.start()
                             },
                             error: function (err) {
-                                swal_error(err.responseJSON)
+                                swal_error(err)
+                                console.log(err.responseJSON)
+
+
                                 $('#card_number').attr('disabled', false)
                                 $('#exp_date').attr('disabled', false)
                                 ConfirmCardDataFormButton.prop('disabled', false)
@@ -403,12 +408,17 @@
                 }
             });
 
-            $(document).on('click', '#cancel_confirm', function (e) {
+            $(document).on('click', '#cancel_confirm, #close_modal_icon', function (e) {
                 countdownSeconds = 300
                 $('#confirm_code_modal').modal('hide')
                 $('#confirm_code').val('')
                 countdown.stop()
                 countdown.reset(countdownSeconds)
+
+                $('#card_number').attr('disabled', false)
+                $('#exp_date').attr('disabled', false)
+                ConfirmCardDataFormButton.prop('disabled', false)
+                ConfirmCardDataFormButton.html(ConfirmCardDataFormButtonValue)
 
             })
 
