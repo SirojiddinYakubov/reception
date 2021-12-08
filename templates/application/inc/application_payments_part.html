@@ -39,36 +39,39 @@
                         {#                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i#}
                         {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
                         {#                        {% endif %}#}
-                        {% if application.section.pay_for_treasury %}
-                            {% check_state_payment_paid application percent as check %}
-                            {% if state_duty_score.state_duty %}
-                                {% if not check %}
-                                    <button class="btn btn-danger create_pay" data-percent-id="{{ percent.id }}"><i
-                                            class="fa fa-money-bill-wave-alt"></i> To'lash
-                                    </button>
-                                {% else %}
-                                    {% check_memorial application percent as memorial %}
-                                    {% if not memorial %}
-                                        <b class="text-primary text-center">Bankka jo'natilgan</b>
+                        {% if not percent.state_duty == 7 %}
+
+                            {% if application.section.pay_for_treasury %}
+                                {% check_state_payment_paid application percent as check %}
+                                {% if state_duty_score.state_duty %}
+                                    {% if not check %}
+                                        <button class="btn btn-danger create_pay" data-percent-id="{{ percent.id }}"><i
+                                                class="fa fa-money-bill-wave-alt"></i> To'lash
+                                        </button>
                                     {% else %}
-                                        <a href="{{ memorial.memorial }}" class="btn btn-success text-bold"
-                                           download="download"> <i class="fa fa-file-download"></i> Kvitansiya yuklab
-                                            olish</a>
+                                        {% check_memorial application percent as memorial %}
+                                        {% if not memorial %}
+                                            <b class="text-primary text-center">Bankka jo'natilgan</b>
+                                        {% else %}
+                                            <a href="{{ memorial.memorial }}" class="btn btn-success text-bold"
+                                               download="download"> <i class="fa fa-file-download"></i> Kvitansiya
+                                                yuklab
+                                                olish</a>
+                                        {% endif %}
+
                                     {% endif %}
+                                {% else %}
+                                    <b class="text-danger text-center">-</b>
 
                                 {% endif %}
                             {% else %}
-                                <b class="text-danger text-center">-</b>
-
+                                <b class="text-danger text-center">Ushbu YHXB onlayn kvitansiyani qabul qilmaydi</b>
                             {% endif %}
-                        {% else %}
-                            <b class="text-danger text-center">Ushbu YHXB onlayn kvitansiyani qabul qilmaydi</b>
+
+
+                            {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
+                            {#                            </button>#}
                         {% endif %}
-
-
-                        {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
-                        {#                            </button>#}
-
                     </td>
                 </tr>
                 {#            {% endif %}#}

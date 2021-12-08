@@ -1504,22 +1504,29 @@ function formatState(state) {
 
 
 function swal_error(err = null) {
-
+    console.log(err)
     try {
-        if (err && typeof err === 'object') {
-            var errorKey
-            var errorText
-            var keys = Object.keys(err.responseJSON);
-
-            keys.forEach(function (key) {
-                errorText = err.responseJSON[key];
-                errorKey = key;
-            });
-            Swal.fire(
-                'Xatolik!',
-                `${errorKey} ${errorText}`,
-                `error`,
-            )
+        if (isDict(err)) {
+            if (isDict(err.responseJSON)) {
+                var errorKey
+                var errorText
+                var keys = Object.keys(err.responseJSON);
+                keys.forEach(function (key) {
+                    errorText = err.responseJSON[key];
+                    errorKey = key;
+                });
+                Swal.fire(
+                    'Xatolik!',
+                    `${errorKey} ${errorText}`,
+                    `error`,
+                )
+            } else {
+                Swal.fire(
+                    'Xatolik!',
+                    `${err.responseJSON}`,
+                    `error`,
+                )
+            }
         } else if (err) {
             Swal.fire(
                 'Xatolik!',
@@ -1563,6 +1570,8 @@ function sendAuthorizationToken() {
         error: function (response) {
             if (response.status === 401) {
                 tokenInvalid()
+            } else if (response.status === 403) {
+                swal_error("Kechirasiz! Ruxsat berilmagan!")
             }
         }
     })
@@ -1611,3 +1620,8 @@ $.urlParam = function (name) {
     }
     return decodeURI(results[1]) || 0;
 }
+
+
+const isDict = dict => {
+    return typeof dict === "object" && !Array.isArray(dict);
+};

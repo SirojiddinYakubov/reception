@@ -2,10 +2,11 @@ import json
 import random
 
 import pyotp
+import requests
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import IntegrityError, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
@@ -16,10 +17,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-import user.admin
+from user.models import (USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
+                         MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR, Section, CarModel, FuelType,
+                         CarType, Device, BodyType, Color)
 from application.mixins import *
 from application.models import Application
-from reception.api import SendSmsWithApi, SendSmsWithPlayMobile
+from reception.api import SendSmsWithApi, SendSmsWithPlayMobile, SUCCESS
 from reception.mixins import *
 from reception.settings import *
 from reception.telegram_bot import send_message_to_developer

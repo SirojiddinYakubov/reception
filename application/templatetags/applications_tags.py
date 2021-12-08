@@ -189,7 +189,7 @@ def get_state_duty_payment(percent_id, application_id):
             payment = amount_base_calculation.amount / 100 * int(percent.percent)
         return int(payment)
     except:
-        return 400
+        return FAILED
 
 
 @register.simple_tag
