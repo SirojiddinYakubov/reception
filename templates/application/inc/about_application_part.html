@@ -57,12 +57,23 @@
         <td>{{ application.created_user }}</td>
     </tr>
     <tr>
-        <th scope="row">Ariza nusxasi</th>
+        <th scope="row">Arizaning elektron nusxasi</th>
         <td>
             <a href="{% url 'application:create_application_doc' application.file_name %}">
                 <button class="btn btn-outline-primary"><i class="fas fa-file-word"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
                 </button>
             </a>
+        </td>
+    </tr>
+
+    <tr>
+        <th scope="row">Referens</th>
+        <td><a style="cursor: pointer; color: #007bff"
+               class="application_render_pdf"
+               data-application="{{ application.id }}">
+            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish
+            </button>
+        </a>
         </td>
     </tr>
     <tr>
@@ -76,16 +87,6 @@
     </tr>
 
 
-    {#    <tr>#}
-    {#        <th scope="row">Ariza haqida ma'lumot</th>#}
-    {#        <td><a style="cursor: pointer; color: #007bff"#}
-    {#               class="application_render_pdf"#}
-    {#               data-application="{{ application.id }}">#}
-    {#            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab olish#}
-    {#            </button>#}
-    {#        </a>#}
-    {#        </td>#}
-    {#    </tr>#}
     {#    <tr>#}
     {#        <th scope="row">Tekshirish uchun parol:</th>#}
     {#        <td class="text-danger">{{ application.password }}</td>#}
