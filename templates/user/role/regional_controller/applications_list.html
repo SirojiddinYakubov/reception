@@ -13,7 +13,7 @@
           rel="stylesheet" type="text/css"/>
     <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
           type="text/css"/>
-    <link href="{% static 'assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet"
+    <link href="{% static 'assets/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet"
           type="text/css"/>
     <!-- third party css end -->
 
@@ -148,18 +148,21 @@
                 "columns": [
                     {
                         "data": "service",
+                         orderable: false,
                         render: function (data, type, row) {
                             return data.short_title
                         }
                     },
                     {
                         "data": "section",
+                         orderable: false,
                         render: function (data, type, row) {
                             return data.title
                         }
                     },
                     {
                         "data": 'car',
+                         orderable: false,
                         render: function (data, type, row) {
                             return `<b title='${data.model.title}'>${data.model.title.substring(0, 25)}</b><br>${data.old_number ? data.old_number : ''}`
                         }
@@ -179,6 +182,7 @@
                     },
                     {
                         "data": "process",
+                         orderable: false,
                         render: function (data, type, row) {
                             if (row.process === 7) {
                                 return '<span class="badge label-table bg-warning">Ariza yaratilmoqda</span>'

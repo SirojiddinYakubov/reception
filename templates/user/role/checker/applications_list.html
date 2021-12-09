@@ -159,6 +159,7 @@
                 "columns": [
                     {
                         "data": "service",
+                         orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, row.id.toString())
                             return `<a href="${url}">${data.short_title}</a>`
@@ -166,6 +167,7 @@
                     },
                     {
                         "data": 'car',
+                         orderable: false,
                         render: function (data, type, row) {
                             var car_url = "{% url 'user:view_car_data' 12345 %}".replace(/12345/, row.car.id.toString())
                             return `<a href='${car_url}' title='${data.model.title}'>${data.model.title.substring(0, 25)}</a><br>${data.old_number ? data.old_number : ''}`
@@ -173,6 +175,7 @@
                     },
                     {
                         "data": "created_user",
+                         orderable: false,
                         render: function (data, type, row) {
                             var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
                             return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
@@ -187,6 +190,7 @@
                     },
                     {
                         "data": "process",
+                         orderable: false,
                         render: function (data, type, row) {
                             var border_color = ((row.process === 2) || (row.process === 3) || (row.process === 4)) ? "#ecec01" : (row.process === 5) ? "#36f406" : (row.process === 6) ? "#dc3545" : '#c9c9c9';
 
@@ -206,6 +210,7 @@
                     {"data": "id"},
                     {
                         "data": "file_name",
+                         orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:create_application_doc' filename=12345 %}".replace(/12345/, row.file_name.toString());
 

@@ -194,7 +194,6 @@ class ApplicationPayStatus(DetailView):
         except:
             return redirect(reverse_lazy('error_404'))
 
-
     def get_context_data(self, **kwargs):
         print(187)
         application = get_object_or_404(Application, id=self.kwargs['id'])
@@ -733,7 +732,6 @@ class SaveDraftApplication(UpdateAPIView):
         return super(SaveDraftApplication, self).patch(*args, **kwargs)
 
 
-
 class PaymentsReport(AllowedRolesMixin, ListView):
     model = PaymentForTreasury
     template_name = 'user/role/regional_controller/payments_report.html'
@@ -746,3 +744,10 @@ class PaymentsReport(AllowedRolesMixin, ListView):
         if role == REGIONAL_CONTROLLER:
             return ['user/role/regional_controller/payments_report.html']
         return [self.template_name]
+
+
+class ApplicantsList(AllowedRolesMixin, ListView):
+    model = User
+    template_name = 'user/role/administrator/applicants_list.html'
+    allowed_roles = [ADMINISTRATOR, SUPER_ADMINISTRATOR]
+

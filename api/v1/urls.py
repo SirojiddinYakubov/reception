@@ -13,4 +13,5 @@ urlpatterns = [
     path('moderator/', include('api.v1.user.moderator.urls')),
     path('state_controller/', include('api.v1.user.state_controller.urls')),
     path('checker/', include('api.v1.user.checker.urls')),
+    path('administrator/', include('api.v1.user.administrator.urls')),
 ]

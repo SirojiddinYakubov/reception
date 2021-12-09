@@ -45,4 +45,5 @@ urlpatterns = [
 
 
     path('payments-report/', PaymentsReport.as_view(), name='payments_report'),
+    path('applicants-list/', ApplicantsList.as_view(), name='applicants_list'),
 ]

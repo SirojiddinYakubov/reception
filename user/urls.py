@@ -20,6 +20,7 @@ urlpatterns = [
     path('', personal_data, name='personal_data'),
     path('view-personal-data/<int:id>/', view_personal_data, name='view_personal_data'),
     path('edit-personal-data/', EditPersonalData.as_view(), name='edit_personal_data'),
+    path('applicant/update/<int:pk>/', ApplicantUpdate.as_view(), name='applicant_update'),
     path('save-personal-data/', SavePersonalData.as_view(), name='save_personal_data'),
     path('add-organization/', add_organization, name='add_organization'),
 
