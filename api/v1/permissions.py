@@ -3,7 +3,7 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 from user.models import (
     USER,
     CHECKER,
-    APP_CREATOR, REGIONAL_CONTROLLER, MODERATOR, STATE_CONTROLLER
+    APP_CREATOR, REGIONAL_CONTROLLER, MODERATOR, STATE_CONTROLLER, ADMINISTRATOR
 )
 
 
@@ -59,10 +59,10 @@ class StateControllerPermission(BasePermission):
             return False
         return request.user.is_active
 
-class CheckerPermission(BasePermission):
+class AdministratorPermission(BasePermission):
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False
-        if request.user.role != CHECKER:
+        if request.user.role != ADMINISTRATOR:
             return False
         return request.user.is_active

@@ -126,33 +126,52 @@
                                             <div class="title-box">
                                                 <h5 class="menu-title">Menyu</h5>
                                                 <ul class="nav flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{% url 'user:personal_data' %}">Shaxsiy
-                                                            ma'lumotlar</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{% url 'user:organizations_list' %}">Tashkilotlar</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link"
-                                                           href="{% url 'application:applications_list' %}">Arizalar</a>
-                                                    </li>
-
-                                                    {% if request.user.role == 6 %}
-                                                        <li class="nav-item">
-                                                            <a class="nav-link"
-                                                               href="{% url 'application:payments_list' %}">To'lovlar</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link"
-                                                               href="{% url 'application:payments_report' %}">To'lovlar hisobot</a>
-                                                        </li>
-                                                    {% endif %}
-                                                    {% if  request.user.role == 8 %}
-                                                        <li class="nav-item">
-                                                            <a class="nav-link"
-                                                               href="{% url 'application:payments_list' %}">To'lovlar</a>
-                                                        </li>
+                                                    {#USER = 1#}
+                                                    {#CHECKER = 2#}
+                                                    {#REVIEWER = 3#}
+                                                    {#TECHNICAL = 4#}
+                                                    {#SECTION_CONTROLLER = 5#}
+                                                    {#REGIONAL_CONTROLLER = 6#}
+                                                    {#STATE_CONTROLLER = 7#}
+                                                    {#MODERATOR = 8#}
+                                                    {#ADMINISTRATOR = 9#}
+                                                    {#SUPER_ADMINISTRATOR = 10#}
+                                                    {#APP_CREATOR = 11#}
+                                                    {% if request.user.role == 1 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/organizations_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                    {% elif request.user.role == 2 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                    {% elif request.user.role == 3 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                    {% elif request.user.role == 4 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                    {% elif request.user.role == 5 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                    {% elif request.user.role == 6 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                    {% elif request.user.role == 7 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                        {% include '_parts/inc/payments_page.html' %}
+                                                        {% include '_parts/inc/payments_report_page.html' %}
+                                                    {% elif  request.user.role == 8 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                        {% include '_parts/inc/payments_page.html' %}
+                                                    {% elif  request.user.role == 9 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
+                                                        {% include '_parts/inc/applicants_page.html' %}
+                                                    {% elif  request.user.role == 10 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                    {% elif  request.user.role == 11 %}
+                                                        {% include '_parts/inc/personal_data_page.html' %}
+                                                        {% include '_parts/inc/application_page.html' %}
                                                     {% endif %}
                                                 </ul>
                                             </div>

@@ -128,7 +128,6 @@
                             old_request: window.location.search
                         }
                     }).then(function (res) {
-                        console.log(res)
                         callback({
                             recordsTotal: res.count,
                             recordsFiltered: res.count,
@@ -146,6 +145,7 @@
                     },
                     {
                         "data": "application",
+                         orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.id.toString())
                             return `<a href="${url}">${data.service.short_title}</a>`
@@ -153,6 +153,7 @@
                     },
                     {
                         "data": "district",
+                         orderable: false,
                         render: function (data, type, row) {
                             return data.title
                         }

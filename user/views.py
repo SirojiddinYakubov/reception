@@ -343,6 +343,19 @@ class EditPersonalData(AllowedRolesMixin, View):
 
         return render(request, self.template_name, context)
 
+class ApplicantUpdate(AllowedRolesMixin, View):
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR, APP_CREATOR]
+    template_name = 'user/edit_personal_data.html'
+
+    def get(self, request, *args, **kwargs):
+        regions = Region.objects.all()
+        user = User.objects.get(id=kwargs.get('pk'))
+        context = {
+            'user': user,
+            'regions': regions,
+        }
+        return render(request, self.template_name, context)
 
 class SavePersonalData(UpdateAPIView):
     model = User

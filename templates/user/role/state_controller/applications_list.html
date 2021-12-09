@@ -13,7 +13,7 @@
           rel="stylesheet" type="text/css"/>
     <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
           type="text/css"/>
-    <link href="{% static 'assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet"
+    <link href="{% static 'assets/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet"
           type="text/css"/>
     <!-- third party css end -->
 
@@ -146,6 +146,7 @@
                 "columns": [
                     {
                         "data": "service",
+                         orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, row.id.toString())
                             return `<a href="${url}">${data.short_title}</a>`
@@ -153,12 +154,14 @@
                     },
                     {
                         "data": "section",
+                         orderable: false,
                         render: function (data, type, row) {
                             return data.title
                         }
                     },
                     {
                         "data": 'car',
+                         orderable: false,
                         render: function (data, type, row) {
                             var car_url = "{% url 'user:view_car_data' 12345 %}".replace(/12345/, row.car.id.toString())
                             return `<a href='${car_url}' title='${data.model.title}'>${data.model.title.substring(0, 25)}</a><br>${data.old_number ? data.old_number : ''}`
@@ -180,6 +183,7 @@
                     },
                     {
                         "data": "process",
+                         orderable: false,
                         render: function (data, type, row) {
 
                             if (row.process === 7) {

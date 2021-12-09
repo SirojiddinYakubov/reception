@@ -20,8 +20,7 @@
 {% endblock css %}
 
 {% block page_title %}
-    {% if section %}{% blocktrans with section_title=section.title %}{{ section_title }}ga kelib
-        tushgan arizalar{% endblocktrans %}{% else %}{% trans "Arizalar" %}{% endif %}
+    {% trans "Arizachilar" %}
 {% endblock %}
 
 {% block content %}
@@ -31,17 +30,19 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-xs-12">
+                        <div class="col-10 col-xs-12">
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
+
+                                    <th>{% trans "#" %}</th>
                                     <th>{% trans "Arizachi" %}</th>
-                                    <th>{% trans "Xizmat turi" %}</th>
-                                    <th>{% trans "Tuman" %}</th>
-                                    <th>{% trans "To'lov summasi" %}</th>
-                                    <th>{% trans "r/s" %}</th>
-                                    <th>{% trans "Yaratilgan vaqti" %}</th>
+                                    <th>{% trans "Viloyat" %}</th>
+                                    <th>{% trans "Tuman/Shahar" %}</th>
+                                    <th>{% trans "So'nggi tashrif" %}</th>
+                                    <th>{% trans "Ro'yhatdan o'tgan" %}</th>
                                     <th>{% trans "Tahrirlash" %}</th>
+                                    {#                                    <th>{% trans "Ariza raqami" %}</th>#}
                                 </tr>
                                 </thead>
 
@@ -50,6 +51,10 @@
 
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div class="col-md-2" id="right_filter_div">
+                            {% include 'user/role/administrator/right_filter_applicants.html' %}
                         </div>
                     </div>
 
@@ -68,10 +73,11 @@
     <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
     <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
     <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
-    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert/sweetalert.min.js' %}"></script>
     <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
     <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
     <script type="text/javascript" class="init">
@@ -81,7 +87,6 @@
             $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
                 console.log(message);
             };
-
 
             var table = $("#example1").DataTable({
                 "serverSide": true,
@@ -94,8 +99,8 @@
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
                     "emptyTable": `{% trans "Ma'lumot topilmadi!" %}`,
                     {#"info": "Ko'rsatilgan _END_ dan _START_. Jami: _TOTAL_ ta ma'lumot",#}
-                    "info": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
-                    "infoEmpty": `{% trans "Jami: _TOTAL_ ta ariza" %}`,
+                    "info": `{% trans "Jami: _TOTAL_ ta arizachi" %}`,
+                    "infoEmpty": `{% trans "Jami: _TOTAL_ ta arizachi" %}`,
                     "infoFiltered": "(filtered from _MAX_ total entries)",
                     "infoPostFix": "",
                     "thousands": ",",
@@ -115,8 +120,9 @@
                     }
                 },
                 "ajax": function (data, callback, settings) {
+
                     $.ajax({
-                        url: "{% url 'api_moderator:payments_list' %}",
+                        url: "{% url 'api_administrator:applicants_list' %}?id=475",
                         type: 'GET',
                         dataType: "json",
                         cache: false,
@@ -139,121 +145,90 @@
                 },
                 "columns": [
                     {
-                        "data": "applicant",
+                        data: "id",
+                        orderable: false,
                         render: function (data, type, row) {
-                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
-                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+                            return data
                         }
                     },
                     {
-                        "data": "application",
-                         orderable: false,
+                        "data": "phone",
                         render: function (data, type, row) {
-                            var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.id.toString())
-                            return `<a href="${url}">${data.service.short_title}</a>`
+                            return `<b>${row.last_name} ${row.first_name} ${row.middle_name}</b><br>+998${data}`
                         }
                     },
                     {
-                        "data": "district",
-                         orderable: false,
+                        "data": 'region',
+                        orderable: false,
                         render: function (data, type, row) {
-                            return data.title
+                            return `<b>${data.title}</b>`
                         }
                     },
                     {
-                        "data": "amount",
+                        "data": 'district',
+                        orderable: false,
                         render: function (data, type, row) {
-                            return formatMoney(data)
+                            return `<b>${data.title}</b>`
                         }
                     },
                     {
-                        "data": 'state_duty_score',
-                        render: function (data, type, row) {
-                            return data.score
-                        }
-                    },
-                    {
-                        "data": "created_at",
+                        "data": "last_login",
                         render: function (data, type, row) {
                             moment.locale('ru');
                             return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
                         }
                     },
-                    /*{
-                         data: null,
-                         className: "center",
-                         defaultContent: `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
-                     },*/
+                    {
+                        "data": "date_joined",
+                        render: function (data, type, row) {
+                            moment.locale('ru');
+                            return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
+                        }
+                    },
                     {
                         "mData": null,
+                        orderable: false,
                         "mRender": function (data, type, row) {
-                            if (data.status === 'success') {
-                                return `<p style="color: green">To'lov amalga oshirilgan</p>`
-                            } else {
-                                return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
-                            }
+                            const href = "{% url 'user:applicant_update' 12345 %}".replace(/12345/, row.id.toString())
+                            return `<a href="${href}" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>`
 
                         }
                     }
+                    /*
 
-                ],
-                /* createdRow: function (row, data, index) {
-                     console.log(205, row)
-                     if ((data.process === 2) || (data.process === 3) || (data.process === 4)) {
-                         $(row).addClass('tr-warning')
-                     } else if (data.process === 5) {
-                         $(row).addClass('tr-success')
-                     } else if (data.process === 6) {
-                         $(row).addClass('tr-danger')
-                     }
-                 } */
-            })
-        })
+                     {
+                         "data": "created_date",
+                         render: function (data, type, row) {
+                             moment.locale('ru');
+                             return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
+                         }
+                     },
+                     {
+                         "data": "process",
+                         render: function (data, type, row) {
+                             if (row.process === 7) {
+                                 return '<span class="badge label-table bg-warning">Ariza yaratilmoqda</span>'
+                             } else if (row.process === 0) {
+                                 return '<span class="badge label-table bg-warning">Ariza yaratilgan</span>'
+                             } else if (row.process === 1) {
+                                 return '<span class="badge label-table bg-info">YXHBga jo\'natilgan</span>'
+                             } else if (row.process === 2) {
+                                 return '<span class="badge label-table bg-info">Ko\'rib chiqilyapti</span>'
+                             } else if (row.process === 3) {
+                                 return '<span class="badge label-table bg-warning">To\'lov kutilmoqda</span>'
+                             } else if (row.process === 4) {
+                                 return '<span class="badge label-table bg-warning">Hujjatlarning asl nusxalari kutilmoqda</span>'
+                             } else if (row.process === 5) {
+                                 return '<span class="badge label-table bg-success">Muvaffaqiyatli yakunlangan</span>'
+                             } else if (row.process === 6) {
+                                 return '<span class="badge label-table bg-danger">Rad etilgan</span>'
+                             }
 
+                         }
 
-        $(document).on('click', '.confirm_pay', function () {
-            const Button = $(this)
-
-            Button.prop('disabled', true)
-            const ButtonValue = Button.text()
-            Button.html(`${ButtonValue}&nbsp<i class="fas fa-spinner fa-spin"></i>`)
-
-            $.ajax({
-                type: "POST",
-                url: "{% url 'api_moderator:confirm_theasury_payment' %}",
-                data: {
-                    id: $(this).data('id')
-                },
-                success: function (res) {
-                    console.log(res)
-
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        background: '#8ff8ac',
-                        timer: 5000,
-                        timerProgressBar: false,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        },
-                    })
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'To\'lov muffaqiyatli amalga oshirildi!'
-                    })
-                    setTimeout(function () {
-                        location.reload()
-                    }, 5000)
-
-                },
-                error: function (err) {
-                    swal_error(err)
-
-                    Button.prop('disabled', false)
-                    Button.html(ButtonValue)
-                }
+                     },
+                     {"data": "id"}, */
+                ]
             })
         })
     </script>

@@ -1,0 +1,90 @@
+{% load applications_tags service_tags static %}
+<style>
+
+</style>
+
+<div style="background-color: #e7fafd; border-radius: 5px" class="p-1">
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Viloyat
+        bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a {% if request.GET.region == 'all' or not request.GET.region %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'region' 'all' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span>
+        </a>
+        <div id="right_filter_region_div">
+
+        </div>
+    </div>
+
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">So'ngi tashrif bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a {% if request.GET.last_login == 'all' or not request.GET.last_login %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'last_login' 'all' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Istalgan kun</span></a>
+        <a {% if request.GET.last_login == 'today' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'last_login' 'today' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Bugun</span></a>
+        <a {% if request.GET.last_login == 'last-7-days' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'last_login' 'last-7-days' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">So'nggi 7 kun</span></a>
+        <a {% if request.GET.last_login == 'month' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'last_login' 'month' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu oyda</span></a>
+        <a {% if request.GET.last_login == 'year' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'last_login' 'year' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu yilda</span></a>
+    </div>
+
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Ro'yhatdan o'tish bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a {% if request.GET.date_joined == 'all' or not request.GET.date_joined %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'date_joined' 'all' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Istalgan kun</span></a>
+        <a {% if request.GET.date_joined == 'today' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'date_joined' 'today' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Bugun</span></a>
+        <a {% if request.GET.date_joined == 'last-7-days' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'date_joined' 'last-7-days' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">So'nggi 7 kun</span></a>
+        <a {% if request.GET.date_joined == 'month' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'date_joined' 'month' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu oyda</span></a>
+        <a {% if request.GET.date_joined == 'year' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'date_joined' 'year' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Shu yilda</span></a>
+    </div>
+</div>
+
+{% block js %}
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            sendAuthorizationToken()
+
+
+            getAjaxData("{% url 'api_user:regions_list' %}").then(res => {
+                var a2 = ""
+                var region_get = "{{ request.GET.region }}"
+                res.forEach((x, i) => {
+                    var href = "{% url "application:change_get_request" 'region' 12345 %}".replace(/12345/, x.id.toString())
+                    a2 += `<a href=${href} class="${x.id.toString() === region_get ? 'active' : 'text-reset d-block'}">
+                            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+                            <span class="mb-0 mt-1">${x.title}</span>
+                            </a>`
+                })
+                $('#right_filter_region_div').html(a2)
+            })
+        })
+    </script>
+{% endblock js %}

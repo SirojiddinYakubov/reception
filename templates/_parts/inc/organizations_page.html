@@ -1,10 +1,5 @@
 {% load i18n %}
 <li class="nav-item">
-    <a href="{% url 'user:organizations_list' %}"
-       class="nav-link {% if request.resolver_match.url_name == 'organizations_list' or request.resolver_match.url_name == 'add_organization' or request.resolver_match.url_name == 'edit_organization' %}active{% endif %}">
-        <i class="nav-icon fas fa-university"></i>
-        <p>
-            {% trans 'Tashkilotlar' %}
-        </p>
-    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'organizations_list' or request.resolver_match.url_name == 'add_organization' or request.resolver_match.url_name == 'edit_organization' %}active{% endif %}"
+       href="{% url 'user:organizations_list' %}">{% trans 'Tashkilotlar' %}</a>
 </li>
