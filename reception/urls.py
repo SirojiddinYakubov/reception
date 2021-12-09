@@ -55,6 +55,8 @@ urlpatterns += i18n_patterns(
     path('application/', include('application.urls')),
     path('error-403/', TemplateView.as_view(template_name='_parts/403.html', ),
          name='error_403'),
+    path('error-404/', TemplateView.as_view(template_name='_parts/404.html', ),
+         name='error_404'),
 
 )
 

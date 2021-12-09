@@ -1,0 +1,123 @@
+{% extends 'base_vertical.html' %}
+{% load i18n humanize service_tags static %}
+
+{% block title %}
+    {% trans "E-RIB.UZ" %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Davlat boj to'lovlari" %}
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="row ml-2 mr-2">
+        <div class="col-12 text-center p-0">
+
+            <div class="card px-0 pb-0 mb-3">
+                <div class="card-body">
+                    {% include '_parts/messages.html' %}
+
+                    <div class="row text-start m-3">
+                        <div class="col-4">
+                            <label class="text-dark" style="width: 100%" for="application">YHXB RIB bo'limi</label>
+
+                            <select name="section"
+                                    class="form-select" id="section">
+                            </select>
+
+                        </div>
+                        <div class="col-4">
+                            <label class="text-dark" style="width: 100%" for="application">Boshlash</label>
+                            <input type="date" id="start" class="form-control"/>
+                        </div>
+                        <div class="col-4">
+                            <label class="text-dark" style="width: 100%" for="application">Tugash</label>
+                            <input type="date" id="stop" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+
+                        <!-- left column -->
+                        <div class="col-md-12">
+
+                            <div class="panel-body" id="render_div">
+                                <table id="report_table" class="table table-bordered">
+                                    <thead class="thead-light" style="background: #f1f0f0">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="text-start">Davlat boji nomi</th>
+                                        <th scope="col">To'langan</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <th class="text-start" scope="row" data-key="{{ pay.0 }}">Yangi qayd etish
+                                            guvohnomasi uchun
+                                        </th>
+                                        <td><b class="paid_pay text-green">189000</b></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot style="background: #f1f0f0">
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-start">Jami:</th>
+                                        <th><b id="paid_pay_total" class="text-green"></b> so'm</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" charset="UTF-8">
+        $(function () {
+            sendAuthorizationToken()
+            getAjaxData("{% url 'api_service:state_duties_list' %}").then(function (res) {
+                console.log(res)
+            })
+
+            getAjaxData("{% url 'api_user:region_sections_list' 12345 %}".replace(/12345/, "{{ request.user.section.region.id }}")).then(res => {
+                res.forEach((x, i) => {
+                    $('#section').append($('<option>').val(x.id).text(x.title))
+                })
+            })
+
+            getAjaxData("{% url 'api_service:payment_for_treasury_list' %}").then(res => {
+                console.log(res)
+                $('#report_table body').append(res)
+                res.forEach((x, i) => {
+                    $('#report_table body').append($('<tr>').val(x.id).text(x.title))
+                })
+            })
+
+        })
+        $(document).ready(function () {
+
+            calc_total()
+
+            function calc_total() {
+                if (!String.prototype.trim) {
+                    String.prototype.trim = function () {
+                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                    };
+                }
+                var paid_sum = 0;
+                $(".paid_pay").each(function () {
+                    paid_sum += parseFloat($(this).text().replace(/\s+/g, ''));
+                });
+                $('#paid_pay_total').text(paid_sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+            }
+
+
+        })
+    </script>
+{% endblock js %}

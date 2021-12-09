@@ -182,6 +182,17 @@ class ApplicationPayStatus(DetailView):
     pk_url_kwarg = 'id'
     model = Application
 
+    def get(self, request, *args, **kwargs):
+        try:
+            application = Application.objects.get(id=self.kwargs['id'])
+            if request.user.role == USER:
+                if not application.applicant == request.user:
+                    return redirect(reverse_lazy('error_403'))
+                elif not application.created_user == request.user:
+                    return redirect(reverse_lazy('error_403'))
+            return super().get(request, *args, **kwargs)
+        except:
+            return redirect(reverse_lazy('error_404'))
 
 
     def get_context_data(self, **kwargs):
@@ -508,38 +519,9 @@ class PaymentsList(AllowedRolesMixin, ListView):
             return ['application/payments/user_payments_list.html']
         elif role == MODERATOR:
             return ['user/role/moderator/payments_list.html']
+        elif role == REGIONAL_CONTROLLER:
+            return ['user/role/regional_controller/payments_list.html']
         return [self.template_name]
-
-    def get_context_data(self, **kwargs):
-        user_role = self.request.user.role
-
-        context = {
-            'pays': STATE_DUTY_TITLE
-        }
-
-        if user_role == STATE_CONTROLLER:
-            if self.request.method == 'GET':
-                try:
-                    if self.request.GET.get('startdate', None):
-                        context.update(startdate=self.request.GET.get('startdate'))
-                    if self.request.GET.get('stopdate', None):
-                        context.update(stopdate=self.request.GET.get('stopdate'))
-                except:
-                    pass
-
-            parent_sections = Section.objects.filter(parent__isnull=True)
-            context.update(parent_sections=parent_sections)
-
-            if self.request.GET.get('parent_section', None):
-                if self.request.GET.get('parent_section').isdigit():
-                    parent_section = get_object_or_404(Section, id=self.request.GET.get('parent_section'))
-                    child_sections = Section.objects.filter(parent=parent_section)
-                    context.update(child_sections=child_sections)
-        elif user_role == USER:
-            applications = Application.objects.filter(is_active=True)
-            context.update(applications=applications)
-
-        return context
 
 
 @permission_classes([IsAuthenticated])
@@ -749,3 +731,18 @@ class SaveDraftApplication(UpdateAPIView):
     def patch(self, request, *args, **kwargs):
         print(request)
         return super(SaveDraftApplication, self).patch(*args, **kwargs)
+
+
+
+class PaymentsReport(AllowedRolesMixin, ListView):
+    model = PaymentForTreasury
+    template_name = 'user/role/regional_controller/payments_report.html'
+    allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR,
+                     ADMINISTRATOR,
+                     SUPER_ADMINISTRATOR]
+
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == REGIONAL_CONTROLLER:
+            return ['user/role/regional_controller/payments_report.html']
+        return [self.template_name]

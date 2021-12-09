@@ -1,3 +1,5 @@
+import itertools
+
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
@@ -8,7 +10,7 @@ from api.v1 import permissions
 from api.v1.service import serializers
 from application.models import (Application)
 from service.models import (
-    Service, StateDutyPercent
+    Service, StateDutyPercent, PaymentForTreasury
 )
 
 
@@ -29,5 +31,31 @@ class StateDutyPercentDetail(generics.RetrieveAPIView):
         context.update({"request": self.request})
         context.update({"engine_power": application.car.engine_power})
         context.update({"price": application.car.price})
-        context.update({'applicant': application.applicant})
+        if application.applicant:
+            context.update({'applicant': application.applicant})
+        else:
+            context.update({'applicant': application.created_user})
         return context
+
+
+class StateDutiesList(APIView):
+    permission_classes = [
+        permissions.RegionalControllerPermission
+    ]
+    serializer_class = serializers.StateDutiesListSerializer
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.serializer_class()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PaymentForTreasuryList(generics.ListAPIView):
+    permission_classes = [
+        permissions.RegionalControllerPermission
+    ]
+    serializer_class = serializers.PaymentForTreasuryListSerializer
+    queryset = PaymentForTreasury.objects.all()
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs

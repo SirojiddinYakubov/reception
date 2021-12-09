@@ -22,3 +22,4 @@ class ApplicationsListSerializer(serializers.ModelSerializer):
             'process',
 
         ]
+

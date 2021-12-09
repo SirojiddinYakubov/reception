@@ -14,7 +14,7 @@ class AllowedRolesMixin(LoginRequiredMixin, View):
 
     def dispatch(self, *args, **kwargs):
         if not self.request.user.role in self.allowed_roles:
-            raise Http404
+            return redirect(reverse_lazy('error_403'))
         # token = self.request.COOKIES.get('token')
         # if not token:
         #     logout(self.request)

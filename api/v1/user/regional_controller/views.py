@@ -3,10 +3,12 @@ from rest_framework.pagination import LimitOffsetPagination
 
 from application.models import (Application, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT,
                                 WAITING_FOR_ORIGINAL_DOCUMENTS, REJECTED, ACCEPTED)
+from service.models import (PaymentForTreasury)
 from . import serializers
 from api.v1 import permissions
 from application.models import (SHIPPED)
 from .import filters
+from ...serializers import PaymentForTreasuryListSerializer
 
 
 class ApplicationsList(generics.ListAPIView):
@@ -26,3 +28,14 @@ class ApplicationsList(generics.ListAPIView):
             process__in=[SHIPPED, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT, WAITING_FOR_ORIGINAL_DOCUMENTS,
                          ACCEPTED, REJECTED])
         return qs
+
+
+class PaymentsList(generics.ListAPIView):
+    queryset = PaymentForTreasury.objects.filter(is_active=True)
+    serializer_class = PaymentForTreasuryListSerializer
+    pagination_class = LimitOffsetPagination
+    max_page_size = 10
+
+    permission_classes = [
+        permissions.RegionalControllerPermission
+    ]

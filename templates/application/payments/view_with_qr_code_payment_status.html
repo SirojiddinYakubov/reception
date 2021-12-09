@@ -1,4 +1,4 @@
-{% load humanize %}
+{% load humanize applications_tags static %}
 
 <html>
 <head>
@@ -7,7 +7,8 @@
     <title>To'lovlarni tekshirish</title>
     <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://e-rib.uz/static/assets/css/config/creative/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/config/creative/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
 </head>
 <style>
     body {
@@ -46,10 +47,12 @@
         display: inline-block;
         margin: 0 auto;
     }
-    .app_id{
+
+    .app_id {
         font-weight: bold;
     }
-    .name{
+
+    .name {
         font-size: 1.4rem;
         font-weight: bold;
         color: #0b3c85;
@@ -58,7 +61,7 @@
 </style>
 <body>
 <div class="card">
-    <p class="name">{{ application.applicant.last_name|upper }} {{ application.applicant.first_name|upper }} {{ application.applicant.middle_name|upper }}</p>
+    <p class="name">{% if application.applicant %}{{ application.applicant.last_name|upper }} {{ application.applicant.first_name|upper }} {{ application.applicant.middle_name|upper }}{% else %}{{ application.created_user.last_name|upper }} {{ application.created_user.first_name|upper }} {{ application.created_user.middle_name|upper }}{% endif %}</p>
     <p class="app_id">{{ application.id }}-ARIZA</p>
     <p class="app_id">{{ application.service.short_title }}</p>
     <p class="app_id">{{ application.car.model.title }}</p>
@@ -74,17 +77,22 @@
             </tr>
             </thead>
             <tbody>
-            {% for payment in application.paymentfortreasury_set.all %}
+            {% for percent in percents %}
                 <tr>
-                    <td><b>{{ payment.id }}</b></td>
-                    <td><b>{{ payment.state_duty_percent.title }}</b></td>
-                    <td><b>{{ payment.amount|intcomma }} so'm</b></td>
+                    <td><b>{{ percent.id }}</b></td>
+                    <td><b>{{ percent.get_state_duty_display }}</b></td>
+                    <td><b class="state_payment">
+                        {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
+                    </td>
                     <td class="text-center">
-                        {% if payment.status == 'success' %}
-                            <p class="text-success">To'langan</p>
-                            <p ><a href="{{ payment.memorial }}" class="text-success text-decoration-underline">Kvitansiyani yuklash</a></p>
+                    {% check_memorial application percent as pay_treasury %}
+                        {% if pay_treasury.status == 'success' %}
+                            <p class="text-success font-17">To'langan</p>
+
+                            <p><a  href="{{ pay_treasury.memorial }}" class="text-primary text-decoration-underline font-13">Kvitansiyani
+                                yuklash</a></p>
                         {% else %}
-                            <p class="text-danger">To'lanmagan</p>
+                            <p class="text-danger font-17">To'lanmagan</p>
                         {% endif %}
                     </td>
                 </tr>
@@ -94,7 +102,7 @@
             <tr>
                 <td></td>
                 <td><b>Jami</b></td>
-                <td><b>{{ pay_treasury.amount__sum|intcomma }} so'm</b></td>
+                <td><b id="total_state_payments"></b> so'm</td>
                 <td></td>
             </tr>
             </tfoot>
@@ -102,4 +110,24 @@
     </div>
 </div>
 </body>
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        calc_total()
+
+        function calc_total() {
+            if (!String.prototype.trim) {
+                String.prototype.trim = function () {
+                    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                };
+            }
+
+            var sum = 0;
+            $(".state_payment").each(function () {
+                sum += parseFloat($(this).text().replace(/[\s+,.]/g, ''));
+            });
+            $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
+        }
+    })
+</script>
 </html>
