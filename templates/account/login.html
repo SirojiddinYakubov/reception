@@ -181,11 +181,10 @@
 <script src="{% static 'js/login/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/login/main.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
+<script src="{% static 'assets/libs/sweetalert/sweetalert.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
 <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
 <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
-<script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -240,7 +239,7 @@
                                     },
                                     statusCode: {
                                         200: function (res) {
-                                            console.log('send sms')
+
                                             swal({
                                                 icon: "success",
                                                 text: "{% trans "Login va parol raqamingizga sms tarzida jo'natildi!" %}"
