@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from api.v1.user.serializers import CarTypesListSerializer, UserShortDetailSerializer
 from service.models import (
-    Service, StateDutyPercent, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER, STATE_DUTY_TITLE, StateDutyScore
+    Service, StateDutyPercent, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER, STATE_DUTY_TITLE,
+    StateDutyScore, PaymentForTreasury
 )
 
 
@@ -82,7 +83,8 @@ class StateDutyPercentDetailSerializer(serializers.ModelSerializer):
             context['amount'] = instance.percent
         context['state_duty'] = dict(STATE_DUTY_TITLE).get(context['state_duty'])
         context['bhm'] = amount_base_calculation.amount
-        context['applicant'] = UserShortDetailSerializer(self.context['applicant']).data
+        if self.context.get('applicant'):
+            context['applicant'] = UserShortDetailSerializer(self.context['applicant']).data
         return context
 
 
@@ -119,4 +121,25 @@ class StateDutyScoreDetailSerializer(serializers.ModelSerializer):
             'district',
             'score',
             'created_date'
+        ]
+
+
+class StateDutiesListSerializer(serializers.Serializer):
+    title = serializers.ChoiceField(choices=STATE_DUTY_TITLE)
+
+
+class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentForTreasury
+        fields = [
+            'id',
+            'application',
+            'amount',
+            'state_duty_score',
+            'state_duty_percent',
+            'amount_base_calculation',
+            'memorial',
+            'payment_system',
+            'transaction_id',
+            'status'
         ]

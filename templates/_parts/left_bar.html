@@ -138,7 +138,17 @@
                                                            href="{% url 'application:applications_list' %}">Arizalar</a>
                                                     </li>
 
-                                                    {% if request.user.role == 8 %}
+                                                    {% if request.user.role == 6 %}
+                                                        <li class="nav-item">
+                                                            <a class="nav-link"
+                                                               href="{% url 'application:payments_list' %}">To'lovlar</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link"
+                                                               href="{% url 'application:payments_report' %}">To'lovlar hisobot</a>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if  request.user.role == 8 %}
                                                         <li class="nav-item">
                                                             <a class="nav-link"
                                                                href="{% url 'application:payments_list' %}">To'lovlar</a>

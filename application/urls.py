@@ -42,4 +42,7 @@ urlpatterns = [
     path('application-cash-by-moderator/', ApplicationCashByModeratorView.as_view(), name='application_cash_by_moderator'),
 
     path('save-draft-application/', SaveDraftApplication.as_view(), name='save_draft_application'),
+
+
+    path('payments-report/', PaymentsReport.as_view(), name='payments_report'),
 ]

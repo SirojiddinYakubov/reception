@@ -41,7 +41,6 @@
                                     <th>{% trans "To'lov summasi" %}</th>
                                     <th>{% trans "r/s" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
-                                    <th>{% trans "Tahrirlash" %}</th>
                                 </tr>
                                 </thead>
 
@@ -116,7 +115,7 @@
                 },
                 "ajax": function (data, callback, settings) {
                     $.ajax({
-                        url: "{% url 'api_moderator:payments_list' %}",
+                        url: "{% url 'api_regional_controller:payments_list' %}",
                         type: 'GET',
                         dataType: "json",
                         cache: false,
@@ -182,18 +181,6 @@
                          className: "center",
                          defaultContent: `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
                      },*/
-                    {
-                        "mData": null,
-                        "mRender": function (data, type, row) {
-                            if (data.status === 'success') {
-                                return `<p style="color: green">To'lov amalga oshirilgan</p>`
-                            } else {
-                                return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
-                            }
-
-                        }
-                    }
-
                 ],
                 /* createdRow: function (row, data, index) {
                      console.log(205, row)
