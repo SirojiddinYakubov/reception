@@ -1502,6 +1502,9 @@ function formatState(state) {
     );
 }
 
+function isDict(dict) {
+    return typeof dict === "object" && !Array.isArray(dict);
+}
 
 function swal_error(err = null) {
     console.log(err)
@@ -1622,6 +1625,3 @@ $.urlParam = function (name) {
 }
 
 
-const isDict = dict => {
-    return typeof dict === "object" && !Array.isArray(dict);
-};
