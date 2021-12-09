@@ -185,11 +185,11 @@ class ApplicationPayStatus(DetailView):
     def get(self, request, *args, **kwargs):
         try:
             application = Application.objects.get(id=self.kwargs['id'])
-            if request.user.role == USER:
-                if not application.applicant == request.user:
-                    return redirect(reverse_lazy('error_403'))
-                elif not application.created_user == request.user:
-                    return redirect(reverse_lazy('error_403'))
+            # if request.user.role == USER:
+            #     if not application.applicant == request.user:
+            #         return redirect(reverse_lazy('error_403'))
+            #     elif not application.created_user == request.user:
+            #         return redirect(reverse_lazy('error_403'))
             return super().get(request, *args, **kwargs)
         except:
             return redirect(reverse_lazy('error_404'))
