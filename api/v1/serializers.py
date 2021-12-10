@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from api.v1.service.serializers import StateDutyScoreDetailSerializer, StateDutyPercentDetailShortSerializer
 from api.v1.user.checker.serializers import ApplicationsListSerializer
-from api.v1.user.serializers import UserShortDetailSerializer, DistrictDetailSerializer
+from api.v1.user.serializers import UserShortDetailSerializer, DistrictDetailSerializer, SectionDetailSerializer
 from service.models import PaymentForTreasury
 
 
@@ -37,4 +37,7 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
             context['district'] = DistrictDetailSerializer(instance.application.applicant.district).data
         else:
             context['district'] = DistrictDetailSerializer(instance.application.created_user.district).data
+
+        if instance.application.section:
+            context['section'] = SectionDetailSerializer(instance.application.section).data
         return context
