@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from application.models import (Application, ACCEPTED_FOR_CONSIDERATION, WAITING_FOR_PAYMENT,
-                                WAITING_FOR_ORIGINAL_DOCUMENTS, REJECTED, ACCEPTED)
+                                WAITING_FOR_ORIGINAL_DOCUMENTS, REJECTED, ACCEPTED, LEGAL_PERSON)
 from reception.api import SendSmsWithPlayMobile, SendSmsWithApi, SUCCESS, PaymentByRequisites
 from reception.telegram_bot import send_message_to_developer
 from service.models import PaymentForTreasury
@@ -55,20 +55,25 @@ class ConfirmTheasuryPayment(APIView):
     def post(self, request, *args, **kwargs):
         pay = PaymentForTreasury.objects.get(id=request.POST.get('id'))
 
-        if pay.application.applicant:
-            applicant = pay.application.applicant
+        if pay.application.person_type == LEGAL_PERSON:
+            sender = pay.application.organization.title
         else:
-            applicant = pay.application.created_user
+            if pay.application.applicant:
+                sender = pay.application.applicant
+            else:
+                sender = pay.application.created_user
+
+
 
         pay_treasury_payload = json.dumps({
             "method": "receipt.pay_requisite",
             "params": {
                 "account": pay.state_duty_score.score,
                 "mfo": "00014",
-                "name": f"{applicant.last_name} {applicant.first_name} {applicant.middle_name}",
+                "name": f"{sender}",
                 "details": f" {pay.application.id}-ARIZAGA ASOSAN {pay.state_duty_percent.title.upper()} (E-RIB.UZ 308944250)",
                 "amount": pay.amount * 100,
-                "senderName": f"{applicant.last_name.upper()} {applicant.first_name.upper()} {applicant.middle_name.upper()}",
+                "senderName": f"{sender}",
                 "transactionId": pay.transaction_id
             }
         })
