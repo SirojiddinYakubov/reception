@@ -22,8 +22,9 @@ class ApplicationRightFilter(filters.FilterSet):
     )
 
     def func_order_by(self, queryset, name, value):
-        print(value)
-        return queryset.order_by(f"{value}")
+        column = value.split(':')[0]
+        dir = value.split(':')[1]
+        return queryset.order_by("{0}{1}".format('-' if dir == 'desc' else '', column))
 
     def right_filter(self, queryset, name, value):
         qs = queryset
