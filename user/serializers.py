@@ -186,7 +186,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('phone')
-        if validated_data.pop('password', None):
+        if validated_data.get('password', None):
             password = validated_data.pop('password', None)
             instance.turbo = password
             instance.set_password(password)

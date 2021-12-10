@@ -51,7 +51,8 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = serializers.UserDetailSerializer
     permission_classes = [
         permissions.UserPermission |
-        permissions.AppCreatorPermission
+        permissions.AppCreatorPermission |
+        permissions.AdministratorPermission
     ]
 
     def get_object(self):
@@ -143,7 +144,8 @@ class DistrictQuartersList(generics.ListAPIView):
     serializer_class = serializers.QuarterDetailSerializer
     permission_classes = [
         permissions.UserPermission |
-        permissions.AppCreatorPermission
+        permissions.AppCreatorPermission |
+        permissions.AdministratorPermission
     ]
 
     def get_queryset(self):
