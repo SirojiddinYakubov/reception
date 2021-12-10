@@ -37,6 +37,7 @@
                                 <tr>
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Xizmat turi" %}</th>
+                                    <th>{% trans "YHXB RIB" %}</th>
                                     <th>{% trans "Tuman" %}</th>
                                     <th>{% trans "To'lov summasi" %}</th>
                                     <th>{% trans "r/s" %}</th>
@@ -89,7 +90,7 @@
                 "processing": true,
                 'autoWidth': false,
                 "orderCellsTop": true,
-                "order": [[7, "desc"]],
+                "order": [[8, "desc"]],
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
@@ -152,7 +153,14 @@
                         orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.id.toString())
-                            return `<a href="${url}">${data.service.short_title}</a>`
+                            return `<a href="${url}">(ID:${row.application.id}) ${data.service.short_title}</a>`
+                        }
+                    },
+                    {
+                        "data": "section",
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return `<b>${data.title}</b>`
                         }
                     },
                     {

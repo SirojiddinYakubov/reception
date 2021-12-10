@@ -139,6 +139,12 @@ class PaymentsListFilter(filters.FilterSet):
         qs = queryset.filter(
             Q(Q(id=q) if q.isdigit() else Q()) |
             Q(Q(application__id=q) if q.isdigit() else Q()) |
+            Q(application__created_user__first_name__icontains=q) |
+            Q(application__created_user__last_name__icontains=q) |
+            Q(application__created_user__middle_name__icontains=q) |
+            Q(application__applicant__first_name__icontains=q) |
+            Q(application__applicant__last_name__icontains=q) |
+            Q(application__applicant__middle_name__icontains=q) |
             Q(amount__icontains=q) |
             Q(state_duty_score__score__icontains=q) |
             Q(transaction_id__icontains=q) |
