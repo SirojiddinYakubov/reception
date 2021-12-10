@@ -21,9 +21,9 @@ class ApplicationRightFilter(filters.FilterSet):
         method='func_order_by'
     )
 
-    def func_order_by(self,queryset, name, value):
+    def func_order_by(self, queryset, name, value):
         print(value)
-        return queryset.order_by(value)
+        return queryset.order_by(f"{value}")
 
     def right_filter(self, queryset, name, value):
         qs = queryset
@@ -52,14 +52,15 @@ class ApplicationRightFilter(filters.FilterSet):
 
                     if key == 'date':
                         today_min = datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
-                        today_max = datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
+                        today_max = datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59,
+                                                                    second=59)
                         some_day_last_week = (datetime.datetime.now() - datetime.timedelta(days=7)).replace(
                             tzinfo=LOCAL_TIMEZONE, hour=0,
                             minute=0, second=0)
                         some_day_last_month = datetime.datetime.now().replace(day=1, hour=0, minute=0, second=0,
-                                                                     tzinfo=LOCAL_TIMEZONE)
+                                                                              tzinfo=LOCAL_TIMEZONE)
                         some_day_last_year = datetime.datetime.now().replace(day=1, month=1, hour=0, minute=0, second=0,
-                                                                    tzinfo=LOCAL_TIMEZONE)
+                                                                             tzinfo=LOCAL_TIMEZONE)
                         if value == 'today':
                             qs = qs.filter(updated_date__range=(today_min, today_max))
 
@@ -101,7 +102,8 @@ class ApplicationRightFilter(filters.FilterSet):
             Q(process__in=self.get_choices_value(q, PROCESS_CHOICES)) |
             # filter by date_pattern
             Q(Q(created_date__date=datetime.datetime.strptime(q[0:10], '%d.%m.%Y').date()) | Q(
-                updated_date__date=datetime.datetime.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern, q) else Q()) |
+                updated_date__date=datetime.datetime.strptime(q[0:10], '%d.%m.%Y').date()) if re.match(date_pattern,
+                                                                                                       q) else Q()) |
             # filter by day_pattern
             Q(Q(created_date__day=q[0:2]) | Q(updated_date__day=q[0:2]) if re.match(day_pattern, q) else Q()) |
             # filter by day_and_month_pattern
@@ -111,7 +113,6 @@ class ApplicationRightFilter(filters.FilterSet):
         )
 
         return qs
-
 
 # class OrganizationWorkplaceListFilter(filters.FilterSet):
 # department = filters.CharFilter(field_name='department__name', lookup_expr='icontains')
