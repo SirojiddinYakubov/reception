@@ -95,7 +95,11 @@
                 "processing": true,
                 'autoWidth': false,
                 "orderCellsTop": true,
-                "order": [[4, "asc"]],
+                {#"scrollY": "90vh",#}
+                {#"scrollX": false,#}
+                {#"scrollCollapse": false,#}
+                "order": [[6, "desc"]],
+                {#"ordering": false,#}
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
@@ -122,7 +126,7 @@
                     }
                 },
                 "ajax": function (data, callback, settings) {
-
+                    console.log(data)
                     $.ajax({
                         url: "{% url 'api_moderator:applications_list' %}",
                         type: 'GET',
@@ -133,7 +137,7 @@
                             limit: data.length,
                             offset: data.start,
                             q: data.search.value,
-                            order_by: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                            order_by: `${data.columns[data.order[0].column].data.replace(/\./g, "__")}:${data.order[0].dir}`,
                             old_request: window.location.search
                         }
                     }).then(function (res) {
@@ -157,8 +161,7 @@
                         "data": "section",
                         orderable: false,
                         render: function (data, type, row) {
-                            console.log(data)
-                            if (data.title) {
+                            if (data) {
                                 return data.title
                             } else {
                                 return ''
@@ -179,12 +182,18 @@
                         "data": "created_user",
                         orderable: false,
                         render: function (data, type, row) {
-                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
-                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+                            if (data) {
+                                var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
+                                return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+
+                            } else {
+                                return ''
+                            }
                         }
                     },
                     {
                         "data": "created_date",
+
                         render: function (data, type, row) {
                             moment.locale('ru');
                             return `<span title='${moment(data).format('LLL')}'>${moment(data).fromNow()}</span>`
@@ -194,7 +203,7 @@
                         "data": "process",
                         orderable: false,
                         render: function (data, type, row) {
-                            /*if ((row.process === 6)) return "#dc3545"*/
+
                             var border_color = ((row.process === 2) || (row.process === 3) || (row.process === 4)) ? "#ecec01" : (row.process === 5) ? "#36f406" : (row.process === 6) ? "#dc3545" : '#c9c9c9';
 
                             return `
@@ -207,13 +216,14 @@
 
                             </select>
                             `
+
+
                         }
 
                     },
                     {"data": "id"},
                 ],
                 createdRow: function (row, data, index) {
-                    console.log(205, row)
                     if ((data.process === 2) || (data.process === 3) || (data.process === 4)) {
                         $(row).addClass('tr-warning')
                     } else if (data.process === 5) {
@@ -223,6 +233,33 @@
                     }
                 }
             })
+
+            {#var order = table.order();#}
+            {##}
+            {#alert('Table is ordered by column: ' + order[0][0] + ', direction:' + order[0][1]);#}
+            {##}
+            {#var title = table.column(order[0][0]).header();#}
+            {#alert('Ordering column title: ' + $(title).html());#}
+
+            $('#example1').on("order.dt", () => {
+
+                if (table.settings().order().length === 1) {
+                    let order = table.settings().order()[0],
+                        th = $("#example1 th:eq(" + order[0] + ")");
+                    if (th.attr("data-sort-next") === "false") {
+                        table.order([]).draw();
+                        th.removeAttr("data-sort-next");
+                    } else {
+                        th.attr("data-sort-next", order[1] !== "desc");
+                    }
+                    $("#example1 th").each((k, v) => {
+                        if (k !== order[0]) {
+                            $("#example1 th:eq(" + k + ")").removeAttr("data-sort-next")
+                        }
+                    });
+                }
+            });
+
 
             $('#example1 tbody').on('change', '.change_process', function () {
 
