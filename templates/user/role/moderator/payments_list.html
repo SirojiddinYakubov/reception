@@ -42,6 +42,7 @@
                                     <th>{% trans "r/s" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
                                     <th>{% trans "Tahrirlash" %}</th>
+                                    <th>{% trans "ID" %}</th>
                                 </tr>
                                 </thead>
 
@@ -88,7 +89,7 @@
                 "processing": true,
                 'autoWidth': false,
                 "orderCellsTop": true,
-                "order": [[1, "asc"]],
+                "order": [[7, "desc"]],
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
@@ -125,11 +126,11 @@
                             limit: data.length,
                             offset: data.start,
                             q: data.search.value,
-                            order_by: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                            order_by: `${data.columns[data.order[0].column].data.replace(/\./g, "__")}:${data.order[0].dir}`,
                             old_request: window.location.search
                         }
                     }).then(function (res) {
-                        console.log(res)
+
                         callback({
                             recordsTotal: res.count,
                             recordsFiltered: res.count,
@@ -140,6 +141,7 @@
                 "columns": [
                     {
                         "data": "applicant",
+                        orderable: false,
                         render: function (data, type, row) {
                             var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
                             return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
@@ -147,7 +149,7 @@
                     },
                     {
                         "data": "application",
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
                             var url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.id.toString())
                             return `<a href="${url}">${data.service.short_title}</a>`
@@ -155,7 +157,7 @@
                     },
                     {
                         "data": "district",
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
                             return data.title
                         }
@@ -168,6 +170,7 @@
                     },
                     {
                         "data": 'state_duty_score',
+                        orderable: false,
                         render: function (data, type, row) {
                             return data.score
                         }
@@ -186,6 +189,7 @@
                      },*/
                     {
                         "mData": null,
+                        orderable: false,
                         "mRender": function (data, type, row) {
                             if (data.status === 'success') {
                                 return `<p style="color: green">To'lov amalga oshirilgan</p>`
@@ -194,7 +198,8 @@
                             }
 
                         }
-                    }
+                    },
+                    {data: 'id'}
 
                 ],
                 /* createdRow: function (row, data, index) {
@@ -210,6 +215,9 @@
             })
         })
 
+        $('#exmaple1').on('change', function () {
+            column_asc_desc()
+        })
 
         $(document).on('click', '.confirm_pay', function () {
             const Button = $(this)
