@@ -39,6 +39,7 @@ class ApplicationsList(generics.ListAPIView):
 class PaymentsList(generics.ListAPIView):
     queryset = PaymentForTreasury.objects.filter(is_active=True)
     serializer_class = PaymentForTreasuryListSerializer
+    filter_class = filters.PaymentsListFilter
     pagination_class = LimitOffsetPagination
     max_page_size = 10
 

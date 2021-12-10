@@ -126,7 +126,6 @@
                     }
                 },
                 "ajax": function (data, callback, settings) {
-                    console.log(data)
                     $.ajax({
                         url: "{% url 'api_moderator:applications_list' %}",
                         type: 'GET',
@@ -241,24 +240,9 @@
             {#var title = table.column(order[0][0]).header();#}
             {#alert('Ordering column title: ' + $(title).html());#}
 
-            $('#example1').on("order.dt", () => {
-
-                if (table.settings().order().length === 1) {
-                    let order = table.settings().order()[0],
-                        th = $("#example1 th:eq(" + order[0] + ")");
-                    if (th.attr("data-sort-next") === "false") {
-                        table.order([]).draw();
-                        th.removeAttr("data-sort-next");
-                    } else {
-                        th.attr("data-sort-next", order[1] !== "desc");
-                    }
-                    $("#example1 th").each((k, v) => {
-                        if (k !== order[0]) {
-                            $("#example1 th:eq(" + k + ")").removeAttr("data-sort-next")
-                        }
-                    });
-                }
-            });
+            $('#exmaple1').on('change', function () {
+               column_asc_desc()
+            })
 
 
             $('#example1 tbody').on('change', '.change_process', function () {
@@ -286,7 +270,6 @@
                             url: '{% url "application:get_given_number" id=12345 %}'.replace(/12345/, applicationId.toString()),
                             statusCode: {
                                 200: function (response) {
-                                    console.log(response)
                                     if (SelectedProcess === 'confirm') {
                                         /*    if (is_replace_number) {
                                             console.log('replace number')

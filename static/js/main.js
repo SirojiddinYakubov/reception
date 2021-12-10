@@ -1624,4 +1624,22 @@ $.urlParam = function (name) {
     return decodeURI(results[1]) || 0;
 }
 
-
+function column_asc_desc() {
+    $(this).on("order.dt", () => {
+        if ($(this).settings().order().length === 1) {
+            let order = $(this).settings().order()[0],
+                th = $(this).children("th:eq(" + order[0] + ")");
+            if (th.attr("data-sort-next") === "false") {
+                $(this).order([]).draw();
+                th.removeAttr("data-sort-next");
+            } else {
+                th.attr("data-sort-next", order[1] !== "desc");
+            }
+            $(this).children("th").each((k, v) => {
+                if (k !== order[0]) {
+                    $(this).children("th:eq(" + k + ")").removeAttr("data-sort-next")
+                }
+            });
+        }
+    });
+}
