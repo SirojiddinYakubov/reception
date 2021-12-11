@@ -55,9 +55,17 @@ class StateDutiesList(APIView):
         for title, items in itertools.groupby(qs, lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
             for item in items:
                 amount += item.amount
-            state_duties.append({
-                "title": title,
-                "amount": amount})
+            try:
+                if title in state_duties[0]['title']:
+                    state_duties[0]['amount'] = amount
+                else:
+                    state_duties.append({
+                        "title": title,
+                        "amount": amount})
+            except:
+                state_duties.append({
+                    "title": title,
+                    "amount": amount})
             amount = 0
         return Response(state_duties, status=status.HTTP_200_OK)
 
