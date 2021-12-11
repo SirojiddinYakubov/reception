@@ -40,4 +40,6 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
 
         if instance.application.section:
             context['section'] = SectionDetailSerializer(instance.application.section).data
+        if instance.state_duty_percent:
+            context['state_duty_title'] = instance.state_duty_percent.get_state_duty_display()
         return context

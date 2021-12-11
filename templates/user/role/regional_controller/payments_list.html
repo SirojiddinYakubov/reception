@@ -38,9 +38,12 @@
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Xizmat turi" %}</th>
                                     <th>{% trans "Tuman" %}</th>
+                                    <th>{% trans "Davlat boji" %}</th>
                                     <th>{% trans "To'lov summasi" %}</th>
+                                    <th>{% trans "Status" %}</th>
                                     <th>{% trans "r/s" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
+
                                 </tr>
                                 </thead>
 
@@ -160,9 +163,36 @@
                         }
                     },
                     {
+                        "data": "state_duty_title",
+                        render: function (data, type, row) {
+                            if (data) {
+                                return data
+                            } else {
+                                return ''
+                            }
+
+                        }
+                    },
+                    {
                         "data": "amount",
                         render: function (data, type, row) {
                             return formatMoney(data)
+                        }
+                    },
+                    {
+                        "data": 'status',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            if (data === 'success') {
+                                return `<span class="badge label-table bg-success">${data}</span>`
+                            } else if (data === 'failed') {
+                                return `<span class="badge label-table bg-danger">${data}</span>`
+                            } else if (data === 'processing') {
+                                return `<span class="badge label-table bg-warning">${data}</span>`
+                            }  else if (data === 'canceled') {
+                                return `<span class="badge label-table bg-danger">${data}</span>`
+                            }
+
                         }
                     },
                     {

@@ -163,7 +163,6 @@ class PaidStateDuty(models.Model):
         verbose_name_plural = "To'langan bojlar"
 
 
-
 class GetPayFromCard(BaseModel):
     from application.models import Application
     application = models.ForeignKey(Application, on_delete=models.CASCADE)
@@ -176,7 +175,6 @@ class GetPayFromCard(BaseModel):
         return f"{self.application.applicant} {self.amount}%"
 
 
-
 KAPITALBANK = 1
 ORIENT_FINANS_BANK = 2
 
@@ -184,7 +182,6 @@ PAYMENT_SYSTEM = (
     (KAPITALBANK, 'Kapitalbank'),
     (ORIENT_FINANS_BANK, 'Orient Finans Bank'),
 )
-
 
 
 class PaymentForTreasury(BaseModel):
@@ -207,12 +204,11 @@ class PaymentForTreasury(BaseModel):
     amount_base_calculation = models.ForeignKey(AmountBaseCalculation, on_delete=models.SET_NULL, null=True)
     memorial = models.URLField(verbose_name="Kvitansiya manzili", blank=True, null=True)
     payment_system = models.IntegerField(choices=PAYMENT_SYSTEM, null=True)
-    transaction_id = models.CharField(max_length=255,blank=True, null=True)
+    transaction_id = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(choices=STATUS, default=PROCESSING, max_length=55)
 
     def __str__(self):
-        return f"{self.application.applicant} {self.amount}%"
-
+        return f"{self.application.applicant} {self.amount} so'm"
 
     def save(self, *args, **kwargs):
         if self.transaction_id is None:
