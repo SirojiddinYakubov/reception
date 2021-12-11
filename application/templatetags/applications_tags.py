@@ -210,5 +210,5 @@ def check_state_payment_paid(application, percent):
 
 @register.simple_tag
 def check_memorial(application, percent):
-    return PaymentForTreasury.objects.filter(state_duty_percent=percent, application=application, memorial__isnull=False).last()
-
+    return PaymentForTreasury.objects.filter(state_duty_percent=percent, application=application,
+                                             memorial__isnull=False).last()

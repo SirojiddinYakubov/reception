@@ -125,7 +125,7 @@ class StateDutyScoreDetailSerializer(serializers.ModelSerializer):
 
 
 class StateDutiesListSerializer(serializers.Serializer):
-    title = serializers.ChoiceField(choices=STATE_DUTY_TITLE)
+    title = serializers.ListSerializer(child=StateDutyScoreDetailSerializer())
 
 
 class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
