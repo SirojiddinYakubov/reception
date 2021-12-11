@@ -47,17 +47,18 @@ class StateDutiesList(APIView):
     serializer_class = serializers.StateDutiesListSerializer
 
     def get(self, request, *args, **kwargs):
-        qs = PaymentForTreasury.objects.filter(is_active=True, status=PaymentForTreasury.SUCCESS)
+        qs = PaymentForTreasury.objects.filter(is_active=True, status=PaymentForTreasury.SUCCESS,
+                                               memorial__isnull=False,
+                                               application__section__region=request.user.section.region)
         state_duties = []
         amount = 0
-        for title, items in itertools.groupby(qs,
-                                              lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
+        for title, items in itertools.groupby(qs, lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
             for item in items:
                 amount += item.amount
             state_duties.append({
                 "title": title,
                 "amount": amount})
-
+            amount = 0
         return Response(state_duties, status=status.HTTP_200_OK)
 
 
