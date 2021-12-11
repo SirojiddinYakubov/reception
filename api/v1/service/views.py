@@ -1,5 +1,7 @@
 import itertools
+import json
 
+from django.db.models import Sum
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
@@ -10,7 +12,7 @@ from api.v1 import permissions
 from api.v1.service import serializers
 from application.models import (Application)
 from service.models import (
-    Service, StateDutyPercent, PaymentForTreasury
+    Service, StateDutyPercent, PaymentForTreasury, STATE_DUTY_TITLE
 )
 
 
@@ -45,8 +47,18 @@ class StateDutiesList(APIView):
     serializer_class = serializers.StateDutiesListSerializer
 
     def get(self, request, *args, **kwargs):
-        serializer = self.serializer_class()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        qs = PaymentForTreasury.objects.all()
+        state_duties = []
+        amount = 0
+        for title, items in itertools.groupby(qs,
+                                              lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
+            for item in items:
+                amount += item.amount
+            state_duties.append({
+                "title": title,
+                "amount": amount})
+
+        return Response(state_duties, status=status.HTTP_200_OK)
 
 
 class PaymentForTreasuryList(generics.ListAPIView):

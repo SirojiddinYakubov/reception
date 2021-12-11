@@ -96,7 +96,7 @@
                 "processing": true,
                 'autoWidth': false,
                 "orderCellsTop": true,
-                "order": [[4, "asc"]],
+                "order": [[6, "desc"]],
                 language: {
                     search: "_INPUT_",
                     searchPlaceholder: "{% trans 'Qidiruv...' %}",
@@ -134,7 +134,7 @@
                             limit: data.length,
                             offset: data.start,
                             q: data.search.value,
-                            order_by: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                            order_by: `${data.columns[data.order[0].column].data.replace(/\./g, "__")}:${data.order[0].dir}`,
                             old_request: window.location.search
                         }
                     }).then(function (res) {
@@ -148,21 +148,25 @@
                 "columns": [
                     {
                         "data": "service",
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
                             return data.short_title
                         }
                     },
                     {
                         "data": "section",
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
-                            return data.title
+                            if (data) {
+                                return data.title
+                            } else {
+                                return ''
+                            }
                         }
                     },
                     {
                         "data": 'car',
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
                             return `<b title='${data.model.title}'>${data.model.title.substring(0, 25)}</b><br>${data.old_number ? data.old_number : ''}`
                         }
@@ -182,7 +186,7 @@
                     },
                     {
                         "data": "process",
-                         orderable: false,
+                        orderable: false,
                         render: function (data, type, row) {
                             if (row.process === 7) {
                                 return '<span class="badge label-table bg-warning">Ariza yaratilmoqda</span>'
@@ -209,6 +213,9 @@
                 ]
             })
 
+            $('#exmaple1').on('change', function () {
+                column_asc_desc()
+            })
 
             $('#example1 tbody').on('click', '.deleteApp', function () {
                 var row = $(this).closest('tr');

@@ -17,7 +17,8 @@ from . import serializers
 from api.v1 import permissions
 from application.models import (SHIPPED)
 from . import filters
-from ...serializers import PaymentForTreasuryListSerializer
+from api.v1.filters import PaymentsListFilter
+from api.v1.serializers import PaymentForTreasuryListSerializer
 
 
 class ApplicationsList(generics.ListAPIView):
@@ -39,7 +40,7 @@ class ApplicationsList(generics.ListAPIView):
 class PaymentsList(generics.ListAPIView):
     queryset = PaymentForTreasury.objects.filter(is_active=True)
     serializer_class = PaymentForTreasuryListSerializer
-    filter_class = filters.PaymentsListFilter
+    filter_class = PaymentsListFilter
     pagination_class = LimitOffsetPagination
     max_page_size = 10
 

@@ -382,7 +382,7 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
 
                         # text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {car.given_technical_passport} seriya va raqamli qayd etish guvohnomasi{' va {0} davlat raqam belgisini'.format(car.given_number) if car.given_number else 'ni'} {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
                         # text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {application.given_date.strftime('%d.%m.%Y') + '-yil'} {request.POST.get('given_time')} da {request.user.section.region.title} {request.user.section.title} ga kelib olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {request.user.section.region.title} {request.user.section.title} ga kelib qayd etish guvohnomasini olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz muvvaffaqiyatli tasdiqlandi! {application.section.title} ga kelib qayd etish guvohnomasini olib ketishingizni so'raymiz. Qo'shimcha ma'lumot uchun tel:972800809"
 
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,
@@ -401,7 +401,7 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         application.inspector = request.user
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {request.user.section.region.title} {request.user.section.title}, Qo'shimcha ma'lumot uchun tel:972800809"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {application.section.title}, Qo'shimcha ma'lumot uchun tel:972800809"
 
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,
@@ -422,7 +422,7 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         application.inspector = request.user
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {request.user.section.region.title} {request.user.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport vositasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {request.user.section.region.title} {request.user.section.title} ga keltirib topshirishingizni so'raymiz! Qo'shimcha ma'lumot uchun tel:972800809"
+                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz {application.section.title} tomonidan ko'rib chiqish uchun qabul qilindi! Kerakli hisob raqamlarga to'lovlarni amalga oshirib, transport vositasini texnik ko'rik va ma'lumotlar mosligini tasdiqlatgandan so'ng hujjatlarning asl nusxasini {application.section.title} ga keltirib topshirishingizni so'raymiz! Qo'shimcha ma'lumot uchun tel:972800809"
 
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,

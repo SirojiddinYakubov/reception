@@ -61,7 +61,10 @@
 </style>
 <body>
 <div class="card">
-    <p class="name">{% if application.applicant %}{{ application.applicant.last_name|upper }} {{ application.applicant.first_name|upper }} {{ application.applicant.middle_name|upper }}{% else %}{{ application.created_user.last_name|upper }} {{ application.created_user.first_name|upper }} {{ application.created_user.middle_name|upper }}{% endif %}</p>
+    <p class="name">{% if application.applicant %}{{ application.applicant.last_name|upper }}
+        {{ application.applicant.first_name|upper }}
+        {{ application.applicant.middle_name|upper }}{% else %}{{ application.created_user.last_name|upper }}
+        {{ application.created_user.first_name|upper }} {{ application.created_user.middle_name|upper }}{% endif %}</p>
     <p class="app_id">{{ application.id }}-ARIZA</p>
     <p class="app_id">{{ application.service.short_title }}</p>
     <p class="app_id">{{ application.car.model.title }}</p>
@@ -81,15 +84,19 @@
                 <tr>
                     <td><b>{{ percent.id }}</b></td>
                     <td><b>{{ percent.get_state_duty_display }}</b></td>
+                    {% check_memorial application percent as pay_treasury %}
                     <td><b class="state_payment">
-                        {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
+                        {% if pay_treasury.status == 'success' %}{{ pay_treasury.amount|intcomma }}{% else %}
+                            {% get_state_duty_payment percent.id application.id as pay %}
+                            {{ pay|intcomma }}{% endif %}</b> so'm
                     </td>
                     <td class="text-center">
-                    {% check_memorial application percent as pay_treasury %}
+
                         {% if pay_treasury.status == 'success' %}
                             <p class="text-success font-17">To'langan</p>
 
-                            <p><a  href="{{ pay_treasury.memorial }}" class="text-primary text-decoration-underline font-13">Kvitansiyani
+                            <p><a href="{{ pay_treasury.memorial }}"
+                                  class="text-primary text-decoration-underline font-13">Kvitansiyani
                                 yuklash</a></p>
                         {% else %}
                             <p class="text-danger font-17">To'lanmagan</p>
