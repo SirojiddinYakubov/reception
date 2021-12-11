@@ -47,7 +47,7 @@ class StateDutiesList(APIView):
     serializer_class = serializers.StateDutiesListSerializer
 
     def get(self, request, *args, **kwargs):
-        qs = PaymentForTreasury.objects.all()
+        qs = PaymentForTreasury.objects.filter(is_active=True, status=PaymentForTreasury.SUCCESS)
         state_duties = []
         amount = 0
         for title, items in itertools.groupby(qs,
