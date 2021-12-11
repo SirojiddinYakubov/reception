@@ -77,6 +77,7 @@
             sendAuthorizationToken()
 
             getAjaxData("{% url 'api_service:state_duties_list' %}").then(function (res) {
+                console.log(res)
                 let amount = 0
                 res.forEach((x, i) => {
                     amount += x.amount
