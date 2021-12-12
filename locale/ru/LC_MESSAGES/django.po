@@ -1,0 +1,3261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-12 16:45+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: application/models.py:52
+msgid "Yaratgan shaxs"
+msgstr ""
+
+#: application/models.py:54
+msgid "Ariza topshiruvchi shaxsi"
+msgstr ""
+
+#: application/models.py:59
+msgid "To'lov qilingan"
+msgstr ""
+
+#: application/models.py:64
+msgid "Ariza tekshiruv kodi"
+msgstr ""
+
+#: application/models.py:65
+msgid "Berish sanasi"
+msgstr ""
+
+#: application/models.py:66
+msgid "Berish vaqti"
+msgstr ""
+
+#: application/models.py:69
+msgid "CRON holati"
+msgstr ""
+
+#: application/models.py:70
+msgid "Ariza topshirilgan IIB YHXB bo'limi"
+msgstr ""
+
+#: application/models.py:75
+msgid "Yaratgan vaqti"
+msgstr ""
+
+#: application/models.py:76
+msgid "Tahrirlangan vaqti"
+msgstr ""
+
+#: application/models.py:78
+msgid "Rad etilgan vaqti"
+msgstr ""
+
+#: application/models.py:79
+msgid "Tasdiqlangan vaqti"
+msgstr ""
+
+#: application/models.py:80
+msgid "Inspektor"
+msgstr ""
+
+#: application/models.py:82
+msgid "Applikant"
+msgstr ""
+
+#: application/models.py:144
+msgid "Moderator"
+msgstr ""
+
+#: click/utils.py:45
+msgid "Error in request from click"
+msgstr ""
+
+#: click/utils.py:56
+msgid "SIGN CHECK FAILED!"
+msgstr ""
+
+#: click/utils.py:62
+msgid "Action not found"
+msgstr ""
+
+#: click/utils.py:69
+msgid "User does not exist"
+msgstr ""
+
+#: click/utils.py:75
+msgid "Incorrect parameter amount"
+msgstr "Неправильная сумма параметра"
+
+#: click/utils.py:81
+msgid "Already paid"
+msgstr "Уже оплачено"
+
+#: click/utils.py:90
+msgid "Transaction not found"
+msgstr "Транзакция не найдена"
+
+#: click/utils.py:96
+msgid "Transaction cancelled"
+msgstr "Транзакция отменена"
+
+#: reception/settings.py:178
+msgid "Uzbek"
+msgstr "Узбек"
+
+#: reception/settings.py:179
+msgid "Russian"
+msgstr "Русский"
+
+#: service/models.py:58
+msgid "Yo'l fondi"
+msgstr "Дорожный фонд"
+
+#: service/models.py:59
+msgid "Yo'l fondi ot kuchi"
+msgstr "Дорожный фонд (лошадиных сил)"
+
+#: service/models.py:60
+msgid "Texnik ko'rik"
+msgstr "Технический осмотр"
+
+#: service/models.py:61
+msgid "Yangi qayd etish guvohnomasi"
+msgstr "Cвидетельство о регистрации"
+
+#: service/models.py:63
+msgid "Qayta ro'yhatlash"
+msgstr "Перерегистрация"
+
+#: service/models.py:64
+msgid "Jarima"
+msgstr "Штраф"
+
+#: templates/_parts/inc/account_statement_page.html:7
+msgid "Hisob ma'lumotnomasi"
+msgstr "Счет справка"
+
+#: templates/_parts/inc/applicants_page.html:4
+#: templates/user/role/administrator/applicants_list.html:23
+msgid "Arizachilar"
+msgstr "Заявители"
+
+#: templates/_parts/inc/application_page.html:5
+#: templates/application/applications_list.html:24
+#: templates/user/role/checker/applications_list.html:24
+#: templates/user/role/checker/checker_applications_list.html:22
+#: templates/user/role/moderator/applications_list.html:24
+#: templates/user/role/moderator/payments_list.html:24
+#: templates/user/role/regional_controller/applications_list.html:24
+#: templates/user/role/regional_controller/payments_list.html:24
+#: templates/user/role/regional_controller/sections_list.html:29
+#: templates/user/role/state_controller/applications_list.html:24
+#: templates/user/role/state_controller/regions_list.html:27
+#: templates/user/role/technical/technical_applications_list.html:13
+msgid "Arizalar"
+msgstr "Заявки"
+
+#: templates/_parts/inc/cotract_of_sale_page.html:7
+msgid "Oldi sotdi shartnomasi"
+msgstr ""
+
+#: templates/_parts/inc/gift_agreement_page.html:7
+msgid "Xadya yoki Me'ros"
+msgstr ""
+
+#: templates/_parts/inc/organizations_page.html:4
+msgid "Tashkilotlar"
+msgstr "Организации"
+
+#: templates/_parts/inc/payments_page.html:4
+msgid "To'lovlar"
+msgstr "Выплаты"
+
+#: templates/_parts/inc/payments_report_page.html:4
+msgid "To'lovlar hisobot"
+msgstr "Отчет о платежах"
+
+#: templates/_parts/inc/personal_data_page.html:5
+#: templates/user/personal_data.html:9
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Личные данные"
+
+#: templates/_parts/inc/re_equipment_page.html:7
+msgid "Qayta jihozlash"
+msgstr "Переоборудование"
+
+#: templates/_parts/inc/regions_page.html:7
+msgid "Viloyatlar"
+msgstr "Регионы"
+
+#: templates/_parts/inc/replace_number_and_tp_page.html:7
+msgid "DRB va TP almashtirish"
+msgstr ""
+
+#: templates/_parts/inc/replace_tp_page.html:7
+msgid "TP almashtirish"
+msgstr ""
+
+#: templates/_parts/inc/workers_page.html:6
+msgid "Xodimlar"
+msgstr ""
+
+#: templates/account/login.html:209
+msgid "Parolni unutdingizmi?"
+msgstr "Забыли пароль?"
+
+#: templates/account/login.html:214
+msgid "Yo'q"
+msgstr "Нет"
+
+#: templates/account/login.html:215
+msgid "Ha, Parolni tiklash"
+msgstr "Да, сброс пароля"
+
+#: templates/account/login.html:221
+msgid "Telefon raqamingizni kiriting..."
+msgstr "Введите номер телефона..."
+
+#: templates/account/login.html:223 templates/account/login.html:255
+#: templates/account/login.html:271
+msgid "Orqaga qaytish"
+msgstr "Назад"
+
+#: templates/account/login.html:224
+msgid "Yuborish"
+msgstr "Отправить"
+
+#: templates/account/login.html:229
+msgid "Masalan:"
+msgstr "Например"
+
+#: templates/account/login.html:246
+msgid "Login va parol raqamingizga sms tarzida jo'natildi!"
+msgstr "Логин и пароль отправлены на ваш телефон по SMS."
+
+#: templates/account/login.html:252
+msgid "Bunday raqam tizimda mavjud emas!"
+msgstr "Такого пользователя не существует в системе!"
+
+#: templates/account/login.html:256
+msgid "Ro'yhatdan o'tish"
+msgstr "Регистрация"
+
+#: templates/account/login.html:268
+msgid "Raqamni kiritishda xatolik!"
+msgstr "Ошибка при вводе номера!"
+
+#: templates/account/login.html:272
+msgid "Qayta urinib ko'rish"
+msgstr "Повторить попытку"
+
+#: templates/account/logout.html:5 templates/account/logout.html:8
+#: templates/account/logout.html:17
+msgid "Tizimdan chiqish"
+msgstr "Выход из системы"
+
+#: templates/account/logout.html:10
+msgid "Tizimdan chiqishni hohlaysizmi?"
+msgstr "Хотите выйти из системы?"
+
+#: templates/account/signup.html:210
+msgid "Mahallani kiritasizmi?"
+msgstr ""
+
+#: templates/application/application_detail.html:39
+msgid "Amalllar xronologiyasi"
+msgstr "Хронология действий"
+
+#: templates/application/applications_list.html:23
+#: templates/user/role/checker/applications_list.html:23
+#: templates/user/role/checker/checker_applications_list.html:21
+#: templates/user/role/moderator/applications_list.html:23
+#: templates/user/role/moderator/payments_list.html:23
+#: templates/user/role/regional_controller/applications_list.html:23
+#: templates/user/role/regional_controller/payments_list.html:23
+#: templates/user/role/state_controller/applications_list.html:23
+#, python-format
+msgid ""
+"%(section_title)sga kelib\n"
+"        tushgan arizalar"
+msgstr ""
+
+#: templates/application/applications_list.html:38
+#: templates/user/role/checker/applications_list.html:59
+#: templates/user/role/moderator/applications_list.html:45
+#: templates/user/role/regional_controller/applications_list.html:45
+#: templates/user/role/state_controller/applications_list.html:45
+msgid "Ariza raqami"
+msgstr "Номер заявки"
+
+#: templates/application/applications_list.html:39
+#: templates/user/role/checker/applications_list.html:54
+#: templates/user/role/checker/checker_applications_list.html:54
+#: templates/user/role/moderator/applications_list.html:39
+#: templates/user/role/regional_controller/applications_list.html:39
+#: templates/user/role/state_controller/applications_list.html:39
+msgid "Xizmat nomi"
+msgstr "Название сервиса"
+
+#: templates/application/applications_list.html:40
+#: templates/user/role/checker/applications_list.html:55
+#: templates/user/role/checker/checker_applications_list.html:55
+#: templates/user/role/moderator/applications_list.html:41
+#: templates/user/role/regional_controller/applications_list.html:41
+#: templates/user/role/state_controller/applications_list.html:41
+msgid "Avtomobil"
+msgstr "Автомобиль"
+
+#: templates/application/applications_list.html:41
+#: templates/user/role/checker/checker_applications_list.html:56
+msgid "Topshirdi"
+msgstr "Заявитель"
+
+#: templates/application/applications_list.html:42
+#: templates/user/role/checker/applications_list.html:57
+#: templates/user/role/checker/checker_applications_list.html:57
+#: templates/user/role/moderator/applications_list.html:43
+#: templates/user/role/moderator/payments_list.html:44
+#: templates/user/role/regional_controller/applications_list.html:43
+#: templates/user/role/regional_controller/payments_list.html:45
+#: templates/user/role/state_controller/applications_list.html:43
+msgid "Yaratilgan vaqti"
+msgstr "Время создания"
+
+#: templates/application/applications_list.html:43
+#: templates/user/role/checker/applications_list.html:58
+#: templates/user/role/checker/checker_applications_list.html:58
+#: templates/user/role/moderator/applications_list.html:44
+#: templates/user/role/regional_controller/applications_list.html:44
+#: templates/user/role/state_controller/applications_list.html:44
+msgid "Holati"
+msgstr "Состояние"
+
+#: templates/application/applications_list.html:44
+#: templates/user/role/checker/checker_applications_list.html:59
+msgid "Ariza nusxasi"
+msgstr "Скачать"
+
+#: templates/application/applications_list.html:100
+#: templates/user/role/administrator/applicants_list.html:99
+#: templates/user/role/checker/applications_list.html:113
+#: templates/user/role/checker/checker_applications_list.html:118
+#: templates/user/role/moderator/applications_list.html:105
+#: templates/user/role/moderator/payments_list.html:96
+#: templates/user/role/regional_controller/applications_list.html:102
+#: templates/user/role/regional_controller/payments_list.html:96
+#: templates/user/role/state_controller/applications_list.html:100
+msgid "Qidiruv..."
+msgstr "Поиск"
+
+#: templates/application/applications_list.html:101
+#: templates/application/applications_list.html:111
+#: templates/user/role/administrator/applicants_list.html:100
+#: templates/user/role/administrator/applicants_list.html:110
+#: templates/user/role/checker/applications_list.html:114
+#: templates/user/role/checker/applications_list.html:124
+#: templates/user/role/checker/checker_applications_list.html:119
+#: templates/user/role/checker/checker_applications_list.html:129
+#: templates/user/role/moderator/applications_list.html:106
+#: templates/user/role/moderator/applications_list.html:116
+#: templates/user/role/moderator/payments_list.html:97
+#: templates/user/role/moderator/payments_list.html:107
+#: templates/user/role/regional_controller/applications_list.html:103
+#: templates/user/role/regional_controller/applications_list.html:113
+#: templates/user/role/regional_controller/payments_list.html:97
+#: templates/user/role/regional_controller/payments_list.html:107
+#: templates/user/role/regional_controller/sections_list.html:60
+#: templates/user/role/state_controller/applications_list.html:101
+#: templates/user/role/state_controller/applications_list.html:111
+#: templates/user/role/state_controller/regions_list.html:58
+msgid "Ma'lumot topilmadi!"
+msgstr "Информации не найдено!"
+
+#: templates/application/applications_list.html:103
+#: templates/application/applications_list.html:104
+#: templates/user/role/checker/applications_list.html:116
+#: templates/user/role/checker/applications_list.html:117
+#: templates/user/role/checker/checker_applications_list.html:121
+#: templates/user/role/checker/checker_applications_list.html:122
+#: templates/user/role/moderator/applications_list.html:108
+#: templates/user/role/moderator/applications_list.html:109
+#: templates/user/role/moderator/payments_list.html:99
+#: templates/user/role/moderator/payments_list.html:100
+#: templates/user/role/regional_controller/applications_list.html:105
+#: templates/user/role/regional_controller/applications_list.html:106
+#: templates/user/role/regional_controller/payments_list.html:99
+#: templates/user/role/regional_controller/payments_list.html:100
+#: templates/user/role/state_controller/applications_list.html:103
+#: templates/user/role/state_controller/applications_list.html:104
+msgid "Jami: _TOTAL_ ta ariza"
+msgstr "Всего: _TOTAL_  заявка"
+
+#: templates/application/applications_list.html:109
+#: templates/user/role/administrator/applicants_list.html:108
+#: templates/user/role/checker/applications_list.html:122
+#: templates/user/role/checker/checker_applications_list.html:127
+#: templates/user/role/moderator/applications_list.html:114
+#: templates/user/role/moderator/payments_list.html:105
+#: templates/user/role/regional_controller/applications_list.html:111
+#: templates/user/role/regional_controller/payments_list.html:105
+#: templates/user/role/state_controller/applications_list.html:109
+msgid "Yuklanmoqda..."
+msgstr "Загрузка...."
+
+#: templates/application/applications_list.html:113
+#: templates/user/role/administrator/applicants_list.html:112
+#: templates/user/role/checker/applications_list.html:126
+#: templates/user/role/checker/checker_applications_list.html:131
+#: templates/user/role/moderator/applications_list.html:118
+#: templates/user/role/moderator/payments_list.html:109
+#: templates/user/role/regional_controller/applications_list.html:115
+#: templates/user/role/regional_controller/payments_list.html:109
+#: templates/user/role/state_controller/applications_list.html:113
+msgid "Birinchi"
+msgstr "Первый"
+
+#: templates/application/applications_list.html:114
+#: templates/user/role/administrator/applicants_list.html:113
+#: templates/user/role/checker/applications_list.html:127
+#: templates/user/role/checker/checker_applications_list.html:132
+#: templates/user/role/moderator/applications_list.html:119
+#: templates/user/role/moderator/payments_list.html:110
+#: templates/user/role/regional_controller/applications_list.html:116
+#: templates/user/role/regional_controller/payments_list.html:110
+#: templates/user/role/state_controller/applications_list.html:114
+msgid "Oxirgi"
+msgstr "Последний"
+
+#: templates/application/applications_list.html:115
+#: templates/user/role/administrator/applicants_list.html:114
+#: templates/user/role/checker/applications_list.html:128
+#: templates/user/role/checker/checker_applications_list.html:133
+#: templates/user/role/moderator/applications_list.html:120
+#: templates/user/role/moderator/payments_list.html:111
+#: templates/user/role/regional_controller/applications_list.html:117
+#: templates/user/role/regional_controller/payments_list.html:111
+#: templates/user/role/state_controller/applications_list.html:115
+msgid "Keyingi"
+msgstr "Далее"
+
+#: templates/application/applications_list.html:116
+#: templates/user/role/administrator/applicants_list.html:115
+#: templates/user/role/checker/applications_list.html:129
+#: templates/user/role/checker/checker_applications_list.html:134
+#: templates/user/role/moderator/applications_list.html:121
+#: templates/user/role/moderator/payments_list.html:112
+#: templates/user/role/regional_controller/applications_list.html:118
+#: templates/user/role/regional_controller/payments_list.html:112
+#: templates/user/role/state_controller/applications_list.html:116
+msgid "Oldingi"
+msgstr "Предыдущий"
+
+#: templates/application/applications_list.html:119
+#: templates/user/role/administrator/applicants_list.html:118
+#: templates/user/role/checker/applications_list.html:132
+#: templates/user/role/checker/checker_applications_list.html:137
+#: templates/user/role/moderator/applications_list.html:124
+#: templates/user/role/moderator/payments_list.html:115
+#: templates/user/role/regional_controller/applications_list.html:121
+#: templates/user/role/regional_controller/payments_list.html:115
+#: templates/user/role/state_controller/applications_list.html:119
+msgid ": o'sish tartibi faollashtirildi"
+msgstr ""
+
+#: templates/application/applications_list.html:120
+#: templates/user/role/administrator/applicants_list.html:119
+#: templates/user/role/checker/applications_list.html:133
+#: templates/user/role/checker/checker_applications_list.html:138
+#: templates/user/role/moderator/applications_list.html:125
+#: templates/user/role/moderator/payments_list.html:116
+#: templates/user/role/regional_controller/applications_list.html:122
+#: templates/user/role/regional_controller/payments_list.html:116
+#: templates/user/role/state_controller/applications_list.html:120
+msgid ": kamayish tartibi faollashtirildi"
+msgstr ""
+
+#: templates/application/check_application_status.html:54
+msgid "Amallar xronologiyasi"
+msgstr "Хронология действий"
+
+#: templates/application/confirm_application_data.html:8
+msgid "Avtotransport ma'lumotlari"
+msgstr ""
+
+#: templates/application/payments/payments_list.html:7
+#: templates/application/payments/user_payments_list.html:7
+#: templates/landing/index.html:12 templates/user/add_organization.html:10
+#: templates/user/edit_organization.html:14
+#: templates/user/role/regional_controller/payments_report.html:5
+msgid "E-RIB.UZ"
+msgstr ""
+
+#: templates/application/payments/payments_list.html:11
+#: templates/application/payments/user_payments_list.html:11
+#: templates/user/role/regional_controller/payments_report.html:9
+msgid "Davlat boj to'lovlari"
+msgstr "Государственные пошлины"
+
+#: templates/landing/calculate.html:5 templates/landing/calculate.html:7
+#: templates/landing/calculate.html:48
+msgid ""
+"Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish "
+"xarajatlari kalkulyatori"
+msgstr "Калькулятор стоимости регистрации и перерегистрации автомобиля"
+
+#: templates/landing/calculate.html:42
+msgid "Ro'yhatdan o'tkazish kalkulyatori"
+msgstr ""
+
+#: templates/landing/calculate.html:53
+#: templates/user/role/moderator/payments_list.html:39
+#: templates/user/role/regional_controller/payments_list.html:39
+msgid "Xizmat turi"
+msgstr "Выберите услугу"
+
+#: templates/landing/calculate.html:63
+#: templates/service/gift_agreement/gift_agreement.html:291
+msgid ""
+"Xadya shartnomasi yaqin qarindosh (ota, ona, er, xotin, aka, uka, opa, "
+"singil) lar orasidami?"
+msgstr ""
+"Заключается ли договор дарения между близкими родственниками (отец, мать, "
+"муж, жена, брат, сестра)?"
+
+#: templates/landing/calculate.html:86
+#: templates/service/account_statement/account_statement.html:134
+#: templates/service/contract_of_sale/contract_of_sale.html:134
+#: templates/service/gift_agreement/gift_agreement.html:134
+#: templates/service/inheritance_agreement/inheritance_agreement.html:134
+#: templates/service/re_equipment/re_equipment.html:134
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:93
+#: templates/service/replace_tp/replace_tp.html:92
+#: templates/user/car/edit_car_data.html:60
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:31
+#: templates/user/role/app_creator/service/contract_of_sale.html:134
+#: templates/user/role/user/service/account_statement/car_fieldset.html:29
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:29
+msgid "Transport vositasi turini tanlang"
+msgstr "Выберите тип автомобиля"
+
+#: templates/landing/calculate.html:96
+msgid "Transport vositasi qayerda ishlab chiqarilgan?"
+msgstr "Где производится транспортное средство?"
+
+#: templates/landing/calculate.html:107
+msgid "Shaxs turini tanlang"
+msgstr "Заявитель"
+
+#: templates/landing/calculate.html:118
+#: templates/service/account_statement/account_statement.html:251
+#: templates/service/account_statement/account_statement_index.html:255
+#: templates/service/contract_of_sale/contract_of_sale.html:252
+#: templates/service/contract_of_sale/contract_of_sale_index.html:251
+#: templates/service/gift_agreement/gift_agreement.html:252
+#: templates/service/gift_agreement/gift_agreement_index.html:251
+#: templates/service/inheritance_agreement/inheritance_agreement.html:252
+#: templates/service/re_equipment/re_equipment.html:252
+#: templates/service/re_equipment/re_equipment_index.html:252
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:211
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:251
+#: templates/service/replace_tp/replace_tp.html:230
+#: templates/service/replace_tp/replace_tp_index.html:251
+#: templates/user/car/edit_car_data.html:188
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:137
+#: templates/user/role/app_creator/service/contract_of_sale.html:252
+#: templates/user/role/user/service/account_statement/car_fieldset.html:121
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:121
+msgid "Dvigatel quvvati"
+msgstr "Мощность двигателя"
+
+#: templates/landing/calculate.html:123
+#: templates/service/account_statement/account_statement.html:256
+#: templates/service/contract_of_sale/contract_of_sale.html:257
+#: templates/service/gift_agreement/gift_agreement.html:257
+#: templates/service/inheritance_agreement/inheritance_agreement.html:257
+#: templates/service/re_equipment/re_equipment.html:257
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:216
+#: templates/service/replace_tp/replace_tp.html:235
+#: templates/user/car/edit_car_data.html:194
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:142
+#: templates/user/role/app_creator/service/contract_of_sale.html:257
+#: templates/user/role/user/service/account_statement/car_fieldset.html:126
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:126
+msgid "Masalan: 120"
+msgstr "Например: 120"
+
+#: templates/landing/calculate.html:133
+#: templates/service/account_statement/account_statement.html:280
+#: templates/service/account_statement/account_statement_index.html:289
+#: templates/service/contract_of_sale/contract_of_sale.html:281
+#: templates/service/contract_of_sale/contract_of_sale_index.html:285
+#: templates/service/gift_agreement/gift_agreement.html:281
+#: templates/service/gift_agreement/gift_agreement_index.html:283
+#: templates/service/inheritance_agreement/inheritance_agreement.html:281
+#: templates/service/re_equipment/re_equipment.html:281
+#: templates/service/re_equipment/re_equipment_index.html:282
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:240
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:285
+#: templates/service/replace_tp/replace_tp.html:259
+#: templates/service/replace_tp/replace_tp_index.html:285
+#: templates/user/car/edit_car_data.html:219
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:166
+#: templates/user/role/app_creator/service/contract_of_sale.html:281
+#: templates/user/role/user/service/account_statement/car_fieldset.html:148
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:148
+msgid "Ishlab chiqarilgan vaqti"
+msgstr "Год выпуска"
+
+#: templates/landing/calculate.html:171
+#: templates/service/account_statement/account_statement.html:289
+#: templates/user/car/edit_car_data.html:229
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:175
+#: templates/user/role/user/service/account_statement/car_fieldset.html:187
+msgid "Transport vositasi narxi"
+msgstr "Стоимость автомобиля"
+
+#: templates/landing/calculate.html:176
+#: templates/service/account_statement/account_statement.html:294
+#: templates/service/account_statement/account_statement_index.html:333
+#: templates/user/car/edit_car_data.html:235
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:180
+#: templates/user/role/user/service/account_statement/car_fieldset.html:192
+msgid "Masalan: 47000000"
+msgstr "Например: 47000000"
+
+#: templates/landing/calculate.html:185
+msgid "Hisob ma\\"
+msgstr ""
+
+#: templates/landing/calculate.html:195
+#: templates/service/account_statement/account_statement.html:303
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:222
+#: templates/user/role/user/service/account_statement/car_fieldset.html:232
+msgid "Raqam auksiondan olinganmi?"
+msgstr "Номер был куплен на аукционе?"
+
+#: templates/landing/calculate.html:218
+msgid "Avtomobildagi DRBni saqlab qolasizmi?"
+msgstr ""
+
+#: templates/landing/calculate.html:240
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:189
+#: templates/user/role/user/service/account_statement/car_fieldset.html:201
+msgid "Yangi olinadigan davlat raqam belgisi YXHB zahirasida saqlanmoqdami?"
+msgstr ""
+
+#: templates/landing/calculate.html:261
+#: templates/service/contract_of_sale/contract_of_sale.html:345
+#: templates/service/gift_agreement/gift_agreement.html:351
+#: templates/service/inheritance_agreement/inheritance_agreement.html:323
+#: templates/service/re_equipment/re_equipment.html:323
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:282
+#: templates/user/car/edit_car_data.html:281
+#: templates/user/role/app_creator/service/contract_of_sale.html:345
+msgid "Davlat raqam belgisi yo'qolganmi?"
+msgstr "Государственный номерной знак отсутствует?"
+
+#: templates/landing/calculate.html:282
+msgid "Davlat raqam belgisi eski namunadami? Masalan: 01 A 5555"
+msgstr ""
+
+#: templates/landing/calculate.html:304
+msgid "Qayd etish guvohnomasi(Tax passport) yo'qolganmi?"
+msgstr ""
+
+#: templates/landing/calculate.html:520
+#, fuzzy
+#| msgid "Hisob ma'lumotnomasi"
+msgid "Hisob ma'lumotnomasi berilgan sana"
+msgstr "Счет справка"
+
+#: templates/landing/calculate.html:522
+msgid "Oldi sotdi shartnomasi berilgan sana"
+msgstr ""
+
+#: templates/landing/calculate.html:524
+msgid "Hadya shartnomasi berilgan sana"
+msgstr ""
+
+#: templates/landing/calculate.html:526
+msgid "Me'ros shartnomasi berilgan sana"
+msgstr ""
+
+#: templates/modals/add_car_color_modal.html:20
+msgid "Yangi rang nomi"
+msgstr ""
+
+#: templates/modals/add_car_model_modal.html:20
+msgid "Yangi model nomi"
+msgstr ""
+
+#: templates/modals/add_car_model_modal.html:31
+msgid "Transport vositasi turi"
+msgstr ""
+
+#: templates/modals/add_car_model_modal.html:50
+msgid "Ishlab chiqaruvchi korxona"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:19
+#: templates/user/add_organization.html:28
+#: templates/user/edit_organization.html:32
+msgid "Tashkilot nomi"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:30
+#: templates/user/add_organization.html:39
+#: templates/user/edit_organization.html:43
+msgid "Rahbari"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:41
+#: templates/user/add_organization.html:50
+#: templates/user/edit_organization.html:54
+msgid "STIR raqam"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:52
+#: templates/user/add_organization.html:61
+#: templates/user/edit_organization.html:65
+msgid "Yuridik manzili(Viloyat)"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:66
+#: templates/user/add_organization.html:77
+#: templates/user/edit_organization.html:81
+msgid "Yuridik manzili(Tuman)"
+msgstr ""
+
+#: templates/modals/add_organization_modal.html:79
+#: templates/user/add_organization.html:90
+#: templates/user/edit_organization.html:94
+msgid "Garaj manzili"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:20
+#: templates/user/edit_personal_data.html:205
+msgid "Tel raqam/Login"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:37
+#: templates/user/edit_personal_data.html:42
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:20
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:20
+msgid "Familiya"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:43
+#: templates/user/edit_personal_data.html:48
+msgid "Masalan: Yoqubov"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:49
+#: templates/user/edit_personal_data.html:54
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:29
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:29
+msgid "Ism"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:55
+#: templates/user/edit_personal_data.html:60
+msgid "Masalan: Sirojiddin"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:61
+#: templates/user/edit_personal_data.html:66
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:38
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:38
+msgid "Otasining ismi"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:66
+#: templates/user/edit_personal_data.html:72
+msgid "Masalan: Tojiddinovich"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:72
+#: templates/user/edit_personal_data.html:78
+msgid "Tug'ilgan vaqt"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:82
+#: templates/partners/diagnostics_list.html:17
+#: templates/user/edit_personal_data.html:89
+#: templates/user/role/administrator/applicants_list.html:40
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:47
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:47
+msgid "Viloyat"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:87
+msgid "--Viloyatni tanlang--"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:93
+#: templates/user/edit_personal_data.html:104
+#: templates/user/role/administrator/applicants_list.html:41
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:55
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:55
+msgid "Tuman/Shahar"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:99
+#: templates/user/edit_personal_data.html:112
+msgid "--Tumanni tanlang--"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:106
+#: templates/user/edit_personal_data.html:119
+#: templates/user/role/app_creator/service/_parts/applicant_fieldset.html:63
+#: templates/user/role/user/service/_parts/applicant_fieldset.html:63
+msgid "Mahalla"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:110
+#: templates/user/edit_personal_data.html:127
+msgid "--Mahallani tanlang--"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:117
+#: templates/user/edit_personal_data.html:135
+msgid "Ko'cha/Qishloq"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:122
+#: templates/user/edit_personal_data.html:141
+msgid "Masalan: M.Iqbol ko'chasi 76-uy"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:128
+#: templates/user/edit_personal_data.html:147
+msgid "Passport seriya"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:133
+#: templates/user/edit_personal_data.html:153
+msgid "Masalan: AA"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:140
+#: templates/user/edit_personal_data.html:160
+msgid "Passport raqam"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:145
+#: templates/user/edit_personal_data.html:166
+msgid "Masalan: 3870293"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:151
+#: templates/user/edit_personal_data.html:193
+msgid "Kim tomonidan berilgan"
+msgstr ""
+
+#: templates/modals/add_user_modal.html:156
+#: templates/user/edit_personal_data.html:199
+msgid "Masalan: BUXORO SHAHAR IIB"
+msgstr ""
+
+#: templates/partners/diagnostics_list.html:8
+msgid "Diaknostikalar ro'yhati"
+msgstr ""
+
+#: templates/partners/diagnostics_list.html:28
+#: templates/user/role/moderator/payments_list.html:41
+#: templates/user/role/regional_controller/payments_list.html:40
+msgid "Tuman"
+msgstr ""
+
+#: templates/service/_parts/territory_of_rib.html:17
+#: templates/user/role/app_creator/service/_parts/section_fieldset.html:17
+#: templates/user/role/user/service/_parts/section_fieldset.html:17
+msgid "Ariza topshiradigan viloyatni tanlang"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:73
+#: templates/service/contract_of_sale/contract_of_sale.html:73
+#: templates/service/gift_agreement/gift_agreement.html:73
+#: templates/service/inheritance_agreement/inheritance_agreement.html:73
+#: templates/service/re_equipment/re_equipment.html:73
+#: templates/user/role/app_creator/service/contract_of_sale.html:73
+#, python-format
+msgid ""
+"%(service_title)s seriyasi va\n"
+"                                    raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:79
+#: templates/service/account_statement/account_statement_index.html:306
+#: templates/service/contract_of_sale/contract_of_sale.html:79
+#: templates/service/contract_of_sale/contract_of_sale_index.html:362
+#: templates/service/gift_agreement/gift_agreement.html:79
+#: templates/service/gift_agreement/gift_agreement_index.html:362
+#: templates/service/inheritance_agreement/inheritance_agreement.html:79
+#: templates/service/re_equipment/re_equipment.html:79
+#: templates/user/role/app_creator/service/_parts/document_fieldset.html:15
+#: templates/user/role/app_creator/service/contract_of_sale.html:79
+#: templates/user/role/user/service/_parts/document_fieldset.html:16
+msgid "Masalan: AAC123456"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:85
+#: templates/service/account_statement/account_statement_index.html:316
+#: templates/service/contract_of_sale/contract_of_sale.html:85
+#: templates/service/contract_of_sale/contract_of_sale_index.html:367
+#: templates/service/gift_agreement/gift_agreement.html:85
+#: templates/service/gift_agreement/gift_agreement_index.html:367
+#: templates/service/inheritance_agreement/inheritance_agreement.html:85
+#: templates/service/re_equipment/re_equipment.html:85
+#: templates/user/role/app_creator/service/_parts/document_fieldset.html:21
+#: templates/user/role/app_creator/service/contract_of_sale.html:85
+#: templates/user/role/user/service/_parts/document_fieldset.html:22
+msgid "Shartnoma tuzilgan sana"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:117
+#: templates/service/contract_of_sale/contract_of_sale.html:117
+#: templates/service/gift_agreement/gift_agreement.html:117
+#: templates/service/inheritance_agreement/inheritance_agreement.html:117
+#: templates/service/re_equipment/re_equipment.html:117
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:76
+#: templates/service/replace_tp/replace_tp.html:75
+#: templates/user/car/edit_car_data.html:42
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:14
+#: templates/user/role/app_creator/service/contract_of_sale.html:117
+#: templates/user/role/user/service/account_statement/car_fieldset.html:17
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:17
+msgid "Transport vositasi modelini tanlang"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:148
+#: templates/service/account_statement/account_statement_index.html:162
+#: templates/service/contract_of_sale/contract_of_sale.html:148
+#: templates/service/contract_of_sale/contract_of_sale_index.html:162
+#: templates/service/gift_agreement/gift_agreement.html:148
+#: templates/service/gift_agreement/gift_agreement_index.html:162
+#: templates/service/inheritance_agreement/inheritance_agreement.html:148
+#: templates/service/re_equipment/re_equipment.html:148
+#: templates/service/re_equipment/re_equipment_index.html:163
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:107
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:162
+#: templates/service/replace_tp/replace_tp_index.html:162
+#: templates/user/car/edit_car_data.html:74
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:42
+#: templates/user/role/app_creator/service/contract_of_sale.html:148
+#: templates/user/role/user/service/account_statement/car_fieldset.html:40
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:40
+msgid "Yoqilg'i turini tanlang"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:163
+#: templates/service/account_statement/account_statement_index.html:174
+#: templates/service/contract_of_sale/contract_of_sale.html:163
+#: templates/service/contract_of_sale/contract_of_sale_index.html:174
+#: templates/service/gift_agreement/gift_agreement.html:163
+#: templates/service/gift_agreement/gift_agreement_index.html:174
+#: templates/service/inheritance_agreement/inheritance_agreement.html:163
+#: templates/service/re_equipment/re_equipment.html:163
+#: templates/service/re_equipment/re_equipment_index.html:175
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:122
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:174
+#: templates/service/replace_tp/replace_tp.html:313
+#: templates/service/replace_tp/replace_tp_index.html:174
+#: templates/user/car/edit_car_data.html:90
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:53
+#: templates/user/role/app_creator/service/contract_of_sale.html:163
+#: templates/user/role/user/service/account_statement/car_fieldset.html:265
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:361
+msgid "Alohida belgilar"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:177
+#: templates/service/account_statement/account_statement_index.html:188
+#: templates/service/contract_of_sale/contract_of_sale.html:178
+#: templates/service/contract_of_sale/contract_of_sale_index.html:184
+#: templates/service/gift_agreement/gift_agreement.html:178
+#: templates/service/gift_agreement/gift_agreement_index.html:184
+#: templates/service/inheritance_agreement/inheritance_agreement.html:178
+#: templates/service/re_equipment/re_equipment.html:178
+#: templates/service/re_equipment/re_equipment_index.html:185
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:137
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:184
+#: templates/service/replace_tp/replace_tp.html:156
+#: templates/service/replace_tp/replace_tp_index.html:184
+#: templates/user/car/edit_car_data.html:106
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:67
+#: templates/user/role/app_creator/service/contract_of_sale.html:178
+#: templates/user/role/user/service/account_statement/car_fieldset.html:51
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:51
+msgid "Kuzov turi"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:190
+#: templates/service/account_statement/account_statement_index.html:203
+#: templates/service/contract_of_sale/contract_of_sale.html:191
+#: templates/service/contract_of_sale/contract_of_sale_index.html:199
+#: templates/service/gift_agreement/gift_agreement.html:191
+#: templates/service/gift_agreement/gift_agreement_index.html:199
+#: templates/service/inheritance_agreement/inheritance_agreement.html:191
+#: templates/service/re_equipment/re_equipment.html:191
+#: templates/service/re_equipment/re_equipment_index.html:200
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:150
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:199
+#: templates/service/replace_tp/replace_tp.html:169
+#: templates/service/replace_tp/replace_tp_index.html:199
+#: templates/user/car/edit_car_data.html:120
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:77
+#: templates/user/role/app_creator/service/contract_of_sale.html:191
+#: templates/user/role/user/service/account_statement/car_fieldset.html:61
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:61
+msgid "Dvigitel raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:195
+#: templates/service/contract_of_sale/contract_of_sale.html:196
+#: templates/service/gift_agreement/gift_agreement.html:196
+#: templates/service/inheritance_agreement/inheritance_agreement.html:196
+#: templates/service/re_equipment/re_equipment.html:196
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:155
+#: templates/service/replace_tp/replace_tp.html:174
+#: templates/user/car/edit_car_data.html:126
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:82
+#: templates/user/role/app_creator/service/contract_of_sale.html:196
+#: templates/user/role/user/service/account_statement/car_fieldset.html:66
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:66
+msgid "Masalan: WZX5645645456"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:201
+#: templates/service/account_statement/account_statement_index.html:211
+#: templates/service/contract_of_sale/contract_of_sale.html:202
+#: templates/service/contract_of_sale/contract_of_sale_index.html:207
+#: templates/service/gift_agreement/gift_agreement.html:202
+#: templates/service/gift_agreement/gift_agreement_index.html:207
+#: templates/service/inheritance_agreement/inheritance_agreement.html:202
+#: templates/service/re_equipment/re_equipment.html:202
+#: templates/service/re_equipment/re_equipment_index.html:208
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:161
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:207
+#: templates/service/replace_tp/replace_tp.html:180
+#: templates/service/replace_tp/replace_tp_index.html:207
+#: templates/user/car/edit_car_data.html:132
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:88
+#: templates/user/role/app_creator/service/contract_of_sale.html:202
+#: templates/user/role/user/service/account_statement/car_fieldset.html:72
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:72
+msgid "Kuzov raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:206
+#: templates/service/contract_of_sale/contract_of_sale.html:207
+#: templates/service/gift_agreement/gift_agreement.html:207
+#: templates/service/inheritance_agreement/inheritance_agreement.html:207
+#: templates/service/re_equipment/re_equipment.html:207
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:166
+#: templates/service/replace_tp/replace_tp.html:185
+#: templates/user/car/edit_car_data.html:138
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:93
+#: templates/user/role/app_creator/service/contract_of_sale.html:207
+#: templates/user/role/user/service/account_statement/car_fieldset.html:77
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:77
+msgid "Masalan: XWB6595645456"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:212
+#: templates/service/account_statement/account_statement_index.html:223
+#: templates/service/contract_of_sale/contract_of_sale.html:213
+#: templates/service/contract_of_sale/contract_of_sale_index.html:219
+#: templates/service/gift_agreement/gift_agreement.html:213
+#: templates/service/gift_agreement/gift_agreement_index.html:219
+#: templates/service/inheritance_agreement/inheritance_agreement.html:213
+#: templates/service/re_equipment/re_equipment.html:213
+#: templates/service/re_equipment/re_equipment_index.html:220
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:172
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:219
+#: templates/service/replace_tp/replace_tp.html:191
+#: templates/service/replace_tp/replace_tp_index.html:219
+#: templates/user/car/edit_car_data.html:146
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:99
+#: templates/user/role/app_creator/service/contract_of_sale.html:213
+#: templates/user/role/user/service/account_statement/car_fieldset.html:83
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:83
+msgid "Shassi raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:217
+#: templates/service/contract_of_sale/contract_of_sale.html:218
+#: templates/service/gift_agreement/gift_agreement.html:218
+#: templates/service/inheritance_agreement/inheritance_agreement.html:218
+#: templates/service/re_equipment/re_equipment.html:218
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:177
+#: templates/service/replace_tp/replace_tp.html:196
+#: templates/user/car/edit_car_data.html:152
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:103
+#: templates/user/role/app_creator/service/contract_of_sale.html:218
+msgid "Masalan: ZXW5642519873"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:223
+#: templates/service/account_statement/account_statement_index.html:234
+#: templates/service/contract_of_sale/contract_of_sale.html:224
+#: templates/service/contract_of_sale/contract_of_sale_index.html:230
+#: templates/service/gift_agreement/gift_agreement.html:224
+#: templates/service/gift_agreement/gift_agreement_index.html:230
+#: templates/service/inheritance_agreement/inheritance_agreement.html:224
+#: templates/service/re_equipment/re_equipment.html:224
+#: templates/service/re_equipment/re_equipment_index.html:231
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:183
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:230
+#: templates/service/replace_tp/replace_tp.html:202
+#: templates/service/replace_tp/replace_tp_index.html:230
+#: templates/user/car/edit_car_data.html:158
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:109
+#: templates/user/role/app_creator/service/contract_of_sale.html:224
+#: templates/user/role/user/service/account_statement/car_fieldset.html:93
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:93
+msgid "To'la vazni"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:228
+#: templates/service/account_statement/account_statement_index.html:237
+#: templates/service/contract_of_sale/contract_of_sale.html:229
+#: templates/service/contract_of_sale/contract_of_sale_index.html:233
+#: templates/service/gift_agreement/gift_agreement.html:229
+#: templates/service/gift_agreement/gift_agreement_index.html:233
+#: templates/service/inheritance_agreement/inheritance_agreement.html:229
+#: templates/service/re_equipment/re_equipment.html:229
+#: templates/service/re_equipment/re_equipment_index.html:234
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:188
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:233
+#: templates/service/replace_tp/replace_tp.html:207
+#: templates/service/replace_tp/replace_tp_index.html:233
+#: templates/user/car/edit_car_data.html:164
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:114
+#: templates/user/role/app_creator/service/contract_of_sale.html:229
+#: templates/user/role/user/service/account_statement/car_fieldset.html:98
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:98
+msgid "Masalan: 20500"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:237
+#: templates/service/account_statement/account_statement_index.html:244
+#: templates/service/contract_of_sale/contract_of_sale.html:238
+#: templates/service/contract_of_sale/contract_of_sale_index.html:240
+#: templates/service/gift_agreement/gift_agreement.html:238
+#: templates/service/gift_agreement/gift_agreement_index.html:240
+#: templates/service/inheritance_agreement/inheritance_agreement.html:238
+#: templates/service/re_equipment/re_equipment.html:238
+#: templates/service/re_equipment/re_equipment_index.html:241
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:197
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:240
+#: templates/service/replace_tp/replace_tp.html:216
+#: templates/service/replace_tp/replace_tp_index.html:240
+#: templates/user/car/edit_car_data.html:173
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:123
+#: templates/user/role/app_creator/service/contract_of_sale.html:238
+#: templates/user/role/user/service/account_statement/car_fieldset.html:107
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:107
+msgid "Yuksiz vazni"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:242
+#: templates/service/account_statement/account_statement_index.html:247
+#: templates/service/contract_of_sale/contract_of_sale.html:243
+#: templates/service/contract_of_sale/contract_of_sale_index.html:243
+#: templates/service/gift_agreement/gift_agreement.html:243
+#: templates/service/gift_agreement/gift_agreement_index.html:243
+#: templates/service/inheritance_agreement/inheritance_agreement.html:243
+#: templates/service/re_equipment/re_equipment.html:243
+#: templates/service/re_equipment/re_equipment_index.html:244
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:202
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:243
+#: templates/service/replace_tp/replace_tp.html:221
+#: templates/service/replace_tp/replace_tp_index.html:243
+#: templates/user/car/edit_car_data.html:179
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:128
+#: templates/user/role/app_creator/service/contract_of_sale.html:243
+#: templates/user/role/user/service/account_statement/car_fieldset.html:112
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:112
+msgid "Masalan: 19500"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:265
+#: templates/service/account_statement/account_statement_index.html:264
+#: templates/service/contract_of_sale/contract_of_sale.html:266
+#: templates/service/contract_of_sale/contract_of_sale_index.html:260
+#: templates/service/gift_agreement/gift_agreement.html:266
+#: templates/service/gift_agreement/gift_agreement_index.html:260
+#: templates/service/inheritance_agreement/inheritance_agreement.html:266
+#: templates/service/re_equipment/re_equipment.html:266
+#: templates/service/re_equipment/re_equipment_index.html:261
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:225
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:260
+#: templates/service/replace_tp/replace_tp.html:244
+#: templates/service/replace_tp/replace_tp_index.html:260
+#: templates/user/car/edit_car_data.html:203
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:151
+#: templates/user/role/app_creator/service/contract_of_sale.html:266
+#: templates/user/role/user/service/account_statement/car_fieldset.html:135
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:135
+msgid "Rangi"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:325
+#: templates/service/account_statement/account_statement_index.html:354
+#: templates/service/contract_of_sale/contract_of_sale.html:423
+#: templates/service/contract_of_sale/contract_of_sale_index.html:397
+#: templates/service/gift_agreement/gift_agreement.html:429
+#: templates/service/gift_agreement/gift_agreement_index.html:396
+#: templates/service/inheritance_agreement/inheritance_agreement.html:401
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:360
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:372
+#: templates/user/car/edit_car_data.html:366
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:244
+#: templates/user/role/app_creator/service/contract_of_sale.html:423
+#: templates/user/role/user/service/account_statement/car_fieldset.html:254
+msgid "Auksion raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement.html:330
+#: templates/service/contract_of_sale/contract_of_sale.html:372
+#: templates/service/contract_of_sale/contract_of_sale.html:428
+#: templates/service/gift_agreement/gift_agreement.html:378
+#: templates/service/gift_agreement/gift_agreement.html:434
+#: templates/service/inheritance_agreement/inheritance_agreement.html:350
+#: templates/service/inheritance_agreement/inheritance_agreement.html:406
+#: templates/service/re_equipment/re_equipment.html:349
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:309
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:365
+#: templates/service/replace_tp/replace_tp.html:307
+#: templates/user/car/edit_car_data.html:311
+#: templates/user/car/edit_car_data.html:372
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:216
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:249
+#: templates/user/role/app_creator/service/contract_of_sale.html:372
+#: templates/user/role/app_creator/service/contract_of_sale.html:428
+#: templates/user/role/user/service/account_statement/car_fieldset.html:226
+#: templates/user/role/user/service/account_statement/car_fieldset.html:259
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:268
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:322
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:355
+msgid "Masalan: 80979HBA"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:10
+msgid "Hisob ma'lumotnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:51
+#: templates/service/contract_of_sale/contract_of_sale_index.html:51
+#: templates/service/gift_agreement/gift_agreement_index.html:51
+#: templates/service/inc/person_type_block.html:26
+#: templates/service/re_equipment/re_equipment_index.html:51
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:51
+#: templates/service/replace_tp/replace_tp_index.html:51
+msgid "Korxonani tanlang:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:66
+#: templates/service/contract_of_sale/contract_of_sale_index.html:66
+#: templates/service/gift_agreement/gift_agreement_index.html:66
+#: templates/service/inc/person_type_block.html:40
+#: templates/service/re_equipment/re_equipment_index.html:66
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:66
+#: templates/service/replace_tp/replace_tp_index.html:66
+msgid "Familiya:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:72
+#: templates/service/contract_of_sale/contract_of_sale_index.html:72
+#: templates/service/gift_agreement/gift_agreement_index.html:72
+#: templates/service/inc/person_type_block.html:49
+#: templates/service/re_equipment/re_equipment_index.html:72
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:72
+#: templates/service/replace_tp/replace_tp_index.html:72
+msgid "Ism:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:80
+#: templates/service/contract_of_sale/contract_of_sale_index.html:80
+#: templates/service/gift_agreement/gift_agreement_index.html:80
+#: templates/service/inc/person_type_block.html:57
+#: templates/service/re_equipment/re_equipment_index.html:80
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:80
+#: templates/service/replace_tp/replace_tp_index.html:80
+msgid "Otasining ismi:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:85
+#: templates/service/contract_of_sale/contract_of_sale_index.html:85
+#: templates/service/gift_agreement/gift_agreement_index.html:85
+#: templates/service/inc/person_type_block.html:64
+#: templates/service/re_equipment/re_equipment_index.html:85
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:85
+#: templates/service/replace_tp/replace_tp_index.html:85
+msgid "Passport:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:95
+#: templates/service/contract_of_sale/contract_of_sale_index.html:95
+#: templates/service/gift_agreement/gift_agreement_index.html:95
+#: templates/service/inc/person_type_block.html:75
+#: templates/service/re_equipment/re_equipment_index.html:95
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:95
+#: templates/service/replace_tp/replace_tp_index.html:95
+msgid "Rahbar:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:100
+#: templates/service/contract_of_sale/contract_of_sale_index.html:100
+#: templates/service/gift_agreement/gift_agreement_index.html:100
+#: templates/service/inc/person_type_block.html:83
+#: templates/service/re_equipment/re_equipment_index.html:100
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:100
+#: templates/service/replace_tp/replace_tp_index.html:100
+msgid "STIR raqam:"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:108
+#: templates/service/contract_of_sale/contract_of_sale_index.html:108
+#: templates/service/gift_agreement/gift_agreement_index.html:108
+#: templates/service/inc/person_type_block.html:91
+#: templates/service/re_equipment/re_equipment_index.html:108
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:108
+#: templates/service/replace_tp/replace_tp_index.html:108
+msgid "Yuridik manzil(Viloyat):"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:113
+#: templates/service/contract_of_sale/contract_of_sale_index.html:113
+#: templates/service/gift_agreement/gift_agreement_index.html:113
+#: templates/service/inc/person_type_block.html:98
+#: templates/service/re_equipment/re_equipment_index.html:113
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:113
+#: templates/service/replace_tp/replace_tp_index.html:113
+msgid "Yuridik manzil(Tuman):"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:135
+#: templates/service/contract_of_sale/contract_of_sale_index.html:135
+#: templates/service/gift_agreement/gift_agreement_index.html:135
+#: templates/service/re_equipment/re_equipment_index.html:135
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:135
+#: templates/service/replace_tp/replace_tp_index.html:135
+msgid "T/v modelini tanlang"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:153
+#: templates/service/gift_agreement/gift_agreement_index.html:153
+#: templates/service/re_equipment/re_equipment_index.html:153
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:153
+#: templates/service/replace_tp/replace_tp_index.html:153
+msgid "T/v turini tanlang"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:206
+#: templates/service/contract_of_sale/contract_of_sale_index.html:202
+#: templates/service/gift_agreement/gift_agreement_index.html:202
+#: templates/service/re_equipment/re_equipment_index.html:203
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:202
+#: templates/service/replace_tp/replace_tp_index.html:202
+msgid "Masalan: B12D12345678DJCCX1234"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:214
+#: templates/service/contract_of_sale/contract_of_sale_index.html:210
+#: templates/service/gift_agreement/gift_agreement_index.html:210
+#: templates/service/re_equipment/re_equipment_index.html:211
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:210
+#: templates/service/replace_tp/replace_tp_index.html:210
+msgid "Masalan: XWBJF69VELA102923"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:226
+#: templates/service/contract_of_sale/contract_of_sale_index.html:222
+#: templates/service/gift_agreement/gift_agreement_index.html:222
+#: templates/service/re_equipment/re_equipment_index.html:223
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:222
+#: templates/service/replace_tp/replace_tp_index.html:222
+msgid "Masalan: X8945642519874656"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:258
+#: templates/service/contract_of_sale/contract_of_sale_index.html:254
+#: templates/service/gift_agreement/gift_agreement_index.html:254
+#: templates/service/re_equipment/re_equipment_index.html:255
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:254
+#: templates/service/replace_tp/replace_tp_index.html:254
+msgid "Masalan: 460"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:303
+msgid "Hisob ma'lumotnomasi seriyasi va raqami"
+msgstr ""
+
+#: templates/service/account_statement/account_statement_index.html:330
+msgid "T/v narxi"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:290
+#: templates/service/gift_agreement/gift_agreement.html:318
+#: templates/service/inheritance_agreement/inheritance_agreement.html:290
+#: templates/service/re_equipment/re_equipment.html:290
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:249
+#: templates/service/replace_tp/replace_tp.html:268
+#: templates/user/car/edit_car_data.html:245
+#: templates/user/role/app_creator/service/contract_of_sale.html:290
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:187
+msgid "Qayd etish guvohnomasi yo'qolganmi?"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:312
+#: templates/service/contract_of_sale/contract_of_sale_index.html:347
+#: templates/service/gift_agreement/gift_agreement.html:340
+#: templates/service/gift_agreement/gift_agreement_index.html:347
+#: templates/service/inheritance_agreement/inheritance_agreement.html:312
+#: templates/service/re_equipment/re_equipment.html:312
+#: templates/service/re_equipment/re_equipment_index.html:325
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:271
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:348
+#: templates/service/replace_tp/replace_tp.html:290
+#: templates/service/replace_tp/replace_tp_index.html:328
+#: templates/user/car/edit_car_data.html:269
+#: templates/user/role/app_creator/service/contract_of_sale.html:312
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:209
+msgid "Qayd etish guvohnomasi seriyasi va raqami"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:317
+#: templates/service/gift_agreement/gift_agreement.html:345
+#: templates/service/inheritance_agreement/inheritance_agreement.html:317
+#: templates/service/re_equipment/re_equipment.html:317
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:276
+#: templates/service/replace_tp/replace_tp.html:295
+#: templates/user/car/edit_car_data.html:275
+#: templates/user/role/app_creator/service/contract_of_sale.html:317
+msgid "Masalan: AF4567895"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:323
+#: templates/user/role/app_creator/service/contract_of_sale.html:323
+msgid "Avtomobildagi DRBni saqlab qolish"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:367
+#: templates/service/gift_agreement/gift_agreement.html:373
+#: templates/service/inheritance_agreement/inheritance_agreement.html:345
+#: templates/service/re_equipment/re_equipment.html:344
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:304
+#: templates/service/replace_tp/replace_tp.html:302
+#: templates/user/car/edit_car_data.html:305
+#: templates/user/role/app_creator/service/contract_of_sale.html:367
+msgid "Davlat raqam belgisi"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:378
+#: templates/service/gift_agreement/gift_agreement.html:384
+#: templates/service/inheritance_agreement/inheritance_agreement.html:356
+#: templates/service/re_equipment/re_equipment.html:355
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:315
+#: templates/user/car/edit_car_data.html:317
+#: templates/user/role/app_creator/service/contract_of_sale.html:378
+msgid "Davlat raqam belgisi eskimi?"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale.html:401
+#: templates/service/gift_agreement/gift_agreement.html:407
+#: templates/service/inheritance_agreement/inheritance_agreement.html:379
+#: templates/service/replace_number_and_tp/replace_number_and_tp.html:338
+#: templates/user/car/edit_car_data.html:342
+#: templates/user/role/app_creator/service/contract_of_sale.html:401
+msgid "Yangi raqam auksiondan olinganmi?"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale_index.html:10
+msgid "Oldi sotdi shartnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale_index.html:153
+msgid "Avtomobil turini tanlang"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale_index.html:327
+#: templates/service/gift_agreement/gift_agreement_index.html:327
+#: templates/service/re_equipment/re_equipment_index.html:316
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:328
+#: templates/service/replace_tp/replace_tp_index.html:319
+msgid "T/v dagi davlat raqam belgisi"
+msgstr ""
+
+#: templates/service/contract_of_sale/contract_of_sale_index.html:359
+msgid "Oldi sotdi shartnomasi seriyasi va raqami"
+msgstr ""
+
+#: templates/service/gift_agreement/gift_agreement_index.html:10
+msgid "Xadya yoki me'ros shartnomasiga asosan transport vositasiga raqam olish"
+msgstr ""
+
+#: templates/service/gift_agreement/gift_agreement_index.html:359
+msgid "Xadya yoki me'ros shartnomasi seriyasi va raqami"
+msgstr ""
+
+#: templates/service/re_equipment/re_equipment.html:379
+#: templates/service/re_equipment/re_equipment_index.html:335
+msgid "Qayta jihozlash sababini tanlang"
+msgstr ""
+
+#: templates/service/re_equipment/re_equipment.html:393
+#: templates/service/re_equipment/re_equipment_index.html:347
+msgid "Almashtirilayotgan rangni tanlang"
+msgstr ""
+
+#: templates/service/re_equipment/re_equipment_index.html:10
+msgid ""
+"Qayta jihozlashga asosan transport vositasi qayd etish guvohnomasini "
+"almashtirish"
+msgstr ""
+
+#: templates/service/re_equipment/re_equipment_index.html:364
+msgid "O'rnatilayotgan qo'shimcha yoqilg'i turini tanlang"
+msgstr ""
+
+#: templates/service/replace_number_and_tp/replace_number_and_tp_index.html:10
+msgid "Davlat raqam belgisi va qayd etish guvohnomasini almashtirish"
+msgstr ""
+
+#: templates/service/replace_tp/replace_tp.html:106
+msgid "Avtomobildagi yoqilg'i turini tanlang"
+msgstr ""
+
+#: templates/service/replace_tp/replace_tp.html:120
+msgid "Yoqilg'i turini o'zgartiryapsizmi?"
+msgstr ""
+
+#: templates/service/replace_tp/replace_tp.html:141
+msgid "Qo'shimcha yoqilg'i turi"
+msgstr ""
+
+#: templates/service/replace_tp/replace_tp_index.html:10
+msgid "Qayd etish guvohnomasini almashtirish"
+msgstr ""
+
+#: templates/services/services_list.html:8
+msgid "Xizmatlar ro'yhati"
+msgstr ""
+
+#: templates/user/add_organization.html:14
+msgid "Tashkilot qo'shish oynasi"
+msgstr ""
+
+#: templates/user/car/edit_car_data.html:10
+msgid "Transport vositasini tahrirlash oynasi"
+msgstr ""
+
+#: templates/user/car/view_car_data.html:9
+msgid "Transport vositasi ma'lumotlari"
+msgstr ""
+
+#: templates/user/edit_organization.html:18
+msgid "Tashkilotni tahrirlash oynasi"
+msgstr ""
+
+#: templates/user/edit_personal_data.html:10
+msgid "Shaxsiy ma'lumotlarni tahrirlash"
+msgstr ""
+
+#: templates/user/edit_personal_data.html:37
+#: templates/user/view_personal_data.html:10
+msgid "Foydalanuvchi ma'lumotlari"
+msgstr ""
+
+#: templates/user/edit_personal_data.html:224
+msgid "Parolni kiriting"
+msgstr ""
+
+#: templates/user/edit_personal_data.html:232
+#: templates/user/edit_personal_data.html:250
+msgid "Masalan: qwerty12345"
+msgstr ""
+
+#: templates/user/edit_personal_data.html:242
+msgid "Parolni qayta kiriting"
+msgstr ""
+
+#: templates/user/organization/view_organization_data.html:10
+msgid "Tashkilot ma'lumotlari"
+msgstr ""
+
+#: templates/user/organizations_list.html:6
+msgid "Ro'yhatga olingan tashkilotlar oynasi"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:38
+#: templates/user/role/checker/applications_list.html:60
+#: templates/user/role/checker/checker_applications_list.html:53
+msgid "#"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:39
+#: templates/user/role/checker/applications_list.html:56
+#: templates/user/role/moderator/applications_list.html:42
+#: templates/user/role/moderator/payments_list.html:38
+#: templates/user/role/regional_controller/applications_list.html:42
+#: templates/user/role/regional_controller/payments_list.html:38
+#: templates/user/role/state_controller/applications_list.html:42
+msgid "Arizachi"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:42
+msgid "So'nggi tashrif"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:43
+msgid "Ro'yhatdan o'tgan"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:44
+#: templates/user/role/moderator/payments_list.html:45
+msgid "Tahrirlash"
+msgstr ""
+
+#: templates/user/role/administrator/applicants_list.html:102
+#: templates/user/role/administrator/applicants_list.html:103
+msgid "Jami: _TOTAL_ ta arizachi"
+msgstr ""
+
+#: templates/user/role/app_creator/service/_parts/car_fieldset.html:211
+#: templates/user/role/user/service/account_statement/car_fieldset.html:221
+msgid "Zahiradagi raqam"
+msgstr ""
+
+#: templates/user/role/app_creator/service/_parts/document_fieldset.html:9
+#: templates/user/role/user/service/_parts/document_fieldset.html:11
+#, python-format
+msgid ""
+"%(service_title)s seriyasi va\n"
+"                    raqami"
+msgstr ""
+
+#: templates/user/role/moderator/applications_list.html:40
+#: templates/user/role/moderator/payments_list.html:40
+#: templates/user/role/regional_controller/applications_list.html:40
+#: templates/user/role/state_controller/applications_list.html:40
+msgid "YHXB RIB"
+msgstr ""
+
+#: templates/user/role/moderator/payments_list.html:42
+#: templates/user/role/regional_controller/payments_list.html:42
+msgid "To'lov summasi"
+msgstr ""
+
+#: templates/user/role/moderator/payments_list.html:43
+#: templates/user/role/regional_controller/payments_list.html:44
+msgid "r/s"
+msgstr ""
+
+#: templates/user/role/moderator/payments_list.html:46
+msgid "ID"
+msgstr ""
+
+#: templates/user/role/regional_controller/payments_list.html:41
+msgid "Davlat boji"
+msgstr ""
+
+#: templates/user/role/regional_controller/payments_list.html:43
+msgid "Status"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:27
+msgid "Bo'lim nomi"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:28
+msgid "Biriktirilgan tuman va shaharlar"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:32
+#: templates/user/role/state_controller/regions_list.html:31
+msgid "Jami"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:33
+#: templates/user/role/state_controller/regions_list.html:32
+msgid "Qabul qilingan"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:34
+#: templates/user/role/state_controller/regions_list.html:33
+msgid "Jarayonda"
+msgstr ""
+
+#: templates/user/role/regional_controller/sections_list.html:35
+#: templates/user/role/state_controller/regions_list.html:34
+msgid "Rad etilgan"
+msgstr ""
+
+#: templates/user/role/state_controller/add_worker.html:10
+#: templates/user/role/state_controller/workers_list.html:17
+msgid "Xodim qo'shish"
+msgstr ""
+
+#: templates/user/role/state_controller/add_worker.html:22
+#: templates/user/role/state_controller/edit_worker.html:20
+msgid "Bo'limni tanlang"
+msgstr ""
+
+#: templates/user/role/state_controller/edit_worker.html:10
+msgid "Xodimni tahrirlash"
+msgstr ""
+
+#: templates/user/role/state_controller/regions_list.html:12
+msgid "Viloyatlar ro'yhati"
+msgstr ""
+
+#: templates/user/role/state_controller/regions_list.html:25
+msgid "Nomi"
+msgstr ""
+
+#: templates/user/role/state_controller/regions_list.html:26
+msgid "TRIBlar soni"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:10
+msgid "Xodimlar ro'yhati"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:25
+msgid "Xodimning ism familiyasi"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:26
+msgid "Lavozimi"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:27
+msgid "Bo'lim"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:28
+msgid "Telefon"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:29
+msgid "Login"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:30
+msgid "Parol"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:32
+msgid "Tahrirlash/O'chirish"
+msgstr ""
+
+#: templates/user/role/state_controller/workers_list.html:43
+msgid "bosh nazoratchisi"
+msgstr ""
+
+#: templates/user/role/user/service/account_statement/car_fieldset.html:87
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:87
+msgid "Masalan: RAQAMSIZ"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:214
+msgid "Masalan: AAF4567895"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:220
+msgid "Transport vositasidagi DRBni saqlab qolish"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:241
+msgid "Transport vositasidagi DRB yo'qolganmi?"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:263
+msgid "Transport vositasidagi DRB"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:274
+msgid "Transport vositasidagi DRB eski namunadami? Masalan: 01 A 5555"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:297
+msgid "Yangi olinadigan DRB YXHB zahirasida saqlanmoqdami?"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:317
+msgid "Zahiradagi DRB"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:328
+msgid "Yangi olinadigan DRB auksiondan olinganmi?"
+msgstr ""
+
+#: templates/user/role/user/service/contract_of_sale/car_fieldset.html:350
+msgid "Auksiondan olingan DRB"
+msgstr ""
+
+#: user/models.py:67
+msgid "Bo'ysinuvchi tashkilot"
+msgstr ""
+
+#: user/models.py:139
+msgid "Erkak"
+msgstr ""
+
+#: user/models.py:140
+msgid "Ayol"
+msgstr ""
+
+#: user/views.py:204
+msgid "Muvaffaqiyatli tahrirlandi!"
+msgstr ""
+
+#: user/views.py:700
+msgid "Xodim muvaffaqiyatli qo'shildi!"
+msgstr ""
+
+#: user/views.py:702
+msgid "Bu raqam oldin ro'yhatdan o'tkazilgan !"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/forms.py:6
+msgid "Search files"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
+msgid "Select an image to embed"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
+msgid "Browse for the image you want, then click 'Embed Image' to continue..."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
+msgid ""
+"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
+"tab."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
+msgid "Images in: "
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
+msgid "Embed Image"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
+msgid "Play Slideshow"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
+msgid "Pause Slideshow"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
+msgid "&lsaquo; Previous Photo"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
+msgid "Next Photo &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
+msgid "Next &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
+msgid "&lsaquo; Prev"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/contrib/messages/apps.py:7
+msgid "Messages"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/contrib/sitemaps/apps.py:7
+msgid "Site Maps"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/contrib/staticfiles/apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/contrib/syndication/apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/paginator.py:48
+msgid "That page number is not an integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/paginator.py:50
+msgid "That page number is less than 1"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/paginator.py:55
+msgid "That page contains no results"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:20
+msgid "Enter a valid value."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:91
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:671
+msgid "Enter a valid URL."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:148
+msgid "Enter a valid integer."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:159
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: venv/lib/python3.8/site-packages/django/core/validators.py:233
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:240
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:249
+#: venv/lib/python3.8/site-packages/django/core/validators.py:259
+#: venv/lib/python3.8/site-packages/django/core/validators.py:281
+msgid "Enter a valid IPv4 address."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:266
+#: venv/lib/python3.8/site-packages/django/core/validators.py:282
+msgid "Enter a valid IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:276
+#: venv/lib/python3.8/site-packages/django/core/validators.py:280
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:310
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:316
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:349
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:358
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:368
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:383
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:402
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:292
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:327
+msgid "Enter a number."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:404
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:409
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:414
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:476
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/core/validators.py:528
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/base.py:1190
+#: venv/lib/python3.8/site-packages/django/forms/models.py:760
+msgid "and"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/base.py:1192
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:100
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:101
+msgid "This field cannot be null."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:102
+msgid "This field cannot be blank."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:103
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:107
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:126
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:939
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:940
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:942
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:983
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1047
+msgid "Comma-separated integers"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1096
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1098
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1241
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1101
+msgid "Date (without time)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1239
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1243
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1247
+msgid "Date (with time)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1395
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1397
+msgid "Decimal number"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1536
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1539
+msgid "Duration"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1589
+msgid "Email address"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1612
+msgid "File path"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1678
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1680
+msgid "Floating point number"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1718
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1720
+msgid "Integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1803
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1819
+msgid "IPv4 address"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1850
+msgid "IP address"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1930
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1931
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1933
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1976
+msgid "Positive big integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:1989
+msgid "Positive integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2002
+msgid "Positive small integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2016
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2048
+msgid "Small integer"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2055
+msgid "Text"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2083
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2085
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2088
+msgid "Time"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2214
+msgid "URL"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2236
+msgid "Raw binary data"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2301
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/__init__.py:2303
+msgid "Universally unique identifier"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/files.py:232
+msgid "File"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/files.py:381
+msgid "Image"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/json.py:18
+msgid "A JSON object"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/json.py:20
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:790
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:792
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:1045
+msgid "One-to-one relationship"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:1099
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:1100
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/db/models/fields/related.py:1142
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: venv/lib/python3.8/site-packages/django/forms/boundfield.py:150
+msgid ":?.!"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:54
+msgid "This field is required."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:247
+msgid "Enter a whole number."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:398
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:1139
+msgid "Enter a valid date."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:422
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:1140
+msgid "Enter a valid time."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:450
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:484
+msgid "Enter a valid duration."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:485
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:545
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:546
+msgid "No file was submitted."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:547
+msgid "The submitted file is empty."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:549
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:552
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:613
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:775
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:865
+#: venv/lib/python3.8/site-packages/django/forms/models.py:1296
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:866
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:981
+#: venv/lib/python3.8/site-packages/django/forms/models.py:1295
+msgid "Enter a list of values."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:982
+msgid "Enter a complete value."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:1198
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/fields.py:1228
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: venv/lib/python3.8/site-packages/django/forms/forms.py:78
+msgid ":"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/forms.py:205
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:93
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:345
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:352
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:379
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:386
+msgid "Order"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/formsets.py:391
+msgid "Delete"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:755
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:759
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:765
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:774
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:1096
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:1180
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/models.py:1298
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/utils.py:167
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:398
+msgid "Clear"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:399
+msgid "Currently"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:400
+msgid "Change"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:709
+msgid "Unknown"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:710
+msgid "Yes"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/forms/widgets.py:711
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:790
+msgid "yes,no,maybe"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:819
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:836
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:838
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:840
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:842
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:844
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/template/defaultfilters.py:846
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:65
+msgid "p.m."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:66
+msgid "a.m."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:71
+msgid "PM"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:72
+msgid "AM"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:149
+msgid "midnight"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dateformat.py:151
+msgid "noon"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:6
+#: venv/lib/python3.8/site-packages/tornado/locale.py:295
+msgid "Monday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:6
+#: venv/lib/python3.8/site-packages/tornado/locale.py:296
+msgid "Tuesday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:6
+#: venv/lib/python3.8/site-packages/tornado/locale.py:297
+msgid "Wednesday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:6
+#: venv/lib/python3.8/site-packages/tornado/locale.py:298
+msgid "Thursday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:6
+#: venv/lib/python3.8/site-packages/tornado/locale.py:299
+msgid "Friday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:7
+#: venv/lib/python3.8/site-packages/tornado/locale.py:300
+msgid "Saturday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:7
+#: venv/lib/python3.8/site-packages/tornado/locale.py:301
+msgid "Sunday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:10
+msgid "Mon"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:10
+msgid "Tue"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:10
+msgid "Wed"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:10
+msgid "Thu"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:10
+msgid "Fri"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:11
+msgid "Sat"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:11
+msgid "Sun"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:281
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:282
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:283
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:284
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:285
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:14
+#: venv/lib/python3.8/site-packages/tornado/locale.py:286
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:15
+#: venv/lib/python3.8/site-packages/tornado/locale.py:287
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:15
+#: venv/lib/python3.8/site-packages/tornado/locale.py:288
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:15
+#: venv/lib/python3.8/site-packages/tornado/locale.py:289
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:15
+#: venv/lib/python3.8/site-packages/tornado/locale.py:290
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:15
+#: venv/lib/python3.8/site-packages/tornado/locale.py:291
+msgid "November"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:16
+#: venv/lib/python3.8/site-packages/tornado/locale.py:292
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "jan"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "feb"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "mar"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "apr"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "may"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:19
+msgid "jun"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "jul"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "aug"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "sep"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "oct"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "nov"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:20
+msgid "dec"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/text.py:71
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/text.py:240
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: venv/lib/python3.8/site-packages/django/utils/text.py:259
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:83
+msgid ", "
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/utils/timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:115
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your Web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:120
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:124
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" …> for links to third-party sites."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:132
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:137
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:61
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:111
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:338
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:589
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/dates.py:623
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/list.py:67
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/generic/list.py:154
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/static.py:42
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:7
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:346
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:368
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:369
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Django Documentation"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:385
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:397
+msgid "Get started with Django"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Django Community"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django/views/templates/default_urlconf.html:409
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/admin.py:196
+#, python-format
+msgid "Add %s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/admin.py:222
+#, python-format
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/admin.py:323
+#, python-format
+msgid "Change %s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/management/commands/generate_secret_key.py:11
+msgid "This command generates SECRET_KEY"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/management/commands/generate_secret_key.py:24
+#, python-format
+msgid "SECRET_KEY length default=%d"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/management/commands/generate_secret_key.py:27
+#, python-format
+msgid "alphabet to use default=%s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/templates/common/admin/nested_tabular.html:44
+msgid "Delete?"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/templates/common/admin/nested_tabular.html:58
+msgid "View on site"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/templates/common/admin/nested_tabular.html:478
+#, python-format
+msgid "Add another %(verbose_name)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/django_common/templates/common/admin/nested_tabular.html:481
+#: venv/lib/python3.8/site-packages/django_common/templates/common/admin/nested_tabular.html:495
+msgid "Remove"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/modeltranslation/widgets.py:25
+msgid "None"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:371
+msgid "1 second ago"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:377
+msgid "1 minute ago"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:382
+msgid "1 hour ago"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:385
+#, python-format
+msgid "%(time)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:387
+msgid "yesterday"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:387
+#, python-format
+msgid "yesterday at %(time)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:389
+#, python-format
+msgid "%(weekday)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:389
+#, python-format
+msgid "%(weekday)s at %(time)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:392
+#: venv/lib/python3.8/site-packages/tornado/locale.py:445
+#, python-format
+msgid "%(month_name)s %(day)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:394
+#, python-format
+msgid "%(month_name)s %(day)s at %(time)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:399
+#, python-format
+msgid "%(month_name)s %(day)s, %(year)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:401
+#, python-format
+msgid "%(month_name)s %(day)s, %(year)s at %(time)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:439
+#, python-format
+msgid "%(weekday)s, %(month_name)s %(day)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/locale.py:462
+#, python-format
+msgid "%(commas)s and %(last)s"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:68
+msgctxt "law"
+msgid "right"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:69
+msgctxt "good"
+msgid "right"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:71
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:74
+msgctxt "organization"
+msgid "club"
+msgstr ""
+
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:76
+#: venv/lib/python3.8/site-packages/tornado/test/locale_test.py:77
+msgctxt "stick"
+msgid "club"
+msgstr ""
