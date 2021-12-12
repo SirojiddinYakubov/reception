@@ -7,19 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
 
-
-# SERVICE_CHOICES = (
-#     ('account_statement', 'Hisob ma\'lumotnoma'),
-#     ('contract_of_sale', 'Oldi sotdi shartnoma'),
-#     ('gift_agreement', 'Xadya shartnoma'),
-#     ('registration', 'Ro\'yhatga qo\'yish'),
-#     ('de_registration', 'Ro\'yhatdan chiqarish'),
-#     ('replace_tp', 'Qayd etish guvohnomasini almashtirish'),
-#     ('replace_number_and_tp', 'Davlat raqam belgisi va qayd etish guvohnomasini almashtirish'),
-#     ('re_equipment', 'Qayta jihozlash'),
-#     ('customs_certificate', 'Bojxona guvohnomasi'),
-#
-# )
+from django.utils.translation import gettext_lazy as _
 
 
 class Service(models.Model):
@@ -67,14 +55,13 @@ TEST = 8
 # POLICE_INSPECTION = 8
 
 STATE_DUTY_TITLE = (
-    (ROAD_FUND, 'Yo\'l fondi'),
-    (ROAD_FUND_HORSE_POWER, 'Yo\'l fondi ot kuchi'),
-    (INSPECTION, 'Texnik ko\'rik'),
-    (TECHNICAL_PASSPORT, 'Yangi qayd etish guvohnomasi'),
-    (REGISTRATION, 'Ro\'yhatlash'),
-    (RE_REGISTRATION, 'Qayta ro\'yhatlash'),
-    (FINE, 'Jarima'),
-    (TEST, "Test uchun"),
+    (ROAD_FUND, _("Yo'l fondi")),
+    (ROAD_FUND_HORSE_POWER, _("Yo'l fondi ot kuchi")),
+    (INSPECTION, _("Texnik ko'rik")),
+    (TECHNICAL_PASSPORT, _("Yangi qayd etish guvohnomasi")),
+    (REGISTRATION, "Ro'yhatlash"),
+    (RE_REGISTRATION, _("Qayta ro'yhatlash")),
+    (FINE, _("Jarima")),
 )
 
 

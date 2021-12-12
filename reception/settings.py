@@ -16,6 +16,7 @@ from datetime import timedelta
 import pytz
 from dotenv import load_dotenv
 from loguru import logger
+from django.utils.translation import gettext_lazy as _
 
 env_path = "./deploy/.env"
 load_dotenv(dotenv_path=env_path)
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +58,6 @@ INSTALLED_APPS = [
     'click',
     'clickuz',
     'payments',
-    'modeltranslation',
     'reception',
     'partners',
     'corsheaders',
@@ -168,6 +169,20 @@ DATE_INPUT_FORMATS = ['%d.%m.%Y']
 DATETIME_FORMAT = 'd.m.Y H:i'
 DATE_FORMAT = 'd.m.Y'
 TIME_ZONE = 'Asia/Tashkent'
+
+
+LANGUAGE_CODE = 'uz'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+gettext = lambda s: s
+LANGUAGES = (
+    ('uz', _('Uzbek')),
+    ('ru', _('Russian')),
+
+    # ('en', _('English')),
+)
+HTTP_ACCEPT_LANGUAGE = 'uz'
+
+
 USE_I18N = True
 USE_L10N = False
 USE_TZ = True
@@ -343,15 +358,7 @@ PAYMENT_MODEL = 'user.Payment'
 #     # django.contrib.auth) you may enable sending PII data.
 #     send_default_pii=True
 # )
-LANGUAGE_CODE = 'uz'
-gettext = lambda s: s
-LANGUAGES = (
-    ('uz', gettext('Uzbek')),
-    ('ru', gettext('Russian')),
-    # ('cy', gettext('Kiril')),
-    ('en', gettext('English')),
-)
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+
 
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),

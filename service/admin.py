@@ -12,7 +12,7 @@ class ServiceAdmin(admin.ModelAdmin):
     #     return super().render_change_form(request, context, *args, **kwargs)
 
     list_display = ['id', 'short_title', 'key', ]
-    list_display_links = ['short_title']
+    list_display_links = ['id','short_title']
     list_filter = ['created_date', ]
     search_fields = ['short_title', 'key']
 
