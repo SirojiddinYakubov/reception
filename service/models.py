@@ -193,6 +193,7 @@ class PaymentForTreasury(BaseModel):
     payment_system = models.IntegerField(choices=PAYMENT_SYSTEM, null=True)
     transaction_id = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(choices=STATUS, default=PROCESSING, max_length=55)
+    check_id = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.application.applicant} {self.amount} so'm"

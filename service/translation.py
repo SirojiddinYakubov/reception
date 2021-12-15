@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import *
+from .models import (Service, StateDutyPercent)
 
 
 @register(Service)
@@ -9,4 +9,4 @@ class ServiceTranslationOptions(TranslationOptions):
 
 @register(StateDutyPercent)
 class StateDutyPercentTranslationOptions(TranslationOptions):
-    fields = ('title', )
+    fields = ('title',)

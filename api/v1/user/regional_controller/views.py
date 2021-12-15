@@ -32,10 +32,7 @@ class ApplicationsList(generics.ListAPIView):
 
 
 class PaymentsList(generics.ListAPIView):
-    queryset = PaymentForTreasury.objects.filter(is_active=True,
-                                                 status__in=[PaymentForTreasury.SUCCESS,
-                                                             PaymentForTreasury.CANCELED,
-                                                             PaymentForTreasury.FAILED])
+    queryset = PaymentForTreasury.objects.filter(is_active=True)
     serializer_class = PaymentForTreasuryListSerializer
     filter_class = PaymentsListFilter
     pagination_class = LimitOffsetPagination
@@ -44,3 +41,10 @@ class PaymentsList(generics.ListAPIView):
     permission_classes = [
         permissions.RegionalControllerPermission
     ]
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(application__section__region=self.request.user.section.region,
+                                           status__in=[PaymentForTreasury.SUCCESS,
+                                                       PaymentForTreasury.CANCELED,
+                                                       PaymentForTreasury.FAILED])
+        return qs
