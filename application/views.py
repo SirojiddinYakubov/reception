@@ -401,8 +401,10 @@ class ConfirmApplicationData(APIView, AllowedRolesMixin):
                         application.inspector = request.user
                         application.save()
 
-                        text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {application.section.title}, Qo'shimcha ma'lumot uchun tel:972800809"
-
+                        if application.section:
+                            text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}! YHXB RIB bo'limi: {application.section.title}, Qo'shimcha ma'lumot uchun tel:972800809"
+                        else:
+                            text = f"Hurmatli foydalanuvchi! {application.id}-raqamli arizangiz rad etildi! Rad etish sababi: {request.POST.get('process_sms')}!, Qo'shimcha ma'lumot uchun tel:972800809"
                         # create notification
                         notification = Notification.objects.create(application=application, sender=request.user,
                                                                    receiver=application.created_user, text=text)
