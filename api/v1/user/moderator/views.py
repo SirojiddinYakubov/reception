@@ -65,8 +65,6 @@ class ConfirmTheasuryPayment(APIView):
             else:
                 sender = pay.application.created_user
 
-
-
         pay_treasury_payload = json.dumps({
             "method": "receipt.pay_requisite",
             "params": {

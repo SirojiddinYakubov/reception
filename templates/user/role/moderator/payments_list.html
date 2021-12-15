@@ -199,9 +199,12 @@
                         "mData": null,
                         orderable: false,
                         "mRender": function (data, type, row) {
+
                             if (data.status === 'success') {
                                 return `<p style="color: green">To'lov amalga oshirilgan</p>`
                             } else {
+
+
                                 return `<button data-id="${row.id}" class="btn btn-success confirm_pay">To'lash</button>`
                             }
 
