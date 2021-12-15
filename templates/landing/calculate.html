@@ -2,9 +2,9 @@
 {% load static i18n %}
 
 {% block meta %}
-    <title>{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish kalkulyatori | E-RIB.UZ' %}</title>
+    <title>{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} | E-RIB.UZ</title>
     <meta name="title"
-          content="{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish kalkulyatori | E-RIB.UZ' %}">
+          content="{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} | E-RIB.UZ">
     <meta name="description"
           content="Avtotransport vositasini ro’yhatga olish va qayta ro’yhatga olish xarajatlarini o’zingiz hisoblang">
     <meta name="keywords"
@@ -45,11 +45,12 @@
 {% block content %}
     <div class="container">
         <div class="row bg-auto" style="background:#fff; padding:20px;">
+            <h2 class="text-center pb-2" style="font-weight: bold" >{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} </h2>
             <form action="#" id="calculation_form" method="post">
                 {% csrf_token %}
                 <div class="row mb-3">
                     <label class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start"
-                           for="service">{% trans 'Xizmat turi' %}<span
+                           for="service">{% trans "Xizmat turi" %}<span
                             class="text-danger">*</span></label>
                     <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                         <select id="service" name="service" required data-width="100%"
@@ -516,7 +517,7 @@
 
             $('#contract_date_div').bind('beforeShow', function (e) {
                 if (key === 'account_statement') {
-                    $(this).children('label').text(`{% trans 'Hisob ma\'lumotnomasi berilgan sana' %}`)
+                    $(this).children('label').text(`{% trans "Hisob ma'lumotnomasi berilgan sana" %}`)
                 } else if (key === 'contract_of_sale') {
                     $(this).children('label').text(`{% trans 'Oldi sotdi shartnomasi berilgan sana' %}`)
                 } else if (key === 'gift_agreement') {

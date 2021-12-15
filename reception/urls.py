@@ -57,7 +57,6 @@ urlpatterns += i18n_patterns(
          name='error_403'),
     path('error-404/', TemplateView.as_view(template_name='_parts/404.html', ),
          name='error_404'),
-
 )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -85,7 +85,7 @@ class ConfirmTheasuryPayment(APIView):
         if transaction['status'] == SUCCESS:
             pay.status = PaymentForTreasury.SUCCESS
             pay.memorial = transaction['result']['memorial']
-            pay.transaction_id = transaction['result']['_id']
+            pay.check_id = transaction['result']['_id']
             pay.save()
             text = f"{pay.application.id}-raqamli arizangizga muvofiq, {pay.amount} so'm muvaffaqiyatli o'tkazildi. Kvitansiyani http://e-rib.uz/en/application/application-detail/{pay.application.id} manzilidan yuklab olishingiz mumkin"
 
