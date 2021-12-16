@@ -305,7 +305,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             lost_number=False, is_old_number=is_old_number,
                                                             is_auction=False,
                                                             car_is_new=False,
-                                                            is_relative=is_relative,
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
                                                             state_duty=REGISTRATION,
@@ -318,7 +317,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             is_old_number=is_old_number,
                                                             is_auction=False,
                                                             car_is_new=is_new,
-                                                            is_relative=is_relative,
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
                                                             state_duty=REGISTRATION,
@@ -331,7 +329,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         car_is_new=is_new, is_auction=is_auction,
                                                         is_save_old_number=save_old_number,
                                                         is_saved_number=is_saved_number,
-                                                        is_relative=is_relative,
                                                         state_duty=REGISTRATION,
                                                         lost_technical_passport=lost_technical_passport, percent__gt=0)
     if lost_number:
