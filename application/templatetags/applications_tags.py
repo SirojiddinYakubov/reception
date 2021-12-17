@@ -177,19 +177,20 @@ def get_payment_score(application_id, percent_id):
 def get_state_duty_payment(percent_id, application_id):
     percent = StateDutyPercent.objects.get(id=percent_id)
     application = Application.objects.get(id=application_id)
+
     try:
         amount_base_calculation = AmountBaseCalculation.objects.get(is_active=True)
         if percent.state_duty == ROAD_FUND:
-            payment = int(int(percent.percent) / 100 * int(application.car.price))
+            payment = round(percent.percent / 100 * int(application.car.price), 2)
         elif percent.state_duty == ROAD_FUND_HORSE_POWER:
 
-            payment = int(
-                amount_base_calculation.amount / 100 * int(percent.percent) * application.car.engine_power)
+            payment = round(
+                amount_base_calculation.amount / 100 * percent.percent * application.car.engine_power, 2)
         else:
-            payment = amount_base_calculation.amount / 100 * int(percent.percent)
-        return int(payment)
+            payment = amount_base_calculation.amount / 100 * percent.percent
+        return round(payment, 2)
     except:
-        return FAILED
+        return 'Xatolik yuz berdi!'
 
 
 @register.simple_tag
