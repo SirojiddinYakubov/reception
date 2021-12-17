@@ -168,4 +168,12 @@ class SmsAdmin(admin.ModelAdmin):
     list_display_links = ['phone', 'text', ]
     search_fields = ['text']
     list_filter = ['status', 'is_playmobile', 'created_at']
+    save_on_top = True\
+
+@admin.register(Balance)
+class BalanceAdmin(admin.ModelAdmin):
+    list_display = ['id', 'amount', 'created_at']
+    list_display_links = ['amount',  ]
+    search_fields = ['amount']
+    list_filter = [ 'created_at']
     save_on_top = True
