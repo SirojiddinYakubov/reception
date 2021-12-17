@@ -389,7 +389,7 @@ class PaymentByRequisites:
         """
 
         try:
-            print(get_phone.json())
+            print(get_phone.json(), 392)
             if isinstance(get_phone.json()['result'], dict):
                 self.token = get_phone.json()['result']['card']['token']
                 self.phone = get_phone.json()['result']['card']['phone']
@@ -397,8 +397,8 @@ class PaymentByRequisites:
             else:
                 return {'status': FAILED, 'result': "Karta raqami yoki amal qilish muddati noto'g'ri!"}
         except Exception as e:
-            print(e)
-            return {'status': FAILED, 'result': "Xatolik! Sahifani yangilab qayta urinib ko'ring!"}
+            print(e, 400)
+            return {'status': FAILED, 'result': get_phone.json()}
 
     def create_amount(self, amount):
         create_amount_payload = json.dumps({
@@ -560,6 +560,10 @@ class PaymentByRequisites:
 
         try:
             print(get_phone_number.json())
+            if 'status' in get_phone_number.json():
+                if get_phone_number.json()['status'] == 'UNAUTHORIZED':
+                    return {'status': FAILED, 'result': "Xatolik! Avtorizatsiya amalga oshmadi!"}
+
             if isinstance(get_phone_number.json()['result'], dict):
                 phone = get_phone_number.json()['result']['card']['phone']
                 if len(phone) == 12:
@@ -569,9 +573,7 @@ class PaymentByRequisites:
             else:
                 send_message_to_developer(f"error: {json.dumps(get_phone_number.json())}")
                 return {'status': FAILED, 'result': "Karta raqami yoki amal qilish muddati noto'g'ri!"}
-        except Exception as e:
-            print(e)
-            send_message_to_developer(f"error: {str(e)}")
+        except:
             return {'status': FAILED, 'result': "Xatolik! Sahifani yangilab qayta urinib ko'ring!"}
 
     def pay_treasury(self, pay, payload):

@@ -103,4 +103,4 @@ class ConfirmTheasuryPayment(APIView):
 
             return Response(status=status.HTTP_200_OK)
         else:
-            return Response("Xatolik! Sahifani yangilab qayta urinib ko'ring!", status=status.HTTP_400_BAD_REQUEST)
+            return Response(transaction['result'], status=status.HTTP_400_BAD_REQUEST)
