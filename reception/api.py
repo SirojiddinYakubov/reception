@@ -615,6 +615,8 @@ class PaymentByRequisites:
             if 'error' in pay_treasury.json():
                 if pay_treasury.json()['error'] == 'External id exists':
                     return {'status': FAILED, 'result': "Xatolik! Bunday ID raqamli to'lov avval amalga oshirilgan!"}
+                else:
+                    return {'status': FAILED, 'result': pay_treasury.json()['error']}
             else:
                 print(pay_treasury.json())
                 if pay_treasury.json()['receipt']['state'] == 30:
@@ -624,7 +626,8 @@ class PaymentByRequisites:
 
                     return {'status': SUCCESS,
                             'result': {'memorial': memorial, '_id': pay_treasury.json()['receipt']['_id']}}
-
+                else:
+                    return {'status': FAILED, 'result': "Xatolik!"}
         except Exception as e:
             send_message_to_developer(f"error: {e}")
             return {'status': FAILED, 'result': "Xatolik!"}
