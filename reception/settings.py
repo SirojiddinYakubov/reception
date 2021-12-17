@@ -318,7 +318,8 @@ SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
 
 CRONJOBS = [
     # ('0 */2 * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
-    ('*/1 * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
+    # ('*/1 * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
+    ('* * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
 ]
 
 PAYCOM_SETTINGS = {
