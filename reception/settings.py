@@ -170,7 +170,6 @@ DATETIME_FORMAT = 'd.m.Y H:i'
 DATE_FORMAT = 'd.m.Y'
 TIME_ZONE = 'Asia/Tashkent'
 
-
 LANGUAGE_CODE = 'uz'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
 gettext = lambda s: s
@@ -181,7 +180,6 @@ LANGUAGES = (
     # ('en', _('English')),
 )
 HTTP_ACCEPT_LANGUAGE = 'uz'
-
 
 USE_I18N = True
 USE_L10N = False
@@ -319,8 +317,10 @@ SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
 CRONJOBS = [
     # ('0 */2 * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
     # ('*/1 * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
-    ('* * * * *', 'application.cron.application_crontab',)  # har 2 soatda cron ishga tushadi
+    ('* * * * *', 'application.cron.application_crontab', '>> /code/deploy/logs/cron.log')  # har 2 soatda cron ishga tushadi
 ]
+
+CRONTAB_COMMAND_SUFFIX = '2>&1'
 
 PAYCOM_SETTINGS = {
     "KASSA_ID": "6180cfc7b977919a7f654016",  # token

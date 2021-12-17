@@ -14,7 +14,8 @@ from user.models import Balance
 
 
 def application_crontab():
-    applications = Application.objects.filter(Q(is_active=True) & Q(process__in=[CREATED, ACCEPTED_FOR_CONSIDERATION]))
+    print('HELLO')
+    # applications = Application.objects.filter(Q(is_active=True) & Q(process__in=[CREATED, ACCEPTED_FOR_CONSIDERATION]))
 
     # for application in applications:
     #     # Faollashtirilmagan arizalar
@@ -123,10 +124,10 @@ def application_crontab():
     #         application.delete()
 
 
-    #account balansini olish
-    account_balance = PaymentByRequisites().account_balance()
-    if account_balance['status'] == SUCCESS:
-        balance = int(account_balance['result']) / 100
-        Balance.objects.create(amount=balance)
-    else:
-        print('cron error account_balance')
+    # #account balansini olish
+    # account_balance = PaymentByRequisites().account_balance()
+    # if account_balance['status'] == SUCCESS:
+    #     balance = int(account_balance['result']) / 100
+    #     Balance.objects.create(amount=balance)
+    # else:
+    #     print('cron error account_balance')
