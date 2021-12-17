@@ -484,3 +484,7 @@ class Notification(BaseModel):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received')  # application.created_user
     text = models.TextField()
     is_read = models.BooleanField(default=False)
+
+
+class Balance(BaseModel):
+    amount = models.DecimalField(max_digits=20, decimal_places=2, default=0)

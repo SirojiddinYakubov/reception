@@ -628,3 +628,17 @@ class PaymentByRequisites:
         except Exception as e:
             send_message_to_developer(f"error: {e}")
             return {'status': FAILED, 'result': "Xatolik!"}
+
+    def account_balance(self):
+        account_balance_payload = json.dumps({
+            "method": "account.balance"
+        })
+        account_balance = requests.request("POST", url=self.url, data=account_balance_payload, headers=self.headers,
+                                            auth=(self.username, self.password))
+        try:
+            print(account_balance.json())
+            return {'status': SUCCESS,
+                    'result': account_balance.json()['result']['balance']}
+        except Exception as e:
+            print(e)
+            return {'status': FAILED, 'result': str(e)}
