@@ -189,7 +189,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.last_name} {self.first_name} {self.middle_name}"
+        if self.last_name and self.first_name and self.middle_name:
+            return f"{self.last_name.upper()} {self.first_name.upper()} {self.middle_name.upper()}"
+        else:
+            return self.username
 
 
 class UserManager(BaseUserManager):

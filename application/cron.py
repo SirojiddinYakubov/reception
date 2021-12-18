@@ -1,16 +1,16 @@
-from datetime import timedelta
-
-from django.db.models import Q
-from django.utils import timezone
-
-from application.models import Application
-from reception.api import SendSmsWithApi, SendSmsWithPlayMobile, SUCCESS, PaymentByRequisites
-from application.models import (
-    CREATED,
-    ACCEPTED_FOR_CONSIDERATION
-)
-from reception.telegram_bot import send_message_to_developer
-from user.models import Balance
+# from datetime import timedelta
+#
+# from django.db.models import Q
+# from django.utils import timezone
+#
+# from application.models import Application
+# from reception.api import SendSmsWithApi, SendSmsWithPlayMobile, SUCCESS, PaymentByRequisites
+# from application.models import (
+#     CREATED,
+#     ACCEPTED_FOR_CONSIDERATION
+# )
+# from reception.telegram_bot import send_message_to_developer
+# from user.models import Balance
 
 
 def application_crontab():
