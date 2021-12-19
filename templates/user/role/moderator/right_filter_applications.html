@@ -4,6 +4,27 @@
 </style>
 
 <div style="background-color: #e7fafd; border-radius: 5px" class="p-1">
+    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Ariza uchun qilingan
+        to'lov bo'yicha</h6>
+    <div class="p-1" style="font-size: 0.8em;">
+        <a {% if request.GET.is_block == 'all' or not request.GET.is_block %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'is_block' 'all' %}" class="text-reset d-block"><i
+                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">Hammasi</span></a>
+        <a {% if request.GET.is_block == 'False' %}class="active" {% endif %}
+           href="{% url "application:change_get_request" 'is_block' 'False' %}" class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">To'lov qilingan</span>
+        </a>
+        <a {% if request.GET.is_block == 'True' %}class="active"
+           {% endif %}
+           href="{% url "application:change_get_request" 'is_block' 'True' %}"
+           class="text-reset d-block">
+            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
+            <span class="mb-0 mt-1">To'lov qilinmagan</span>
+        </a>
+
+    </div>
     <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Viloyat
         bo'yicha</h6>
     <div class="p-1" style="font-size: 0.8em;">
