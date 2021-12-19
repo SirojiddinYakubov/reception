@@ -24,7 +24,9 @@ COPY deploy/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 RUN chmod 0644 /etc/cron.d/crontab
 RUN /usr/bin/crontab deploy/crontab
+RUN chmod +x /code/deploy/cron_script.sh
 CMD ["cron", "-f"]
+CMD /etc/init.d/cron start
 ENTRYPOINT ["sh", "/entrypoint.sh"]
 
 #RUN mkdir /code
