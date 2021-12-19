@@ -93,55 +93,55 @@
                 class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
             <span class="mb-0 mt-1">Yuridik shaxs</span></a>
     </div>
-    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">To'lov bo'yicha</h6>
-    <div class="p-1" style="font-size: 0.8em;">
-        <a {% if request.GET.payment == 'all' or not request.GET.payment %}class="active" {% endif %}
-           href="{% url "application:change_get_request" 'payment' 'all' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Hammasi</span></a>
-        <a {% if request.GET.payment == 'True' %}class="active" {% endif %} href="{% url "
-            application:change_get_request" 'payment' 'True' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">To'lov qilingan</span></a>
-        <a {% if request.GET.payment == 'False' %}class="active" {% endif %}
-           href="{% url "application:change_get_request" 'payment' 'False' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">To'lov qilinmagan</span></a>
-    </div>
-    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Ma'lumotlar mosligi
-        bo'yicha</h6>
-    <div class="p-1" style="font-size: 0.8em;">
-        <a {% if request.GET.confirm == 'all' or not request.GET.confirm %}class="active" {% endif %}
-           href="{% url "application:change_get_request" 'confirm' 'all' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Hammasi</span></a>
-        <a {% if request.GET.confirm == 'True' %}class="active" {% endif %} href="{% url "
-            application:change_get_request" 'confirm' 'True' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Tasdiqlangan</span></a>
-        <a {% if request.GET.confirm == 'False' %}class="active" {% endif %} href="{% url "
-            application:change_get_request" 'confirm' 'False' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Tasdiqlanmagan</span></a>
-    </div>
-    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Texnik ko'rik
-        bo'yicha</h6>
-    <div class="p-1" style="font-size: 0.8em;">
-        <a {% if request.GET.technical_confirm == 'all' or not request.GET.technical_confirm %}class="active" {% endif %}
-           href="{% url "application:change_get_request" 'technical_confirm' 'all' %}" class="text-reset d-block"><i
-                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Hammasi</span></a> <a {% if request.GET.technical_confirm == 'True' %}class="active"
-                                                          {% endif %}
-                                                          href="{% url "application:change_get_request" 'technical_confirm' 'True' %}"
-                                                          class="text-reset d-block">
-        <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-        <span class="mb-0 mt-1">Ko'rikdan o'tkazilgan</span>
-    </a>
-        <a {% if request.GET.technical_confirm == 'False' %}class="active" {% endif %}
-           href="{% url "application:change_get_request" 'technical_confirm' 'False' %}" class="text-reset d-block">
-            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>
-            <span class="mb-0 mt-1">Ko'rikdan o'tkazilmagan</span></a>
-    </div>
+{#    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">To'lov bo'yicha</h6>#}
+{#    <div class="p-1" style="font-size: 0.8em;">#}
+{#        <a {% if request.GET.payment == 'all' or not request.GET.payment %}class="active" {% endif %}#}
+{#           href="{% url "application:change_get_request" 'payment' 'all' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Hammasi</span></a>#}
+{#        <a {% if request.GET.payment == 'True' %}class="active" {% endif %} href="{% url "#}
+{#            application:change_get_request" 'payment' 'True' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">To'lov qilingan</span></a>#}
+{#        <a {% if request.GET.payment == 'False' %}class="active" {% endif %}#}
+{#           href="{% url "application:change_get_request" 'payment' 'False' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">To'lov qilinmagan</span></a>#}
+{#    </div>#}
+{#    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Ma'lumotlar mosligi#}
+{#        bo'yicha</h6>#}
+{#    <div class="p-1" style="font-size: 0.8em;">#}
+{#        <a {% if request.GET.confirm == 'all' or not request.GET.confirm %}class="active" {% endif %}#}
+{#           href="{% url "application:change_get_request" 'confirm' 'all' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Hammasi</span></a>#}
+{#        <a {% if request.GET.confirm == 'True' %}class="active" {% endif %} href="{% url "#}
+{#            application:change_get_request" 'confirm' 'True' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Tasdiqlangan</span></a>#}
+{#        <a {% if request.GET.confirm == 'False' %}class="active" {% endif %} href="{% url "#}
+{#            application:change_get_request" 'confirm' 'False' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Tasdiqlanmagan</span></a>#}
+{#    </div>#}
+{#    <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Texnik ko'rik#}
+{#        bo'yicha</h6>#}
+{#    <div class="p-1" style="font-size: 0.8em;">#}
+{#        <a {% if request.GET.technical_confirm == 'all' or not request.GET.technical_confirm %}class="active" {% endif %}#}
+{#           href="{% url "application:change_get_request" 'technical_confirm' 'all' %}" class="text-reset d-block"><i#}
+{#                class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Hammasi</span></a> <a {% if request.GET.technical_confirm == 'True' %}class="active"#}
+{#                                                          {% endif %}#}
+{#                                                          href="{% url "application:change_get_request" 'technical_confirm' 'True' %}"#}
+{#                                                          class="text-reset d-block">#}
+{#        <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#        <span class="mb-0 mt-1">Ko'rikdan o'tkazilgan</span>#}
+{#    </a>#}
+{#        <a {% if request.GET.technical_confirm == 'False' %}class="active" {% endif %}#}
+{#           href="{% url "application:change_get_request" 'technical_confirm' 'False' %}" class="text-reset d-block">#}
+{#            <i class="mdi mdi-checkbox-blank-circle-outline me-1 text-success"></i>#}
+{#            <span class="mb-0 mt-1">Ko'rikdan o'tkazilmagan</span></a>#}
+{#    </div>#}
     <h6 style="font-size: 0.8em; margin-bottom: 0.6em" class="font-10 text-muted text-uppercase">Sana bo'yicha</h6>
     <div class="p-1" style="font-size: 0.8em;">
         <a {% if request.GET.date == 'all' or not request.GET.date %}class="active" {% endif %}
