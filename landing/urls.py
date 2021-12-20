@@ -14,6 +14,7 @@ urlpatterns = [
     # other requests
     path('', home_page, name='home_page'),
     path('calculate/', TemplateView.as_view(template_name='landing/calculate.html'), name='calculate'),
+    path('diagnostics/', TemplateView.as_view(template_name='landing/diagnostics.html'), name='diagnostics'),
 
 
 ]
