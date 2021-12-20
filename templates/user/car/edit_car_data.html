@@ -226,8 +226,7 @@
                         </div>
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="price">{% trans 'Transport vositasi narxi' %}<span
-                                    class="text-danger">*</span></label>
+                                   for="price">{% trans 'Transport vositasi narxi' %}</label>
                             <div class="col-8 col-xl-9 price">
                                 <input type="number" id="price" name="price"
                                        class="form-control" required
@@ -266,8 +265,7 @@
                         </div>
                         <div class="row mb-3" id="old_technical_passport_div">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="old_technical_passport">{% trans "Qayd etish guvohnomasi seriyasi va raqami" %}<span
-                                    class="text-danger">*</span></label>
+                                   for="old_technical_passport">{% trans "Qayd etish guvohnomasi seriyasi va raqami" %}</label>
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="old_technical_passport"
                                        class="form-control text-uppercase" required
@@ -302,8 +300,7 @@
                         </div>
                         <div class="row mb-3" id="old_number_div">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="old_number">{% trans "Davlat raqam belgisi" %}<span
-                                    class="text-danger">*</span></label>
+                                   for="old_number">{% trans "Davlat raqam belgisi" %}</label>
                             <div class="col-8 col-xl-9">
                                 <input type="text" id="old_number"
                                        class="form-control text-uppercase" required
@@ -650,15 +647,15 @@
                         },
 
                         old_technical_passport: {
-                            required: true,
+                            required: false,
                             alphanumeric: true,
                             noSpace: true,
                         },
                         given_number: {
-                            required: true,
+                            required: false,
                         },
                         old_number: {
-                            required: true,
+                            required: false,
                         },
 
 
