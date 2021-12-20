@@ -883,6 +883,10 @@ class ViewCarData(AllowedRolesMixin, DetailView):
             return redirect(reverse_lazy('error_403'))
         elif request.user.role == MODERATOR:
             return super().get(request, *args, **kwargs)
+        elif request.user.role == CHECKER:
+            return super().get(request, *args, **kwargs)
+        elif request.user.role == REGIONAL_CONTROLLER:
+            return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         car = get_object_or_404(Car, id=self.kwargs['car_id'])
@@ -968,7 +972,7 @@ class EditCarData(AllowedRolesMixin, View):
         return render(request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
-        car = get_object_or_404(Car, id=self.kwargs[self.pk_url_kwarg])
+        car = Car.objects.get(id=self.kwargs[self.pk_url_kwarg])
 
         form = EditCarForm(instance=car)
 
@@ -996,18 +1000,20 @@ class EditCarData(AllowedRolesMixin, View):
 
     def post(self, request, *args, **kwargs):
         try:
-            car = get_object_or_404(Car, id=self.kwargs[self.pk_url_kwarg])
+
+            car = Car.objects.get(id=self.kwargs[self.pk_url_kwarg])
+
             form = EditCarForm(request.POST, instance=car)
 
             devices = []
             if request.POST.getlist('devices'):
                 for device_id in list(filter(None, request.POST.getlist('devices'))):
-                    devices.append(get_object_or_404(Device, id=device_id))
+                    devices.append(Device.objects.get(id=device_id))
 
             fuel_types = []
             if request.POST.getlist('fuel_types'):
                 for fuel_type_id in list(filter(None, request.POST.getlist('fuel_types'))):
-                    fuel_types.append(get_object_or_404(FuelType, id=fuel_type_id))
+                    fuel_types.append(FuelType.objects.get(id=fuel_type_id))
 
             if form.is_valid():
                 form = form.save(commit=False)
@@ -1018,9 +1024,10 @@ class EditCarData(AllowedRolesMixin, View):
                 for device in devices:
                     form.device.add(device)
 
-                if request.POST.get('history') != 'false':
-                    history = get_object_or_404(Car, id=request.POST.get('history'))
-                    form.history = history
+                # if request.POST.get('history') != 'false':
+                #     print('inside')
+                #     history = Car.objects.get(id=request.POST.get('history'))
+                #     form.history = history
 
                 if request.POST.get('price', None):
                     price = request.POST.get('price')
@@ -1030,8 +1037,10 @@ class EditCarData(AllowedRolesMixin, View):
 
                 return HttpResponse(status=200)
             else:
+                print(form.errors)
                 return HttpResponse(status=400)
-        except:
+        except Exception as e:
+            print(e)
             return HttpResponse(status=400)
 
 

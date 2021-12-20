@@ -137,10 +137,12 @@ class EditWorkerForm(ModelForm):
 
 
 class EditCarForm(ModelForm):
+    made_year = forms.DateField(input_formats=['%Y-%m-%d'],)
+
     class Meta:
         model = Car
         fields = (
-        'model', 'history', 'body_type', 'body_number', 'chassis_number', 'engine_number', 'made_year', 'color',
-        'engine_power', 'old_number', 'old_technical_passport', 'lost_technical_passport', 'type', 'fuel_type',
-        'device', 'is_auction', 'full_weight', 'empty_weight', 'is_old_number', 'lost_number', 'given_number')
+            'model',  'body_type', 'body_number', 'chassis_number', 'engine_number', 'made_year', 'color',
+            'engine_power', 'old_number', 'old_technical_passport', 'lost_technical_passport', 'type', 'fuel_type',
+            'device', 'is_auction', 'full_weight', 'empty_weight', 'is_old_number', 'lost_number', 'given_number')
         exclude = ()
