@@ -8,7 +8,7 @@ from api.v1.partners import serializers
 from partners.models import (DiagnosticDepartment)
 
 class DistrictDiagnosticsList(generics.ListAPIView):
-    queryset = DiagnosticDepartment.objects.filter(is_active=True)
+    queryset = DiagnosticDepartment.objects.filter(is_active=True).order_by('?')
     serializer_class = serializers.DistrictDiagnosticsListSerializer
     permission_classes = [AllowAny]
 
