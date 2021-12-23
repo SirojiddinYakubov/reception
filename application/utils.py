@@ -308,7 +308,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
                                                             state_duty=REGISTRATION,
-                                                            lost_technical_passport=lost_technical_passport,
+                                                            lost_technical_passport=False,
                                                             percent__gt=0)
 
         else:
@@ -320,7 +320,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
                                                             state_duty=REGISTRATION,
-                                                            lost_technical_passport=lost_technical_passport,
+                                                            lost_technical_passport=False,
                                                             percent__gt=0)
     else:
         registration1 = StateDutyPercent.objects.filter(service=service, car_type=car_type,
@@ -330,7 +330,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         is_save_old_number=save_old_number,
                                                         is_saved_number=is_saved_number,
                                                         state_duty=REGISTRATION,
-                                                        lost_technical_passport=lost_technical_passport, percent__gt=0)
+                                                        lost_technical_passport=False, percent__gt=0)
     if lost_number:
         """Qayd etish guvohnomasi yo'qolgan yoki yo'qolmaganligidan kelib chiqib jarima"""
         registration2 = StateDutyPercent.objects.filter(service=service, car_type=car_type,
@@ -358,7 +358,6 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         lost_technical_passport=True, percent__gt=0)
     else:
         registration3 = StateDutyPercent.objects.none()
-
     if lost_technical_passport and lost_number:
         registration4 = (registration2 | registration3)
     else:
