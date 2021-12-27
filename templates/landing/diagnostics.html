@@ -12,8 +12,15 @@
 {% endblock meta %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
-    <link href="{% static 'assets/libs/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{% static 'assets/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet"
+          type="text/css"/>
 {% endblock css %}
 
 {% block page_title %}
@@ -25,48 +32,121 @@
             <div class="row bg-auto" style="background:#fff; padding:20px;">
                 <h2 class="text-center pb-2"
                     style="font-weight: bold">{% trans 'Avtotransport vositalarini texnik ko\'rikdan o\'tkazish hududlari ro\'yhati' %} </h2>
-                <form action="#" id="calculation_form" method="post">
+                <form action="#" method="post">
                     <div class="row mb-3">
-                        <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                               for="region">{% trans "Viloyat" %}<span
-                                class="text-danger">*</span></label>
-                        <div class="col-8 col-xl-9 region">
-                            <select name="region" class="form-control" id="region" v-model="region"
+                        <div class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 region">
+                            <label class="not_copy col-12 col-form-label text-start"
+                                   for="region">{% trans "Viloyat" %}</label>
+                            <select
+                                    name="region"
+                                    class="form-select"
+                                    id="region"
+                                    v-model="region"
                                     required>
-
-                                <option value="" disabled>{% trans '--Viloyatni tanlang--' %}</option>
-                                <option :value="region.id" v-for="region in regions" :key="region.id">
+                                <option
+                                        value=""
+                                        disabled>{% trans '--Viloyatni tanlang--' %}</option>
+                                <option
+                                        v-if="regions.length > 0"
+                                        v-for="region in regions"
+                                        :value="region.id"
+                                        :key="region.id">
                                     [[region.title]]
                                 </option>
                             </select>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                               for="district">{% trans "Tuman/Shahar" %}<span
-                                class="text-danger">*</span></label>
-                        <div class="col-8 col-xl-9 district">
-                            <select name="district" class="form-select select2" id="district" v-model="district"
+                        <div class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <label
+                                    class="not_copy col-12 col-form-label text-start"
+                                    for="district">{% trans "Tuman/Shahar" %}
+                            </label>
+                            <select
+                                    name="district"
+                                    ref="district"
+                                    class="form-select select2"
+                                    id="district"
+                                    v-model="district"
                                     required>
                                 <option value="" disabled>{% trans '--Tumanni tanlang--' %}</option>
-                                <option :value="district.id" v-for="district in districts" :key="district.id">
+                                <option
+                                        v-for="district in districts"
+                                        :value="district.id"
+                                        :key="district.id">
                                     [[district.title]]
                                 </option>
                             </select>
                         </div>
+
+
                     </div>
-                    <div class="card card-body text-xs-center bg-light" v-for="diagnostic in diagnostics"
-                         :key="diagnostic">
-                        <h5 class="card-title"><strong>Nomi:</strong> [[diagnostic.title]]</h5>
-                        <p class="card-text"><strong>Manzili:</strong> [[diagnostic.address]]</p>
-                        <p class="card-text">
-                            <small class="text-muted"><strong>Tel raqam:</strong> <a
-                                    :href="[[ 'tel:+998' + diagnostic.phone]]">[[diagnostic.phone]]</a></small>
-                        </p>
-                    </div>
+
+
+                    {#                    <div class="card card-body text-xs-center bg-light"#}
+                    {#                         v-if="diagnostics.length > 0"#}
+                    {#                         v-for="diagnostic in diagnostics"#}
+                    {#                         :key="diagnostic.id">#}
+                    {#                        <h5 class="card-title"><strong>Nomi:</strong> [[diagnostic.title]]</h5>#}
+                    {#                        <p class="card-text"><strong>Manzili:</strong> [[diagnostic.address]]</p>#}
+                    {#                        <p class="card-text">#}
+                    {#                            <small class="text-muted">#}
+                    {#                                <strong>Tel raqam:</strong>#}
+                    {#                                <a#}
+                    {#                                        :href="[[ 'tel:+998' + diagnostic.phone]]">#}
+                    {#                                    [[diagnostic.phone]]</a>#}
+                    {#                            </small>#}
+                    {#                        </p>#}
+                    {#                    </div>#}
 
                     <br>
                 </form>
+
+                <table ref="diagnosticsTable" class="table dt-responsive nowrap w-100">
+                    <thead>
+                    <tr>
+                        <th>{% trans "№" %}</th>
+                        <th>{% trans "Nomi" %}</th>
+                        <th>{% trans "Manzil" %}</th>
+                        <th>{% trans "Telefon raqami" %}</th>
+                        <th>{% trans "Xaritda ko'rish" %}</th>
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr
+                            v-for="(diagnostic, index) in diagnostics"
+                            :key="diagnostic.id">
+                        <td>[[ limit * currentPage - 9 + index ]]</td>
+                        <td>[[ diagnostic.title ]]</td>
+                        <td>[[diagnostic.address]]</td>
+                        <td><a
+                                :href="[[ 'tel:+998' + diagnostic.phone]]">
+                            +998[[diagnostic.phone]]</a></td>
+                        <td><a class="btn btn-info"
+                               :href="'http://maps.google.com/maps?q=' + diagnostic.latitude + ',' + diagnostic.longitude"
+                               target="_blank">Xaritada ko'rish</a></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+                <nav aria-label="Page navigation example" v-if="pages > 0">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item" :class="{disabled: currentPage == 1}">
+                            <a class="page-link" href="#" tabindex="-1"
+                               @click="currentPage = currentPage - 1">Oldingi</a>
+                        </li>
+                        <li class="page-item" :class="{active: page === currentPage}" v-for="(page, index) in pages">
+                            <a class="page-link" @click="changePage(page)" href="#">[[ page ]]</a>
+                        </li>
+
+                        <li class="page-item" :class="{disabled: currentPage == pages}">
+                            <a class="page-link" href="#" @click="currentPage = currentPage + 1">Keyingi</a>
+                        </li>
+                    </ul>
+                </nav>
 
             </div>
             <br>
@@ -77,10 +157,25 @@
 {% endblock content %}
 
 {% block js %}
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+
+    <!-- development version -->
+    <script src="{% static 'vue/vue.dev.js' %}"></script>
+
+    <!-- production version -->
+    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+
     <script src="{% static 'assets/libs/axios/axios.min.js' %}"></script>
     <script>
         const App = {
+            el: '#app',
             delimiters: ['[[', ']]'],
             data() {
                 return {
@@ -89,22 +184,45 @@
                     districts: [],
                     district: '',
                     diagnostics: [],
-                    diagnostic: ''
+                    diagnostic: '',
+                    dt: null,
+                    currentPage: 1,
+                    pages: 1,
+                    limit: 10,
+                    offset: 0
                 }
             },
+
             created() {
                 this.getRegions()
+                this.getDiagnosticsList()
+            },
+            mounted() {
+                this.$refs.district
+
             },
             methods: {
-                async getDiagnostics(id) {
-                    await axios.get('{% url "api_partners:district_diagnostics_list" 12345 %}'.replace(/12345/, id.toString()))
+                async getDiagnosticsList() {
+
+                    await axios.get(`{% url "api_partners:diagnostics_list" %}`, {
+                        params: {
+                            limit: this.limit,
+                            offset: (this.currentPage - 1) * this.limit,
+                            region: this.region,
+                            district: this.district,
+                        }
+                    })
                         .then(res => {
-                            this.diagnostics = res.data
+                            console.log(res)
+                            this.diagnostics = res.data.results
+                            this.pages = Math.ceil(res.data.count / this.limit)
+
                         })
                         .catch(err => {
                             console.log(err)
                         })
                 },
+
                 async getRegions() {
                     await axios.get("{% url 'api_user:regions_list' %}")
                         .then(res => {
@@ -123,19 +241,29 @@
                         .catch(err => {
                             console.log(err)
                         })
+                },
+                changePage(page) {
+                    this.currentPage = page
                 }
             },
             watch: {
                 region(newVal) {
                     this.getDistricts(newVal)
+                    this.getDiagnosticsList()
+                    this.district = ''
                 },
                 district(newVal) {
-                    this.getDiagnostics(newVal)
+                    this.getDiagnosticsList()
+                },
+                diagnostics(val) {
+
+                },
+                currentPage(val) {
+                    this.getDiagnosticsList()
                 }
             }
         }
-
-        Vue.createApp(App).mount('#app')
+        new Vue(App)
     </script>
 
 {% endblock js %}

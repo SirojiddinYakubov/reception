@@ -5,5 +5,5 @@ from . import views
 app_name = 'api_partners'
 
 urlpatterns = [
-    path('district/<int:pk>/diagnostics/list/', views.DistrictDiagnosticsList.as_view(), name='district_diagnostics_list'),
+    path('diagnostics/list/', views.DiagnosticsList.as_view(), name='diagnostics_list'),
 ]

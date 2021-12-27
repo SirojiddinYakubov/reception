@@ -2,7 +2,7 @@ from rest_framework import serializers
 from partners.models import (DiagnosticDepartment)
 
 
-class DistrictDiagnosticsListSerializer(serializers.ModelSerializer):
+class DiagnosticsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiagnosticDepartment
         fields = [
