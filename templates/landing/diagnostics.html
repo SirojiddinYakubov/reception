@@ -249,13 +249,15 @@
             watch: {
                 region(newVal) {
                     this.getDistricts(newVal)
+                    this.offset = 0
                     this.getDiagnosticsList()
                     this.district = ''
-                    this.offset = 0
+
                 },
                 district(newVal) {
-                    this.getDiagnosticsList()
                     this.offset = 0
+                    this.getDiagnosticsList()
+
                 },
                 diagnostics(val) {
 
