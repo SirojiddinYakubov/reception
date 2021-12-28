@@ -116,11 +116,9 @@
                         </div>
                         <div class="row mb-3">
                             <label class="not_copy col-4 col-xl-3 col-form-label text-start"
-                                   for="quarter">{% trans "Mahalla" %}<span
-                                    class="text-danger">*</span></label>
+                                   for="quarter">{% trans "Mahalla" %}</label>
                             <div class="col-8 col-xl-9 quarter">
-                                <select name="quarter" class="form-select select2" id="quarter"
-                                        required>
+                                <select name="quarter" class="form-select select2" id="quarter">
                                     {% if quarter %}
                                         <option value="{{ quarter.id }}">{{ quarter.title }}</option>
                                     {% else %}
@@ -429,9 +427,6 @@
                         district: {
                             required: true
                         },
-                        quarter: {
-                            required: true
-                        },
                         birthday: {
                             required: true
                         },
@@ -464,7 +459,7 @@
                         },
                         password: {
                             required: true,
-                            minlength: 6,
+                            minlength: 5,
                             passwordCheck: true
                         },
                         confirm_password: {
@@ -488,9 +483,6 @@
                         },
                         district: {
                             required: 'Tuman tanlanmagan!',
-                        },
-                        quarter: {
-                            required: 'Mahalla tanlanmagan!',
                         },
                         birthday: {
                             required: 'Tug\'ilgan vaqti kiritilmagan!',
@@ -516,7 +508,7 @@
                         },
                         password: {
                             required: "Parol kiritilmagan!",
-                            minlength: "Kamida 6 ta belgi kiriting!"
+                            minlength: "Kamida 5 ta belgi kiriting!"
 
                         },
                         confirm_password: {
