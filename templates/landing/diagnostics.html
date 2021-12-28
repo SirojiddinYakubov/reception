@@ -84,24 +84,6 @@
 
 
                     </div>
-
-
-                    {#                    <div class="card card-body text-xs-center bg-light"#}
-                    {#                         v-if="diagnostics.length > 0"#}
-                    {#                         v-for="diagnostic in diagnostics"#}
-                    {#                         :key="diagnostic.id">#}
-                    {#                        <h5 class="card-title"><strong>Nomi:</strong> [[diagnostic.title]]</h5>#}
-                    {#                        <p class="card-text"><strong>Manzili:</strong> [[diagnostic.address]]</p>#}
-                    {#                        <p class="card-text">#}
-                    {#                            <small class="text-muted">#}
-                    {#                                <strong>Tel raqam:</strong>#}
-                    {#                                <a#}
-                    {#                                        :href="[[ 'tel:+998' + diagnostic.phone]]">#}
-                    {#                                    [[diagnostic.phone]]</a>#}
-                    {#                            </small>#}
-                    {#                        </p>#}
-                    {#                    </div>#}
-
                     <br>
                 </form>
                 <div class="table-responsive">
@@ -196,7 +178,6 @@
                     pages: 1,
                     limit: 10,
                     offset: 0,
-                    totalPages: 1
                 }
             },
 
@@ -230,7 +211,6 @@
                         }
                     })
                         .then(res => {
-                            console.log(res)
                             this.diagnostics = res.data.results
                             this.pages = Math.ceil(res.data.count / this.limit)
 
@@ -274,9 +254,6 @@
                 district(newVal) {
                     this.currentPage = 1
                     this.getDiagnosticsList()
-
-                },
-                diagnostics(val) {
 
                 },
                 currentPage(val) {
