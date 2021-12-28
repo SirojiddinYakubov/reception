@@ -21,6 +21,11 @@
           type="text/css"/>
     <link href="{% static 'assets/libs/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}" rel="stylesheet"
           type="text/css"/>
+
+    <style>
+
+
+    </style>
 {% endblock css %}
 
 {% block page_title %}
@@ -99,38 +104,40 @@
 
                     <br>
                 </form>
-
-                <table ref="diagnosticsTable" class="table dt-responsive nowrap w-100">
-                    <thead>
-                    <tr>
-                        <th>{% trans "№" %}</th>
-                        <th>{% trans "Nomi" %}</th>
-                        <th>{% trans "Manzil" %}</th>
-                        <th>{% trans "Telefon raqami" %}</th>
-                        <th>{% trans "Xaritda ko'rish" %}</th>
-                    </tr>
-                    </thead>
-
-
-                    <tbody>
-
-                    <tr
-                            v-for="(diagnostic, index) in diagnostics"
-                            :key="diagnostic.id">
-                        <td>[[ limit * currentPage - 9 + index ]]</td>
-                        <td>[[ diagnostic.title ]]</td>
-                        <td>[[diagnostic.address]]</td>
-                        <td><a
-                                :href="[[ 'tel:+998' + diagnostic.phone]]">
-                            +998[[diagnostic.phone]]</a></td>
-                        <td><a class="btn btn-info"
-                               :href="'http://maps.google.com/maps?q=' + diagnostic.latitude + ',' + diagnostic.longitude"
-                               target="_blank">Xaritada ko'rish</a></td>
-                    </tr>
+                <div class="table-responsive">
+                    <table ref="diagnosticsTable" class="table dt-responsive nowrap w-100">
+                        <thead>
+                        <tr>
+                            <th>{% trans "№" %}</th>
+                            <th>{% trans "Nomi" %}</th>
+                            <th>{% trans "Manzil" %}</th>
+                            <th>{% trans "Telefon raqami" %}</th>
+                            <th>{% trans "Xaritda ko'rish" %}</th>
+                        </tr>
+                        </thead>
 
 
-                    </tbody>
-                </table>
+                        <tbody>
+
+                        <tr
+                                v-for="(diagnostic, index) in diagnostics"
+                                :key="diagnostic.id">
+                            <td>[[ limit * currentPage - 9 + index ]]</td>
+                            <td>[[ diagnostic.title ]]</td>
+                            <td>[[diagnostic.address]]</td>
+                            <td><a
+                                    :href="[[ 'tel:+998' + diagnostic.phone]]">
+                                +998[[diagnostic.phone]]</a></td>
+                            <td><a class="btn btn-info"
+                                   :href="'http://maps.google.com/maps?q=' + diagnostic.latitude + ',' + diagnostic.longitude"
+                                   target="_blank">Xaritada ko'rish</a></td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+
 
                 <nav aria-label="Page navigation example" v-if="pages > 0">
                     <ul class="pagination justify-content-end">
@@ -185,7 +192,6 @@
                     district: '',
                     diagnostics: [],
                     diagnostic: '',
-                    dt: null,
                     currentPage: 1,
                     pages: 1,
                     limit: 10,
@@ -196,10 +202,20 @@
             created() {
                 this.getRegions()
                 this.getDiagnosticsList()
+
             },
             mounted() {
                 this.$refs.district
-
+                {#console.log(this.$refs.diagnosticsTable)#}
+                {#$(this.$refs.diagnosticsTable).DataTable({#}
+                {#    "scrollY": 300,#}
+                {#    "scrollX": true,#}
+                {#    "responsive": true,#}
+                {#    "paging": false,#}
+                {#    "ordering": false,#}
+                {#    "info": false#}
+                {##}
+                //{#});#}
             },
             methods: {
                 async getDiagnosticsList() {
