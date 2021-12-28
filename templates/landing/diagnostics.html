@@ -145,7 +145,7 @@
                             <a class="page-link" href="#" tabindex="-1"
                                @click="currentPage = currentPage - 1">Oldingi</a>
                         </li>
-                        <li class="page-item" :class="{active: page === currentPage}" v-for="(page, index) in pages">
+                        <li class="page-item" :class="{active: page === currentPage}" v-for="(page, index) in displayPages">
                             <a class="page-link" @click="changePage(page)" href="#">[[ page ]]</a>
                         </li>
 
@@ -195,7 +195,8 @@
                     currentPage: 1,
                     pages: 1,
                     limit: 10,
-                    offset: 0
+                    offset: 0,
+                    totalPages: 1
                 }
             },
 
@@ -205,17 +206,17 @@
 
             },
             mounted() {
-                this.$refs.district
-                {#console.log(this.$refs.diagnosticsTable)#}
-                {#$(this.$refs.diagnosticsTable).DataTable({#}
-                {#    "scrollY": 300,#}
-                {#    "scrollX": true,#}
-                {#    "responsive": true,#}
-                {#    "paging": false,#}
-                {#    "ordering": false,#}
-                {#    "info": false#}
-                {##}
-                //{#});#}
+
+            },
+            computed: {
+                displayPages() {
+                    let numShown = 5;   // This sets the number of page tabs
+                    numShown = Math.min(numShown, this.pages);
+                    let first = this.currentPage - Math.floor(numShown / 2);
+                    first = Math.max(first, 1);
+                    first = Math.min(first, this.pages - numShown + 1);
+                    return [...Array(numShown)].map((k, i) => i + first);
+                }
             },
             methods: {
                 async getDiagnosticsList() {
