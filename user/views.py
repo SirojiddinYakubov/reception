@@ -39,11 +39,11 @@ class Home(AllowedRolesMixin, RedirectView):
 
     def get(self, request, *args, **kwargs):
         if request.user.role == USER:
-            return redirect(reverse_lazy('user:personal_data'))
+            return redirect(reverse_lazy('service:services_list'))
         elif request.user.role == CHECKER:
             return redirect(reverse_lazy('application:applications_list'))
         else:
-            return redirect(reverse_lazy('application:applications_list'))
+            return redirect(reverse_lazy('service:services_list'))
 
 
 @login_required
