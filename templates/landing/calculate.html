@@ -2,7 +2,8 @@
 {% load static i18n %}
 
 {% block meta %}
-    <title>{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} | E-RIB.UZ</title>
+    <title>{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} |
+        E-RIB.UZ</title>
     <meta name="title"
           content="{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} | E-RIB.UZ">
     <meta name="description"
@@ -45,7 +46,8 @@
 {% block content %}
     <div class="container">
         <div class="row bg-auto" style="background:#fff; padding:20px;">
-            <h2 class="text-center pb-2" style="font-weight: bold" >{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} </h2>
+            <h2 class="text-center pb-2"
+                style="font-weight: bold">{% trans 'Avtotransport vositalarini ro’yhatga olish va qayta ro’yhatga olish xarajatlari kalkulyatori' %} </h2>
             <form action="#" id="calculation_form" method="post">
                 {% csrf_token %}
                 <div class="row mb-3">
@@ -353,29 +355,31 @@
                     ></button>
                 </div>
                 <div class="modal-body" id="render_div">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="state_duty_table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Davlat boji nomi</th>
+                                <th scope="col">Sababi</th>
+                                <th scope="col">To'lov miqdori</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    <table class="table table-bordered table-striped" id="state_duty_table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Davlat boji nomi</th>
-                            <th scope="col">Sababi</th>
-                            <th scope="col">To'lov miqdori</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                            </tbody>
+                            <tfoot style="background: lightgray">
+                            <tr>
+                                <th></th>
+                                <th>Jami</th>
+                                <th></th>
+                                <th><b id="total_state_payments"></b> so'm</th>
 
-                        </tbody>
-                        <tfoot style="background: lightgray">
-                        <tr>
-                            <th></th>
-                            <th>Jami</th>
-                            <th></th>
-                            <th><b id="total_state_payments"></b> so'm</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
 
-                        </tr>
-                        </tfoot>
-                    </table>
                     <hr style="margin-top: 2% !important;margin-bottom: 2% !important;">
                     <p style="color: red">Ushbu summalar to'g'riligini YHXB RO' va IOB xodimlariga tekshirtiring. Kam
                         yoki ko'p o'tgan to'lov
@@ -696,7 +700,7 @@
 
                 var sum = 0;
                 $(".state_duty_payment").each(function () {
-                    sum += parseFloat($(this).text().replace(/[\s+,.]/g, ''));
+                    sum += parseFloat($(this).text().split('.')[0].replace(/[\s+,.]/g, ''));
                 });
                 $('#total_state_payments').text(formatMoney(sum))
             }

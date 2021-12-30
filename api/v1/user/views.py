@@ -187,6 +187,12 @@ class CreateCarModel(generics.CreateAPIView):
         permissions.AppCreatorPermission
     ]
 
+    def post(self, request, *args, **kwargs):
+        if request.data.get('title'):
+            model = CarModel.objects.filter(title__icontains=request.data.get('title').lower())
+            if model.exists():
+                return Response(status=status.HTTP_409_CONFLICT)
+        return super().post(request, *args, **kwargs)
 
 class CreateColor(generics.CreateAPIView):
     queryset = Color.objects.filter(is_active=True)
@@ -195,6 +201,13 @@ class CreateColor(generics.CreateAPIView):
         permissions.UserPermission |
         permissions.AppCreatorPermission
     ]
+
+    def post(self, request, *args, **kwargs):
+        if request.data.get('title'):
+            color = Color.objects.filter(title__icontains=request.data.get('title').lower())
+            if color.exists():
+                return Response(status=status.HTTP_409_CONFLICT)
+        return super().post(request, *args, **kwargs)
 
 
 class PlayMobileSmsStatus(APIView):
