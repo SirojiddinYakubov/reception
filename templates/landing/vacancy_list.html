@@ -28,8 +28,9 @@
     <div class="container">
         <div class="row bg-auto" style="background:#fff; padding:20px;">
             {% for vacancy in vacancy_list %}
-                <a href="{% url 'landing:vacancy_detail' vacancy.id %}">{{ vacancy.title }}</a>
+                <h3><a href="{% url 'landing:vacancy_detail' vacancy.id %}">{{ vacancy.title }}</a></h3>
                 <p>{{ vacancy.desc }}</p>
+                <hr>
             {% endfor %}
 
         </div>
