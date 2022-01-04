@@ -1,0 +1,153 @@
+{% load i18n static %}
+<!-- Modal -->
+<div class="modal-backdrop" v-if="addOrganizationDialog">
+    <div class="modal fade bd-example-modal-lg show" style="display: block">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <form @submit.prevent="addOrganizationForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Tashkilot ro'yhatga olish</h5>
+                        <button type="button" class="btn-close" @click="addOrganizationDialog = false"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu
+                            belgi
+                            qo'yilgan
+                            maydonlarni to'ldirish majburiy.</p>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="title">{% trans "Tashkilot nomi" %}</label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text"
+                                       id="title"
+                                       v-model="organizationForm.title"
+                                       class="form-control"
+                                       placeholder='Masalan: "BUXORO RAVON AVTOMAKTAB" MCHJ'
+                                       autocomplete="off"
+                                       :class="{'is-invalid': $v.organizationForm.title.$error}"
+                                >
+                                <div
+                                        v-if="$v.organizationForm.title.$dirty && !$v.organizationForm.title.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    Tashkilot nomi kiritilmagan!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="director">{% trans "Rahbari" %}</label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text"
+                                       id="director"
+                                       v-model="organizationForm.director"
+                                       class="form-control"
+                                       placeholder="Masalan: Sirojiddin Yoqubov"
+                                       autocomplete="off"
+                                       :class="{'is-invalid': $v.organizationForm.director.$error}"
+                                >
+                                <div
+                                        v-if="$v.organizationForm.director.$dirty && !$v.organizationForm.director.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    Rahbar kiritilmagan!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="identification_number">{% trans "STIR raqam" %}</label>
+                            <div class="col-8 col-xl-9">
+                                <input type="number"
+                                       v-model.number="organizationForm.identification_number"
+                                       class="form-control"
+                                       placeholder='Masalan: 305897526'
+                                       autocomplete="off"
+                                       :class="{'is-invalid': $v.organizationForm.identification_number.$error}"
+                                >
+                                <div
+                                        v-if="$v.organizationForm.identification_number.$dirty && !$v.organizationForm.identification_number.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    STIR raqami kiritilmagan!
+                                </div>
+                                <div
+                                        v-if="$v.organizationForm.identification_number.$dirty && $v.organizationForm.identification_number.required && !$v.organizationForm.identification_number.simpleValidator"
+                                        class="text-danger w-100" style="text-align: start">
+                                    STIR raqami 9 xonali sondan iborat bo'lishi kerak!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="legal_address_region">{% trans 'Yuridik manzili(Viloyat)' %}</label>
+                            <div class="col-8 col-xl-9 legal_address_region">
+                                <v-select
+                                        v-model="organizationForm.legal_address_region"
+                                        :options="regions"
+                                        label="title"
+                                        placeholder="Viloyatni tanlang . . . "
+                                        class="form-control"
+                                        :class="{'v-error': $v.organizationForm.legal_address_region.$error}">
+                                    <span slot="no-options">Siz izlayotgan viloyat topilmadi!</span>
+                                </v-select>
+                                <div
+                                        v-if="$v.organizationForm.legal_address_region.$dirty && !$v.organizationForm.legal_address_region.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    Yuridik manzili(Viloyat) tanlanmagan!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="legal_address_district">{% trans 'Yuridik manzili(Tuman/Shahar)' %}</label>
+                            <div class="col-8 col-xl-9 legal_address_district">
+                                <v-select
+                                        v-model="organizationForm.legal_address_district"
+                                        :options="districts"
+                                        label="title"
+                                        placeholder="Tumanni tanlang . . . "
+                                        class="form-control"
+                                        :class="{'v-error': $v.organizationForm.legal_address_district.$error}"
+                                >
+                                    <span slot="no-options">Siz izlayotgan tuman/shahar topilmadi!</span>
+                                </v-select>
+                                <div
+                                        v-if="$v.organizationForm.legal_address_district.$dirty && !$v.organizationForm.legal_address_district.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    Yuridik manzili(Tuman/Shahar) tanlanmagan!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start label_required"
+                                   for="address_of_garage">{% trans "Garaj manzili" %}</label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text"
+                                       id="address_of_garage"
+                                       v-model="organizationForm.address_of_garage"
+                                       class="form-control"
+                                       placeholder="Masalan: Buxoro shahri Suvchilar ko'chasi 24/3"
+                                       autocomplete="off"
+                                       :class="{'is-invalid': $v.organizationForm.address_of_garage.$error}"
+                                >
+                                <div
+                                        v-if="$v.organizationForm.address_of_garage.$dirty && !$v.organizationForm.address_of_garage.required"
+                                        class="text-danger w-100" style="text-align: start">
+                                    Garaj manzili kiritilmagan!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" @click="addOrganizationDialog = false" class="btn btn-secondary">
+                            Bekor qilish
+                        </button>
+                        <button type="submit" class="btn btn-primary">Tasdiqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

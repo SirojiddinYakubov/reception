@@ -64,3 +64,32 @@ class CreateApplicationDocumentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return super().create(validated_data)
+
+
+class ApplicationDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = [
+            'id',
+            'service',
+            'created_user',
+            'person_type',
+            'organization',
+            'process',
+            'is_payment',
+            'file_name',
+            'password',
+            'given_date',
+            'given_time',
+            'is_active',
+            'is_block',
+            'cron',
+            'section',
+            'car',
+            'created_date',
+            'updated_date',
+            'canceled_date',
+            'confirmed_date',
+            'inspector',
+            'applicant'
+        ]

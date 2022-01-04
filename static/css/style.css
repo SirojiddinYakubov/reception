@@ -9,11 +9,10 @@ input[type=number]::-webkit-inner-spin-button {
 
 .label_required {
     display: inline;
-    margin-top: 1rem;
 }
 
 
-.label_required:after {
+.label_required:before {
     content: "*";
     color: red;
 }
@@ -410,7 +409,7 @@ legend {
     padding-left: 10px;
     margin-left: 3%;
     margin-bottom: unset !important;
- z-index: 1000;
+    z-index: 1000;
 
     position:relative;
 }

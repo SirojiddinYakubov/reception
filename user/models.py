@@ -351,6 +351,7 @@ class Car(models.Model):
     is_saved_number = models.BooleanField(default=False)
     is_relative = models.BooleanField(default=False)
     is_tranzit = models.BooleanField(default=False)
+    is_another_car = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Avtomobil'

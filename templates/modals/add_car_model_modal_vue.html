@@ -1,0 +1,86 @@
+{% load static i18n %}
+
+<!-- Modal -->
+<div class="modal-backdrop" v-if="addCarModelDialog">
+    <div class="modal fade show" style="display: block" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" @submit.prevent="sendAddCarModelForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Transport vositasi modeli qo'shish</h5>
+                        <button type="button" class="btn-close" @click="addCarModelDialog = false"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="not_copy col-4 col-xl-3 col-form-label text-start"
+                                   for="model_title">{% trans "Yangi model nomi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-8 col-xl-9">
+                                <input type="text"
+                                       v-model.trim="addCarModelForm.title"
+                                       class="form-control"
+                                       :class="$v.addCarModelForm.title.$error  ? 'is-invalid' : ''"
+                                       placeholder='Masalan: Gentra'
+                                       autocomplete="off">
+                                <div v-if="$v.addCarModelForm.$dirty && !$v.addCarModelForm.title.required"
+                                     class="invalid-feedback" style="text-align: start">
+                                    Model nomi kirilmagan!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-5 col-form-label text-start"
+                                   for="is_truck">{% trans 'Transport vositasi turi' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <div class="row justify-content-start mt-1">
+                                    <div class="col-6">
+                                        <input type="radio" id="is_truck_yes" value="True"
+                                               v-model="addCarModelForm.is_truck"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_truck_yes">Yuk</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="radio" id="is_truck_no" v-model="addCarModelForm.is_truck"
+                                               value="False"
+                                               class="form-check-input" checked>
+                                        <label class="form-check-label" for="is_truck_no">Yengil</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="not_copy col-5 col-form-label text-start"
+                                   for="is_local">{% trans 'Ishlab chiqaruvchi korxona' %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <div class="row justify-content-start mt-1">
+                                    <div class="col-6">
+                                        <input type="radio" id="is_local_yes" v-model="addCarModelForm.is_local"
+                                               value="True"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_local_yes">Mahalliy</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="radio" id="is_local_no" v-model="addCarModelForm.is_local"
+                                               value="False"
+                                               class="form-check-input">
+                                        <label class="form-check-label" for="is_local_no">Chet el</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="addCarModelDialog = false">
+                            Bekor qilish
+                        </button>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

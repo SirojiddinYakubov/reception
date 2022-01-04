@@ -1643,3 +1643,62 @@ function column_asc_desc() {
         }
     });
 }
+
+async function setAxiosHeader() {
+    // axios.defaults.baseURL = baseURL + '/api/v1';
+    if (localStorage.getItem('access')
+        && typeof localStorage.getItem('access') !== "undefined"
+        && localStorage.getItem('access') !== "undefined") {
+        // Apply to every request
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+        getCurrentUser()
+    } else {
+        refreshToken()
+    }
+
+    axios.interceptors.response.use((response) => response, (error) => {
+        if (error.response.status === 401) {
+            refreshToken()
+        } else if (error.response.status === 403) {
+            swal_error("Sizga ruxsat berilmagan!")
+        } else if (error.response.status === 500) {
+            swal_error("Server xatoligi! Sahifani yangilab qayta urinib ko'ring!")
+        }
+        throw error;
+    });
+
+}
+
+async function getCurrentUser() {
+    await axios.get('/api/v1/user/auth/users/me')
+        .then(res => {
+            localStorage.setItem('userId', res.data.id)
+            localStorage.setItem('userUsername', res.data.username)
+        })
+        .catch(err => {
+            // swal_error(err)
+            localStorage.removeItem('access')
+            refreshToken()
+        })
+}
+
+async function refreshToken() {
+    await axios.post('/api/v1/user/auth/jwt/refresh/', {
+        'refresh': localStorage.getItem('refresh')
+    })
+        .then(function (res) {
+            localStorage.setItem('access', res.data.access)
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access;
+            getCurrentUser()
+            location.reload()
+        })
+        .catch(function (error) {
+            localStorage.removeItem('refresh')
+
+            error_toast('Xatolik! Token yaroqsiz!')
+
+            setTimeout(function () {
+                window.location.href = '/user/custom-logout/'
+            }, 3000)
+        });
+}
