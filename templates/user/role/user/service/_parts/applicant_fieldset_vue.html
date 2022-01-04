@@ -1,0 +1,77 @@
+{% load static i18n %}
+
+<fieldset id="applicant_fieldset" v-if="isShowApplicantFieldset">
+    <legend>Arizachi</legend>
+    <form action="#" id="organization_form" method="POST">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <label for="person" class="col-form-label not_copy text-start label_required">Arizachini tanlang</label>
+            <div class="col-12">
+                <select class="form-select select2" style="width: 100%;" id="person" name="person"
+                        required disabled>
+                    <option :value="user.id">[[user.last_name]] [[user.first_name]] [[user.middle_name]]</option>
+                    <option value="new" data-style="color: blue;">Yangi arizachi qo'shish</option>
+                </select>
+            </div>
+        </div>
+        <div id="physical_div">
+            <div class="row mb-3">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="last_name">{% trans "Familiya" %}</label>
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                    <input type="text" :value="user.last_name"
+                           class="form-control" disabled>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="first_name">{% trans "Ism" %}</label>
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                    <input type="text" :value="user.first_name"
+                           class="form-control" disabled>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="middle_name">{% trans "Otasining ismi" %}</label>
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                    <input type="text" :value="user.middle_name"
+                           class="form-control" disabled>
+                </div>
+            </div>
+            <div class="row mb-3" v-if="user.region">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="region">{% trans "Viloyat" %}</label>
+
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 region">
+                    <input class="form-control" type="text" :value="user.region.title" disabled>
+                </div>
+            </div>
+            <div class="row mb-3" v-if="user.district">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="district">{% trans "Tuman/Shahar" %}</label>
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 district">
+                    <input class="form-control" type="text" :value="user.district.title" disabled>
+                </div>
+            </div>
+            <div class="row mb-3" v-if="user.quarter">
+                <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
+                       for="quarter">{% trans "Mahalla" %}</label>
+                <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 quarter">
+                    <input class="form-control" type="text" :value="user.quarter.title" disabled>
+                </div>
+            </div>
+
+
+            <div class="justify-content-end row">
+                <div class="col-12">
+                    <button @click="()=>{isShowApplicantFieldset = false; isShowPersonTypeFieldset = true}"
+                            class="btn btn-info waves-effect waves-light float-end next"
+                            type="button"
+                    >Keyingi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</fieldset>

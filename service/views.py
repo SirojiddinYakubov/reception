@@ -255,6 +255,15 @@ class ContractOfSale(ServiceCustomMixin):
 class GiftAgreement(ServiceCustomMixin):
     template_name = 'service/gift_agreement/gift_agreement.html'
 
+
+    def get_template_names(self):
+        role = self.request.user.role
+
+        if role == USER:
+            return ['user/role/user/service/gift_agreement/gift_agreement.html']
+        else:
+            return [self.template_name]
+
     def post(self, request, *args, **kwargs):
         print(request.POST)
         return self.get_json_data()

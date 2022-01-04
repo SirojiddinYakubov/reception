@@ -1,0 +1,44 @@
+{% load static i18n %}
+
+<!-- Modal -->
+<div class="modal-backdrop" v-if="addCarColorDialog">
+    <div class="modal fade show" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" method="POST" @submit.prevent="addNewColorForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Transport vositasi rangi qo'shish</h5>
+                        <button type="button" class="btn-close" @click="addCarColorDialog = false"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="not_copy col-5 col-form-label text-start"
+                                   for="color_title">{% trans "Yangi rang nomi" %}<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-7">
+                                <input type="text" id="color_title" v-model="newColor"
+                                       class="form-control"
+                                       placeholder='Masalan: Oq'
+                                       :class="$v.newColor.$error  ? 'is-invalid' : ''"
+                                       autocomplete="off">
+                                <div v-if="$v.newColor.$dirty && !$v.newColor.required"
+                                     class="invalid-feedback" style="text-align: start">
+                                    Rang nomi kirilmagan!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                @click="addCarColorDialog = false">
+                            Bekor qilish
+                        </button>
+                        <button type="submit" class="btn btn-primary">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
