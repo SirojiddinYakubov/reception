@@ -1,123 +1,125 @@
-<table id="created_is_person" class="table table-bordered table-striped">
-    <tbody>
-    <tr>
-        <th scope="row">Model:</th>
-        <td>{% if application.car.model %}
-            {{ application.car.model }}{% endif %}</td>
-    </tr>
-    <tr>
-        <th scope="row">Avtmobil turi:</th>
-        <td>{% if application.car.type %}
-            {{ application.car.type }}{% endif %}</td>
-    </tr>
-    <tr>
-        <th scope="row">Kuzov turi:</th>
-        <td>{% if application.car.body_type %}
-            {{ application.car.body_type }}{% endif %}</td>
-    </tr>
-
-    <tr>
-        <th scope="row">Yoqilg'i turi:</th>
-        <td>{% if application.car.fuel_type %}
-            {% for fuel_type in application.car.fuel_type.all %}
-                <button class="disabled btn btn-outline-primary">{{ fuel_type }}</button>
-            {% endfor %}
-        {% endif %}</td>
-    </tr>
-
-    <tr>
-        <th scope="row">Kuzov raqami:</th>
-        <td>{% if application.car.body_number %}
-            {{ application.car.body_number }}{% endif %}</td>
-    </tr>
-    {% if application.car.chassis_number %}
+<div class="table-responsive">
+    <table id="created_is_person" class="table table-bordered table-striped">
+        <tbody>
         <tr>
-            <th scope="row">Shassi raqami:</th>
-            <td>{{ application.car.chassis_number }}</td>
+            <th scope="row">Model:</th>
+            <td>{% if application.car.model %}
+                {{ application.car.model }}{% endif %}</td>
         </tr>
-    {% endif %}
-    <tr>
-        <th scope="row">Dvigatel raqami:</th>
-        <td>{% if application.car.engine_number %}
-            {{ application.car.engine_number }}{% endif %}</td>
-    </tr>
+        <tr>
+            <th scope="row">Avtmobil turi:</th>
+            <td>{% if application.car.type %}
+                {{ application.car.type }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th scope="row">Kuzov turi:</th>
+            <td>{% if application.car.body_type %}
+                {{ application.car.body_type }}{% endif %}</td>
+        </tr>
 
-    <tr>
-        <th scope="row">Ishlab chiqarilgan yili:</th>
-        <td>{% if application.car.made_year %}
-            {{ application.car.made_year|date:"Y" }}{% endif %}</td>
-    </tr>
-
-    <tr>
-        <th scope="row">Rangi:</th>
-        <td>{% if application.car.color %}
-            {{ application.car.color }}{% endif %}</td>
-    </tr>
-
-    <tr>
-        <th scope="row">Qo'shimcha jihozlar:</th>
-        <td>
-            {% if application.car.device %}
-                {% for device in application.car.device.all %}
-                    <button class="disabled btn btn-outline-primary">{{ device }}</button>
+        <tr>
+            <th scope="row">Yoqilg'i turi:</th>
+            <td>{% if application.car.fuel_type %}
+                {% for fuel_type in application.car.fuel_type.all %}
+                    <button class="disabled btn btn-outline-primary">{{ fuel_type }}</button>
                 {% endfor %}
-            {% endif %}
-        </td>
-    </tr>
+            {% endif %}</td>
+        </tr>
 
-    <tr>
-        <th scope="row">To'la vazni:</th>
-        <td>{% if application.car.full_weight %}
-            {{ application.car.full_weight }}{% endif %}</td>
-    </tr>
-    <tr>
-        <th scope="row">Yuksiz vazni:</th>
-        <td>{% if application.car.empty_weight %}
-            {{ application.car.empty_weight }}{% endif %}</td>
-    </tr>
-    <tr>
-        <th scope="row">Dvigatel quvvati:</th>
-        <td>{% if application.car.engine_power %}
-            {{ application.car.engine_power }}{% endif %}</td>
-    </tr>
-    <tr>
-        <th scope="row">Davlat raqam belgisi yo'qolganmi?</th>
-        <td>{% if application.car.lost_number %}
-            Ha{% else %}
-            Yo'q{% endif %}</td>
-    </tr>
-    {% if not application.car.lost_number %}
         <tr>
-            <th scope="row">Davlat raqam belgisi:</th>
-            <td>{% if application.car.old_number %}
-                {{ application.car.old_number }}{% endif %}</td>
+            <th scope="row">Kuzov raqami:</th>
+            <td>{% if application.car.body_number %}
+                {{ application.car.body_number }}{% endif %}</td>
         </tr>
-    {% endif %}
-    <tr>
-        <th scope="row">Davlat raqam belgisi eskimi?</th>
-        <td>{% if application.car.is_old_number %}
-            Ha{% else %}
-            Yo'q{% endif %}</td>
-    </tr>
-    {% if not application.car.lost_technical_passport %}
+        {% if application.car.chassis_number %}
+            <tr>
+                <th scope="row">Shassi raqami:</th>
+                <td>{{ application.car.chassis_number }}</td>
+            </tr>
+        {% endif %}
         <tr>
-            <th scope="row">Texpassport seriyasi va raqami:</th>
-            <td>{% if application.car.old_technical_passport %}
-                {{ application.car.old_technical_passport }}{% endif %}</td>
+            <th scope="row">Dvigatel raqami:</th>
+            <td>{% if application.car.engine_number %}
+                {{ application.car.engine_number }}{% endif %}</td>
         </tr>
-    {% endif %}
-    <tr>
-        <th scope="row">Texnik passport yo'qolganmi?</th>
-        <td>{% if application.car.lost_technical_passport %}
-            Ha{% else %}
-            Yo'q{% endif %}</td>
-    </tr>
-    {% if application.car.is_auction %}
+
         <tr>
-            <th scope="row">Auksion raqami:</th>
-            <td>{% if application.car.given_number %}
-                {{ application.car.given_number }}{% endif %}</td>
+            <th scope="row">Ishlab chiqarilgan yili:</th>
+            <td>{% if application.car.made_year %}
+                {{ application.car.made_year|date:"Y" }}{% endif %}</td>
         </tr>
-    {% endif %}
-    </tbody>
-</table>
+
+        <tr>
+            <th scope="row">Rangi:</th>
+            <td>{% if application.car.color %}
+                {{ application.car.color }}{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">Qo'shimcha jihozlar:</th>
+            <td>
+                {% if application.car.device %}
+                    {% for device in application.car.device.all %}
+                        <button class="disabled btn btn-outline-primary">{{ device }}</button>
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">To'la vazni:</th>
+            <td>{% if application.car.full_weight %}
+                {{ application.car.full_weight }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th scope="row">Yuksiz vazni:</th>
+            <td>{% if application.car.empty_weight %}
+                {{ application.car.empty_weight }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th scope="row">Dvigatel quvvati:</th>
+            <td>{% if application.car.engine_power %}
+                {{ application.car.engine_power }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th scope="row">Davlat raqam belgisi yo'qolganmi?</th>
+            <td>{% if application.car.lost_number %}
+                Ha{% else %}
+                Yo'q{% endif %}</td>
+        </tr>
+        {% if not application.car.lost_number %}
+            <tr>
+                <th scope="row">Davlat raqam belgisi:</th>
+                <td>{% if application.car.old_number %}
+                    {{ application.car.old_number }}{% endif %}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th scope="row">Davlat raqam belgisi eskimi?</th>
+            <td>{% if application.car.is_old_number %}
+                Ha{% else %}
+                Yo'q{% endif %}</td>
+        </tr>
+        {% if not application.car.lost_technical_passport %}
+            <tr>
+                <th scope="row">Texpassport seriyasi va raqami:</th>
+                <td>{% if application.car.old_technical_passport %}
+                    {{ application.car.old_technical_passport }}{% endif %}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th scope="row">Texnik passport yo'qolganmi?</th>
+            <td>{% if application.car.lost_technical_passport %}
+                Ha{% else %}
+                Yo'q{% endif %}</td>
+        </tr>
+        {% if application.car.is_auction %}
+            <tr>
+                <th scope="row">Auksion raqami:</th>
+                <td>{% if application.car.given_number %}
+                    {{ application.car.given_number }}{% endif %}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>

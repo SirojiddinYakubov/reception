@@ -1,31 +1,33 @@
- <table class="table table-bordered table-striped">
-                                    <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Hujjat nomi</th>
-                                        <th scope="col">Formati</th>
-                                        <th scope="col">Hujjat havolasi</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Hujjat nomi</th>
+            <th scope="col">Formati</th>
+            <th scope="col">Hujjat havolasi</th>
+        </tr>
+        </thead>
+        <tbody>
 
-                                    <tr>
-                                        <td>1</td>
-                                        <th scope="row">Ariza haqida ma'lumot</th>
-                                        <td>PDF</td>
-                                        <td><a style="cursor: pointer; color: #007bff"
-                                               class="application_render_pdf"
-                                               data-application="{{ application.id }}">Yuklab olish</a></td>
-                                    </tr>
+        <tr>
+            <td>1</td>
+            <th scope="row">Ariza haqida ma'lumot</th>
+            <td>PDF</td>
+            <td><a style="cursor: pointer; color: #007bff"
+                   class="application_render_pdf"
+                   data-application="{{ application.id }}">Yuklab olish</a></td>
+        </tr>
 
-                                    <tr>
-                                        <td>2</td>
-                                        <th scope="row">Ariza nusxasi</th>
-                                        <td>DOCX</td>
-                                        <td>
-                                            <a href="{% url 'application:create_application_doc' application.file_name %}"
-                                               target="_blank">Yuklab
-                                                olish</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+        <tr>
+            <td>2</td>
+            <th scope="row">Ariza nusxasi</th>
+            <td>DOCX</td>
+            <td>
+                <a href="{% url 'application:create_application_doc' application.file_name %}"
+                   target="_blank">Yuklab
+                    olish</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
