@@ -1,102 +1,105 @@
 {% load humanize static %}
 {% load applications_tags %}
 <div id="render_div">
-    <table class="table table-bordered table-striped">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Davlat boji nomi</th>
-            <th scope="col">Sababi</th>
-            <th scope="col">Hisob raqam</th>
-            <th scope="col">To'lov miqdori</th>
-            <th scope="col" style="width: 7%">Holati</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Davlat boji nomi</th>
+                <th scope="col">Sababi</th>
+                <th scope="col">Hisob raqam</th>
+                <th scope="col">To'lov miqdori</th>
+                <th scope="col" style="width: 7%">Holati</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        {% for percent in percents %}
-            {% if percent.payment != 0 %}
-                {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <th scope="row">{{ percent.get_state_duty_display }}</th>
-                    <th scope="row">{{ percent.title }}</th>
-                    <td>
-                        <b>{% get_payment_score application.id percent.id as state_duty_score %} {{ state_duty_score.score|safe }}</b>
-                    </td>
-                    <td><b class="state_payment">
-                        {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
-                    </td>
-                    <td>
-                        {#                        {% if request.user.role == '2' or request.user.role == '3' %}#}
-                        {#                            <input name="payment" {% if percent.is_paid %}checked{% endif %}#}
-                        {#                                   data-payment="{{ percent.id }}"#}
-                        {#                                   class="payment_checkbox" type="checkbox"/>#}
-                        {#                        {% else %}#}
-                        {#                            {% check_payment_paid application percent as paid %}#}
-                        {#                            {% if paid %}#}
-                        {#                                <i style="color: green" class="far fa-check-circle"></i>{% else %}#}
-                        {#                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i#}
-                        {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
-                        {#                        {% endif %}#}
+            {% for percent in percents %}
+                {% if percent.payment != 0 %}
+                    {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row">{{ percent.get_state_duty_display }}</th>
+                        <th scope="row">{{ percent.title }}</th>
+                        <td>
+                            <b>{% get_payment_score application.id percent.id as state_duty_score %} {{ state_duty_score.score|safe }}</b>
+                        </td>
+                        <td><b class="state_payment">
+                            {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
+                        </td>
+                        <td>
+                            {#                        {% if request.user.role == '2' or request.user.role == '3' %}#}
+                            {#                            <input name="payment" {% if percent.is_paid %}checked{% endif %}#}
+                            {#                                   data-payment="{{ percent.id }}"#}
+                            {#                                   class="payment_checkbox" type="checkbox"/>#}
+                            {#                        {% else %}#}
+                            {#                            {% check_payment_paid application percent as paid %}#}
+                            {#                            {% if paid %}#}
+                            {#                                <i style="color: green" class="far fa-check-circle"></i>{% else %}#}
+                            {#                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i#}
+                            {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
+                            {#                        {% endif %}#}
 
-                        {% if not percent.state_duty == 7 %}
+                            {% if not percent.state_duty == 7 %}
 
-                            {% if application.section.pay_for_treasury %}
-                                {% check_state_payment_paid application percent as check %}
-                                {% if state_duty_score.state_duty %}
-                                    {% if not check %}
-                                        <button class="btn btn-danger create_pay" data-percent-id="{{ percent.id }}"><i
-                                                class="fa fa-money-bill-wave-alt"></i> To'lash
-                                        </button>
-                                    {% else %}
-                                        {% check_memorial application percent as memorial %}
-                                        {% if not memorial %}
-                                            <b class="text-primary text-center">Bankka jo'natilgan</b>
+                                {% if application.section.pay_for_treasury %}
+                                    {% check_state_payment_paid application percent as check %}
+                                    {% if state_duty_score.state_duty %}
+                                        {% if not check %}
+                                            <button class="btn btn-danger create_pay"
+                                                    data-percent-id="{{ percent.id }}"><i
+                                                    class="fa fa-money-bill-wave-alt"></i> To'lash
+                                            </button>
                                         {% else %}
-                                            <a href="{{ memorial.memorial }}" class="btn btn-success text-bold"
-                                               download="download"> <i class="fa fa-file-download"></i> Kvitansiya
-                                                yuklab
-                                                olish</a>
+                                            {% check_memorial application percent as memorial %}
+                                            {% if not memorial %}
+                                                <b class="text-primary text-center">Bankka jo'natilgan</b>
+                                            {% else %}
+                                                <a href="{{ memorial.memorial }}" class="btn btn-success text-bold"
+                                                   download="download"> <i class="fa fa-file-download"></i> Kvitansiya
+                                                    yuklab
+                                                    olish</a>
+                                            {% endif %}
+
                                         {% endif %}
+                                    {% else %}
+                                        <b class="text-danger text-center">-</b>
 
                                     {% endif %}
                                 {% else %}
-                                    <b class="text-danger text-center">-</b>
-
+                                    <b class="text-danger text-center">Ushbu YHXB onlayn kvitansiyani qabul qilmaydi</b>
                                 {% endif %}
-                            {% else %}
-                                <b class="text-danger text-center">Ushbu YHXB onlayn kvitansiyani qabul qilmaydi</b>
+
+
+                                {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
+                                {#                            </button>#}
                             {% endif %}
+                        </td>
+                    </tr>
+                    {#            {% endif %}#}
+                {% endif %}
 
-
-                            {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
-                            {#                            </button>#}
-                        {% endif %}
-                    </td>
-                </tr>
-                {#            {% endif %}#}
-            {% endif %}
-
-        {% endfor %}
-        </tbody>
-        <tfoot style="background: lightgray">
-        <tr>
-            <th></th>
-            <th>Jami</th>
-            <th></th>
-            <th></th>
-            <th><b id="total_state_payments"></b> so'm</th>
-            <th></th>
-        </tr>
-        </tfoot>
-    </table>
-    <div style="margin: 20px; font-size: medium">
-        <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
-            bosh boshqarmasi XKKM</b></p>
-        <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
-        <p>MFO: <b style="color: blue">00014</b></p>
-        <p>INN: <b style="color: blue">201122919</b></p>
+            {% endfor %}
+            </tbody>
+            <tfoot style="background: lightgray">
+            <tr>
+                <th></th>
+                <th>Jami</th>
+                <th></th>
+                <th></th>
+                <th><b id="total_state_payments"></b> so'm</th>
+                <th></th>
+            </tr>
+            </tfoot>
+        </table>
+        <div style="margin: 20px; font-size: medium">
+            <p><b style="font-size: large">O'zbekiston Respublikasi Markaziy banki Toshkent shahar
+                bosh boshqarmasi XKKM</b></p>
+            <p>Hisob raqam: <b style="color: blue">23402000300100001010</b></p>
+            <p>MFO: <b style="color: blue">00014</b></p>
+            <p>INN: <b style="color: blue">201122919</b></p>
+        </div>
     </div>
 </div>
 <hr>

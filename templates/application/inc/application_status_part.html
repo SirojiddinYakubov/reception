@@ -1,100 +1,109 @@
 {% load humanize %}
-<table class="table table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">Holat</th>
-        <th scope="col">Sababi</th>
-        {% if application.given_date and application.given_time %}
-            <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
-            <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
-        {% endif %}
-        {% if application.canceled_date %}
-            <th scope="col">Hujjatlar rad etilgan vaqt</th>
-        {% endif %}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Holat</th>
+            <th scope="col">Sababi</th>
+            {% if application.given_date and application.given_time %}
+                <th scope="col">Hujjatlarni qabul qilib olish sanasi</th>
+                <th scope="col">Hujjatlarni qabul qilib olish vaqti</th>
+            {% endif %}
+            {% if application.canceled_date %}
+                <th scope="col">Hujjatlar rad etilgan vaqt</th>
+            {% endif %}
 
-        {% if application.process == 0 %}
-            <th scope="col">To'lov</th>
-        {% endif %}
-
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
+            {% if application.process == 0 %}
+                <th scope="col">To'lov</th>
+            {% endif %}
 
 
-        <!--Yaratildi-->
-        {% if application.process == 0 %}
-             <th scope="row" style="color: #0f6674">Ariza yaratildi</th>
-            <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi. Arizangizni {{ application.section.title }}ga jo'natishingiz mumkin.
-            </th>
-
-            <!--Jo'natildi-->
-        {% elif application.process == 1 %}
-             <th scope="row" style="color: #0f6674">Ariza jo'natildi</th>
-            <th style="color: #0f6674">Arizangiz "{{ application.section.title }}" ga jo'natildi. Javobini
-                SMS xabarnoma tarzida qabul qilasiz.
-            </th>
-            <!--Ko'rib chiqish uchun qabul qilindi-->
-        {% elif application.process == 2 %}
-             <th scope="row" style="color: #0f6674">Ko'rib chiqish uchun qabul qilindi</th>
-            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan ko'rib
-                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
-            </th>
-            <!--To'lovni kutmoqda-->
-        {% elif application.process == 3 %}
-             <th scope="row" style="color: #0f6674">To'lovni kutmoqda</th>
-            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan ko'rib
-                chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
-            </th>
-            <!--Hujjatlarning asl nusxasini kutmoqda-->
-        {% elif application.process == 4 %}
-             <th scope="row" style="color: #0f6674">Hujjatlarni asl nusxasini kutmoqda</th>
-            <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl
-                nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib kelishingizni
-                so'raymiz.
-            </th>
-            <!--Muvaffaqiyatli yakunlandi-->
-        {% elif application.process == 5 %}
-             <th scope="row" style="color: #0f6674">Muvaffaqiyatli yakunlandi</th>
-            <th style="color: #0f6674"> Sizning {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi.
-                Sizdan {{ application.given_date }} {{ application.given_time }}
-                da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi.
-                Manzil: {{ application.section.address }}
-            </th>
-            <!--Rad etildi-->
-        {% elif application.process == 6 %}
-             <th scope="row" style="color: #0f6674">Rad etildi</th>
-            <th style="color: #0f6674"> Arizangiz {{ application.section.region.title }} {{ application.section.title }}
-                inspektorlari tomonidan rad etildi!
-            </th>
-        {% elif application.process == 7 %}
-             <th scope="row" style="color: #0f6674">Ariza yaratilish jarayonida</th>
-            <th style="color: #e53e3e"> Arizangizdagi ma'lumotlari to'liq bo'lmaganligi sababli YHXB bo'limiga jo'natish uchun talabga javob bermaydi!
-
-            </th>
-        {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
 
 
-        {% if application.given_date and application.given_time %}
-            <th style="color: #0f6674">{{ application.given_date|date:"SHORT_DATE_FORMAT" }}</th>
-            <th style="color: #0f6674">{{ application.given_time }}</th>
-        {% endif %}
-        {% if application.canceled_date %}
-            <th style="color: #0f6674">{{ application.canceled_date }}</th>
-        {% endif %}
+            <!--Yaratildi-->
+            {% if application.process == 0 %}
+                <th scope="row" style="color: #0f6674">Ariza yaratildi</th>
+                <th style="color: #0f6674">Sizning arizangiz muvaffaqiyatli yaratildi.
+                    Arizangizni {{ application.section.title }}ga jo'natishingiz mumkin.
+                </th>
 
-        {% if application.process == 0 %}
-            <th>
-                <button style="margin-left: 2%" type="button"
-                        class="btn btn-info waves-effect waves-light float-start application-activation-payment">To'lov qilish
-                    &nbsp&nbsp&nbsp<i
+                <!--Jo'natildi-->
+            {% elif application.process == 1 %}
+                <th scope="row" style="color: #0f6674">Ariza jo'natildi</th>
+                <th style="color: #0f6674">Arizangiz "{{ application.section.title }}" ga jo'natildi. Javobini
+                    SMS xabarnoma tarzida qabul qilasiz.
+                </th>
+                <!--Ko'rib chiqish uchun qabul qilindi-->
+            {% elif application.process == 2 %}
+                <th scope="row" style="color: #0f6674">Ko'rib chiqish uchun qabul qilindi</th>
+                <th style="color: #0f6674">
+                    Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                    inspektorlari tomonidan ko'rib
+                    chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+                </th>
+                <!--To'lovni kutmoqda-->
+            {% elif application.process == 3 %}
+                <th scope="row" style="color: #0f6674">To'lovni kutmoqda</th>
+                <th style="color: #0f6674">
+                    Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                    inspektorlari tomonidan ko'rib
+                    chiqish uchun qabul qilindi. Keyingi bosqich haqida SMS orqali xabarnoma olasiz.
+                </th>
+                <!--Hujjatlarning asl nusxasini kutmoqda-->
+            {% elif application.process == 4 %}
+                <th scope="row" style="color: #0f6674">Hujjatlarni asl nusxasini kutmoqda</th>
+                <th style="color: #0f6674"> {{ application.id }} raqamli arizangiz bo'yicha hujjatlarni asl
+                    nusxasini {{ application.section.region.title }} {{ application.section.title }}ga olib
+                    kelishingizni
+                    so'raymiz.
+                </th>
+                <!--Muvaffaqiyatli yakunlandi-->
+            {% elif application.process == 5 %}
+                <th scope="row" style="color: #0f6674">Muvaffaqiyatli yakunlandi</th>
+                <th style="color: #0f6674"> Sizning {{ application.id }} raqamli arizangiz muvaffaqiyatli yakunlandi.
+                    Sizdan {{ application.given_date }} {{ application.given_time }}
+                    da {{ application.section.region.title }} {{ application.section.title }} ga kelishingiz so'raladi.
+                    Manzil: {{ application.section.address }}
+                </th>
+                <!--Rad etildi-->
+            {% elif application.process == 6 %}
+                <th scope="row" style="color: #0f6674">Rad etildi</th>
+                <th style="color: #0f6674">
+                    Arizangiz {{ application.section.region.title }} {{ application.section.title }}
+                    inspektorlari tomonidan rad etildi!
+                </th>
+            {% elif application.process == 7 %}
+                <th scope="row" style="color: #0f6674">Ariza yaratilish jarayonida</th>
+                <th style="color: #e53e3e"> Arizangizdagi ma'lumotlari to'liq bo'lmaganligi sababli YHXB bo'limiga
+                    jo'natish uchun talabga javob bermaydi!
+
+                </th>
+            {% endif %}
+
+
+            {% if application.given_date and application.given_time %}
+                <th style="color: #0f6674">{{ application.given_date|date:"SHORT_DATE_FORMAT" }}</th>
+                <th style="color: #0f6674">{{ application.given_time }}</th>
+            {% endif %}
+            {% if application.canceled_date %}
+                <th style="color: #0f6674">{{ application.canceled_date }}</th>
+            {% endif %}
+
+            {% if application.process == 0 %}
+                <th>
+                    <button style="margin-left: 2%" type="button"
+                            class="btn btn-info waves-effect waves-light float-start application-activation-payment">
+                        To'lov qilish
+                        &nbsp&nbsp&nbsp<i
                             class="fas fa-long-arrow-alt-right"></i>
-                </button>
-            </th>
-        {% endif %}
-    </tr>
-    </tbody>
-</table>
+                    </button>
+                </th>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</div>
