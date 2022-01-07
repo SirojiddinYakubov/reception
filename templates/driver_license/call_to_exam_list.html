@@ -1,0 +1,219 @@
+{% extends "base_horizontal.html" %}
+{% load static i18n %}
+
+{% block meta %}
+    <title>{% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %} | E-RIB.UZ</title>
+    <meta name="title"
+          content="{% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %} | E-RIB.UZ">
+    <meta name="description"
+          content="aydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish">
+    <meta name="keywords"
+          content="aydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish">
+{% endblock meta %}
+
+{% block css %}
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        .vue-btn {
+            background: #3283f6 !important;
+            border-color: #3283f6 !important;
+            color: white !important;
+        }
+    </style>
+{% endblock css %}
+
+{% block page_title %}
+    {% trans "Haydovchilik guvohnomasi imtihoni uchun o\'quvchilarga jo\'natilgan smslar" %}
+{% endblock page_title %}
+{% block content %}
+    <div id="app">
+        <div class="container">
+            <div class="row bg-auto" style="background:#fff; padding:20px;">
+                <h2 class="text-center pb-2"
+                    style="font-weight: bold">{% trans 'Haydovchilik guvohnomasi imtihoni uchun o\'quvchilarga jo\'natilgan smslar' %} </h2>
+                <form action="#" method="post">
+                    <div class="row mb-3">
+                        <div class="col-3">
+                            <label class="not_copy col-12 col-form-label text-start">{% trans "Imtihon kuni" %}</label>
+                            <input type="date" class="form-control" v-model="date">
+                        </div>
+                        <div class="col-6"></div>
+                        <div class="col-3">
+                            <label
+                                    class="not_copy col-12 col-form-label"
+                                    for="search">{% trans "Qidiruv" %}
+                            </label>
+                            <input type="text" v-model="search" class="form-control">
+                        </div>
+
+
+                    </div>
+                    <br>
+                </form>
+                <div class="table-responsive">
+                    <table ref="callToExamTable" class="table dt-responsive nowrap w-100">
+                        <thead>
+                        <tr>
+                            <th>{% trans "№" %}</th>
+                            <th>{% trans "F.I.O" %}</th>
+                            <th>{% trans "Tel raqam" %}</th>
+                            <th>{% trans "Imtihon vaqti" %}</th>
+                            <th>{% trans "Jo'natilganligi" %}</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody v-if="callToExams.length !== 0">
+                        <tr
+                                v-for="(callToExam, index) in callToExams"
+                                :key="callToExam.id">
+                            <td>[[ limit * currentPage - 9 + index ]]</td>
+                            <td>[[ callToExam.pupil ]]</td>
+                            <td><a
+                                    :href="[[ 'tel:+998' + callToExam.phone]]">
+                                +998[[callToExam.phone]]</a></td>
+                            <td :title="callToExam.coming_date">[[callToExam.coming_date | date]]</td>
+                            <td v-html="$options.filters.checkbox(callToExam.is_send)"></td>
+                        </tr>
+                        </tbody>
+                        <tbody v-else>
+                        <tr>
+                            <td colspan="5" class="text-center text-danger">Ma'lumot topilmadi</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <nav aria-label="Page navigation example" v-if="pages > 0">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item" :class="{disabled: currentPage == 1}">
+                            <a class="page-link" href="#" tabindex="-1"
+                               @click="currentPage = currentPage - 1">Oldingi</a>
+                        </li>
+                        <li class="page-item" :class="{active: page === currentPage}"
+                            v-for="(page, index) in displayPages">
+                            <a class="page-link" @click="changePage(page)" href="#">[[ page ]]</a>
+                        </li>
+
+                        <li class="page-item" :class="{disabled: currentPage == pages}">
+                            <a class="page-link" href="#" @click="currentPage = currentPage + 1">Keyingi</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+            <br>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
+    <!-- development version -->
+{#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+
+    <!-- production version -->
+        <script src="{% static 'vue/vue.prod.js' %}"></script>
+
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}"></script>
+    <script>
+        const App = {
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    callToExams: [],
+                    callToExam: '',
+                    date: '',
+                    search: '',
+                    currentPage: 1,
+                    pages: 1,
+                    limit: 10,
+                    offset: 0,
+                }
+            },
+
+            created() {
+                this.getcallToExamsList()
+
+            },
+            mounted() {
+
+            },
+            filters: {
+                date: function (value) {
+                    if (!value) return ''
+                    moment.locale('ru')
+                    return moment(value).format('LLL')
+                },
+                checkbox: function (value) {
+                    if (value) {
+                        return `<i class="far fa-check-circle text-success"></i>`
+                    } else {
+                        return `<i class="far fa-times-circle text-danger"></i>`
+                    }
+                }
+            },
+            computed: {
+                displayPages() {
+                    let numShown = 5;   // This sets the number of page tabs
+                    numShown = Math.min(numShown, this.pages);
+                    let first = this.currentPage - Math.floor(numShown / 2);
+                    first = Math.max(first, 1);
+                    first = Math.min(first, this.pages - numShown + 1);
+                    return [...Array(numShown)].map((k, i) => i + first);
+                }
+            },
+            methods: {
+                async getcallToExamsList() {
+
+                    await axios.get(`{% url "api_driver_license:call_to_exam_send_sms_list" %}`, {
+                        params: {
+                            limit: this.limit,
+                            offset: (this.currentPage - 1) * this.limit,
+                            date: this.date,
+                            q: this.search
+                        }
+                    })
+                        .then(res => {
+                            this.callToExams = res.data.results
+                            this.pages = Math.ceil(res.data.count / this.limit)
+
+                        })
+                        .catch(err => {
+                            error_toast()
+                        })
+                },
+                changePage(page) {
+                    this.currentPage = page
+                }
+            },
+            watch: {
+                currentPage(val) {
+                    this.getcallToExamsList()
+                },
+                date(val) {
+                    this.getcallToExamsList()
+                },
+                search(val) {
+                    this.getcallToExamsList()
+                }
+            }
+        }
+        new Vue(App)
+    </script>
+
+{% endblock js %}

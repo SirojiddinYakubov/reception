@@ -1,0 +1,350 @@
+{% extends "base_horizontal.html" %}
+{% load static i18n %}
+
+{% block meta %}
+    <title>{% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %} | E-RIB.UZ</title>
+    <meta name="title"
+          content="{% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %} | E-RIB.UZ">
+    <meta name="description"
+          content="aydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish">
+    <meta name="keywords"
+          content="aydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish">
+{% endblock meta %}
+
+{% block css %}
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        .vue-btn {
+            background: #3283f6 !important;
+            border-color: #3283f6 !important;
+            color: white !important;
+        }
+    </style>
+{% endblock css %}
+
+{% block page_title %}
+    {% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %}
+{% endblock page_title %}
+{% block content %}
+    <div id="app">
+        <div class="container">
+            <div class="row bg-auto" style="background:#fff; padding:20px;">
+                <h2 class="text-center pb-2"
+                    style="font-weight: bold">{% trans "Haydovchilik guvohnomasi imtihoni uchun o'quvchiga sms jo'natish" %} </h2>
+
+                <div class="justify-content-end row">
+                    <div class="col-12">
+                        <a class="btn btn-secondary waves-effect waves-light float-end"
+                           href="{% url 'driver_license:call_to_exam_list' %}">Jo'natilgan smslar</a>
+                    </div>
+                </div>
+                <form action="#" @submit.prevent="submitForm" method="post">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="not_copy col-12 col-form-label text-start label_required"
+                                   for="name">{% trans "F.I.O" %}</label>
+                            <input class="form-control"
+                                   v-model="form.name"
+                                   :class="{'is-invalid': $v.form.name.$error}"
+                                   placeholder="Masalan: Yoqubov Sirojiddin"
+                            />
+                            <div
+                                    v-if="$v.form.name.$dirty && !$v.form.name.required"
+                                    class="text-danger w-100" style="text-align: start">
+                                F.I.O kiritilmagan!
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="not_copy col-12 col-form-label text-start label_required"
+                                   for="phone">{% trans "Tel raqam" %}</label>
+                            <input class="form-control"
+                                   type="tel"
+                                   v-model="form.phone"
+                                   :class="{'is-invalid': $v.form.phone.$error}"
+                                   v-phone-mask
+                                   @keyup="form.phone = $event.target.value"
+                                   placeholder="+998 (__) ___-__-__"
+                            />
+                            <div
+                                    v-if="$v.form.phone.$dirty && !$v.form.phone.required"
+                                    class="text-danger w-100" style="text-align: start">
+                                Tel raqam kiritilmagan!
+                            </div>
+                            <div
+                                    v-if="$v.form.phone.$dirty && $v.form.phone.required && !$v.form.phone.phoneValidation"
+                                    class="text-danger w-100" style="text-align: start">
+                                Tel raqam to'liq kiritilmagan!
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="not_copy col-12 col-form-label text-start label_required"
+                                   for="coming_date">{% trans "Kelish sanasi" %}</label>
+                            <input class="form-control"
+                                   v-model="form.coming_date"
+                                   :class="{'is-invalid': $v.form.coming_date.$error}"
+                                   placeholder="Masalan: 15:30"
+                                   type="date"
+                            />
+                            <div
+                                    v-if="$v.form.coming_date.$dirty && !$v.form.coming_date.required"
+                                    class="text-danger w-100" style="text-align: start">
+                                Kelish sanasi kiritilmagan!
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="not_copy col-12 col-form-label text-start label_required"
+                                   for="coming_time">{% trans "Kelish vaqti" %}</label>
+                            <input class="form-control"
+                                   v-model="form.coming_time"
+                                   :class="{'is-invalid': $v.form.coming_time.$error}"
+                                   placeholder="Masalan: 15:30"
+                                   @keyup="form.coming_time = $event.target.value"
+                                   v-time_mask
+                            />
+                            <div
+                                    v-if="$v.form.coming_time.$dirty && !$v.form.coming_time.required"
+                                    class="text-danger w-100" style="text-align: start">
+                                Kelish vaqti kiritilmagan!
+                            </div>
+                            <div
+                                    v-if="$v.form.coming_time.$dirty && $v.form.coming_time.required && !$v.form.coming_time.timeValidation"
+                                    class="text-danger w-100" style="text-align: start">
+                                Kelish vaqti to'liq kiritilmagan!
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="justify-content-end row">
+                        <div class="col-12">
+                            <vue_button_spinner
+                                    type="submit"
+                                    class="btn btn-info waves-effect waves-light float-end"
+                                    :is-loading="buttonIsLoading"
+                                    :disabled="buttonIsLoading"
+                            >Sms jo'natish
+                            </vue_button_spinner>
+                        </div>
+                    </div>
+                    <br>
+                </form>
+
+            </div>
+            <br>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/vuelidate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/validators.min.js"></script>
+    <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-button-spinner@2.2.1/dist/vue-button-spinner.min.js"></script>
+
+    <!-- development version -->
+{#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+
+    <!-- production version -->
+        <script src="{% static 'vue/vue.prod.js' %}"></script>
+
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}"></script>
+    <script>
+        Vue.directive('phone-mask', {
+            params: ['mask'],
+
+            bind: function (el, binding, vNode) {
+                $(el).inputmask({
+                    mask: '+\\9\\98 (99) 999-99-99',
+                })
+            },
+            unbind: function (el) {
+                $(el).inputmask('+\\9\\98 (99) 999-99-99').remove()
+            }
+        });
+
+
+        Vue.use(window.vuelidate.default)
+        const vue_button_spinner = window["vue-button-spinner"].default
+        const {required, minLength, maxLength, requiredIf} = window.validators;
+        const App = {
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        phone: '',
+                        coming_date: '',
+                        coming_time: '',
+                    },
+                    buttonIsLoading: false
+
+                }
+            },
+            validations: {
+                form: {
+                    name: {
+                        required,
+                    },
+                    phone: {
+                        required,
+                        phoneValidation(value) {
+                            return Inputmask.unmask(value, {mask: '+\\9\\98 (99) 999-99-99'}).length === 9
+                        }
+                    },
+                    coming_date: {
+                        required
+                    },
+
+                    coming_time: {
+                        required,
+                        timeValidation(value) {
+                            return Inputmask.unmask(value, {mask: '99:99'}).length === 4
+                        }
+                    }
+                },
+            },
+            components: {
+                vue_button_spinner: vue_button_spinner
+            },
+            created() {
+
+            },
+            directives: {
+                time_mask: {
+                    bind: function (el, binding, vNode) {
+                        $(el).inputmask({
+                            'alias': 'datetime',
+                            'inputFormat': 'HH:MM'
+                        })
+                    },
+                    unbind: function (el) {
+                        $(el).inputmask('99:99').remove()
+                    }
+                }
+            },
+            mounted() {
+
+            },
+            computed: {},
+            methods: {
+                async submitForm() {
+                    this.$v.form.$touch()
+                    let unmaskedValue = Inputmask.unmask(this.form.phone, {mask: '+\\9\\98 (99) 999-99-99'})
+
+                    if (!this.$v.form.$error) {
+
+                        const {value: formValues} = Swal.fire({
+                            allowOutsideClick: false,
+                            showCancelButton: true,
+                            showLoaderOnConfirm: true,
+                            showClass: {
+                                popup: 'animate__animated animate__fadeInDown'
+                            },
+                            hideClass: {
+                                popup: 'animate__animated animate__fadeOutUp'
+                            },
+                            confirmButtonText: 'Saqlash',
+                            cancelButtonText: 'Bekor qilish',
+                            title: "Sms jo'natishni tasdiqlash",
+                            html:
+                                '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Maxfiy kodni kiriting</label>' +
+                                '<input style="margin-top: 4px" id="secret_key" class="form-control" required>',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                return [
+                                    document.getElementById('secret_key').value,
+                                ]
+                            },
+                        }).then(async (confirm) => {
+                            if (confirm.isConfirmed) {
+                                var secret_key = confirm.value[0]
+                                if (secret_key !== '') {
+                                    this.buttonIsLoading = true
+
+                                    let formData = new FormData()
+
+                                    formData.append('name', this.form.name)
+                                    formData.append('phone', unmaskedValue)
+                                    formData.append('coming_date', this.form.coming_date)
+                                    formData.append('coming_time', this.form.coming_time)
+                                    formData.append('secret_key', secret_key)
+
+                                    try {
+                                        await axios.post("{% url 'api_driver_license:call_to_exam_send_sms' %}", formData)
+                                            .then((res) => {
+                                                if (res.status === 200) {
+                                                    const Toast = Swal.mixin({
+                                                        toast: true,
+                                                        position: 'top-end',
+                                                        showConfirmButton: false,
+                                                        background: '#8ff8ac',
+                                                        timer: 5000,
+                                                        timerProgressBar: false,
+                                                        didOpen: (toast) => {
+                                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                                        },
+                                                    })
+                                                    Toast.fire({
+                                                        icon: 'success',
+                                                        title: 'Sms muvaffaqiyatli jo\'natildi!'
+                                                    })
+
+                                                    this.clearForm()
+
+                                                    this.buttonIsLoading = false
+                                                }
+                                            }).catch((error) => {
+                                                this.buttonIsLoading = false
+                                                if (error.response) {
+                                                    if (error.response.status === 400) {
+                                                        error_toast(error.response.data)
+                                                    }
+                                                } else {
+                                                    error_toast()
+                                                }
+                                            })
+                                    } catch (e) {
+                                        console.log(e)
+                                        error_toast()
+                                        this.buttonIsLoading = false
+                                    }
+                                } else {
+                                    error_toast("Maxfiy kod kiritilmagan!")
+                                }
+
+                            }
+                        })
+                    }
+
+                },
+                clearForm() {
+                    this.$v.form.$reset()
+
+                    this.form.name = ''
+                    this.form.phone = ''
+                    this.form.coming_date = ''
+                    this.form.coming_time = ''
+                }
+            },
+            watch: {}
+        }
+        new Vue(App)
+    </script>
+
+{% endblock js %}
