@@ -36,9 +36,13 @@
                     <div class="row mb-3">
                         <div class="col-3">
                             <label class="not_copy col-12 col-form-label text-start">{% trans "Imtihon kuni" %}</label>
-                            <input type="date" class="form-control" v-model="date">
+                            <input type="date" class="form-control" v-model="date" >
                         </div>
-                        <div class="col-6"></div>
+                        <div class="col-2"></div>
+                        <div class="col-2">
+                            <a href="{% url 'driver_license:call_to_exam' %}" class="btn btn-info">Sms jo'natish</a>
+                        </div>
+                        <div class="col-2"></div>
                         <div class="col-3">
                             <label
                                     class="not_copy col-12 col-form-label"
