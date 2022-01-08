@@ -160,6 +160,7 @@
                     isShowCarFieldset: false,
                     isShowSectionFieldset: false,
                     user: {},
+                    userId: '',
                     application: {},
                     region: '',
                     isShowOrganizationInput: false,
@@ -343,7 +344,7 @@
                 },
             },
             created() {
-                this.getUser()
+                this.getCurrentUser()
                 {#this.getSectionExistsRegions()#}
             },
             computed: {
@@ -436,17 +437,22 @@
 
             },
             methods: {
+                async getCurrentUser() {
+                    this.userId = await axios.get('/api/v1/user/auth/users/me')
+                        .then(res => res.data.id)
+                        .catch(err => {
+                            // swal_error(err)
+                            localStorage.removeItem('access')
+                            refreshToken()
+                        })
+                    this.getUser()
+                },
                 async getUser() {
-                    if (localStorage.getItem('userId')) {
-                        this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, localStorage.getItem('userId').toString())).then(res => res.data)
-                    } else {
-                        getCurrentUser()
-                        location.reload()
-                    }
+                    this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
                 },
 
                 async getUserOrganiztions() {
-                    this.organizations = await axios.get('{% url "api_app_creator:user_organizations_list" pk=12345 %}'.replace(/12345/, localStorage.getItem('userId').toString())).then(res => res.data)
+                    this.organizations = await axios.get('{% url "api_app_creator:user_organizations_list" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
                 },
                 sendDocumentForm() {
                     this.$v.documentForm.$touch()
