@@ -136,9 +136,9 @@
     <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 
     <!-- development version -->
-    {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+        <script src="{% static 'vue/vue.dev.js' %}"></script>
     <!-- production version -->
-    <script src="{% static 'vue/vue.prod.js' %}"></script>
+{#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
 
     <script>
 
@@ -168,9 +168,9 @@
                     organizations: [],
                     regions: [],
                     districts: [],
-                    personTypeFieldsetButtonType: 'submit',
-                    documentFieldsetButtonType: 'submit',
-                    carFieldsetButtonType: 'submit',
+                    personTypeIsComplete: false,
+                    documentFormIsComplete: false,
+                    carFormIsComplete: false,
                     documentForm: {
                         seriya: '',
                         contract_date: '',
@@ -232,6 +232,7 @@
                     addCarColorDialog: false,
                     addOrganizationDialog: false,
                     knowMadeYear: false,
+                    errorMessages: {},
                 }
             },
             components: {},
@@ -242,7 +243,8 @@
                         //     return value.length > 4
                         //  },
                         required,
-                        minLength: minLength(5)
+                        minLength: minLength(5),
+                        maxLength: maxLength(50)
                     },
                     contract_date: {
                         required,
@@ -262,11 +264,23 @@
                     type: {required},
                     fuel_type: {required},
                     body_type: {required},
-                    engine_number: {required},
+                    full_weight: {
+                        maxLength: maxLength(10)
+                    },
+                    empty_weight: {
+                        maxLength: maxLength(10)
+                    },
+                    engine_number: {
+                        required,
+                        maxLength: maxLength(50)
+                    },
                     body_number: {
                         required,
                         minLength: minLength(17),
                         maxLength: maxLength(17)
+                    },
+                    chassis_number: {
+                        maxLength: maxLength(50)
                     },
                     engine_power: {
                         required,
@@ -277,23 +291,27 @@
                     old_technical_passport: {
                         required: requiredIf(vm => {
                             return !vm.lost_technical_passport
-                        })
+                        }),
+                        maxLength: maxLength(30)
                     },
                     lost_number: {required},
                     old_number: {
                         required: requiredIf(vm => {
                             return !vm.lost_number
-                        })
+                        }),
+                        maxLength: maxLength(15)
                     },
                     saved_number: {
                         required: requiredIf(vm => {
                             return vm.is_saved_number
-                        })
+                        }),
+                        maxLength: maxLength(15)
                     },
                     auction_number: {
                         required: requiredIf(vm => {
                             return vm.is_auction
-                        })
+                        }),
+                        maxLength: maxLength(15)
                     },
                     is_auction: {required},
                     is_saved_number: {required},
@@ -305,7 +323,8 @@
                     another_car_number: {
                         required: requiredIf(vm => {
                             return vm.is_another_car
-                        })
+                        }),
+                        maxLength: maxLength(15)
                     }
 
                 },
@@ -427,7 +446,7 @@
                 sendDocumentForm() {
                     this.$v.documentForm.$touch()
                     if (!this.$v.documentForm.$error) {
-                        this.documentFieldsetButtonType = 'button'
+                        this.documentFormIsComplete = true
 
                         this.isShowDocumentFieldset = false
                         this.isShowCarFieldset = true
@@ -474,11 +493,9 @@
                     this.districts = await axios.get('{% url "api_user:region_districts_list" 12345 %}'.replace(/12345/, id.toString())).then(res => res.data)
                 },
 
-                changeFieldset(event) {
-                    if (event.target.type === 'button') {
-                        this.isShowDocumentFieldset = false
-                        this.isShowCarFieldset = true
-                    }
+                changeFieldset(first, second) {
+                    this.$set(this, first, true)
+                    this.$set(this, second, false)
                 },
                 upper(e) {
                     e.target.value = e.target.value.toUpperCase()
@@ -543,7 +560,7 @@
                     if (!this.$v.organization.$error) {
                         this.isShowPersonTypeFieldset = false
                         this.isShowDocumentFieldset = true
-                        this.personTypeFieldsetButtonType = 'button'
+                        this.personTypeIsComplete = true
                     }
                 },
                 organizationResetForm() {
@@ -667,8 +684,7 @@
                                     console.log(res)
                                     if (res.status === 201) {
 
-                                        this.carFieldsetButtonType = 'button'
-
+                                        this.carFormIsComplete = true
 
                                         this.isShowCarFieldset = false
                                         this.isShowSectionFieldset = true
@@ -677,10 +693,11 @@
                                     }
                                 })
                                 .catch((error) => {
-                                    console.log(error.response)
                                     if (error.response) {
                                         if (error.response.status === 400) {
-                                            swal_error(error.response.data[0])
+                                            for (const [key, value] of Object.entries(error.response.data)) {
+                                                this.$set(this.errorMessages, key, value)
+                                            }
                                         }
                                     }
                                 })
@@ -704,31 +721,39 @@
                         this.$v.organization.$reset()
                     }
                 },
-                'carForm.device': (val) => {
-                    swal.fire(
-                        'Ogohlantirish',
-                        'Agarda sizni transport vositangizda qo\'shimcha qayta jihoz mavjud bo\'lsa (gazdan tashqari) unda ushbu ro\'yhatdan uni tanlang. Agar qo\'shimcha jihoz ro\'yhatda bo\'lmasa, unda 972800809 raqamiga murojaat eting.',
-                        'warning',
-                    )
+                'carForm.device': (newVal, oldVal) => {
+                    if (oldVal.length === 0) {
+                        swal.fire(
+                            'Ogohlantirish',
+                            'Agarda sizni transport vositangizda qo\'shimcha qayta jihoz mavjud bo\'lsa (gazdan tashqari) unda ushbu ro\'yhatdan uni tanlang. Agar qo\'shimcha jihoz ro\'yhatda bo\'lmasa, unda 972800809 raqamiga murojaat eting.',
+                            'warning',
+                        )
+                    }
                 },
                 region(val) {
                     if (val) {
                         this.getSections(val)
                     }
                 },
-                isShowCarFieldset() {
-                    this.getCarModels()
-                    this.getTypes()
-                    this.getFuelTypes()
-                    this.getBodyTypes()
-                    this.getColors()
-                    this.getDevices()
+                isShowCarFieldset(val) {
+                    if (val) {
+                        this.getCarModels()
+                        this.getTypes()
+                        this.getFuelTypes()
+                        this.getBodyTypes()
+                        this.getColors()
+                        this.getDevices()
+                    }
                 },
-                isShowSectionFieldset() {
-                    this.getSectionExistsRegions()
+                isShowSectionFieldset(val) {
+                    if (val) {
+                        this.getSectionExistsRegions()
+                    }
                 },
-                addOrganizationDialog() {
-                    this.getRegions()
+                addOrganizationDialog(val) {
+                    if (val) {
+                        this.getRegions()
+                    }
                 },
                 'organizationForm.legal_address_region': function (region) {
                     if (region) {

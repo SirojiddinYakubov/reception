@@ -1,15 +1,8 @@
 {% load static i18n %}
 
-
 <fieldset id="car_fieldset" v-show="isShowCarFieldset">
     <legend>Transport vositasi</legend>
-
-    <form action="#" @submit.prevent="sendCarForm" method="post">
-        <input type='hidden' value="0" name="person_type">
-        <input type='hidden' value="" name="organization">
-        <input type='hidden' :value="documentForm.seriya.toUpperCase()" name="seriya">
-        <input type='hidden' :value="documentForm.contract_date" name="contract_date">
-
+    <form @keypress.enter.prevent="!carFormIsComplete ? sendCarForm() : ''">
         <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
             maydonlarni to'ldirish majburiy.</p>
         </div>
@@ -29,11 +22,12 @@
                             placeholder="Model nomini qidiring . . . "
                             class="form-control"
                             :class="{'v-error': $v.carForm.model.$error}"
+                            :disabled="carFormIsComplete"
                     >
                         <span slot="no-options">Siz izlayotgan transport vositasi modeli topilmadi! <a href="#"
                                                                                                        @click="addCarModelDialog = true">yangi model qo'shish</a></span>
                     </v-select>
-                    <div class="input-group-append" @click="addCarModelDialog = true">
+                    <div v-if="!carFormIsComplete" class="input-group-append" @click="addCarModelDialog = true">
                         <span class="input-group-text" style="height: 32px !important;">
                             <i class="fas fa-plus"></i>
                         </span>
@@ -58,6 +52,7 @@
                         placeholder="Transport vositasi turini qidiring . . . "
                         class="form-control"
                         :class="{'v-error': $v.carForm.type.$error}"
+                        :disabled="carFormIsComplete"
                 >
                     <span slot="no-options">Siz izlayotgan transport vositasi turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -80,6 +75,7 @@
                         placeholder="Transport vositasi yoqilg'i turini qidiring . . . "
                         class="form-control"
                         :class="{'v-error': $v.carForm.fuel_type.$error}"
+                        :disabled="carFormIsComplete"
                 >
                     <span slot="no-options">Siz izlayotgan yoqilg'i turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -102,6 +98,7 @@
                         placeholder="Kuzov turini qidiring . . . "
                         class="form-control"
                         :class="{'v-error': $v.carForm.body_type.$error}"
+                        :disabled="carFormIsComplete"
                 >
                     <span slot="no-options">Siz izlayotgan kuzov turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -122,11 +119,19 @@
                        placeholder="{% trans 'Masalan: WZX5645645456' %}"
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.engine_number.$error}"
+                       :disabled="carFormIsComplete"
                 >
                 <div
                         v-if="$v.carForm.engine_number.$dirty && !$v.carForm.engine_number.required"
                         class="text-danger w-100" style="text-align: start">
                     Dvigitel raqami kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.engine_number.$dirty && !$v.carForm.engine_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 50 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.engine_number]]
                 </div>
             </div>
         </div>
@@ -141,6 +146,7 @@
                        placeholder="{% trans 'Masalan: XWB6595645456' %}"
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.body_number.$error}"
+                       :disabled="carFormIsComplete"
                 >
                 <div
                         v-if="$v.carForm.body_number.$dirty && !$v.carForm.body_number.required"
@@ -151,6 +157,9 @@
                         v-if="$v.carForm.body_number.$dirty && !($v.carForm.body_number.minLength && $v.carForm.body_number.maxLength)"
                         class="text-danger w-100" style="text-align: start">
                     Kuzov raqami 17 xonali bo'lishi kerak!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.body_number]]
                 </div>
             </div>
         </div>
@@ -164,7 +173,15 @@
                        v-model.trim="carForm.chassis_number"
                        placeholder="{% trans 'Masalan: RAQAMSIZ' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                 >
+                <div v-if="$v.carForm.chassis_number.$dirty && !$v.carForm.chassis_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 50 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.chassis_number]]
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -177,23 +194,43 @@
                        class="form-control"
                        placeholder="{% trans 'Masalan: 20500' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                 >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
                     kiriting!</p>
+                <div v-if="$v.carForm.full_weight.$dirty && !$v.carForm.full_weight.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 10 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.full_weight]]
+                </div>
             </div>
         </div>
         <div class="row mb-3">
             <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                    for="empty_weight">{% trans 'Yuksiz vazni' %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 empty_weight">
-                <input type="number" id="empty_weight" v-model.number="carForm.empty_weight"
-                       class="form-control"
-                       placeholder="{% trans 'Masalan: 19500' %}"
-                       autocomplete="off">
+                <input
+                        type="number"
+                        id="empty_weight"
+                        v-model.number="carForm.empty_weight"
+                        class="form-control"
+                        placeholder="{% trans 'Masalan: 19500' %}"
+                        autocomplete="off"
+                        :disabled="carFormIsComplete"
+                >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
                     kiriting!</p>
+                <div v-if="$v.carForm.empty_weight.$dirty && !$v.carForm.empty_weight.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 10 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.empty_weight]]
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -207,6 +244,7 @@
                        placeholder="{% trans 'Masalan: 120' %}"
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.engine_power.$error}"
+                       :disabled="carFormIsComplete"
                 >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
@@ -220,6 +258,9 @@
                         v-if="$v.carForm.engine_power.$dirty && !$v.carForm.engine_power.maxLength"
                         class="text-danger w-100" style="text-align: start">
                     Dvigatel quvvati eng yuqori 5 xonali bo'lishi mumkin!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.engine_power]]
                 </div>
             </div>
         </div>
@@ -236,13 +277,13 @@
                             placeholder="Rangni qidiring . . . "
                             class="form-control"
                             :class="{'v-error': $v.carForm.color.$error}"
+                            :disabled="carFormIsComplete"
                     >
                         <span slot="no-options">Siz izlayotgan rang topilmadi! <a href="#"
                                                                                   @click="addCarColorDialog = true">yangi rang qo'shish</a></span>
                     </v-select>
 
-
-                    <div class="input-group-append" @click="addCarColorDialog = true">
+                    <div v-if="!carFormIsComplete" class="input-group-append" @click="addCarColorDialog = true">
                         <span class="input-group-text">
                             <i class="fas fa-plus"></i>
                         </span>
@@ -262,15 +303,23 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="knowMadeYear_yes"
-                               v-model="knowMadeYear" :value="true"
-                               class="form-check-input">
+                        <input type="radio"
+                               id="knowMadeYear_yes"
+                               v-model="knowMadeYear"
+                               :value="true"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                        >
                         <label class="form-check-label" for="knowMadeYear_yes">Ha, bilaman</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
                         <input type="radio" id="knowMadeYear_no"
-                               v-model="knowMadeYear" :value="false" checked
-                               class="form-check-input">
+                               v-model="knowMadeYear"
+                               :value="false"
+                               checked
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                        >
                         <label class="form-check-label" for="knowMadeYear_no">Yo'q, bilmayman</label>
                     </div>
 
@@ -292,7 +341,9 @@
                                    ref="day"
                                    class="form-control"
                                    v-model="carForm.day"
-                                   placeholder="Kunni tanlang">
+                                   placeholder="Kunni tanlang"
+                                   :disabled="carFormIsComplete"
+                            >
                             <div class="input-group-text icon">
                                 <i class="fas fa-calendar-day"></i>
                             </div>
@@ -305,7 +356,9 @@
                                    ref="month"
                                    class="form-control"
                                    v-model="carForm.month"
-                                   placeholder="Oyni tanlang">
+                                   placeholder="Oyni tanlang"
+                                   :disabled="carFormIsComplete"
+                            >
                             <div class="input-group-text icon">
                                 <i class="fas fa-calendar-day"></i>
                             </div>
@@ -321,6 +374,7 @@
                                     v-model="carForm.year"
                                     placeholder="Yil tanlang"
                                     :class="{'is-invalid': $v.carForm.year.$error}"
+                                    :disabled="carFormIsComplete"
                             >
                             <div class="input-group-text icon">
                                 <i class="fas fa-calendar-day"></i>
@@ -343,21 +397,27 @@
             <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_relative_yes" v-model="carForm.is_relative"
-                               :value="true"
-                               class="form-check-input">
+                        <input
+                                type="radio" id="is_relative_yes"
+                                v-model="carForm.is_relative"
+                                :value="true"
+                                class="form-check-input"
+                                :disabled="carFormIsComplete"
+                        >
                         <label class="form-check-label" for="is_relative_yes">Yaqin qarindosh</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_relative_no" v-model="carForm.is_relative"
-                               :value="false"
-                               class="form-check-input">
+                        <input
+                                type="radio"
+                                id="is_relative_no"
+                                v-model="carForm.is_relative"
+                                :value="false"
+                                class="form-check-input"
+                                :disabled="carFormIsComplete"
+                        >
                         <label class="form-check-label" for="is_relative_no">Yaqin qarindosh emas</label>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
         <div class="row mb-3">
@@ -366,14 +426,21 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="lost_technical_passport_yes"
-                               v-model="carForm.lost_technical_passport" :value="true"
-                               class="form-check-input">
+                        <input type="radio"
+                               id="lost_technical_passport_yes"
+                               v-model="carForm.lost_technical_passport"
+                               :value="true"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                        >
                         <label class="form-check-label" for="lost_technical_passport_yes">Ha, yo'qolgan</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="lost_technical_passport_no"
-                               v-model="carForm.lost_technical_passport" :value="false" checked
+                        <input type="radio"
+                               id="lost_technical_passport_no"
+                               v-model="carForm.lost_technical_passport"
+                               :value="false" checked
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="lost_technical_passport_no">Yo'q, yo'qolmagan</label>
                     </div>
@@ -391,11 +458,19 @@
                        placeholder="{% trans 'Masalan: AAF4567895' %}"
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.old_technical_passport.$error}"
+                       :disabled="carFormIsComplete"
                 >
                 <div
                         v-if="$v.carForm.old_technical_passport.$dirty && !$v.carForm.old_technical_passport.required"
                         class="text-danger w-100" style="text-align: start">
                     Qayd etish guvohnomasi seriyasi va raqami kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.old_technical_passport.$dirty && $v.carForm.old_technical_passport.required && !$v.carForm.old_technical_passport.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 30 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.old_technical_passport]]
                 </div>
             </div>
         </div>
@@ -406,14 +481,19 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="save_old_number_yes"
-                               v-model="carForm.save_old_number" :value="true"
+                        <input type="radio"
+                               id="save_old_number_yes"
+                               v-model="carForm.save_old_number"
+                               :value="true"
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="save_old_number_yes">Ha, saqlab qolaman</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
                         <input type="radio" id="save_old_number_no"
-                               v-model="carForm.save_old_number" :value="false"
+                               v-model="carForm.save_old_number"
+                               :value="false"
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="save_old_number_no">Yo'q, saqlab qolmayman</label>
                     </div>
@@ -428,13 +508,17 @@
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
                         <input type="radio" id="lost_number_yes"
-                               v-model="carForm.lost_number" :value="true"
+                               v-model="carForm.lost_number"
+                               :value="true"
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="lost_number_yes">Ha, yo'qolgan</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
                         <input type="radio" id="lost_number_no"
-                               v-model="carForm.lost_number" :value="false"
+                               v-model="carForm.lost_number"
+                               :value="false"
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="lost_number_no">Yo'q, yo'qolmagan</label>
                     </div>
@@ -449,14 +533,22 @@
                 <input type="text" id="old_number"
                        v-model="carForm.old_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.old_number.$error}"
                 >
                 <div
                         v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.required"
                         class="text-danger w-100" style="text-align: start">
                     Transport vositasidagi DRB kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.old_number]]
                 </div>
             </div>
         </div>
@@ -466,14 +558,20 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_old_number_yes"
-                               v-model="carForm.is_old_number" :value="true"
+                        <input type="radio"
+                               id="is_old_number_yes"
+                               v-model="carForm.is_old_number"
+                               :value="true"
+                               :disabled="carFormIsComplete"
                                class="form-check-input">
                         <label class="form-check-label" for="is_old_number_yes">Ha, eski</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_old_number_no" v-model="carForm.is_old_number"
-                               class="form-check-input" :value="false">
+                        <input type="radio" id="is_old_number_no"
+                               v-model="carForm.is_old_number"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="false">
                         <label class="form-check-label" for="is_old_number_no">Yo'q, eski emas</label>
                     </div>
 
@@ -488,13 +586,20 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_saved_number_yes" v-model="carForm.is_saved_number"
-                               class="form-check-input" :value="true">
+                        <input type="radio" id="is_saved_number_yes"
+                               v-model="carForm.is_saved_number"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="true">
                         <label class="form-check-label" for="is_saved_number_yes">Ha, saqlanyapti</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_saved_number_no" v-model="carForm.is_saved_number"
-                               class="form-check-input" :value="false">
+                        <input type="radio"
+                               id="is_saved_number_no"
+                               v-model="carForm.is_saved_number"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="false">
                         <label class="form-check-label" for="is_saved_number_no">Yo'q, saqlanmayapti</label>
                     </div>
 
@@ -508,14 +613,19 @@
                 <input type="text" id="saved_number"
                        v-model="carForm.saved_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.saved_number.$error}"
                 >
                 <div
                         v-if="$v.carForm.saved_number.$dirty && !$v.carForm.saved_number.required"
                         class="text-danger w-100" style="text-align: start">
                     Zahiradagi DRB kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.saved_number.$dirty && $v.carForm.saved_number.required && !$v.carForm.saved_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
                 </div>
             </div>
         </div>
@@ -525,13 +635,21 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_another_car_yes" v-model="carForm.is_another_car"
-                               class="form-check-input" :value="true">
+                        <input type="radio"
+                               id="is_another_car_yes"
+                               v-model="carForm.is_another_car"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="true">
                         <label class="form-check-label" for="is_another_car_number_yes">Ha, olmoqchiman</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_another_car_no" v-model="carForm.is_another_car"
-                               class="form-check-input" :value="false">
+                        <input type="radio"
+                               id="is_another_car_no"
+                               v-model="carForm.is_another_car"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="false">
                         <label class="form-check-label" for="is_another_car_no">Yo'q, olmayman</label>
                     </div>
 
@@ -545,14 +663,19 @@
                 <input type="text" id="another_car_number"
                        v-model="carForm.another_car_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.another_car_number.$error}"
                 >
                 <div
                         v-if="$v.carForm.another_car_number.$dirty && !$v.carForm.another_car_number.required"
                         class="text-danger w-100" style="text-align: start">
                     Boshqa transport vositasitangizdagi DRB kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.another_car_number.$dirty && !$v.carForm.another_car_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
                 </div>
             </div>
         </div>
@@ -562,13 +685,20 @@
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <div class="row justify-content-start mt-1">
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_auction_yes" v-model="carForm.is_auction"
-                               class="form-check-input" :value="true">
+                        <input type="radio"
+                               id="is_auction_yes"
+                               v-model="carForm.is_auction"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="true">
                         <label class="form-check-label" for="is_auction_yes">Ha, auksiondan olingan</label>
                     </div>
                     <div class="col-6 col-lg-4 col-xl-4 text-start">
-                        <input type="radio" id="is_auction_no" v-model="carForm.is_auction"
-                               class="form-check-input" :value="false">
+                        <input type="radio" id="is_auction_no"
+                               v-model="carForm.is_auction"
+                               class="form-check-input"
+                               :disabled="carFormIsComplete"
+                               :value="false">
                         <label class="form-check-label" for="is_auction_no">Yo'q, auksiondan olinmagan</label>
                     </div>
 
@@ -585,14 +715,19 @@
                 <input type="text" id="auction_number"
                        v-model="carForm.auction_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 80979HBA' %}"
+                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
                        autocomplete="off"
+                       :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.auction_number.$error}"
                 >
                 <div
-                        v-if="$v.carForm.auction_number.$dirty && $v.carForm.auction_number.$error"
+                        v-if="$v.carForm.auction_number.$dirty && !$v.carForm.auction_number.required"
                         class="text-danger w-100" style="text-align: start">
                     Auksiondan olingan DRB kiritilmagan!
+                </div>
+                <div v-if="$v.carForm.auction_number.$dirty && $v.carForm.auction_number.required && !$v.carForm.auction_number.maxLength"
+                     class="text-danger w-100" style="text-align: start">
+                    Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
                 </div>
             </div>
         </div>
@@ -600,8 +735,13 @@
             <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start"
                    for="device">{% trans "Qayta jihozlash turlari" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                <v-multiselect v-model="carForm.device" label="title" track-by="id"
-                               placeholder="Alohida belgini tanlang . . ." open-direction="top" :options="devices"
+                <v-multiselect v-model="carForm.device"
+                               label="title"
+                               track-by="id"
+                               placeholder="Alohida belgini tanlang . . ."
+                               open-direction="top"
+                               :options="devices"
+                               :disabled="carFormIsComplete"
                                :multiple="true">
                     <span slot="noResult">Siz izlayotgan alohida belgi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-multiselect>
@@ -615,7 +755,8 @@
                 >Oldingi
                 </button>
                 {#                <button type="button" id="fake" class="btn btn-danger">Fake</button>#}
-                <button :type="carFieldsetButtonType"
+                <button type="button"
+                        @click="carFormIsComplete ? changeFieldset('isShowCarFieldset', 'isShowSectionFieldset') : sendCarForm()"
                         class="btn btn-info waves-effect waves-light float-end next">Keyingi
                 </button>
             </div>
