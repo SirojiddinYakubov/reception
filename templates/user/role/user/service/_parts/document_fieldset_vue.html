@@ -2,7 +2,7 @@
 
 <fieldset id="document_fieldset" v-if="isShowDocumentFieldset">
     <legend>{{ service.short_title }}</legend>
-    <form action="#" id="save_document_form" @submit.prevent="sendDocumentForm()">
+    <form @keypress.enter.prevent="!documentFormIsComplete ? sendDocumentForm() : ''">
         <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
             maydonlarni to'ldirish majburiy.</p>
         </div>
@@ -16,10 +16,11 @@
                 <input type="text"
                        id="seriya"
                        name="seriya"
-                       v-model.trim="documentForm.seriya"
+                       v-model="documentForm.seriya"
                        class="form-control text-uppercase"
                        :class="$v.documentForm.seriya.$error  ? 'is-invalid' : ''"
-                       placeholder="{% trans 'Masalan: AAC123456' %}"
+                       placeholder="{% trans 'Masalan: ASH 1234567 TN' %}"
+                       :disabled="documentFormIsComplete"
                        autocomplete="off">
                 <div v-if="$v.documentForm.seriya.$dirty && !$v.documentForm.seriya.required"
                      class="invalid-feedback" style="text-align: start">
@@ -28,6 +29,10 @@
                 <div v-if="$v.documentForm.seriya.$dirty && !$v.documentForm.seriya.minLength"
                      class="invalid-feedback" style="text-align: start">
                     Seriya kamida 5 ta harf yoki raqamdan iborat bo'lishi kerak!
+                </div>
+                <div v-if="$v.documentForm.seriya.$dirty && !$v.documentForm.seriya.maxLength"
+                     class="invalid-feedback" style="text-align: start">
+                    Seriya ko'pi bilan 50 ta harf yoki raqamdan iborat bo'lishi mumkin!
                 </div>
             </div>
         </div>
@@ -41,8 +46,10 @@
                         name="contract_date"
                         v-model="documentForm.contract_date"
                         :class="$v.documentForm.contract_date.$error  ? 'is-invalid' : ''"
-                        class="form-control">
-                 <div v-if="$v.documentForm.contract_date.$dirty && !$v.documentForm.contract_date.required"
+                        class="form-control"
+                        :disabled="documentFormIsComplete"
+                >
+                <div v-if="$v.documentForm.contract_date.$dirty && !$v.documentForm.contract_date.required"
                      class="invalid-feedback" style="text-align: start">
                     Sana kirilmagan!
                 </div>
@@ -55,9 +62,10 @@
                         class="btn btn-secondary waves-effect waves-light float-start"
                 >Oldingi
                 </button>
-                <button :type="documentFieldsetButtonType"
+                <button
+                        type="button"
                         class="btn btn-info waves-effect waves-light float-end"
-                        @click="changeFieldset($event)"
+                        @click="documentFormIsComplete ? changeFieldset('isShowCarFieldset','isShowDocumentFieldset') : sendDocumentForm()"
                 >Keyingi
                 </button>
             </div>

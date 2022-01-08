@@ -318,7 +318,7 @@ class Car(models.Model):
     type = models.ForeignKey('CarType', on_delete=models.SET_NULL, blank=True, null=True)
     device = models.ManyToManyField('Device', blank=True)
     body_number = models.CharField(max_length=50, blank=True)
-    chassis_number = models.CharField(max_length=255, blank=True, null=True)
+    chassis_number = models.CharField(max_length=50, blank=True, null=True)
     engine_number = models.CharField(max_length=50, blank=True)
     made_year = models.DateField(null=True, blank=True)
     color = models.ForeignKey('Color', on_delete=models.SET_NULL, null=True, blank=True,

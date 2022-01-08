@@ -2,14 +2,16 @@
 
 <fieldset id="person_type_fieldset" v-if="isShowPersonTypeFieldset">
     <legend>Shaxs turi</legend>
-    <form @submit.prevent="sendPersonTypeForm" >
-
+    <form @keypress.enter.prevent="!personTypeIsComplete ? sendPersonTypeForm() : ''">
         <div id="account_div">
             <div class="row mb-3">
                 <label class="col-form-label not_copy text-start label_required">Arizachi shaxsini tanlang</label>
                 <div class="col-12">
-                    <select class="form-select" style="width: 100%;" id="person_type" name="person_type"
+                    <select class="form-select"
+                            style="width: 100%;" id="person_type"
+                            name="person_type"
                             v-model="person_type"
+                            :disabled="personTypeIsComplete"
                             required>
                         <option value="0">Jismoniy shaxs</option>
                         <option value="1">Yuridik shaxs</option>
@@ -20,14 +22,17 @@
             <div class="row mb-3">
                 <label class="col-form-label not_copy text-start label_required">Arizachi</label>
                 <div class="col-12">
-                    <input type="text" readonly class="form-control"
+                    <input type="text"
+                           readonly
+                           class="form-control"
                            :value="user.last_name + ' ' + user.first_name + ' ' + user.middle_name">
                 </div>
             </div>
 
             <div id="legal_div" v-if="isShowOrganizationInput">
                 <div class="row mb-3">
-                    <label for="organization" class="col-form-label not_copy text-start label_required">Ariza ushbu maydonda tanlangan
+                    <label for="organization" class="col-form-label not_copy text-start label_required">Ariza ushbu
+                        maydonda tanlangan
                         tashkilot nomidan jo'natiladi</label>
                     <div class="col-12">
                         <div class="input-group mb-3">
@@ -39,13 +44,16 @@
                                     placeholder="Tashkilotni tanlang . . . "
                                     class="form-control"
                                     :class="{'v-error': $v.organization.$error}"
+                                    :disabled="personTypeIsComplete"
                             >
-                        <span slot="no-options">Tashkilot topilmadi! <a href="#"  @click="addOrganizationDialog = true">yangi tashkilot qo'shish</a></span>
+                                <span slot="no-options">Tashkilot topilmadi! <a href="#"
+                                                                                @click="addOrganizationDialog = true">yangi tashkilot qo'shish</a></span>
                             </v-select>
-                            <div class="input-group-append" @click="addOrganizationDialog = true">
-                        <span class="input-group-text" style="height: 32px !important;">
-                            <i class="fas fa-plus"></i>
-                        </span>
+                            <div v-if="!personTypeIsComplete" class="input-group-append"
+                                 @click="addOrganizationDialog = true">
+                                <span class="input-group-text" style="height: 32px !important;">
+                                    <i class="fas fa-plus"></i>
+                                </span>
                             </div>
                             <div
                                     v-if="$v.organization.$dirty && !$v.organization.required"
@@ -61,10 +69,12 @@
                 <div class="col-12">
                     <button type="button"
                             @click="()=>{isShowPersonTypeFieldset = false; isShowApplicantFieldset = true}"
-                            class="btn btn-secondary waves-effect waves-light float-start prev">
+                            class="btn btn-secondary waves-effect waves-light float-start">
                         Oldingi
                     </button>
-                    <button :type="personTypeFieldsetButtonType"
+                    <button
+                            type="button"
+                            @click="personTypeIsComplete ? changeFieldset('isShowDocumentFieldset', 'isShowPersonTypeFieldset') : sendPersonTypeForm()"
                             class="btn btn-info waves-effect waves-light float-end">Keyingi
                     </button>
                 </div>
