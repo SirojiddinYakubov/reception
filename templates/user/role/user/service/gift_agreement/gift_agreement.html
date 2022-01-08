@@ -441,6 +441,7 @@
                         this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, localStorage.getItem('userId').toString())).then(res => res.data)
                     } else {
                         getCurrentUser()
+                        this.getUser()
                     }
                 },
 

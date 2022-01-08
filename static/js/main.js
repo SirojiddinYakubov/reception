@@ -1674,7 +1674,6 @@ async function getCurrentUser() {
         .then(res => {
             localStorage.setItem('userId', res.data.id)
             localStorage.setItem('userUsername', res.data.username)
-            location.reload()
         })
         .catch(err => {
             // swal_error(err)
