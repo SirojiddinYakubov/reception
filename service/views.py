@@ -253,7 +253,7 @@ class ContractOfSale(ServiceCustomMixin):
 
 
 class GiftAgreement(ServiceCustomMixin):
-    template_name = 'service/gift_agreement/gift_agreement.html'
+    template_name = 'user/role/user/service/gift_agreement/gift_agreement.html'
 
 
     def get_template_names(self):
