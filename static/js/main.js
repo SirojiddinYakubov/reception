@@ -1652,6 +1652,7 @@ async function setAxiosHeader() {
         // Apply to every request
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access');
     } else {
+        alert('topilmadi')
         refreshToken()
     }
 
@@ -1688,7 +1689,6 @@ async function refreshToken() {
         .then(function (res) {
             localStorage.setItem('access', res.data.access)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access;
-            getCurrentUser()
             location.reload()
         })
         .catch(function (error) {
