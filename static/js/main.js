@@ -1652,6 +1652,7 @@ async function setAxiosHeader() {
         && localStorage.getItem('access') !== "undefined") {
         // Apply to every request
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+        axios.defaults.headers.common['Content-Type'] = 'application/json';
     } else {
         refreshToken()
     }

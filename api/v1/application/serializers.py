@@ -32,9 +32,15 @@ class CreateApplicationSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
+        errors = dict()
+
         if data.get('person_type', None):
             if not data.get('organization'):
-                raise serializers.ValidationError('Tashkilot topilmadi!')
+                errors.update(organization=["Ushbu maydon to'ldirilishi shart."])
+
+        if errors.__len__() > 0:
+            raise serializers.ValidationError(errors)
+
         return data
 
     def create(self, validated_data):

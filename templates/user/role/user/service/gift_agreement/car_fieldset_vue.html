@@ -1,6 +1,6 @@
 {% load static i18n %}
 
-<fieldset ref="car_fieldset" v-show="isShowCarFieldset" >
+<fieldset ref="car_fieldset" v-show="isShowCarFieldset">
     <legend>Transport vositasi</legend>
     <form @keypress.enter.prevent="!carFormIsComplete ? sendCarForm() : ''">
         <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
@@ -13,7 +13,7 @@
                    for="car">{% trans 'Transport vositasi modelini tanlang' %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 car">
 
-                <div class="input-group mb-3" >
+                <div class="input-group mb-3">
 
                     <v-select
                             v-model="carForm.model"
@@ -135,6 +135,10 @@
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 50 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
                 </div>
+                <div v-if="$v.carForm.engine_number.$dirty && !$v.carForm.engine_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
+                </div>
                 <div class="text-danger" style="text-align: start">
                     [[errorMessages.engine_number]]
                 </div>
@@ -164,6 +168,10 @@
                         class="text-danger w-100" style="text-align: start">
                     Kuzov raqami 17 xonali bo'lishi kerak!
                 </div>
+                <div v-if="$v.carForm.body_number.$dirty && !$v.carForm.body_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
+                </div>
                 <div class="text-danger" style="text-align: start">
                     [[errorMessages.body_number]]
                 </div>
@@ -185,6 +193,10 @@
                 <div v-if="$v.carForm.chassis_number.$dirty && !$v.carForm.chassis_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 50 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.chassis_number.$dirty && !$v.carForm.chassis_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
                 </div>
                 <div class="text-danger" style="text-align: start">
                     [[errorMessages.chassis_number]]
@@ -464,7 +476,7 @@
                    for="old_technical_passport">{% trans "Qayd etish guvohnomasi seriyasi va raqami" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <input type="text" id="old_technical_passport"
-                       v-model="carForm.old_technical_passport"
+                       v-model.trim="carForm.old_technical_passport"
                        class="form-control text-uppercase"
                        placeholder="{% trans 'Masalan: AAF4567895' %}"
                        autocomplete="off"
@@ -480,6 +492,10 @@
                 <div v-if="$v.carForm.old_technical_passport.$dirty && $v.carForm.old_technical_passport.required && !$v.carForm.old_technical_passport.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 30 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.old_technical_passport.$dirty && !$v.carForm.old_technical_passport.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
                 </div>
                 <div class="text-danger" style="text-align: start">
                     [[errorMessages.old_technical_passport]]
@@ -543,9 +559,9 @@
                    for="old_number">{% trans "Transport vositasidagi DRB" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <input type="text" id="old_number"
-                       v-model="carForm.old_number"
+                       v-model.trim="carForm.old_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
+                       placeholder="{% trans 'Masalan: 01K979AB' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.old_number.$error}"
@@ -559,6 +575,10 @@
                 <div v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
                 </div>
                 <div class="text-danger" style="text-align: start">
                     [[errorMessages.old_number]]
@@ -624,9 +644,9 @@
                    for="saved_number">{% trans "Zahiradagi DRB" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <input type="text" id="saved_number"
-                       v-model="carForm.saved_number"
+                       v-model.trim="carForm.saved_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
+                       placeholder="{% trans 'Masalan: 01K979AB' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.saved_number.$error}"
@@ -640,6 +660,13 @@
                 <div v-if="$v.carForm.saved_number.$dirty && $v.carForm.saved_number.required && !$v.carForm.saved_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.saved_number.$dirty && !$v.carForm.saved_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.saved_number]]
                 </div>
             </div>
         </div>
@@ -675,9 +702,9 @@
                    for="saved_number">{% trans "Boshqa transport vositasitangizdagi DRB" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <input type="text" id="another_car_number"
-                       v-model="carForm.another_car_number"
+                       v-model.trim="carForm.another_car_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
+                       placeholder="{% trans 'Masalan: 01K979AB' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.another_car_number.$error}"
@@ -691,6 +718,13 @@
                 <div v-if="$v.carForm.another_car_number.$dirty && !$v.carForm.another_car_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.another_car_number.$dirty && !$v.carForm.another_car_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
+                </div>
+                <div class="text-danger" style="text-align: start">
+                    [[errorMessages.another_car_number]]
                 </div>
             </div>
         </div>
@@ -728,9 +762,9 @@
                    for="auction_number">{% trans "Auksiondan olingan DRB" %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                 <input type="text" id="auction_number"
-                       v-model="carForm.auction_number"
+                       v-model.trim="carForm.auction_number"
                        class="form-control text-uppercase"
-                       placeholder="{% trans 'Masalan: 01 K 979 AB' %}"
+                       placeholder="{% trans 'Masalan: 01K979AB' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.auction_number.$error}"
@@ -744,6 +778,13 @@
                 <div v-if="$v.carForm.auction_number.$dirty && $v.carForm.auction_number.required && !$v.carForm.auction_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
                     Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
+                </div>
+                <div v-if="$v.carForm.auction_number.$dirty && !$v.carForm.auction_number.alphaNum"
+                     class="text-danger w-100" style="text-align: start">
+                    Faqat harf va raqam kiriting!
+                </div>
+                 <div class="text-danger" style="text-align: start">
+                    [[errorMessages.auction_number]]
                 </div>
             </div>
         </div>

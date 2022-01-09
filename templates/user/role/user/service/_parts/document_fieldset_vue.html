@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <fieldset id="document_fieldset" v-if="isShowDocumentFieldset">
-    <legend>{{ service.short_title }}</legend>
+    <legend>{% trans "Notarius ma'lumotlari" %}</legend>
     <form @keypress.enter.prevent="!documentFormIsComplete ? sendDocumentForm() : ''">
         <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
             maydonlarni to'ldirish majburiy.</p>
@@ -52,6 +52,10 @@
                 <div v-if="$v.documentForm.contract_date.$dirty && !$v.documentForm.contract_date.required"
                      class="invalid-feedback" style="text-align: start">
                     Sana kirilmagan!
+                </div>
+                <div v-if="$v.documentForm.contract_date.$dirty && $v.documentForm.contract_date.required && !$v.documentForm.contract_date.dateValidator"
+                     class="invalid-feedback" style="text-align: start">
+                    Sana noto'g'ri kiritilgan!
                 </div>
             </div>
         </div>

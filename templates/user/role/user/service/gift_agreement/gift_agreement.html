@@ -82,7 +82,7 @@
                         <span>Shaxs turi</span>
                     </li>
                     <li id="document_step" class="step-item" :class="{active: isShowDocumentFieldset}">
-                        <span>{{ service.short_title }}</span>
+                        <span>{% trans "Notarius ma'lumotlari" %}</span>
                     </li>
                     <li id="car_step" class="step-item" :class="{active: isShowCarFieldset}">
                         <span>Transport vositasi</span>
@@ -136,7 +136,7 @@
     <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 
     <!-- development version -->
-    {#        <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+    {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
     <!-- production version -->
     <script src="{% static 'vue/vue.prod.js' %}"></script>
 
@@ -148,7 +148,7 @@
         Vue.component('v-select', VueSelect.VueSelect)
         Vue.component('v-multiselect', window.VueMultiselect.default)
 
-        const {required, minLength, maxLength, requiredIf} = window.validators;
+        const {required, minLength, maxLength, requiredIf, maxValue, alphaNum} = window.validators;
         const App = {
             el: '#app',
             delimiters: ['[[', ']]'],
@@ -249,6 +249,9 @@
                     },
                     contract_date: {
                         required,
+                        dateValidator(value) {
+                            return moment(moment(value).format('YYYY-MM-DD'), 'YYYY-MM-DD', true).isValid()
+                        },
                     }
                 },
                 addCarModelForm: {
@@ -273,15 +276,18 @@
                     },
                     engine_number: {
                         required,
-                        maxLength: maxLength(50)
+                        maxLength: maxLength(50),
+                        alphaNum
                     },
                     body_number: {
                         required,
                         minLength: minLength(17),
-                        maxLength: maxLength(17)
+                        maxLength: maxLength(17),
+                        alphaNum
                     },
                     chassis_number: {
-                        maxLength: maxLength(50)
+                        maxLength: maxLength(50),
+                        alphaNum
                     },
                     engine_power: {
                         required,
@@ -293,26 +299,30 @@
                         required: requiredIf(vm => {
                             return !vm.lost_technical_passport
                         }),
-                        maxLength: maxLength(30)
+                        maxLength: maxLength(30),
+                        alphaNum
                     },
                     lost_number: {required},
                     old_number: {
                         required: requiredIf(vm => {
                             return !vm.lost_number
                         }),
-                        maxLength: maxLength(15)
+                        maxLength: maxLength(15),
+                        alphaNum
                     },
                     saved_number: {
                         required: requiredIf(vm => {
                             return vm.is_saved_number
                         }),
-                        maxLength: maxLength(15)
+                        maxLength: maxLength(15),
+                        alphaNum
                     },
                     auction_number: {
                         required: requiredIf(vm => {
                             return vm.is_auction
                         }),
-                        maxLength: maxLength(15)
+                        maxLength: maxLength(15),
+                        alphaNum
                     },
                     is_auction: {required},
                     is_saved_number: {required},
@@ -325,7 +335,8 @@
                         required: requiredIf(vm => {
                             return vm.is_another_car
                         }),
-                        maxLength: maxLength(15)
+                        maxLength: maxLength(15),
+                        alphaNum
                     }
 
                 },
@@ -345,7 +356,6 @@
             },
             created() {
                 this.getCurrentUser()
-                {#this.getSectionExistsRegions()#}
 
                 {#this.getCarModels()#}
                 {#this.getTypes()#}
@@ -651,7 +661,7 @@
                 },
                 async sendCarForm() {
                     this.$v.carForm.$touch()
-                    {#this.scrollToFirstError(this.$v.carForm)#}
+
                     this.$nextTick(() => this.scrollToFirstError(this.$v.carForm));
 
                     if (!this.$v.carForm.$error) {
@@ -705,19 +715,32 @@
 
                                         return res.data
                                     }
-                                })
-                                .catch((error) => {
+                                }).catch((error) => {
+                                    console.log(error.response)
+                                    console.log(error.response.data)
                                     if (error.response) {
                                         if (error.response.status === 400) {
                                             for (const [key, value] of Object.entries(error.response.data)) {
-                                                this.$set(this.errorMessages, key, value)
+                                                let k = key
+                                                if (k === 'given_number') {
+                                                    if (this.carForm.is_auction) {
+                                                        k = 'auction_number'
+                                                    } else if (this.carForm.is_another_car) {
+                                                        k = 'another_car_number'
+                                                    } else if (this.carForm.is_saved_number) {
+                                                        k = 'saved_number'
+                                                    } else if (this.carForm.save_old_number) {
+                                                        k = 'old_number'
+                                                    }
 
-                                                if (this.$refs[key] instanceof Vue) {
-                                                    this.$refs[key].$el.querySelector('input').focus()
-                                                } else {
-                                                    this.$refs[key].focus()
                                                 }
 
+                                                this.$set(this.errorMessages, k, value)
+                                                if (this.$refs[k] instanceof Vue) {
+                                                    this.$refs[k].$el.querySelector('input').focus()
+                                                } else {
+                                                    this.$refs[k].focus()
+                                                }
                                             }
                                         }
                                     }

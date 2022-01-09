@@ -61,6 +61,7 @@ class RegionSectionsListSerializer(serializers.ModelSerializer):
         model = Section
         fields = ['id', 'parent', 'title', 'region', 'district', 'located_district', 'quarter', 'street', 'is_active', ]
 
+
 class SectionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Section
@@ -69,6 +70,7 @@ class SectionDetailSerializer(serializers.ModelSerializer):
             'parent',
             'title'
         ]
+
 
 class UserListSerializer(serializers.ModelSerializer):
     region = RegionDetailSerializer()
@@ -96,6 +98,7 @@ class UserListSerializer(serializers.ModelSerializer):
             'date_joined'
 
         ]
+
 
 class UserDetailSerializer(serializers.ModelSerializer):
     region = RegionDetailSerializer()
@@ -168,6 +171,7 @@ class CarModelsListSerializer(serializers.ModelSerializer):
             'created_date'
         ]
 
+
 class CarColorsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
@@ -178,6 +182,7 @@ class CarColorsListSerializer(serializers.ModelSerializer):
             'created_user',
         ]
 
+
 class CarTypesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarType
@@ -186,6 +191,7 @@ class CarTypesListSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
         ]
+
 
 class DevicesListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -196,6 +202,7 @@ class DevicesListSerializer(serializers.ModelSerializer):
             'created_date',
         ]
 
+
 class CarFuelTypesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = FuelType
@@ -205,6 +212,7 @@ class CarFuelTypesListSerializer(serializers.ModelSerializer):
             'created_date',
         ]
 
+
 class CarBodyTypesListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BodyType
@@ -213,6 +221,7 @@ class CarBodyTypesListSerializer(serializers.ModelSerializer):
             'title',
             'created_date',
         ]
+
 
 class CreateCarModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -355,6 +364,7 @@ class CreateContractOfSaleCarSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+
 class CreateGiftAgreementCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
@@ -410,18 +420,24 @@ class CreateGiftAgreementCarSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
-        print(attrs)
-        if attrs.get('is_auction') | attrs.get('is_saved_number') | attrs.get('save_old_number') | attrs.get('is_another_car'):
+        errors = dict()
+
+        if attrs.get('is_auction') | attrs.get('is_saved_number') | attrs.get('save_old_number') | attrs.get(
+                'is_another_car'):
             if not attrs.get('given_number'):
-                raise serializers.ValidationError('given_number to\'ldirish majburiy!')
+                errors.update(given_number=["Ushbu maydon to'ldirilishi shart."])
 
         if not attrs.get('lost_technical_passport'):
             if not attrs.get('old_technical_passport'):
-                raise serializers.ValidationError('old_technical_passport to\'ldirish majburiy!')
+                errors.update(old_technical_passport=["Ushbu maydon to'ldirilishi shart."])
+
+        if errors.__len__() > 0:
+            raise serializers.ValidationError(errors)
         return attrs
 
     def create(self, validated_data):
         return super().create(validated_data)
+
 
 class OrganizationDetailSerializer(serializers.ModelSerializer):
     applicant = UserShortDetailSerializer()
@@ -444,6 +460,7 @@ class OrganizationDetailSerializer(serializers.ModelSerializer):
             'applicant',
         ]
 
+
 class CarModelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
@@ -461,6 +478,7 @@ class CarModelDetailSerializer(serializers.ModelSerializer):
 
 class CarDetailSerializer(serializers.ModelSerializer):
     model = CarModelDetailSerializer()
+
     class Meta:
         model = Car
         fields = [
@@ -514,4 +532,3 @@ class CreateOrganizationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['created_user'] = self.context['request'].user
         return super().create(validated_data)
-

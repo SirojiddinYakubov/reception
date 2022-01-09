@@ -167,16 +167,26 @@ class CreateGiftAgreement(APIView):
     ]
 
     def validate(self, attrs):
+        errors = dict()
+
+        if not attrs.get('applicant'):
+            errors.update(applicant=['Arizachi topilmadi!'])
+
         if not attrs.get('person_type'):
-            raise ValidationError('Arizachi shaxsi topilmadi!')
+            errors.update(person_type=['Arizachi shaxsi topilmadi!'])
+
         if not attrs.get('seriya'):
-            raise ValidationError("Hisob ma'lumotnomasi seriyasi kiritilmagan!")
+            errors.update(seriya=["Hisob ma'lumotnomasi seriyasi kiritilmagan!"])
+
         if not attrs.get('contract_date'):
-            raise ValidationError("Shartnoma tuzilgan sana kiritilmagan!")
+            errors.update(contract_date=["Notarius shartnomasi tuzilgan sana kiritilmagan!"])
 
         example_doc = ExampleDocument.objects.filter(key=self.service_key)
         if not example_doc:
-            raise ValidationError("ExampleDocument objects not found!")
+            errors.update(document=["ExampleDocument objects not found!"])
+
+        if errors.__len__() > 0:
+            raise ValidationError(errors)
 
         self.example_doc = example_doc.last()
         return attrs
