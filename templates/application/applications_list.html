@@ -32,11 +32,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-10 col-xs-12">
-                            <table id="example1" class="table dt-responsive nowrap w-100">
+                            <div class="table-responsive">
+
+                            <table id="example1" class="table nowrap w-100">
                                 <thead>
                                 <tr>
-                                    <th>{% trans "Ariza raqami" %}</th>
-                                    <th>{% trans "Xizmat nomi" %}</th>
+                                           <th>{% trans "Xizmat nomi" %}</th>
+                                    <th>{% trans "Raqami" %}</th>
                                     <th>{% trans "Avtomobil" %}</th>
                                     <th>{% trans "Topshirdi" %}</th>
                                     <th>{% trans "Yaratilgan vaqti" %}</th>
@@ -53,6 +55,8 @@
 
                                 </tbody>
                             </table>
+
+                            </div>
                         </div>
 
                         <div class="col-md-2" id="right_filter_div">
@@ -164,7 +168,13 @@
                     //{#})#}
                 },
                 "columns": [
-                    {"data": "id"},
+                    {
+                        "data":  "id",
+                        render: function (data, type, row) {
+                            let url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.toString())
+                            return `<a href="${url}">${data}-ariza</a>`
+                        }
+                    },
                     {"data": "service"},
                     {"data": `car`},
                     {"data": "created_user"},
