@@ -1,6 +1,6 @@
 {% load static i18n %}
 
-<fieldset id="car_fieldset" v-show="isShowCarFieldset">
+<fieldset ref="car_fieldset" v-show="isShowCarFieldset" >
     <legend>Transport vositasi</legend>
     <form @keypress.enter.prevent="!carFormIsComplete ? sendCarForm() : ''">
         <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan
@@ -13,7 +13,7 @@
                    for="car">{% trans 'Transport vositasi modelini tanlang' %}</label>
             <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 car">
 
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" >
 
                     <v-select
                             v-model="carForm.model"
@@ -23,6 +23,7 @@
                             class="form-control"
                             :class="{'v-error': $v.carForm.model.$error}"
                             :disabled="carFormIsComplete"
+                            ref="model"
                     >
                         <span slot="no-options">Siz izlayotgan transport vositasi modeli topilmadi! <a href="#"
                                                                                                        @click="addCarModelDialog = true">yangi model qo'shish</a></span>
@@ -53,6 +54,7 @@
                         class="form-control"
                         :class="{'v-error': $v.carForm.type.$error}"
                         :disabled="carFormIsComplete"
+                        ref="type"
                 >
                     <span slot="no-options">Siz izlayotgan transport vositasi turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -76,6 +78,7 @@
                         class="form-control"
                         :class="{'v-error': $v.carForm.fuel_type.$error}"
                         :disabled="carFormIsComplete"
+                        ref="fuel_type"
                 >
                     <span slot="no-options">Siz izlayotgan yoqilg'i turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -99,6 +102,7 @@
                         class="form-control"
                         :class="{'v-error': $v.carForm.body_type.$error}"
                         :disabled="carFormIsComplete"
+                        ref="body_type"
                 >
                     <span slot="no-options">Siz izlayotgan kuzov turi topilmadi. 972800809 raqamiga murojat qiling</span>
                 </v-select>
@@ -120,6 +124,7 @@
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.engine_number.$error}"
                        :disabled="carFormIsComplete"
+                       ref="engine_number"
                 >
                 <div
                         v-if="$v.carForm.engine_number.$dirty && !$v.carForm.engine_number.required"
@@ -147,6 +152,7 @@
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.body_number.$error}"
                        :disabled="carFormIsComplete"
+                       ref="body_number"
                 >
                 <div
                         v-if="$v.carForm.body_number.$dirty && !$v.carForm.body_number.required"
@@ -174,6 +180,7 @@
                        placeholder="{% trans 'Masalan: RAQAMSIZ' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
+                       ref="chassis_number"
                 >
                 <div v-if="$v.carForm.chassis_number.$dirty && !$v.carForm.chassis_number.maxLength"
                      class="text-danger w-100" style="text-align: start">
@@ -195,6 +202,7 @@
                        placeholder="{% trans 'Masalan: 20500' %}"
                        autocomplete="off"
                        :disabled="carFormIsComplete"
+                       ref="full_weight"
                 >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
@@ -220,6 +228,7 @@
                         placeholder="{% trans 'Masalan: 19500' %}"
                         autocomplete="off"
                         :disabled="carFormIsComplete"
+                        ref="empty_weight"
                 >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
@@ -245,6 +254,7 @@
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.engine_power.$error}"
                        :disabled="carFormIsComplete"
+                       ref="engine_power"
                 >
                 <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
                     qiymatni kilogrammda
@@ -278,6 +288,7 @@
                             class="form-control"
                             :class="{'v-error': $v.carForm.color.$error}"
                             :disabled="carFormIsComplete"
+                            ref="color"
                     >
                         <span slot="no-options">Siz izlayotgan rang topilmadi! <a href="#"
                                                                                   @click="addCarColorDialog = true">yangi rang qo'shish</a></span>
@@ -459,6 +470,7 @@
                        autocomplete="off"
                        :class="{'is-invalid': $v.carForm.old_technical_passport.$error}"
                        :disabled="carFormIsComplete"
+                       ref="old_technical_passport"
                 >
                 <div
                         v-if="$v.carForm.old_technical_passport.$dirty && !$v.carForm.old_technical_passport.required"
@@ -537,6 +549,7 @@
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.old_number.$error}"
+                       ref="old_number"
                 >
                 <div
                         v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.required"
@@ -617,6 +630,7 @@
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.saved_number.$error}"
+                       ref="saved_number"
                 >
                 <div
                         v-if="$v.carForm.saved_number.$dirty && !$v.carForm.saved_number.required"
@@ -667,6 +681,7 @@
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.another_car_number.$error}"
+                       ref="another_car_number"
                 >
                 <div
                         v-if="$v.carForm.another_car_number.$dirty && !$v.carForm.another_car_number.required"
@@ -719,6 +734,7 @@
                        autocomplete="off"
                        :disabled="carFormIsComplete"
                        :class="{'is-invalid': $v.carForm.auction_number.$error}"
+                       ref="auction_number"
                 >
                 <div
                         v-if="$v.carForm.auction_number.$dirty && !$v.carForm.auction_number.required"
