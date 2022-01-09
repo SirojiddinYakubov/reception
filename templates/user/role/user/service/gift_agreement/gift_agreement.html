@@ -154,10 +154,10 @@
             delimiters: ['[[', ']]'],
             data() {
                 return {
-                    isShowApplicantFieldset: true,
+                    isShowApplicantFieldset: false,
                     isShowPersonTypeFieldset: false,
                     isShowDocumentFieldset: false,
-                    isShowCarFieldset: false,
+                    isShowCarFieldset: true,
                     isShowSectionFieldset: false,
                     user: {},
                     userId: '',
@@ -346,6 +346,13 @@
             created() {
                 this.getCurrentUser()
                 {#this.getSectionExistsRegions()#}
+
+                this.getCarModels()
+                this.getTypes()
+                this.getFuelTypes()
+                this.getBodyTypes()
+                this.getColors()
+                this.getDevices()
             },
             computed: {
                 given_number: {
@@ -439,7 +446,7 @@
             methods: {
                 async getCurrentUser() {
                     this.userId = await axios.get('/api/v1/user/auth/users/me/')
-                        .then(res =>  res.data.id)
+                        .then(res => res.data.id)
                     this.getUserDetail()
                 },
                 async getUserDetail() {
@@ -644,10 +651,11 @@
                 },
                 async sendCarForm() {
                     this.$v.carForm.$touch()
+                    this.scrollToFirstError(this.$v.carForm)
+                    {#this.$nextTick(() => this.scrollToFirstError());#}
 
                     if (!this.$v.carForm.$error) {
 
-                        let merged = Object.assign(this.carForm, this.documentForm,)
                         const now = new Date()
                         let month = this.carForm.month ? $(this.$refs.month).datepicker('getDate').getMonth() + 1 : ''
 
@@ -715,7 +723,22 @@
                 },
                 hideDiv(...args) {
                     return !args.some((elem) => elem)
-                }
+                },
+                scrollToFirstError(form) {
+                    Object.keys(form).forEach((key) => {
+                        if (form[key].$error) {
+                            try {
+                                if (this.$refs[key] instanceof Vue) {
+                                    this.$refs[key].$el.querySelector('input').focus()
+                                } else {
+                                    this.$refs[key].focus()
+                                }
+                            } catch (e) {
+                                console.log(e)
+                            }
+                        }
+                    })
+                },
             },
             watch: {
                 person_type(newVal) {
@@ -767,7 +790,6 @@
                         this.getRegionDistricts(region.id)
                     }
                 },
-
             }
         }
         const vue = new Vue(App)
