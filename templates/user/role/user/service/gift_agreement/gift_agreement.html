@@ -438,17 +438,11 @@
             },
             methods: {
                 async getCurrentUser() {
-                    console.log('OK')
-                    this.userId = await axios.get('/api/v1/user/auth/users/me')
-                        .then(res => res.data.id)
-                        .catch(err => {
-                            // swal_error(err)
-                            localStorage.removeItem('access')
-                            refreshToken()
-                        })
-                    this.getUser()
+                    this.userId = await axios.get('/api/v1/user/auth/users/me/')
+                        .then(res =>  res.data.id)
+                    this.getUserDetail()
                 },
-                async getUser() {
+                async getUserDetail() {
                     this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
                 },
 

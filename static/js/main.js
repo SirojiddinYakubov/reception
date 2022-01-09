@@ -1646,13 +1646,13 @@ function column_asc_desc() {
 
 async function setAxiosHeader() {
     // axios.defaults.baseURL = baseURL + '/api/v1';
+
     if (localStorage.getItem('access')
         && typeof localStorage.getItem('access') !== "undefined"
         && localStorage.getItem('access') !== "undefined") {
         // Apply to every request
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access');
     } else {
-        alert('topilmadi')
         refreshToken()
     }
 
