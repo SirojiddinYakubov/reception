@@ -333,6 +333,7 @@ class CreateContractOfSaleCarSerializer(serializers.ModelSerializer):
             'is_old_number',
             'lost_technical_passport',
             'old_technical_passport',
+            'is_another_car'
         ]
         extra_kwargs = {
             'model': {'required': True},
@@ -356,9 +357,19 @@ class CreateContractOfSaleCarSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        errors = dict()
+
+        if attrs.get('is_auction') | attrs.get('is_saved_number') | attrs.get('save_old_number') \
+                | attrs.get('is_another_car'):
+            if not attrs.get('given_number'):
+                errors.update(given_number=["Ushbu maydon to'ldirilishi shart."])
+
         if not attrs.get('lost_technical_passport'):
             if not attrs.get('old_technical_passport'):
-                raise serializers.ValidationError('old_technical_passport to\'ldirish majburiy!')
+                errors.update(old_technical_passport=["Ushbu maydon to'ldirilishi shart."])
+
+        if errors.__len__() > 0:
+            raise serializers.ValidationError(errors)
         return attrs
 
     def create(self, validated_data):
@@ -422,8 +433,8 @@ class CreateGiftAgreementCarSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         errors = dict()
 
-        if attrs.get('is_auction') | attrs.get('is_saved_number') | attrs.get('save_old_number') | attrs.get(
-                'is_another_car'):
+        if attrs.get('is_auction') | attrs.get('is_saved_number') | attrs.get('save_old_number') \
+                | attrs.get('is_another_car'):
             if not attrs.get('given_number'):
                 errors.update(given_number=["Ushbu maydon to'ldirilishi shart."])
 

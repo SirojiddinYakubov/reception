@@ -88,43 +88,36 @@ class CreateContractOfSale(APIView):
     ]
 
     def validate(self, attrs):
+        errors = dict()
+
         if not attrs.get('applicant'):
-            raise ValidationError('Arizachi topilmadi!')
+            errors.update(applicant=['Arizachi topilmadi!'])
+
         if not attrs.get('person_type'):
-            raise ValidationError('Arizachi shaxsi topilmadi!')
+            errors.update(person_type=['Arizachi shaxsi topilmadi!'])
+
         if not attrs.get('seriya'):
-            raise ValidationError("Hisob ma'lumotnomasi seriyasi kiritilmagan!")
+            errors.update(seriya=["Hisob ma'lumotnomasi seriyasi kiritilmagan!"])
+
         if not attrs.get('contract_date'):
-            raise ValidationError("Shartnoma tuzilgan sana kiritilmagan!")
-
-        if attrs.get('is_auction') == 'true':
-            if not attrs.get('auction_number'):
-                raise ValidationError('auction_number to\'ldirish majburiy!')
-            if not attrs.get('given_number'):
-                raise ValidationError('given_number to\'ldirish majburiy!')
-
-        if attrs.get('is_saved_number') == 'true':
-            if not attrs.get('saved_number'):
-                raise ValidationError('saved_number to\'ldirish majburiy!')
-            if not attrs.get('given_number'):
-                raise ValidationError('given_number to\'ldirish majburiy!')
+            errors.update(contract_date=["Notarius shartnomasi tuzilgan sana kiritilmagan!"])
 
         example_doc = ExampleDocument.objects.filter(key=self.service_key)
         if not example_doc:
-            raise ValidationError("ExampleDocument objects not found!")
+            errors.update(document=["ExampleDocument objects not found!"])
+
+        if errors.__len__() > 0:
+            raise ValidationError(errors)
 
         self.example_doc = example_doc.last()
         return attrs
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        service = Service.objects.get(key=self.service_key)
-        data._mutable = True
-        applicant_id = data.get('applicant')
-        data['model'] = int(''.join(filter(str.isdigit, data.pop('car'))))
-        # data['contract_date'] = '2021-12-01'
-        data._mutable = False
         print(data)
+        service = Service.objects.get(key=self.service_key)
+        applicant_id = data.get('applicant')
+
         self.validate(data)
 
         person_type = data.get('person_type')
