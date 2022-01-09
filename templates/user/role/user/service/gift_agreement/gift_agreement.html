@@ -154,10 +154,10 @@
             delimiters: ['[[', ']]'],
             data() {
                 return {
-                    isShowApplicantFieldset: false,
+                    isShowApplicantFieldset: true,
                     isShowPersonTypeFieldset: false,
                     isShowDocumentFieldset: false,
-                    isShowCarFieldset: true,
+                    isShowCarFieldset: false,
                     isShowSectionFieldset: false,
                     user: {},
                     userId: '',
@@ -347,12 +347,12 @@
                 this.getCurrentUser()
                 {#this.getSectionExistsRegions()#}
 
-                this.getCarModels()
-                this.getTypes()
-                this.getFuelTypes()
-                this.getBodyTypes()
-                this.getColors()
-                this.getDevices()
+                {#this.getCarModels()#}
+                {#this.getTypes()#}
+                {#this.getFuelTypes()#}
+                {#this.getBodyTypes()#}
+                {#this.getColors()#}
+                {#this.getDevices()#}
             },
             computed: {
                 given_number: {
@@ -651,8 +651,8 @@
                 },
                 async sendCarForm() {
                     this.$v.carForm.$touch()
-                    this.scrollToFirstError(this.$v.carForm)
-                    {#this.$nextTick(() => this.scrollToFirstError());#}
+                    {#this.scrollToFirstError(this.$v.carForm)#}
+                    this.$nextTick(() => this.scrollToFirstError(this.$v.carForm));
 
                     if (!this.$v.carForm.$error) {
 
@@ -711,6 +711,13 @@
                                         if (error.response.status === 400) {
                                             for (const [key, value] of Object.entries(error.response.data)) {
                                                 this.$set(this.errorMessages, key, value)
+
+                                                if (this.$refs[key] instanceof Vue) {
+                                                    this.$refs[key].$el.querySelector('input').focus()
+                                                } else {
+                                                    this.$refs[key].focus()
+                                                }
+
                                             }
                                         }
                                     }
