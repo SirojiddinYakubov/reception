@@ -23,22 +23,68 @@
     <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css"/>
     <!-- Sweet Alert-->
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@3.0.0/dist/vue-select.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+    <style>
+        .v-select {
+            border: none !important;
+            padding: unset !important;
+        }
+
+        .v-error > .vs__dropdown-toggle {
+            border-color: red
+        }
+
+        .input-group-append {
+            cursor: pointer;
+            height: 100% !important;
+
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1040;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .icon {
+            cursor: pointer
+        }
+
+
+        .error {
+            border-color: red;
+            background: #FDD;
+        }
+
+        .error:focus {
+            outline-color: #F99;
+        }
+
+    </style>
 {% endblock css %}
 {% block content %}
-    <div class="row ml-2 mr-2">
+    <div class="row ml-2 mr-2" id="app">
         <div class="col-12 text-center p-0">
             <div class="card px-0 pb-0 mb-3">
                 <ul class="step d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-nowrap pt-4">
-                    <li id="applicant_step" class="step-item active">
+                    <li id="applicant_step" class="step-item" :class="{active: isShowApplicantFieldset}">
                         <span>Arizachi</span>
                     </li>
-                    <li id="person_type_step" class="step-item">
+                    <li id="person_type_step" class="step-item" :class="{active: isShowPersonTypeFieldset}">
                         <span>Shaxs turi</span>
                     </li>
-                    <li id="document_step" class="step-item">
-                        <span>{{ service.short_title }}</span>
+                    <li id="document_step" class="step-item" :class="{active: isShowDocumentFieldset}">
+                        <span>{% trans "Notarius ma'lumotlari" %}</span>
                     </li>
-                    <li id="car_step" class="step-item">
+                    <li id="car_step" class="step-item" :class="{active: isShowCarFieldset}">
                         <span>Transport vositasi</span>
                     </li>
                     <li id="section_step" class="step-item">
@@ -47,15 +93,16 @@
                 </ul>
                 <br>
                 <br>
-                {% include 'user/role/user/service/_parts/applicant_fieldset.html' %}
 
-                {% include 'user/role/user/service/_parts/person_type_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/applicant_fieldset_vue.html' %}
 
-                {% include 'user/role/user/service/_parts/document_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/person_type_fieldset_vue.html' %}
+
+                {% include 'user/role/user/service/_parts/document_fieldset_vue.html' %}
 
                 {% include 'user/role/user/service/contract_of_sale/car_fieldset.html' %}
 
-                {% include 'user/role/user/service/_parts/section_fieldset.html' %}
+                {% include 'user/role/user/service/_parts/section_fieldset_vue.html' %}
 
             </div>
 
@@ -79,87 +126,878 @@
     <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
     <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
     <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
-    <script type="text/javascript" charset="UTF-8">
-        $(function () {
-            {#$('#applicant_fieldset').hide()#}
-            {#$('#section_fieldset').show()#}
-        })
 
-        $(document).ready(function () {
-                sendAuthorizationToken()
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
 
-                jQuery.validator.addMethod("noSpace", function (value, element) {
-                    return value === '' || value.trim().length !== 0;
-                }, "Iltimos, bo'sh joy qoldirmang!");
-                jQuery.validator.addMethod("alphanumeric", function (value, element) {
-                    return this.optional(element) || /^\w+$/i.test(value);
-                }, "Faqat harf va raqam kiriting!");
-                jQuery.validator.addMethod("personIdMaxLength", function (value, element) {
-                    return this.optional(element) || /^\d{14}$/.test(value);
-                }, "JShShIR 14 raqamdan iborat bo'lishi kerak!");
-                jQuery.validator.addMethod("phoneMaxLength", function (value, element) {
-                    return this.optional(element) || /^\d{2}\s\d{3}-\d{2}-\d{2}$/.test(value);
-                }, "Telefon raqam noto'g'ri kiritilgan!");
-                jQuery.validator.addMethod("selectRequired", function (value, element, arg) {
-                    return $.isNumeric(value);
-                }, "Ushbu maydonni to'ldirishda xatolik!");
-                jQuery.validator.addMethod("passwordCheck",
-                    function (value, element, param) {
-                        if (this.optional(element)) {
-                            return true;
-                        } else if (!/[a-z]/.test(value)) {
-                            return false;
-                        } else if (!/[0-9]/.test(value)) {
-                            return false;
-                        }
-                        return true;
+    <script src="https://unpkg.com/vue-select@3.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/vuelidate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/validators.min.js"></script>
+    <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+
+    <!-- development version -->
+    {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+    <!-- production version -->
+    <script src="{% static 'vue/vue.prod.js' %}"></script>
+
+    <script>
+
+        setAxiosHeader()
+
+        Vue.use(window.vuelidate.default)
+        Vue.component('v-select', VueSelect.VueSelect)
+        Vue.component('v-multiselect', window.VueMultiselect.default)
+
+        const {required, minLength, maxLength, requiredIf, maxValue, alphaNum} = window.validators;
+        const App = {
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    isShowApplicantFieldset: true,
+                    isShowPersonTypeFieldset: false,
+                    isShowDocumentFieldset: false,
+                    isShowCarFieldset: false,
+                    isShowSectionFieldset: false,
+                    user: {},
+                    userId: '',
+                    application: {},
+                    region: '',
+                    isShowOrganizationInput: false,
+                    person_type: '0',
+                    organization: '',
+                    organizations: [],
+                    regions: [],
+                    districts: [],
+                    personTypeIsComplete: false,
+                    documentFormIsComplete: false,
+                    carFormIsComplete: false,
+                    documentForm: {
+                        seriya: '',
+                        contract_date: '',
                     },
-                    "Parol raqam va harfdan iborat bo'lishi kerak!");
+                    carForm: {
+                        model: '',
+                        type: '',
+                        fuel_type: '',
+                        body_type: '',
+                        engine_number: '',
+                        body_number: '',
+                        chassis_number: '',
+                        full_weight: 0,
+                        empty_weight: 0,
+                        engine_power: null,
+                        color: null,
+                        lost_technical_passport: false,
+                        old_technical_passport: '',
+                        save_old_number: false,
+                        lost_number: false,
+                        old_number: '',
+                        is_old_number: false,
+                        is_saved_number: false,
+                        saved_number: '',
+                        is_auction: false,
+                        auction_number: '',
+                        device: [],
+                        year: '',
+                        month: '',
+                        day: '',
+                        is_another_car: false,
+                        another_car_number: '',
+                    },
+                    organizationForm: {
+                        title: '',
+                        director: '',
+                        identification_number: '',
+                        legal_address_region: '',
+                        legal_address_district: '',
+                        address_of_garage: '',
+                    },
+                    carModels: [],
+                    types: [],
+                    fuelTypes: [],
+                    bodyTypes: [],
+                    colors: [],
+                    devices: [],
+                    sectionExistsRegions: [],
+                    sections: [],
+                    newColor: null,
+                    addCarModelForm: {
+                        title: '',
+                        is_truck: "False",
+                        is_local: "True"
 
-                $(document).on('click', '.next', function () {
-                    if ($(this).attr('type') === 'button') {
-                        var step_prefix = $(this).parents('fieldset').attr('id').split('_fieldset')[0]
+                    },
+                    addCarModelDialog: false,
+                    addCarColorDialog: false,
+                    addOrganizationDialog: false,
+                    knowMadeYear: false,
+                    errorMessages: {},
+                }
+            },
+            components: {},
+            validations: {
+                documentForm: {
+                    seriya: {
+                        // simpleValidator(value) {
+                        //     return value.length > 4
+                        //  },
+                        required,
+                        minLength: minLength(5),
+                        maxLength: maxLength(50)
+                    },
+                    contract_date: {
+                        required,
+                        dateValidator(value) {
+                            return moment(moment(value).format('YYYY-MM-DD'), 'YYYY-MM-DD', true).isValid()
+                        },
+                    }
+                },
+                addCarModelForm: {
+                    title: {required}
+                },
+                newColor: {required},
+                organization: {
+                    required: requiredIf(vm => {
+                        return vm.isShowOrganizationInput
+                    })
+                },
+                carForm: {
+                    model: {required},
+                    type: {required},
+                    fuel_type: {required},
+                    body_type: {required},
+                    full_weight: {
+                        maxLength: maxLength(10)
+                    },
+                    empty_weight: {
+                        maxLength: maxLength(10)
+                    },
+                    engine_number: {
+                        required,
+                        maxLength: maxLength(50),
+                        alphaNum
+                    },
+                    body_number: {
+                        required,
+                        minLength: minLength(17),
+                        maxLength: maxLength(17),
+                        alphaNum
+                    },
+                    chassis_number: {
+                        maxLength: maxLength(50),
+                        alphaNum
+                    },
+                    engine_power: {
+                        required,
+                        maxLength: maxLength(5)
+                    },
+                    color: {required},
+                    lost_technical_passport: {required},
+                    old_technical_passport: {
+                        required: requiredIf(vm => {
+                            return !vm.lost_technical_passport
+                        }),
+                        maxLength: maxLength(30),
+                        alphaNum
+                    },
+                    lost_number: {required},
+                    old_number: {
+                        required: requiredIf(vm => {
+                            return !vm.lost_number
+                        }),
+                        maxLength: maxLength(15),
+                        alphaNum
+                    },
+                    saved_number: {
+                        required: requiredIf(vm => {
+                            return vm.is_saved_number
+                        }),
+                        maxLength: maxLength(15),
+                        alphaNum
+                    },
+                    auction_number: {
+                        required: requiredIf(vm => {
+                            return vm.is_auction
+                        }),
+                        maxLength: maxLength(15),
+                        alphaNum
+                    },
+                    is_auction: {required},
+                    is_saved_number: {required},
+                    is_old_number: {required},
+                    save_old_number: {required},
+                    year: {required},
+                    is_another_car: {required},
+                    another_car_number: {
+                        required: requiredIf(vm => {
+                            return vm.is_another_car
+                        }),
+                        maxLength: maxLength(15),
+                        alphaNum
+                    }
 
-                        if (step_prefix === 'applicant') {
-                            if ($('#person option:selected').val() === 'new' || $('#person option:selected').val() === '') {
-                                $('#add_user_modal').modal('show')
-                                return;
-                            } else {
-                                $('#person').prop('disabled', true)
-                            }
+                },
+                organizationForm: {
+                    title: {required},
+                    director: {required},
+                    identification_number: {
+                        required,
+                        simpleValidator(value) {
+                            return value.toString().length === 9
+                        },
+                    },
+                    legal_address_region: {required},
+                    legal_address_district: {required},
+                    address_of_garage: {required},
+                },
+            },
+            created() {
+                this.getCurrentUser()
 
-                        } else if (step_prefix === 'person_type') {
-                            if ($('#person_type option:selected').val() === '1') {
-                                if ($('#organization option:selected').val() === 'new' || $('#organization option:selected').val() === '') {
-                                    $('#add_organization_modal').modal('show')
-                                    return;
-                                } else {
-                                    $('input[name="organization"]').val($('#organization option:selected').val())
-                                    $('#person_type').prop('disabled', true)
-                                    $('#organization').prop('disabled', true)
+                {#this.getCarModels()#}
+                {#this.getTypes()#}
+                {#this.getFuelTypes()#}
+                {#this.getBodyTypes()#}
+                {#this.getColors()#}
+                {#this.getDevices()#}
+            },
+            computed: {
+                given_number: {
+                    get: function () {
+                        if (this.carForm.is_auction) {
+                            return this.carForm.auction_number
+                        } else if (this.carForm.is_another_car) {
+                            return this.carForm.another_car_number
+                        } else if (this.carForm.is_saved_number) {
+                            return this.carForm.saved_number
+                        } else if (this.carForm.save_old_number) {
+                            return this.carForm.old_number
+                        } else {
+                            return ''
+                        }
+                    },
+                    set: function (newValue) {
+                        console.log(newValue)
+                    }
+                }
+            },
+            mounted() {
+                let dateOpt = {
+                    format: 'dd',
+                    maxViewMode: 0,
+                    autoclose: true,
+                    language: 'ru',
+                };
+
+                $(this.$refs.year).datepicker({
+                    format: "yyyy",
+                    viewMode: "years",
+                    minViewMode: "years",
+                    autoclose: true,
+                    language: 'ru',
+                    startDate: '-80y',
+                    endDate: '+0y',
+
+                }).on('changeDate', (e) => {
+
+                    var month = $(this.$refs.month).datepicker('getDate');
+                    if (!month) {
+                        month = new Date();
+                    }
+                    dateOpt.defaultViewDate = {
+                        year: e.date.getFullYear(),
+                        month: month.getMonth(),
+                        day: 1
+                    };
+
+                    // Reset date datepicker
+                    $(this.$refs.day).datepicker('destroy');
+                    // Re-init with defaultViewDate option
+                    $(this.$refs.day).datepicker(dateOpt);
+
+                    this.carForm.year = e.target.value
+
+                })
+
+                $(this.$refs.month).datepicker({
+                    format: "MM",
+                    viewMode: "months",
+                    language: 'ru',
+                    minViewMode: "months",
+                    maxViewMode: 0,
+                    autoclose: true
+                }).on('changeDate', (e) => {
+
+                    var year = $(this.$refs.year).datepicker('getDate');
+
+                    if (!year) {
+                        year = new Date();
+                    }
+                    dateOpt.defaultViewDate = {
+                        year: year.getFullYear(),
+                        month: e.date.getMonth(),
+                        day: 1
+                    };
+                    $(this.$refs.day).datepicker('destroy');
+                    $(this.$refs.day).datepicker(dateOpt);
+
+                    this.carForm.month = e.target.value
+
+                });
+
+                $(this.$refs.day).datepicker(dateOpt).on('changeDate', (e) => {
+                    this.carForm.day = e.target.value
+                })
+
+            },
+            methods: {
+                async getCurrentUser() {
+                    this.userId = await axios.get('/api/v1/user/auth/users/me/')
+                        .then(res => res.data.id)
+                    this.getUserDetail()
+                },
+                async getUserDetail() {
+                    this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
+                },
+
+                async getUserOrganiztions() {
+                    this.organizations = await axios.get('{% url "api_app_creator:user_organizations_list" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
+                },
+                sendDocumentForm() {
+                    this.$v.documentForm.$touch()
+                    if (!this.$v.documentForm.$error) {
+                        this.documentFormIsComplete = true
+
+                        this.isShowDocumentFieldset = false
+                        this.isShowCarFieldset = true
+                    }
+                },
+
+                async getCarModels() {
+                    this.carModels = await axios.get('{% url "api_user:car_models_list" %}').then(res => res.data)
+                },
+
+                async getDevices() {
+                    this.devices = await axios.get('{% url 'api_user:devices_list' %}').then(res => res.data)
+                },
+
+                async getTypes() {
+                    this.types = await axios.get('{% url "api_user:car_types_list" %}').then(res => res.data)
+                },
+
+                async getFuelTypes() {
+                    this.fuelTypes = await axios.get('{% url "api_user:car_fuel_types_list" %}').then(res => res.data)
+                },
+
+                async getBodyTypes() {
+                    this.bodyTypes = await axios.get('{% url "api_user:car_body_types_list" %}').then(res => res.data)
+                },
+
+                async getColors() {
+                    this.colors = await axios.get('{% url "api_user:car_colors_list" %}').then(res => res.data)
+                },
+
+                async getSectionExistsRegions() {
+                    this.sectionExistsRegions = await axios.get('{% url "api_user:section_exists_regions_list" %}').then(res => res.data)
+                },
+
+                async getSections(id) {
+                    this.sections = await axios.get('{% url "api_user:region_sections_list" pk=12345 %}'.replace(/12345/, id.toString())).then(res => res.data)
+                },
+
+                async getRegions() {
+                    this.regions = await axios.get('{% url "api_user:regions_list" %}').then(res => res.data)
+                },
+
+                async getRegionDistricts(id) {
+                    this.districts = await axios.get('{% url "api_user:region_districts_list" 12345 %}'.replace(/12345/, id.toString())).then(res => res.data)
+                },
+
+                changeFieldset(first, second) {
+                    this.$set(this, first, true)
+                    this.$set(this, second, false)
+                },
+                upper(e) {
+                    e.target.value = e.target.value.toUpperCase()
+                },
+                async sendAddCarModelForm() {
+                    this.$v.addCarModelForm.$touch()
+
+                    if (!this.$v.addCarModelForm.title.$error) {
+                        this.carForm.model = await axios.post('{% url "api_user:create_car_model" %}', this.addCarModelForm).then(res => {
+                            this.getCarModels()
+                            this.addCarModelDialog = false
+                            return res.data
+                        }).catch(error => {
+                            if (error.response) {
+                                if (error.response.status === 400) {
+                                    swal_error("Model nomi kiritilmagan!")
+                                } else if (error.response.status === 409) {
+                                    swal_error(`${this.addCarModelForm.title} modellar ro'yhatida mavjud!`)
                                 }
                             }
+                        })
+                    }
+                },
+                async addNewColorForm() {
+                    this.$v.newColor.$touch()
+
+                    if (!this.$v.newColor.$error) {
+                        try {
+                            this.carForm.color = await axios.post('{% url 'api_user:create_color' %}', {
+                                title: this.newColor
+                            }).then(res => {
+                                if (res.status === 201) {
+                                    this.getColors()
+                                    this.addCarColorDialog = false
+                                    this.newColor = ''
+                                    return res.data
+                                }
+
+                            }).catch(error => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        swal_error("Rang nomi kiritilmagan!")
+                                    } else if (error.response.status === 409) {
+                                        swal_error(`${this.newColor} ranglar ro'yhatida mavjud!`)
+                                    }
+                                }
+                            })
+                        } catch (e) {
+                            console.log(e)
+                            location.reload()
                         }
 
-                        var stepName = step_prefix + '_step'
-                        $(`#${stepName}`).removeClass('active')
-                        $(`#${stepName}`).nextAll('li').first().addClass('active')
-
-                        $(this).parents('fieldset').hide()
-                        $(this).parents('fieldset').nextAll('fieldset').first().show()
-
-
                     }
-                })
 
-                $(document).on('click', '.prev', function (e) {
-                    $(this).parents('fieldset').hide()
-                    $(this).parents('fieldset').prevAll("fieldset").first().show()
-                })
+                },
+                showAlert: (event) => {
+                    console.log(event)
+                },
+                sendPersonTypeForm() {
+                    this.$v.organization.$touch()
+
+                    if (!this.$v.organization.$error) {
+                        this.isShowPersonTypeFieldset = false
+                        this.isShowDocumentFieldset = true
+                        this.personTypeIsComplete = true
+                    }
+                },
+                organizationResetForm() {
+                    this.organizationForm.title = ''
+                    this.organizationForm.identification_number = ''
+                    this.organizationForm.legal_address_region = ''
+                    this.organizationForm.legal_address_district = ''
+                    this.organizationForm.address_of_garage = ''
+                    this.organizationForm.director = ''
+
+                    this.$v.organizationForm.$reset()
+                },
+                async addOrganizationForm() {
+                    this.$v.organizationForm.$touch()
+
+                    if (!this.$v.organizationForm.$error) {
+
+                        let formData = new FormData()
+
+                        formData.append('title', this.organizationForm.title)
+                        formData.append('identification_number', this.organizationForm.identification_number)
+                        formData.append('legal_address_region', this.organizationForm.legal_address_region.id)
+                        formData.append('legal_address_district', this.organizationForm.legal_address_district.id)
+                        formData.append('address_of_garage', this.organizationForm.address_of_garage)
+                        formData.append('director', this.organizationForm.director)
+                        formData.append('created_user', this.user.id)
+                        formData.append('applicant', this.user.id)
+
+                        this.organization = await axios.post("{% url 'api_user:create_organization' %}", formData)
+                            .then((res) => {
+                                if (res.status === 201) {
+                                    this.addOrganizationDialog = false
+                                    this.organizationResetForm()
+
+                                    return res.data
+                                }
+
+                            })
+                            .catch((error) => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        loader.style.display = 'none'
+                                        swal_error()
+                                    }
+                                }
+                            })
+                    }
+                },
+                async sendApplication(id) {
+                    let loader = document.getElementById('load')
+                    loader.style.display = 'block'
+
+                    try {
+                        await axios.patch("{% url "api_application:save_application_section" 12345 %}".replace(/12345/, this.application.id.toString()), {
+                            section: id,
+                        }).then((res) => {
+                            success_toast()
+                            setTimeout(() => {
+                                window.location.href = "{% url 'application:application_detail' 12345 %}".replace(/12345/, this.application.id.toString())
+                            }, 5000)
+
+                        }).catch((error) => {
+                            if (error.response) {
+                                if (error.response.status === 400) {
+                                    loader.style.display = 'none'
+                                    swal_error()
+                                }
+                            }
+                        })
+                    } catch (e) {
+                        console.log(e)
+                        loader.style.display = 'none'
+                    }
+
+                },
+                async sendCarForm() {
+                    this.$v.carForm.$touch()
+
+                    this.$nextTick(() => this.scrollToFirstError(this.$v.carForm));
+
+                    if (!this.$v.carForm.$error) {
+
+                        const now = new Date()
+                        let month = this.carForm.month ? $(this.$refs.month).datepicker('getDate').getMonth() + 1 : ''
+
+                        let formData = new FormData()
+                        formData.append('person_type', this.person_type)
+                        formData.append('seriya', this.documentForm.seriya)
+                        formData.append('contract_date', this.documentForm.contract_date)
+                        formData.append('model', this.carForm.model.id)
+                        formData.append('body_type', this.carForm.body_type.id)
+                        formData.append('type', this.carForm.type.id)
+                        formData.append('fuel_type', this.carForm.fuel_type.id)
+                        formData.append('engine_number', this.carForm.engine_number)
+                        formData.append('body_number', this.carForm.body_number)
+                        formData.append('chassis_number', this.carForm.chassis_number || 'RAQAMSIZ')
+                        formData.append('full_weight', this.carForm.full_weight)
+                        formData.append('empty_weight', this.carForm.empty_weight)
+                        formData.append('engine_power', this.carForm.engine_power)
+                        formData.append('color', this.carForm.color.id)
+                        formData.append('lost_technical_passport', this.carForm.lost_technical_passport)
+                        formData.append('old_technical_passport', !this.carForm.lost_technical_passport ? this.carForm.old_technical_passport : '')
+                        formData.append('save_old_number', this.carForm.save_old_number)
+                        formData.append('lost_number', this.carForm.lost_number)
+                        formData.append('old_number', this.carForm.lost_number ? '' : this.carForm.old_number)
+                        formData.append('is_old_number', this.carForm.is_old_number)
+                        formData.append('is_saved_number', this.carForm.is_saved_number)
+                        formData.append('given_number', this.given_number)
+                        formData.append('is_auction', this.carForm.is_auction)
+                        formData.append('organization', this.organization.id)
+                        formData.append('applicant', this.user.id)
+
+                        this.carForm.device.forEach((data) => formData.append('device', data.id))
+
+                        formData.append('made_year', `${this.carForm.year || now.getFullYear()}-${month || now.getMonth() + 1}-${this.carForm.day || now.getDate()}`)
+                        formData.append('is_another_car', this.carForm.is_another_car)
+
+                        try {
+                            this.application = await axios.post("{% url 'api_application:create_contract_of_sale' %}", formData)
+                                .then((res) => {
+                                    console.log(res)
+                                    if (res.status === 201) {
+
+                                        this.carFormIsComplete = true
+
+                                        this.isShowCarFieldset = false
+                                        this.isShowSectionFieldset = true
+
+                                        return res.data
+                                    }
+                                }).catch((error) => {
+                                    console.log(error.response)
+                                    console.log(error.response.data)
+                                    if (error.response) {
+                                        if (error.response.status === 400) {
+                                            for (const [key, value] of Object.entries(error.response.data)) {
+                                                let k = key
+                                                if (k === 'given_number') {
+                                                    if (this.carForm.is_auction) {
+                                                        k = 'auction_number'
+                                                    } else if (this.carForm.is_another_car) {
+                                                        k = 'another_car_number'
+                                                    } else if (this.carForm.is_saved_number) {
+                                                        k = 'saved_number'
+                                                    } else if (this.carForm.save_old_number) {
+                                                        k = 'old_number'
+                                                    }
+
+                                                }
+
+                                                this.$set(this.errorMessages, k, value)
+                                                if (this.$refs[k] instanceof Vue) {
+                                                    this.$refs[k].$el.querySelector('input').focus()
+                                                } else {
+                                                    this.$refs[k].focus()
+                                                }
+                                            }
+                                        }
+                                    }
+                                })
+                        } catch (e) {
+                            console.log(e)
+                        }
+                    }
+
+                },
+                hideDiv(...args) {
+                    return !args.some((elem) => elem)
+                },
+                scrollToFirstError(form) {
+                    Object.keys(form).forEach((key) => {
+                        if (form[key].$error) {
+                            try {
+                                if (this.$refs[key] instanceof Vue) {
+                                    this.$refs[key].$el.querySelector('input').focus()
+                                } else {
+                                    this.$refs[key].focus()
+                                }
+                            } catch (e) {
+                                console.log(e)
+                            }
+                        }
+                    })
+                },
+            },
+            watch: {
+                person_type(newVal) {
+                    if (newVal === '1') {
+                        this.getUserOrganiztions()
+                        this.isShowOrganizationInput = true
+                    } else {
+                        this.isShowOrganizationInput = false
+                        this.$v.organization.$reset()
+                    }
+                },
+                'carForm.device': (newVal, oldVal) => {
+                    if (oldVal.length === 0) {
+                        swal.fire(
+                            'Ogohlantirish',
+                            'Agarda sizni transport vositangizda qo\'shimcha qayta jihoz mavjud bo\'lsa (gazdan tashqari) unda ushbu ro\'yhatdan uni tanlang. Agar qo\'shimcha jihoz ro\'yhatda bo\'lmasa, unda 972800809 raqamiga murojaat eting.',
+                            'warning',
+                        )
+                    }
+                },
+                region(val) {
+                    if (val) {
+                        this.getSections(val)
+                    }
+                },
+                isShowCarFieldset(val) {
+                    if (val) {
+                        this.getCarModels()
+                        this.getTypes()
+                        this.getFuelTypes()
+                        this.getBodyTypes()
+                        this.getColors()
+                        this.getDevices()
+                    }
+                },
+                isShowSectionFieldset(val) {
+                    if (val) {
+                        this.getSectionExistsRegions()
+                    }
+                },
+                addOrganizationDialog(val) {
+                    if (val) {
+                        this.getRegions()
+                    }
+                },
+                'organizationForm.legal_address_region': function (region) {
+                    if (region) {
+                        this.organizationForm.legal_address_district = ''
+                        this.getRegionDistricts(region.id)
+                    }
+                },
             }
-        )
+        }
+        const vue = new Vue(App)
+
+        $(function () {
+            $(document).on('click', '.icon', function () {
+                $(this).siblings('input').trigger('focus')
+            })
+        })
     </script>
 {% endblock js %}
+
+
+
+
+
+
+
+
+{#{% extends 'base_vertical.html' %}#}
+{#{% load static %}#}
+{#{% load i18n %}#}
+{#{% block title %}#}
+{#    {{ service.short_title }}#}
+{#{% endblock title %}#}
+{##}
+{#{% block page_title %}#}
+{#    {{ service.long_title }}#}
+{#{% endblock page_title %}#}
+{##}
+{#{% block css %}#}
+{#    <!-- Plugins css -->#}
+{#    <link href="{% static 'assets/libs/mohithg-switchery/switchery.min.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="{% static 'assets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"#}
+{#          type="text/css"/>#}
+{#    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">#}
+{#    <!-- Loading button css -->#}
+{#    <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css"/>#}
+{#    <!-- Sweet Alert-->#}
+{#    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>#}
+{#{% endblock css %}#}
+{#{% block content %}#}
+{#    <div class="row ml-2 mr-2">#}
+{#        <div class="col-12 text-center p-0">#}
+{#            <div class="card px-0 pb-0 mb-3">#}
+{#                <ul class="step d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-nowrap pt-4">#}
+{#                    <li id="applicant_step" class="step-item active">#}
+{#                        <span>Arizachi</span>#}
+{#                    </li>#}
+{#                    <li id="person_type_step" class="step-item">#}
+{#                        <span>Shaxs turi</span>#}
+{#                    </li>#}
+{#                    <li id="document_step" class="step-item">#}
+{#                        <span>{{ service.short_title }}</span>#}
+{#                    </li>#}
+{#                    <li id="car_step" class="step-item">#}
+{#                        <span>Transport vositasi</span>#}
+{#                    </li>#}
+{#                    <li id="section_step" class="step-item">#}
+{#                        <span>Ariza topshirish hududi</span>#}
+{#                    </li>#}
+{#                </ul>#}
+{#                <br>#}
+{#                <br>#}
+{#                {% include 'user/role/user/service/_parts/applicant_fieldset.html' %}#}
+{##}
+{#                {% include 'user/role/user/service/_parts/person_type_fieldset.html' %}#}
+{##}
+{#                {% include 'user/role/user/service/_parts/document_fieldset.html' %}#}
+{##}
+{#                {% include 'user/role/user/service/contract_of_sale/car_fieldset.html' %}#}
+{##}
+{#                {% include 'user/role/user/service/_parts/section_fieldset.html' %}#}
+{##}
+{#            </div>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#{% endblock content %}#}
+{##}
+{#{% block js %}#}
+{#    <script src="{% static 'assets/libs/selectize/js/standalone/selectize.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/mohithg-switchery/switchery.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/multiselect/js/jquery.multi-select.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>#}
+{#    <script src="{% static 'js/main.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>#}
+{#    <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>#}
+{#    <script type="text/javascript" charset="UTF-8">#}
+{#        $(function () {#}
+            {#$('#applicant_fieldset').hide()#}
+            {#$('#section_fieldset').show()#}
+{#        })#}
+{##}
+{#        $(document).ready(function () {#}
+{#                sendAuthorizationToken()#}
+{##}
+{#                jQuery.validator.addMethod("noSpace", function (value, element) {#}
+{#                    return value === '' || value.trim().length !== 0;#}
+{#                }, "Iltimos, bo'sh joy qoldirmang!");#}
+{#                jQuery.validator.addMethod("alphanumeric", function (value, element) {#}
+{#                    return this.optional(element) || /^\w+$/i.test(value);#}
+{#                }, "Faqat harf va raqam kiriting!");#}
+{#                jQuery.validator.addMethod("personIdMaxLength", function (value, element) {#}
+{#                    return this.optional(element) || /^\d{14}$/.test(value);#}
+{#                }, "JShShIR 14 raqamdan iborat bo'lishi kerak!");#}
+{#                jQuery.validator.addMethod("phoneMaxLength", function (value, element) {#}
+{#                    return this.optional(element) || /^\d{2}\s\d{3}-\d{2}-\d{2}$/.test(value);#}
+{#                }, "Telefon raqam noto'g'ri kiritilgan!");#}
+{#                jQuery.validator.addMethod("selectRequired", function (value, element, arg) {#}
+{#                    return $.isNumeric(value);#}
+{#                }, "Ushbu maydonni to'ldirishda xatolik!");#}
+{#                jQuery.validator.addMethod("passwordCheck",#}
+{#                    function (value, element, param) {#}
+{#                        if (this.optional(element)) {#}
+{#                            return true;#}
+{#                        } else if (!/[a-z]/.test(value)) {#}
+{#                            return false;#}
+{#                        } else if (!/[0-9]/.test(value)) {#}
+{#                            return false;#}
+{#                        }#}
+{#                        return true;#}
+{#                    },#}
+{#                    "Parol raqam va harfdan iborat bo'lishi kerak!");#}
+{##}
+{#                $(document).on('click', '.next', function () {#}
+{#                    if ($(this).attr('type') === 'button') {#}
+{#                        var step_prefix = $(this).parents('fieldset').attr('id').split('_fieldset')[0]#}
+{##}
+{#                        if (step_prefix === 'applicant') {#}
+{#                            if ($('#person option:selected').val() === 'new' || $('#person option:selected').val() === '') {#}
+{#                                $('#add_user_modal').modal('show')#}
+{#                                return;#}
+{#                            } else {#}
+{#                                $('#person').prop('disabled', true)#}
+{#                            }#}
+{##}
+{#                        } else if (step_prefix === 'person_type') {#}
+{#                            if ($('#person_type option:selected').val() === '1') {#}
+{#                                if ($('#organization option:selected').val() === 'new' || $('#organization option:selected').val() === '') {#}
+{#                                    $('#add_organization_modal').modal('show')#}
+{#                                    return;#}
+{#                                } else {#}
+{#                                    $('input[name="organization"]').val($('#organization option:selected').val())#}
+{#                                    $('#person_type').prop('disabled', true)#}
+{#                                    $('#organization').prop('disabled', true)#}
+{#                                }#}
+{#                            }#}
+{#                        }#}
+{##}
+{#                        var stepName = step_prefix + '_step'#}
+{#                        $(`#${stepName}`).removeClass('active')#}
+{#                        $(`#${stepName}`).nextAll('li').first().addClass('active')#}
+{##}
+{#                        $(this).parents('fieldset').hide()#}
+{#                        $(this).parents('fieldset').nextAll('fieldset').first().show()#}
+{##}
+{##}
+{#                    }#}
+{#                })#}
+{##}
+{#                $(document).on('click', '.prev', function (e) {#}
+{#                    $(this).parents('fieldset').hide()#}
+{#                    $(this).parents('fieldset').prevAll("fieldset").first().show()#}
+{#                })#}
+{#            }#}
+{#        )#}
+{#    </script>#}
+{#{% endblock js %}#}
 
 
 
