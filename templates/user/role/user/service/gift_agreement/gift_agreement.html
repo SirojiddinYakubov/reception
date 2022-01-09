@@ -438,6 +438,7 @@
             },
             methods: {
                 async getCurrentUser() {
+                    console.log('OK')
                     this.userId = await axios.get('/api/v1/user/auth/users/me')
                         .then(res => res.data.id)
                         .catch(err => {

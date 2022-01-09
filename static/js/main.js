@@ -1669,18 +1669,18 @@ async function setAxiosHeader() {
 
 }
 
-async function getCurrentUser() {
-    await axios.get('/api/v1/user/auth/users/me')
-        .then(res => {
-            localStorage.setItem('userId', res.data.id)
-            localStorage.setItem('userUsername', res.data.username)
-        })
-        .catch(err => {
-            // swal_error(err)
-            localStorage.removeItem('access')
-            refreshToken()
-        })
-}
+// async function getCurrentUser() {
+//     await axios.get('/api/v1/user/auth/users/me')
+//         .then(res => {
+//             localStorage.setItem('userId', res.data.id)
+//             localStorage.setItem('userUsername', res.data.username)
+//         })
+//         .catch(err => {
+//             // swal_error(err)
+//             localStorage.removeItem('access')
+//             refreshToken()
+//         })
+// }
 
 async function refreshToken() {
     await axios.post('/api/v1/user/auth/jwt/refresh/', {
