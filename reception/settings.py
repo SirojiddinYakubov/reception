@@ -403,4 +403,7 @@ CKEDITOR_CONFIGS = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
+    'https://6fe5-213-230-80-60.ngrok.io',
+    'https://e-rib.uz',
+    'http://e-rib.uz',
 )
