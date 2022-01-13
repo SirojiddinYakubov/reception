@@ -153,15 +153,18 @@ def get_payment_score(application_id, percent_id):
 
         try:
             if percent.state_duty != FINE or percent.state_duty != REGISTRATION or percent.state_duty != RE_REGISTRATION:
-
-                if district in section.district.all():
-                    print("Buxoro obl gai tarkibida, tuman raqami")
+                if section.payment_to_my_territory:
+                    if district in section.district.all():
+                        print("Buxoro obl gai tarkibida, tuman raqami")
+                        state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty,
+                                                                         district=district).last()
+                    else:
+                        print("boshqa shaharda, Boxoro shahar raqami")
+                        state_duty_score = StateDutyScore.objects.filter(region=section.region,
+                                                                     state_duty=percent.state_duty).last()
+                else:
                     state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty,
                                                                      district=district).last()
-                else:
-                    print("boshqa shaharda, Boxoro shahar raqami")
-                    state_duty_score = StateDutyScore.objects.filter(region=section.region,
-                                                                     state_duty=percent.state_duty).last()
             else:
                 state_duty_score = StateDutyScore.objects.filter(state_duty=percent.state_duty).last()
             return state_duty_score
