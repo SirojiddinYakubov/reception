@@ -77,6 +77,7 @@ class Section(models.Model):
     is_active = models.BooleanField(default=True)
     pay_for_service = models.BooleanField(default=True)
     pay_for_treasury = models.BooleanField(default=False)
+    payment_to_my_territory = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Bo'lim"
