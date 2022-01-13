@@ -1344,8 +1344,10 @@ function get_regions(url) {
                 resolve(regions)
             },
             error: function (err) {
-                console.log(err)
                 reject(err)
+                if (err.status === 401) {
+                    tokenInvalid()
+                }
             }
         })
     })
@@ -1408,7 +1410,7 @@ function Counter(options) {
     }
 
     function startCounter() {
-        onCounterStart();
+        onCounterStart(seconds);
         clearInterval(timer);
         timer = 0;
         decrementCounter();
@@ -1421,7 +1423,8 @@ function Counter(options) {
     }
 
     return {
-        start: function () {
+        start: function (sec) {
+            seconds = sec
             startCounter();
         },
         stop: function () {
@@ -1571,6 +1574,7 @@ function sendAuthorizationToken() {
             xhr.setRequestHeader('Authorization', `Bearer ${access}`)
         },
         error: function (response) {
+
             if (response.status === 401) {
                 tokenInvalid()
             } else if (response.status === 403) {

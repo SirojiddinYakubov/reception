@@ -1253,16 +1253,17 @@ class SectionsListByRegion(AllowedRolesMixin, View):
 
 
 class GetRegionsList(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
+        print(request.POST)
         regions = Region.objects.all()
         serializer = RegionSerializer(regions, many=True)
         return Response(serializer.data, status=200)
 
 
 class GetSectionsList(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         region_id = kwargs.get('region_id')
