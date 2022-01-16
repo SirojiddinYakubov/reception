@@ -4,7 +4,16 @@ from user.models import (
     User,
     Region,
     District,
-    Quarter, Organization, Car, Color, CarModel, CarType, FuelType, BodyType, Section, Device
+    Quarter,
+    Organization,
+    Car,
+    Color,
+    CarModel,
+    CarType,
+    FuelType,
+    BodyType,
+    Section,
+    Device
 )
 
 
@@ -543,3 +552,6 @@ class CreateOrganizationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['created_user'] = self.context['request'].user
         return super().create(validated_data)
+
+
+

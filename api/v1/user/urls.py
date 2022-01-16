@@ -27,6 +27,9 @@ urlpatterns = [
     path('create-car-model/', views.CreateCarModel.as_view(), name='create_car_model'),
     path('create-color/', views.CreateColor.as_view(), name='create_color'),
 
+    path('get-code/', views.GetCode.as_view(), name='get_code'),
+    path('verify-code/', views.VerifyCode.as_view(), name='verify_code'),
+
     path('playmobile/sms/status/', views.PlayMobileSmsStatus.as_view()),
 
     path('get/card/phone/number/', views.GetCardPhoneNumber.as_view(), name='get_card_phone_number'),
