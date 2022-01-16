@@ -178,9 +178,9 @@
     <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://unpkg.com/underscore@1.8.3"></script>
     <!-- development version -->
-    <script src="{% static 'vue/vue.dev.js' %}"></script>
+{#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
     <!-- production version -->
-    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+        <script src="{% static 'vue/vue.prod.js' %}"></script>
 
     <script>
         setAxiosHeader()
