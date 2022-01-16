@@ -367,7 +367,7 @@
                                    placeholder="Kunni tanlang"
                                    :disabled="carFormIsComplete"
                             >
-                            <div class="input-group-text icon">
+                            <div class="input-group-text icon" @click="() => $refs.day.focus()">
                                 <i class="fas fa-calendar-day"></i>
                             </div>
                         </div>
@@ -382,7 +382,7 @@
                                    placeholder="Oyni tanlang"
                                    :disabled="carFormIsComplete"
                             >
-                            <div class="input-group-text icon">
+                            <div class="input-group-text icon" @click="() => $refs.month.focus()">
                                 <i class="fas fa-calendar-day"></i>
                             </div>
                         </div>
@@ -399,7 +399,7 @@
                                     :class="{'is-invalid': $v.carForm.year.$error}"
                                     :disabled="carFormIsComplete"
                             >
-                            <div class="input-group-text icon">
+                            <div class="input-group-text icon" @click="() => $refs.year.focus()">
                                 <i class="fas fa-calendar-day"></i>
                             </div>
                         </div>

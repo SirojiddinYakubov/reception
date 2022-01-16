@@ -2,6 +2,7 @@ import json
 import random
 import re
 
+import pyotp
 import requests
 from django.contrib import auth
 from rest_framework import generics, status
@@ -111,7 +112,7 @@ class RegionsList(generics.ListAPIView):
 
 
 class SectionExistsRegionsList(generics.ListAPIView):
-    queryset = Region.objects.filter(is_active=True, section__isnull=False, section__parent__isnull=False).distinct()
+    queryset = Region.objects.filter(is_active=True, section__isnull=False, section__parent__isnull=False, section__is_active=True).distinct()
     serializer_class = serializers.RegionDetailSerializer
     permission_classes = [AllowAny]
 
@@ -178,7 +179,6 @@ class CreateOrganization(generics.CreateAPIView):
         permissions.AppCreatorPermission
     ]
 
-
 class CreateCarModel(generics.CreateAPIView):
     queryset = CarModel.objects.filter(is_active=True)
     serializer_class = serializers.CreateCarModelSerializer
@@ -193,6 +193,7 @@ class CreateCarModel(generics.CreateAPIView):
             if model.exists():
                 return Response(status=status.HTTP_409_CONFLICT)
         return super().post(request, *args, **kwargs)
+
 
 class CreateColor(generics.CreateAPIView):
     queryset = Color.objects.filter(is_active=True)
@@ -210,6 +211,38 @@ class CreateColor(generics.CreateAPIView):
         return super().post(request, *args, **kwargs)
 
 
+class GetCode(APIView):
+    def post(self, request, *args, **kwargs):
+        phone_number = request.data.get('phone')
+        phone = re.sub('[^0-9]', '', phone_number)
+        user = User.objects.filter(username=phone)
+        if user:
+            return Response({'error': 'Phone Number already exists'},
+                            status=status.HTTP_409_CONFLICT)
+
+        otp_response = send_otp(phone_number)
+        print(otp_response)
+        send_message_to_developer(str(otp_response))
+        msg = f"E-RIB dasturidan ro'yhatdan o'tish uchun tasdiqlash kodi: {otp_response['otp']}. Qo\'shimcha ma\'lumot uchun tel:972800809"
+        r = SendSmsWithPlayMobile(phone=phone, message=msg).get()
+        if not r == SUCCESS:
+            r = SendSmsWithApi(message=msg, phone=phone).get()
+        if r == SUCCESS:
+            return Response({'secret': otp_response['secret']}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Sms service not working"}, status=status.HTTP_400_BAD_REQUEST)
+
+class VerifyCode(APIView):
+    def post(self, request, *args, **kwargs):
+        secret = request.data.get('secret')
+        sms_code: str = request.data.get("code")
+        sms_code = sms_code.zfill(6)
+        if sms_code and secret:
+            totp = pyotp.TOTP(secret, interval=315360000)
+            if totp.verify(sms_code):
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Tasdiqlash kodi noto\'g\'ri!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PlayMobileSmsStatus(APIView):
@@ -299,7 +332,8 @@ class ConfirmPay(APIView):
                 else:
                     phone = application.created_user.phone
                 r = SendSmsWithPlayMobile(phone=phone, message=text).get()
-                SendSmsWithPlayMobile(phone=972800809, message=f"{application.id}-raqamli arizaga asosan, {phone} dan {all_amount} so'm to'landi!").get()
+                SendSmsWithPlayMobile(phone=972800809,
+                                      message=f"{application.id}-raqamli arizaga asosan, {phone} dan {all_amount} so'm to'landi!").get()
                 print(text)
                 if not r == SUCCESS:
                     # send sms with eskiz

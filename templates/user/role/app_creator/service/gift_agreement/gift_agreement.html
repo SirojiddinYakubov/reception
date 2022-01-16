@@ -1,0 +1,266 @@
+{% extends 'base_vertical.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    {{ service.short_title }}
+{% endblock title %}
+
+{% block page_title %}
+    {{ service.long_title }}
+{% endblock page_title %}
+
+{% block css %}
+    <!-- Plugins css -->
+    <link href="{% static 'assets/libs/mohithg-switchery/switchery.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/multiselect/css/multi-select.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet" href="{% static 'assets/libs/bootstrap-datepicker/css/bootstrap-datepicker3.min.css' %}">
+    <!-- Loading button css -->
+    <link href="{% static 'assets/libs/ladda/ladda.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/libs/ladda/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+    <style>
+        .v-select {
+            border: none !important;
+            padding: unset !important;
+        }
+
+        .v-error > .vs__dropdown-toggle {
+            border-color: red
+        }
+
+        .input-group-append {
+            cursor: pointer;
+            height: 100% !important;
+
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1040;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .icon {
+            cursor: pointer
+        }
+
+
+        .error {
+            border-color: red;
+            background: #FDD;
+        }
+
+        .error:focus {
+            outline-color: #F99;
+        }
+
+    </style>
+{% endblock css %}
+{% block content %}
+    <div class="row ml-2 mr-2" id="app">
+        <div class="col-12 text-center p-0">
+            <div class="card px-0 pb-0 mb-3">
+                <ul class="step d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-nowrap pt-4">
+                    <li id="applicant_step" class="step-item" :class="{active: isShowApplicantFieldset}">
+                        <span>Arizachi</span>
+                    </li>
+                    <li id="person_type_step" class="step-item" :class="{active: isShowPersonTypeFieldset}">
+                        <span>Shaxs turi</span>
+                    </li>
+                    <li id="document_step" class="step-item" :class="{active: isShowDocumentFieldset}">
+                        <span>{% trans "Notarius ma'lumotlari" %}</span>
+                    </li>
+                    <li id="car_step" class="step-item" :class="{active: isShowCarFieldset}">
+                        <span>Transport vositasi</span>
+                    </li>
+                    <li id="section_step" class="step-item">
+                        <span>Ariza topshirish hududi</span>
+                    </li>
+                </ul>
+                <br>
+                <br>
+
+                <component is="ApplicantFieldset"
+                           v-if="isShowApplicantFieldset && Object.keys(user).length !== 0"
+                           :applicant="applicant"
+                           :user="user"
+                           v-model:complete="applicantIsComplete"
+                           @update="applicant = $event"
+                           @next="()=>{isShowApplicantFieldset = false; isShowPersonTypeFieldset = true}"
+                >
+                </component>
+
+                <component is="PersonTypeFieldset"
+                           v-if="isShowPersonTypeFieldset"
+                           :applicant="applicant"
+                           :user="user"
+                           :person_type="person_type"
+                           :organization="organization"
+                           v-model="personTypeIsComplete"
+                           @update="organization = $event"
+                           @update-person-type="person_type = $event"
+                           @prev="()=>{isShowPersonTypeFieldset = false; isShowApplicantFieldset = true}"
+                           @next="()=>{isShowPersonTypeFieldset = false; isShowDocumentFieldset = true}"
+                >
+                </component>
+
+                <component is="DocumentFieldset"
+                           v-if="isShowDocumentFieldset"
+                           v-model:complete="documentIsComplete"
+                           :context="documentForm"
+                           @update="updateDocumentForm($event)"
+                           @prev="()=>{isShowDocumentFieldset = false; isShowPersonTypeFieldset = true}"
+                           @next="()=>{isShowDocumentFieldset = false; isShowCarFieldset = true}"
+                >
+                </component>
+                <component is="CarFieldset"
+                           v-if="isShowCarFieldset"
+                           :context="$data"
+                           v-model:complete="carIsComplete"
+                           @update="application = $event"
+                           @prev="()=>{isShowCarFieldset = false; isShowDocumentFieldset = true}"
+                           @next="()=>{isShowCarFieldset = false; isShowSectionFieldset = true}"
+                >
+                </component>
+
+
+                <component is="SectionFieldset"
+                           v-if="isShowSectionFieldset"
+                           :application="application"
+                           @prev="()=>{isShowSectionFieldset = false; isShowCarFieldset = true}"
+                >
+                </component>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'assets/libs/selectize/js/standalone/selectize.min.js' %}"></script>
+    <script src="{% static 'assets/libs/mohithg-switchery/switchery.min.js' %}"></script>
+    <script src="{% static 'assets/libs/multiselect/js/jquery.multi-select.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-inputmask/jquery.inputmask.min.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/main.js' %}" type="text/javascript"></script>
+
+
+    <script src="https://unpkg.com/vue-select@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/vuelidate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.6/dist/validators.min.js"></script>
+    <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/underscore@1.8.3"></script>
+    <!-- development version -->
+{#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+    <!-- production version -->
+        <script src="{% static 'vue/vue.prod.js' %}"></script>
+
+    <script>
+        setAxiosHeader()
+
+        /* Vue.directive('phone-mask', {
+             params: ['mask'],
+             bind: function (el, binding, vNode) {
+                 $(el).inputmask({
+                     mask: '+\\9\\98 (99) 999-99-99',
+                 })
+             },
+             unbind: function (el) {
+                 $(el).inputmask('+\\9\\98 (99) 999-99-99').remove()
+             }
+         });*/
+
+        Vue.use(window.vuelidate.default)
+        const {required, minLength, maxLength, requiredIf, maxValue, alphaNum, alpha} = window.validators;
+        new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: () => ({
+                isShowApplicantFieldset: true,
+                isShowPersonTypeFieldset: false,
+                isShowDocumentFieldset: false,
+                isShowCarFieldset: false,
+                isShowSectionFieldset: false,
+
+                applicantIsComplete: false,
+                personTypeIsComplete: false,
+                documentIsComplete: false,
+                carIsComplete: false,
+
+                user: {},
+                userId: '',
+                application: {},
+                applicant: '',
+                documentForm: {
+                    seriya: '',
+                    contract_date: '',
+                },
+                person_type: '0',
+                organization: ''
+            }),
+            components: {
+                'ApplicantFieldset': httpVueLoader('/static/vue/components/service/ApplicantFieldset.vue'),
+                'PersonTypeFieldset': httpVueLoader('/static/vue/components/service/PersonTypeFieldset.vue'),
+                'DocumentFieldset': httpVueLoader('/static/vue/components/service/DocumentFieldset.vue'),
+                'CarFieldset': httpVueLoader('/static/vue/components/service/CarFieldset.vue'),
+                'SectionFieldset': httpVueLoader('/static/vue/components/service/SectionFieldset.vue'),
+            },
+            created() {
+                this.getCurrentUser()
+            },
+            methods: {
+                async getCurrentUser() {
+                    this.userId = await axios.get('/api/v1/user/auth/users/me/')
+                        .then(res => res.data.id)
+                    this.getUserDetail()
+                },
+                async getUserDetail() {
+                    this.user = await axios.get('{% url "api_user:user_detail" pk=12345 %}'.replace(/12345/, this.userId.toString())).then(res => res.data)
+                },
+                showAlert: (event) => {
+                    console.log(event)
+                },
+                updateDocumentForm(data) {
+                    this.documentForm.seriya = data.seriya
+                    this.documentForm.contract_date = data.contract_date
+                },
+                updatePersonType(data) {
+                    this.person_type = data.person_type
+                }
+            },
+        })
+    </script>
+{% endblock js %}
+
+
+
+
+
+
