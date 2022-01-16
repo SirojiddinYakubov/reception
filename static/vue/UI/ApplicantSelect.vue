@@ -3,53 +3,54 @@
         <label class="col-form-label not_copy text-start label_required">Arizachini
             tanlang</label>
         <div class="col-12">
-                <div class="input-group mb-3">
-                    <v-select
-                        :options="applicants"
-                        v-model="selectedOption"
-                        placeholder="Arizachi nomi yoki pasport orqali qidiring . . . "
-                        label="first_name"
-                        :filterable="false"
-                        class="form-control"
-                        :class="{'v-error': $v.applicant.$error}"
-                        @open="onOpen"
-                        @close="onClose"
-                        @search="onSearch"
-                        append-to-body
-                    >
-                        <template #selected-option="{ last_name, first_name, middle_name }">
-                            {{ last_name }} {{ first_name }} {{ middle_name }}
-                        </template>
+            <div class="input-group mb-3">
+                <v-select
+                    :options="applicants"
+                    v-model="selectedOption"
+                    placeholder="Arizachi nomi yoki pasport orqali qidiring . . . "
+                    label="first_name"
+                    :filterable="false"
+                    class="form-control"
+                    :class="{'v-error': $v.applicant.$error}"
+                    :disabled="disabled"
+                    @open="onOpen"
+                    @close="onClose"
+                    @search="onSearch"
+                    append-to-body
+                >
+                    <template #selected-option="{ last_name, first_name, middle_name }">
+                        {{ last_name }} {{ first_name }} {{ middle_name }}
+                    </template>
 
-                        <span slot="option" slot-scope="applicant" :key="applicant.id">
+                    <span slot="option" slot-scope="applicant" :key="applicant.id">
                 <span class="text-capitalize" :key="applicant.id">
                     {{ applicant.last_name }} {{ applicant.first_name }} {{ applicant.middle_name }}
                 </span>
             </span>
 
-                        <span slot="no-options">Siz izlayotgan arizachi topilmadi!
+                    <span slot="no-options">Siz izlayotgan arizachi topilmadi!
                 <a href="#" @click="$emit('add-new-applicant', true)">yangi arizachi qo'shish</a>
             </span>
-                        <template #list-footer>
-                            <li v-show="hasNextPage && applicants.length > 0" ref="load" class="loader">
-                                Loading more options...
-                            </li>
-                        </template>
-                    </v-select>
-                    <div class="input-group-append"
-                         @click="$emit('add-new-applicant', true)">
+                    <template #list-footer>
+                        <li v-show="hasNextPage && applicants.length > 0" ref="load" class="loader">
+                            Loading more options...
+                        </li>
+                    </template>
+                </v-select>
+                <div v-if="!disabled" class="input-group-append"
+                     @click="$emit('add-new-applicant', true)">
                         <span class="input-group-text" style="height: 32px !important;">
                             <i class="fas fa-plus"></i>
                         </span>
-                    </div>
-                    <div
-                        v-if="$v.applicant.$dirty && !$v.applicant.required"
-                        class="text-danger w-100" style="text-align: start">
-                        Arizachi tanlanmagan!
-                    </div>
+                </div>
+                <div
+                    v-if="$v.applicant.$dirty && !$v.applicant.required"
+                    class="text-danger w-100" style="text-align: start">
+                    Arizachi tanlanmagan!
                 </div>
             </div>
         </div>
+    </div>
 </template>
 
 <script>
@@ -57,7 +58,11 @@
 
 module.exports = {
     name: 'InfiniteScroll',
-    props: ['$v', 'selected', 'disabled'],
+    model: {
+        prop: 'applicant',
+        event: 'change'
+    },
+    props: ['$v', 'applicant', 'disabled'],
     data: () => ({
         observer: null,
         applicants: [],
@@ -71,10 +76,11 @@ module.exports = {
     computed: {
         selectedOption: {
             get() {
-                return this.selected
+                return this.applicant
             },
             set(val) {
-                this.$emit('update', val)
+                console.log(88, val);
+                this.$emit('change', val)
             }
         },
         sortedApplicants() {
@@ -84,6 +90,7 @@ module.exports = {
             })
         },
     },
+
     mounted() {
         this.observer = new IntersectionObserver(this.infiniteScroll)
     },
