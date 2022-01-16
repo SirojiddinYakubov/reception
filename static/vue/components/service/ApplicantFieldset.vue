@@ -5,21 +5,18 @@
             <form>
                 <component is="applicant-select"
                            @add-new-applicant="isShowApplicantModal = $event"
-                           :selected="applicant"
+                           v-model="selectedApplicant"
                            :disabled="isComplete"
                            :$v="$v"
-                           @update="selected = $event"
                 >
                 </component>
-
-
-                <div v-if="applicant">
+                <div v-if="selectedApplicant">
                     <div class="row mb-3">
                         <label
                             class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                             for="last_name">Familiya</label>
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                            <input type="text" id="last_name" :value="applicant.last_name"
+                            <input type="text" id="last_name" :value="selectedApplicant.last_name"
                                    class="form-control" disabled>
                         </div>
                     </div>
@@ -29,7 +26,7 @@
                             Ism
                         </label>
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                            <input type="text" :value="applicant.first_name"
+                            <input type="text" :value="selectedApplicant.first_name"
                                    class="form-control" disabled/>
                         </div>
                     </div>
@@ -38,33 +35,33 @@
                             class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                         >Otasining ismi</label>
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                            <input type="text" :value="applicant.middle_name"
+                            <input type="text" :value="selectedApplicant.middle_name"
                                    class="form-control" disabled/>
                         </div>
                     </div>
-                    <div class="row mb-3" v-if="applicant.region">
+                    <div class="row mb-3" v-if="selectedApplicant.region">
                         <label
                             class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                         >Viloyat</label>
 
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 region">
-                            <input class="form-control" type="text" :value="applicant.region.title" disabled/>
+                            <input class="form-control" type="text" :value="selectedApplicant.region.title" disabled/>
                         </div>
                     </div>
-                    <div class="row mb-3" v-if="applicant.district">
+                    <div class="row mb-3" v-if="selectedApplicant.district">
                         <label
                             class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                         >Tuman/Shahar</label>
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 district">
-                            <input class="form-control" type="text" :value="applicant.district.title" disabled/>
+                            <input class="form-control" type="text" :value="selectedApplicant.district.title" disabled/>
                         </div>
                     </div>
-                    <div class="row mb-3" v-if="applicant.quarter">
+                    <div class="row mb-3" v-if="selectedApplicant.quarter">
                         <label
                             class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
                         >Mahalla</label>
                         <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 quarter">
-                            <input class="form-control" type="text" :value="applicant.quarter.title" disabled/>
+                            <input class="form-control" type="text" :value="selectedApplicant.quarter.title" disabled/>
                         </div>
                     </div>
                 </div>
@@ -87,7 +84,7 @@
                    v-if="isShowApplicantModal"
                    :user="user"
                    @hide="isShowApplicantModal = false"
-                   @update="applicant = $event"
+                   @update="selectedApplicant = $event"
         ></component>
     </div>
 </template>
@@ -111,12 +108,12 @@ module.exports = {
 
     },
     computed: {
-        selected: {
+        selectedApplicant: {
             get() {
                 return this.applicant
             },
             set(val) {
-                this.$emit('update', val)
+                this.$emit('update-applicant', val)
             }
         },
         isComplete: {
@@ -146,8 +143,6 @@ module.exports = {
             }
         }
     },
-    watch: {}
-
 }
 </script>
 

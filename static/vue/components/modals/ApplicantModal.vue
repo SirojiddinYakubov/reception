@@ -426,7 +426,7 @@ module.exports = {
                 let phone = Inputmask.unmask(this.newApplicantForm.phone, {mask: '+\\9\\98 (99) 999-99-99'})
 
                 const formData = new FormData()
-                console.log(this.newApplicantForm.quarter && this.newApplicantForm.quarter.id || '')
+
                 formData.append('phone', phone)
                 formData.append('created_by', this.user.id)
                 formData.append('last_name', this.newApplicantForm.last_name)

@@ -1,5 +1,5 @@
 <template>
-    <fieldset id="document_fieldset">
+    <fieldset>
         <legend>Notarius ma'lumotlari</legend>
         <form @keypress.enter.prevent="!isComplete ? next() : ''">
             <div class="alert-danger text-center"><p><b style="color: red; font-size: large">*</b> ushbu belgi qo'yilgan

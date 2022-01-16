@@ -1,8 +1,7 @@
 <template>
     <fieldset>
         <legend>Ariza topshirish hududi</legend>
-        <form action="#" id="save_section_form">
-            <input type="hidden" name="application">
+        <form action="#" >
             <div class="row mb-3">
                 <div class="alert alert-info">
                     <p style="font-size: 1.4rem; font-weight: bold">ARIZA TOPSHIRISH HUDUDI</p>
@@ -63,7 +62,6 @@
                             @click="$emit('prev')"
                     >Oldingi
                     </button>
-
                 </div>
             </div>
         </form>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <fieldset id="person_type_fieldset">
+        <fieldset>
             <legend>Shaxs turi</legend>
             <form @keypress.enter.prevent="!isComplete ? next() : ''">
                 <div>
@@ -90,6 +90,14 @@ module.exports = {
             set(val) {
                 this.$emit('update', val)
             }
+        },
+        isComplete: {
+            get() {
+                return this.complete
+            },
+            set(val) {
+                this.$emit('change', val)
+            }
         }
     },
     data: () => ({
@@ -117,7 +125,7 @@ module.exports = {
         next() {
             this.$v.organization.$touch()
             if (!this.$v.organization.$error) {
-                this.$emit('update-person-type',  this.selectedPersonType)
+                this.$emit('update-person-type', this.selectedPersonType)
                 this.$emit('change', true)
                 this.$emit('next')
             }
