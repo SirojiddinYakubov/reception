@@ -262,7 +262,7 @@ class GiftAgreement(ServiceCustomMixin):
         if role == USER:
             return ['user/role/user/service/gift_agreement/gift_agreement.html']
         elif role == APP_CREATOR:
-            return ['user/role/app_creator/service/gift_agreement/gift_agreement.html']
+            return ['user/role/app_creator/service/gift_agreement.html']
         else:
             return [self.template_name]
 
