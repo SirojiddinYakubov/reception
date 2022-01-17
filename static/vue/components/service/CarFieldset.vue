@@ -321,7 +321,7 @@
                                 <label class="form-label" style="float: left">Kun</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text"
-                                           onkeydown="return false"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                            ref="day"
                                            class="form-control"
                                            v-model="carForm.day"
@@ -337,7 +337,7 @@
                                 <label class="form-label" style="float: left">Oy</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text"
-                                           onkeydown="return false"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                            ref="month"
                                            class="form-control"
                                            v-model="carForm.month"
@@ -353,7 +353,7 @@
                                 <label class="form-label label_required" style="float: left">Yil</label>
                                 <div class="input-group input-group-merge">
                                     <input
-                                        onkeydown="return false"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                         type="text"
                                         ref="year"
                                         class="form-control"
