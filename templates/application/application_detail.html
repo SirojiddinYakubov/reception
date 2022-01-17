@@ -60,6 +60,24 @@
                     </div>
                 </div>
                 <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFifth">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFifth" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseFifth">
+                            <h5>To'lov</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFifth" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingFifth">
+                        <div class="accordion-body">
+                            <ul>
+                                {% include 'application/inc/application_payments_part.html' %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
@@ -102,24 +120,6 @@
                         <div class="accordion-body">
                             <ul>
                                 {% include 'application/inc/application_files_part.html' %}
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingFifth">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseFifth" aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseFifth">
-                            <h5>To'lov</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseFifth" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingFifth">
-                        <div class="accordion-body">
-                            <ul>
-                                {% include 'application/inc/application_payments_part.html' %}
                             </ul>
                         </div>
                     </div>
