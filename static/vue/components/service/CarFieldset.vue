@@ -8,41 +8,14 @@
                     maydonlarni to'ldirish majburiy.</p>
                 </div>
 
-
-                <div class="row">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Transport vositasi modelini tanlang</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 car">
-
-                        <div class="input-group mb-3">
-
-                            <v-select
-                                v-model="carForm.model"
-                                :options="carModels"
-                                label="title"
-                                placeholder="Model nomini qidiring . . . "
-                                class="form-control"
-                                :class="{'v-error': $v.carForm.model.$error}"
-                                :disabled="isComplete"
-                                ref="model"
-                            >
-                        <span slot="no-options">Siz izlayotgan transport vositasi modeli topilmadi! <a href="#"
-                                                                                                       @click="isShowModelModal = true">yangi model qo'shish</a></span>
-                            </v-select>
-                            <div v-if="!isComplete" class="input-group-append" @click="isShowModelModal = true">
-                        <span class="input-group-text" style="height: 32px !important;">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                            </div>
-                            <div
-                                v-if="$v.carForm.model.$dirty && !$v.carForm.model.required"
-                                class="text-danger w-100" style="text-align: start">
-                                Transport vositasi modeli tanlanmagan!
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <model-select
+                    :$v="$v"
+                    v-model="carForm.model"
+                    :complete="isComplete"
+                    @update="isComplete = $event"
+                    @add-new-model="isShowModelModal = true"
+                    ref="model"
+                ></model-select>
 
                 <div class="row mb-3">
                     <label
@@ -296,41 +269,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Rangi</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 color">
-                        <div class="input-group mb-3">
 
-                            <v-select
-                                v-model="carForm.color"
-                                :options="colors"
-                                label="title"
-                                placeholder="Rangni qidiring . . . "
-                                class="form-control"
-                                :class="{'v-error': $v.carForm.color.$error}"
-                                :disabled="isComplete"
-                                ref="color"
-                            >
-                        <span slot="no-options">Siz izlayotgan rang topilmadi! <a href="#"
-                                                                                  @click="isShowColorModal = true">yangi rang qo'shish</a></span>
-                            </v-select>
+                <color-select
+                    :$v="$v"
+                    v-model="carForm.color"
+                    :complete="isComplete"
+                    @update="isComplete = $event"
+                    @add-new-color="isShowColorModal = true"
+                    ref="color"
+                ></color-select>
 
-                            <div v-if="!isComplete" class="input-group-append" @click="isShowColorModal = true">
-                        <span class="input-group-text">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                            </div>
-                            <div
-                                v-if="$v.carForm.color.$dirty && !$v.carForm.color.required"
-                                class="text-danger w-100" style="text-align: start">
-                                Rang tanlanmagan!
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
                 <div class="row mb-3">
                     <label
                         class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
@@ -865,13 +813,13 @@
         <color-modal
             v-if="isShowColorModal"
             @hide="isShowColorModal = false"
-            @update="updateColors"
+            @update="carForm.color = $event"
         ></color-modal>
 
         <model-modal
             v-if="isShowModelModal"
             @hide="isShowModelModal = false"
-            @update="updateModels"
+            @update="carForm.model = $event"
         ></model-modal>
 
     </div>
@@ -945,11 +893,9 @@ module.exports = {
             another_car_number: '',
         },
         errorMessages: {},
-        carModels: [],
         types: [],
         fuelTypes: [],
         bodyTypes: [],
-        colors: [],
         devices: [],
         knowMadeYear: false,
         isShowModelModal: false,
@@ -960,6 +906,9 @@ module.exports = {
         'v-multiselect': window.VueMultiselect.default,
         'ColorModal': httpVueLoader('/static/vue/components/modals/ColorModal.vue'),
         'ModelModal': httpVueLoader('/static/vue/components/modals/ModelModal.vue'),
+        'ModelSelect': httpVueLoader('/static/vue/UI/ModelSelect.vue'),
+        'ColorSelect': httpVueLoader('/static/vue/UI/ColorSelect.vue'),
+
     },
     validations: {
         carForm: {
@@ -1041,11 +990,9 @@ module.exports = {
         },
     },
     created() {
-        this.getCarModels()
         this.getTypes()
         this.getFuelTypes()
         this.getBodyTypes()
-        this.getColors()
         this.getDevices()
 
         this.documentForm = this.context.documentForm
@@ -1124,13 +1071,13 @@ module.exports = {
 
     },
     methods: {
+        showAlert(event) {
+            console.log(1100, event)
+        },
+
         hideDiv(...args) {
             return !args.some((elem) => elem)
         },
-        async getCarModels() {
-            this.carModels = await axios.get('/api/v1/user/car-models/list/').then(res => res.data)
-        },
-
         async getDevices() {
             this.devices = await axios.get('/api/v1/user/devices/list/').then(res => res.data)
         },
@@ -1145,10 +1092,6 @@ module.exports = {
 
         async getBodyTypes() {
             this.bodyTypes = await axios.get('/api/v1/user/car-body-types/list/').then(res => res.data)
-        },
-
-        async getColors() {
-            this.colors = await axios.get('/api/v1/user/car-colors/list/').then(res => res.data)
         },
         async sendCarForm() {
             this.$v.carForm.$touch()
@@ -1225,8 +1168,6 @@ module.exports = {
                                 return res.data
                             }
                         }).catch((error) => {
-                            console.log(error.response)
-                            console.log(error.response.data)
                             if (error.response) {
                                 if (error.response.status === 400) {
                                     for (const [key, value] of Object.entries(error.response.data)) {
@@ -1246,7 +1187,6 @@ module.exports = {
             }
 
         },
-
         scrollToFirstError(form) {
             Object.keys(form).forEach((key) => {
                 if (form[key].$error) {
@@ -1262,15 +1202,6 @@ module.exports = {
                 }
             })
         },
-
-        updateColors(color) {
-            this.getColors()
-            this.carForm.color = color
-        },
-        updateModels(model) {
-            this.getCarModels()
-            this.carForm.model = model
-        }
     },
     watch: {
         'carForm.device': (newVal, oldVal) => {

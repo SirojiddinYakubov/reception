@@ -129,10 +129,8 @@ module.exports = {
         applicant: {required},
     },
     components: {
-        'v-select': VueSelect.VueSelect,
         'applicant-modal': httpVueLoader('/static/vue/components/modals/ApplicantModal.vue'),
         'applicant-select': httpVueLoader('/static/vue/UI/ApplicantSelect.vue'),
-
     },
     methods: {
         next() {
