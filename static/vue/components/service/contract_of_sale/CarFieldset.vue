@@ -831,7 +831,7 @@ module.exports = {
         },
     },
     data: () => ({
-        carForm: {
+        form: {
             model: '',
             type: '',
             fuel_type: '',
@@ -957,6 +957,12 @@ module.exports = {
         },
     },
     created() {
+        if (this.context["carForm"] !== undefined) {
+            this.carForm = this.context.carForm
+        } else {
+            this.carForm = this.form
+        }
+
         this.getTypes()
         this.getFuelTypes()
         this.getBodyTypes()
@@ -1110,7 +1116,7 @@ module.exports = {
                         .then((res) => {
                             console.log(res)
                             if (res.status === 201) {
-
+                                this.$emit('update-context', this.form)
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: 'top-end',
