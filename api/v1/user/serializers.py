@@ -359,7 +359,6 @@ class CreateContractOfSaleCarSerializer(serializers.ModelSerializer):
             'made_year': {'required': True},
             'color': {'required': True},
             'engine_power': {'required': True},
-            'price': {'required': True},
             'is_auction': {'required': True},
             'is_saved_number': {'required': True},
             'save_old_number': {'required': True},
@@ -431,7 +430,6 @@ class CreateGiftAgreementCarSerializer(serializers.ModelSerializer):
             'made_year': {'required': True},
             'color': {'required': True},
             'engine_power': {'required': True},
-            'price': {'required': True},
             'is_auction': {'required': True},
             'is_saved_number': {'required': True},
             'save_old_number': {'required': True},
@@ -558,3 +556,55 @@ class CreateOrganizationSerializer(serializers.ModelSerializer):
 
 
 
+class CreateReplaceTpCarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = [
+            'id',
+            'model',
+            'body_type',
+            'fuel_type',
+            're_fuel_type',
+            'full_weight',
+            'empty_weight',
+            'type',
+            'body_number',
+            'chassis_number',
+            'engine_number',
+            'made_year',
+            'color',
+            'engine_power',
+            'old_number',
+            'lost_technical_passport',
+            'old_technical_passport',
+
+        ]
+        extra_kwargs = {
+            'model': {'required': True},
+            'body_type': {'required': True},
+            'fuel_type': {'required': True},
+            'full_weight': {'required': True},
+            'empty_weight': {'required': True},
+            'type': {'required': True},
+            'body_number': {'required': True},
+            'engine_number': {'required': True},
+            'made_year': {'required': True},
+            'color': {'required': True},
+            'engine_power': {'required': True},
+            'lost_technical_passport': {'required': True},
+            'old_number': {'required': True},
+        }
+
+    def validate(self, attrs):
+        errors = dict()
+
+        if not attrs.get('lost_technical_passport'):
+            if not attrs.get('old_technical_passport'):
+                errors.update(old_technical_passport=["Ushbu maydon to'ldirilishi shart."])
+
+        if errors.__len__() > 0:
+            raise serializers.ValidationError(errors)
+        return attrs
+
+    def create(self, validated_data):
+        return super().create(validated_data)
