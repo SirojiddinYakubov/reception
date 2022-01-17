@@ -598,6 +598,15 @@ class ReEquipment(ServiceCustomMixin):
 class ReplaceTp(ServiceCustomMixin):
     template_name = 'service/replace_tp/replace_tp.html'
 
+
+    def get_template_names(self):
+        role = self.request.user.role
+
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/replace_tp.html']
+        else:
+            return [self.template_name]
+
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
 
