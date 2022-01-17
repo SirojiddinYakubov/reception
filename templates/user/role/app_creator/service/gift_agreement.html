@@ -121,8 +121,8 @@
                 <component is="DocumentFieldset"
                            v-if="isShowDocumentFieldset"
                            v-model:complete="documentIsComplete"
-                           :context="documentForm"
-                           @update="updateDocumentForm($event)"
+                           :context="$data"
+                           @update="Object.assign($data,{documentForm: $event})"
                            @prev="()=>{isShowDocumentFieldset = false; isShowPersonTypeFieldset = true}"
                            @next="()=>{isShowDocumentFieldset = false; isShowCarFieldset = true}"
                 >
@@ -132,6 +132,7 @@
                            :context="$data"
                            v-model:complete="carIsComplete"
                            @update="application = $event"
+                           @update-context="Object.assign($data,{carForm: $event})"
                            @prev="()=>{isShowCarFieldset = false; isShowDocumentFieldset = true}"
                            @next="()=>{isShowCarFieldset = false; isShowSectionFieldset = true}"
                 >
@@ -218,10 +219,6 @@
                 userId: '',
                 application: {},
                 applicant: '',
-                documentForm: {
-                    seriya: '',
-                    contract_date: '',
-                },
                 person_type: '0',
                 organization: ''
             }),
@@ -246,10 +243,6 @@
                 },
                 showAlert: (event) => {
                     console.log(event)
-                },
-                updateDocumentForm(data) {
-                    this.documentForm.seriya = data.seriya
-                    this.documentForm.contract_date = data.contract_date
                 },
                 updatePersonType(data) {
                     this.person_type = data.person_type

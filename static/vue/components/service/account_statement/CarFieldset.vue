@@ -280,44 +280,13 @@
                 ></color-select>
 
                 <div class="row mb-3">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Ishlab chiqarilgan kun va oyini aniq bilasizmi?</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio"
-                                       id="knowMadeYear_yes"
-                                       v-model="knowMadeYear"
-                                       :value="true"
-                                       class="form-check-input"
-                                       :disabled="isComplete"
-                                >
-                                <label class="form-check-label" for="knowMadeYear_yes">Ha, bilaman</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio" id="knowMadeYear_no"
-                                       v-model="knowMadeYear"
-                                       :value="false"
-                                       checked
-                                       class="form-check-input"
-                                       :disabled="isComplete"
-                                >
-                                <label class="form-check-label" for="knowMadeYear_no">Yo'q, bilmayman</label>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
                     <label class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-form-label text-start label_required"
                            style="margin: auto"
                     >Ishlab chiqarilgan vaqti</label>
                     <div class="col-12 col-xl-8 col-lg-8 col-md-8">
 
                         <div class="row">
-                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" v-show="knowMadeYear">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" >
                                 <label class="form-label" style="float: left">Kun</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text"
@@ -333,7 +302,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" v-show="knowMadeYear">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                 <label class="form-label" style="float: left">Oy</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text"
@@ -380,216 +349,39 @@
 
                 </div>
 
-                <div class="row mb-3 check" id="is_relative_div">
-                    <label
-                        class="not_copy col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-form-label text-start label_required"
-                    >Xadya shartnomasi yaqin qarindosh (ota, ona, er, xotin, aka, uka,
-                        opa, singil) lar orasidami?</label>
-                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input
-                                    type="radio" id="is_relative_yes"
-                                    v-model="carForm.is_relative"
-                                    :value="true"
-                                    class="form-check-input"
-                                    :disabled="isComplete"
-                                >
-                                <label class="form-check-label" for="is_relative_yes">Yaqin qarindosh</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input
-                                    type="radio"
-                                    id="is_relative_no"
-                                    v-model="carForm.is_relative"
-                                    :value="false"
-                                    class="form-check-input"
-                                    :disabled="isComplete"
-                                >
-                                <label class="form-check-label" for="is_relative_no">Yaqin qarindosh emas</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row mb-3">
                     <label
                         class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Qayd etish guvohnomasi yo'qolganmi?</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio"
-                                       id="lost_technical_passport_yes"
-                                       v-model="carForm.lost_technical_passport"
-                                       :value="true"
-                                       class="form-check-input"
-                                       :disabled="isComplete"
-                                >
-                                <label class="form-check-label" for="lost_technical_passport_yes">Ha, yo'qolgan</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio"
-                                       id="lost_technical_passport_no"
-                                       v-model="carForm.lost_technical_passport"
-                                       :value="false" checked
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="lost_technical_passport_no">Yo'q,
-                                    yo'qolmagan</label>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3" v-if="!carForm.lost_technical_passport">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                        for="old_technical_passport">Qayd etish guvohnomasi seriyasi va raqami</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <input type="text" id="old_technical_passport"
-                               v-model.trim="carForm.old_technical_passport"
-                               class="form-control text-uppercase"
-                               placeholder="Masalan: AAF4567895"
+                        for="engine_power">Transport vositasi narxi</label>
+                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8 engine_power">
+                        <input type="number"
+                               v-model.number="carForm.price"
+                               class="form-control"
+                               placeholder="Masalan: 75 000 000"
                                autocomplete="off"
-                               :class="{'is-invalid': $v.carForm.old_technical_passport.$error}"
+                               :class="{'is-invalid': $v.carForm.price.$error}"
                                :disabled="isComplete"
-                               ref="old_technical_passport"
+                               ref="price"
                         >
+                        <p class="text-muted" style="font-size: small; margin-bottom: 0; text-align:start">Ushbu
+                            qiymatni so'mda
+                            kiriting!</p>
                         <div
-                            v-if="$v.carForm.old_technical_passport.$dirty && !$v.carForm.old_technical_passport.required"
+                            v-if="$v.carForm.price.$dirty && !$v.carForm.price.required"
                             class="text-danger w-100" style="text-align: start">
-                            Qayd etish guvohnomasi seriyasi va raqami kiritilmagan!
+                            Transport vositasi narxi kiritilmagan!
                         </div>
                         <div
-                            v-if="$v.carForm.old_technical_passport.$dirty && $v.carForm.old_technical_passport.required && !$v.carForm.old_technical_passport.maxLength"
+                            v-if="$v.carForm.price.$dirty && !$v.carForm.price.maxLength"
                             class="text-danger w-100" style="text-align: start">
-                            Ushbu qiymat 30 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
-                        </div>
-                        <div
-                            v-if="$v.carForm.old_technical_passport.$dirty && !$v.carForm.old_technical_passport.alphaNum"
-                            class="text-danger w-100" style="text-align: start">
-                            Faqat harf va raqam kiriting!
+                            Transport vositasi narxi eng yuqori 18 xonali bo'lishi mumkin!
                         </div>
                         <div class="text-danger" style="text-align: start">
-                            {{ errorMessages.old_technical_passport }}
+                            {{ errorMessages.price }}
                         </div>
                     </div>
                 </div>
-                <div class="row mb-3"
-                     v-if="hideDiv(carForm.is_auction, carForm.is_another_car, carForm.lost_number, carForm.is_saved_number)">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Transport vositasidagi DRBni saqlab qolish</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio"
-                                       id="save_old_number_yes"
-                                       v-model="carForm.save_old_number"
-                                       :value="true"
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="save_old_number_yes">Ha, saqlab qolaman</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio" id="save_old_number_no"
-                                       v-model="carForm.save_old_number"
-                                       :value="false"
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="save_old_number_no">Yo'q, saqlab qolmayman</label>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3" v-if="!carForm.save_old_number">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Transport vositasidagi DRB yo'qolganmi?</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio" id="lost_number_yes"
-                                       v-model="carForm.lost_number"
-                                       :value="true"
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="lost_number_yes">Ha, yo'qolgan</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio" id="lost_number_no"
-                                       v-model="carForm.lost_number"
-                                       :value="false"
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="lost_number_no">Yo'q, yo'qolmagan</label>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3" v-if="!carForm.lost_number">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                        for="old_number">Transport vositasidagi DRB</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <input type="text" id="old_number"
-                               v-model.trim="carForm.old_number"
-                               class="form-control text-uppercase"
-                               placeholder="Masalan: 01K979AB"
-                               autocomplete="off"
-                               :disabled="isComplete"
-                               :class="{'is-invalid': $v.carForm.old_number.$error}"
-                               ref="old_number"
-                        >
-                        <div
-                            v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.required"
-                            class="text-danger w-100" style="text-align: start">
-                            Transport vositasidagi DRB kiritilmagan!
-                        </div>
-                        <div v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.maxLength"
-                             class="text-danger w-100" style="text-align: start">
-                            Ushbu qiymat 15 yoki undan kam belgidan iboratligiga ishonch hosil qiling!
-                        </div>
-                        <div v-if="$v.carForm.old_number.$dirty && !$v.carForm.old_number.alphaNum"
-                             class="text-danger w-100" style="text-align: start">
-                            Faqat harf va raqam kiriting!
-                        </div>
-                        <div class="text-danger" style="text-align: start">
-                            {{ errorMessages.old_number }}
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3" id="is_old_number_div">
-                    <label
-                        class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    >Transport vositasidagi DRB eski namunadami? Masalan: 01 A 5555</label>
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
-                        <div class="row justify-content-start mt-1">
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio"
-                                       id="is_old_number_yes"
-                                       v-model="carForm.is_old_number"
-                                       :value="true"
-                                       :disabled="isComplete"
-                                       class="form-check-input">
-                                <label class="form-check-label" for="is_old_number_yes">Ha, eski</label>
-                            </div>
-                            <div class="col-6 col-lg-4 col-xl-4 text-start">
-                                <input type="radio" id="is_old_number_no"
-                                       v-model="carForm.is_old_number"
-                                       class="form-check-input"
-                                       :disabled="isComplete"
-                                       :value="false">
-                                <label class="form-check-label" for="is_old_number_no">Yo'q, eski emas</label>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                </div>
                 <div class="row mb-3"
                      v-if="hideDiv(carForm.is_auction, carForm.save_old_number, carForm.is_another_car)">
                     <label
@@ -850,8 +642,6 @@ module.exports = {
                     return this.carForm.another_car_number
                 } else if (this.carForm.is_saved_number) {
                     return this.carForm.saved_number
-                } else if (this.carForm.save_old_number) {
-                    return this.carForm.old_number
                 } else {
                     return ''
                 }
@@ -874,12 +664,6 @@ module.exports = {
             empty_weight: 0,
             engine_power: null,
             color: null,
-            lost_technical_passport: false,
-            old_technical_passport: '',
-            save_old_number: false,
-            lost_number: false,
-            old_number: '',
-            is_old_number: false,
             is_saved_number: false,
             saved_number: '',
             is_auction: false,
@@ -888,16 +672,15 @@ module.exports = {
             year: '',
             month: '',
             day: '',
-            is_relative: false,
             is_another_car: false,
             another_car_number: '',
+            price: '',
         },
         errorMessages: {},
         types: [],
         fuelTypes: [],
         bodyTypes: [],
         devices: [],
-        knowMadeYear: false,
         isShowModelModal: false,
         isShowColorModal: false,
     }),
@@ -942,22 +725,7 @@ module.exports = {
                 maxLength: maxLength(5)
             },
             color: {required},
-            lost_technical_passport: {required},
-            old_technical_passport: {
-                required: requiredIf(vm => {
-                    return !vm.lost_technical_passport
-                }),
-                maxLength: maxLength(30),
-                alphaNum
-            },
-            lost_number: {required},
-            old_number: {
-                required: requiredIf(vm => {
-                    return !vm.lost_number
-                }),
-                maxLength: maxLength(15),
-                alphaNum
-            },
+
             saved_number: {
                 required: requiredIf(vm => {
                     return vm.is_saved_number
@@ -974,10 +742,7 @@ module.exports = {
             },
             is_auction: {required},
             is_saved_number: {required},
-            is_old_number: {required},
-            save_old_number: {required},
             year: {required},
-            is_relative: {required},
             is_another_car: {required},
             another_car_number: {
                 required: requiredIf(vm => {
@@ -985,7 +750,11 @@ module.exports = {
                 }),
                 maxLength: maxLength(15),
                 alphaNum
-            }
+            },
+            price: {
+                required,
+                maxLength: maxLength(18)
+            },
 
         },
     },
@@ -1129,12 +898,6 @@ module.exports = {
                 formData.append('empty_weight', this.carForm.empty_weight)
                 formData.append('engine_power', this.carForm.engine_power)
                 formData.append('color', this.carForm.color.id)
-                formData.append('lost_technical_passport', this.carForm.lost_technical_passport)
-                formData.append('old_technical_passport', !this.carForm.lost_technical_passport ? this.carForm.old_technical_passport : '')
-                formData.append('save_old_number', this.carForm.save_old_number)
-                formData.append('lost_number', this.carForm.lost_number)
-                formData.append('old_number', this.carForm.lost_number ? '' : this.carForm.old_number)
-                formData.append('is_old_number', this.carForm.is_old_number)
                 formData.append('is_saved_number', this.carForm.is_saved_number)
                 formData.append('given_number', this.given_number)
                 formData.append('is_auction', this.carForm.is_auction)
@@ -1142,15 +905,17 @@ module.exports = {
                 this.carForm.device.forEach((data) => formData.append('device', data.id))
 
                 formData.append('made_year', `${this.carForm.year || now.getFullYear()}-${month || now.getMonth() + 1}-${this.carForm.day || now.getDate()}`)
-                formData.append('is_relative', this.carForm.is_relative)
                 formData.append('is_another_car', this.carForm.is_another_car)
+                formData.append('price', this.carForm.price)
 
                 try {
-                    this.application = await axios.post("/api/v1/application/create_gift_agreement/", formData)
+                    this.application = await axios.post("/api/v1/application/create_account_statement/", formData)
                         .then((res) => {
                             console.log(res)
                             if (res.status === 201) {
+
                                 this.$emit('update-context', this.form)
+
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: 'top-end',

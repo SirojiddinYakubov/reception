@@ -18,24 +18,33 @@ from service.models import (Service, ExampleDocument)
 
 class CreateAccountStatement(APIView):
     example_doc = None
+    service_key = 'account_statement'
     permission_classes = [
         permissions.UserPermission |
         permissions.AppCreatorPermission
     ]
 
     def validate(self, attrs):
-        if not attrs.get('applicant'):
-            raise ValidationError('Arizachi topilmadi!')
-        if not attrs.get('person_type'):
-            raise ValidationError('Arizachi shaxsi topilmadi!')
-        if not attrs.get('seriya'):
-            raise ValidationError("Hisob ma'lumotnomasi seriyasi kiritilmagan!")
-        if not attrs.get('contract_date'):
-            raise ValidationError("Shartnoma tuzilgan sana kiritilmagan!")
+        errors = dict()
 
-        example_doc = ExampleDocument.objects.filter(key='account_statement')
+        if not attrs.get('applicant'):
+            errors.update(applicant=['Arizachi topilmadi!'])
+
+        if not attrs.get('person_type'):
+            errors.update(person_type=['Arizachi shaxsi topilmadi!'])
+
+        if not attrs.get('seriya'):
+            errors.update(seriya=["Hisob ma'lumotnomasi seriyasi kiritilmagan!"])
+
+        if not attrs.get('contract_date'):
+            errors.update(contract_date=["Notarius shartnomasi tuzilgan sana kiritilmagan!"])
+
+        example_doc = ExampleDocument.objects.filter(key=self.service_key)
         if not example_doc:
-            raise ValidationError("ExampleDocument objects not found!")
+            errors.update(document=["ExampleDocument objects not found!"])
+
+        if errors.__len__() > 0:
+            raise ValidationError(errors)
 
         self.example_doc = example_doc.last()
         return attrs
@@ -43,11 +52,11 @@ class CreateAccountStatement(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         print(data)
+        service = Service.objects.get(key=self.service_key)
+        applicant_id = data.get('applicant')
+
         self.validate(data)
-        service = Service.objects.get(key='account_statement')
-        data._mutable = True
-        applicant_id = int(''.join(filter(str.isdigit, data.pop('applicant'))))
-        data._mutable = False
+
         person_type = data.get('person_type')
         organization_id = data.get('organization', None)
         car_serializer = CreateAccountStatementCarSerializer(data=data)

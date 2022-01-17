@@ -87,6 +87,12 @@ module.exports = {
         event: 'change'
     },
     props: ['complete', 'context'],
+    data: () => ({
+        form: {
+            seriya: '',
+            contract_date: '',
+        },
+    }),
     computed: {
         isComplete: {
             get() {
@@ -98,7 +104,11 @@ module.exports = {
         },
     },
     created() {
-        this.documentForm = this.context
+        if (this.context["documentForm"] !== undefined) {
+            this.documentForm = this.context.documentForm
+        } else {
+            this.documentForm = this.form
+        }
     },
     validations: {
         documentForm: {
@@ -127,7 +137,7 @@ module.exports = {
 
             if (!this.$v.documentForm.$error) {
                 this.isComplete = true
-                this.$emit('update', this.documentForm)
+                this.$emit('update', this.form)
                 this.$emit('next')
             }
         }

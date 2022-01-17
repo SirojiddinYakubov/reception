@@ -291,6 +291,8 @@ class CreateAccountStatementCarSerializer(serializers.ModelSerializer):
             'is_auction',
             'is_saved_number',
             'given_number',
+            'is_another_car',
+
         ]
         extra_kwargs = {
             'model': {'required': True},
@@ -307,6 +309,7 @@ class CreateAccountStatementCarSerializer(serializers.ModelSerializer):
             'price': {'required': True},
             'is_auction': {'required': True},
             'is_saved_number': {'required': True},
+            'is_another_car': {'required': True},
         }
 
     def create(self, validated_data):
