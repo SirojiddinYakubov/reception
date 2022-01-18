@@ -8,6 +8,7 @@ urlpatterns = [
     path('create_account_statement/', views.CreateAccountStatement.as_view(), name='create_account_statement'),
     path('create_contract_of_sale/', views.CreateContractOfSale.as_view(), name='create_contract_of_sale'),
     path('create_auction_protocol/', views.CreateAuctionProtocol.as_view(), name='create_auction_protocol'),
+    path('create_credit_contract/', views.CreateCreditContract.as_view(), name='create_credit_contract'),
     path('create_gift_agreement/', views.CreateGiftAgreement.as_view(), name='create_gift_agreement'),
     path('create_inheritance_agreement/', views.CreateInheritanceAgreement.as_view(), name='create_inheritance_agreement'),
     path('create_replace_tp/', views.CreateReplaceTp.as_view(), name='create_replace_tp'),

@@ -34,24 +34,24 @@
                         <div class="col-10 col-xs-12">
                             <div class="table-responsive">
 
-                            <table id="example1" class="table nowrap w-100">
-                                <thead>
-                                <tr>
-                                           <th>{% trans "Xizmat nomi" %}</th>
-                                    <th>{% trans "Raqami" %}</th>
-                                    <th>{% trans "Avtomobil" %}</th>
-                                    <th>{% trans "Topshirdi" %}</th>
-                                    <th>{% trans "Yaratilgan vaqti" %}</th>
-                                    <th>{% trans "Holati" %}</th>
-                                    <th>{% trans "Ariza nusxasi" %}</th>
-                                </tr>
-                                </thead>
+                                <table id="example1" class="table nowrap w-100">
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans "Raqami" %}</th>
+                                        <th>{% trans "Xizmat nomi" %}</th>
+                                        <th>{% trans "Avtomobil" %}</th>
+                                        <th>{% trans "Topshirdi" %}</th>
+                                        <th>{% trans "Yaratilgan vaqti" %}</th>
+                                        <th>{% trans "Holati" %}</th>
+                                        <th>{% trans "Ariza nusxasi" %}</th>
+                                    </tr>
+                                    </thead>
 
 
-                                <tbody>
+                                    <tbody>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                 },
                 "columns": [
                     {
-                        "data":  "id",
+                        "data": "id",
                         render: function (data, type, row) {
                             let url = "{% url 'application:application_detail' 12345 %}".replace(/12345/, data.toString())
                             return `<a href="${url}">${data}-ariza</a>`
