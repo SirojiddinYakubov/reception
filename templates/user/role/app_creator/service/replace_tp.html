@@ -167,9 +167,9 @@
     <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://unpkg.com/underscore@1.8.3"></script>
     <!-- development version -->
-    <script src="{% static 'vue/vue.dev.js' %}"></script>
+{#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
     <!-- production version -->
-    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+        <script src="{% static 'vue/vue.prod.js' %}"></script>
 
     <script>
         setAxiosHeader()
@@ -197,10 +197,10 @@
                 organization: ''
             }),
             components: {
-                'ApplicantFieldset': httpVueLoader('/static/vue/components/service/parts/ApplicantFieldset.vue'),
-                'PersonTypeFieldset': httpVueLoader('/static/vue/components/service/parts/PersonTypeFieldset.vue'),
-                'CarFieldset': httpVueLoader('/static/vue/components/service/replace_tp/CarFieldset.vue'),
-                'SectionFieldset': httpVueLoader('/static/vue/components/service/parts/SectionFieldset.vue'),
+                'ApplicantFieldset': httpVueLoader('/static/vue/components/role/app_creator/parts/ApplicantFieldset.vue'),
+                'PersonTypeFieldset': httpVueLoader('/static/vue/components/role/app_creator/parts/PersonTypeFieldset.vue'),
+                'CarFieldset': httpVueLoader('/static/vue/components/role/app_creator/replace_tp/CarFieldset.vue'),
+                'SectionFieldset': httpVueLoader('/static/vue/components/role/app_creator/parts/SectionFieldset.vue'),
             },
             created() {
                 this.getCurrentUser()
