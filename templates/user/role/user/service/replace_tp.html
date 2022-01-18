@@ -78,9 +78,6 @@
                     <li id="person_type_step" class="step-item" :class="{active: isShowPersonTypeFieldset}">
                         <span>Shaxs turi</span>
                     </li>
-                    <li id="document_step" class="step-item" :class="{active: isShowDocumentFieldset}">
-                        <span>{% trans "Notarius ma'lumotlari" %}</span>
-                    </li>
                     <li id="car_step" class="step-item" :class="{active: isShowCarFieldset}">
                         <span>Transport vositasi</span>
                     </li>
@@ -99,26 +96,17 @@
                            v-model="personTypeIsComplete"
                            @update="organization = $event"
                            @update-person-type="person_type = $event"
-                           @next="()=>{isShowPersonTypeFieldset = false; isShowDocumentFieldset = true}"
+                           @next="()=>{isShowPersonTypeFieldset = false; isShowCarFieldset = true}"
                 >
                 </component>
 
-                <component is="DocumentFieldset"
-                           v-if="isShowDocumentFieldset"
-                           v-model:complete="documentIsComplete"
-                           :context="$data"
-                           @update="Object.assign($data,{documentForm: $event})"
-                           @prev="()=>{isShowDocumentFieldset = false; isShowPersonTypeFieldset = true}"
-                           @next="()=>{isShowDocumentFieldset = false; isShowCarFieldset = true}"
-                >
-                </component>
                 <component is="CarFieldset"
                            v-if="isShowCarFieldset"
                            :context="$data"
                            v-model:complete="carIsComplete"
                            @update="application = $event"
                            @update-context="Object.assign($data,{carForm: $event})"
-                           @prev="()=>{isShowCarFieldset = false; isShowDocumentFieldset = true}"
+                           @prev="()=>{isShowCarFieldset = false; isShowPersonTypeFieldset = true}"
                            @next="()=>{isShowCarFieldset = false; isShowSectionFieldset = true}"
                 >
                 </component>
@@ -190,12 +178,10 @@
             delimiters: ['[[', ']]'],
             data: () => ({
                 isShowPersonTypeFieldset: true,
-                isShowDocumentFieldset: false,
                 isShowCarFieldset: false,
                 isShowSectionFieldset: false,
 
                 personTypeIsComplete: false,
-                documentIsComplete: false,
                 carIsComplete: false,
 
                 user: {},
@@ -207,8 +193,7 @@
             }),
             components: {
                 'PersonTypeFieldset': httpVueLoader('/static/vue/components/role/user/parts/PersonTypeFieldset.vue'),
-                'DocumentFieldset': httpVueLoader('/static/vue/components/role/user/contract_of_sale/DocumentFieldset.vue'),
-                'CarFieldset': httpVueLoader('/static/vue/components/role/user/contract_of_sale/CarFieldset.vue'),
+                'CarFieldset': httpVueLoader('/static/vue/components/role/user/replace_tp/CarFieldset.vue'),
                 'SectionFieldset': httpVueLoader('/static/vue/components/role/user/parts/SectionFieldset.vue'),
             },
             created() {
