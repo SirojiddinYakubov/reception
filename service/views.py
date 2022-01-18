@@ -27,7 +27,7 @@ class AccountStatement(ServiceCustomMixin):
         if role == APP_CREATOR:
             return ['user/role/app_creator/service/account_statement.html']
         elif role == USER:
-            return ['user/role/user/service/account_statement/account_statement.html']
+            return ['user/role/user/service/account_statement.html']
         else:
             return [self.template_name]
 

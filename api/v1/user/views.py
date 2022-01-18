@@ -75,6 +75,18 @@ class UserOrganizationsList(generics.ListAPIView):
         return qs
 
 
+class OrganizationsList(generics.ListAPIView):
+    queryset = Organization.objects.filter(is_active=True)
+    serializer_class = serializers.UserOrganizationsListSerializer
+    permission_classes = [
+        permissions.UserPermission
+    ]
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(applicant=self.kwargs.get('pk'))
+        return qs
+
+
 class CarModelsList(generics.ListAPIView):
     queryset = CarModel.objects.filter(is_active=True)
     serializer_class = serializers.CarModelsListSerializer

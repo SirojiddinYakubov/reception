@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('detail/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
     path('organizations/list/', views.UserOrganizationsList.as_view(), name='user_organizations_list'),
+    path('<int:pk>/organizations/list/', views.OrganizationsList.as_view(), name='organizations_list'),
     path('car-models/list/', views.CarModelsList.as_view(), name='car_models_list'),
     path('car-colors/list/', views.CarColorsList.as_view(), name='car_colors_list'),
     path('car-types/list/', views.CarTypesList.as_view(), name='car_types_list'),
