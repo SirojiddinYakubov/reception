@@ -129,14 +129,14 @@ class AccountStatement(ServiceCustomMixin):
 
 
 class ContractOfSale(ServiceCustomMixin):
-    template_name = 'service/contract_of_sale/contract_of_sale.html'
+    template_name = 'user/role/user/service/contract_of_sale.html'
 
     def get_template_names(self):
         role = self.request.user.role
         if role == APP_CREATOR:
             return ['user/role/app_creator/service/contract_of_sale.html']
         elif role == USER:
-            return ['user/role/user/service/contract_of_sale/contract_of_sale.html']
+            return ['user/role/user/service/contract_of_sale.html']
         else:
             return [self.template_name]
 

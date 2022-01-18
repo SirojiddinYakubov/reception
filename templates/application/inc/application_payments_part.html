@@ -17,7 +17,6 @@
 
             {% for percent in percents %}
                 {% if percent.payment != 0 %}
-                    {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <th scope="row">{{ percent.get_state_duty_display }}</th>
@@ -61,9 +60,7 @@
                             {% endif %}
                         </td>
                     </tr>
-                    {#            {% endif %}#}
                 {% endif %}
-
             {% endfor %}
             </tbody>
             <tfoot style="background: lightgray">
