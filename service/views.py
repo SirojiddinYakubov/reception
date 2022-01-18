@@ -381,6 +381,14 @@ class GiftAgreement(ServiceCustomMixin):
 class InheritanceAgreement(ServiceCustomMixin):
     template_name = 'service/inheritance_agreement/inheritance_agreement.html'
 
+    def get_template_names(self):
+        role = self.request.user.role
+
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/inheritance_agreement.html']
+        else:
+            return [self.template_name]
+
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
 
@@ -693,6 +701,14 @@ class ReplaceTp(ServiceCustomMixin):
 
 class ReplaceNumberAndTp(ServiceCustomMixin):
     template_name = 'service/replace_number_and_tp/replace_number_and_tp.html'
+
+    def get_template_names(self):
+        role = self.request.user.role
+
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/replace_number_and_tp.html']
+        else:
+            return [self.template_name]
 
     def post(self, request, *args, **kwargs):
         return self.get_json_data()
