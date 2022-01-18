@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('account-statement/', AccountStatement.as_view(), name='account_statement'),
     path('contract-of-sale/', ContractOfSale.as_view(), name='contract_of_sale'),
+    path('auction-protocol/', AuctionProtocol.as_view(), name='auction_protocol'),
     path('gift-agreement/', GiftAgreement.as_view(), name='gift_agreement'),
     path('inheritance-agreement/', InheritanceAgreement.as_view(), name='inheritance_agreement'),
     # path('re-equipment/', ReEquipment.as_view(), name='re_equipment'),

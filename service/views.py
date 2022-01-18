@@ -125,6 +125,18 @@ class ContractOfSale(ServiceCustomMixin):
         else:
             return [self.template_name]
 
+class AuctionProtocol(ServiceCustomMixin):
+    template_name = 'user/role/user/service/auction_protocol.html'
+
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/auction_protocol.html']
+        elif role == USER:
+            return [self.template_name]
+        else:
+            return [self.template_name]
+
     # def post(self, request, *args, **kwargs):
     #     return self.get_json_data()
     #
