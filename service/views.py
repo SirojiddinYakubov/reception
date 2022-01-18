@@ -137,6 +137,18 @@ class AuctionProtocol(ServiceCustomMixin):
         else:
             return [self.template_name]
 
+class CreditContract(ServiceCustomMixin):
+    template_name = 'user/role/user/service/credit_contract.html'
+
+    def get_template_names(self):
+        role = self.request.user.role
+        if role == APP_CREATOR:
+            return ['user/role/app_creator/service/credit_contract.html']
+        elif role == USER:
+            return [self.template_name]
+        else:
+            return [self.template_name]
+
     # def post(self, request, *args, **kwargs):
     #     return self.get_json_data()
     #
