@@ -6,13 +6,11 @@
             <thead class="thead-light">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col" style="width: 7%">Holati</th>
-                <th scope="col">To'lov miqdori</th>
                 <th scope="col">Davlat boji nomi</th>
                 <th scope="col">Sababi</th>
                 <th scope="col">Hisob raqam</th>
-
-
+                <th scope="col">To'lov miqdori</th>
+                <th scope="col" style="width: 7%">Holati</th>
             </tr>
             </thead>
             <tbody>
@@ -22,20 +20,15 @@
                     {#            {% if payment.car_type == application.car.type or payment.car_type == None %}#}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-
+                        <th scope="row">{{ percent.get_state_duty_display }}</th>
+                        <th scope="row">{{ percent.title }}</th>
                         <td>
-                            {#                        {% if request.user.role == '2' or request.user.role == '3' %}#}
-                            {#                            <input name="payment" {% if percent.is_paid %}checked{% endif %}#}
-                            {#                                   data-payment="{{ percent.id }}"#}
-                            {#                                   class="payment_checkbox" type="checkbox"/>#}
-                            {#                        {% else %}#}
-                            {#                            {% check_payment_paid application percent as paid %}#}
-                            {#                            {% if paid %}#}
-                            {#                                <i style="color: green" class="far fa-check-circle"></i>{% else %}#}
-                            {#                                <div class="application-state-duty-payment" data-payment="{{ percent.id }}"><i#}
-                            {#                                        style="color: red" class="far fa-times-circle"></i></div>{% endif %}#}
-                            {#                        {% endif %}#}
-
+                            <b>{% get_payment_score application.id percent.id as state_duty_score %} {{ state_duty_score.score|safe }}</b>
+                        </td>
+                        <td><b class="state_payment">
+                            {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
+                        </td>
+                        <td>
                             {% if not percent.state_duty == 7 %}
 
                                 {% if application.section.pay_for_treasury %}
@@ -65,21 +58,8 @@
                                 {% else %}
                                     <b class="text-danger text-center">Ushbu YHXB onlayn kvitansiyani qabul qilmaydi</b>
                                 {% endif %}
-
-
-                                {#                            <button class="btn btn-primary" data-percent-id="{{ percent.id }}">Tekshirish#}
-                                {#                            </button>#}
                             {% endif %}
                         </td>
-                      <td><b class="state_payment">
-                            {% get_state_duty_payment percent.id application.id as pay %}{{ pay|intcomma }}</b> so'm
-                        </td>
-                        <th scope="row">{{ percent.get_state_duty_display }}</th>
-                        <th scope="row">{{ percent.title }}</th>
-                        <td>
-                            <b>{% get_payment_score application.id percent.id as state_duty_score %} {{ state_duty_score.score|safe }}</b>
-                        </td>
-
                     </tr>
                     {#            {% endif %}#}
                 {% endif %}
