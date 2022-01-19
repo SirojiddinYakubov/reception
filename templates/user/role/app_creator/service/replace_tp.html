@@ -166,6 +166,7 @@
     <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://unpkg.com/underscore@1.8.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-button-spinner@2.2.1/dist/vue-button-spinner.min.js"></script>
     <!-- development version -->
 {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
     <!-- production version -->
@@ -175,6 +176,7 @@
         setAxiosHeader()
 
         Vue.use(window.vuelidate.default)
+        const vue_button_spinner = window["vue-button-spinner"].default
         const {required, minLength, maxLength, requiredIf, maxValue, alphaNum, alpha} = window.validators;
         new Vue({
             el: '#app',
