@@ -240,6 +240,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
         is_old_number = data.get('is_old_number')
         is_relative = data.get('is_relative')
         lost_technical_passport = data.get('lost_technical_passport')
+        is_another_car = data.get('is_another_car', False)
     else:
         """Get variables from application"""
         service = data.service
@@ -263,7 +264,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
         is_old_number = data.car.is_old_number
         is_relative = data.car.is_relative
         lost_technical_passport = data.car.lost_technical_passport
-
+        is_another_car = data.car.is_another_car
     """Start filter state duty percents"""
     """Jarima"""
     if contract_date:
@@ -307,6 +308,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             car_is_new=False,
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
+                                                            is_another_car=is_another_car,
                                                             state_duty=REGISTRATION,
                                                             lost_technical_passport=False,
                                                             percent__gt=0)
@@ -317,6 +319,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                             is_old_number=is_old_number,
                                                             is_auction=False,
                                                             car_is_new=is_new,
+                                                            is_another_car=is_another_car,
                                                             is_save_old_number=save_old_number,
                                                             is_saved_number=is_saved_number,
                                                             state_duty=REGISTRATION,
@@ -328,6 +331,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         is_old_number=is_old_number,
                                                         car_is_new=is_new, is_auction=is_auction,
                                                         is_save_old_number=save_old_number,
+                                                        is_another_car=is_another_car,
                                                         is_saved_number=is_saved_number,
                                                         state_duty=REGISTRATION,
                                                         lost_technical_passport=False, percent__gt=0)
@@ -339,6 +343,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         car_is_new=is_new, is_auction=is_auction,
                                                         is_save_old_number=save_old_number,
                                                         is_saved_number=is_saved_number,
+                                                        is_another_car=is_another_car,
                                                         is_relative=is_relative,
                                                         state_duty=REGISTRATION,
                                                         lost_technical_passport=False, percent__gt=0)
@@ -353,6 +358,7 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
                                                         car_is_new=is_new, is_auction=is_auction,
                                                         is_save_old_number=save_old_number,
                                                         is_saved_number=is_saved_number,
+                                                        is_another_car=is_another_car,
                                                         is_relative=is_relative,
                                                         state_duty=REGISTRATION,
                                                         lost_technical_passport=True, percent__gt=0)
