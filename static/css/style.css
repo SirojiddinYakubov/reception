@@ -483,3 +483,9 @@ fieldset form {
 .tr-danger {
     background-color: #faebeb;
 }
+
+.vue-btn {
+    background: #3283f6 !important;
+    border-color: #3283f6 !important;
+    color: white !important;
+}
