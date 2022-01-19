@@ -97,6 +97,7 @@ class StateDutyPercent(models.Model):
     lost_technical_passport = models.BooleanField(default=False)
     is_auction = models.BooleanField(default=False)
     is_tranzit = models.BooleanField(default=False)
+    is_another_car = models.BooleanField(default=False)
     contract_fine = models.BooleanField(default=False)
     is_relative = models.BooleanField(default=False)
     start = models.IntegerField(default=0)
