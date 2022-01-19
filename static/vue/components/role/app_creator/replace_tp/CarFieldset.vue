@@ -542,10 +542,14 @@
                         <!--                        {#-->
                         <!--                        <button type="button" id="fake" class="btn btn-danger">Fake</button>-->
                         <!--                        #}-->
-                        <button type="button"
-                                @click="isComplete ? $emit('next') : sendCarForm()"
-                                class="btn btn-info waves-effect waves-light float-end next">Keyingi
-                        </button>
+                        <vue_button_spinner
+                            type="button"
+                            class="btn btn-info waves-effect waves-light float-end"
+                            :is-loading="buttonIsLoading"
+                            :disabled="buttonIsLoading"
+                            v-on:click.native="isComplete ? $emit('next') : sendCarForm()"
+                        >Keyingi
+                        </vue_button_spinner>
                     </div>
                 </div>
             </form>
@@ -614,6 +618,7 @@ module.exports = {
         knowMadeYear: false,
         isShowModelModal: false,
         isShowColorModal: false,
+        buttonIsLoading: false
     }),
     components: {
         'v-select': VueSelect.VueSelect,
@@ -622,7 +627,7 @@ module.exports = {
         'ModelModal': httpVueLoader('/static/vue/components/modals/ModelModal.vue'),
         'ModelSelect': httpVueLoader('/static/vue/UI/ModelSelect.vue'),
         'ColorSelect': httpVueLoader('/static/vue/UI/ColorSelect.vue'),
-
+        vue_button_spinner
     },
     validations: {
         carForm: {
@@ -792,7 +797,7 @@ module.exports = {
             this.$nextTick(() => this.scrollToFirstError(this.$v.carForm));
 
             if (!this.$v.carForm.$error) {
-
+                this.buttonIsLoading = true
                 const now = new Date()
                 let month = this.carForm.month ? $(this.$refs.month).datepicker('getDate').getMonth() + 1 : ''
 
@@ -848,6 +853,7 @@ module.exports = {
                                 return res.data
                             }
                         }).catch((error) => {
+                            this.buttonIsLoading = false
                             if (error.response) {
                                 if (error.response.status === 400) {
                                     for (const [key, value] of Object.entries(error.response.data)) {
@@ -862,6 +868,7 @@ module.exports = {
                             }
                         })
                 } catch (e) {
+                    this.buttonIsLoading = false
                     console.log(e)
                 }
             }
