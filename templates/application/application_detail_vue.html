@@ -1,0 +1,715 @@
+{% extends 'base_vertical.html' %}
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+{% load applications_tags %}
+{% block css %}
+    <style>
+        .table-striped > tbody > tr:nth-of-type(odd) {
+            --bs-table-accent-bg: #e9eef1;
+            color: var(--bs-table-striped-color);
+        }
+
+        .accordion-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            font-size: .875rem;
+            color: #6c757d;
+            text-align: left;
+            background-color: #dfe2e4;
+            border: 0;
+            border-radius: 0;
+            overflow-anchor: none;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
+            border: 1px dashed darkblue;
+        }
+
+    </style>
+
+    <!-- Sweet Alert-->
+    <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
+
+
+{% endblock css %}
+
+{% block page_title %}
+    {% trans 'Amalllar xronologiyasi' %}
+{% endblock page_title %}
+
+{% block content %}
+    <div class="row" id="app">
+
+
+    <accordion
+    :content="example2"
+    >
+
+    </accordion>
+
+
+        {#        {% include '_parts/messages.html' %}#}
+        <div class="col-12 info_area" >
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
+                            <h5>Ariza haqida ma'lumot</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                         aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            {#                            {% include 'application/inc/about_application_part.html' %}#}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFifth">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFifth" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseFifth">
+                            <h5>To'lov</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFifth" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingFifth">
+                        <div class="accordion-body">
+                            <ul>
+                                {#                                {% include 'application/inc/application_payments_part.html' %}#}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                            <h5>Ariza topshiruvchi</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            {#                            {% include 'application/inc/application_submitting_part.html' %}#}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                            <h5>Avtomobil</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            {#                            {% include 'application/inc/application_car_part.html' %}#}
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseFour">
+                            <h5>Mavjud fayllar</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingFour">
+                        <div class="accordion-body">
+                            <ul>
+                                {#                                {% include 'application/inc/application_files_part.html' %}#}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseSix">
+                            <h5>Ariza holati</h5>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse"
+                         aria-labelledby="panelsStayOpen-headingSix">
+                        <div class="accordion-body">
+                            <ul>
+                                {#                                {% include 'application/inc/application_status_part.html' %}#}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}" type="text/javascript"></script>
+ <script src="https://unpkg.com/http-vue-loader"></script>
+
+    <!-- development version -->
+    <script src="{% static 'vue/vue.dev.js' %}"></script>
+    <!-- production version -->
+    {#        <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+
+    <script type="text/javascript">
+
+        setAxiosHeader()
+        new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: () => ({
+                example1: [
+                    {
+                        id: 1,
+                        active: true,
+                        title: 'Crushing Spirits',
+                        details: `
+      <p>You can crush me but you can't crush my spirit! Are you crazy? I can't swallow that. Who's brave enough to fly into something we all keep calling a death sphere? It doesn't look so shiny to me.</p>
+      <ul>
+        <li>I just want to talk.</li>
+        <li>It has nothing to do with mating.</li>
+        <li>Fry, that doesn't make sense.</li>
+      </ul>
+    `
+                    },
+                    {
+                        id: 2,
+                        active: false,
+                        title: 'Soundtracks',
+                        details: `
+      <p>Ah, the 'Breakfast Club' soundtrack! I can't wait til I'm old enough to feel ways about stuff!</p>
+    `
+                    },
+                    {
+                        id: 3,
+                        active: false,
+                        title: `The Letter Shaped Like a Man Wearing a Hat`,
+                        details: `
+      <p>And then the battle's not so bad? You'll have all the Slurm you can drink when you're partying with Slurms McKenzie! Say it in Russian!</p>
+      <p>Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat.</p>
+    `
+                    }
+                ],
+                example2: [
+                    {
+                        id: 1,
+                        active: false,
+                        title: 'Celebration',
+                        details: `
+      <p>Come on, this is a Bluth family celebration. It's no place for children.</p>
+    `
+                    },
+                    {
+                        id: 2,
+                        active: false,
+                        title: 'Lighter Fluid and Wine',
+                        details: `
+      <p>But where did the lighter fluid come from? Wine only turns to alcohol if you let it sit. But anyhoo, can you believe that the only reason the club is going under is because it's in a terrifying neighborhood?</p>
+    `
+                    },
+                    {
+                        id: 3,
+                        active: false,
+                        title: `What's in Oscar's box?`,
+                        details: `
+      <p>In fact, it was a box of Oscar's legally obtained medical marijuana. Primo bud. Real sticky weed.</p>
+      <p>Great, now I'm gonna smell to high heaven like a tuna melt!</p>
+    `
+                    }
+                ]
+            }),
+            components: {
+                'accordion': httpVueLoader('/static/vue/components/application/Accordion.vue'),
+            },
+            created() {
+
+            }
+        })
+
+
+    </script>
+
+    {#    <script type="text/javascript">#}
+    {##}
+    {#        $(document).ready(function () {#}
+    {#            sendAuthorizationToken()#}
+    {#            var isBlock = '{{ application.is_block }}'#}
+    {#            var proccess = '{{ application.process }}'#}
+    {#            var activation_pay = '{{ activation_pay }}'#}
+    {#            var user = '{{ request.user }}'#}
+    {#            var application_owner = '{{ application.created_user }}'#}
+    {#            var applicationId = '{{ application.id }}'#}
+    {##}
+    {#            if (user === application_owner) {#}
+    {##}
+    {##}
+    {#                if (proccess === '7' && isBlock === 'True') {#}
+    {#                    Swal.fire({#}
+    {#                        allowOutsideClick: false,#}
+    {#                        showCloseButton: true,#}
+    {#                        showCancelButton: false,#}
+    {#                        showConfirmButton: true,#}
+    {#                        showLoaderOnConfirm: true,#}
+    {#                        confirmButtonText: "To'lov qilish",#}
+    {#cancelButtonText: 'Bekor qilish',#}
+    {#                        icon: 'error',#}
+    {#                        title: 'Ariza aktivlashtirilmagan!',#}
+    {#                        text: `Arizani aktivlashitirish uchun ariza jo'natiladigan YHXB RIB bo'limini va ${activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,#}
+    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+    {#                    }).then(function (confirm) {#}
+    {#                        if (confirm.isConfirmed) {#}
+    {#                            select_payment()#}
+    {#window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
+    {#                        }#}
+    {#                    })#}
+    {#                } else if (proccess === '7') {#}
+    {#                    Swal.fire({#}
+    {#                        allowOutsideClick: false,#}
+    {#                        showCloseButton: true,#}
+    {#                        showCancelButton: false,#}
+    {#                        showConfirmButton: true,#}
+    {#                        showLoaderOnConfirm: true,#}
+    {#                        confirmButtonText: "Kiritish",#}
+    {#cancelButtonText: 'Bekor qilish',#}
+    {#                        icon: 'error',#}
+    {#                        title: 'Ariza to\'liq to\'ldirilmagan!',#}
+    {#                        text: `Arizani to'liq to'ldirish uchun ariza jo'natiladigan YHXB RIB bo'limini kiriting!`,#}
+    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+    {#                    }).then(function (confirm) {#}
+    {#                        if (confirm.isConfirmed) {#}
+    {#                            add_section()#}
+    {#                        }#}
+    {##}
+    {#                    })#}
+    {#                } else if (isBlock === 'True') {#}
+    {#                    Swal.fire({#}
+    {#                        allowOutsideClick: false,#}
+    {#                        showCloseButton: true,#}
+    {#                        showCancelButton: false,#}
+    {#                        showConfirmButton: true,#}
+    {#                        showLoaderOnConfirm: true,#}
+    {#                        confirmButtonText: "To'lov qilish",#}
+    {#cancelButtonText: 'Bekor qilish',#}
+    {#                        icon: 'error',#}
+    {#                        title: 'Ariza aktivlashtirilmagan!',#}
+    {#                        text: `Arizani aktivlashitirish uchun ${activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,#}
+    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+    {#                    }).then(function (confirm) {#}
+    {#                        if (confirm.isConfirmed) {#}
+    {#                            select_payment()#}
+    {##}
+    {#                        }#}
+    {#                    })#}
+    {#                } else if (isBlock === 'False' && proccess === '0') {#}
+    {#                    Swal.fire({#}
+    {#                        allowOutsideClick: true,#}
+    {#                        showCloseButton: true,#}
+    {#                        showCancelButton: false,#}
+    {#                        showConfirmButton: true,#}
+    {#                        showLoaderOnConfirm: true,#}
+    {#                        confirmButtonText: "Jo'natish",#}
+    {#cancelButtonText: 'Bekor qilish',#}
+    {#                        icon: 'error',#}
+    {#                        title: `Ariza ${'{{ application.section.title }}'}ga jo'natilmagan!`,#}
+    {#                        text: `Ariza to'liq to'ldirilgan lekin ${'{{ application.section.title }}'}ga jo'natilmagan!`,#}
+    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
+    {#                    }).then(function (confirm) {#}
+    {#                        if (confirm.isConfirmed) {#}
+    {#                            send_application()#}
+    {#                        }#}
+    {##}
+    {#                    })#}
+    {#                }#}
+    {#            }#}
+    {##}
+    {#            function send_application() {#}
+    {#                Swal.fire({#}
+    {#                    text: `Jo'natiladigan YHXB RIB bo'limi: "${'{{ application.section.title }}'}"`,#}
+    {#                    title: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",#}
+    {#                    icon: 'warning',#}
+    {#                    showCancelButton: true,#}
+    {#                    confirmButtonColor: '#3085d6',#}
+    {#                    cancelButtonColor: '#d33',#}
+    {#                    confirmButtonText: 'Ha, albatta',#}
+    {#                    cancelButtonText: 'Bilmadim',#}
+    {#                }).then((result) => {#}
+    {#                    if (result.isConfirmed) {#}
+    {##}
+    {#                        $.ajax({#}
+    {#                            type: "POST",#}
+    {#                            url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),#}
+    {#                            success: function (res) {#}
+    {#                                var textHeader = `<p style="margin-bottom: 0px; text-align: left">Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun quyidagi hujjatlarni ${'{{ application.section.region.title }}'}, ${'{{ application.section.located_district.title }}'}, ${'{{ application.section.quarter.title }}'}, ${'{{ application.section.street }}'}ga olib borib topshirishingiz talab etiladi!</p>`#}
+    {#                                var text = '<ol>';#}
+    {#                                for (const x of res) {#}
+    {#                                    text = text + `<br><li style="text-align: left">${x.title}</li>`;#}
+    {#                                }#}
+    {#                                text = text + '</ol>';#}
+    {#                                text = textHeader + text#}
+    {#                                var textFooter = "<p style='text-align: left'>Ushbu hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!</p>"#}
+    {#                                text = text + textFooter#}
+    {##}
+    {#                                const wrapper = document.createElement('div');#}
+    {#                                wrapper.innerHTML = text;#}
+    {##}
+    {#                                Swal.fire({#}
+    {#                                    title: 'Jo\'natildi!',#}
+    {#                                    html: wrapper,#}
+    {#                                    icon: 'success',#}
+    {#                                    confirmButtonText: 'Tushunarli',#}
+    {#                                }).then(function () {#}
+    {#                                    refresh_with_time()#}
+    {#                                })#}
+    {#                            },#}
+    {#                            error: function (err) {#}
+    {#                                console.log(err)#}
+    {#                                Swal.fire(#}
+    {#                                    'Xatolik!',#}
+    {#                                    `${err.responseJSON['error']}`,#}
+    {#                                    'error',#}
+    {#                                ).then(function () {#}
+    {#                                    location.reload()#}
+    {#                                })#}
+    {#                            }#}
+    {#                        })#}
+    {##}
+    {##}
+    {#                    }#}
+    {#                })#}
+    {#            }#}
+    {##}
+    {#            $('#draft_to_shipped').on('click', function (e) {#}
+    {#                send_application()#}
+    {##}
+    {#            })#}
+    {##}
+    {#            function select_payment() {#}
+    {#                Swal.fire({#}
+    {#                    allowOutsideClick: false,#}
+    {#                    showCloseButton: true,#}
+    {#                    showCancelButton: false,#}
+    {#                    showConfirmButton: false,#}
+    {#                    showLoaderOnConfirm: true,#}
+    {#                    title: 'To\'lov turini tanlang!',#}
+    {#                    html: "<div class='row'>" +#}
+    {#                        "<div style='border: 1px solid #fff' class='col-6'><a href='#' id='click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +#}
+    {#                        "<div class='col-6'><a href='#' id='payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +#}
+    {#                        "</div>",#}
+    {#                })#}
+    {#            }#}
+    {##}
+    {#            $('body').on('click', '#click, #payme', function (e) {#}
+    {##}
+    {#                if ($(e.currentTarget).attr('id') === 'click') {#}
+    {#                    $('#load').show()#}
+    {#alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')#}
+    {#                    window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
+    {#                } else if ($(e.currentTarget).attr('id') === 'payme') {#}
+    {#                    $('#load').show()#}
+    {#                    window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
+    {#                }#}
+    {#            })#}
+    {##}
+    {#            $('.application_render_pdf').on('click', function () {#}
+    {#                var applicationId = $(this).data('application')#}
+    {#                window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());#}
+    {#            })#}
+    {##}
+    {#            $('.payment_render_pdf').on('click', function () {#}
+    {#                Swal.fire({#}
+    {#                    title: `Ogohlantirish`,#}
+    {#                    text: "To'lov kvitansiyalari hozir yuklab olinadi. Ushbu kvitansiyalarni istalgan bank orqali to'lashingiz mumkin. Faqatgina muhr(pechat) urdirishni unutmang. Aks holda YHXB bo'limi qabul qilmaydi!",#}
+    {#                    icon: 'warning',#}
+    {#                    showCancelButton: false,#}
+    {#                    allowOutsideClick: false,#}
+    {#                    confirmButtonColor: '#3085d6',#}
+    {#                    confirmButtonText: 'Tushunarli',#}
+    {#                }).then((result) => {#}
+    {#                    var element = document.getElementById('render_div'),#}
+    {#                        filename = `To'lov`#}
+    {#                    html_to_pdf(element, filename)#}
+    {#                })#}
+    {#            })#}
+    {#            calc_total()#}
+    {##}
+    {#            function calc_total() {#}
+    {#                if (!String.prototype.trim) {#}
+    {#                    String.prototype.trim = function () {#}
+    {#                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');#}
+    {#                    };#}
+    {#                }#}
+    {##}
+    {#                var sum = 0;#}
+    {#                $(".state_payment").each(function () {#}
+    {#                    sum += parseFloat($(this).text().split('.')[0].replace(/[\s+,.]/g, ''));#}
+    {#                });#}
+    {#                $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))#}
+    {#            }#}
+    {##}
+    {##}
+    {#            $('.payment_checkbox').on('change', function () {#}
+    {#                let modify#}
+    {#                if ($(this).prop('checked')) {#}
+    {#                    modify = true#}
+    {#                } else {#}
+    {#                    modify = false#}
+    {#                }#}
+    {##}
+    {#                $.ajax({#}
+    {#                    type: 'POST',#}
+    {#                    url: '{% url "application:modify_payment_checkbox" %}',#}
+    {#                    data: {#}
+    {#                        'modify': modify,#}
+    {#                        'payment': $(this).data('payment'),#}
+    {#                    },#}
+    {#                    success: function (res) {#}
+    {#                        if (res === 'True') {#}
+    {#                            edit_toast()#}
+    {#                        } else {#}
+    {#                            errorFunction()#}
+    {#                        }#}
+    {#                    },#}
+    {#                    error: function (err) {#}
+    {#                        errorFunction()#}
+    {#                    }#}
+    {#                })#}
+    {#            })#}
+    {##}
+    {#            function add_section() {#}
+    {#                Swal.fire({#}
+    {#                    title: 'Viloyatni tanlang',#}
+    {#                    confirmButtonText: 'Tanlash',#}
+    {#                    input: 'select',#}
+    {#                    inputOptions: get_regions(url = '{% url 'user:get_regions_list' %}'),#}
+    {#                    /* inputValidator: function (value) {#}
+    {#                         return new Promise(function (resolve, reject) {#}
+    {#                             if (value !== '') {#}
+    {#                                 resolve();#}
+    {#                             } else {#}
+    {#                                 resolve('You need to select a Tier');#}
+    {#                             }#}
+    {#                         });#}
+    {#                     } */#}
+    {#                }).then(function (confirm) {#}
+    {#                    console.log(confirm)#}
+    {#                    if (confirm.isConfirmed) {#}
+    {##}
+    {#                        Swal.fire({#}
+    {#                            title: 'YHXB RIB bo\'limini tanlang',#}
+    {#                            confirmButtonText: 'Tanlash',#}
+    {#                            input: 'select',#}
+    {#                            inputOptions: get_sections(url = "{% url 'user:get_sections_list' region_id=12345 %}".replace(/12345/, confirm.value.toString())),#}
+    {#                        }).then(function (confirm) {#}
+    {#                            if (confirm.isConfirmed) {#}
+    {#                                $.ajax({#}
+    {#                                    type: "POST",#}
+    {#                                    url: "{% url 'application:save_application_section' %}",#}
+    {#                                    data: {#}
+    {#                                        'application': applicationId,#}
+    {#                                        'section': confirm.value,#}
+    {#                                    },#}
+    {#                                    success: function (res) {#}
+    {#                                        console.log(res)#}
+    {#                                        location.reload()#}
+    {#                                    },#}
+    {#                                    error: function (err) {#}
+    {#                                        console.log(err)#}
+    {#                                    },#}
+    {#                                    failure: function (err) {#}
+    {#                                        console.log(err)#}
+    {#                                    }#}
+    {##}
+    {#                                })#}
+    {#                            }#}
+    {##}
+    {#                        })#}
+    {#                    }#}
+    {#                })#}
+    {#            }#}
+    {##}
+    {#            $('#add_section').on('click', function (e) {#}
+    {#                add_section()#}
+    {#            })#}
+    {##}
+    {#            $('.application-state-duty-payment').on('click', function () {#}
+    {#                var paymentId = $(this).data('payment')#}
+    {#                const {value: formValues} = Swal.fire({#}
+    {#                    allowOutsideClick: false,#}
+    {#                    showCancelButton: true,#}
+    {#                    showLoaderOnConfirm: true,#}
+    {#                    showClass: {#}
+    {#                        popup: 'animate__animated animate__fadeInDown'#}
+    {#                    },#}
+    {#                    hideClass: {#}
+    {#                        popup: 'animate__animated animate__fadeOutUp'#}
+    {#                    },#}
+    {#                    confirmButtonText: 'Saqlash',#}
+    {#                    cancelButtonText: 'Bekor qilish',#}
+    {#                    title: 'Naqd pul to\'lovi',#}
+    {#                    html:#}
+    {#                        '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Moderatorning maxfiy raqamini kiriting</label>' +#}
+    {#                        '<input style="margin-top: 4px" id="add_cash" class="form-control">',#}
+    {#                    focusConfirm: false,#}
+    {#                    preConfirm: () => {#}
+    {#                        return [#}
+    {#                            document.getElementById('add_cash').value,#}
+    {#                        ]#}
+    {#                    },#}
+    {#                }).then(function (confirm) {#}
+    {#                    if (confirm.isConfirmed) {#}
+    {#                        var secret_key = confirm.value[0]#}
+    {#                        if (secret_key !== '') {#}
+    {##}
+    {#                            $.ajax({#}
+    {#                                type: 'POST',#}
+    {#                                url: "{% url 'application:application_cash_by_moderator' %}",#}
+    {#                                data: {#}
+    {#                                    secret_key: secret_key,  // moderator secret_key#}
+    {#                                    application: '{{ application.id }}',#}
+    {#                                    type: 1,  // application state duty payment type#}
+    {#                                    payment: paymentId,#}
+    {#                                },#}
+    {#                                statusCode: {#}
+    {#                                    200: function (response) {#}
+    {#                                        setTimeout(function () {#}
+    {#                                            window.location.reload()#}
+    {#                                        }, 3000)#}
+    {#                                        success_toast()#}
+    {##}
+    {#                                    },#}
+    {#                                    404: function (error) {#}
+    {#                                        error_toast()#}
+    {#                                    },#}
+    {#                                    409: function () {#}
+    {#                                        const Toast = Swal.mixin({#}
+    {#                                            toast: true,#}
+    {#                                            position: 'top-end',#}
+    {#                                            background: '#f5d696',#}
+    {#                                            showConfirmButton: false,#}
+    {#                                            timer: 5000,#}
+    {#                                            timerProgressBar: false,#}
+    {#                                            didOpen: (toast) => {#}
+    {#                                                toast.addEventListener('mouseenter', Swal.stopTimer)#}
+    {#                                                toast.addEventListener('mouseleave', Swal.resumeTimer)#}
+    {#                                            }#}
+    {#                                        })#}
+    {#                                        Toast.fire({#}
+    {#                                            icon: 'warning',#}
+    {#                                            title: `Arizangiz to'lovlari allaqachon amalga oshirilgan!`#}
+    {#                                        })#}
+    {#                                    }#}
+    {#                                },#}
+    {#                            })#}
+    {##}
+    {#                        }#}
+    {##}
+    {##}
+    {#                    } else {#}
+    {#                        error_toast()#}
+    {#                    }#}
+    {##}
+    {##}
+    {#                })#}
+    {#            })#}
+    {##}
+    {#            $('.application-activation-payment').on('click', function () {#}
+    {#                const {value: formValues} = Swal.fire({#}
+    {#                    allowOutsideClick: false,#}
+    {#                    showCancelButton: true,#}
+    {#                    showLoaderOnConfirm: true,#}
+    {#                    showClass: {#}
+    {#                        popup: 'animate__animated animate__fadeInDown'#}
+    {#                    },#}
+    {#                    hideClass: {#}
+    {#                        popup: 'animate__animated animate__fadeOutUp'#}
+    {#                    },#}
+    {#                    confirmButtonText: 'Saqlash',#}
+    {#                    cancelButtonText: 'Bekor qilish',#}
+    {#                    title: 'Naqd pul to\'lovi',#}
+    {#                    html:#}
+    {#                        '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Moderatorning maxfiy raqamini kiriting</label>' +#}
+    {#                        '<input style="margin-top: 4px" id="add_cash" class="form-control">',#}
+    {#                    focusConfirm: false,#}
+    {#                    preConfirm: () => {#}
+    {#                        return [#}
+    {#                            document.getElementById('add_cash').value,#}
+    {#                        ]#}
+    {#                    },#}
+    {#                }).then(function (confirm) {#}
+    {#                    if (confirm.isConfirmed) {#}
+    {#                        var secret_key = confirm.value[0]#}
+    {#                        if (secret_key !== '') {#}
+    {##}
+    {#                            $.ajax({#}
+    {#                                type: 'POST',#}
+    {#                                url: "{% url 'application:application_cash_by_moderator' %}",#}
+    {#                                data: {#}
+    {#                                    secret_key: secret_key,  // moderator secret_key#}
+    {#                                    application: '{{ application.id }}',#}
+    {#                                    type: 0,  // application state duty payment type#}
+    {#                                },#}
+    {#                                statusCode: {#}
+    {#                                    200: function (response) {#}
+    {#                                        setTimeout(function () {#}
+    {#                                            window.location.reload()#}
+    {#                                        }, 3000)#}
+    {#                                        success_toast()#}
+    {##}
+    {#                                    },#}
+    {#                                    404: function (error) {#}
+    {#                                        error_toast()#}
+    {#                                    },#}
+    {##}
+    {#                                    409: function () {#}
+    {#                                        const Toast = Swal.mixin({#}
+    {#                                            toast: true,#}
+    {#                                            position: 'top-end',#}
+    {#                                            background: '#f5d696',#}
+    {#                                            showConfirmButton: false,#}
+    {#                                            timer: 5000,#}
+    {#                                            timerProgressBar: false,#}
+    {#                                            didOpen: (toast) => {#}
+    {#                                                toast.addEventListener('mouseenter', Swal.stopTimer)#}
+    {#                                                toast.addEventListener('mouseleave', Swal.resumeTimer)#}
+    {#                                            }#}
+    {#                                        })#}
+    {#                                        Toast.fire({#}
+    {#                                            icon: 'warning',#}
+    {#                                            title: `Arizangiz allaqachon aktivlashtiilgan!`#}
+    {#                                        })#}
+    {#                                    }#}
+    {#                                },#}
+    {#                            })#}
+    {##}
+    {#                        }#}
+    {##}
+    {##}
+    {#                    } else {#}
+    {#                        error_toast()#}
+    {#                    }#}
+    {##}
+    {##}
+    {#                })#}
+    {#            })#}
+    {#        })#}
+    {#    </script>#}
+{% endblock js %}

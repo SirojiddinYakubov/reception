@@ -8,9 +8,12 @@ app_name = 'application'
 urlpatterns = [
     path('applications-list/', ApplicationsList.as_view(), name='applications_list'),
 
-
     # path('application-detail/<int:id>/', application_detail, name='application_detail2'),
     path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),
+
+    path('application-detail-vue/<int:id>/',
+         TemplateView.as_view(template_name='application/application_detail_vue.html')),
+
     path('application-pdf/<int:id>/', ApplicationPdf.as_view(), name='application_pdf'),
     path('application-pay-status/<int:id>/', ApplicationPayStatus.as_view(), name='application_pay_status'),
     path('get-information/', get_information, name='get_information'),
@@ -39,10 +42,10 @@ urlpatterns = [
     path('save-application-section/', SaveApplicationSection.as_view(), name='save_application_section'),
     path('draft-to-shipped/<int:application_id>/', DraftToShipped.as_view(), name='draft_to_shipped'),
 
-    path('application-cash-by-moderator/', ApplicationCashByModeratorView.as_view(), name='application_cash_by_moderator'),
+    path('application-cash-by-moderator/', ApplicationCashByModeratorView.as_view(),
+         name='application_cash_by_moderator'),
 
     path('save-draft-application/', SaveDraftApplication.as_view(), name='save_draft_application'),
-
 
     path('payments-report/', PaymentsReport.as_view(), name='payments_report'),
     path('applicants-list/', ApplicantsList.as_view(), name='applicants_list'),
