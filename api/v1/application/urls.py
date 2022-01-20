@@ -17,7 +17,11 @@ urlpatterns = [
          name='create_replace_number_and_tp'),
 
     path('save/application/section/<int:pk>/', views.SaveApplicationSection.as_view(), name='save_application_section'),
-    path('generate-application-word/<str:filename>/', views.GenerateApplicationWord.as_view(), name='generate_application_word'),
+    path('generate-application-word/<str:filename>/', views.GenerateApplicationWord.as_view(),
+         name='generate_application_word'),
+    path('generate-application-pdf/<int:pk>/', views.GenerateApplicationPdf.as_view(), name='generate_application_pdf'),
+    # path('application-pay-status/<int:id>/', views.ApplicationPayStatus.as_view(), name='application_pay_status'),
+    path('send-application-to-section/<int:pk>/', views.SendApplicationToSection.as_view(), name='send_application_to_section'),
 
     path('detail/<int:pk>/', views.ApplicationDetail.as_view(), name='detail'),
 

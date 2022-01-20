@@ -135,5 +135,8 @@ module.exports = {
     components: {
         'accordion-item': httpVueLoader('/static/vue/components/application/AccordionItem.vue'),
     },
+    created() {
+        console.log('created 12345')
+    }
 };
 </script>

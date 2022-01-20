@@ -1,7 +1,7 @@
 <template>
     <fieldset>
         <legend>Ariza topshirish hududi</legend>
-        <form action="#" >
+        <form action="#">
             <div class="row mb-3">
                 <div class="alert alert-info">
                     <p style="font-size: 1.4rem; font-weight: bold">ARIZA TOPSHIRISH HUDUDI</p>
@@ -46,7 +46,9 @@
                             <div class="fw-bold text-start text-start">{{ section.title }}</div>
                             <span>{{ section.region.title }}</span> <span
                             v-if="section.located_district">{{ section.located_district.title }}</span>
-                            <span v-if="section.quarter">{{ section.quarter.title }}</span> <span v-if="section.street">{{ section.street }}</span>
+                            <span v-if="section.quarter">{{ section.quarter.title }}</span> <span v-if="section.street">{{
+                                section.street
+                            }}</span>
                         </div>
                         <div class="col-5 col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
                             <button type="button" @click="sendApplication(section.id)"
@@ -95,6 +97,7 @@ module.exports = {
             try {
                 await axios.patch(`/api/v1/application/save/application/section/${this.application.id}/`, {
                         section: id,
+                        process: 1
                     }
                 ).then((res) => {
                     success_toast()

@@ -3,7 +3,9 @@
         <h2 class="accordion-header"
             :id="`panelsStayOpen-heading${uid}`">
             <button
-                class="accordion-button collapsed"
+                @click="toggleAccordion"
+                class="accordion-button"
+                :class="{'collapsed': !open}"
                 type="button"
                 data-bs-toggle="collapse"
                 :data-bs-target="`#panelsStayOpen-collapse${uid}`"
@@ -17,6 +19,7 @@
         <div
             :id="`panelsStayOpen-collapse${uid}`"
             class="accordion-collapse collapse"
+            :class="{'show': open}"
             :aria-labelledby="`panelsStayOpen-heading${uid}`">
             <div class="accordion-body">
                 <slot name="content"/>
@@ -28,7 +31,17 @@
 <script>
 module.exports = {
     name: "AccordionItem",
-    props: ['uid']
+    model: {
+        prop: "open",
+        event: "change"
+    },
+    props: ['uid', 'open'],
+    methods: {
+        toggleAccordion() {
+            this.open = !this.open
+            this.$emit('change', this.open)
+        }
+    },
 }
 </script>
 

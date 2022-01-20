@@ -5,6 +5,7 @@ import re
 from django.http import HttpResponse
 from django.utils import timezone
 from docxtpl import DocxTemplate
+from reportlab.pdfgen import canvas
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -16,10 +17,14 @@ from api.v1.user.serializers import (CreateAccountStatementCarSerializer, Create
                                      CreateGiftAgreementCarSerializer, CreateReplaceTpCarSerializer,
                                      CreateInheritanceAgreementCarSerializer, CreateReplaceNumberAndTpCarSerializer)
 from application.models import (
-    Application, LEGAL_PERSON, DRAFT, ApplicationDocument
+    Application, LEGAL_PERSON, DRAFT, ApplicationDocument, SHIPPED, DocumentForPolice
 )
-from service.models import (Service, ExampleDocument)
-from user.models import Section, Car, CarModel
+from application.serializers import DocumentForPoliceSerializer
+from reception.api import SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
+from reception.telegram_bot import send_message_to_developer
+from service.models import (Service, ExampleDocument, AmountBaseCalculation)
+from user.models import Section, Car, CarModel, CHECKER, User
+from user.utils import render_to_pdf
 
 
 class CreateAccountStatement(APIView):
@@ -558,10 +563,14 @@ class CreateReplaceNumberAndTp(APIView):
 
 class SaveApplicationSection(generics.UpdateAPIView):
     queryset = Application.objects.filter(is_active=True)
-    serializer_class = serializers.ApplicationDetailSerializer
+    serializer_class = serializers.ApplicationSectionUpdateSerializer
     permission_classes = [
         permissions.UserPermission |
-        permissions.AppCreatorPermission
+        permissions.AppCreatorPermission |
+        permissions.ModeratorPermission |
+        permissions.AdministratorPermission |
+        permissions.RegionalControllerPermission |
+        permissions.CheckerPermission
     ]
 
 
@@ -639,9 +648,70 @@ class GenerateApplicationWord(generics.ListAPIView):
         return response
 
 
+class GenerateApplicationPdf(generics.ListAPIView):
+    def get(self, request, *args, **kwargs):
+        application = Application.objects.get(id=kwargs.get('pk'))
+        pdf = render_to_pdf('application/application_detail_pdf.html', self.get_context_data())
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Ariza #%s.pdf" % (application.id)
+            content = "attachment; filename=%s" % (filename)
+            response['Content-Disposition'] = content
+            return response
+
+    def get_context_data(self, *args, **kwargs):
+        application = Application.objects.get(id=self.kwargs.get('pk'))
+        context = {
+            'now_date': timezone.now(),
+            'created_date': application.created_date,
+            'app': application,
+            'section': application.section,
+            'request': self.request,
+        }
+        return context
+
+
+class SendApplicationToSection(generics.ListAPIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            application_id = kwargs.get('pk')
+            application = Application.objects.get(id=application_id)
+            base_amount = AmountBaseCalculation.objects.filter(is_active=True).last()
+            if not base_amount:
+                return Response("Eng kam oylik ish haqi topilmadi!", status=status.HTTP_400_BAD_REQUEST)
+
+            if application.process == DRAFT:
+                return Response("Ariza to'liq to'ldirilmagan!", status=status.HTTP_400_BAD_REQUEST)
+
+            if application.is_block:
+                return Response(
+                    f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak",
+                    status=status.HTTP_400_BAD_REQUEST)
+            application.process = SHIPPED
+            application.save()
+
+            text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda!"
+            inspectors = User.objects.filter(section=application.section, role=CHECKER)
+
+            if inspectors:
+                for inspector in inspectors:
+                    r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
+                    if not r == SUCCESS:
+                        r = SendSmsWithApi(message=text, phone=inspector.phone).get()
+                        if not r == SUCCESS:
+                            send_message_to_developer('Sms service not working!')
+
+            document_polices = DocumentForPolice.objects.filter(is_active=True, service=application.service)
+            serializer = DocumentForPoliceSerializer(document_polices, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response("Xatolik yuz berdi!", status=status.HTTP_400_BAD_REQUEST)
+
+
 class ApplicationDetail(generics.RetrieveAPIView):
     queryset = Application.objects.filter(is_active=True)
-    serializer_class = serializers.ApplicationDetailSerializer
+    serializer_class = serializers.ApplicationDetailFullSerializer
 
     permission_classes = [
         permissions.UserPermission |
@@ -653,6 +723,5 @@ class ApplicationDetail(generics.RetrieveAPIView):
     ]
 
     def get_object(self):
-        application_id = self.kwargs.get('pk')
-        application = self.get_queryset().filter(id=application_id).last()
+        application = self.get_queryset().filter(id=self.kwargs.get('pk')).last()
         return application

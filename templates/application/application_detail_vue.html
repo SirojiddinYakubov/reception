@@ -43,15 +43,20 @@
     <div class="row" id="app">
         <div class="col-12 info_area">
             <div class="accordion">
-                <about
-                        v-if="application"
-                        :application="application"
-                ></about>
+                <component is="about"
+                           v-if="application"
+                           :open="isOpenAboutAccordion"
+                           :application="application"
+                ></component>
             </div>
         </div>
         <div class="col-12 info_area">
             <div class="accordion">
-                <payment/>
+                 <component is="payment"
+                           v-if="application"
+                           :open="isOpenPaymentAccordion"
+                           :application="application"
+                ></component>
             </div>
         </div>
         [[application]]
@@ -66,7 +71,6 @@
     <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
     <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
     <script src="https://unpkg.com/http-vue-loader"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-file-download@0.4.12/file-download.min.js"></script>
 
     <!-- development version -->
     <script src="{% static 'vue/vue.dev.js' %}"></script>
@@ -75,12 +79,14 @@
 
     <script type="text/javascript">
         setAxiosHeader()
-        console.log(window)
         new Vue({
             el: '#app',
             delimiters: ['[[', ']]'],
             data: () => ({
-                application: null
+                application: null,
+
+                isOpenAboutAccordion: true,
+                isOpenPaymentAccordion: false
             }),
             components: {
                 'About': httpVueLoader('/static/vue/components/application/AboutApplicationAccordion.vue'),

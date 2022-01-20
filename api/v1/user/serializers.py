@@ -72,12 +72,22 @@ class RegionSectionsListSerializer(serializers.ModelSerializer):
 
 
 class SectionDetailSerializer(serializers.ModelSerializer):
+    region = RegionDetailSerializer()
+    located_district = DistrictDetailSerializer()
+    quarter = QuarterDetailSerializer()
+
     class Meta:
         model = Section
         fields = [
             'id',
             'parent',
-            'title'
+            'title',
+            'region',
+            'located_district',
+            'quarter',
+            'street',
+            'is_active'
+
         ]
 
 
