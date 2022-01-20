@@ -1,0 +1,142 @@
+<template>
+    <accordion-item
+        :uid="2"
+    >
+        <template v-slot:title>
+            To'lov
+        </template>
+        <template v-slot:content>
+<!--            <div class="table-responsive">-->
+<!--                <table class="table table-bordered table-striped">-->
+<!--                    <tbody>-->
+
+<!--                    <tr>-->
+<!--                        <th scope="row">Status:</th>-->
+<!--                        <td>-->
+<!--                            {% if application.process == 0 %}-->
+<!--                            <button id="draft_to_shipped" class="btn btn-success">Arizani-->
+<!--                                {{ application.section.title }}ga-->
+<!--                                jo'natish &nbsp&nbsp&nbsp<i class="fas fa-arrow-up"></i></button>-->
+<!--                            {% elif not application.section %}-->
+<!--                            <b style="color: red">Ariza to'liq to'ldirilmagan!</b>-->
+<!--                            {% else %}-->
+<!--                            <b>Ariza {{ application.section.title }}ga jo'natilgan!</b>-->
+<!--                            {% endif %}-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+<!--                    <tr>-->
+<!--                        <th scope="row">Ariza raqami:</th>-->
+<!--                        <td>{{ application.id }}</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Xizmat nomi:</th>-->
+<!--                        <td>-->
+<!--                            <p>{{ application.service.long_title }}</p>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Ariza jo'natilgan YXHB RIB bo'limi:</th>-->
+<!--                        <td>-->
+<!--                            {% if application.section %}-->
+<!--                            <span id="add_section"-->
+<!--                                  style="cursor: pointer; color: blue; font-weight: bold;    border-bottom: dashed 1px #0088cc;">{{-->
+<!--                                    application.section.region.title-->
+<!--                                }}: {{ application.section.title }}</span>-->
+<!--                            {% else %}-->
+<!--                            <b id="add_section"-->
+<!--                               style="cursor: pointer; color: red; font-weight: bold;    border-bottom: dashed 1px #0088cc;">YHXB-->
+<!--                                RIB bo'limi tanlanmagan!</b>-->
+<!--                            {% endif %}-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    {% if application.seriya %}-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Xizmat turi seriyasi va raqami:</th>-->
+<!--                        <td>-->
+<!--                            <p>{{ application.seriya }}</p>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Shartnoma tuzilgan sana:</th>-->
+<!--                        <td>-->
+<!--                            <p>{{ application.contract_date|date:"SHORT_DATE_FORMAT" }}</p>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    {% endif %}-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Yaratdi:</th>-->
+<!--                        <td>{{ application.created_user }}</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Arizaning elektron nusxasi</th>-->
+<!--                        <td>-->
+<!--                            <a href="{% url 'application:create_application_doc' application.file_name %}">-->
+<!--                                <button class="btn btn-outline-primary"><i class="fas fa-file-word"></i>&nbsp&nbsp&nbsp&nbspYuklab-->
+<!--                                    olish-->
+<!--                                </button>-->
+<!--                            </a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+<!--                    <tr>-->
+<!--                        <th scope="row">Referens</th>-->
+<!--                        <td><a style="cursor: pointer; color: #007bff"-->
+<!--                               class="application_render_pdf"-->
+<!--                               data-application="{{ application.id }}">-->
+<!--                            <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab-->
+<!--                                olish-->
+<!--                            </button>-->
+<!--                        </a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">To'lovlar</th>-->
+<!--                        <td>-->
+<!--                            <a href="#" class="payment_render_pdf">-->
+<!--                                <button class="btn btn-outline-primary"><i class="fas fa-file-pdf"></i>&nbsp&nbsp&nbsp&nbspYuklab-->
+<!--                                    olish-->
+<!--                                </button>-->
+<!--                            </a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+
+<!--                    {#-->
+<!--                    <tr>#}-->
+<!--                        {#-->
+<!--                        <th scope="row">Tekshirish uchun parol:</th>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                        <td class="text-danger">{{ application.password }}</td>-->
+<!--                        #}-->
+<!--                        {#-->
+<!--                    </tr>-->
+<!--                    #}-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Yaratilgan vaqt:</th>-->
+<!--                        <td>{{ application.created_date }}</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">Tahrirlangan vaqt:</th>-->
+<!--                        <td>{{ application.updated_date }}</td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+            To'lov content
+        </template>
+    </accordion-item>
+</template>
+
+<script>
+module.exports = {
+    name: 'PaymentApplicationAccordion',
+    components: {
+        'accordion-item': httpVueLoader('/static/vue/components/application/AccordionItem.vue'),
+    },
+    created() {
+        console.log('created 12345')
+    }
+};
+</script>

@@ -656,7 +656,7 @@ class DraftToShipped(APIView):
             application.process = SHIPPED
             application.save()
 
-            text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda!"
+            text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda! \nAvtomobil: {application.car}"
             inspectors = User.objects.filter(section=application.section, role=CHECKER)
 
             if inspectors:

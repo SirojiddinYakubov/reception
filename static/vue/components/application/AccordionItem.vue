@@ -1,47 +1,47 @@
 <template>
-    <div :id="groupId + '-' + item.id" class="accordion-item" :class="{'is-active': item.active}">
-        <dt class="accordion-item-title">
-            <button @click="toggle" class="accordion-item-trigger">
-                <h4 class="accordion-item-title-text">{{ item.title }}</h4>
-                <span class="accordion-item-trigger-icon"></span>
+    <div class="accordion-item">
+        <h2 class="accordion-header"
+            :id="`panelsStayOpen-heading${uid}`">
+            <button
+                @click="toggleAccordion"
+                class="accordion-button"
+                :class="{'collapsed': !open}"
+                type="button"
+                data-bs-toggle="collapse"
+                :data-bs-target="`#panelsStayOpen-collapse${uid}`"
+                aria-expanded="true"
+                :aria-controls="`panelsStayOpen-collapse${uid}`">
+                <h5>
+                    <slot name="title"/>
+                </h5>
             </button>
-        </dt>
-        <transition
-            name="accordion-item"
-            @enter="startTransition"
-            @after-enter="endTransition"
-            @before-leave="startTransition"
-            @after-leave="endTransition">
-            <dd v-if="item.active" class="accordion-item-details">
-                <div v-html="item.details" class="accordion-item-details-inner"></div>
-            </dd>
-        </transition>
+        </h2>
+        <div
+            :id="`panelsStayOpen-collapse${uid}`"
+            class="accordion-collapse collapse"
+            :class="{'show': open}"
+            :aria-labelledby="`panelsStayOpen-heading${uid}`">
+            <div class="accordion-body">
+                <slot name="content"/>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 module.exports = {
     name: "AccordionItem",
-    props: ['item', 'multiple', 'groupId'],
+    model: {
+        prop: "open",
+        event: "change"
+    },
+    props: ['uid', 'open'],
     methods: {
-        toggle(event) {
-            if (this.multiple) this.item.active = !this.item.active
-            else {
-                this.$parent.$children.forEach((item, index) => {
-                    if (item.$el.id === event.currentTarget.parentElement.parentElement.id) item.item.active = !item.item.active
-                    else item.item.active = false
-                })
-            }
-        },
-
-        startTransition(el) {
-            el.style.height = el.scrollHeight + 'px'
-        },
-
-        endTransition(el) {
-            el.style.height = ''
+        toggleAccordion() {
+            this.open = !this.open
+            this.$emit('change', this.open)
         }
-    }
+    },
 }
 </script>
 

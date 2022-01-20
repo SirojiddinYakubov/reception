@@ -3,7 +3,7 @@ from rest_framework import serializers
 from api.v1.user.serializers import CarTypesListSerializer, UserShortDetailSerializer
 from service.models import (
     Service, StateDutyPercent, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER, STATE_DUTY_TITLE,
-    StateDutyScore, PaymentForTreasury
+    StateDutyScore, PaymentForTreasury, ExampleDocument
 )
 
 
@@ -142,4 +142,13 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
             'payment_system',
             'transaction_id',
             'status'
+        ]
+
+class ExampleDocumentDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExampleDocument
+        fields = [
+            'id',
+            'title',
+            'key'
         ]
