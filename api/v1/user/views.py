@@ -327,8 +327,7 @@ class ConfirmPay(APIView):
             all_amount = amount + commission_amount
             transaction = PaymentByRequisites().get_pay_from_card(self.card_number, self.exp_date, all_amount * 100)
             if transaction['status'] == SUCCESS:
-                GetPayFromCard.objects.create(application_id=self.application_id,
-                                              card_number=self.card_number, exp_date=self.exp_date, amount=all_amount,
+                GetPayFromCard.objects.create(application_id=self.application_id, amount=all_amount,
                                               transaction_id=transaction['result'])
                 payment = PaymentForTreasury.objects.create(application_id=self.application_id,
                                                             amount=amount, state_duty_score=self.score,

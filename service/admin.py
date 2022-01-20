@@ -86,10 +86,10 @@ class AmountBaseCalculationAdmin(admin.ModelAdmin):
 
 @admin.register(GetPayFromCard)
 class GetPayFromCardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'transaction_id', 'application', 'card_number', 'amount']
+    list_display = ['id', 'transaction_id', 'application',  'amount']
     list_display_links = ['transaction_id']
     list_filter = ['created_at', ]
-    search_fields = ['transaction_id', 'application_id', 'card_number', ]
+    search_fields = ['transaction_id', 'application_id',  ]
 
 
 @admin.register(PaymentForTreasury)
