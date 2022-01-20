@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
 from api.v1.service.serializers import (
-    ServiceDetailSerializer
+    ServiceDetailSerializer, ExampleDocumentDetailSerializer
 )
 from api.v1.user.serializers import (
     UserShortDetailSerializer,
     OrganizationDetailSerializer,
-    CarDetailSerializer
+    CarDetailSerializer, SectionDetailSerializer
 )
 from application.models import (
     Application, ApplicationDocument
@@ -71,8 +71,28 @@ class CreateApplicationDocumentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+class ApplicationDocumentDetailSerializer(serializers.ModelSerializer):
+    example_document = ExampleDocumentDetailSerializer()
+    class Meta:
+        model = ApplicationDocument
+        fields = [
+            'id',
+            'application',
+            'example_document',
+            'seriya',
+            'contract_date'
+        ]
+
+
+
 
 class ApplicationDetailSerializer(serializers.ModelSerializer):
+    service = ServiceDetailSerializer()
+    created_user = UserShortDetailSerializer()
+    applicant = UserShortDetailSerializer()
+    inspector = UserShortDetailSerializer()
+    car = CarDetailSerializer()
+
     class Meta:
         model = Application
         fields = [
@@ -99,3 +119,15 @@ class ApplicationDetailSerializer(serializers.ModelSerializer):
             'inspector',
             'applicant'
         ]
+
+    def to_representation(self, instance):
+        context = super(ApplicationDetailSerializer, self).to_representation(instance)
+        if instance.organization:
+            context['organization'] = OrganizationDetailSerializer(instance.organization).data
+
+        if instance.section:
+            context['section'] = SectionDetailSerializer(instance.section).data
+
+        if instance.applicationdocument_set.exists():
+            context['document'] = ApplicationDocumentDetailSerializer(instance.applicationdocument_set.last()).data
+        return context

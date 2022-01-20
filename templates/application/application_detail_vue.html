@@ -41,121 +41,21 @@
 
 {% block content %}
     <div class="row" id="app">
-
-
-    <accordion
-    :content="example2"
-    >
-
-    </accordion>
-
-
-        {#        {% include '_parts/messages.html' %}#}
-        <div class="col-12 info_area" >
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseOne">
-                            <h5>Ariza haqida ma'lumot</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
-                         aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
-                            {#                            {% include 'application/inc/about_application_part.html' %}#}
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingFifth">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseFifth" aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseFifth">
-                            <h5>To'lov</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseFifth" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingFifth">
-                        <div class="accordion-body">
-                            <ul>
-                                {#                                {% include 'application/inc/application_payments_part.html' %}#}
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
-                                aria-controls="panelsStayOpen-collapseTwo">
-                            <h5>Ariza topshiruvchi</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingTwo">
-                        <div class="accordion-body">
-                            {#                            {% include 'application/inc/application_submitting_part.html' %}#}
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
-                                aria-controls="panelsStayOpen-collapseThree">
-                            <h5>Avtomobil</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingThree">
-                        <div class="accordion-body">
-                            {#                            {% include 'application/inc/application_car_part.html' %}#}
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseFour">
-                            <h5>Mavjud fayllar</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingFour">
-                        <div class="accordion-body">
-                            <ul>
-                                {#                                {% include 'application/inc/application_files_part.html' %}#}
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingSix">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true"
-                                aria-controls="panelsStayOpen-collapseSix">
-                            <h5>Ariza holati</h5>
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse"
-                         aria-labelledby="panelsStayOpen-headingSix">
-                        <div class="accordion-body">
-                            <ul>
-                                {#                                {% include 'application/inc/application_status_part.html' %}#}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <about
+                        v-if="application"
+                        :application="application"
+                ></about>
             </div>
         </div>
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <payment/>
+            </div>
+        </div>
+        [[application]]
     </div>
-
-
 {% endblock content %}
 {% block js %}
     <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
@@ -163,7 +63,10 @@
     <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
     <script src="{% static 'assets/libs/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
     <script src="{% static 'assets/libs/axios/axios.min.js' %}" type="text/javascript"></script>
- <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="{% static 'assets/libs/moment/moment.js' %}"></script>
+    <script src="{% static 'assets/libs/moment/locale/ru.js' %}"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-file-download@0.4.12/file-download.min.js"></script>
 
     <!-- development version -->
     <script src="{% static 'vue/vue.dev.js' %}"></script>
@@ -171,77 +74,31 @@
     {#        <script src="{% static 'vue/vue.prod.js' %}"></script>#}
 
     <script type="text/javascript">
-
         setAxiosHeader()
+        console.log(window)
         new Vue({
             el: '#app',
             delimiters: ['[[', ']]'],
             data: () => ({
-                example1: [
-                    {
-                        id: 1,
-                        active: true,
-                        title: 'Crushing Spirits',
-                        details: `
-      <p>You can crush me but you can't crush my spirit! Are you crazy? I can't swallow that. Who's brave enough to fly into something we all keep calling a death sphere? It doesn't look so shiny to me.</p>
-      <ul>
-        <li>I just want to talk.</li>
-        <li>It has nothing to do with mating.</li>
-        <li>Fry, that doesn't make sense.</li>
-      </ul>
-    `
-                    },
-                    {
-                        id: 2,
-                        active: false,
-                        title: 'Soundtracks',
-                        details: `
-      <p>Ah, the 'Breakfast Club' soundtrack! I can't wait til I'm old enough to feel ways about stuff!</p>
-    `
-                    },
-                    {
-                        id: 3,
-                        active: false,
-                        title: `The Letter Shaped Like a Man Wearing a Hat`,
-                        details: `
-      <p>And then the battle's not so bad? You'll have all the Slurm you can drink when you're partying with Slurms McKenzie! Say it in Russian!</p>
-      <p>Morbo can't understand his teleprompter because he forgot how you say that letter that's shaped like a man wearing a hat.</p>
-    `
-                    }
-                ],
-                example2: [
-                    {
-                        id: 1,
-                        active: false,
-                        title: 'Celebration',
-                        details: `
-      <p>Come on, this is a Bluth family celebration. It's no place for children.</p>
-    `
-                    },
-                    {
-                        id: 2,
-                        active: false,
-                        title: 'Lighter Fluid and Wine',
-                        details: `
-      <p>But where did the lighter fluid come from? Wine only turns to alcohol if you let it sit. But anyhoo, can you believe that the only reason the club is going under is because it's in a terrifying neighborhood?</p>
-    `
-                    },
-                    {
-                        id: 3,
-                        active: false,
-                        title: `What's in Oscar's box?`,
-                        details: `
-      <p>In fact, it was a box of Oscar's legally obtained medical marijuana. Primo bud. Real sticky weed.</p>
-      <p>Great, now I'm gonna smell to high heaven like a tuna melt!</p>
-    `
-                    }
-                ]
+                application: null
             }),
             components: {
-                'accordion': httpVueLoader('/static/vue/components/application/Accordion.vue'),
+                'About': httpVueLoader('/static/vue/components/application/AboutApplicationAccordion.vue'),
+                'Payment': httpVueLoader('/static/vue/components/application/PaymentApplicationAccordion.vue'),
             },
             created() {
+                let url = document.URL
 
+                var applicationId = url.match(/application-detail-vue\/(\d+)/)[1]
+
+                if (applicationId) {
+                    this.getApplicationDetail(applicationId)
+                }
+            },
+            methods: {
+                async getApplicationDetail(id) {
+                    this.application = await axios.get(`/api/v1/application/detail/${id}/`).then((response) => response.data)
+                }
             }
         })
 

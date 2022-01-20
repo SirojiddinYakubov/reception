@@ -127,7 +127,8 @@
                             <a class="page-link" href="#" tabindex="-1"
                                @click="currentPage = currentPage - 1">Oldingi</a>
                         </li>
-                        <li class="page-item" :class="{active: page === currentPage}" v-for="(page, index) in displayPages">
+                        <li class="page-item" :class="{active: page === currentPage}"
+                            v-for="(page, index) in displayPages">
                             <a class="page-link" @click="changePage(page)" href="#">[[ page ]]</a>
                         </li>
 
@@ -156,10 +157,10 @@
     <script src="{% static 'assets/libs/select2/js/select2.min.js' %}"></script>
 
     <!-- development version -->
-    <script src="{% static 'vue/vue.dev.js' %}"></script>
+    {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
 
     <!-- production version -->
-    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+    <script src="{% static 'vue/vue.prod.js' %}"></script>
 
     <script src="{% static 'assets/libs/axios/axios.min.js' %}"></script>
     <script>
