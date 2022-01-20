@@ -154,8 +154,6 @@ class PaidStateDuty(models.Model):
 class GetPayFromCard(BaseModel):
     from application.models import Application
     application = models.ForeignKey(Application, on_delete=models.CASCADE)
-    card_number = models.CharField(max_length=16)
-    exp_date = models.CharField(max_length=4)
     amount = models.IntegerField(default=0)
     transaction_id = models.CharField(max_length=255, blank=True)
 
