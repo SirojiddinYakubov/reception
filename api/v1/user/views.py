@@ -336,7 +336,7 @@ class ConfirmPay(APIView):
                                                             payment_system=KAPITALBANK,
                                                             status=PaymentForTreasury.PROCESSING)
 
-                text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m o\'tkazish jarayoniga o\'tdi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
+                text = f'{self.application_id}-raqamli arizangizga muvofiq, {amount} so\'m bankka muvafaqiyatli jo\'natildi. Bank tomonidan to\'lov qabul qilinganidan so\'ng sms xabarnoma olasiz. Ushbu jarayon bir necha soatgacha cho\'zilishi mumkin. Banklar ishlamaydigan kunlari o\'tkazilgan to\'lovlar, keyingi bank ish kuniga qadar cho\'zilishi mumkin. Qo\'shimcha ma\'lumot uchun tel:972800809'
 
                 if application.applicant:
                     phone = application.applicant.phone
@@ -344,6 +344,8 @@ class ConfirmPay(APIView):
                     phone = application.created_user.phone
                 r = SendSmsWithPlayMobile(phone=phone, message=text).get()
                 SendSmsWithPlayMobile(phone=972800809,
+                                      message=f"{application.id}-raqamli arizaga asosan, {phone} dan {all_amount} so'm to'landi!").get()
+                SendSmsWithPlayMobile(phone=919791999,
                                       message=f"{application.id}-raqamli arizaga asosan, {phone} dan {all_amount} so'm to'landi!").get()
                 print(text)
                 if not r == SUCCESS:
