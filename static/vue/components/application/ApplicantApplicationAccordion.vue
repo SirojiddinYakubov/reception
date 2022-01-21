@@ -43,7 +43,7 @@
                         <td>{{ application.organization.address_of_garage }}</td>
                     </tr>
                     </tbody>
-                    <tbody v-else v-if="application.applicant">
+                    <tbody v-else>
                     <tr>
                         <th scope="row">ID:</th>
                         <td>{{ application.applicant.id }}</td>
