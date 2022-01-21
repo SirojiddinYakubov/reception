@@ -86,8 +86,8 @@ class SectionDetailSerializer(serializers.ModelSerializer):
             'located_district',
             'quarter',
             'street',
-            'is_active'
-
+            'is_active',
+            'pay_for_treasury'
         ]
 
 
@@ -575,9 +575,61 @@ class CarModelDetailSerializer(serializers.ModelSerializer):
             'created_date'
         ]
 
+class BodyTypeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BodyType
+        fields = [
+            'id',
+            'title',
+            'created_date'
+        ]
+
+class FuelTypeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FuelType
+        fields = [
+            'id',
+            'title',
+            'created_date'
+        ]
+
+class CarTypeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarType
+        fields = [
+            'id',
+            'title',
+            'created_date'
+        ]
+
+
+class DeviceDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = [
+            'id',
+            'title',
+            'created_date'
+        ]
+
+class ColorDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = [
+            'id',
+            'title',
+            'created_date'
+        ]
+
 
 class CarDetailSerializer(serializers.ModelSerializer):
     model = CarModelDetailSerializer()
+    body_type = BodyTypeDetailSerializer()
+    fuel_type = FuelTypeDetailSerializer(many=True)
+    type = CarTypeDetailSerializer()
+    device = DeviceDetailSerializer(many=True)
+    color = ColorDetailSerializer()
+    re_color = ColorDetailSerializer()
 
     class Meta:
         model = Car
@@ -595,11 +647,22 @@ class CarDetailSerializer(serializers.ModelSerializer):
             'engine_number',
             'made_year',
             'color',
+            're_color',
             'engine_power',
             'price',
             'is_auction',
             'given_number',
-            'old_number'
+            'old_number',
+            'old_technical_passport',
+            'given_technical_passport',
+            'lost_technical_passport',
+            'lost_number',
+            'is_new',
+            'is_old_number',
+            'is_saved_number',
+            'is_relative',
+            'is_tranzit',
+            'is_another_car'
         ]
 
 

@@ -1,19 +1,23 @@
 from rest_framework import serializers
 
 from api.v1.service.serializers import (
-    ServiceDetailSerializer, ExampleDocumentDetailSerializer
+    ServiceDetailSerializer, ExampleDocumentDetailSerializer, StateDutyScoreDetailSerializer,
+    PaymentForTreasuryListSerializer
 )
 from api.v1.user.serializers import (
     UserShortDetailSerializer,
     OrganizationDetailSerializer,
-    CarDetailSerializer, SectionDetailSerializer
+    CarDetailSerializer, SectionDetailSerializer, UserDetailSerializer
 )
 from application.models import (
     Application, ApplicationDocument, DocumentForPolice
 )
 from application.serializers import DocumentForPoliceSerializer
+from application.templatetags.applications_tags import get_payment_score
 from reception.api import SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
 from reception.telegram_bot import send_message_to_developer
+from service.models import STATE_DUTY_TITLE, ROAD_FUND_HORSE_POWER, ROAD_FUND, AmountBaseCalculation, StateDutyPercent, \
+    StateDutyScore, PaymentForTreasury
 from user.models import User, CHECKER
 
 
@@ -120,7 +124,7 @@ class ApplicationDetailSerializer(serializers.ModelSerializer):
 class ApplicationDetailFullSerializer(serializers.ModelSerializer):
     service = ServiceDetailSerializer()
     created_user = UserShortDetailSerializer()
-    applicant = UserShortDetailSerializer()
+    applicant = UserDetailSerializer()
     inspector = UserShortDetailSerializer()
     car = CarDetailSerializer()
 
@@ -188,3 +192,53 @@ class ApplicationSectionUpdateSerializer(serializers.ModelSerializer):
                     if not r == SUCCESS:
                         send_message_to_developer('Sms service not working!')
         return application
+
+
+class ApplicationPaymentStateDutyPercentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StateDutyPercent
+        fields = [
+            'id',
+            'title',
+            'service',
+            'state_duty',
+            'person_type',
+            'car_type',
+            'car_is_new',
+            'is_old_number',
+            'is_save_old_number',
+            'lost_number',
+            'lost_technical_passport',
+            'is_auction',
+            'is_tranzit',
+            'start',
+            'stop',
+            'percent',
+        ]
+
+    def to_representation(self, instance):
+        context = super().to_representation(instance)
+        application = self.context.get('application')
+        amount_base_calculation = AmountBaseCalculation.objects.filter(is_active=True).order_by('-id').last()
+        try:
+            payment = amount_base_calculation.amount / 100 * round(instance.percent, 2)
+            context['amount'] = round(payment, 2)
+        except Exception as e:
+            print(e)
+
+        if context.get('state_duty'):
+            context['state_duty_title'] = dict(STATE_DUTY_TITLE).get(context['state_duty'])
+        context['bhm'] = amount_base_calculation.amount
+
+        if application.section:
+            score = get_payment_score(application.id, context['id'])
+            if isinstance(score, StateDutyScore):
+                context['score'] = StateDutyScoreDetailSerializer(score).data
+            else:
+                context['score'] = score
+        context['check_state_payment_paid'] = application.paymentfortreasury_set.filter(state_duty_percent_id=context['id']).exists()
+        check_memorial = PaymentForTreasury.objects.filter(state_duty_percent_id=context['id'], application=application,
+                                             memorial__isnull=False).last()
+        if check_memorial:
+            context['check_memorial'] = PaymentForTreasuryListSerializer(check_memorial).data
+        return context

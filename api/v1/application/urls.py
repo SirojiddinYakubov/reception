@@ -23,6 +23,12 @@ urlpatterns = [
     # path('application-pay-status/<int:id>/', views.ApplicationPayStatus.as_view(), name='application_pay_status'),
     path('send-application-to-section/<int:pk>/', views.SendApplicationToSection.as_view(), name='send_application_to_section'),
 
+
+    path('get-payment-percents/<int:pk>/', views.GetPaymentPercents.as_view(), name='get_payment_percents'),
+    path('get-payment-score/<int:application_id>/<int:percent_id>/', views.GetPaymentScore.as_view(), name='get_payment_score'),
+
+
+
     path('detail/<int:pk>/', views.ApplicationDetail.as_view(), name='detail'),
 
 ]

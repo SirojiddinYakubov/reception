@@ -2,7 +2,7 @@
     <div>
         <accordion-item
             :uid="1"
-            v-model="open"
+            v-model="isOpen"
         >
             <template v-slot:title>
                 Ariza haqida ma'lumot
@@ -14,7 +14,8 @@
                         <tr>
                             <th scope="row">Status:</th>
                             <td>
-                                <b v-if="!application.section && application.proccess !== 1" style="color: red">Ariza jo'natiladigan YXHB bo'limi tanlanmagan!</b>
+                                <b v-if="!application.section && application.proccess !== 1" style="color: red">Ariza
+                                    jo'natiladigan YXHB bo'limi tanlanmagan!</b>
                                 <b v-else>Ariza {{ application.section.title }}ga jo'natilgan!</b>
                             </td>
                         </tr>
@@ -88,14 +89,8 @@
                         </tr>
                         <tr>
                             <th scope="row">To'lovlar</th>
-                            <td>
-                                <a @click="generatePayment">
-                                    <button class="btn btn-outline-primary">
-                                        <i class="fas fa-file-pdf"></i>
-                                        &nbsp&nbsp&nbsp&nbspYuklab olish
-                                    </button>
-                                </a>
-                            </td>
+                            <td><a href="/" @click.prevent="$emit('open-payment')"
+                                   style="text-decoration: underline">ko'rish</a>
                         </tr>
                         <!--                    <tr>-->
                         <!--                        <th scope="row">Tekshirish uchun parol:</th>-->
@@ -103,7 +98,8 @@
                         <!--                    </tr>-->
                         <tr>
                             <th scope="row">YHXB bo'limiga olib borilishi kerak bo'lgan hujjatlar</th>
-                            <td><a href="/" @click.prevent="isShowRequireDocuments = true" style="text-decoration: underline">ko'rish</a>
+                            <td><a href="/" @click.prevent="isShowRequireDocuments = true"
+                                   style="text-decoration: underline">ko'rish</a>
                             </td>
                         </tr>
                         <tr>
@@ -131,6 +127,10 @@
 <script>
 module.exports = {
     name: 'AboutApplicationAccordion',
+    model: {
+        prop: 'open',
+        event: 'change'
+    },
     props: ['application', 'open'],
     data: () => ({
         isShowRequireDocuments: false,
@@ -141,6 +141,14 @@ module.exports = {
         'instruction': httpVueLoader('/static/vue/components/application/Instruction.vue'),
     },
     computed: {
+        isOpen: {
+          get() {
+              return this.open
+          },
+          set(val) {
+              this.$emit('change', val)
+          }
+        },
         full_name() {
             return this.application.created_user.last_name + ' ' + this.application.created_user.first_name + ' ' + this.application.created_user.middle_name
         },
@@ -208,16 +216,11 @@ module.exports = {
             } catch (e) {
                 console.log(e)
             }
-
-        },
-        generatePayment() {
-            alert('scroll to payment')
         },
         getRegions() {
             return new Promise((resolve, reject) => {
                 axios.get('/api/v1/user/section/exists/regions/list/').then((response) => {
                     const regions = {}
-
                     for (const x of response.data) {
                         regions[x.id] = x.title
                     }

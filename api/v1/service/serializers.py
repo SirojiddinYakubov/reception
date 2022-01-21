@@ -152,3 +152,5 @@ class ExampleDocumentDetailSerializer(serializers.ModelSerializer):
             'title',
             'key'
         ]
+
+
