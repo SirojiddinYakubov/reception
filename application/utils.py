@@ -296,7 +296,16 @@ def filter_state_duty_percents(data) -> QuerySet[StateDutyPercent]:
     qs = fine1
 
     """Qayta ro'yhatlash"""
-    re_registration = StateDutyPercent.objects.filter(service=service, state_duty=RE_REGISTRATION, percent__gt=0)
+    re_registration = StateDutyPercent.objects.filter(service=service, car_type=car_type,
+                                                      lost_number=False, is_old_number=is_old_number,
+                                                      is_auction=False,
+                                                      car_is_new=False,
+                                                      is_save_old_number=save_old_number,
+                                                      is_saved_number=is_saved_number,
+                                                      is_another_car=is_another_car,
+                                                      state_duty=RE_REGISTRATION,
+                                                      lost_technical_passport=False,
+                                                      percent__gt=0)
     qs = qs.union(re_registration)
 
     """Ro'yhatlash ya'ni DRB uchun to'lov"""
