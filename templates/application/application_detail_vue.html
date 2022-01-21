@@ -45,21 +45,57 @@
             <div class="accordion">
                 <component is="about"
                            v-if="application"
-                           :open="isOpenAboutAccordion"
+                           v-model="isOpenAboutAccordion"
+                           :application="application"
+                           @open-payment="() => {isOpenPaymentAccordion = true; isOpenAboutAccordion = false}"
+                ></component>
+            </div>
+        </div>
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <component is="payment"
+                           v-if="application"
+                           v-model="isOpenPaymentAccordion"
                            :application="application"
                 ></component>
             </div>
         </div>
         <div class="col-12 info_area">
             <div class="accordion">
-                 <component is="payment"
+                <component is="applicant"
                            v-if="application"
-                           :open="isOpenPaymentAccordion"
+                           v-model="isOpenApplicantAccordion"
                            :application="application"
                 ></component>
             </div>
         </div>
-        [[application]]
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <component is="car"
+                           v-if="application"
+                           v-model="isOpenCarAccordion"
+                           :application="application"
+                ></component>
+            </div>
+        </div>
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <component is="document"
+                           v-if="application"
+                           v-model="isOpenDocumentAccordion"
+                           :application="application"
+                ></component>
+            </div>
+        </div>
+        <div class="col-12 info_area">
+            <div class="accordion">
+                <component is="status"
+                           v-if="application"
+                           v-model="isOpenStatusAccordion"
+                           :application="application"
+                ></component>
+            </div>
+        </div>
     </div>
 {% endblock content %}
 {% block js %}
@@ -85,12 +121,20 @@
             data: () => ({
                 application: null,
 
-                isOpenAboutAccordion: true,
-                isOpenPaymentAccordion: false
+                isOpenAboutAccordion: false,
+                isOpenPaymentAccordion: false,
+                isOpenApplicantAccordion: false,
+                isOpenCarAccordion: false,
+                isOpenDocumentAccordion: false,
+                isOpenStatusAccordion: true
             }),
             components: {
                 'About': httpVueLoader('/static/vue/components/application/AboutApplicationAccordion.vue'),
                 'Payment': httpVueLoader('/static/vue/components/application/PaymentApplicationAccordion.vue'),
+                'Applicant': httpVueLoader('/static/vue/components/application/ApplicantApplicationAccordion.vue'),
+                'Car': httpVueLoader('/static/vue/components/application/CarApplicationAccordion.vue'),
+                'Document': httpVueLoader('/static/vue/components/application/DocumentApplicationAccordion.vue'),
+                'Status': httpVueLoader('/static/vue/components/application/StatusApplicationAccordion.vue'),
             },
             created() {
                 let url = document.URL
@@ -110,469 +154,4 @@
 
 
     </script>
-
-    {#    <script type="text/javascript">#}
-    {##}
-    {#        $(document).ready(function () {#}
-    {#            sendAuthorizationToken()#}
-    {#            var isBlock = '{{ application.is_block }}'#}
-    {#            var proccess = '{{ application.process }}'#}
-    {#            var activation_pay = '{{ activation_pay }}'#}
-    {#            var user = '{{ request.user }}'#}
-    {#            var application_owner = '{{ application.created_user }}'#}
-    {#            var applicationId = '{{ application.id }}'#}
-    {##}
-    {#            if (user === application_owner) {#}
-    {##}
-    {##}
-    {#                if (proccess === '7' && isBlock === 'True') {#}
-    {#                    Swal.fire({#}
-    {#                        allowOutsideClick: false,#}
-    {#                        showCloseButton: true,#}
-    {#                        showCancelButton: false,#}
-    {#                        showConfirmButton: true,#}
-    {#                        showLoaderOnConfirm: true,#}
-    {#                        confirmButtonText: "To'lov qilish",#}
-    {#cancelButtonText: 'Bekor qilish',#}
-    {#                        icon: 'error',#}
-    {#                        title: 'Ariza aktivlashtirilmagan!',#}
-    {#                        text: `Arizani aktivlashitirish uchun ariza jo'natiladigan YHXB RIB bo'limini va ${activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,#}
-    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-    {#                    }).then(function (confirm) {#}
-    {#                        if (confirm.isConfirmed) {#}
-    {#                            select_payment()#}
-    {#window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
-    {#                        }#}
-    {#                    })#}
-    {#                } else if (proccess === '7') {#}
-    {#                    Swal.fire({#}
-    {#                        allowOutsideClick: false,#}
-    {#                        showCloseButton: true,#}
-    {#                        showCancelButton: false,#}
-    {#                        showConfirmButton: true,#}
-    {#                        showLoaderOnConfirm: true,#}
-    {#                        confirmButtonText: "Kiritish",#}
-    {#cancelButtonText: 'Bekor qilish',#}
-    {#                        icon: 'error',#}
-    {#                        title: 'Ariza to\'liq to\'ldirilmagan!',#}
-    {#                        text: `Arizani to'liq to'ldirish uchun ariza jo'natiladigan YHXB RIB bo'limini kiriting!`,#}
-    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-    {#                    }).then(function (confirm) {#}
-    {#                        if (confirm.isConfirmed) {#}
-    {#                            add_section()#}
-    {#                        }#}
-    {##}
-    {#                    })#}
-    {#                } else if (isBlock === 'True') {#}
-    {#                    Swal.fire({#}
-    {#                        allowOutsideClick: false,#}
-    {#                        showCloseButton: true,#}
-    {#                        showCancelButton: false,#}
-    {#                        showConfirmButton: true,#}
-    {#                        showLoaderOnConfirm: true,#}
-    {#                        confirmButtonText: "To'lov qilish",#}
-    {#cancelButtonText: 'Bekor qilish',#}
-    {#                        icon: 'error',#}
-    {#                        title: 'Ariza aktivlashtirilmagan!',#}
-    {#                        text: `Arizani aktivlashitirish uchun ${activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,#}
-    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-    {#                    }).then(function (confirm) {#}
-    {#                        if (confirm.isConfirmed) {#}
-    {#                            select_payment()#}
-    {##}
-    {#                        }#}
-    {#                    })#}
-    {#                } else if (isBlock === 'False' && proccess === '0') {#}
-    {#                    Swal.fire({#}
-    {#                        allowOutsideClick: true,#}
-    {#                        showCloseButton: true,#}
-    {#                        showCancelButton: false,#}
-    {#                        showConfirmButton: true,#}
-    {#                        showLoaderOnConfirm: true,#}
-    {#                        confirmButtonText: "Jo'natish",#}
-    {#cancelButtonText: 'Bekor qilish',#}
-    {#                        icon: 'error',#}
-    {#                        title: `Ariza ${'{{ application.section.title }}'}ga jo'natilmagan!`,#}
-    {#                        text: `Ariza to'liq to'ldirilgan lekin ${'{{ application.section.title }}'}ga jo'natilmagan!`,#}
-    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-    {#                    }).then(function (confirm) {#}
-    {#                        if (confirm.isConfirmed) {#}
-    {#                            send_application()#}
-    {#                        }#}
-    {##}
-    {#                    })#}
-    {#                }#}
-    {#            }#}
-    {##}
-    {#            function send_application() {#}
-    {#                Swal.fire({#}
-    {#                    text: `Jo'natiladigan YHXB RIB bo'limi: "${'{{ application.section.title }}'}"`,#}
-    {#                    title: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",#}
-    {#                    icon: 'warning',#}
-    {#                    showCancelButton: true,#}
-    {#                    confirmButtonColor: '#3085d6',#}
-    {#                    cancelButtonColor: '#d33',#}
-    {#                    confirmButtonText: 'Ha, albatta',#}
-    {#                    cancelButtonText: 'Bilmadim',#}
-    {#                }).then((result) => {#}
-    {#                    if (result.isConfirmed) {#}
-    {##}
-    {#                        $.ajax({#}
-    {#                            type: "POST",#}
-    {#                            url: '{% url "application:draft_to_shipped" application_id=12345 %}'.replace(/12345/, applicationId.toString()),#}
-    {#                            success: function (res) {#}
-    {#                                var textHeader = `<p style="margin-bottom: 0px; text-align: left">Ariza ${'{{ application.section.title }}'}ga muvaffaqiyatli jo\'natildi, Ariza ko'rib chiqilishi uchun quyidagi hujjatlarni ${'{{ application.section.region.title }}'}, ${'{{ application.section.located_district.title }}'}, ${'{{ application.section.quarter.title }}'}, ${'{{ application.section.street }}'}ga olib borib topshirishingiz talab etiladi!</p>`#}
-    {#                                var text = '<ol>';#}
-    {#                                for (const x of res) {#}
-    {#                                    text = text + `<br><li style="text-align: left">${x.title}</li>`;#}
-    {#                                }#}
-    {#                                text = text + '</ol>';#}
-    {#                                text = textHeader + text#}
-    {#                                var textFooter = "<p style='text-align: left'>Ushbu hujjatlar topshirilgandan so'ng ariza RIB xodimlari tomonidan o'rganib chiqilib, yakuniy xulosa sizga sms tarzida jo'natiladi!</p>"#}
-    {#                                text = text + textFooter#}
-    {##}
-    {#                                const wrapper = document.createElement('div');#}
-    {#                                wrapper.innerHTML = text;#}
-    {##}
-    {#                                Swal.fire({#}
-    {#                                    title: 'Jo\'natildi!',#}
-    {#                                    html: wrapper,#}
-    {#                                    icon: 'success',#}
-    {#                                    confirmButtonText: 'Tushunarli',#}
-    {#                                }).then(function () {#}
-    {#                                    refresh_with_time()#}
-    {#                                })#}
-    {#                            },#}
-    {#                            error: function (err) {#}
-    {#                                console.log(err)#}
-    {#                                Swal.fire(#}
-    {#                                    'Xatolik!',#}
-    {#                                    `${err.responseJSON['error']}`,#}
-    {#                                    'error',#}
-    {#                                ).then(function () {#}
-    {#                                    location.reload()#}
-    {#                                })#}
-    {#                            }#}
-    {#                        })#}
-    {##}
-    {##}
-    {#                    }#}
-    {#                })#}
-    {#            }#}
-    {##}
-    {#            $('#draft_to_shipped').on('click', function (e) {#}
-    {#                send_application()#}
-    {##}
-    {#            })#}
-    {##}
-    {#            function select_payment() {#}
-    {#                Swal.fire({#}
-    {#                    allowOutsideClick: false,#}
-    {#                    showCloseButton: true,#}
-    {#                    showCancelButton: false,#}
-    {#                    showConfirmButton: false,#}
-    {#                    showLoaderOnConfirm: true,#}
-    {#                    title: 'To\'lov turini tanlang!',#}
-    {#                    html: "<div class='row'>" +#}
-    {#                        "<div style='border: 1px solid #fff' class='col-6'><a href='#' id='click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +#}
-    {#                        "<div class='col-6'><a href='#' id='payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +#}
-    {#                        "</div>",#}
-    {#                })#}
-    {#            }#}
-    {##}
-    {#            $('body').on('click', '#click, #payme', function (e) {#}
-    {##}
-    {#                if ($(e.currentTarget).attr('id') === 'click') {#}
-    {#                    $('#load').show()#}
-    {#alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')#}
-    {#                    window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
-    {#                } else if ($(e.currentTarget).attr('id') === 'payme') {#}
-    {#                    $('#load').show()#}
-    {#                    window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
-    {#                }#}
-    {#            })#}
-    {##}
-    {#            $('.application_render_pdf').on('click', function () {#}
-    {#                var applicationId = $(this).data('application')#}
-    {#                window.location.href = "{% url 'application:application_pdf' id=12345 %}".replace(/12345/, applicationId.toString());#}
-    {#            })#}
-    {##}
-    {#            $('.payment_render_pdf').on('click', function () {#}
-    {#                Swal.fire({#}
-    {#                    title: `Ogohlantirish`,#}
-    {#                    text: "To'lov kvitansiyalari hozir yuklab olinadi. Ushbu kvitansiyalarni istalgan bank orqali to'lashingiz mumkin. Faqatgina muhr(pechat) urdirishni unutmang. Aks holda YHXB bo'limi qabul qilmaydi!",#}
-    {#                    icon: 'warning',#}
-    {#                    showCancelButton: false,#}
-    {#                    allowOutsideClick: false,#}
-    {#                    confirmButtonColor: '#3085d6',#}
-    {#                    confirmButtonText: 'Tushunarli',#}
-    {#                }).then((result) => {#}
-    {#                    var element = document.getElementById('render_div'),#}
-    {#                        filename = `To'lov`#}
-    {#                    html_to_pdf(element, filename)#}
-    {#                })#}
-    {#            })#}
-    {#            calc_total()#}
-    {##}
-    {#            function calc_total() {#}
-    {#                if (!String.prototype.trim) {#}
-    {#                    String.prototype.trim = function () {#}
-    {#                        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');#}
-    {#                    };#}
-    {#                }#}
-    {##}
-    {#                var sum = 0;#}
-    {#                $(".state_payment").each(function () {#}
-    {#                    sum += parseFloat($(this).text().split('.')[0].replace(/[\s+,.]/g, ''));#}
-    {#                });#}
-    {#                $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))#}
-    {#            }#}
-    {##}
-    {##}
-    {#            $('.payment_checkbox').on('change', function () {#}
-    {#                let modify#}
-    {#                if ($(this).prop('checked')) {#}
-    {#                    modify = true#}
-    {#                } else {#}
-    {#                    modify = false#}
-    {#                }#}
-    {##}
-    {#                $.ajax({#}
-    {#                    type: 'POST',#}
-    {#                    url: '{% url "application:modify_payment_checkbox" %}',#}
-    {#                    data: {#}
-    {#                        'modify': modify,#}
-    {#                        'payment': $(this).data('payment'),#}
-    {#                    },#}
-    {#                    success: function (res) {#}
-    {#                        if (res === 'True') {#}
-    {#                            edit_toast()#}
-    {#                        } else {#}
-    {#                            errorFunction()#}
-    {#                        }#}
-    {#                    },#}
-    {#                    error: function (err) {#}
-    {#                        errorFunction()#}
-    {#                    }#}
-    {#                })#}
-    {#            })#}
-    {##}
-    {#            function add_section() {#}
-    {#                Swal.fire({#}
-    {#                    title: 'Viloyatni tanlang',#}
-    {#                    confirmButtonText: 'Tanlash',#}
-    {#                    input: 'select',#}
-    {#                    inputOptions: get_regions(url = '{% url 'user:get_regions_list' %}'),#}
-    {#                    /* inputValidator: function (value) {#}
-    {#                         return new Promise(function (resolve, reject) {#}
-    {#                             if (value !== '') {#}
-    {#                                 resolve();#}
-    {#                             } else {#}
-    {#                                 resolve('You need to select a Tier');#}
-    {#                             }#}
-    {#                         });#}
-    {#                     } */#}
-    {#                }).then(function (confirm) {#}
-    {#                    console.log(confirm)#}
-    {#                    if (confirm.isConfirmed) {#}
-    {##}
-    {#                        Swal.fire({#}
-    {#                            title: 'YHXB RIB bo\'limini tanlang',#}
-    {#                            confirmButtonText: 'Tanlash',#}
-    {#                            input: 'select',#}
-    {#                            inputOptions: get_sections(url = "{% url 'user:get_sections_list' region_id=12345 %}".replace(/12345/, confirm.value.toString())),#}
-    {#                        }).then(function (confirm) {#}
-    {#                            if (confirm.isConfirmed) {#}
-    {#                                $.ajax({#}
-    {#                                    type: "POST",#}
-    {#                                    url: "{% url 'application:save_application_section' %}",#}
-    {#                                    data: {#}
-    {#                                        'application': applicationId,#}
-    {#                                        'section': confirm.value,#}
-    {#                                    },#}
-    {#                                    success: function (res) {#}
-    {#                                        console.log(res)#}
-    {#                                        location.reload()#}
-    {#                                    },#}
-    {#                                    error: function (err) {#}
-    {#                                        console.log(err)#}
-    {#                                    },#}
-    {#                                    failure: function (err) {#}
-    {#                                        console.log(err)#}
-    {#                                    }#}
-    {##}
-    {#                                })#}
-    {#                            }#}
-    {##}
-    {#                        })#}
-    {#                    }#}
-    {#                })#}
-    {#            }#}
-    {##}
-    {#            $('#add_section').on('click', function (e) {#}
-    {#                add_section()#}
-    {#            })#}
-    {##}
-    {#            $('.application-state-duty-payment').on('click', function () {#}
-    {#                var paymentId = $(this).data('payment')#}
-    {#                const {value: formValues} = Swal.fire({#}
-    {#                    allowOutsideClick: false,#}
-    {#                    showCancelButton: true,#}
-    {#                    showLoaderOnConfirm: true,#}
-    {#                    showClass: {#}
-    {#                        popup: 'animate__animated animate__fadeInDown'#}
-    {#                    },#}
-    {#                    hideClass: {#}
-    {#                        popup: 'animate__animated animate__fadeOutUp'#}
-    {#                    },#}
-    {#                    confirmButtonText: 'Saqlash',#}
-    {#                    cancelButtonText: 'Bekor qilish',#}
-    {#                    title: 'Naqd pul to\'lovi',#}
-    {#                    html:#}
-    {#                        '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Moderatorning maxfiy raqamini kiriting</label>' +#}
-    {#                        '<input style="margin-top: 4px" id="add_cash" class="form-control">',#}
-    {#                    focusConfirm: false,#}
-    {#                    preConfirm: () => {#}
-    {#                        return [#}
-    {#                            document.getElementById('add_cash').value,#}
-    {#                        ]#}
-    {#                    },#}
-    {#                }).then(function (confirm) {#}
-    {#                    if (confirm.isConfirmed) {#}
-    {#                        var secret_key = confirm.value[0]#}
-    {#                        if (secret_key !== '') {#}
-    {##}
-    {#                            $.ajax({#}
-    {#                                type: 'POST',#}
-    {#                                url: "{% url 'application:application_cash_by_moderator' %}",#}
-    {#                                data: {#}
-    {#                                    secret_key: secret_key,  // moderator secret_key#}
-    {#                                    application: '{{ application.id }}',#}
-    {#                                    type: 1,  // application state duty payment type#}
-    {#                                    payment: paymentId,#}
-    {#                                },#}
-    {#                                statusCode: {#}
-    {#                                    200: function (response) {#}
-    {#                                        setTimeout(function () {#}
-    {#                                            window.location.reload()#}
-    {#                                        }, 3000)#}
-    {#                                        success_toast()#}
-    {##}
-    {#                                    },#}
-    {#                                    404: function (error) {#}
-    {#                                        error_toast()#}
-    {#                                    },#}
-    {#                                    409: function () {#}
-    {#                                        const Toast = Swal.mixin({#}
-    {#                                            toast: true,#}
-    {#                                            position: 'top-end',#}
-    {#                                            background: '#f5d696',#}
-    {#                                            showConfirmButton: false,#}
-    {#                                            timer: 5000,#}
-    {#                                            timerProgressBar: false,#}
-    {#                                            didOpen: (toast) => {#}
-    {#                                                toast.addEventListener('mouseenter', Swal.stopTimer)#}
-    {#                                                toast.addEventListener('mouseleave', Swal.resumeTimer)#}
-    {#                                            }#}
-    {#                                        })#}
-    {#                                        Toast.fire({#}
-    {#                                            icon: 'warning',#}
-    {#                                            title: `Arizangiz to'lovlari allaqachon amalga oshirilgan!`#}
-    {#                                        })#}
-    {#                                    }#}
-    {#                                },#}
-    {#                            })#}
-    {##}
-    {#                        }#}
-    {##}
-    {##}
-    {#                    } else {#}
-    {#                        error_toast()#}
-    {#                    }#}
-    {##}
-    {##}
-    {#                })#}
-    {#            })#}
-    {##}
-    {#            $('.application-activation-payment').on('click', function () {#}
-    {#                const {value: formValues} = Swal.fire({#}
-    {#                    allowOutsideClick: false,#}
-    {#                    showCancelButton: true,#}
-    {#                    showLoaderOnConfirm: true,#}
-    {#                    showClass: {#}
-    {#                        popup: 'animate__animated animate__fadeInDown'#}
-    {#                    },#}
-    {#                    hideClass: {#}
-    {#                        popup: 'animate__animated animate__fadeOutUp'#}
-    {#                    },#}
-    {#                    confirmButtonText: 'Saqlash',#}
-    {#                    cancelButtonText: 'Bekor qilish',#}
-    {#                    title: 'Naqd pul to\'lovi',#}
-    {#                    html:#}
-    {#                        '<label style="float: left; margin-bottom: 0" class="label_required" for="add_color">Moderatorning maxfiy raqamini kiriting</label>' +#}
-    {#                        '<input style="margin-top: 4px" id="add_cash" class="form-control">',#}
-    {#                    focusConfirm: false,#}
-    {#                    preConfirm: () => {#}
-    {#                        return [#}
-    {#                            document.getElementById('add_cash').value,#}
-    {#                        ]#}
-    {#                    },#}
-    {#                }).then(function (confirm) {#}
-    {#                    if (confirm.isConfirmed) {#}
-    {#                        var secret_key = confirm.value[0]#}
-    {#                        if (secret_key !== '') {#}
-    {##}
-    {#                            $.ajax({#}
-    {#                                type: 'POST',#}
-    {#                                url: "{% url 'application:application_cash_by_moderator' %}",#}
-    {#                                data: {#}
-    {#                                    secret_key: secret_key,  // moderator secret_key#}
-    {#                                    application: '{{ application.id }}',#}
-    {#                                    type: 0,  // application state duty payment type#}
-    {#                                },#}
-    {#                                statusCode: {#}
-    {#                                    200: function (response) {#}
-    {#                                        setTimeout(function () {#}
-    {#                                            window.location.reload()#}
-    {#                                        }, 3000)#}
-    {#                                        success_toast()#}
-    {##}
-    {#                                    },#}
-    {#                                    404: function (error) {#}
-    {#                                        error_toast()#}
-    {#                                    },#}
-    {##}
-    {#                                    409: function () {#}
-    {#                                        const Toast = Swal.mixin({#}
-    {#                                            toast: true,#}
-    {#                                            position: 'top-end',#}
-    {#                                            background: '#f5d696',#}
-    {#                                            showConfirmButton: false,#}
-    {#                                            timer: 5000,#}
-    {#                                            timerProgressBar: false,#}
-    {#                                            didOpen: (toast) => {#}
-    {#                                                toast.addEventListener('mouseenter', Swal.stopTimer)#}
-    {#                                                toast.addEventListener('mouseleave', Swal.resumeTimer)#}
-    {#                                            }#}
-    {#                                        })#}
-    {#                                        Toast.fire({#}
-    {#                                            icon: 'warning',#}
-    {#                                            title: `Arizangiz allaqachon aktivlashtiilgan!`#}
-    {#                                        })#}
-    {#                                    }#}
-    {#                                },#}
-    {#                            })#}
-    {##}
-    {#                        }#}
-    {##}
-    {##}
-    {#                    } else {#}
-    {#                        error_toast()#}
-    {#                    }#}
-    {##}
-    {##}
-    {#                })#}
-    {#            })#}
-    {#        })#}
-    {#    </script>#}
 {% endblock js %}

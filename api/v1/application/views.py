@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 from api.v1 import permissions
 from api.v1.application import serializers
+from api.v1.service.serializers import StateDutyPercentDetailSerializer, StateDutyScoreDetailSerializer
 from api.v1.user.serializers import (CreateAccountStatementCarSerializer, CreateContractOfSaleCarSerializer,
                                      CreateGiftAgreementCarSerializer, CreateReplaceTpCarSerializer,
                                      CreateInheritanceAgreementCarSerializer, CreateReplaceNumberAndTpCarSerializer)
@@ -20,9 +21,11 @@ from application.models import (
     Application, LEGAL_PERSON, DRAFT, ApplicationDocument, SHIPPED, DocumentForPolice
 )
 from application.serializers import DocumentForPoliceSerializer
+from application.templatetags.applications_tags import get_payment_score
+from application.utils import filter_state_duty_percents
 from reception.api import SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
 from reception.telegram_bot import send_message_to_developer
-from service.models import (Service, ExampleDocument, AmountBaseCalculation)
+from service.models import (Service, ExampleDocument, AmountBaseCalculation, StateDutyPercent)
 from user.models import Section, Car, CarModel, CHECKER, User
 from user.utils import render_to_pdf
 
@@ -707,6 +710,22 @@ class SendApplicationToSection(generics.ListAPIView):
         except Exception as e:
             print(e)
             return Response("Xatolik yuz berdi!", status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetPaymentPercents(APIView):
+    def get(self, request, *args, **kwargs):
+        application = Application.objects.get(id=kwargs.get('pk'))
+        percents = filter_state_duty_percents(application)
+        serializer = serializers.ApplicationPaymentStateDutyPercentSerializer(percents, many=True,
+                                                                              context={'application': application})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetPaymentScore(APIView):
+    def get(self, request, *args, **kwargs):
+        score = get_payment_score(kwargs.get('application_id'), kwargs.get('percent_id'))
+        serializer = StateDutyScoreDetailSerializer(score)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ApplicationDetail(generics.RetrieveAPIView):
