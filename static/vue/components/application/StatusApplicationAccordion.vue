@@ -1,6 +1,6 @@
 <template>
     <accordion-item
-        :uid="5"
+        :uid="6"
         v-model="isOpen"
     >
         <template v-slot:title>
