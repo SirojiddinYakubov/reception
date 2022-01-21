@@ -121,12 +121,12 @@
             data: () => ({
                 application: null,
 
-                isOpenAboutAccordion: false,
+                isOpenAboutAccordion: true,
                 isOpenPaymentAccordion: false,
                 isOpenApplicantAccordion: false,
                 isOpenCarAccordion: false,
                 isOpenDocumentAccordion: false,
-                isOpenStatusAccordion: true
+                isOpenStatusAccordion: false
             }),
             components: {
                 'About': httpVueLoader('/static/vue/components/application/AboutApplicationAccordion.vue'),
@@ -139,7 +139,7 @@
             created() {
                 let url = document.URL
 
-                var applicationId = url.match(/application-detail-vue\/(\d+)/)[1]
+                var applicationId = url.match(/application-detail\/(\d+)/)[1]
 
                 if (applicationId) {
                     this.getApplicationDetail(applicationId)
