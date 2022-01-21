@@ -105,36 +105,9 @@
                 </tr>
             {% endfor %}
             </tbody>
-            <tfoot>
-            <tr>
-                <td></td>
-                <td><b>Jami</b></td>
-                <td><b id="total_state_payments"></b> so'm</td>
-                <td></td>
-            </tr>
-            </tfoot>
         </table>
     </div>
 </div>
 </body>
 <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
-<script>
-    $(document).ready(function () {
-        calc_total()
-
-        function calc_total() {
-            if (!String.prototype.trim) {
-                String.prototype.trim = function () {
-                    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-                };
-            }
-
-            var sum = 0;
-            $(".state_payment").each(function () {
-                sum += parseFloat($(this).text().replace(/[\s+,.]/g, ''));
-            });
-            $('#total_state_payments').text(sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
-        }
-    })
-</script>
 </html>
