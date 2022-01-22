@@ -168,6 +168,10 @@ class ApplicationDetailFullSerializer(serializers.ModelSerializer):
 
         document_polices = DocumentForPolice.objects.filter(is_active=True, service=instance.service)
         context['requireDocuments'] = DocumentForPoliceSerializer(document_polices, many=True).data
+
+        if AmountBaseCalculation.objects.filter(is_active=True):
+            activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+            context['activation_pay'] = activation_pay
         return context
 
 class ApplicationSectionUpdateSerializer(serializers.ModelSerializer):
