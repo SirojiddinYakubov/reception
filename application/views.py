@@ -86,21 +86,21 @@ class ApplicationDetail(AllowedRolesMixin, DetailView):
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
                      MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
-    def get(self, request, *args, **kwargs):
-        application = get_object_or_404(Application, id=self.kwargs['id'])
-
-        if request.user.role == USER:
-            if application.created_user == request.user:
-                return super().get(request, *args, **kwargs)
-            return redirect(reverse_lazy('error_403'))
-        elif request.user.role == CHECKER:
-            return super().get(request, *args, **kwargs)
-        elif request.user.role == APP_CREATOR:
-            if request.user == application.created_user:
-                return super().get(request, *args, **kwargs)
-            return redirect(reverse_lazy('error_403'))
-        elif request.user.role == MODERATOR:
-            return super().get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     application = get_object_or_404(Application, id=self.kwargs['id'])
+    #
+    #     if request.user.role == USER:
+    #         if application.created_user == request.user:
+    #             return super().get(request, *args, **kwargs)
+    #         return redirect(reverse_lazy('error_403'))
+    #     elif request.user.role == CHECKER:
+    #         return super().get(request, *args, **kwargs)
+    #     elif request.user.role == APP_CREATOR:
+    #         if request.user == application.created_user:
+    #             return super().get(request, *args, **kwargs)
+    #         return redirect(reverse_lazy('error_403'))
+    #     elif request.user.role == MODERATOR:
+    #         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs['id'])
