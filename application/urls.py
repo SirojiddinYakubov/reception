@@ -9,10 +9,10 @@ urlpatterns = [
     path('applications-list/', ApplicationsList.as_view(), name='applications_list'),
 
     # path('application-detail/<int:id>/', application_detail, name='application_detail2'),
-    # path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),
+    path('application-detail/<int:id>/', ApplicationDetail.as_view(), name='application_detail'),
 
-    path('application-detail/<int:id>/',
-         TemplateView.as_view(template_name='application/application_detail_vue.html'), name='application_detail'),
+    # path('application-detail/<int:id>/',
+    #      TemplateView.as_view(template_name='application/application_detail_vue.html'), name='application_detail'),
 
     path('application-pdf/<int:id>/', ApplicationPdf.as_view(), name='application_pdf'),
     path('application-pay-status/<int:id>/', ApplicationPayStatus.as_view(), name='application_pay_status'),
