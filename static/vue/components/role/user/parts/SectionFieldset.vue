@@ -97,7 +97,7 @@ module.exports = {
             try {
                 await axios.patch(`/api/v1/application/save/application/section/${this.application.id}/`, {
                         section: id,
-                        proccess: 1
+                        process: 0
                     }
                 ).then((res) => {
                     success_toast()
