@@ -16,6 +16,7 @@
                             <td>
                                 <b v-if="!application.section && application.proccess !== 1" style="color: red">Ariza
                                     jo'natiladigan YXHB bo'limi tanlanmagan!</b>
+                                <b v-else-if="application.is_block">Arizani aktivlashtirish</b>
                                 <b v-else>Ariza {{ application.section.title }}ga jo'natilgan!</b>
                             </td>
                         </tr>
