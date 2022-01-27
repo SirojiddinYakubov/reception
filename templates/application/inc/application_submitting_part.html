@@ -30,29 +30,53 @@
                 <td>{{ application.organization.address_of_garage }}</td>
             </tr>
         {% else %}
-            <tr>
-                <th scope="row">Familiya:</th>
-                <td>{{ application.created_user.last_name }}</td>
-            </tr>
+            {% if application.applicant %}
+                <tr>
+                    <th scope="row">Familiya:</th>
+                    <td>{{ application.applicant.last_name }}</td>
+                </tr>
 
-            <tr>
-                <th scope="row">Ism:</th>
-                <td>{{ application.created_user.first_name }}</td>
-            </tr>
+                <tr>
+                    <th scope="row">Ism:</th>
+                    <td>{{ application.applicant.first_name }}</td>
+                </tr>
 
-            <tr>
-                <th scope="row">Otasining ismi:</th>
-                <td>{{ application.created_user.middle_name }}</td>
-            </tr>
+                <tr>
+                    <th scope="row">Otasining ismi:</th>
+                    <td>{{ application.applicant.middle_name }}</td>
+                </tr>
 
-            <tr>
-                <th scope="row">Passport:</th>
-                <td>{% if application.created_user.passport_seriya %}
-                    {{ application.created_user.passport_seriya }}{% endif %}
-                    {% if application.created_user.passport_number %}
-                        {{ application.created_user.passport_number }}{% endif %}</td>
-            </tr>
+                <tr>
+                    <th scope="row">Passport:</th>
+                    <td>{% if application.applicant.passport_seriya %}
+                        {{ application.applicant.passport_seriya }}{% endif %}
+                        {% if application.applicant.passport_number %}
+                            {{ application.applicant.passport_number }}{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th scope="row">Familiya:</th>
+                    <td>{{ application.created_user.last_name }}</td>
+                </tr>
 
+                <tr>
+                    <th scope="row">Ism:</th>
+                    <td>{{ application.created_user.first_name }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Otasining ismi:</th>
+                    <td>{{ application.created_user.middle_name }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Passport:</th>
+                    <td>{% if application.created_user.passport_seriya %}
+                        {{ application.created_user.passport_seriya }}{% endif %}
+                        {% if application.created_user.passport_number %}
+                            {{ application.created_user.passport_number }}{% endif %}</td>
+                </tr>
+            {% endif %}
         {% endif %}
         </tbody>
     </table>

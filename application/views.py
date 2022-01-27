@@ -133,7 +133,7 @@ class ApplicationPdf(AllowedRolesMixin, View):
     template_name = 'application/application_detail_pdf.html'
     pk_url_kwarg = 'id'
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get(self, request, *args, **kwargs):
         application = get_object_or_404(Application, id=self.kwargs[self.pk_url_kwarg])
