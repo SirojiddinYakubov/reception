@@ -139,13 +139,13 @@ def get_payment_score(application_id, percent_id):
     try:
         from service.models import FINE, REGISTRATION, RE_REGISTRATION
         section = Section.objects.filter(id=application.section.id).last()
-        created_user = User.objects.get(id=application.created_user.id)
+        applicant = application.created_user if application.applicant else application.created_user
         percent = StateDutyPercent.objects.get(id=percent_id)
 
         if application.person_type == LEGAL_PERSON:
             district = application.organization.legal_address_district
         else:
-            district = created_user.district
+            district = applicant.district
 
         if percent.state_duty == FINE:
             if percent.contract_fine:
