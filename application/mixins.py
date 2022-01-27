@@ -30,7 +30,7 @@ class ApplicationCustomMixin(ListView):
                                  # 'is_payment',
                                  # 'car__is_confirm',
                                  # 'car__is_technical_confirm',
-                                 'car__is_replace_number'
+                                 'car__is_replace_number', 'applicant'
                                  ]
 
     # def __init__(self, *args, **kwargs):
@@ -204,6 +204,12 @@ class ApplicationCustomMixin(ListView):
                 reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
                 application.created_user.last_name, application.created_user.first_name,
                 application.created_user.middle_name)
+            item['applicant'] = "<a href='{0}'>{1}</a>".format(
+                reverse('user:view_organization_data', kwargs={'id': application.organization.id}),
+                application.organization.title) if application.person_type == LEGAL_PERSON and application.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
+                reverse('user:view_personal_data', kwargs={'id': application.applicant.id}),
+                application.applicant.last_name, application.applicant.first_name,
+                application.applicant.middle_name)
             list_data.append(item)
 
         context = {
