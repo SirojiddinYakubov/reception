@@ -183,13 +183,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                              <div class="alert-danger text-center"><p>Viloyat, Tuman, Mahalla va manzilni propiska bo'yicha kiriting!</p>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-12 col-xl-6 region">
                                                     <label class="label_required not_copy" for="region">Viloyat</label>
                                                     <select name="region" class="form-control select2" id="region"
                                                             required>
-                                                        <option value="">--Viloyatni tanlang--</option>
+                                                        <option value="" >--Viloyatni tanlang--</option>
                                                         {% for region in regions %}
                                                             <option value="{{ region.pk }}">{{ region.title }}</option>
                                                         {% endfor %}
@@ -200,7 +201,7 @@
                                                            for="district">Tuman/Shahar</label>
                                                     <select name="district" class="form-control select2" id="district"
                                                             required>
-                                                        <option value="">--Tumanni tanlang--</option>
+                                                        <option value="" >--Tumanni tanlang--</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -379,8 +380,8 @@
             }
         })
 
-        {#$('#fieldset1').hide()#}
-        {#$('#fieldset2').show()#}
+        $('#fieldset1').hide()
+        $('#fieldset2').show()
 
         var phone_mask = false
 
