@@ -143,12 +143,12 @@ module.exports = {
     },
     computed: {
         isOpen: {
-          get() {
-              return this.open
-          },
-          set(val) {
-              this.$emit('change', val)
-          }
+            get() {
+                return this.open
+            },
+            set(val) {
+                this.$emit('change', val)
+            }
         },
         full_name() {
             return this.application.created_user.last_name + ' ' + this.application.created_user.first_name + ' ' + this.application.created_user.middle_name

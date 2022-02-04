@@ -271,7 +271,8 @@ def create_application_doc(request, filename):
                    car=car,
                    made_year=car.made_year.strftime("%d.%m.%Y"),
                    user=application.applicant if application.applicant else application.created_user,
-                   birthday=application.applicant.birthday.strftime('%d.%m.%Y') if application.applicant else application.created_user.birthday.strftime('%d.%m.%Y'),
+                   birthday=application.applicant.birthday.strftime(
+                       '%d.%m.%Y') if application.applicant else application.created_user.birthday.strftime('%d.%m.%Y'),
                    given_number=car.given_number,
                    old_number=car.old_number,
                    old_technical_passport=car.old_technical_passport,
@@ -516,6 +517,32 @@ class PaymentsList(AllowedRolesMixin, ListView):
     allowed_roles = [USER, CHECKER, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER, MODERATOR, ADMINISTRATOR,
                      SUPER_ADMINISTRATOR]
 
+    def get(self, request, *args, **kwargs):
+
+        regions = Region.objects.all() #Toshkent shahri
+        for region in regions:
+            pays = PaymentForTreasury.objects.filter(status='success').filter(
+                Q(Q(application__applicant__isnull=True) & Q(application__created_user__region=region)) |
+                Q(Q(application__applicant__isnull=False) & Q(application__applicant__region=region)) |
+                Q(Q(application__person_type=1) & Q(application__organization__legal_address_region=region))
+            ).distinct().aggregate(amount=Sum('amount'))['amount']
+        # print(len(pays))
+        # for pay in pays:
+        #     amount += pay.amount
+            if pays:
+                print(region.title, "\nDavlat boji: ", pays, " so'm")
+
+
+            applications = Application.objects.filter(is_block=False).filter(
+                Q(Q(applicant__isnull=True) & Q(created_user__region=region)) |
+                Q(Q(applicant__isnull=False) & Q(applicant__region=region)) |
+                Q(Q(person_type=1) & Q(organization__legal_address_region=region))
+            )
+            if len(applications):
+                print(region.title, "\nAriza uchun: ", len(applications) * 13500, " so'm")
+            print("\n")
+        return super().get(request, *args, **kwargs)
+
     def get_template_names(self):
         role = self.request.user.role
         if role == USER:
@@ -754,4 +781,3 @@ class ApplicantsList(AllowedRolesMixin, ListView):
     model = User
     template_name = 'user/role/administrator/applicants_list.html'
     allowed_roles = [ADMINISTRATOR, SUPER_ADMINISTRATOR]
-

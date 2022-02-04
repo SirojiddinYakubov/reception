@@ -191,6 +191,7 @@ class ApplicationSectionUpdateSerializer(serializers.ModelSerializer):
         if inspectors:
             for inspector in inspectors:
                 r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
+                # r = 200
                 if not r == SUCCESS:
                     r = SendSmsWithApi(message=text, phone=inspector.phone).get()
                     if not r == SUCCESS:

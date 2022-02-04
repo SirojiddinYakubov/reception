@@ -97,8 +97,29 @@
                 ></component>
             </div>
         </div>
+        <component is="ApplicationStatusModal"
+                   v-if="isOpenApplicationStatusModal && application"
+                   :application="application"
+                   @payment-type="isOpenPaymentTypeSelectModal = true; isOpenApplicationStatusModal = false"
+                   @select-section="selectSection"
+                   @hide="isOpenApplicationStatusModal = false"
+        >
+        </component>
+
+        <component is="PaymentTypeSelectModal"
+                   v-if="isOpenPaymentTypeSelectModal && application"
+                   :application="application"
+                   @hide="isOpenPaymentTypeSelectModal = false"
+                   @select-payment="selectPayment($event)"
+        >
+        </component>
     </div>
 {% endblock content %}
+
+{% block modals %}
+
+{% endblock modals %}
+
 {% block js %}
     <script src="{% static 'assets/libs/html2pdf/html2pdf.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
@@ -110,9 +131,9 @@
     <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="{% static 'assets/libs/cryptoJS/cryptoJS.js' %}"></script>
     <!-- development version -->
-    {#    <script src="{% static 'vue/vue.dev.js' %}"></script>#}
+    <script src="{% static 'vue/vue.dev.js' %}"></script>
     <!-- production version -->
-    <script src="{% static 'vue/vue.prod.js' %}"></script>
+    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
 
     <script type="text/javascript">
         setAxiosHeader()
@@ -127,7 +148,10 @@
                 isOpenApplicantAccordion: false,
                 isOpenCarAccordion: false,
                 isOpenDocumentAccordion: false,
-                isOpenStatusAccordion: false
+                isOpenStatusAccordion: false,
+
+                isOpenApplicationStatusModal: true,
+                isOpenPaymentTypeSelectModal: false
             }),
             components: {
                 'About': httpVueLoader('/static/vue/components/application/AboutApplicationAccordion.vue'),
@@ -136,6 +160,8 @@
                 'Car': httpVueLoader('/static/vue/components/application/CarApplicationAccordion.vue'),
                 'Document': httpVueLoader('/static/vue/components/application/DocumentApplicationAccordion.vue'),
                 'Status': httpVueLoader('/static/vue/components/application/StatusApplicationAccordion.vue'),
+                'ApplicationStatusModal': httpVueLoader('/static/vue/components/application/parts/ApplicationStatusModal.vue'),
+                'PaymentTypeSelectModal': httpVueLoader('/static/vue/components/application/parts/PaymentTypeSelectModal.vue'),
             },
             created() {
                 let url = document.URL
@@ -158,157 +184,44 @@
                 },
                 async getApplicationDetail(id) {
                     this.application = await axios.get(`/api/v1/application/detail/${id}/`).then((response) => response.data)
-                    this.check_errors()
                 },
-                async check_errors() {
-                    await this.application
-                    await this.user
-                    if (this.application && this.user) {
-                        if (this.user.id === this.application.applicant.id) {
-
-                            console.log(this.application.process)
-                            console.log(this.application.is_block)
-
-                            if (this.application.process === 7 && this.application.is_block) {
-                                Swal.fire({
-                                    allowOutsideClick: false,
-                                    showCloseButton: true,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    showLoaderOnConfirm: true,
-                                    confirmButtonText: "To'lov qilish",
-                                    {#cancelButtonText: 'Bekor qilish',#}
-                                    icon: 'error',
-                                    title: 'Ariza aktivlashtirilmagan!',
-                                    text: `Arizani aktivlashitirish uchun ariza jo'natiladigan YHXB RIB bo'limini va ${this.application.activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,
-                                    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-                                }).then((confirm) => {
-                                    if (confirm.isConfirmed) {
-                                        this.select_payment()
-                                        {#window.location.href = '{% url 'paycom:create_paycom_url_via_order' %}' + `?amount=${activation_pay}&application=${applicationId}`#}
-                                    }
-                                })
-                            } else if (this.application.process === 7) {
-                                Swal.fire({
-                                    allowOutsideClick: false,
-                                    showCloseButton: true,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    showLoaderOnConfirm: true,
-                                    confirmButtonText: "Kiritish",
-                                    {#cancelButtonText: 'Bekor qilish',#}
-                                    icon: 'error',
-                                    title: 'Ariza to\'liq to\'ldirilmagan!',
-                                    text: `Arizani to'liq to'ldirish uchun ariza jo'natiladigan YHXB RIB bo'limini kiriting!`,
-                                    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-                                }).then((confirm) => {
-                                    if (confirm.isConfirmed) {
-                                        this.selectSection()
-                                    }
-
-                                })
-                            } else if (this.application.is_block) {
-                                Swal.fire({
-                                    allowOutsideClick: false,
-                                    showCloseButton: true,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    showLoaderOnConfirm: true,
-                                    confirmButtonText: "To'lov qilish",
-                                    {#cancelButtonText: 'Bekor qilish',#}
-                                    icon: 'error',
-                                    title: 'Ariza aktivlashtirilmagan!',
-                                    text: `Arizani aktivlashitirish uchun ${this.application.activation_pay} so'm to'lovni amalga oshirishingiz talab etiladi!`,
-                                    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-                                }).then((confirm) => {
-                                    if (confirm.isConfirmed) {
-                                        this.select_payment()
-                                    }
-                                })
-                            } else if (!this.application.is_block && this.application.process === 0) {
-                                Swal.fire({
-                                    allowOutsideClick: true,
-                                    showCloseButton: true,
-                                    showCancelButton: false,
-                                    showConfirmButton: true,
-                                    showLoaderOnConfirm: true,
-                                    confirmButtonText: "Jo'natish",
-                                    {#cancelButtonText: 'Bekor qilish',#}
-                                    icon: 'error',
-                                    title: `Ariza ${this.application.section.title}ga jo'natilmagan!`,
-                                    text: `Ariza to'liq to'ldirilgan lekin ${this.application.section.title}ga jo'natilmagan!`,
-                                    {#footer: '<a href="">To\'lovni keyinroq amalga oshiraman</a>'#}
-                                }).then((confirm) => {
-                                    if (confirm.isConfirmed) {
-                                        this.draftToShipped()
-                                    }
-
-                                })
-                            }
-                        }
+                selectPayment(type) {
+                    document.getElementById('load').style.display = 'block'
+                    if (type === 'click') {
+                        //click
+                        window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${this.application.activation_pay}&application=${this.application.id}`
+                    } else {
+                        //payme
+                        window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${this.application.activation_pay}&application=${this.application.id}`
                     }
                 },
-                select_payment() {
-                    Swal.fire({
-                        allowOutsideClick: false,
-                        showCloseButton: true,
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        showLoaderOnConfirm: true,
-                        title: 'To\'lov turini tanlang!',
-                        html: "<div class='row'>" +
-                            "<div style='border: 1px solid #fff' class='col-6'><a href='#' id='click'><img width='90%' src=\'{% static 'online/clickuz.png' %}\' alt='clickuz'></a></div>" +
-                            "<div class='col-6'><a href='#' id='payme'><img width='90%' src=\'{% static 'online/payme.png' %}\' alt='payme'></a></div>" +
-                            "</div>",
-                    })
-                },
-                draftToShipped() {
-                    Swal.fire({
-                        text: `Jo'natiladigan YHXB RIB bo'limi: ` + this.application.section.title,
-                        title: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ha, albatta',
-                        cancelButtonText: 'Bilmadim',
-                    }).then(async (result) => {
-                        if (result.isConfirmed) {
-                            this.requiredDocuments = await axios.post(`/api/v1/application/send-application-to-section/${this.application.id}/`)
-                                .then((response) => {
-                                    return response.data
-                                }).catch((error) => {
-                                    if (error.response) {
-                                        Swal.fire(
-                                            'Xatolik!',
-                                            `${error.response.data}`,
-                                            'error',
-                                        ).then(function () {
-                                            location.reload()
-                                        })
-                                    } else {
-                                        console.log(error)
-                                    }
-                                })
-
-                        }
-                    })
-                },
                 selectSection() {
+                    this.isOpenApplicationStatusModal = false
+
+                    let footer = `<div>
+                                        <span style='color: red'>Diqqat!</span>
+                                        Agarda viloyatlar ro'yhatida sizning viloyatingiz bo'lmasa, unda sizning viloyatingizda
+                                        E-RIB.UZ tizimi xizmat ko'rsatmaydi. Shunday bo'lishiga qaramasdan E-RIB.UZ tizimi siz
+                                        haqingizda qayg'uradi va sizga <a href="#">ushbu qulaylikni</a> yaratib beradi.
+                                  </div>`
+
                     Swal.fire({
                         title: "YXHB bo'limi joylashgan viloyatni tanlang",
                         confirmButtonText: 'Tanlash',
                         input: 'select',
                         inputOptions: this.getRegions(),
-
+                        allowOutsideClick: false,
+                        showCloseButton: true,
+                        footer: footer
                     }).then((confirm) => {
-
                         if (confirm.isConfirmed) {
                             Swal.fire({
                                 title: "Ariza jo'natiladigan YHXB bo'limini tanlang",
                                 confirmButtonText: "Jo'natish",
                                 input: 'select',
                                 inputOptions: this.getSections(confirm.value),
+                                allowOutsideClick: false,
+                                showCloseButton: true
                             }).then((confirm) => {
                                 if (confirm.isConfirmed) {
 
@@ -325,7 +238,6 @@
                                             }
                                         })
                                 }
-
                             })
                         }
                     })
@@ -358,16 +270,5 @@
                 },
             }
         })
-        $('body').on('click', '#click, #payme', function (e) {
-            if ($(e.currentTarget).attr('id') === 'click') {
-                $('#load').show()
-                {#alert('Click integratsiya jarayonida, Paymedan foydalanishingiz mumkin!')#}
-                window.location.href = '{% url 'click:create_click_order' %}' + `?amount=${vm._data.application.activation_pay}&application=${vm._data.application.id}`
-            } else if ($(e.currentTarget).attr('id') === 'payme') {
-                $('#load').show()
-                window.location.href = '{% url 'paycom:create_payme_order' %}' + `?amount=${vm._data.application.activation_pay}&application=${vm._data.application.id}`
-            }
-        })
-
     </script>
 {% endblock js %}
