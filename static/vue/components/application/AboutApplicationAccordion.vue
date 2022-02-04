@@ -36,14 +36,14 @@
                             <td>
                                 <span v-if="application.section"
                                       class="dashed_underscore"
-                                      @click="selectSection"
+                                      @click="$emit('select-section')"
                                 >
                                      {{ application.section.title }}
                                 </span>
                                 <b v-else
                                    class="dashed_underscore"
                                    style="color: red"
-                                   @click="selectSection"
+                                   @click="$emit('select-section')"
                                 >
                                     YHXB RIB bo'limini tanlang...
                                 </b>
@@ -164,42 +164,6 @@ module.exports = {
         },
     },
     methods: {
-        changeApplicationSection() {
-            alert('CHANGE')
-        },
-        draftToShipped() {
-            Swal.fire({
-                text: `Jo'natiladigan YHXB RIB bo'limi: ` + this.application.section.title,
-                title: "Arizadagi ma'lumotlar to'g'ri ekanligiga ishonchingiz komilmi?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ha, albatta',
-                cancelButtonText: 'Bilmadim',
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    this.requiredDocuments = await axios.post(`/api/v1/application/send-application-to-section/${this.application.id}/`)
-                        .then((response) => {
-                            this.isShowSuccessInstruction = true
-                            return response.data
-                        }).catch((error) => {
-                            if (error.response) {
-                                Swal.fire(
-                                    'Xatolik!',
-                                    `${error.response.data}`,
-                                    'error',
-                                ).then(function () {
-                                    location.reload()
-                                })
-                            } else {
-                                console.log(error)
-                            }
-                        })
-
-                }
-            })
-        },
         generateApplicationWord(filename) {
             let url = `/api/v1/application/generate-application-word/${filename}/`
             try {
@@ -218,68 +182,6 @@ module.exports = {
                 console.log(e)
             }
         },
-        getRegions() {
-            return new Promise((resolve, reject) => {
-                axios.get('/api/v1/user/section/exists/regions/list/').then((response) => {
-                    const regions = {}
-                    for (const x of response.data) {
-                        regions[x.id] = x.title
-                    }
-                    resolve(regions)
-                }).catch((error) => {
-                    reject(error)
-                })
-            })
-        },
-        getSections(id) {
-            return new Promise((resolve, reject) => {
-                axios.get(`/api/v1/user/region/${id}/sections/list/`).then((response) => {
-                    const sections = {}
-                    for (const x of response.data) {
-                        sections[x.id] = x.title
-                    }
-                    resolve(sections)
-                }).catch((error) => {
-                    reject(error)
-                })
-            })
-        },
-        selectSection() {
-            Swal.fire({
-                title: "YXHB bo'limi joylashgan viloyatni tanlang",
-                confirmButtonText: 'Tanlash',
-                input: 'select',
-                inputOptions: this.getRegions(),
-
-            }).then((confirm) => {
-
-                if (confirm.isConfirmed) {
-                    Swal.fire({
-                        title: "Ariza jo'natiladigan YHXB bo'limini tanlang",
-                        confirmButtonText: "Jo'natish",
-                        input: 'select',
-                        inputOptions: this.getSections(confirm.value),
-                    }).then((confirm) => {
-                        if (confirm.isConfirmed) {
-
-                            const formData = new FormData()
-                            formData.append('section', confirm.value)
-                            formData.append('process', 1)
-                            axios.patch(`/api/v1/application/save/application/section/${this.application.id}/`, formData)
-                                .then((response) => {
-                                    location.reload()
-                                })
-                                .catch((error) => {
-                                    if (error.response) {
-                                        swal_error(error.response.data)
-                                    }
-                                })
-                        }
-
-                    })
-                }
-            })
-        }
     }
 };
 </script>

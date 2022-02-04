@@ -19,10 +19,9 @@
                             <b>{{ this.application.activation_pay }} so'm</b> to'lovni amalga
                             oshirishingiz talab etiladi!</p>
                         <div class="font-16" v-if="application.section && !application.is_block">
-                            <p>Sizning arizangiz muvaffaqiyatli aktivlashtirilgan va <b>{{
-                                    application.section.title
-                                }}</b>
-                                ga jo'natilgan!</p>
+                            <p>Sizning arizangiz muvaffaqiyatli aktivlashtirilgan va
+                                <b>{{ application.section.title }}</b> ga jo'natilgan!
+                            </p>
 
                             <h5>YHXB bo'limiga olib borilishi kerak bo'lgan hujjatlar:</h5>
 
