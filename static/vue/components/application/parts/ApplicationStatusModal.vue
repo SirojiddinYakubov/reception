@@ -18,37 +18,39 @@
                             chiqishlari uchun jo'natilmagan. Ushbu arizani YHXB bo'limiga jo'natish uchun
                             <b>{{ this.application.activation_pay }} so'm</b> to'lovni amalga
                             oshirishingiz talab etiladi!</p>
-                        <p class="font-16" v-if="application.section && !application.is_block">
-                            Sizning arizangiz muvaffaqiyatli aktivlashtirilgan va <b>{{ application.section.title }}</b>
-                            ga jo'natilgan!
-                        </p>
-                        <h5>YHXB bo'limiga olib borilishi kerak bo'lgan hujjatlar:</h5>
+                        <div class="font-16" v-if="application.section && !application.is_block">
+                            <p>Sizning arizangiz muvaffaqiyatli aktivlashtirilgan va <b>{{
+                                    application.section.title
+                                }}</b>
+                                ga jo'natilgan!</p>
 
-                        <ol>
-                            <li v-for="document in application.requireDocuments"
-                                :key="document.id"
-                            >
-                                {{ document.title }}
-                            </li>
-                        </ol>
-                        <div v-if="application.section">
-                            YHXB bo'limi manzili:
-                            <div style="font-weight: bold">
+                            <h5>YHXB bo'limiga olib borilishi kerak bo'lgan hujjatlar:</h5>
+
+                            <ol>
+                                <li v-for="document in application.requireDocuments"
+                                    :key="document.id"
+                                >
+                                    {{ document.title }}
+                                </li>
+                            </ol>
+                            <div v-if="application.section">
+                                YHXB bo'limi manzili:
+                                <div style="font-weight: bold">
                                 <span v-if="application.section.region">
                                     {{ application.section.region.title }}
                                 </span>,
-                                <span v-if="application.section.located_district">
+                                    <span v-if="application.section.located_district">
                                     {{ application.section.located_district.title }}
                                 </span>,
-                                <span v-if="application.section.quarter">
+                                    <span v-if="application.section.quarter">
                                     {{ application.section.quarter.title }}
                                 </span>,
-                                <span v-if="application.section.street">
+                                    <span v-if="application.section.street">
                                     {{ application.section.street }}
                                 </span>
+                                </div>
                             </div>
                         </div>
-
                         <p v-else-if="!application.section && !application.is_block" class="font-16">Sizning arizangiz
                             muvaffaqiyatli yaratilgan va aktivlashtirilgan. Lekin siz ushbu arizani YHXB bo'limiga
                             jo'natmagansiz! Ariza jo'natiladigan YHXB bo'limi tanlang!</p>
