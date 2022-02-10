@@ -365,21 +365,24 @@ class Car(models.Model):
         return reverse_lazy('user:view_car_data', kwargs={'car_id': self.id})
 
     def save(self, *args, **kwargs):
-        if self.old_technical_passport:
-            self.old_technical_passport = self.old_technical_passport.upper()
-        if self.given_technical_passport:
-            self.given_technical_passport = self.given_technical_passport.upper()
-        if self.body_number:
-            self.body_number = self.body_number.upper()
-        if self.chassis_number:
-            self.chassis_number = self.chassis_number.upper()
-        if self.engine_number:
-            self.engine_number = self.engine_number.upper()
-        if self.old_number:
-            self.old_number = self.old_number.upper()
-        if self.given_number:
-            self.given_number = self.given_number.upper()
-        return super().save(*args, **kwargs)
+        try:
+            if self.old_technical_passport:
+                self.old_technical_passport = self.old_technical_passport.upper()
+            if self.given_technical_passport:
+                self.given_technical_passport = self.given_technical_passport.upper()
+            if self.body_number:
+                self.body_number = self.body_number.upper()
+            if self.chassis_number:
+                self.chassis_number = self.chassis_number.upper()
+            if self.engine_number:
+                self.engine_number = self.engine_number.upper()
+            if self.old_number:
+                self.old_number = self.old_number.upper()
+            if self.given_number:
+                self.given_number = self.given_number.upper()
+            return super().save(*args, **kwargs)
+        except:
+            return super().save(*args, **kwargs)
 
 
 class CarType(models.Model):

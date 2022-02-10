@@ -624,8 +624,10 @@ class GenerateApplicationWord(generics.ListAPIView):
                        fuel_types=fuel_types_string,
                        car=car,
                        made_year=car.made_year.strftime("%d.%m.%Y"),
-                       user=application.created_user,
-                       birthday=application.created_user.birthday.strftime('%d.%m.%Y'),
+                       user=application.applicant if application.applicant else application.created_user,
+                       birthday=application.applicant.birthday.strftime(
+                           '%d.%m.%Y') if application.applicant else application.created_user.birthday.strftime(
+                           '%d.%m.%Y'),
                        given_number=car.given_number,
                        old_number=car.old_number,
                        old_technical_passport=car.old_technical_passport,

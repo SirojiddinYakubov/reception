@@ -77,9 +77,11 @@ class Application(models.Model):
                                         default=timezone.now)
     canceled_date = models.DateTimeField(verbose_name=_('Rad etilgan vaqti'), null=True, blank=True)
     confirmed_date = models.DateTimeField(verbose_name=_('Tasdiqlangan vaqti'), null=True, blank=True)
-    inspector = models.ForeignKey('user.User', verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True, blank=True,
+    inspector = models.ForeignKey('user.User', verbose_name=_('Inspektor'), on_delete=models.SET_NULL, null=True,
+                                  blank=True,
                                   related_name='inspector_application')
-    applicant = models.ForeignKey('user.User', verbose_name=_('Applikant'), on_delete=models.CASCADE, null=True, blank=True,
+    applicant = models.ForeignKey('user.User', verbose_name=_('Applikant'), on_delete=models.CASCADE, null=True,
+                                  blank=True,
                                   related_name='user_applicant')
 
     class Meta:
@@ -122,6 +124,14 @@ class ApplicationDocument(BaseModel):
     example_document = models.ForeignKey(ExampleDocument, on_delete=models.SET_NULL, null=True)
     seriya = models.CharField('Seriya', max_length=50, blank=True, null=True)
     contract_date = models.DateField(verbose_name="Shartnoma tuzilgan sana", max_length=50, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        try:
+            if self.seriya:
+                self.seriya = self.seriya.upper()
+            return super().save(*args, **kwargs)
+        except:
+            return super().save(*args, **kwargs)
 
 
 class ApplicationDocumentAttachment(BaseModel):

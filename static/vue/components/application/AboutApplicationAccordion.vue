@@ -112,6 +112,7 @@
                             <td :title="application.updated_date">{{ application.updated_date | date }}</td>
                         </tr>
                         </tbody>
+
                     </table>
                 </div>
             </template>
