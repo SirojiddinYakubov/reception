@@ -38,7 +38,7 @@
             <div class="row mb-3">
                 <label
                     class="not_copy col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-form-label text-start label_required"
-                    for="contract_date">Shartnoma tuzilgan sana</label>
+                    for="contract_date">Kredit shartnomasi tuzilgan sana</label>
                 <div class="col-12 col-xl-8 col-lg-8 col-md-8 col-sm-8">
                     <input
                         type="date"

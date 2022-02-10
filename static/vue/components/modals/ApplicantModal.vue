@@ -86,11 +86,6 @@
                                         class="text-danger w-100" style="text-align: start">
                                         Familiya kiritilmagan!
                                     </div>
-                                    <div
-                                        v-if="$v.newApplicantForm.last_name.$dirty && $v.newApplicantForm.last_name.required && !$v.newApplicantForm.last_name.alpha"
-                                        class="text-danger w-100" style="text-align: start">
-                                        Faqat harf kiriting!
-                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -108,11 +103,6 @@
                                         class="text-danger w-100" style="text-align: start">
                                         Ism kiritilmagan!
                                     </div>
-                                    <div
-                                        v-if="$v.newApplicantForm.first_name.$dirty && $v.newApplicantForm.first_name.required && !$v.newApplicantForm.first_name.alpha"
-                                        class="text-danger w-100" style="text-align: start">
-                                        Faqat harf kiriting!
-                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -129,11 +119,6 @@
                                         v-if="$v.newApplicantForm.middle_name.$dirty && !$v.newApplicantForm.middle_name.required"
                                         class="text-danger w-100" style="text-align: start">
                                         Otasining ismi kiritilmagan!
-                                    </div>
-                                    <div
-                                        v-if="$v.newApplicantForm.middle_name.$dirty && $v.newApplicantForm.middle_name.required && !$v.newApplicantForm.middle_name.alpha"
-                                        class="text-danger w-100" style="text-align: start">
-                                        Faqat harf kiriting!
                                     </div>
                                 </div>
                             </div>
@@ -375,15 +360,12 @@ module.exports = {
             },
             last_name: {
                 required,
-                alpha
             },
             first_name: {
                 required,
-                alpha
             },
             middle_name: {
                 required,
-                alpha
             },
             birthday: {
                 required,
