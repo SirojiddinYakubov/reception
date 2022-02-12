@@ -204,12 +204,13 @@ class ApplicationCustomMixin(ListView):
                 reverse('user:view_personal_data', kwargs={'id': application.created_user.id}),
                 application.created_user.last_name, application.created_user.first_name,
                 application.created_user.middle_name)
+
+            applicant = application.applicant if application.applicant else application.created_user
             item['applicant'] = "<a href='{0}'>{1}</a>".format(
                 reverse('user:view_organization_data', kwargs={'id': application.organization.id}),
                 application.organization.title) if application.person_type == LEGAL_PERSON and application.organization else "<a href='{0}'>{1} {2} {3}</a>".format(
-                reverse('user:view_personal_data', kwargs={'id': application.applicant.id}),
-                application.applicant.last_name, application.applicant.first_name,
-                application.applicant.middle_name)
+                reverse('user:view_personal_data', kwargs={'id': applicant.id}),
+                applicant.last_name, applicant.first_name, applicant.middle_name)
             list_data.append(item)
 
         context = {

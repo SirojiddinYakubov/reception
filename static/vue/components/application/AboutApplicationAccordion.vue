@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                         <tr v-if="application.document">
-                            <th scope="row">Shartnoma tuzilgan sana:</th>
+                            <th scope="row">{{ application.service.short_title }} tuzilgan sana:</th>
                             <td>
                                 <p>{{ application.document.contract_date | date }}</p>
                             </td>
@@ -152,7 +152,12 @@ module.exports = {
             }
         },
         full_name() {
-            return this.application.created_user.last_name + ' ' + this.application.created_user.first_name + ' ' + this.application.created_user.middle_name
+            if (this.application.applicant) {
+                return this.application.applicant.last_name.toUpperCase() + ' ' + this.application.applicant.first_name.toUpperCase() + ' ' + this.application.applicant.middle_name.toUpperCase()
+            } else {
+                return this.application.created_user.last_name.toUpperCase() + ' ' + this.application.created_user.first_name.toUpperCase() + ' ' + this.application.created_user.middle_name.toUpperCase()
+            }
+
         },
     },
     created() {

@@ -8,7 +8,7 @@ from application.models import Application, SHIPPED
 from click.models import Order, PAYCOM
 from reception import settings
 from service.models import AmountBaseCalculation
-from user.models import User
+from user.models import User, APP_CREATOR
 
 from .views import MerchantAPIView
 from paycom import Paycom
@@ -73,7 +73,13 @@ class CreatePaymeOrder(View):
                 application_id = int(request.GET.get('application'))
 
                 if AmountBaseCalculation.objects.filter(is_active=True):
-                    activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+                    if request.user.role == APP_CREATOR:
+                        activation_pay = int(
+                            AmountBaseCalculation.objects.filter(is_active=True).last().amount * 6 / 100)
+                    else:
+                        activation_pay = int(
+                            AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+
                     if amount != activation_pay:
                         messages.error(request,
                                        f"Payme orqali to'lov qilishda xatolik! To'lov summasi {activation_pay} so'mga teng bo'lishi kerak!")

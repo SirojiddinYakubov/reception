@@ -18,7 +18,7 @@ from reception.api import SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
 from reception.telegram_bot import send_message_to_developer
 from service.models import STATE_DUTY_TITLE, ROAD_FUND_HORSE_POWER, ROAD_FUND, AmountBaseCalculation, StateDutyPercent, \
     StateDutyScore, PaymentForTreasury
-from user.models import User, CHECKER
+from user.models import User, CHECKER, APP_CREATOR
 
 
 class CreateApplicationSerializer(serializers.ModelSerializer):
@@ -170,7 +170,11 @@ class ApplicationDetailFullSerializer(serializers.ModelSerializer):
         context['requireDocuments'] = DocumentForPoliceSerializer(document_polices, many=True).data
 
         if AmountBaseCalculation.objects.filter(is_active=True):
-            activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+            role = self.context['request'].user.role
+            if role == APP_CREATOR:
+                activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 6 / 100)
+            else:
+                activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
             context['activation_pay'] = activation_pay
         return context
 

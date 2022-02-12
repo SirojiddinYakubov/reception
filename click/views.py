@@ -13,7 +13,7 @@ from application.models import Application, SHIPPED
 from click.models import Order, CLICK
 from reception.telegram_bot import send_message_to_developer
 from service.models import AmountBaseCalculation
-from user.models import User
+from user.models import User, APP_CREATOR
 
 
 class CreateClickOrder(View):
@@ -26,7 +26,11 @@ class CreateClickOrder(View):
             application_id = int(request.GET.get('application'))
 
             if AmountBaseCalculation.objects.filter(is_active=True):
-                activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+                if request.user.role == APP_CREATOR:
+                    activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 6 / 100)
+                else:
+                    activation_pay = int(AmountBaseCalculation.objects.filter(is_active=True).last().amount * 5 / 100)
+
                 if amount != activation_pay:
                     messages.error(request,
                                    f"Click orqali to'lov qilishda xatolik! To'lov summasi {activation_pay} so'mga teng bo'lishi kerak!")

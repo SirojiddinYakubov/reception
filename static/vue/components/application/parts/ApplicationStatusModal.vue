@@ -101,9 +101,9 @@ module.exports = {
     props: ['application'],
     created() {
         if (this.application && this.application.applicant) {
-            this.applicant = this.application.applicant.last_name + ' ' + this.application.applicant.first_name + ' ' + this.application.applicant.middle_name
+            this.applicant = this.application.applicant.last_name.toUpperCase() + ' ' + this.application.applicant.first_name.toUpperCase() + ' ' + this.application.applicant.middle_name.toUpperCase()
         } else if (this.application && this.application.created_user) {
-            this.applicant = this.application.created_user.last_name + ' ' + this.application.created_user.first_name + ' ' + this.application.created_user.middle_name
+            this.applicant = this.application.created_user.last_name.toUpperCase() + ' ' + this.application.created_user.first_name.toUpperCase() + ' ' + this.application.created_user.middle_name.toUpperCase()
         }
     },
     components: {
