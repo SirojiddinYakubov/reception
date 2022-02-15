@@ -126,7 +126,7 @@ class StateDutyScore(models.Model):
 
     def __str__(self):
         if self.region:
-            return f"{self.get_state_duty_display()} : {self.region.title} : {self.score}"
+            return f"{self.get_state_duty_display()} : {self.region.title} : {self.district.title} : {self.score}"
         else:
             return f"{self.get_state_duty_display()} : {self.score}"
 
