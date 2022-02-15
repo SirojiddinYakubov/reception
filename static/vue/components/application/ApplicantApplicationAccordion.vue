@@ -46,64 +46,64 @@
                     <tbody v-else>
                     <tr>
                         <th scope="row">ID:</th>
-                        <td>{{ application.applicant.id }}</td>
+                        <td>{{ applicant.id }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Tel raqam:</th>
-                        <td>{{ application.applicant.phone }}</td>
+                        <td>{{ applicant.phone }}</td>
                     </tr>
                     <tr>
                         <th scope="row">Familiya:</th>
-                        <td>{{ application.applicant.last_name }}</td>
+                        <td>{{ applicant.last_name }}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Ism:</th>
-                        <td>{{ application.applicant.first_name }}</td>
+                        <td>{{ applicant.first_name }}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Otasining ismi:</th>
-                        <td>{{ application.applicant.middle_name }}</td>
+                        <td>{{ applicant.middle_name }}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Passport:</th>
                         <td>
-                            <span v-if="application.applicant.passport_seriya && application.applicant.passport_number">
-                                {{ application.applicant.passport_seriya }}{{ application.applicant.passport_number }}
+                            <span v-if="applicant.passport_seriya && applicant.passport_number">
+                                {{ applicant.passport_seriya }}{{ applicant.passport_number }}
                             </span>
                         </td>
                     </tr>
 
                     <tr>
                         <th scope="row">Kim tomonidan berilgan:</th>
-                        <td :title="application.applicant.issue_by_whom">{{ application.applicant.issue_by_whom }}</td>
+                        <td :title="applicant.issue_by_whom">{{ applicant.issue_by_whom }}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Tug'ilgan vaqti:</th>
-                        <td :title="application.applicant.birthday">{{ application.applicant.birthday | date }}</td>
+                        <td :title="applicant.birthday">{{ applicant.birthday | date }}</td>
                     </tr>
 
-                    <tr v-if="application.applicant.region">
+                    <tr v-if="applicant.region">
                         <th scope="row">Viloyat:</th>
-                        <td>{{ application.applicant.region.title }}</td>
+                        <td>{{ applicant.region.title }}</td>
                     </tr>
 
-                    <tr v-if="application.applicant.district">
+                    <tr v-if="applicant.district">
                         <th scope="row">Tuman/Shahar:</th>
-                        <td>{{ application.applicant.district.title }}</td>
+                        <td>{{ applicant.district.title }}</td>
                     </tr>
 
-                    <tr v-if="application.applicant.quarter">
+                    <tr v-if="applicant.quarter">
                         <th scope="row">Mahalla:</th>
-                        <td>{{ application.applicant.quarter.title }}</td>
+                        <td>{{ applicant.quarter.title }}</td>
                     </tr>
 
-                    <tr v-if="application.applicant.address">
+                    <tr v-if="applicant.address">
                         <th scope="row">Ko'cha/Qishloq:</th>
-                        <td>{{ application.applicant.address }}</td>
+                        <td>{{ applicant.address }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -122,6 +122,13 @@ module.exports = {
     props: ['application', 'open'],
     components: {
         'accordion-item': httpVueLoader('/static/vue/components/application/AccordionItem.vue'),
+    },
+    created() {
+        if (this.application && this.application.applicant) {
+            this.applicant = this.application.applicant
+        } else if (this.application && this.application.created_user) {
+            this.applicant = this.application.created_user
+        }
     },
     filters: {
         date: function (value) {

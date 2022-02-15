@@ -24,6 +24,13 @@ class ApplicationsListSerializer(serializers.ModelSerializer):
             'created_user',
             'created_date',
             'process',
-
+            'applicant'
         ]
 
+    def to_representation(self, instance):
+        context = super().to_representation(instance)
+        if instance.applicant:
+            context['applicant'] = UserShortDetailSerializer(instance.applicant).data
+        else:
+            context['applicant'] = UserShortDetailSerializer(instance.created_user).data
+        return context

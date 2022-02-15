@@ -188,8 +188,14 @@
                             <span class="badge bg-secondary font-15">{{ application.car.given_number }}</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr v-if="application.car.save_old_number">
                         <th scope="row">Transport vositasidagi DRBni saqlab qolish:</th>
+                        <td>
+                            <span v-html="$options.filters.checkbox(application.car.save_old_number)"></span>
+                        </td>
+                    </tr>
+                    <tr v-if="application.car.is_saved_number">
+                        <th scope="row">Boshqa transport vositasidagi DRBni saqlab qolish:</th>
                         <td>
                             <span v-html="$options.filters.checkbox(application.car.is_saved_number)"></span>
                         </td>

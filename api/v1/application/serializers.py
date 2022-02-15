@@ -123,7 +123,7 @@ class ApplicationDetailSerializer(serializers.ModelSerializer):
 
 class ApplicationDetailFullSerializer(serializers.ModelSerializer):
     service = ServiceDetailSerializer()
-    created_user = UserShortDetailSerializer()
+    created_user = UserDetailSerializer()
     applicant = UserDetailSerializer()
     inspector = UserShortDetailSerializer()
     car = CarDetailSerializer()
@@ -186,21 +186,9 @@ class ApplicationSectionUpdateSerializer(serializers.ModelSerializer):
             'section',
         ]
 
-    def update(self, instance, validated_data):
-        application = super(ApplicationSectionUpdateSerializer, self).update(instance, validated_data)
-
-        text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda! \nAvtomobil: {application.car}"
-        inspectors = User.objects.filter(section=application.section, role__in=[CHECKER])
-
-        if inspectors:
-            for inspector in inspectors:
-                r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
-                # r = 200
-                if not r == SUCCESS:
-                    r = SendSmsWithApi(message=text, phone=inspector.phone).get()
-                    if not r == SUCCESS:
-                        send_message_to_developer('Sms service not working!')
-        return application
+    # def update(self, instance, validated_data):
+    #
+    #     return application
 
 
 class ApplicationPaymentStateDutyPercentSerializer(serializers.ModelSerializer):

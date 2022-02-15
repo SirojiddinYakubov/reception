@@ -178,11 +178,11 @@
                         }
                     },
                     {
-                        "data": "created_user",
+                        "data": "applicant",
                         orderable: false,
                         render: function (data, type, row) {
                             if (data) {
-                                var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.created_user.id.toString())
+                                var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, row.applicant.id.toString())
                                 return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
 
                             } else {

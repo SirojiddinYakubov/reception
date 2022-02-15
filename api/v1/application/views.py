@@ -746,3 +746,8 @@ class ApplicationDetail(generics.RetrieveAPIView):
     def get_object(self):
         application = self.get_queryset().filter(id=self.kwargs.get('pk')).last()
         return application
+
+    def get(self, request, *args, **kwargs):
+        if not self.get_queryset().filter(id=self.kwargs.get('pk')):
+            return Response("Ushbu id raqamli ariza topilmadi!", status=status.HTTP_404_NOT_FOUND)
+        return super(ApplicationDetail, self).get(request, *args, **kwargs)

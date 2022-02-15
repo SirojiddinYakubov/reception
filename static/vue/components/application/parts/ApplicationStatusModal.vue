@@ -60,32 +60,31 @@
                     </div>
                     <div class="modal-footer">
                         <div v-if="application.section && application.is_block">
-                            <button type="button" class="btn btn-secondary" @click="$emit('hide')">Keyinroq to'lash
+                            <button type="button" class="btn btn-secondary m-1" @click="$emit('hide')">Keyinroq to'lash
                             </button>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" class="btn btn-primary m-1"
                                     @click="$emit('payment-type')"
                             >To'lov qilish
                             </button>
                         </div>
-
                         <div v-else-if="!application.section && !application.is_block">
                             <button type="button"
-                                    class="btn btn-secondary" @click="$emit('hide')">Keyinroq tanlash
+                                    class="btn btn-secondary m-1" @click="$emit('hide')">Keyinroq tanlash
                             </button>
                             <button type="button" @click="$emit('select-section')"
-                                    class="btn btn-primary">Tanlash
+                                    class="btn btn-primary m-1">Tanlash
                             </button>
                         </div>
                         <div v-else-if="!application.section && application.is_block">
                             <button type="button"
-                                    class="btn btn-secondary" @click="$emit('hide')">Oynani yopish
+                                    class="btn btn-secondary m-1" @click="$emit('hide')">Oynani yopish
                             </button>
                             <button type="button"
                                     @click="$emit('payment-type')"
-                                    class="btn btn-primary">To'lov qilish
+                                    class="btn btn-primary m-1">To'lov qilish
                             </button>
                             <button type="button" @click="$emit('select-section')"
-                                    class="btn btn-primary">YHXB bo'limini tanlash
+                                    class="btn btn-primary m-1">YHXB bo'limini tanlash
                             </button>
                         </div>
                     </div>
@@ -122,5 +121,8 @@ module.exports = {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
+}
+.modal-footer {
+    justify-content: space-around;
 }
 </style>

@@ -662,7 +662,8 @@ class CarDetailSerializer(serializers.ModelSerializer):
             'is_saved_number',
             'is_relative',
             'is_tranzit',
-            'is_another_car'
+            'is_another_car',
+            'save_old_number'
         ]
 
 

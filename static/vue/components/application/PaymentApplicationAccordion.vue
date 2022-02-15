@@ -33,29 +33,36 @@
                                     <div v-if="application.section.pay_for_treasury">
                                         <!--Agar davlat boji jarima bo'lmasa-->
                                         <div v-if="percent.state_duty !== 7">
-                                            <!--Agar to'langan bo'lsa-->
-                                            <span v-if="percent.check_state_payment_paid">
-                                            <!--Kvitansiyasi chiqgan bo'lsa-->
-                                            <div v-if="percent.check_memorial">
-                                                <!--Kvitansiyasini yuklab olish-->
-                                                <a :href="percent.check_memorial.memorial"
-                                                   class="btn btn-success text-bold"
-                                                   download="download">
-                                                    <i class="fa fa-file-download"></i>
-                                                    Kvitansiya yuklab olish
-                                                </a>
+                                            <!--Agar hisob raqam mavjud bo'lsa-->
+                                            <div v-if="!isNaN(score(percent))">
+                                                <!--Agar to'langan bo'lsa-->
+                                                <span v-if="percent.check_state_payment_paid">
+                                                    <!--Kvitansiyasi chiqgan bo'lsa-->
+                                                    <div v-if="percent.check_memorial">
+                                                        <!--Kvitansiyasini yuklab olish-->
+                                                        <a :href="percent.check_memorial.memorial"
+                                                           class="btn btn-success text-bold"
+                                                           download="download">
+                                                            <i class="fa fa-file-download"></i>
+                                                            Kvitansiya yuklab olish
+                                                        </a>
+                                                    </div>
+                                                    <!--Kvitansiyasi chiqmagan bo'lsa-->
+                                                    <div v-else>
+                                                         <b class="text-primary text-center">Bankka jo'natilgan</b>
+                                                    </div>
+                                                </span>
+                                                <!--Agar to'lanmagan bo'lsa-->
+                                                <div v-else>
+                                                    <button class="btn btn-danger" type="button"
+                                                            v-on:click="createPay(percent.id)">
+                                                        <i class="fa fa-money-bill-wave-alt"></i> To'lash
+                                                    </button>
+                                                </div>
                                             </div>
-                                                <!--Kvitansiyasi chiqmagan bo'lsa-->
-                                            <div v-else>
-                                                 <b class="text-primary text-center">Bankka jo'natilgan</b>
-                                            </div>
-                                        </span>
-                                            <!--Agar to'lanmagan bo'lsa-->
-                                            <div v-else>
-                                                <button class="btn btn-danger" type="button"
-                                                        v-on:click="createPay(percent.id)">
-                                                    <i class="fa fa-money-bill-wave-alt"></i> To'lash
-                                                </button>
+                                            <!--Agar hisob raqam topilmasa-->
+                                            <div v-else class="text-center text-danger">
+                                                Hisob raqam topilmadi!
                                             </div>
                                         </div>
                                         <!--Agar davlat boji jarima bo'lsa-->
@@ -96,8 +103,8 @@
                             <th>Jami</th>
                             <th></th>
                             <th></th>
-                            <th><b v-if="percents.length > 0">{{ allAmount | moneyFormat }}</b> so'm</th>
                             <th></th>
+                            <th><b v-if="percents.length > 0">{{ allAmount | moneyFormat }}</b> so'm</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -165,6 +172,12 @@ module.exports = {
     },
     created() {
         this.getPercents()
+
+        if (this.application && this.application.applicant) {
+            this.applicant = this.application.applicant
+        } else if (this.application && this.application.created_user) {
+            this.applicant = this.application.created_user
+        }
     },
     mounted() {
 

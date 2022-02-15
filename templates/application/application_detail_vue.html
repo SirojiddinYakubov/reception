@@ -89,15 +89,15 @@
                 ></component>
             </div>
         </div>
-        <div class="col-12 info_area">
-            <div class="accordion">
-                <component is="status"
-                           v-if="application"
-                           v-model="isOpenStatusAccordion"
-                           :application="application"
-                ></component>
-            </div>
-        </div>
+        {#        <div class="col-12 info_area">#}
+        {#            <div class="accordion">#}
+        {#                <component is="status"#}
+        {#                           v-if="application"#}
+        {#                           v-model="isOpenStatusAccordion"#}
+        {#                           :application="application"#}
+        {#                ></component>#}
+        {#            </div>#}
+        {#        </div>#}
         <component is="ApplicationStatusModal"
                    v-if="isOpenApplicationStatusModal && application"
                    :application="application"
@@ -142,7 +142,7 @@
             el: '#app',
             delimiters: ['[[', ']]'],
             data: () => ({
-                application: null,
+                application: '',
 
                 isOpenAboutAccordion: true,
                 isOpenPaymentAccordion: false,
@@ -184,7 +184,14 @@
                     this.user = await axios.get(`/api/v1/user/detail/${this.userId}/`).then(res => res.data)
                 },
                 async getApplicationDetail(id) {
-                    this.application = await axios.get(`/api/v1/application/detail/${id}/`).then((response) => response.data)
+                    this.application = await axios.get(`/api/v1/application/detail/${id}/`)
+                        .then((response) => response.data)
+                        .catch(error => {
+                            swal_error(error.response.data)
+                            setTimeout(function () {
+                                location.reload()
+                            }, 5000)
+                        })
                 },
                 selectPayment(type) {
                     document.getElementById('load').style.display = 'block'
