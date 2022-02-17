@@ -21,7 +21,7 @@ urlpatterns = [
          name='generate_application_word'),
     path('generate-application-pdf/<int:pk>/', views.GenerateApplicationPdf.as_view(), name='generate_application_pdf'),
     # path('application-pay-status/<int:id>/', views.ApplicationPayStatus.as_view(), name='application_pay_status'),
-    path('send-application-to-section/<int:pk>/', views.SendApplicationToSection.as_view(), name='send_application_to_section'),
+    # path('send-application-to-section/<int:pk>/', views.SendApplicationToSection.as_view(), name='send_application_to_section'),
 
 
     path('get-payment-percents/<int:pk>/', views.GetPaymentPercents.as_view(), name='get_payment_percents'),

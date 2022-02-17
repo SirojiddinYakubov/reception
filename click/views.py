@@ -9,6 +9,7 @@ from clickuz import ClickUz
 from django.urls import reverse_lazy
 from django.views import View
 
+from api.v1.application.utils import ApplicationSuccessCreatedMessage
 from application.models import Application, SHIPPED
 from click.models import Order, CLICK
 from reception.telegram_bot import send_message_to_developer
@@ -83,6 +84,8 @@ class OrderCheckAndPayment(ClickUz):
                 if application:
                     application.is_block = False
                     application.save()
+
+                    ApplicationSuccessCreatedMessage(application).get()
                 else:
                     send_message_to_developer(f'order application not found. Order id: {order.id}')
             else:

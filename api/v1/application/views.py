@@ -676,42 +676,42 @@ class GenerateApplicationPdf(generics.ListAPIView):
         return context
 
 
-class SendApplicationToSection(generics.ListAPIView):
-    def post(self, request, *args, **kwargs):
-        try:
-            application_id = kwargs.get('pk')
-            application = Application.objects.get(id=application_id)
-            base_amount = AmountBaseCalculation.objects.filter(is_active=True).last()
-            if not base_amount:
-                return Response("Eng kam oylik ish haqi topilmadi!", status=status.HTTP_400_BAD_REQUEST)
-
-            if application.process == DRAFT:
-                return Response("Ariza to'liq to'ldirilmagan!", status=status.HTTP_400_BAD_REQUEST)
-
-            if application.is_block:
-                return Response(
-                    f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak",
-                    status=status.HTTP_400_BAD_REQUEST)
-            application.process = SHIPPED
-            application.save()
-
-            text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda!"
-            inspectors = User.objects.filter(section=application.section, role=CHECKER)
-
-            if inspectors:
-                for inspector in inspectors:
-                    r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
-                    if not r == SUCCESS:
-                        r = SendSmsWithApi(message=text, phone=inspector.phone).get()
-                        if not r == SUCCESS:
-                            send_message_to_developer('Sms service not working!')
-
-            document_polices = DocumentForPolice.objects.filter(is_active=True, service=application.service)
-            serializer = DocumentForPoliceSerializer(document_polices, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
-            return Response("Xatolik yuz berdi!", status=status.HTTP_400_BAD_REQUEST)
+# class SendApplicationToSection(generics.ListAPIView):
+#     def post(self, request, *args, **kwargs):
+#         try:
+#             application_id = kwargs.get('pk')
+#             application = Application.objects.get(id=application_id)
+#             base_amount = AmountBaseCalculation.objects.filter(is_active=True).last()
+#             if not base_amount:
+#                 return Response("Eng kam oylik ish haqi topilmadi!", status=status.HTTP_400_BAD_REQUEST)
+#
+#             if application.process == DRAFT:
+#                 return Response("Ariza to'liq to'ldirilmagan!", status=status.HTTP_400_BAD_REQUEST)
+#
+#             if application.is_block:
+#                 return Response(
+#                     f"Ariza aktivlashtirilmagan! Arizani {application.section.title} ga jo'natish uchun {int(base_amount.amount / 100 * 5)} so'm to'lov qilishingiz kerak",
+#                     status=status.HTTP_400_BAD_REQUEST)
+#             application.process = SHIPPED
+#             application.save()
+#
+#             text = f"E-RIB.UZ Onlayn ariza platformasiga {application.id}-raqamli ariza kelib tushdi. \nIltimos arizani ko'rib chiqish uchun qabul qiling. Fuqaro sizning javobingizni kutmoqda!"
+#             inspectors = User.objects.filter(section=application.section, role=CHECKER)
+#
+#             if inspectors:
+#                 for inspector in inspectors:
+#                     r = SendSmsWithPlayMobile(phone=inspector.phone, message=text).get()
+#                     if not r == SUCCESS:
+#                         r = SendSmsWithApi(message=text, phone=inspector.phone).get()
+#                         if not r == SUCCESS:
+#                             send_message_to_developer('Sms service not working!')
+#
+#             document_polices = DocumentForPolice.objects.filter(is_active=True, service=application.service)
+#             serializer = DocumentForPoliceSerializer(document_polices, many=True)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         except Exception as e:
+#             print(e)
+#             return Response("Xatolik yuz berdi!", status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetPaymentPercents(APIView):

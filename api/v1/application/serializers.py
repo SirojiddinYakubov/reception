@@ -186,10 +186,6 @@ class ApplicationSectionUpdateSerializer(serializers.ModelSerializer):
             'section',
         ]
 
-    # def update(self, instance, validated_data):
-    #
-    #     return application
-
 
 class ApplicationPaymentStateDutyPercentSerializer(serializers.ModelSerializer):
     class Meta:
