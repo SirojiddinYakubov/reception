@@ -1,7 +1,7 @@
 import itertools
 import json
 
-from django.db.models import Sum
+from django.db.models import Sum, F
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
@@ -40,34 +40,31 @@ class StateDutyPercentDetail(generics.RetrieveAPIView):
         return context
 
 
-class StateDutiesList(APIView):
+class RegionStateDutiesList(APIView):
     permission_classes = [
         permissions.RegionalControllerPermission
     ]
     serializer_class = serializers.StateDutiesListSerializer
 
-    def get(self, request, *args, **kwargs):
+    def get_queryset(self, request, *args, **kwargs):
         qs = PaymentForTreasury.objects.filter(is_active=True, status=PaymentForTreasury.SUCCESS,
-                                               memorial__isnull=False,
-                                               application__section__region=request.user.section.region)
-        state_duties = []
-        amount = 0
-        for title, items in itertools.groupby(qs, lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
-            for item in items:
-                amount += item.amount
-            try:
-                if title in state_duties[0]['title']:
-                    state_duties[0]['amount'] = amount
-                else:
-                    state_duties.append({
-                        "title": title,
-                        "amount": amount})
-            except:
-                state_duties.append({
-                    "title": title,
-                    "amount": amount})
-            amount = 0
-        return Response(state_duties, status=status.HTTP_200_OK)
+                                               memorial__isnull=False)
+        section_id = request.GET.get('section')
+        if section_id:
+            return qs.filter(application__section_id=section_id)
+        else:
+            return qs.filter(application__section__region=self.kwargs.get('id'))
+    def get(self, request, *args, **kwargs):
+        # for title, items in itertools.groupby(qs, lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
+        # for q in qs:
+        #     state_duties.setdefault(q.state_duty_percent.get_state_duty_display(), []).append(q)
+        results = self.get_queryset(request, *args, **kwargs).values(title=F('state_duty_percent__state_duty')) \
+            .order_by('title') \
+            .annotate(total_amount=Sum('amount'))
+
+        for result in results:
+            result['title'] = dict(STATE_DUTY_TITLE).get(result['title'])
+        return Response(list(results), status=status.HTTP_200_OK)
 
 
 class PaymentForTreasuryList(generics.ListAPIView):

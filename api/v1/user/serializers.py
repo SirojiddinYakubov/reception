@@ -123,6 +123,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     region = RegionDetailSerializer()
     district = DistrictDetailSerializer()
     quarter = QuarterDetailSerializer()
+    section = SectionDetailSerializer()
 
     class Meta:
         model = User
@@ -140,7 +141,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'passport_seriya',
             'passport_number',
             'issue_by_whom',
-            'created_by'
+            'created_by',
+            'section',
         ]
 
 

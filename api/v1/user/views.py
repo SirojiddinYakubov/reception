@@ -54,7 +54,9 @@ class UserDetailView(generics.RetrieveAPIView):
         permissions.UserPermission |
         permissions.AppCreatorPermission |
         permissions.AdministratorPermission |
-        permissions.ModeratorPermission
+        permissions.ModeratorPermission |
+        permissions.RegionalControllerPermission
+
     ]
 
     def get_object(self):

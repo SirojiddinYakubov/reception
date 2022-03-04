@@ -872,7 +872,7 @@ class ViewCarData(AllowedRolesMixin, DetailView):
     template_name = 'user/car/view_car_data.html'
     pk_url_kwarg = 'car_id'
     allowed_roles = [USER, CHECKER, REVIEWER, TECHNICAL, SECTION_CONTROLLER, REGIONAL_CONTROLLER, STATE_CONTROLLER,
-                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR]
+                     MODERATOR, ADMINISTRATOR, SUPER_ADMINISTRATOR, APP_CREATOR]
 
     def get(self, request, *args, **kwargs):
         car = get_object_or_404(Car, id=self.kwargs['car_id'])
@@ -886,6 +886,8 @@ class ViewCarData(AllowedRolesMixin, DetailView):
         elif request.user.role == CHECKER:
             return super().get(request, *args, **kwargs)
         elif request.user.role == REGIONAL_CONTROLLER:
+            return super().get(request, *args, **kwargs)
+        elif request.user.role == APP_CREATOR:
             return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

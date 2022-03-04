@@ -101,6 +101,7 @@
             width: 100%;
 
         }
+
     </style>
     <link href="{% static 'assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock css %}
@@ -195,9 +196,12 @@
                                         </div>
 
                                         <div class="p-1">
-                                            <button type="submit" class="btn btn-primary btn-block free-button">To'lov
+                                            <button type="submit" class="btn btn-primary">To'lov
                                                 qilish
                                             </button>
+                                            <button type="button" id="share" class="btn btn-dark">Поделиться
+                                            </button>
+                                            <input type="text" hidden value="Hello Friend 123465" id="myInput">
                                         </div>
                                     </div>
 
@@ -225,7 +229,8 @@
                 <form action="#" id="confirm_code_form">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">Karta ma'lumotlarini tasdiqlash</h5>
-                        <button id="close_modal_icon" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        <button id="close_modal_icon" type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"
                         ></button>
                     </div>
                     <div class="modal-body">
@@ -498,8 +503,52 @@
 
 
                 })
-
             })
+
+
+            function appCopyToClipBoard(sText) {
+                var oText = false,
+                    bResult = false;
+                try {
+                    oText = document.createElement("textarea");
+                    $(oText).addClass('clipboardCopier').val(sText).insertAfter('body').focus();
+                    oText.select();
+                    document.execCommand("Copy");
+                    bResult = true;
+
+                    // copied animation
+                    oText.classList.add('copied');
+
+                    setTimeout(function () {
+                        oText.classList.remove('copied');
+                    }, 1500);
+
+                } catch (e) {
+                }
+
+                $(oText).remove();
+                return bResult;
+            }
+
+
+
+            $('#share').on('click', function () {
+
+                $(this).tooltip({
+                    placement: 'bottom',
+                    title: "Copied...",
+                 }).tooltip('show')
+
+                if (!appCopyToClipBoard(window.location.href)) {
+                    alert('Sorry, copy to clipboard failed.');
+                    $(this).tooltip('hide')
+                }
+            })
+
+            {#$('#share').tooltip({#}
+            {#    trigger: 'click',#}
+            {#    placement: 'bottom'#}
+            //{#});#}
         })
     </script>
 {% endblock js %}
