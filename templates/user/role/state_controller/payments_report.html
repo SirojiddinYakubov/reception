@@ -1,0 +1,181 @@
+{% extends 'base_vertical.html' %}
+{% load i18n humanize service_tags static %}
+
+{% block title %}
+    {% trans "E-RIB.UZ" %}
+{% endblock title %}
+
+{% block page_title %}
+    {% trans "Davlat boj to'lovlari" %}
+{% endblock page_title %}
+
+{% block content %}
+
+    <div class="row ml-2 mr-2" id="app">
+        <div class="col-12 text-center p-0">
+
+            <div class="card px-0 pb-0 mb-3">
+                <div class="card-body">
+                    {% include '_parts/messages.html' %}
+
+                    <div class="row text-start m-3">
+                         <div class="col-3">
+                            <label class="text-dark" style="width: 100%" for="application">Viloyat</label>
+
+                            <select class="form-select" v-model="region">
+                                <option value="" >Hammasi</option>
+                                <option :value="region.id" v-for="region in regions" :key="region.id">[[region.title]]</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="text-dark" style="width: 100%" for="application">YHXB RIB bo'limi</label>
+
+                            <select class="form-select"  v-model="section">
+                                <option value="" v-if="sections.length == 0" disabled >-- viloyatni tanlang --</option>
+                                <option value="" v-if="sections.length > 0">Hammasi</option>
+                                <option :value="section.id" v-for="section in sections" :key="section.id">[[section.title]]</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="text-dark" style="width: 100%" for="application">Boshlash</label>
+                            <input type="date" v-model="start_date" class="form-control" />
+                        </div>
+                        <div class="col-3">
+                            <label class="text-dark" style="width: 100%" for="application">Tugash</label>
+                            <input type="date" v-model="end_date" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+
+                        <!-- left column -->
+                        <div class="col-md-12">
+
+                            <div class="panel-body" id="render_div">
+                                <table id="report_table" class="table table-bordered">
+                                    <thead class="thead-light" style="background: #f1f0f0">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="text-start">Davlat boji nomi</th>
+                                        <th scope="col">To'langan</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(stateDuty, index) in stateDuties" :key="index">
+                                        <td>[[index + 1]]</td>
+                                        <td class="font-18 text-start">
+                                            [[stateDuty.title]]
+                                        </td>
+                                        <td class="text-end">
+                                            <b>[[stateDuty.total_amount | moneyFormat]]</b>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot style="background: #f1f0f0">
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-start">Jami:</th>
+                                        <th class="text-end"><b class="text-green" v-if="totalAmount > 0">[[totalAmount
+                                            | moneyFormat]]</b> so'm
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'assets/libs/axios/axios.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- development version -->
+    <script src="{% static 'vue/vue.dev.js' %}"></script>
+    <!-- production version -->
+    {#    <script src="{% static 'vue/vue.prod.js' %}"></script>#}
+
+    <script type="text/javascript" charset="UTF-8">
+        setAxiosHeader()
+        new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: () => ({
+                userId: '',
+                user: '',
+                stateDuties: [],
+                totalAmount: 0,
+                sections: [],
+                section: '',
+                start_date: '',
+                end_date: '',
+                regions: [],
+                region: ''
+            }),
+            created() {
+                this.getStateDuties()
+                this.getSectionExistsRegionsList()
+            },
+            filters: {
+                moneyFormat(value) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }
+            },
+            methods: {
+                async getStateDuties() {
+                    this.stateDuties = await axios.get(`{% url 'api_state_controller:state_duties_report' %}`, {
+                        params: {
+                            region: this.region,
+                            section: this.section,
+                            start_date: this.start_date,
+                            end_date: this.end_date
+                        }
+                    })
+                        .then((res) => {
+                            let amount = 0
+                            res.data.forEach((x, i) => {
+                                amount += x.total_amount
+                            })
+                            this.totalAmount = amount
+                            return res.data
+                        })
+                },
+                async getRegionSectionsList(id) {
+                    this.sections = await axios.get(`/api/v1/user/region/${id}/sections/list/`)
+                    .then(res => {
+                        return res.data
+                    })
+                },
+                async getSectionExistsRegionsList () {
+                    this.regions = await axios.get("{% url 'api_user:section_exists_regions_list' %}")
+                    .then((res) => {
+                        return res.data
+                    })
+                }
+            },
+            watch: {
+                region(newVal) {
+                    this.getStateDuties()
+                    if (newVal) {
+                        this.getRegionSectionsList(newVal)
+                    } else {
+                        this.sections = []
+                    }
+
+                },
+                section() {
+                    this.getStateDuties()
+                },
+                start_date() {
+                    this.getStateDuties()
+                },
+                end_date() {
+                    this.getStateDuties()
+                }
+            }
+        })
+    </script>
+{% endblock js %}

@@ -44,7 +44,8 @@ class StateDutyPercentDetail(generics.RetrieveAPIView):
 
 class RegionStateDutiesReport(APIView):
     permission_classes = [
-        permissions.RegionalControllerPermission
+        permissions.RegionalControllerPermission |
+        permissions.StateControllerPermission
     ]
     serializer_class = serializers.PaymentForTreasuryListSerializer
 

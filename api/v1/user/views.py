@@ -55,7 +55,8 @@ class UserDetailView(generics.RetrieveAPIView):
         permissions.AppCreatorPermission |
         permissions.AdministratorPermission |
         permissions.ModeratorPermission |
-        permissions.RegionalControllerPermission
+        permissions.RegionalControllerPermission |
+        permissions.StateControllerPermission
 
     ]
 
@@ -148,7 +149,8 @@ class RegionSectionsList(generics.ListAPIView):
         permissions.UserPermission |
         permissions.AppCreatorPermission |
         permissions.RegionalControllerPermission |
-        permissions.ModeratorPermission
+        permissions.ModeratorPermission |
+        permissions.StateControllerPermission
     ]
 
     def get_queryset(self):

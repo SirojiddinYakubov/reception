@@ -551,6 +551,8 @@ class PaymentsList(AllowedRolesMixin, ListView):
             return ['user/role/moderator/payments_list.html']
         elif role == REGIONAL_CONTROLLER:
             return ['user/role/regional_controller/payments_list.html']
+        elif role == STATE_CONTROLLER:
+            return ['user/role/state_controller/payments_list.html']
         return [self.template_name]
 
 
@@ -774,6 +776,8 @@ class PaymentsReport(AllowedRolesMixin, ListView):
         role = self.request.user.role
         if role == REGIONAL_CONTROLLER:
             return ['user/role/regional_controller/payments_report.html']
+        if role == STATE_CONTROLLER:
+            return ['user/role/state_controller/payments_report.html']
         return [self.template_name]
 
 
