@@ -227,6 +227,7 @@ class CreateColor(generics.CreateAPIView):
 
 
 class GetCode(APIView):
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('phone')
         phone = re.sub('[^0-9]', '', phone_number)
@@ -248,6 +249,7 @@ class GetCode(APIView):
             return Response({"error": "Sms service not working"}, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyCode(APIView):
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         secret = request.data.get('secret')
         sms_code: str = request.data.get("code")

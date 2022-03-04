@@ -9,6 +9,8 @@ class ApplicationsListSerializer(serializers.ModelSerializer):
     service = ServiceDetailSerializer()
     car = CarDetailSerializer()
     created_user = UserShortDetailSerializer()
+    section = SectionDetailSerializer()
+
     class Meta:
         model = Application
         fields = [
@@ -18,5 +20,6 @@ class ApplicationsListSerializer(serializers.ModelSerializer):
             'created_user',
             'created_date',
             'process',
-            'file_name'
+            'file_name',
+            'section'
         ]

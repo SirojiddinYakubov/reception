@@ -267,31 +267,42 @@
     <script src="{% static 'assets/libs/sweetalert2/sweetalert2.all.min.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            sendAuthorizationToken()
             let secretToken,
                 countdownSeconds = 300,
                 card_number,
                 exp_date
 
-            const encrypted = $.urlParam('token')
-            let decrypted = CryptoJS.AES.decrypt(encrypted, "password")
-            decrypted = decrypted.toString(CryptoJS.enc.Utf8)
-            let queryDict = {}
-            decrypted.substr().split("&").forEach(function (item) {
-                queryDict[item.split("=")[0]] = item.split("=")[1]
-            })
+            try {
+                const encrypted = $.urlParam('token')
+                let decrypted = CryptoJS.AES.decrypt(encrypted, "password")
+                decrypted = decrypted.toString(CryptoJS.enc.Utf8)
+                let queryDict = {}
+                decrypted.substr().split("&").forEach(function (item) {
+                    queryDict[item.split("=")[0]] = item.split("=")[1]
+                })
 
-            getAjaxData(`{% url 'api_service:state_duty_percent_detail' 12345 %}?application=${queryDict.applicationId}`.replace(/12345/, queryDict.percentId.toString())).then(function (res) {
-                $('#state_duty_title').html(`${res.title}:`)
-                $('#state_duty_amount').html(`${res.amount} so'm`)
-                const commission_amount = res.amount / 100 * 2
-                $('#commission_amount').html(`${commission_amount} so'm`)
-                const all_amount = commission_amount + res.amount
-                $('#all_amount').html(`${all_amount} so'm`)
+                getAjaxData(`{% url 'api_service:state_duty_percent_detail' 12345 %}?application=${queryDict.applicationId}`.replace(/12345/, queryDict.percentId.toString())).then(function (res) {
+                    $('#state_duty_title').html(`${res.title}:`)
+                    $('#state_duty_amount').html(`${res.amount} so'm`)
+                    const commission_amount = res.amount / 100 * 2
+                    $('#commission_amount').html(`${commission_amount} so'm`)
+                    const all_amount = commission_amount + res.amount
+                    $('#all_amount').html(`${all_amount} so'm`)
 
-                $('#applicant').html(`${res.applicant.last_name} ${res.applicant.first_name} ${res.applicant.middle_name}`)
+                    $('#applicant').html(`${res.applicant.last_name} ${res.applicant.first_name} ${res.applicant.middle_name}`)
 
-            })
+                })
+
+            } catch {
+                Swal.fire(
+                    'Xatolik!',
+                    "Arizachi va to'lov miqdori topilmadi!",
+                    'error'
+                ).then(() => {
+                   window.location.href = "{% url 'application:applications_list' %}"
+                })
+            }
+
 
             $("#card_number").inputmask("9999 9999 9999 9999", {
                 "oncomplete": function () {
@@ -531,24 +542,18 @@
             }
 
 
-
             $('#share').on('click', function () {
 
                 $(this).tooltip({
                     placement: 'bottom',
                     title: "Copied...",
-                 }).tooltip('show')
+                }).tooltip('show')
 
                 if (!appCopyToClipBoard(window.location.href)) {
                     alert('Sorry, copy to clipboard failed.');
                     $(this).tooltip('hide')
                 }
             })
-
-            {#$('#share').tooltip({#}
-            {#    trigger: 'click',#}
-            {#    placement: 'bottom'#}
-            //{#});#}
         })
     </script>
 {% endblock js %}

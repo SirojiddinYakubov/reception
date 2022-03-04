@@ -154,3 +154,7 @@ class ExampleDocumentDetailSerializer(serializers.ModelSerializer):
         ]
 
 
+class StateDutiesReportSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    total_amount = serializers.IntegerField()
+

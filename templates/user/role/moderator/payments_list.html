@@ -144,8 +144,16 @@
                         "data": "applicant",
                         orderable: false,
                         render: function (data, type, row) {
-                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
-                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+                            var applicant_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
+
+                            let applicant = `<a href='${applicant_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a>`
+                            let organization = ''
+
+                            if (row.organization) {
+                                let organization_url = "{% url 'user:view_organization_data' 12345 %}".replace(/12345/, row.organization.id.toString())
+                                organization = `<a href="${organization_url}">${row.organization.title}</a>`
+                            }
+                            return `${applicant} <br> ${organization ? organization + '<br>' : ''}  +998${data.phone}`
                         }
                     },
                     {

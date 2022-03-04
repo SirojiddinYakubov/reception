@@ -2,7 +2,9 @@ from rest_framework import serializers
 
 from api.v1.service.serializers import StateDutyScoreDetailSerializer, StateDutyPercentDetailShortSerializer
 from api.v1.user.checker.serializers import ApplicationsListSerializer
-from api.v1.user.serializers import UserShortDetailSerializer, DistrictDetailSerializer, SectionDetailSerializer
+from api.v1.user.serializers import UserShortDetailSerializer, DistrictDetailSerializer, SectionDetailSerializer, \
+    OrganizationDetailSerializer
+from application.models import LEGAL_PERSON
 from service.models import PaymentForTreasury
 
 
@@ -32,6 +34,9 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
             context['applicant'] = UserShortDetailSerializer(instance.application.applicant).data
         else:
             context['applicant'] = UserShortDetailSerializer(instance.application.created_user).data
+
+        if instance.application.person_type == LEGAL_PERSON and instance.application.organization:
+            context['organization'] = OrganizationDetailSerializer(instance.application.organization).data
 
         if instance.application.applicant:
             context['district'] = DistrictDetailSerializer(instance.application.applicant.district).data

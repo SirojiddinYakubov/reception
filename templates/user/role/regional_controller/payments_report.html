@@ -30,11 +30,11 @@
                         </div>
                         <div class="col-4">
                             <label class="text-dark" style="width: 100%" for="application">Boshlash</label>
-                            <input type="date" id="start" class="form-control"/>
+                            <input type="date" v-model="start_date" class="form-control" />
                         </div>
                         <div class="col-4">
                             <label class="text-dark" style="width: 100%" for="application">Tugash</label>
-                            <input type="date" id="stop" class="form-control"/>
+                            <input type="date" v-model="end_date" class="form-control"/>
                         </div>
                     </div>
 
@@ -101,7 +101,9 @@
                 stateDuties: [],
                 totalAmount: 0,
                 sections: [],
-                section: ''
+                section: '',
+                start_date: '',
+                end_date: ''
             }),
             created() {
                 this.getCurrentUser()
@@ -125,9 +127,11 @@
                     this.getRegionSectionsList(this.user.section.region.id)
                 },
                 async getRegionStateDuties(id) {
-                    this.stateDuties = await axios.get(`/api/v1/service/region/${id}/state-duties/list/`, {
+                    this.stateDuties = await axios.get(`/api/v1/service/region/${id}/state-duties/report/`, {
                         params: {
-                            section: this.section
+                            section: this.section,
+                            start_date: this.start_date,
+                            end_date: this.end_date
                         }
                     })
                         .then((res) => {
@@ -148,6 +152,12 @@
             },
             watch: {
                 section() {
+                    this.getRegionStateDuties(this.user.section.region.id)
+                },
+                start_date() {
+                    this.getRegionStateDuties(this.user.section.region.id)
+                },
+                end_date() {
                     this.getRegionStateDuties(this.user.section.region.id)
                 }
             }

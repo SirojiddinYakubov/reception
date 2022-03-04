@@ -35,10 +35,10 @@
                             <table id="example1" class="table dt-responsive nowrap w-100">
                                 <thead>
                                 <tr>
+                                    <th>{% trans "Davlat boji" %}</th>
                                     <th>{% trans "Arizachi" %}</th>
                                     <th>{% trans "Xizmat turi" %}</th>
-                                    <th>{% trans "Tuman" %}</th>
-                                    <th>{% trans "Davlat boji" %}</th>
+                                    <th>{% trans "YHXB RIB" %}</th>
                                     <th>{% trans "To'lov summasi" %}</th>
                                     <th>{% trans "Status" %}</th>
                                     <th>{% trans "r/s" %}</th>
@@ -140,11 +140,30 @@
                 },
                 "columns": [
                     {
+                        "data": "state_duty_title",
+                        render: function (data, type, row) {
+                            if (data) {
+                                return data
+                            } else {
+                                return ''
+                            }
+
+                        }
+                    },
+                    {
                         "data": "applicant",
                         orderable: false,
                         render: function (data, type, row) {
-                            var created_user_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
-                            return `<a href='${created_user_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a><br>+998${data.phone}`
+                            var applicant_url = "{% url 'user:view_personal_data' 12345 %}".replace(/12345/, data.id.toString())
+
+                            let applicant = `<a href='${applicant_url}'>${data.last_name} ${data.first_name} ${data.middle_name}</a>`
+                            let organization = ''
+
+                            if (row.organization) {
+                                let organization_url = "{% url 'user:view_organization_data' 12345 %}".replace(/12345/, row.organization.id.toString())
+                                organization = `<a href="${organization_url}">${row.organization.title}</a>`
+                            }
+                            return `${applicant} <br> ${organization ? organization + '<br>' : ''}  +998${data.phone}`
                         }
                     },
                     {
@@ -159,20 +178,15 @@
                         "data": "district",
                         orderable: false,
                         render: function (data, type, row) {
-                            return data.title
-                        }
-                    },
-                    {
-                        "data": "state_duty_title",
-                        render: function (data, type, row) {
-                            if (data) {
-                                return data
-                            } else {
+                            try {
+                                return row.application.section.title
+                            } catch {
                                 return ''
                             }
 
                         }
                     },
+
                     {
                         "data": "amount",
                         render: function (data, type, row) {
@@ -189,7 +203,7 @@
                                 return `<span class="badge label-table bg-danger">${data}</span>`
                             } else if (data === 'processing') {
                                 return `<span class="badge label-table bg-warning">${data}</span>`
-                            }  else if (data === 'canceled') {
+                            } else if (data === 'canceled') {
                                 return `<span class="badge label-table bg-danger">${data}</span>`
                             }
 

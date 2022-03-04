@@ -1,3 +1,4 @@
+import datetime
 import itertools
 import json
 
@@ -11,6 +12,7 @@ from rest_framework.views import APIView
 from api.v1 import permissions
 from api.v1.service import serializers
 from application.models import (Application)
+from reception.settings import LOCAL_TIMEZONE
 from service.models import (
     Service, StateDutyPercent, PaymentForTreasury, STATE_DUTY_TITLE
 )
@@ -40,20 +42,35 @@ class StateDutyPercentDetail(generics.RetrieveAPIView):
         return context
 
 
-class RegionStateDutiesList(APIView):
+class RegionStateDutiesReport(APIView):
     permission_classes = [
         permissions.RegionalControllerPermission
     ]
-    serializer_class = serializers.StateDutiesListSerializer
+    serializer_class = serializers.PaymentForTreasuryListSerializer
 
     def get_queryset(self, request, *args, **kwargs):
         qs = PaymentForTreasury.objects.filter(is_active=True, status=PaymentForTreasury.SUCCESS,
                                                memorial__isnull=False)
         section_id = request.GET.get('section')
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+
+
+        # today_min = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=0, minute=0, second=0)
+        # today_max = timezone.now().replace(tzinfo=LOCAL_TIMEZONE, hour=23, minute=59, second=59)
+
         if section_id:
-            return qs.filter(application__section_id=section_id)
+            qs = qs.filter(application__section_id=section_id)
         else:
-            return qs.filter(application__section__region=self.kwargs.get('id'))
+            qs = qs.filter(application__section__region=self.kwargs.get('id'))
+
+
+        start_min = datetime.datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE) if start_date else datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE, day=1, month=1, year=2020)
+        end_max = datetime.datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=LOCAL_TIMEZONE) if end_date else datetime.datetime.now().replace(tzinfo=LOCAL_TIMEZONE)
+        qs = qs.filter(created_at__range=[start_min, end_max])
+        return qs
+
     def get(self, request, *args, **kwargs):
         # for title, items in itertools.groupby(qs, lambda x: dict(STATE_DUTY_TITLE).get(x.state_duty_percent.state_duty)):
         # for q in qs:
