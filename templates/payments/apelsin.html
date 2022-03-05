@@ -270,13 +270,13 @@
             let secretToken,
                 countdownSeconds = 300,
                 card_number,
-                exp_date
+                exp_date,
+                queryDict = {}
 
             try {
                 const encrypted = $.urlParam('token')
                 let decrypted = CryptoJS.AES.decrypt(encrypted, "password")
                 decrypted = decrypted.toString(CryptoJS.enc.Utf8)
-                let queryDict = {}
                 decrypted.substr().split("&").forEach(function (item) {
                     queryDict[item.split("=")[0]] = item.split("=")[1]
                 })
@@ -443,7 +443,7 @@
                 var code = $('#confirm_code').val()
                 $.ajax({
                     type: "POST",
-                    url: "{% url 'user:verify_code' %}",
+                    url: "{% url 'api_user:verify_code' %}",
                     data: {
                         'secret': secretToken,
                         'code': code
