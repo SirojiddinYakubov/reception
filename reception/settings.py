@@ -222,8 +222,8 @@ REST_FRAMEWORK = {
 # smtp
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yakubov9791999@gmail.com'
-EMAIL_HOST_PASSWORD = 'yakubov9791999'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 SIMPLE_JWT = {
@@ -312,8 +312,8 @@ PAY_FOR_SERVICE = int(MINIMUM_BASE_WAGE / 100 * 5)  # eng kam bazaviy hisoblash 
 PAY_FOR_SERVICE_PERCENT = int(PAY_FOR_SERVICE / 100 * 4)  # PAY_FOR_SERVICEning 4% miqdori, to'lov tizimlari foizi
 # PAY_FOR_SERVICE_PERCENT = 0
 
-SMS_LOGIN = 'jj39k'
-SMS_TOKEN = 'cb547db5ce188f49c1e1790c25ca6184'
+SMS_LOGIN = os.getenv("SMS_LOGIN")
+SMS_TOKEN = os.getenv("SMS_TOKEN")
 
 CRONJOBS = [
     # ('0 */2 * * *', 'application.cron.application_crontab',)  #har 2 soatda cron ishga tushadi
@@ -334,10 +334,10 @@ PAYCOM_SETTINGS = {
 }
 
 CLICK_SETTINGS = {
-    'service_id': 19604,
-    'merchant_id': 14103,
-    'secret_key': '7T8fbCgyiVDu8I',
-    'merchant_user_id': 22381,
+    'service_id': os.getenv("CLICK_SERVICE_ID"),
+    'merchant_id': os.getenv("CLICK_MERCHANT_ID"),
+    'secret_key': os.getenv("CLICK_SECRET_KEY"),
+    'merchant_user_id': os.getenv("CLICK_MERCHANT_USER_ID"),
 }
 
 PAYMENT_HOST = '81.177.139.231:443'
