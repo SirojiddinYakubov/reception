@@ -143,6 +143,14 @@ class PaymentForTreasuryListSerializer(serializers.ModelSerializer):
             'transaction_id',
             'status'
         ]
+    def to_representation(self, instance):
+        context = super(PaymentForTreasuryListSerializer, self).to_representation(instance)
+        context['state_duty_title'] = dict(STATE_DUTY_TITLE).get(instance.state_duty_percent.state_duty)
+        if instance.state_duty_score:
+            score = StateDutyScore.objects.get(id=instance.state_duty_score.id).score
+            context['score'] = score
+        context['title'] = instance.state_duty_percent.title
+        return context
 
 class ExampleDocumentDetailSerializer(serializers.ModelSerializer):
     class Meta:

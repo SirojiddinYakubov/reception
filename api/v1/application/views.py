@@ -1,11 +1,9 @@
 import datetime
 import os
-import re
 
 from django.http import HttpResponse
 from django.utils import timezone
 from docxtpl import DocxTemplate
-from reportlab.pdfgen import canvas
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -13,20 +11,17 @@ from rest_framework.views import APIView
 
 from api.v1 import permissions
 from api.v1.application import serializers
-from api.v1.service.serializers import StateDutyPercentDetailSerializer, StateDutyScoreDetailSerializer
+from api.v1.service.serializers import StateDutyScoreDetailSerializer
 from api.v1.user.serializers import (CreateAccountStatementCarSerializer, CreateContractOfSaleCarSerializer,
                                      CreateGiftAgreementCarSerializer, CreateReplaceTpCarSerializer,
                                      CreateInheritanceAgreementCarSerializer, CreateReplaceNumberAndTpCarSerializer)
 from application.models import (
-    Application, LEGAL_PERSON, DRAFT, ApplicationDocument, SHIPPED, DocumentForPolice
+    Application, LEGAL_PERSON, DRAFT, ApplicationDocument
 )
-from application.serializers import DocumentForPoliceSerializer
 from application.templatetags.applications_tags import get_payment_score
 from application.utils import filter_state_duty_percents
-from reception.api import SendSmsWithPlayMobile, SUCCESS, SendSmsWithApi
-from reception.telegram_bot import send_message_to_developer
-from service.models import (Service, ExampleDocument, AmountBaseCalculation, StateDutyPercent)
-from user.models import Section, Car, CarModel, CHECKER, User
+from service.models import (Service, ExampleDocument, PaymentForTreasury)
+from user.models import Section, Car, CarModel
 from user.utils import render_to_pdf
 
 
@@ -717,10 +712,16 @@ class GenerateApplicationPdf(generics.ListAPIView):
 class GetPaymentPercents(APIView):
     def get(self, request, *args, **kwargs):
         application = Application.objects.get(id=kwargs.get('pk'))
-        percents = filter_state_duty_percents(application)
-        serializer = serializers.ApplicationPaymentStateDutyPercentSerializer(percents, many=True,
-                                                                              context={'application': application})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        required_percents = filter_state_duty_percents(application)
+        ids = list(required_percents.values_list('id', flat=True))
+        incorrectly_percents = PaymentForTreasury.objects.filter(is_active=True, application=application).exclude(
+            state_duty_percent__in=ids)
+        required_percents_data = serializers.ApplicationPaymentStateDutyPercentSerializer(required_percents, many=True,
+                                                                                          context={
+                                                                                              'application': application}).data
+        incorrectly_percents_data = serializers.PaymentForTreasuryListSerializer(incorrectly_percents, many=True).data
+        data = {'required_percents': required_percents_data, 'incorrectly_percents': incorrectly_percents_data}
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class GetPaymentScore(APIView):
