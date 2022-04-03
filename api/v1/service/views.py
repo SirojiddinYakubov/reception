@@ -39,6 +39,8 @@ class StateDutyPercentDetail(generics.RetrieveAPIView):
             context.update({'applicant': application.applicant})
         else:
             context.update({'applicant': application.created_user})
+        if application.organization:
+            context.update({'organization': application.organization})
         return context
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.v1.user.serializers import CarTypesListSerializer, UserShortDetailSerializer
+from api.v1.user.serializers import CarTypesListSerializer, UserShortDetailSerializer, OrganizationDetailSerializer
 from service.models import (
     Service, StateDutyPercent, AmountBaseCalculation, ROAD_FUND, ROAD_FUND_HORSE_POWER, STATE_DUTY_TITLE,
     StateDutyScore, PaymentForTreasury, ExampleDocument
@@ -85,6 +85,8 @@ class StateDutyPercentDetailSerializer(serializers.ModelSerializer):
         context['bhm'] = amount_base_calculation.amount
         if self.context.get('applicant'):
             context['applicant'] = UserShortDetailSerializer(self.context['applicant']).data
+        if self.context.get('organization'):
+            context['organization'] = OrganizationDetailSerializer(self.context.get('organization')).data
         return context
 
 
